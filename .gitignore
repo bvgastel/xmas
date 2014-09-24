@@ -2,3 +2,7 @@
 # you can still add pdf by hand, if necessary, but git will not include it automatically
 *.pdf
 *.swp
+*.backup
+*.aux
+*.tmp
+*.log

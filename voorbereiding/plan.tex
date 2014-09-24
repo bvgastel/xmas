@@ -1,0 +1,181 @@
+\documentclass[a4paper,11pt,twoside,draft]{article}
+
+\usepackage{ucs}
+\usepackage{subfigure}
+\usepackage[dutch,english]{babel}
+\usepackage{graphicx}
+
+\usepackage[dvips,pdftex]{hyperref}
+\hypersetup{%
+   pdfcreator=%
+}
+
+\author{Guus Bonnema}
+\date{24/09/14}
+
+\title{Plan van aanpak voor xmas ontwerp tool}
+
+\begin{document}
+
+\section{Opdracht}
+
+\subsection{Inleiding}
+
+\paragraph{Factoren}
+
+\begin{enumerate}
+\item geografisch gespreid team
+\item technisch product
+\item high level functionele requirements bekend bij opdrachtgever.
+\item Kwalitatieve requirements nog niet expliciet
+\item 3 teamleden
+\item Vaste tijd voor volledige uitvoering (8 maanden +/- 1 maand)
+\item Weinig externe risico's
+\end{enumerate}
+
+
+
+\paragraph{Alternatieve aanpakken}
+
+\begin{enumerate}
+\item Volledig plangedreven zoals SDM2 (System Development Method 2)
+\item Volledig agile zoals XP (Extreme programming)
+\item Hybride aanpak zoals UP (Unified Process)
+\item Scrum aanpak (additief aan een agile of hybride aanpak): iteratief
+\end{enumerate}
+
+\paragraph{Overwegingen}
+
+\begin{enumerate}
+\item Klein team met deels bekende requirements
+\item geografische spreiding
+\item teamleden hebben geen ervaring met agile methoden
+\end{enumerate}
+
+\paragraph{Conclusies}
+\begin{description}
+\item XP vergt fysieke nabijheid en grote gebruikers betrokkenheid: valt af
+\item SDM2 heeft een rigide requirements Engineering process
+\item UP: Iteratief met agile constructie komt het dichtst in de buurt:
+\begin{enumerate}
+ \item Plangedreven voorbereiding
+ \item iteratieve sprints tijdens de uitvoering
+\end{enumerate}
+\end{description}
+
+Scrum is het meest bruikbaar voor project management tijdens de constructie omdat
+het gemakkelijk bij agile en bij incrementeel cq iteratief ontwikkelen te gebruiken is.
+
+\subsection{Business case}
+
+Wat maakt deze wijziging nodig? Wie helpt het? Hoe helpt het?
+Hoe groot is de benefit?
+
+\subsection{Risicos}
+
+Wat zijn de belangrijkste risicos? Welke moeten we accepteren, en welke wat aan doen?
+
+
+\subsection{Challanges}
+
+Wat zijn de belangrijkst project uitdagingen? Als we dit goed formuleren, dan komen hier
+requirements uit voort.
+
+\subsection{Vision}
+
+Wat zien we voor ons als het systeem klaar is?
+
+\subsection{High level Requirements}
+
+Wat zijn de high level requirements?
+
+\subsection{Succesfactoren}
+Wanneer is het project een succes?
+Wanneer is het project mislukt?
+
+\section{Architectuur}
+Aan welke eisen moet de architectuur voldoen?
+Op welke platformen draait het?
+Is het multi user? Is het client/server? Is er een repository?
+Is het taalonafhankelijk?
+
+\section{Domeinanalyse}
+
+Welke domeinanalyse doen we en wie doet wat? Hoeveel tijd kunnen er aan besteden?
+
+\section{Aanpak}
+
+\paragraph{Volgorde van fasen}
+
+\begin{enumerate}
+ \item Planning en aanpak
+ \item Business case
+ \item Risico analyse
+ \item Vision en challanges
+ \item Requirements
+ \item Domeinanalyse
+ \item Architectuur (incl GUI framework)
+ \item Uitvoering (3 weekse iteraties)
+ \begin{enumerate}
+  \item a. iteratie 1 -- hoogste risico dempen
+  \item b. iteratie 2 -- v1
+  \item c. iteratie 3 -- v2
+  \item d. iteratie 4 -- v3
+  \item e. iteratie 5 -- v4
+ \end{enumerate}
+\item Afronding en presentatie
+\end{enumerate}
+
+\paragraph{De basis principes}
+\begin{itemize}
+ \item De uitvoering is agile en tijdgedreven.
+ \item Elke iteratie heeft een vaste hoeveelheid tijd
+ \item Elke iteratie begint met een analyse (requirements engineering, prioriteiten en selectie). Soms wijzigen requirements of komen er nieuwe bij.
+ \item Elke iteratie eindigt met een evaluatie
+ \item Dit moeten we valideren bij Bernard en Freek. Gebruikers betrokkenheid is
+ beperkt tot het begin van de iteratie, de prioriteitsstelling van requirements, bijstelling van
+ requirements, nieuwe requirements en uiteindelijk de selectie van wat we gaan bouwen.
+\end{itemize}
+
+\paragraph{Tijdsindeling}
+
+\begin{description}
+ \item[Fase 1] Het bepalen van de toolkit en ontwikkel omgeving. Duur 3 weken.
+ \item[Fase 2-4] Business case, risico's, vision en challanges. Duur 4 weken.
+ \item[Fase 5-7] Requirements engineering uitsluitend high level requirements. Duur 4 weken.
+ \item[Fase 8] De uitvoering in 5 iteraties. Duur 5 x 3 weken is 15 weken
+ \item[Fase 9] De afronding en de presentatie. Duur 4 weken.
+\end{description}
+
+Netto duur 27 weken, bruto 8 maanden 1 maand speling voor vakantie, ziekte en onvoorzien.
+
+Project start 20 sept 2014, Eind 20 mei 2015. Neem de exacte datum met een korrel zout.
+
+
+\subsection{Agile aanpak}
+------------
+
+\begin{itemize}
+ \item Gebruiken git voor versiebeheer van documenten en software
+ \item Passen TDD toe (binnen redelijke)
+ \item Passen refactoring toe
+ \item Elke iteratie:
+ \begin{itemize}
+   \item Analyse (requirements aanpassen, prioriteitsstelling, selectie)
+   \item Ontwikkeling prototype
+   \item Evaluatie
+ \end{itemize}
+\end{itemize}
+
+
+\subsection{Open punten}
+
+\begin{enumerate}
+ \item Wat zijn de domeinanalyses precies? Welke onderwerpen? Hoe diepgaand? Hoeveel tijd kost het?
+ \item Aan welke eisen moet het scriptieverslag voldoen?
+ \item Aan welke eisen moet de presentatie voldoen?
+ \item Hoe gaan we agile precies invullen?
+ \item Hoe valt Freek in de iteratie tijdens de uitvoering? Welke rol speelt Freek precies tijdens de andere fases?
+\end{enumerate}
+
+\end{document}
