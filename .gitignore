@@ -1,2 +1,3 @@
 # add files or patterns to be ignored like: *.bla to ignore all files ending in .bla
-*.bla
+# you can still add pdf by hand, if necessary, but git will not include it automatically
+*.pdf
