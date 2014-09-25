@@ -5,10 +5,9 @@
 \usepackage[dutch,english]{babel}
 \usepackage{graphicx}
 
-\usepackage[dvips,pdftex]{hyperref}
-\hypersetup{%
-   pdfcreator=%
-}
+\bibliographystyle{alpha}
+
+\usepackage{hyperref}
 
 \author{Guus Bonnema}
 \date{24/09/14}
@@ -87,7 +86,47 @@ Wat zien we voor ons als het systeem klaar is?
 
 \subsection{High level Requirements}
 
-Wat zijn de high level requirements?
+Wat zijn uitdagingen en welke high level requirements vloeien hieruit voort? De uitdagingen en requirements
+zijn niet volledig. Tijdens de eerste iteratie werkt het team dit uit.
+
+Hieronder een lijst van uitdagingen (challanges):
+
+\begin{description}
+ \item[platformen] Het onderzoeksteam werkt met Mac, ontwikkelteam met ms windows en linux, de opdrachtgever en studenten met ms windows, linux of mac.
+		    Dit genereert requirements voor platform onafhankelijkheid van ontwikkelomgeving, taal en toolkits die we gebruiken.
+ \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerp tool (wat ons onderwerp is) en analyse tools (tools die nog
+		    in ontwikkeling zijn, maar deels al gebouwd). De uitdaging is een hoge graad van integratie van deze componenten, zo onafhankelijk mogelijk.
+		    Dit genereert requirements voor onderhoudbaarheid, component interfaces, applicatie structuur. De analyse tools zijn alle C++ programma's.
+		    De interfaces zijn gebaseerd op JSON.
+ \item[onderhoud] Over de tijd heen onderhouden vele mensen de software, die elkaar niet spreken. Dit genereert requirements met betrekking tot documentatie,
+		    onderhoudbaarheid en toegankelijkheid.
+ \item[Uitbreiding] De huidige software is moeilijk uitbreidbaar op de wijze die de opdrachtgever graag wil.
+ \item[functie] Het ontwerp tool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het xmas paper \cite{chatterjee-kishinevsky:xmas}.
+		Het  huidige ontwerp tool: WickedXMas geeft de richting aan implementatie van de functionaliteit en de interface, maar is
+		niet beperkend of maatgevend daarvoor.
+ \item[rest]	Wat zijn de overige uitdagingen? Welke requirements kan de huidige programmatuur moeilijker aan?
+\end{description}
+
+High level requirements.
+
+\begin{description}
+ \item[platform 001] Het ontwerptool moet draaien onder zowel ms Windows, Mac en Linux.
+ \item[platform 002] De GUI toolkit moet platform onafhankelijk werken zowel met de
+ grafische user interface als met de achterliggende processing en de integratie daarmee.
+ \item[platform 003] De documentatie moet op alle platformen te genereren zijn.
+ \item[integratie 001] De architectuur van de applicatie moet onderhoudbaarbaar zijn
+ \item[integratie 002] De integratie van het ontwerp tool met de analyse tools moet onafhankelijk zijn (kleine koppeling)
+ \item[integratie 003] De integratie van het ontwerp tool met de analyse tools moet hecht zijn
+ vanuit het perspectief van gebruik.
+ \item[integratie 004] Het ontwerptool moet JSON kunnen interpreteren.
+ \item[onderhoud 001] De integratie moet gemakkelijk wijzigbaar zijn: voldoende documentatie, goed gestructureerd
+ \item[functie 001] Het ontwerp tool ondersteunt het modelleren op basis van de acht primitieven uit het xmas paper \cite{chatterjee-kishinevsky:xmas}.
+ \item[functie 002] Het ontwerp tool ondersteunt het controleren van de modellen o.b.v. de analyse tools.
+ \item[uitbreiding 001] Het ontwerp tool ondersteunt het toevoegen van een nieuw analyse tool.
+ \item[uitbreiding 002] Het ontwerp tool ondersteunt uitbreiding o.b.v. een plug in
+\end{description}
+
+
 
 \subsection{Succesfactoren}
 Wanneer is het project een succes?
@@ -176,6 +215,20 @@ Project start 20 sept 2014, Eind 20 mei 2015. Neem de exacte datum met een korre
  \item Aan welke eisen moet de presentatie voldoen?
  \item Hoe gaan we agile precies invullen?
  \item Hoe valt Freek in de iteratie tijdens de uitvoering? Welke rol speelt Freek precies tijdens de andere fases?
+ \item wat is het belang van i18n voor systeem documentatie?
+ \item wat is het belang van l10n voor de software (variabele namen, menu opties)?
+ \item moet de communicatie in meerdere talen aanwezig zijn?
 \end{enumerate}
 
-\end{document}
+
+\appendix
+\section{Definitions}
+
+\begin{description}
+ \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
+ \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
+\end{description}
+\section{Verwijzingen}
+
+\bibliography{plan.bib}
+\end{document} ;########################### end document ##################################;
