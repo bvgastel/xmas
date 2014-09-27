@@ -32,6 +32,19 @@ We use git for communication with the following use cases
 	If you cannot, then you could fork the repo and do a pull 
 	request.
 
+2. Nieuwe branch maken.
+	Als je een nieuwe branch wilt maken, maak dan eerst lokaal
+	een branch aan, en creer het vervolgens remote. Dat gaat als
+	volgt. Stel de branchnaam is plan
+
+	* git checkout -b plan
+	* <wijzig een bestand en doe een commit>
+	* git push --set-upstream origin plan
+
+	Als je de laatste vergeet, dan krijg je een foutmelding, omdat
+	de branch remote niet bestaat. Zodra je de push does met
+	--set-upstream dan creert git remote de branch.
+
 2. Collaborator
 	Clone the repo, use it as you normally would with
 	change-commit cycles and when you want to publish do a
