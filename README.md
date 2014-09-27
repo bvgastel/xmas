@@ -24,7 +24,7 @@ We use git for communication with the following use cases
 	Clone the github directory using git as described below.
 	*nix users from a bash shell, ms windows from git bash.
 
-	machine/xmas> git clone https://github.com/gbonnema/clone
+	machine/xmas> git clone https://github.com/gbonnema/xmas
 
 	If you can become collaborator, you should be able to push
 	your updates to the same URL.
