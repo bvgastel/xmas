@@ -1,0 +1,70 @@
+\documentclass[a4paper]{article}
+
+
+\usepackage[dutch]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Ideeën verdere aanpak}
+
+\author{Stefan Versluys}
+
+\date 23 september 2014
+
+\begin{document}
+\maketitle
+
+
+\section{Introductie}
+
+Betreft enkele ideeën om tot een plan van aanpak te komen
+
+
+\section{wat weten we al ?}
+
+\begin{enumerate}
+\item WickedxMas moet Herschreven worden in C++
+\item Code moet gestructureerd zijn en zodoende beter onderhoudbaar
+\item Documentatie
+\item De huidige GUI mag herbruikt worden, functionaliteit OK
+\item Analyse d.m.v. algoritmen zoals deadlock check moeten liefst geïntegreerd worden
+\item Platform onafhankelijk
+\item Qt Creator als IDE en GUI toolkit
+\item Git als versie beheer
+\item \LaTeX\ documentering
+\item Agile ontwikkelmethode
+\item Collaborate of Teamviewer als alternatief voor skype
+\end{enumerate}
+
+\section{Onbekenden of risico's}
+
+\begin{enumerate}
+\item Stakeholders?
+\item Source code oude tool?
+\item De grafische voorstelling van een xMas netwerk moet dit in C++ herschreven worden of is dit een kant en klare herbruikbare component --> tamelijk complex , verbindingen hebben autorouting!
+\item Heeft de analyse tool zoals deadlock reeds een interface, API? 
+\item Andere Analyse tools beschikbaar? Onder welke vorm , component? source code?
+\item Hoe gaat men tewerk met de WickedxMas tool, demo door Bernard? 
+\item sommige analyses zoals liviness vergen extreem veel CPU rekenwerk , soms dagen!
+\item de xMas taal is al een vrij grote abstractie van chips of netwerken , heeft het zin om het domein te verkennen voorbij de abstractie, m.a.w. levert ons dat iets op voor WickedxMas?
+\item men heeft het over efficientie , slaat dit op analyse zo ja, algoritmen vallen buiten de scope
+\end{enumerate}
+
+
+\section{Haalbare scope (volgens mij)}
+
+\begin{enumerate}
+\item Huidige tool , met dezelfde functionaliteit , in C++ ,onderhoudbaar, gestructureerd en gedocumenteerd
+\item Interface bedenken en voorzien om analyse tools makkelijk te kunnen integreren in de WickedxMas tool , start/stop , visualisatie/export van de resultaten.
+\item Documentatie
+\item optioneel : deadlock analyse als voorbeeld component/template, er van uit gaan dat source code of component beschikbaar is
+\end{enumerate}
+
+Ik zou het proberen te beperken tot de Wickedxmas tool, interface voor analyse tools en documentatie , we kunnen dit verantwoorden omdat,
+C++ niet de meest moderne taal is, het vergt extra aandacht om foutvrije code te schrijven , dus extra tests, debugging en leercurve. IDE's voor modernere talen ondersteunen de ontwikkelaar beter en bieden meer mogelijkheden met nieuwe technologiën en dit vind je niet terug bij C++ . (de OU maakt naar mijn mening steeds de fout om C++ te vergelijken met Java "C++ lijkt op Java" , ik zeg altijd "C++ lijkt op Java maar het lijkt niet te doen wat Java doet!!" Onthou dit goed)
+ 
+
+
+\end{document}
