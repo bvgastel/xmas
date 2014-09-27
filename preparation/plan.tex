@@ -18,6 +18,8 @@
 
 \section{Opdracht}
 
+
+
 \subsection{Inleiding}
 
 \paragraph{Factoren}
@@ -83,6 +85,102 @@ requirements uit voort.
 \subsection{Vision}
 
 Wat zien we voor ons als het systeem klaar is?
+
+\subsection{Stakeholders}
+
+Opdrachtgever is Bernard van Gastel van de Open Universiteit. Begeleider is Freek Verbeek van de Open Universiteit.
+De doelgroep voor gebruikers van het ontwerp tool zijn medewerkers van universiteiten en onderzoekers van bedrijven zoals
+Intel en LLC. Een kleine groep van xMAS onderzoekers van zowel de universiteit als bedrijven gebruiken vanuit de optiek
+van onderzoek naar verbetering van NoC ontwerp het ontwerp tool. Doelstellingen voor deze groep zijn chip import
+en export van bestandsformaten (zoals Verilog), verificatie van aspecten van correctheid (deadlock, livelock,
+syntactische of semantische checks). Bernard en Freek nemen het onderhoud van het tool voor hun rekening.
+
+%% Opmerking: stakeholders splitsen in 2 tabellen. 1 tabel met de doelstelling en toelichting daarop
+%%            1 tabel met per stakeholder de project en systeem-belangen en -doelstellingen
+
+\begin{figure}
+{\tiny
+\begin{center}
+\begin{tabular}{lll}\hline
+{\bf Stakeholder}    & {\bf Projectrollen}   & {\bf omgevingsrollen} \\\hline
+Bernard van Gastel   & Opdrachtgever         & Onderzoeker \\
+                     &                       & Gebruiker \\
+                     &                       & Ontwikkelaar \\
+Freek Verbeek        & Begeleider            & Onderzoeker \\
+                     &                       & Gebruiker \\
+                     &                       & Ontwikkelaar \\
+Team33               & Ontwikkelaar          & \\
+                     & Student               & \\
+Univ. medewerkers    &                       & Gebruiker \\
+                     &                       & Onderzoeker \\
+                     &                       & Onderzoeker NoC \\
+Bedrijfsmedewerkers  &                       & Gebruiker \\
+                     &                       & Onderzoeker \\
+\hline
+\end{tabular}
+\end{center}
+}% end tiny
+\caption{Stakeholders en hun rollen}\label{fig:stakeholders}
+\end{figure}
+
+\begin{figure}
+{\tiny
+\begin{center}
+\fbox{
+\begin{tabular}{lcp{30em}}
+{\bf Doel}    & {\bf Prio} & {\bf Toelichting}\\
+Integratie    & 1          & Een hoofddoelstelling is naadloze
+			     integratie van de analyse tools
+			     in het ontwerp tool. \\
+Onderhoud     & 1          & Een hoofddoelstelling voor dit project
+			     is het ontwerptool beter onderhoudbaar
+			     te maken dan het huidige tool.\\
+Usability     & 1 	   & Een hoofddoelstelling is gebruik te bevorderen.
+			     Hieronder valt installatie gemak, gebruikers gemak
+			     op het niveau van NoC ontwerpers of onderzoeker\\
+Uitbreidbaarheid & 2       & Een subdoelstelling van integratie en onderhoudbaarheid
+			     is de aanpasbaarheid van de verificatie algoritmen
+			     waar het integratie met het design tool betreft.\\
+Onderzoek NoC & 2          & Het design tool is ondersteunend
+                             voor NoC onderzoek\\
+Onderzoek Alg & 3          & Het design tool is ondersteunend
+                             voor algemeen onderzoek\\
+\end{tabular}
+}% end fbox
+\end{center}
+}% end tiny
+\caption{Doelstellingen met prioriteiten \tiny (1 = must have, 2 = could have, 3 = nice to have)}\label{fig:doelstellingen}
+\end{figure}
+
+
+
+
+{\tiny
+\begin{center}
+\begin{tabular}{llllll}\hline
+{\bf Stakeholder}    & {\bf Doelen}   & {\bf Rol}     & {\bf Freq} & {\bf Belang} & {\bf Invloed}\\\hline
+Bernard van Gastel   & Onderzoek NoC  & Opdrachtgever & Hoog       & Hoog   & Hoog \\
+                     & Onderhoud      & Opdrachtgever & Laag       & Hoog   &  \\
+                     & Gebruik        & Gebruiker     & ??         & Hoog   & \\
+Freek Verbeek        & Onderzoek NoC  & Begeleider    & Hoog       & Hoog   & Hoog\\
+                     & Onderhoud      & Opdrachtgever & Laag       & Hoog   & \\
+                     & Onderhoud      & Ontwikkelaar  & Laag       & Hoog   & \\
+                     & Gebruik        & Gebruiker     &            & Hoog   & \\
+Univ. medewerkers    & Onderzoek alg. & Gebruiker     & Laag       & Middel & \\
+                     & Onderzoek NoC  & Gebruiker     & Middel     & Hoog   & \\
+                     & Gebruik        &               &            & Middel & \\
+Bedrijfsonderzoekers & Onderzoek NoC  & -             & Middel     & Hoog   & \\
+                     & Gebruik        & Gebruiker     &            & Middel & \\
+                     & Installatie    & Gebruiker     &            & Hoog   & \\
+Bedrijfsmedewerkers  & Gebruik        & Gebruiker     & Laag       & Middel & \\
+                     & Installatie    & Gebruiker     &            & Hoog   & \\
+Team33               & Ontwikkeling   & Ontwikkelaar  & Hoog       & Hoog   & Hoog\\
+                     & Afstuderen     & Student       &            & Hoog   & Hoog\\
+                     & Samenwerking   & Ontwikkelaar  & Hoog       & Hoog   & Hoog\\
+\hline
+\end{tabular}
+\end{center}
+}% end tiny
 
 \subsection{High level Requirements}
 
