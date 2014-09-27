@@ -38,6 +38,7 @@
 *.fls
 *.out
 *.toc
+*.ptc1
 
 ## Intermediate documents:
 *.dvi
