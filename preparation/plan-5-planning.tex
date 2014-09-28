@@ -1,39 +1,79 @@
 %%
 %% Dit is een subdocument van het projectplan.
 %%
+%% voorlopige indeling volgens SE Sommerville p623
 
+\section{Planning}
 
-%% Deze stappen kloppen niet meer. De eerste paar stappen horen bij 1 stap: Preparation & planning.
+\subsection{Introduction}
+This project concerns building an expert tool called WickedXmas. To understand the problem very well, it requires a deep domain analysis . This excercise must start before any implementation can start so the first part of this project plan is a plan driven approach while for the construction an agile approach is chosen. 
+
+\subsection{Organisation}
+ %% hoe zijn wij als team geörganiseerd, wie zijn we en wat zijn onze rollen
+
+\subsection{Risk analysis}
+ %% wat zijn de mogelijke project risico's
+
+\subsection{Hard- and software requirments}
+ %% wat hebben we allemaal nodig om het ding te bouwen
+
+\subsection{Work breakdown}
 
 \begin{enumerate}
- \item Planning en aanpak
- \item Business case
- \item Risico analyse
- \item Vision en challanges
- \item Requirements
- \item Domeinanalyse
- \item Architectuur (incl GUI framework)
- \item Uitvoering (3 weekse iteraties)
- \begin{enumerate}
-  \item a. iteratie 1 -- hoogste risico dempen
-  \item b. iteratie 2 -- v1
-  \item c. iteratie 3 -- v2
-  \item d. iteratie 4 -- v3
-  \item e. iteratie 5 -- v4
- \end{enumerate}
-\item Afronding en presentatie
+	\item \underline{\textbf{Startup}}
+	\begin{itemize}
+		\item Stakeholder meeting.
+		\item Define the problem.
+		\item Collect high-level requirments.
+		\item Explore architectural solutions.
+		\item Find tool and IDE options.
+		\item Planning. 
+	\end{itemize}
+	\paragraph{Result}
+	This block delivers a document that describes the problem , high-level requirements, business case ,risks , stakeholders, vision and challenges, technical options and a project plan.
+	
+	\item \underline{\textbf{Research}}
+	\begin{itemize}
+		\item Domain analysis.
+		\item Context research.
+		\item Find requirements based on using the current product tool.
+		\item Find requirements based on sourcecode of the current product tool.
+		\item Collect requirements.
+		\item Stakeholder meeting.
+	\end{itemize}
+	\paragraph{Result}
+	Domain research is added to the document, the result is a refined document with new requirements and choices with argumentation. Technical choices are made and the team has gained knowledge of IDE, tools and domain. 
+	
+	\item \underline{\textbf{Construction}}
+	
+	\begin{itemize}
+		\item Iteration 1 :
+		Create *xmas skeletons and GUI design
+		\item Iteration 2 :
+		Implement *xmas functionality and GUI
+		\item Iteration 3 :
+		Create *analysis/checkers skeletons and GUI design
+		\item Iteration 4 :
+		Implement *analysis/checkers functionality and GUI
+		\item Iteration 5 :
+		Implement additional options (Export,Report,...)
+	\end{itemize}
+	(*) xmas is the part that enables editing an xmas network, while analysis/checkers concerns the part that analyse and checks such a network.
+	
+	\paragraph{Result}
+	Each iteration takes about 2 to 4 weeks and starts with an analysis , implementation , testing, documenting and a release (prototype). The aim of the last iteration is to deliver a fully working release of the product.
+	
+	\item \underline{\textbf{Final}}
+	\begin{itemize}
+		\item Product description
+		\item Presentation
+	\end{itemize}
+	\paragraph{Result}
+	Product is ready and presented to the stakeholders.
 \end{enumerate}
 
-\paragraph{Tijdsindeling}
+\subsection{Schedule}
+ %% dit onderdeel moet vermoedelijk in het schedule plan
 
-\begin{description}
- \item[Fase 1] Het bepalen van de toolkit en ontwikkel omgeving. Duur 3 weken.
- \item[Fase 2-4] Business case, risico's, vision en challanges. Duur 4 weken.
- \item[Fase 5-7] Requirements engineering uitsluitend high level requirements. Duur 4 weken.
- \item[Fase 8] De uitvoering in 5 iteraties. Duur 5 x 3 weken is 15 weken
- \item[Fase 9] De afronding en de presentatie. Duur 4 weken.
-\end{description}
-
-Netto duur 27 weken, bruto 8 maanden 1 maand speling voor vakantie, ziekte en onvoorzien.
-
-Project start 20 sept 2014, Eind 20 mei 2015. Neem de exacte datum met een korrel zout.
+\subsection{Monitoring and reporting}
+ %% hoe gaan we onze doelstellingen bewaken en rapporteren
