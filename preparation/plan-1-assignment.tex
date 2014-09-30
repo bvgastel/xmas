@@ -112,14 +112,18 @@ TODO: Per risico opnemen of we het accepteren of maatregelen nemen (optioneel).
 \end{figure}
 
 
-\subsection{Challanges}
+\subsection{Vision}\label{sec: vision}
 
-Wat zijn de belangrijkst project uitdagingen? Als we dit goed formuleren, dan komen hier
-requirements uit voort.
+Dit tool is bedoeld voor wetenschappers van universiteiten en van bedrijven (o.a. Intel). We zien een tool dat
+is te downloaden en te installeren op alle relevante platforms. De installatie is eenvoudig\footnote{zie open punten}.
 
-\subsection{Vision}
+We zien een design tool dat dynamisch controles uitvoert\footnote{zie open punten} zodat elk ontwerp van een NoC correct is
+zodra het klaar is.
 
-Wat zien we voor ons als het systeem klaar is?
+We zien het programma als goed gedocumenteerd en gemakkelijk te onderhouden en uit te breiden.
+
+\paragraph{Nice to have} We zien de onderzoekers naar \xmas nieuwe primitieven bedenken en toevoegen, nieuwe verificatie tools
+bedenken en toevoegen. De onderzoekers kunnen onze bestanden naar een ander formaat converteren zoals Verilog.
 
 \subsection{Stakeholders}
 
@@ -185,7 +189,7 @@ Team33               & Ontwikkeling   & Ontwikkelaar  & Hoog       & Hoog   & Ho
 \end{center}
 }% end tiny
 
-\subsection{Challanges and goals}
+\subsection{Challanges and goals}\label{sec: challanges goals}
 
 Wat zijn uitdagingen en welke high level requirements vloeien hieruit voort? De uitdagingen en requirements
 zijn niet volledig. Tijdens de eerste iteratie werkt het team dit uit.
@@ -208,7 +212,7 @@ Hieronder een lijst van uitdagingen (challanges):
  \item[rest]	Wat zijn de overige uitdagingen? Welke requirements kan de huidige programmatuur moeilijker aan?
 \end{description}
 
-Doelstellingen.
+De high level doelstellingen van het project:
 
 \begin{description}
  \item[beschikbaarheid]
@@ -216,20 +220,29 @@ Doelstellingen.
  \item[Uitbreidbaar met primitieven]
  \item[Uitbreidbaar met analyse en verificatie tools]
  \item[Design functionaliteit]
- \item[Open punten]
- \begin{description}
-    \item[ontwikkeltaal] Zijn er eisen aan de ontwikkeltaal of de ontwikkelomgeving?
-    \item[ontwerp proces] Zijn er wensen ten aanzien van het ontwerp proces ten opzichte van het
-	huidig gerealiseerde WickedXmas? Bijvoorbeeld parallelle verificatie en controle?
-    \item[analyse tools] Zijn er wensen ten aanzien van de analyse tools zelf? Nieuwe analyse tool?
-    \item[design functionaliteit] Zijn er nog meer wensen ten aanzien van design functionaliteit? Zoals parametrische queue sizes?
-    \item[Multi user repository] Zijn er wensen ten aanzien van multi user repo?
- \end{description}
+ \item[Open punten] Zie einde document.
 \end{description}
 
 De doelstellingen leiden tot de high level requirements.
 
-
 \subsection{Succesfactoren}
-Wanneer is het project een succes?
-Wanneer is het project mislukt?
+Het project is een succes als
+
+\begin{itemize}
+ \item het design tool een ontwerp kan maken in de xmas taal en de analyse tools kan aanroepen voor controle.
+ \item Gebruikers van het tool op de volgende platforms kan draaien:
+ \begin{itemize}
+    \item ms Windows vanaf versie 7 64 bits (32 bits via emulatie)
+    \item Linux 64 bits en 32 bits
+    \item Mac OS X (versie?)
+ \end{itemize}
+\end{itemize}
+
+Het project is een groot succes als het project een succes is en:
+
+\begin{itemize}
+ \item De gebruiker kan validatie en verificatie software aanzetten of uitzetten
+ \item De gebruiker kan nieuwe primitieven maken en aankoppelen.
+\end{itemize}
+
+Het project is mislukt als het ontwerp tool geen succes is.
