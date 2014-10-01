@@ -1,129 +1,64 @@
 %%
 %% Dit is een subdocument van het projectplan.
 %%
-%% voorlopige indeling volgens SE Sommerville p623
+%% items op basis van SE Sommerville p623 (chapter 23.2.1 Project plans)
+%%  	sommige items zijn elders in het document reeds opgenomen , zoals bvb risico's
+%%
 
-\section{Planning}
+ 
+%%\subsection{Risico analyse}
+%% Een van de risico's is dat de tool, tijdens een analyse of check, een xmas netwerk ten onrechte als fout vrij verklaren. Als gebruikers daaruit beslissen dat het chip ontwerp goed is en dat de chip geproduceerd mag worden, is dit een probleem.
 
-\subsection{Introduction}
-This project concerns building an expert tool called WickedXmas. To understand the problem very well, it requires a deep domain analysis . This excercise must start before any implementation can start so the first part of this project plan is a plan driven approach while for the construction an agile approach is chosen. 
 
-\subsection{Organisation}
- %% hoe zijn wij als team geörganiseerd, wie zijn we en wat zijn onze rollen
-
-\subsection{Risk analysis}
- %% wat zijn de mogelijke project risico's
-
-\subsection{Hard- and software requirments}
- %% wat hebben we allemaal nodig om het ding te bouwen
-
-\subsection{Work breakdown}
+\subsection{Werk indeling}
 
 \begin{enumerate}
-	\item \underline{\textbf{Startup}}
-	\begin{itemize}
-		\item Stakeholder meeting.
-		\item Define the problem.
-		\item Collect high-level requirments.
-		\item Explore architectural solutions.
-		\item Find tool and IDE options.
-		\item Planning. 
-	\end{itemize}
-	\paragraph{Result}
-	This block delivers a document that describes the problem , high-level requirements, business case ,risks , stakeholders, vision and challenges, technical options and a project plan.
+\item \underline{\textbf{Inceptie}}
+		\begin{itemize}
+			\item Meeting met stakeholders.
+			\item Het probleem definiëren.
+			\item High level requirements verzamelen.
+			\item Architectuur oplossingen zoeken.
+			\item Planning. 
+		\end{itemize}
+		\paragraph{Artefacten}
+		Deze fase levert een document dat het probleem omschrijft , de high-level requirements, business case ,risiso'c , stakeholders, vision and challenges, mogelijke opties voor de architectuur en een plan.
 	
-	\item \underline{\textbf{Research}}
+\item \underline{\textbf{Elaboratie en domeinonderzoek}}
 	\begin{itemize}
-		\item Domain analysis.
-		\item Context research.
-		\item Find requirements based on using the current product tool.
-		\item Find requirements based on sourcecode of the current product tool.
-		\item Collect requirements.
-		\item Stakeholder meeting.
+		\item Domein onderzoek (3 onderdelen).
+		\item Context onderzoek.
+		\item Requirements : Demonstratie van de huidige WickedXmas tool door stakeholder.
+		\item Requirements : Op basis van sourcecode van de huidige WickedXmas tool.
+		\item Meeting met stakeholders.
 	\end{itemize}
-	\paragraph{Result}
-	Domain research is added to the document, the result is a refined document with new requirements and choices with argumentation. Technical choices are made and the team has gained knowledge of IDE, tools and domain. 
+	\paragraph{Artefacten}
+	Document wordt uitgebreid met de resultaten van het domein onderzoek, eisen uit de observatie, architectuur keuzes en kennis.
+	Het team heeft de IDE met tools geïnstalleerd en de skills bijgesteld om  te kunnen starten.   
 	
-	\item \underline{\textbf{Construction (*)}}
+\item \underline{\textbf{Constructie}}
 
+		\begin{itemize}
+			\item Iteration 1 : WickedXmas editor en documentatie
+			\item Iteration 2 : WickedXmas editor en documentatie
+			\item Iteration 3 : WickedXmas editor en documentatie
+			\item Iteration 4 : WickedXmas analyse integratie en documentatie
+			\item Iteration 5 : WickedXmas analyse integratie en documentatie
+		\end{itemize}
+		
+		\paragraph{Artefacten}
+		Ekle iteratie levert een prototype op dat ter evaluatie aan de opdrachtgever aangeboden wordt. Er wordt telkens dat deel van de documentatie
+	
+	
+\item \underline{\textbf{Afronden}}
 	\begin{itemize}
-		\item Iteration 1 : 
-			xmas skeletons, GUI design and documentation
-		\item Iteration 2 : 
-			xmas functionality, GUI and documentation
-		\item Iteration 3 : 
-			analysis/checkers skeletons, GUI design and documentation
-		\item Iteration 4 : 
-			analysis/checkers functionality, GUI and documentation
-		\item Iteration 5 : 
-			additional options (Export,Report,...)
+		\item Release van de nieuwe WickedXmas tool.
+		\item Documentatie van de tool (handleiding).
+		\item Presentatie
 	\end{itemize}
-	(*) xmas is the part that enables editing an xmas network, while analysis/checkers concerns the part that analyse and checks such a network.
-	
-	\paragraph{Result}
-	Each iteration takes about 3 weeks and has activities : analysis , requirements, design , implementation and testing. The outcome of an iteration is a release which is available to the customer for feedback.  
-	
-	\item \underline{\textbf{Final}}
-	\begin{itemize}
-		\item Product
-		\item Documentation
-		\item Presentation
-	\end{itemize}
-	\paragraph{Result}
-	Product is ready and presented to the stakeholders.
-\end{enumerate}
+	\paragraph{Artefacten}
+	Een presentatie , documentatie en de nieuwe WickedXmas tool.
 
-\subsection{Schedule}
- %% dit onderdeel moet vermoedelijk in het schedule plan
-  
-
-  \begin{figure}
-  	\centering
-  	\includegraphics[width=0.8\textwidth,natwidth=1306,natheight=543]{Gantt.png}
-  	\caption{\label{fig:Gantt Chart}Scheduling.}
-  \end{figure}
-
-\begin{tabular}{ll}\hline
-{\bf Fase}    & {\bf weken}\\\hline
-Planning             & 2,5 \\
-
-Domeinanalyse        & 3 \\
-Architectuur         & 3 \\
-
-Iteratie 1           & 3 \\
-Iteratie 2           & 3 \\
-Iteratie 3           & 3 \\
-Iteratie 4           & 3 \\
-Iteratie 5           & 3 \\
-
-Onderzoekcontext     &	2 \\
-
-Afronding	     & 1.5 \\
-\hline
-Totaal               & 27 \\
-\end{tabular}
-
-
-
-\begin{itemize}
- \item 27 weken * 15 uur/week = 405 uur
- \item 8 maanden, ongeveer 32 weken beschikbaar, dus 5 weken marge
-\end{itemize}
-
-
-
-\paragraph{Capaciteitsplanning}
-
-\begin{enumerate}
- \item vakanties?
- \item beschikbaarheid Freek en Bernard?
-\end{enumerate}
-
-\paragraph{Planning iteraties}
-\begin{enumerate}
- \item 3 weken per interatie
- \item hoeveel tijd voor requirements?
- \item hoeveel tijd voor evaluatie?
 \end{enumerate}
 
 
@@ -131,5 +66,5 @@ Totaal               & 27 \\
 
 
 
-\subsection{Monitoring and reporting}
- %% hoe gaan we onze doelstellingen bewaken en rapporteren
+
+
