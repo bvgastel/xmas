@@ -6,7 +6,9 @@
 
 \subsection{Business case}
 
-Uit de projectaanvraag voor dit project:
+De projectaanvraag voor dit project van Bernard van Gastel en
+Freek Verbeek verwoordt de business case in de projectaanvraag
+als volgt.
 
 \begin{quote}
     \tiny
@@ -36,46 +38,47 @@ Uit de projectaanvraag voor dit project:
     bouwen.
 \end{quote}
 
+Omdat dit het afstudeer project is van drie studenten, zijn er geen financi\"ele overwegingen.
+De kosten die er zijn (inzet opdrachtgever en begeleider) vallen onder het afstuderen. Deze kosten
+zijn al gedekt als onderdeel van de cursus Afstudeer Bachelor Informatica (ABI).
 
-\noindent
-De business case voor deze aanvraag bestaat uit bruikbaarheid van de ontwerp module
-op verschillende platforms, en een hechtere integratie van het ontwerp tool met de
-analyse tools.
-
-De platform onafhankelijkheid bevordert beschikbaarheid van het tool voor een grotere
-groep onderzoekers. De integratie en betere modulariteit bevordert de onderhoudbaarheid.
-
-Als het project een platform onafhankelijk tool kan maken, dat goed geintegreerd en gestructureerd
-is, dan kan de onderzoeks profiteren van een breder publiek, gemakkelijker aanpassingen doen en gemakkelijker
-met nieuwe gewijzigde analyse tools integreren.
-
-De baten kunnen wij helaas niet in financie\"ele zin kwantificeren.
+De baten zijn vooral gemakkelijker onderhoudbaarheid en uitbreidbaarheid en een bredere ondersteuning van platform .
+Deze verbeteringen ondersteunen met name het chip ontwerp onderzoek aan universiteiten bedrijven.
 
 \subsection{Risico}
+
+De onderkende risico's zijn vooral project risico's. De meeste project risico's komen voort uit de
+geografische spreiding van het team (i.e. de studenten) en opdrachtgever
+en begeleider. Diverse maatregelen zijn dan ook gericht op het verminderen
+van het risico's die de spreiding veroorzaakt.
+
+
+Omdat het gaat om herstructureren/herbouwen van bestaande programmatuur zijn er weinig systeem risico's.
+Inhoudelijke kennis is bij de opdrachtgever en de begeleider voorhanden. Het grootste systeem risico is het kiezen
+van een user interface toolkit. Dit onderdeel bepaalt de platform onafhankelijkheid en heeft invloed op de architectuur.
+Het plan besteed apart aandacht aan dit onderdeel in een domeinanalyse.
 
 Zie figuur \ref{fig: risico} een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
 een overzicht van de maatregelen die we nemen ter compensatie van risico's.
 
-TODO: Per risico opnemen of we het accepteren of maatregelen nemen (optioneel).
-
-
 \begin{figure}[ht]
 \begin{center}
-\small
-\begin{tabular}{cp{10em}p{20em}}
-{\bf nr} & {\bf Risico} & {\bf Toelichting} \\
+\tiny
+\begin{tabular}{|c|p{20em}|p{30em}|}
+\hline
+{\bf nr} & {\bf Risico} & {\bf Toelichting} \\\hline
  1 & Beschikbaarheid stakeholders  & De opdrachtgever en de begeleider hebben een beperkte tijd
-					beschikbaar. De andere stakeholders zijn niet beschikbaar.\\
- 2 & Ervaring waterval & De teamleden hebben vooral ervaring met waterval projecten.\\
- 3 & Trage support & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken.\\
+					beschikbaar. De andere stakeholders zijn niet beschikbaar.\\\hline
+ 2 & Ervaring waterval & De teamleden hebben vooral ervaring met waterval projecten.\\\hline
+ 3 & Trage support & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken.\\\hline
  4 & Tijd nodig om de materie kennis op te doen & Het kost tijd om de bestaande analyse
 					tools en de achterliggende
-					xmas materie op te nemen.\\
+					xmas materie op te nemen.\\\hline
  5 & Geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
-				organiseren voor overleg tijdens het project.\\
+				organiseren voor overleg tijdens het project.\\\hline
  6 & structuur verval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuur verval een
-				natuurlijk gevolg.\\
- 7 & twee onervaren C++ programmeurs & Het team heeft \'e\'en ervaren C++ programmeur.\\
+				natuurlijk gevolg.\\\hline
+ 7 & twee onervaren C++ programmeurs & Het team heeft \'e\'en ervaren C++ programmeur.\\\hline
 
 \end{tabular}
 \end{center}
@@ -86,26 +89,30 @@ TODO: Per risico opnemen of we het accepteren of maatregelen nemen (optioneel).
 
 \begin{figure}[!ht]
 \begin{center}
-\small
-\begin{tabular}{p{10em}p{20em}c}
-    {\bf } & {\bf } & {\bf } \\
-    Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider & 1\\
+\tiny
+\begin{tabular}{|p{20em}p{30em}c|}
+\hline
+    {\bf Maatregel} & {\bf Toelichting} & {\bf risico} \\\hline
+    Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider & 1\\\hline
     Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
-				    een kans op vertraging. & 1\\
+				    een kans op vertraging. & 1\\\hline
     Regelmatige refactor (per taak) & Een refactor na uitvoeren en testen van een taak, levert
-					een goed gestructureerd systeem na elke iteratie. & 6\\
-    Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken & 5\\
-    Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken & 5\\
+					een goed gestructureerd systeem na elke iteratie. & 6\\\hline
+    Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken & 5\\\hline
+    Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken & 5\\\hline
     Ondersteuning zoeken buiten de OU & Een trage ondersteuning kan op kritieke momenten
 					het gehele project vertragen. Door minder op
-					OU support te leunen, verminderen we die afhankelijkheid & 3\\
+					OU support te leunen, verminderen we die afhankelijkheid & 3\\\hline
     Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
-				problemen met het proces & 2\\
+				problemen met het proces & 2\\\hline
     C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
 			met onze achtergrond kennis van programmeer talen en
-			van Java, het risico op vertraging voor zijn & 7\\
+			van Java, het risico op vertraging voor zijn & 7\\\hline
     Review door de ervaren C++ & Learning on the job onder begeleiding van
-				het teamlid dat C++ ervaring heeft & 7\\
+				het teamlid dat C++ ervaring heeft & 7\\\hline
+    Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domein
+				analyse en de het bepalen van de architectuur.
+				Dit beperkt het gevaar van te vroeg implementeren & 4\\\hline
 \end{tabular}
 \end{center}
  \caption{Risico reductie}\label{fig: risico reductie}
@@ -114,16 +121,15 @@ TODO: Per risico opnemen of we het accepteren of maatregelen nemen (optioneel).
 
 \subsection{Vision}\label{sec: vision}
 
-Dit tool is bedoeld voor wetenschappers van universiteiten en van bedrijven (o.a. Intel). We zien een tool dat
-is te downloaden en te installeren op alle relevante platforms. De installatie is eenvoudig\footnote{zie open punten}.
+Deze sectie geeft aan wat de opdrachtgever ziet als ideale uitkomst van het project. Het ontwerp tool is
+bedoeld voor wetenschappers van universiteiten en van bedrijven (o.a. Intel). Onderzoekers op verschillende
+platformen kunnen het ontwerp tool gemakkelijk downloaden, installeren en gebruiken. Het tool toont tijdens
+het ontwerp fouten op dezelfde manier als een IDE bij een C++ of java programma doet: dynamische controles.
+Als het ontwerp klaar is dan is het ook correct.
 
-We zien een design tool dat dynamisch controles uitvoert\footnote{zie open punten} zodat elk ontwerp van een NoC correct is
-zodra het klaar is.
-
-We zien het programma als goed gedocumenteerd en gemakkelijk te onderhouden en uit te breiden.
-
-\paragraph{Nice to have} We zien de onderzoekers naar \xmas nieuwe primitieven bedenken en toevoegen, nieuwe verificatie tools
-bedenken en toevoegen. De onderzoekers kunnen onze bestanden naar een ander formaat converteren zoals Verilog.
+Het programma is goed gestructureerd, uit te breiden met nieuwe analyses en verificaties en NoC onderzoekers
+kunnen gemakkelijk nieuwe primitieven defini\"eren. Ten slotte kunnen de \xmas\ onderzoekers onze bestanden
+converteren naar een ander formaat zoals Verilog.
 
 \subsection{Stakeholders}
 
@@ -142,19 +148,11 @@ syntactische of semantische checks). Bernard en Freek nemen het onderhoud van he
 \begin{center}
 \begin{tabular}{lll}\hline
 {\bf Stakeholder}    & {\bf Projectrollen}   & {\bf omgevingsrollen} \\\hline
-Bernard van Gastel   & Opdrachtgever         & Onderzoeker \\
-                     &                       & Gebruiker \\
-                     &                       & Ontwikkelaar \\
-Freek Verbeek        & Begeleider            & Onderzoeker \\
-                     &                       & Gebruiker \\
-                     &                       & Ontwikkelaar \\
-Team33               & Ontwikkelaar          & \\
-                     & Student               & \\
-Univ. medewerkers    &                       & Gebruiker \\
-                     &                       & Onderzoeker \\
-                     &                       & Onderzoeker NoC \\
-Bedrijfsmedewerkers  &                       & Gebruiker \\
-                     &                       & Onderzoeker \\
+Bernard van Gastel   & Opdrachtgever         & Onderzoeker, gebruiker, ontwikkelaar\\
+Freek Verbeek        & Begeleider            & Onderzoeker, gebruiker, ontwikkelaar \\
+Team33               & Ontwikkelaar, student & \\
+Univ. medewerkers    &                       & Onderzoeker, onderzoeker NoC, gebruiker \\
+Bedrijfsmedewerkers  &                       & Onderzoeker, gebruiker \\
 \hline
 \end{tabular}
 \end{center}
@@ -209,21 +207,9 @@ Hieronder een lijst van uitdagingen (challanges):
  \item[functie] Het ontwerp tool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het xmas paper \cite{chatterjee-kishinevsky:xmas}.
 		Het  huidige ontwerp tool: WickedXMas geeft de richting aan implementatie van de functionaliteit en de interface, maar is
 		niet beperkend of maatgevend daarvoor.
- \item[rest]	Wat zijn de overige uitdagingen? Welke requirements kan de huidige programmatuur moeilijker aan?
 \end{description}
 
-De high level doelstellingen van het project:
-
-\begin{description}
- \item[beschikbaarheid]
- \item[hoge integratie met analyse tools]
- \item[Uitbreidbaar met primitieven]
- \item[Uitbreidbaar met analyse en verificatie tools]
- \item[Design functionaliteit]
- \item[Open punten] Zie einde document.
-\end{description}
-
-De doelstellingen leiden tot de high level requirements.
+De uitdagingen leiden tot de high level requirements.
 
 \subsection{Succesfactoren}
 Het project is een succes als
