@@ -56,10 +56,12 @@ van het risico's die de spreiding veroorzaakt.
 Omdat het gaat om herstructureren/herbouwen van bestaande programmatuur zijn er weinig systeem risico's.
 Inhoudelijke kennis is bij de opdrachtgever en de begeleider voorhanden. Het grootste systeem risico is het kiezen
 van een user interface toolkit. Dit onderdeel bepaalt de platform onafhankelijkheid en heeft invloed op de architectuur.
-Het plan besteed apart aandacht aan dit onderdeel in een domeinanalyse.
+Het plan besteedt apart aandacht aan dit onderdeel in een domeinanalyse.
 
 Zie figuur \ref{fig: risico} een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
 een overzicht van de maatregelen die we nemen ter compensatie van risico's.
+
+\todo[inline, color=green!40]{@Guus -- Een ander mogelijk risico's is dat de tool, tijdens een analyse of check, een xmas netwerk ten onrechte als fout vrij verklaren. Als gebruikers daaruit beslissen dat het chip ontwerp goed is en dat de chip geproduceerd mag worden, is dit een probleem.}
 
 \begin{figure}[ht]
 \begin{center}
@@ -187,12 +189,12 @@ Team33               & Ontwikkeling   & Ontwikkelaar  & Hoog       & Hoog   & Ho
 \end{center}
 }% end tiny
 
-\subsection{Challanges and goals}\label{sec: challanges goals}
+\subsection{Challenges and goals}\label{sec: challenges goals}
 
-Hieronder een lijst van uitdagingen (challanges). Tijdens de voorbereidingsfasen werken we de uitdagingen uit tot high level requirements.
+Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen werken we de uitdagingen uit tot high level requirements.
 
 \begin{description}
- \item[platformen] Het onderzoeksteam werkt met Mac, ontwikkelteam met ms windows en linux, de opdrachtgever en studenten met ms windows, linux of mac.
+ \item[platformen] Het onderzoeksteam werkt met Mac, ontwikkelteam met MS Windows en Linux, de opdrachtgever en studenten met MS Windows, Linux of Mac OS.
 		    Dit genereert requirements voor platform onafhankelijkheid van ontwikkelomgeving, taal en toolkits die we gebruiken.
  \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerp tool (wat ons onderwerp is) en analyse tools (tools die nog
 		    in ontwikkeling zijn, maar deels al gebouwd). De uitdaging is een hoge graad van integratie van deze componenten, zo onafhankelijk mogelijk.
@@ -214,7 +216,7 @@ Het project is een succes als
  \item het design tool een ontwerp kan maken in de xmas taal en de analyse tools kan aanroepen voor controle.
  \item Gebruikers van het tool op de volgende platforms kan draaien:
  \begin{itemize}
-    \item ms Windows vanaf versie 7 64 bits (32 bits via emulatie)
+    \item MS Windows vanaf versie 7 64 bits (32 bits via emulatie)
     \item Linux 64 bits en 32 bits
     \item Mac OS X (versie?)
  \end{itemize}
@@ -225,6 +227,7 @@ Het project is een groot succes als het project een succes is en:
 \begin{itemize}
  \item De gebruiker kan validatie en verificatie software aanzetten of uitzetten
  \item De gebruiker kan nieuwe primitieven maken en aankoppelen.
+ \todo[inline, color=green!40]{@Guus --> De software zal dusdanig gestuctureerd zijn dat er makkelijk primitieven toegevoed kunnen worden.(primitieven toevoegen zal eerder door iemand gebeuren die de software tool onderhoud , en niet een gebruiker)}
 \end{itemize}
 
 Het project is mislukt als het ontwerp tool geen succes is.
