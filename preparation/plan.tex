@@ -1,14 +1,14 @@
-%%c
+%%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
 \documentclass[a4paper,11pt]{article}
 
-\usepackage{ucs}
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
 \usepackage[dutch]{babel}
 \usepackage{graphicx}
-\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks]{hyperref}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal]{todonotes}% when generating final (documentclass option) skip notes
 
 \bibliographystyle{alpha}
 
@@ -30,6 +30,8 @@
 
 \maketitle
 
+\listoftodos
+
 \begin{abstract}
  Dit document is het plan van aanpak voor het ABI (afstudeer project bachelor
  informatica). De opdrachtgever is Bernard van Gastel en de begeleider is
@@ -41,7 +43,7 @@
  de voorbereiding plan gedreven is en de uitvoering incrementeel en iteratief.
 
  De domein analyses omvatten het bepalen van het user interface tool,
- een onderzoek naar verificatie en ....
+ een onderzoek naar verificatie en ....\todo[inline]{domeinanalyse aanvullen}
 \end{abstract}
 
 \include{plan-1-assignment}
