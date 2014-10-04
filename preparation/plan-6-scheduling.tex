@@ -12,7 +12,9 @@
 \begin{landscape}
 \newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
 
-\begin{ganttchart}{1}{37}
+\begin{ganttchart}[
+   today=3
+ ]{1}{37}
  \gantttitle{2014}{15}
  \gantttitle{2015}{22} \\
  \gantttitlelist{38,...,52}{1}
@@ -58,6 +60,68 @@
  \ganttlink{elem13}{elem16}
  \ganttlink{elem16}{elem17}
  
+\end{ganttchart}
+
+\pagebreak
+
+\begin{ganttchart}[
+    today=22
+  ]{1}{32}
+  \gantttitle{Planning}{32}
+  \ganttnewline
+  \gantttitle{2014}{32} \\
+  \gantttitle{september}{18}
+  \gantttitle{oktober}{14} \\
+  \gantttitlelist{13,...,30}{1}
+  \gantttitlelist{1,...,14}{1}\\
+  
+  \ganttmilestone{Startbijeenkomst}{0.5} \\
+  \ganttbar{Teamafspraken}{2}{7} \\
+  \ganttbar{Stakeholder meeting}{8}{8} \\
+  \ganttbar{Probleemdefinitie}{9}{24} \\
+  \ganttbar{High-level requirements}{9}{24} \\
+  \ganttmilestone{Concept planning}{24} \\
+  
+  \ganttbar{Verbeteringen}{25}{32} \\
+  \ganttmilestone{Planning}{32}
+  
+  \ganttlink{elem0}{elem1}
+  \ganttlink{elem1}{elem2}
+  \ganttlink{elem2}{elem3}
+  \ganttlink{elem2}{elem4}
+  \ganttlink{elem3}{elem5}
+  \ganttlink{elem4}{elem5}
+  \ganttlink{elem5}{elem6}
+  \ganttlink{elem6}{elem7}
+ 
+\end{ganttchart}
+
+\pagebreak
+
+\begin{ganttchart}[]{1}{33}
+  \gantttitle{Domeinanalyse}{33}
+  \ganttnewline
+  \gantttitle{2014}{33} \\
+  \gantttitle{oktober}{17}
+  \gantttitle{november}{16} \\
+  \gantttitlelist{14,...,31}{1}
+  \gantttitlelist{1,...,14}{1}\\
+  
+  \ganttmilestone{Planning}{0.5} \\
+  \ganttbar{Domeinanalyse GB}{2}{28} \\
+  \ganttbar{Domeinanalyse JK}{2}{7}
+  \ganttbar{}{13}{28} \\
+  \ganttbar{Domeinanalyse SV}{2}{11}
+  \ganttbar{}{19}{28} \\
+  \ganttmilestone{Domeinanalyse}{29}
+  
+  \ganttlink{elem0}{elem1}
+  \ganttlink{elem0}{elem2}
+  \ganttlink{elem0}{elem4}
+  \ganttlink{elem1}{elem6}
+  \ganttlink{elem3}{elem6}
+  \ganttlink{elem5}{elem6}
+  
 \end{ganttchart}
 
 \restoregeometry
@@ -120,6 +184,14 @@ Totaal               & 27 \\
 \paragraph{Capaciteitsplanning}
 
 \begin{itemize}
+ \item Beschikbare tijd
+ \begin{itemize}
+  \item $\sim$15 uur per week per teamlid
+  \item $\sim$30 uur gedurende het hele project voor Freek en $\sim$20 uur voor Bernard
+ \end{itemize}
+
+ 
+ 
  \item vakanties / niet beschikbaar voor project
  \begin{itemize}
   
