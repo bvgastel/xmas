@@ -1,0 +1,464 @@
+{
+  "shapes": [
+    {
+      "oldShapeID": 0,
+      "posX": 466,
+      "posY": 404,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Join",
+      "label": "",
+      "functions": [
+        "0",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 1,
+      "posX": 368,
+      "posY": 594,
+      "orientation": 4,
+      "sizeMultiplier": 1.0,
+      "type": "Join",
+      "label": "",
+      "functions": [
+        "1",
+        ""
+      ]
+    },
+    {
+      "qSize": 2,
+      "oldShapeID": 2,
+      "posX": 463,
+      "posY": 797,
+      "orientation": 3,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B5",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "qSize": 2,
+      "oldShapeID": 3,
+      "posX": 450,
+      "posY": 266,
+      "orientation": 3,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B1",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 4,
+      "posX": 278,
+      "posY": 315,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Source",
+      "label": "src1",
+      "functions": [
+        "{p in PacketDomain | p_type == 0}",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 5,
+      "posX": 635,
+      "posY": 494,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Merge",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 6,
+      "posX": 721,
+      "posY": 494,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Switch",
+      "label": "ingresssw",
+      "functions": [
+        "return p_type==0;",
+        ""
+      ]
+    },
+    {
+      "qSize": 2,
+      "oldShapeID": 7,
+      "posX": 814,
+      "posY": 517,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B4",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "qSize": 2,
+      "oldShapeID": 8,
+      "posX": 817,
+      "posY": 471,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B3",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 9,
+      "posX": 908,
+      "posY": 559,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Fork",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 10,
+      "posX": 1051,
+      "posY": 398,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Fork",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 11,
+      "posX": 709,
+      "posY": 308,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Join",
+      "label": "",
+      "functions": [
+        "1",
+        ""
+      ]
+    },
+    {
+      "qSize": 3,
+      "oldShapeID": 12,
+      "posX": 687,
+      "posY": 212,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B2",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 13,
+      "posX": 585,
+      "posY": 166,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Fork",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 14,
+      "posX": 585,
+      "posY": 110,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Source",
+      "label": "",
+      "functions": [
+        "{p in PacketDomain | p_type < 2}",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 15,
+      "posX": 709,
+      "posY": 380,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Sink",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 16,
+      "posX": 986,
+      "posY": 536,
+      "orientation": 4,
+      "sizeMultiplier": 1.0,
+      "type": "Sink",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 17,
+      "posX": 672,
+      "posY": 610,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Source",
+      "label": "",
+      "functions": [
+        "{p in PacketDomain | p_type < 2}",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 18,
+      "posX": 744,
+      "posY": 826,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Join",
+      "label": "",
+      "functions": [
+        "1",
+        ""
+      ]
+    },
+    {
+      "qSize": 2,
+      "oldShapeID": 19,
+      "posX": 721,
+      "posY": 761,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Queue",
+      "label": "B6",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 20,
+      "posX": 672,
+      "posY": 667,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Fork",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 21,
+      "posX": 743,
+      "posY": 897,
+      "orientation": 1,
+      "sizeMultiplier": 1.0,
+      "type": "Sink",
+      "label": "",
+      "functions": [
+        "",
+        ""
+      ]
+    },
+    {
+      "oldShapeID": 22,
+      "posX": 1163,
+      "posY": 926,
+      "orientation": 2,
+      "sizeMultiplier": 1.0,
+      "type": "Function",
+      "label": "flip",
+      "functions": [
+        "ret_type = (p_type == 0 ? 1 : 0);",
+        ""
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "oldSourceDesignerShapeID": 5,
+      "oldSinkDesignerShapeID": 0,
+      "sourceConnectorName": "In1",
+      "sinkConnectorName": "Out1"
+    },
+    {
+      "oldSourceDesignerShapeID": 1,
+      "oldSinkDesignerShapeID": 5,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In2"
+    },
+    {
+      "oldSourceDesignerShapeID": 22,
+      "oldSinkDesignerShapeID": 1,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 10,
+      "oldSinkDesignerShapeID": 22,
+      "sourceConnectorName": "Out2",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 4,
+      "oldSinkDesignerShapeID": 0,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In2"
+    },
+    {
+      "oldSourceDesignerShapeID": 20,
+      "oldSinkDesignerShapeID": 2,
+      "sourceConnectorName": "Out2",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 21,
+      "oldSinkDesignerShapeID": 18,
+      "sourceConnectorName": "In1",
+      "sinkConnectorName": "Out1"
+    },
+    {
+      "oldSourceDesignerShapeID": 20,
+      "oldSinkDesignerShapeID": 19,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 20,
+      "oldSinkDesignerShapeID": 17,
+      "sourceConnectorName": "In1",
+      "sinkConnectorName": "Out1"
+    },
+    {
+      "oldSourceDesignerShapeID": 19,
+      "oldSinkDesignerShapeID": 18,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In2"
+    },
+    {
+      "oldSourceDesignerShapeID": 9,
+      "oldSinkDesignerShapeID": 18,
+      "sourceConnectorName": "Out2",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 9,
+      "oldSinkDesignerShapeID": 16,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 15,
+      "oldSinkDesignerShapeID": 11,
+      "sourceConnectorName": "In1",
+      "sinkConnectorName": "Out1"
+    },
+    {
+      "oldSourceDesignerShapeID": 14,
+      "oldSinkDesignerShapeID": 13,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 13,
+      "oldSinkDesignerShapeID": 3,
+      "sourceConnectorName": "Out2",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 13,
+      "oldSinkDesignerShapeID": 12,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 12,
+      "oldSinkDesignerShapeID": 11,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In2"
+    },
+    {
+      "oldSourceDesignerShapeID": 10,
+      "oldSinkDesignerShapeID": 11,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 7,
+      "oldSinkDesignerShapeID": 9,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 8,
+      "oldSinkDesignerShapeID": 10,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 6,
+      "oldSinkDesignerShapeID": 8,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 6,
+      "oldSinkDesignerShapeID": 7,
+      "sourceConnectorName": "Out2",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 5,
+      "oldSinkDesignerShapeID": 6,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    },
+    {
+      "oldSourceDesignerShapeID": 2,
+      "oldSinkDesignerShapeID": 1,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In2"
+    },
+    {
+      "oldSourceDesignerShapeID": 3,
+      "oldSinkDesignerShapeID": 0,
+      "sourceConnectorName": "Out1",
+      "sinkConnectorName": "In1"
+    }
+  ],
+  "packet_types": {
+    "type": 2
+  }
+}
