@@ -155,48 +155,6 @@ Het project is een groot succes als het project een succes is en:
 \begin{itemize}
  \item De gebruiker kan validatie en verificatie software aanzetten of uitzetten
  \item De gebruiker kan nieuwe primitieven maken en aankoppelen.
- \todo[inline, color=green!40, caption={primitieven toevoegen vraag}]{@Guus De software zal dusdanig gestuctureerd zijn
- dat er makkelijk primitieven toegevoed kunnen worden.(primitieven toevoegen zal eerder
- door iemand gebeuren die de software tool onderhoud , en niet een gebruiker).}
-
- \todo[inline, caption={primitieven toevoegen antwoord}]{
- @Stefan Het gaat hier niet om uitbreidbaarheid (programmatisch toevoegen van een primitief).
- Een C++ programmeur moet inderdaad gemakkelijk een nieuwe primitief kunnen maken. Waar het hier om
- gaat is een visie van de primitief als een soort plugin. Voor nu hoeven we ons hiermee niet bezig
- te houden.
-
- Freek heeft dit als ``nice to have'' geclassificeerd in zijn antwoord (zie
- betreffende pdf). Het kan zijn, dat we hier niet aan toekomen. Als we tijd hebben en het loopt goed,
- dan is dit een optie. Minimale eis is dat we gemakkelijk een nieuw primitief kunnen defini\"eren.
- De rest volgt later.}
-
- \todo[inline,caption={primitieven, definitie1}]{
- De term primitief is hier volgens mij niet juist. De xMAS taal bestaat uit 8 primitieven en die zijn
- (volgens de bedenkers van xMAS) voldoende om alle mogelijke netwerken mee te maken. Wel zijn er
- macro's. Het is wel handig als de gebruiker (onderzoeker, niet programmeur) nieuwe macro's kan definieeren.
- Sommige veelgebruikte macro's zoals delay, credit counter en multiplexed source (zie pdf) hebben een eigen
- symbool, om deze te visualiseren moet er denk ik wel aparte code voor worden geschreven.
- }
-
- \todo[inline,caption={primitieven, definitie2}]{
- Freek heeft het hier over de xmas onderzoekers die nieuwe primitieven definieren.
- Vergeet niet dat de xmas tool een ``work in progress'' is. Ik citeer Freek uit zijn mail antwoord:
-
- \begin{quotation}
-     Naast deze ``gebruiker-stakeholders`` is er ook nog een kleine club mensen die
-onderzoek dan naar xMAS en die mogelijk de tool willen gebruiken in hun
-toekomstig onderzoek. Zij willen bijvoorbeeld compleet nieuwe primitieven kunnen
-toevoegen, meer verificatie tools er aan koppelen (dus niet alleen onze
-deadlock/reachability verificatie), of bestanden naar andere formaten exporteren
-(bijv. naar Verilog). Rekening houden met deze groep stakeholders zie ik echter als
-"nice-to-have" en niet als noodzakelijk voor het project. Ik zie verder geen
-negatieve stakeholders.
- \end{quotation}
-
-
- Een macro hoort zoals ik het begrijp bij de huidige functionaliteit. Als het niet zo is, dan is
- ook de macro ``nice to have''. Immers, de eerste doelstelling van het project is herbouw. Nieuwe
- dingen bouwen is extra.}
 \end{itemize}
 
 Het project is mislukt als het ontwerp tool geen succes is.
@@ -216,13 +174,6 @@ Het plan besteedt apart aandacht aan dit onderdeel in een domeinanalyse.
 
 Zie figuur \ref{fig: risico} een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
 een overzicht van de maatregelen die we nemen ter compensatie van risico's.
-
-\todo[inline, color=green!40, caption={risico ontwerp fout, opm}]{@Guus Een ander mogelijk risico's is dat de tool, tijdens een analyse of check,
-een xmas netwerk ten onrechte als fout vrij verklaren. Als gebruikers daaruit beslissen dat het chip ontwerp goed is
-en dat de chip geproduceerd mag worden, is dit een probleem.}
-
-\todo[inline,caption={risico ontwerp fout, antw}]{@Stefan: ik neem dit op in het overzicht. De vraag is of dit ons probleem is. Het is het probleem van
-de materie zelf. Cq de analyse tools moeten alle fouten ontdekken. Ons project betreft het ontwerp tool.}
 
 \begin{figure}[ht]
 \begin{center}
