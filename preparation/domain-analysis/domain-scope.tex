@@ -1,0 +1,105 @@
+%%
+%% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
+%%
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{subfig}
+\usepackage{wrapfig}% product wrapfigure and wraptable
+\usepackage[dutch]{babel}
+\usepackage{graphicx}
+\usepackage[colorlinks]{hyperref}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{pgfgantt}
+\usepackage{pdflscape}
+\usepackage[a4paper]{geometry}
+
+\bibliographystyle{alpha}
+
+\usepackage{hyperref}
+
+\author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\date{24/09/14}
+
+\title{Goals and results of domain analysis}
+
+%% Document is in subdocumenten gesplitst.
+
+\begin{document}
+
+\selectlanguage{dutch}
+
+\newcommand{\xmas}{x\textsc{mas}}%
+
+\maketitle
+
+\section{Introduction}
+This document specified the chosen domain analyses that we will perform before starting the development phases
+of this project.
+
+\section{Scope definition of toolkit domain analysis}
+Student: Guus Bonnema.
+\subsection{Requirements for domain analysis}
+\begin{itemize}
+    \item At least an initial idea of the high level view of the system should be available. The final high level
+	    view will depend on the choices made here and for the toolkits.
+    \item The high level requirements must be defined and agreed on.
+\end{itemize}
+\subsection{Goal of analysis}
+Find the toolkit combination that optimally satisfies the high level requirements as specified in the project plan.
+\subsection{Subjects in scope}
+high level architecture. User interface toolkits. IPC toolkits. Concurrency toolkits. Integration toolkits.
+Influence on development environment.
+\subsection{Subjects out of scope}
+database toolkits.
+\subsection{Overlapping subjects}
+Overlap with integration as many toolkits have approaches to integrating components. Also the constraints that follow
+from the domain analysis on integration will influence the resulting decision.
+\subsection{Relevance to the project}
+The domain analysis results in advice on use of toolkits and on time necessary to master the toolkits.
+
+\section{Scope definition of tool integration domain analysis}
+Student: Stefan Versluys.
+\subsection{Requirements for domain analysis}
+\begin{itemize}
+    \item At least an initial idea of the high level view of the system should be available. The final high level
+	    view will depend on the choices made here and for the toolkits.
+    \item The high level requirements must be defined and agreed on.
+\end{itemize}
+\subsection{Goal of analysis}
+Find a way of integrating the analysis tools in the design tool, in such a way
+that the high level requirements are optimally satisfied. Describe both the functions
+and the dynamics of this integration.
+\subsection{Subjects in scope}
+Integration of tools in the design tool. Types of tools necessary.
+high level architecture. Constraints on use of toolkits. Influence on development environment and subsequent constraints.
+\subsection{Subjects out of scope}
+Specific toolkits. Development environment.
+\subsection{Overlapping subjects}
+This domain analysis overlaps with toolkit domain analysis. The constraints that follow from this analysis
+will influence the choice of toolkit.
+\subsection{Relevance to the project}
+This analysis results in an advice that will directly influence the applications architecture, its development environment
+and the use of toolkits.
+
+\section{Scope definition of combinatoric cycle checker}
+Student: Jeroen Kleijn.
+\subsection{Requirements for domain analysis}
+\begin{itemize}
+    \item At least an initial idea of the high level view of the system should be available. The final high level
+	    view will depend on the choices made here and for the toolkits.
+    \item The high level requirements must be defined and agreed on.
+\end{itemize}
+\subsection{Goal of analysis}
+Integrate the combinatoric cycle checker with the design tool. Determine the specific interface. Determine the common interface
+with other tools.
+\subsection{Subjects in scope}
+Combinatoric cycle checker. Integration.
+\subsection{Subjects out of scope}
+The design tool.
+\subsection{Overlapping subjects}
+The choices made in the integration analysis have implementation consequences for this domain analysis and vice versa.
+\subsection{Relevance to the project}
+This tool is not yet integrated into the design tool.
+\note[inline]{is this true?}
+
+\end{document}
