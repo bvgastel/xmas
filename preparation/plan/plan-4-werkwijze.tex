@@ -8,8 +8,8 @@ en ontwerp van chips is het belangrijk dat deze tool foutloos werkt. Verder betr
 alledaags domein waardoor er extra aandacht noodzakelijk is om het domein te verkennen. De eis dat
 het tool platformonafhankelijk moet zijn en bij voorkeur in C++ geschreven is , maken dat er tijd
 voorzien moet worden om de teamleden de nodige ontwikkeltools eigen te maken.
-Er is gekozen voor een globaal plan dat uit vier blokken van activiteiten bestaat , enkel in het
-derde blok , tijdens de constructie , wordt agile gewerkt.
+Er is gekozen voor agile aanpak zoals in DAD, het plan is opgebouwd volgens de
+drie fasen ervan.
 
 \subsection{Organisatie}
  De teamleden ontwikkelen gedelokaliseerd en communiceren via internet. Sources worden gecentraliseerd
@@ -51,29 +51,34 @@ derde blok , tijdens de constructie , wordt agile gewerkt.
 	\item Platformonafhankelijke GUI Toolkit.
 	\item Componenten voor xmas analyse en checks.
 	\item Mac OS , MS Windows, Linux platformen.
+	\item DAD Support Tool (Work Item template)
 \end{enumerate}
 
 
-\subsection{Werkwijze}
-\subsubsection{De basis principes}
-\begin{itemize}
- \item De uitvoering is agile volgens de DAD ontwikkelmethode.
- \item Elke iteratie heeft een vaste hoeveelheid tijd
- \item Elke iteratie begint met een analyse (requirements engineering, prioriteiten en selectie).     \item Elke iteratie eindigt met een evaluatie
-\item Peer review is belangrijk onderdeel van ons proces
- \item Refactoring is standaard onderdeel van process
-\end{itemize}
+\subsection{DAD Ontwikkelmethode}
+\subsubsection{Lifecycle}
 
-\subsubsection{Agile aanpak}
+\begin{figure}[h]
+  \includegraphics[width=1.0\textwidth]{dadLifecycleUP2}
+  \caption{DAD basic Lifecycle} 
+\end{figure}
+Mijlpalen : 
+\begin{enumerate}
+\item Stakeholder consensus
+\item Proven architecture
+\item Sufficient functionality
+\item Production ready
+\item Delighted stakeholders
+\end{enumerate}
+
+\subsubsection{Iteratie aanpak}
 \begin{itemize}
- \item Passen TDD toe (binnen redelijke)
- \item Passen refactoring toe
- \item Elke iteratie:
- \begin{itemize}
-   \item Analyse (requirements aanpassen, prioriteitsstelling, selectie)
-   \item Ontwikkeling prototype
-   \item Evaluatie : Tijdens het constructie blok is het de bedoeling dat elke iteratie een prototype oplevert, deze wordt dan ter evaluatie aan een gebruiker aangeboden. Feedback die voortvloeit uit de evaluatie wordt meegenomen voor de volgende iteratie.
- \end{itemize}
+ \item Analyse : Modellen, requirements , prioriteiten ,selectie 
+ \item Test Driven Development (waar zinvol) 
+ \item Refactoring
+ \item Peer review
+ \item Levert steeds iets bruikbaars op dat ge\"evalueerd kan worden voor feedback.
+ \item Planning
 \end{itemize}
 
 
