@@ -7,14 +7,17 @@
 
 \subsection{Schedule}
  %% dit onderdeel moet vermoedelijk in het schedule plan
-  
-  
+
+\pagebreak
 \begin{landscape}
+%%\newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
 \newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
 
+\begin{figure}[hp]
 \begin{ganttchart}[
+   y unit chart=.9cm,
    today=3
- ]{1}{37}
+ ]{0}{37}
  \gantttitle{2014}{15}
  \gantttitle{2015}{22} \\
  \gantttitlelist{38,...,52}{1}
@@ -44,11 +47,12 @@
  
  \ganttgroup{Transitie}{29}{31} \\
  \ganttbar{Onderzoekcontext}{20}{29} \\
- \ganttbar{Afronding}{30}{31} \\
+ \ganttbar{Afronding}{30}{32}
+ \ganttbar[bar/.style={fill=gray}]{}{32}{37} \\
  
- \ganttmilestone{Einde project}{31} 
+ \ganttmilestone{Einde project}{37} 
  
-  \ganttlink{elem1}{elem2}
+ \ganttlink{elem1}{elem2}
  \ganttlink{elem2}{elem3}
  \ganttlink{elem3}{elem4}
  \ganttlink{elem4}{elem6}
@@ -62,18 +66,18 @@
  \ganttlink{elem9}{elem15}
  \ganttlink{elem13}{elem16}
  \ganttlink{elem15}{elem16}
- \ganttlink{elem16}{elem17}
-
+ \ganttlink{elem17}{elem18}
  
 \end{ganttchart}
+\caption{Globale planning met hoofdfasen en belangrijkste mijlpalen}
+\end{figure}
 
 \pagebreak
 
+\begin{figure}[hp]
 \begin{ganttchart}[
     today=22
-  ]{1}{32}
-  \gantttitle{Planning}{32}
-  \ganttnewline
+  ]{0}{32}
   \gantttitle{2014}{32} \\
   \gantttitle{september}{18}
   \gantttitle{oktober}{14} \\
@@ -100,10 +104,13 @@
   \ganttlink{elem6}{elem7}
  
 \end{ganttchart}
+\caption{Detailplanning 'Planning'}
+\end{figure}
 
 \pagebreak
 
-\begin{ganttchart}[]{1}{33}
+\begin{figure}[hp]
+\begin{ganttchart}[]{0}{33}
   \gantttitle{Domeinanalyse}{33}
   \ganttnewline
   \gantttitle{2014}{33} \\
@@ -113,27 +120,30 @@
   \gantttitlelist{1,...,14}{1}\\
   
   \ganttmilestone{Planning}{0.5} \\
-  \ganttbar{Domeinanalyse GB}{2}{28} \\
-  \ganttbar{Domeinanalyse JK}{2}{7}
-  \ganttbar{}{13}{28} \\
-  \ganttbar{Domeinanalyse SV}{2}{11}
-  \ganttbar{}{19}{28} \\
-  \ganttmilestone{Domeinanalyse}{29}
+  \ganttbar{Demonstratie WickedXmas}{2}{2} \\
+  \ganttbar{Domeinanalyse GB}{3}{22}
+  \ganttbar[bar/.style={fill=gray}]{}{23}{29} \\
+  \ganttbar{Domeinanalyse JK}{3}{7}
+  \ganttbar{}{13}{27}
+  \ganttbar[bar/.style={fill=gray}]{}{28}{29} \\
+  \ganttbar{Domeinanalyse SV}{3}{11}
+  \ganttbar{}{19}{29} \\
+  \ganttmilestone{Domeinanalyse}{30}
   
   \ganttlink{elem0}{elem1}
-  \ganttlink{elem0}{elem2}
-  \ganttlink{elem0}{elem4}
-  \ganttlink{elem1}{elem6}
-  \ganttlink{elem3}{elem6}
-  \ganttlink{elem5}{elem6}
+  \ganttlink{elem1}{elem2}
+  \ganttlink{elem1}{elem4}
+  \ganttlink{elem1}{elem7}
+  \ganttlink{elem3}{elem9}
+  \ganttlink{elem6}{elem9}
+  \ganttlink{elem8}{elem9}
   
 \end{ganttchart}
+\end{figure}
 
-\restoregeometry
+%%\restoregeometry
 \end{landscape}
 
-
-\todo[inline, color=green!40]{TO-DO: planning domeinanalyse uitwerken}
 
 
 
@@ -161,6 +171,7 @@ Totaal               & 27 \\
 \begin{itemize}
  \item 27 weken * 15 uur/week = 405 uur
  \item 8 maanden, ongeveer 32 weken beschikbaar, dus 5 weken marge
+ \item Na elke iteratie wordt een voorlopige versie van de software aan de opdrachtgever verstrekt
 \end{itemize}
 
 
