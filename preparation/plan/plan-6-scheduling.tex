@@ -4,12 +4,11 @@
 %%  hier worden tijden en eventueel personen toegekend aan activiteiten
 %%
 
-
-\subsection{Schedule}
+\begin{landscape}
+\section{Schedule}
  %% dit onderdeel moet vermoedelijk in het schedule plan
 
-\pagebreak
-\begin{landscape}
+%\pagebreak
 \newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
 
 \begin{figure}[hp]
@@ -21,19 +20,19 @@
  \gantttitle{2015}{22} \\
  \gantttitlelist{38,...,52}{1}
  \gantttitlelist{1,...,22}{1} \\
- 
+
  \ganttgroup{Inceptie}{1}{8} \\
  \ganttbar{Planning}{1}{4} \\
- 
+
  \ganttmilestone{Planning}{4} \\
- 
+
  \ganttbar{Domeinanalyse}{5}{8} \\
- 
- 
+
+
  \ganttmilestone{Domeinanalyse}{8} \\
- 
+
  \ganttgroup{Constructie}{9}{28} \\
- 
+
  \ganttbar{Iteratie 0}{9}{11} \\
  \ganttmilestone{Proven Architecture}{11} \\
  \ganttbar{Iteratie 1}{12}{14} \\
@@ -41,16 +40,16 @@
  \ganttbar{Iteratie 3}{20}{22} \\
  \ganttbar{Iteratie 4}{23}{25} \\
  \ganttbar{Iteratie 5}{26}{28} \\
- 
+
  \ganttmilestone{Constructie}{28} \\
- 
+
  \ganttgroup{Transitie}{29}{31} \\
  \ganttbar{Onderzoekcontext}{20}{29} \\
  \ganttbar{Afronding}{30}{32}
  \ganttbar[bar/.style={fill=gray}]{}{32}{37} \\
- 
- \ganttmilestone{Einde project}{37} 
- 
+
+ \ganttmilestone{Einde project}{37}
+
  \ganttlink{elem1}{elem2}
  \ganttlink{elem2}{elem3}
  \ganttlink{elem3}{elem4}
@@ -66,7 +65,7 @@
  \ganttlink{elem13}{elem16}
  \ganttlink{elem15}{elem16}
  \ganttlink{elem17}{elem18}
- 
+
 \end{ganttchart}
 \caption{Globale planning met hoofdfasen en belangrijkste mijlpalen}
 \end{figure}
@@ -82,17 +81,17 @@
   \gantttitle{oktober}{14} \\
   \gantttitlelist{13,...,30}{1}
   \gantttitlelist{1,...,14}{1}\\
-  
+
   \ganttmilestone{Startbijeenkomst}{0.5} \\
   \ganttbar{Teamafspraken}{2}{7} \\
   \ganttbar{Stakeholder meeting}{8}{8} \\
   \ganttbar{Probleemdefinitie}{9}{24} \\
   \ganttbar{High-level requirements}{9}{24} \\
   \ganttmilestone{Concept planning}{27} \\
-  
+
   \ganttbar{Verbeteringen}{28}{32} \\
   \ganttmilestone{Planning}{32}
-  
+
   \ganttlink{elem0}{elem1}
   \ganttlink{elem1}{elem2}
   \ganttlink{elem2}{elem3}
@@ -101,7 +100,7 @@
   \ganttlink{elem4}{elem5}
   \ganttlink{elem5}{elem6}
   \ganttlink{elem6}{elem7}
- 
+
 \end{ganttchart}
 \caption{Detailplanning 'Planning'}
 \end{figure}
@@ -117,7 +116,7 @@
   \gantttitle{november}{16} \\
   \gantttitlelist{14,...,31}{1}
   \gantttitlelist{1,...,14}{1}\\
-  
+
   \ganttmilestone{Planning}{0.5} \\
   \ganttbar{Demonstratie WickedXmas}{2}{2} \\
   \ganttbar{Domeinanalyse GB}{3}{22}
@@ -128,7 +127,7 @@
   \ganttbar{Domeinanalyse SV}{3}{11}
   \ganttbar{}{19}{29} \\
   \ganttmilestone{Domeinanalyse}{30}
-  
+
   \ganttlink{elem0}{elem1}
   \ganttlink{elem1}{elem2}
   \ganttlink{elem1}{elem4}
@@ -136,7 +135,7 @@
   \ganttlink{elem3}{elem9}
   \ganttlink{elem6}{elem9}
   \ganttlink{elem8}{elem9}
-  
+
 \end{ganttchart}
 \end{figure}
 
@@ -212,13 +211,14 @@ planning. Hoe moeten we deze tijd invullen, iteraties langer of een extra iterat
 
 
 
-\begin{tabular}{lll}\hline
+\begin{tabular}{llp{10cm}}\hline
 {\bf Week}    & {\bf Taak}  & {\bf Extra}\\\hline
 38-41         & Planning    \\
 42-45         & Domeinanalyse & 4 weken ingepland i.v.m. vakanties Stefan \& Jeroen \\
 46-48         & Iteratie 0    \\
 49-51         & Iteratie 1    \\
-52-1          &               & geen iteratie i.v.m. vakantieperiode, mogelijk individueel (onderzoekcontext?) \\
+52-1          &               & geen iteratie i.v.m. vakantieperiode, mogelijk
+				individueel (bijvoorbeeld onderzoekcontext) \\
 2-4           & Iteratie 2    \\
 5-7           & Iteratie 3    \\
 8-10          & Iteratie 4    \\
@@ -242,22 +242,22 @@ planning. Hoe moeten we deze tijd invullen, iteraties langer of een extra iterat
   \item $\sim$30 uur gedurende het hele project voor Freek en $\sim$20 uur voor Bernard
  \end{itemize}
 
- 
- 
+
+
  \item vakanties / niet beschikbaar voor project
  \begin{itemize}
-  
+
   \item Stefan
   \begin{itemize}
    \item 25-10-2014 t/m 31-01-2014 (week 44)
    \item 24-12-2014 t/m 02-01-2015 (week 52-01)
   \end{itemize}
- 
+
   \item Jeroen
   \begin{itemize}
    \item 21-10-2014 t/m 25-10-2014 (week 43)
   \end{itemize}
- 
+
   \item Bernard
    \begin{itemize}
     \item 04-10-2014 t/m 14-10-2014 (week 41-42)

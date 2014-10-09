@@ -74,7 +74,7 @@ Mode=LaTeX
 
 [item:plan-1-assignment.tex]
 archive=true
-column=0
+column=2
 encoding=UTF-8
 highlight=LaTeX
 line=0
@@ -84,17 +84,7 @@ order=1
 
 [item:plan-1b-aanpak.tex]
 archive=true
-column=0
-encoding=UTF-8
-highlight=LaTeX
-line=11
-mode=LaTeX
-open=true
-order=7
-
-[item:plan-2-architecture.tex]
-archive=true
-column=0
+column=16
 encoding=UTF-8
 highlight=LaTeX
 line=0
@@ -102,35 +92,45 @@ mode=LaTeX
 open=true
 order=2
 
+[item:plan-2-architecture.tex]
+archive=true
+column=39
+encoding=UTF-8
+highlight=LaTeX
+line=27
+mode=LaTeX
+open=true
+order=3
+
 [item:plan-3-domains.tex]
 archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
-mode=LaTeX
-open=true
-order=3
-
-[item:plan-4-werkwijze.tex]
-archive=true
-column=1
-encoding=UTF-8
-highlight=LaTeX
-line=46
+line=124
 mode=LaTeX
 open=true
 order=4
 
-[item:plan-5-planning.tex]
+[item:plan-4-werkwijze.tex]
 archive=true
-column=0
+column=41
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=76
 mode=LaTeX
 open=true
 order=5
+
+[item:plan-5-planning.tex]
+archive=true
+column=44
+encoding=UTF-8
+highlight=LaTeX
+line=25
+mode=LaTeX
+open=true
+order=6
 
 [item:plan-6-scheduling.tex]
 archive=true
@@ -140,14 +140,14 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=true
-order=6
+order=7
 
 [item:plan.tex]
 archive=true
-column=1
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=50
+line=0
 mode=LaTeX
 open=true
 order=0
@@ -163,49 +163,49 @@ open=false
 order=-1
 
 [view-settings,view=0,item:plan-1-assignment.tex]
-CursorColumn=0
+CursorColumn=2
 CursorLine=0
 JumpList=
-ViMarks=.,185,16,[,185,16,],185,17
+ViMarks=.,170,107,[,170,107,],170,107
 
 [view-settings,view=0,item:plan-1b-aanpak.tex]
-CursorColumn=0
-CursorLine=11
-JumpList=
-ViMarks=
-
-[view-settings,view=0,item:plan-2-architecture.tex]
-CursorColumn=0
+CursorColumn=16
 CursorLine=0
 JumpList=
-ViMarks=.,24,114,[,24,114,],24,114
+ViMarks=.,74,0,[,74,0,],74,0
+
+[view-settings,view=0,item:plan-2-architecture.tex]
+CursorColumn=39
+CursorLine=27
+JumpList=
+ViMarks=.,27,37,[,27,37,],27,38
 
 [view-settings,view=0,item:plan-3-domains.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=124
 JumpList=
-ViMarks=.,23,113,[,23,113,],23,113
+ViMarks=.,59,77,[,59,68,],59,77
 
 [view-settings,view=0,item:plan-4-werkwijze.tex]
-CursorColumn=1
-CursorLine=46
+CursorColumn=41
+CursorLine=76
 JumpList=
-ViMarks=.,16,99,[,16,99,],16,99
+ViMarks=.,76,39,[,76,39,],76,40
 
 [view-settings,view=0,item:plan-5-planning.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=44
+CursorLine=25
 JumpList=
-ViMarks=.,58,66,[,58,66,],58,66
+ViMarks=.,25,42,[,25,42,],25,43
 
 [view-settings,view=0,item:plan-6-scheduling.tex]
 CursorColumn=0
 CursorLine=0
 JumpList=
-ViMarks=
+ViMarks=.,107,0,[,107,0,],107,0
 
 [view-settings,view=0,item:plan.tex]
-CursorColumn=1
-CursorLine=50
+CursorColumn=0
+CursorLine=0
 JumpList=
-ViMarks=.,51,0,[,51,0,],51,0
+ViMarks=.,109,18,[,109,9,],109,18

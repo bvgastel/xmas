@@ -7,18 +7,23 @@
 \usepackage{wrapfig}% product wrapfigure and wraptable
 \usepackage[dutch]{babel}
 \usepackage{graphicx}
-\usepackage[colorlinks]{hyperref}
-\usepackage[prependcaption,colorinlistoftodos,obeyFinal]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    citecolor = airforceblue,
+    linkcolor = blue
+}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
 \usepackage{pgfgantt}
 \usepackage{pdflscape}
 \usepackage[a4paper]{geometry}
+\usepackage{titlesec}% added to change section headers, see newcommand definition.
+\usepackage{boxedminipage}
 
 \bibliographystyle{alpha}
 
-\usepackage{hyperref}
-
 \author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
-\date{24/09/14}
+\date{09/10/14}
 
 \title{Plan van aanpak voor \xmas\ ontwerp tool}
 
@@ -30,6 +35,16 @@
 \selectlanguage{dutch}
 
 \newcommand{\xmas}{x\textsc{mas}}%
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+\newcommand\secformat[1]{%
+    {\fontsize{60}{60}\selectfont\thesection}%
+    \quad\rule[-8pt]{2pt}{40pt}\quad
+    \parbox[b]{.7\textwidth}{\filright\bfseries #1}}%
+\titleformat{\section}[block]
+    {\filright\normalfont\sffamily}{}{0pt}{\secformat}
+\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
+
 
 \maketitle
 
@@ -42,37 +57,27 @@
  chip ontwerp tool op de aspecten platform onafhankelijkheid, uitbreidbaarheid,
  en integratie met de analyse tools.
 
- Het plan is gebouwd op basis van een hybride agile aanpak , een aanpak dat
+ Het plan is gebouwd op basis van een hybride agile aanpak, een aanpak dat
  moet passen bij de noden van het team alsook voor het probleem.
 
  De domeinanalyses omvatten onderzoek van deelgebieden uit de productcontext
- dat alternatieven voor oplossingen aan het licht moeten brengen. Op die manier
- kunnen keuzes wetenschappelijk onderbouwd worden en kan er aan de opdrachtgever
- verantwoord advies geven worden.
+ dat alternatieven voor oplossingen aan het licht moeten brengen.
+ Op deze manier onderbouwen wij onze keuze op een wetenschappelijke manier
+ en kunnen we verantwoord advies geven aan de opdrachtgever.
 
 \end{abstract}
 
-\include{plan-1-assignment}
-\include{plan-1b-aanpak}
-\include{plan-2-architecture}
-\include{plan-3-domains}
-
-\section{Planning en Aanpak}
-\input{plan-4-werkwijze}
-\input{plan-5-planning}
-\input{plan-6-scheduling}
-
-\subsection{Open punten}
+\section{Open punten}
 
 \begin{enumerate}
- \item Is het de bedoeling dat de ontwerpen die met deze tool gemaakt kunnen worden ook voor de productie van een chip gebruikt zullen worden, m.a.w. bestaat er een risico dat fouten door deze tool leiden tot een fout geproduceerde chip?
- \item Wat is een onderzoekscontext?
+ \item Is het de bedoeling dat de ontwerpen die met deze tool gemaakt kunnen worden ook voor de productie van een
+ chip gebruikt zullen worden, m.a.w. bestaat er een risico dat fouten door deze tool leiden tot een
+ foutief geproduceerde chip?
  \item Aan welke eisen moet het scriptieverslag voldoen?
  \item Aan welke eisen moet de presentatie voldoen?
- \item Hoe valt Freek in de iteratie tijdens de uitvoering? Welke rol speelt Freek precies tijdens de andere fases?
- \item wat is het belang van i18n voor systeem documentatie?
+ \item wat is het belang van i18n\footnote{Zie appendix} voor systeem documentatie?
  \item wat is het belang van l10n voor de software (variabele namen, menu opties)?
- \item moet de communicatie in meerdere talen aanwezig zijn?
+ \item moet communicatie in meerdere talen aanwezig zijn?
 
  \item Open punten m.b.t. vision (zie sectie \ref{sec: vision} op pagina \pageref{sec: vision}).
  \begin{description}
@@ -91,14 +96,22 @@
  \end{description}
 \end{enumerate}
 
-\appendix
-\section{Definitions}
+\include{plan-1-assignment}
+\include{plan-1b-aanpak}
+\include{plan-2-architecture}
+\include{plan-3-domains}
 
+\include{plan-4-werkwijze}
+\include{plan-5-planning}
+\include{plan-6-scheduling}
+
+\appendix
+
+\section{Definities}
 \begin{description}
  \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
  \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
 \end{description}
-\section{Verwijzingen}
 
 \bibliography{plan.bib}
 \end{document} ;########################### end document ##################################;

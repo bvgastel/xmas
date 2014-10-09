@@ -10,21 +10,21 @@ De domeinanalyse ligt op het domein van de klant (Bernard): het geeft een deelpr
 Ervaring wijst uit dat het belangrijk is de domeinanalyses als eerste te doen. Dat ondersteunt het project en voorkomt
 de domeinanalyse aan het eind ``nog even te moeten schrijven''.
 
-We kiezen er voor om de meest onzekere delen van het project als eerste doen. Hiermee halen we het grootste risico uit het
-project.
-
 De twee belangrijke kenmerken van een domeinanalyse zijn dat het een beperkt deel van het onderwerp is en dat het daadwerkelijk
-ondersteunend is aan het project. De valkuil is om een te breed onderwerp te nemen. Hieronder voorbeelden van goede onderwerpen
-voor een domeinanalyse.
+ondersteunend is aan het project. De valkuil is om een te breed onderwerp te nemen. Hieronder de voorbeelden van goede onderwerpen
+voor een domeinanalyse die voor ons als input hebben gediend.
 
 De uitkomst van een domeinanalyse is een beschrijving van het probleem,
 een beschrijving van de alternatieven, een beschrijving van de keuze criteria en
 een gewogen aanbeveling. Gewogen betekent dat de aanbeveling naar objectieve criteria plaatsvindt.
-
-De domeinanalyse bevat een aanbeveling. De beslissing is een team effort, waarbij de klant (Bernard in dit geval)
+De beslissing is een team effort, waarbij de klant (Bernard in dit geval)
 de doorslaggevende stem heeft.
 
 De beoordeling van elke domeinanalyse is individueel evenals de uitwerking.
+
+We kiezen er voor om de meest onzekere delen van het project als eerste doen. Hiermee halen we het grootste risico uit het
+project. Zie figuur \ref{fig: domain-analysis} voor de uitwerking per persoon.
+De keuze van het team is voor Guus de UI toolkit, voor Jeroen de combinatorische cycle checker en voor Stefan de combinatorial objects.
 
 \begin{center}
     \begin{tabular}{|p{2.5cm}|p{10cm}|}
@@ -40,8 +40,85 @@ De beoordeling van elke domeinanalyse is individueel evenals de uitwerking.
         combinatorische cycle checker & je zou de combinatorische cycle checker kunnen bestuderen inclusief de datastructuur die
 					deze tool deelt met de andere analysetools en een domeinanalyse kunnen doen
 					over hoe deze tool geintegreerd kan worden met jullie tool.\\\hline
-         combinatorial objects &  een onderzoek hoe om te gaan met combinatorial objects.
+        combinatorial objects &  een onderzoek hoe om te gaan met combinatorial objects.
 				    Bv hoe grafisch weer te geven, hoe op te slaan in de data structuur\\\hline
     \end{tabular}
-
 \end{center}
+
+
+\begin{figure}[!h]
+    \subfloat[UI toolkit]{%
+    \begin{boxedminipage}[b]{.32\textwidth}
+	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	    Student: Guus Bonnema.
+	    \paragraph{Goal}
+	    Find the toolkit combination that optimally satisfies the high level requirements as specified in the project plan.
+	    \paragraph{In scope}
+	    The high level architecture and the user interface toolkit. Influence on IPC toolkits, concurrency toolkits en integration toolkits.
+	    The influence on development environment.
+	    \paragraph{Out of scope}
+	    Any non UI toolkits are out of scope, unless a clear relationship exists.
+	    \paragraph{Overlap}
+	    Overlap with integration as many toolkits have approaches to integrating components. Also the constraints that follow
+	    from the domain analysis on integration will influence the resulting decision.
+	    \paragraph{Results}
+	    The domain analysis results in advice on use of toolkits and on time necessary to master the toolkits.
+	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{boxedminipage}
+    }% subfig
+%    \caption{Scope of toolkit domain analysis}
+%    \label{fig: da-toolkit}
+%\end{figure}
+    \subfloat[Combinatorial objects]{%
+    \begin{boxedminipage}[b]{.32\textwidth}
+	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	    Student: Stefan Versluys.
+	    \paragraph{Goal}
+	    Find a way of integrating the analysis tools in the design tool, in such a way
+	    that the high level requirements are optimally satisfied. Describe both the functions
+	    and the dynamics of this integration.
+	    \paragraph{In scope}
+	    Integration of tools in the design tool. Types of tools necessary.
+	    high level architecture. Constraints on use of toolkits. Influence on development environment and subsequent constraints.
+	    \paragraph{Out of scope}
+	    Specific toolkits. Development environment.
+	    \paragraph{Overlap}
+	    This domain analysis overlaps with toolkit domain analysis. The constraints that follow from this analysis
+	    will influence the choice of toolkit.
+	    \paragraph{Results}
+	    This analysis results in an advice that will directly influence the applications architecture, its development environment
+	    and the use of toolkits.
+	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{boxedminipage}
+    }% subfig
+%    \caption{Scope definition of combinatorial objects}
+%    \label{fig: da-objects}
+%\end{figure}
+    \subfloat[Combinatoric cycle checker]{%
+    \begin{boxedminipage}[b]{.32\textwidth}
+	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	    Student: Jeroen Kleijn.
+	    \paragraph{Goal} Integrate the combinatoric cycle checker with the design tool. Determine the specific interface. Determine the common interface
+	    with other tools.
+	    \paragraph{In scope} Combinatoric cycle checker. Integration.
+	    \paragraph{Out of scope} The design tool.
+	    \paragraph{Overlap} The choices made in the integration analysis have implementation consequences for this domain analysis and vice versa.
+	    \paragraph{Results} This tool is not yet integrated into the design tool.
+	    \todo[inline,caption={cycle checker}]{is this true?}
+	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{boxedminipage}
+    }% subfig
+
+%    \paragraph{Requirements for domain analysis}
+    \begin{boxedminipage}[c]{.8\textwidth}
+    \begin{itemize}
+	\item At least an initial idea of the high level view of the system should be available. The final high level
+		view will depend on the choices made here and for the toolkits.
+	\item The high level requirements must be defined and agreed on.
+    \end{itemize}
+    \end{boxedminipage}
+
+
+    \caption{Scope domain analyses}
+    \label{fig: domain-analysis}
+\end{figure}
