@@ -19,6 +19,8 @@
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
 \usepackage{boxedminipage}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
 
 \bibliographystyle{alpha}
 
@@ -34,9 +36,13 @@
 
 \selectlanguage{dutch}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\secformat[1]{%
     {\fontsize{60}{60}\selectfont\thesection}%
     \quad\rule[-8pt]{2pt}{40pt}\quad
@@ -44,11 +50,9 @@
 \titleformat{\section}[block]
     {\filright\normalfont\sffamily}{}{0pt}{\secformat}
 \titlespacing*{\section}{0pt}{*3}{*2}[1pc]
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \maketitle
-
-\listoftodos
 
 \begin{abstract}
  Dit document is het plan van aanpak voor het ABI (afstudeer project bachelor
@@ -66,6 +70,8 @@
  en kunnen we verantwoord advies geven aan de opdrachtgever.
 
 \end{abstract}
+
+\listoftodos
 
 \section{Open punten}
 

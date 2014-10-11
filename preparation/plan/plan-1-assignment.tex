@@ -52,9 +52,8 @@ versnelt het lokaliseren en verhelpen van fouten in een ontwerp.
 
 Deze sectie geeft aan wat de opdrachtgever ziet als ideale uitkomst van het project. Het ontwerp tool is
 bedoeld voor wetenschappers van universiteiten en van bedrijven (o.a. Intel). Onderzoekers op verschillende
-platformen kunnen het ontwerp tool gemakkelijk downloaden, installeren en gebruiken. Het tool toont tijdens
-het ontwerp fouten op dezelfde manier als een IDE bij een C++ of java programma doet: dynamische controles.
-Als het ontwerp klaar is dan is het ook correct.
+platformen kunnen het ontwerp tool gemakkelijk downloaden, installeren en gebruiken. Het tool toont op verzoek
+tijdens het ontwerp fouten van verificatie tools.
 
 Het programma is goed gestructureerd, uit te breiden met nieuwe analyses en verificaties en NoC onderzoekers
 kunnen gemakkelijk nieuwe primitieven defini\"eren. Ten slotte kunnen de \xmas\ onderzoekers onze bestanden
@@ -177,22 +176,22 @@ een overzicht van de maatregelen die we nemen ter compensatie van risico's.
 \begin{figure}[ht]
 \begin{center}
 \tiny
-\begin{tabular}{|c|p{20em}|p{30em}|}
+\begin{tabular}{|c|c|p{20em}|p{30em}|}
 \hline
-{\bf nr} & {\bf Risico} & {\bf Toelichting} \\\hline
- 1 & Beschikbaarheid stakeholders  & De opdrachtgever en de begeleider hebben een beperkte tijd
+{\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting} \\\hline
+  \ok & 1 & Beschikbaarheid stakeholders  & De opdrachtgever en de begeleider hebben een beperkte tijd
 					beschikbaar. De andere stakeholders zijn niet beschikbaar.\\\hline
- 2 & Ervaring waterval & De teamleden hebben vooral ervaring met waterval projecten.\\\hline
- 3 & Trage support & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken.\\\hline
- 4 & Tijd nodig om de materie kennis op te doen & Het kost tijd om de bestaande analyse
+  \ok & 2 & Geen agile ervaring & De teamleden hebben vooral ervaring met waterval projecten.\\\hline
+  \ok & 3 & Trage support & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken.\\\hline
+  \ok & 4 & Tijd nodig om de materie kennis op te doen & Het kost tijd om de bestaande analyse
 					tools en de achterliggende
 					xmas materie op te nemen.\\\hline
- 5 & Geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
+  \ok & 5 & Geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
 				organiseren voor overleg tijdens het project.\\\hline
- 6 & structuur verval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuur verval een
+  \ok & 6 & structuur verval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuur verval een
 				natuurlijk gevolg.\\\hline
- 7 & twee onervaren C++ programmeurs & Het team heeft \'e\'en ervaren C++ programmeur.\\\hline
- 8 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken\\\hline
+  \ok & 7 & twee onervaren C++ programmeurs & Het team heeft \'e\'en ervaren C++ programmeur.\\\hline
+  \ding{"38} & 8 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken\\\hline
 
 \end{tabular}
 \end{center}
