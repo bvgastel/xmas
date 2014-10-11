@@ -10,8 +10,8 @@ TODO: add details of these papers.
 Contents
 ========
 
-- notulen			The minutes, only the TeX sources.
-- voorbereiding 	Files used during preparation plus plan
+- minutes			The minutes, only the TeX sources.
+- preparation	 	Files used during preparation plus plan
 - xmas-info			Information on xmas (pdf)
 
 
@@ -32,18 +32,19 @@ We use git for communication with the following use cases
 	If you cannot, then you could fork the repo and do a pull 
 	request.
 
-2. Nieuwe branch maken.
-	Als je een nieuwe branch wilt maken, maak dan eerst lokaal
-	een branch aan, en creer het vervolgens remote. Dat gaat als
-	volgt. Stel de branchnaam is plan
+2. Creating a new branch.
+	You create a new branch "plan" with the command
 
 	* git checkout -b plan
-	* <wijzig een bestand en doe een commit>
+	
+	do the alterations and commits until the modifications are finished
+	then push the commits to remote
+
 	* git push --set-upstream origin plan
 
-	Als je de laatste vergeet, dan krijg je een foutmelding, omdat
-	de branch remote niet bestaat. Zodra je de push does met
-	--set-upstream dan creert git remote de branch.
+	If you forget the option "--set-upstream" git will issue an error
+	because it does not recognize the branch yet. Once the branch
+	is created on remote with "--set-upstream", you can do a "git push".
 
 2. Collaborator
 	Clone the repo, use it as you normally would with
@@ -55,11 +56,32 @@ We use git for communication with the following use cases
 	changes from github, make sure you committed and then do
 	a git pull. Again, remember to set up git remote.
 
+	Sometimes a "git push" will result in an error, because
+	your working directory is not updated with the latest
+	changes from remote. Make sure to do a "git pull", resolve
+	any conflicts, do a commit and a push to get your committed 
+	changes to remote.
+
 3. Any github user
 	If you are using the system and want to update it, you
 	can clone the repo locally, make the changes with the
 	usual change-commit cycles. When done (including
 	documentation and tests) you can do a pull request.
+
+Documentation
+=============
+
+We use two document formats: LaTeX and markdown. 
+
+Project documentation
+---------------------
+We use LaTeX for most of the project documents like the plan, a tutorial or a guide. 
+Any kind of document that needs to look good on paper and is more than just a screenfull.
+
+System documentation
+--------------------
+We use markdown with pandoc format for most of the system documentation (excluding the
+larger documents containing architecture or design documents). 
 
 Development process
 ===================
