@@ -3,6 +3,7 @@
 \usepackage[dutch]{babel}
 \usepackage{minutes}
 
+\minutesstyle{header = {table}}
 \title{Notulen 009 overleg team 33}
 \author{Jeroen}
 \minutesstyle{header=list, vote=list, contents=true}
@@ -29,10 +30,27 @@ iteratie ingepland.
 
 \topic{Markdown}
 
-Het idee is om systeemdocumentatie met behulp van markdown te realiseren. Mocht markdown
-hier niet voor geschikt zijn dan zal de systeemdocumentatie waarschijnlijk met LaTeX
-worden gemaakt. De komende dagen wordt met markdown ge\"experimenteerd (onder andere
-het toevoegen van figures) om te kijken of markdown gebruikt kan worden.
+Het idee is om systeemdocumentatie met behulp van markdown te realiseren. 
+Het sterke punt van markdown is dat je het naar
+heel veel andere formaten kunt vertalen, niet alleen papier, maar ook scherm formaten
+zoals html, een pdf of zelfs wiki formaat. Het sterke punt van LaTeX is dat
+goed kan typesetten. LaTeX is vooral op papier gericht en is iets complexer (en krachtiger)
+dan markdown. 
+
+De bedoeling is om vooral systeem gerichte zaken zoals systeem ontwerp en guides
+in markdown te doen, zodat we de docs net zo gemakkelijk op het web kunnen zetten
+in een wiki als in een pdf kunnen aanbieden. Merk op dat GitHub automatisch
+markdown converteert naar het web.
+Specifieke documenten kunnen we nog steeds in LaTeX aanbieden.
+
+De komende dagen experimenteren Stefan en Jeroen met markdown met als doel om
+te kijken of zij er comfortabel mee zijn om hier documentatie mee te maken.
+Met name kijken we of we plaatjes op kunnen nemen (vergelijkbaar met LaTeX) en 
+of vertaling naar wiki of html en naar pdf naar onze zin gaat. Als het redelijk
+gemakkelijk te maken is en pandoc werkt ook goed onder ms windows (Stefan), dan
+lijkt dit een goed alternatief voor systeem documentatie.
+
+We spreken er de volgende keer over hoe we markdown gaan gebruiken.
 
 \topic{Agile}
 
@@ -49,24 +67,42 @@ op te sturen. De zaterdag daarop kunnen de teamleden dan via Collaborate de plan
 toelichten. De rolverdeling zal dan zijn dat Guus globaal de planning toelicht en
 Stefan en Jeroen zullen respectievelijk de ontwikkelwijze (DAD) en de schedule toelichten.
 
+\topic{Schedule}
+
+%%
+%% formaat: \schedule{yyyy/mm/dd}[hh:mm]{Beschrijving}
+%% 			de tijd is optioneel
+%%
+\schedule{2014/01/13}[19:00]{Reguliere meeting. Voortgang taken, zie takenlijst}
+\schedule{2014/10/18}[10:00]{Reguliere meeting. Freek en Bernard uitnodigen voor plan}
+
+
+\topic{Taken}
+
+\task{Guus}{Commentaar van Freek verwerken in de planning}
+\task{Guus}{Afspraak maken met Freek over openstaande vragen}
+\task{Guus}{Afspraak maken met Freek en Bernard om plan te presenteren}
+\task{Stefan}{Werkwijze bij de iteraties beschrijven in readme.md}
+\task{Stefan}{Domein analyse aanpassen en specifiek maken}
+\task{Jeroen}{Domein analyse aanpassen en specifiek maken}
+\task{Jeroen}{Extra iteratie vanwege onderzoekscontext verwerken in planning}
+\task{Jeroen}{Vooraf iteratie afstem momenten vastleggen (na akkoord planning)}
+\task{Guus}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Stefan}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Jeroen}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Jeroen}{Opvragen source code van de analyse tools}
+\task{Stefan}{Downloaden en installeren pandoc, experimenteren met markdown}
+\task{Jeroen}{Experimenteren met markdown}
+\task{Guus}{Uitzoeken of images in markdown goed werken}
+\task{Allen}{Besluit nemen over systeemdocumentatie}
 
 
 \topic{Besluiten}
-
-\begin{itemize}
- \item Guus verwerkt de opmerkingen van Freek in de planning
- \item Guus maakt een afspraak met Freek om de openstaande vragen te bespreken
- \item Stefan beschrijft de werkwijze tijdens de iteraties
- \item Stefan en Jeroen passen de sectie van domeinanalyse aan
- \item Stefan werkt de indeling van activiteiten bij zoals besproken
- \item Jeroen werkt de chart bij
- \item Jeroen informeert bij Freek en Bernard wat handige vaste contactmomenten zijn.
- (Pas als de planning is goedgekeurd).
- \item Waar de inhoud/grenzen van de domeinanalyse nog niet duidelijk is zullen de
- teamleden dit (individueel) overleggen met Freek. 
- \item Vooruitlopend op de domeinanalyse zullen de teamleden alvast de voor de 
- domeinanalyse benodigde informatie opvragen (bijvoorbeeld de source code van de analysetools).
-\end{itemize}
+\decisiontheme{DA}{Theme for a decision}
+\decision{DA}{Besluit wie welke domeinanalyse doet}[
+Guus doet de toolkit. Jeroen neemt de integratie van verificatie modules
+voor zijn rekening met de cycle checker als uitgangspunt. Stefan doet
+de combinatorische objecten en werkt samen met Freek uit wat dit precies betekent.]
 
 
 \end{Minutes}
