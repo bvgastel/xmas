@@ -3,10 +3,9 @@
 \usepackage[dutch]{babel}
 \usepackage{minutes}
 
-\minutesstyle{header = {table}}
 \title{Notulen 009 overleg team 33}
 \author{Jeroen}
-\minutesstyle{header=list, vote=list, contents=true}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
 
 \begin{document}
 %\selectlanguage{dutch}
@@ -21,12 +20,38 @@
 \topic{Planning}
 
 In het overleg zijn de opmerkingen van Freek over de conceptversie van de planning
-besproken. De opmerkingen zullen in de planning worden verwerkt. De
-openstaande punten zullen samen met Freek in een Skype sessie worden besproken.
-In het plan wordt verder nog het onderdeel van de domeinanalyses verbeterd. De
-eerste iteratie krijgt in de tijdsplanning een extra week voor het configureren
-van de ontwikkelomgeving, git repository, en dergelijken. Verder wordt een extra
-iteratie ingepland.
+besproken. \task{Guus}{Commentaar van Freek verwerken in de planning}. Freek
+heeft gevraagd om een skype sessie voor de openstaande punten. 
+\task{Guus}{Afspraak maken met Freek over openstaande vragen}
+\task{Jeroen}{Opvragen source code van de analyse tools}
+
+De domein analyse voorbeelden zoals Guus in het plan had opgenomen waren dubbel: de
+derde rij was een specificatie van de eerste rij. We besluiten de 
+domein analyses deze week individueel met Freek af te stemmen zodat we afbakening en
+doel akkoord hebben voordat we daadwerkelijk beginnen. 
+
+\task{Guus}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Stefan}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Jeroen}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Stefan}{Domein analyse aanpassen en specifiek maken}
+\task{Jeroen}{Domein analyse aanpassen en specifiek maken}
+\task{Guus}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Stefan}{Inhoud eigen domein analyse afstemmen met Freek}
+\task{Jeroen}{Inhoud eigen domein analyse afstemmen met Freek}
+
+De eerste iteratie krijgt in de tijdsplanning een extra week voor het configureren
+van de ontwikkelomgeving, git repository, en dergelijken. Vanwege opname van
+de onderzoekscontext planning wij een extra iteratie in. Omdat Bernard en Freek
+druk bezet zijn, gaan we de communicatie momenten vooraf vastleggen.
+
+\task{Jeroen}{Extra week toevoegen voor configureren van de ontwikkelomgeving}
+\task{Jeroen}{Extra iteratie vanwege onderzoekscontext verwerken in planning}
+\task{Jeroen}{Vooraf iteratie afstem momenten vastleggen (na akkoord planning)}
+
+We besluiten het plan komende zaterdag te presenteren aan Freek en Bernard.
+
+\task{Guus}{Afspraak maken met Freek en Bernard om plan te presenteren}
+
 
 \topic{Markdown}
 
@@ -43,6 +68,10 @@ in een wiki als in een pdf kunnen aanbieden. Merk op dat GitHub automatisch
 markdown converteert naar het web.
 Specifieke documenten kunnen we nog steeds in LaTeX aanbieden.
 
+\task{Stefan}{Downloaden en installeren pandoc, experimenteren met markdown}
+\task{Jeroen}{Experimenteren met markdown}
+\task{Guus}{Uitzoeken of images in markdown goed werken}
+
 De komende dagen experimenteren Stefan en Jeroen met markdown met als doel om
 te kijken of zij er comfortabel mee zijn om hier documentatie mee te maken.
 Met name kijken we of we plaatjes op kunnen nemen (vergelijkbaar met LaTeX) en 
@@ -52,6 +81,8 @@ lijkt dit een goed alternatief voor systeem documentatie.
 
 We spreken er de volgende keer over hoe we markdown gaan gebruiken.
 
+\task{Allen}{Besluit nemen over systeemdocumentatie}
+
 \topic{Agile}
 
 Als voorbereiding constructie zullen de teamleden nadenken over de werkwijze tijdens
@@ -59,6 +90,8 @@ de iteraties. Welke rolverdeling wordt er afgesproken? Is er een projectleider?
 Wie is de architecture owner? Stefan zal de werkwijze in een document beschrijven en
 kijken welke tools er beschikbaar zijn om deze werkwijze te ondersteunen. Guus en
 Jeroen zullen zich inlezen in DAD.
+
+\task{Stefan}{Werkwijze bij de iteraties beschrijven in readme.md}
 
 \topic{Presentatie planning}
 
@@ -79,26 +112,28 @@ Stefan en Jeroen zullen respectievelijk de ontwikkelwijze (DAD) en de schedule t
 
 \topic{Taken}
 
-\task{Guus}{Commentaar van Freek verwerken in de planning}
-\task{Guus}{Afspraak maken met Freek over openstaande vragen}
-\task{Guus}{Afspraak maken met Freek en Bernard om plan te presenteren}
-\task{Stefan}{Werkwijze bij de iteraties beschrijven in readme.md}
-\task{Stefan}{Domein analyse aanpassen en specifiek maken}
-\task{Jeroen}{Domein analyse aanpassen en specifiek maken}
-\task{Jeroen}{Extra iteratie vanwege onderzoekscontext verwerken in planning}
-\task{Jeroen}{Vooraf iteratie afstem momenten vastleggen (na akkoord planning)}
-\task{Guus}{Inhoud eigen domein analyse afstemmen met Freek}
-\task{Stefan}{Inhoud eigen domein analyse afstemmen met Freek}
-\task{Jeroen}{Inhoud eigen domein analyse afstemmen met Freek}
-\task{Jeroen}{Opvragen source code van de analyse tools}
-\task{Stefan}{Downloaden en installeren pandoc, experimenteren met markdown}
-\task{Jeroen}{Experimenteren met markdown}
-\task{Guus}{Uitzoeken of images in markdown goed werken}
-\task{Allen}{Besluit nemen over systeemdocumentatie}
+%%%\task{Guus}{Commentaar van Freek verwerken in de planning}
+%%%\task{Guus}{Afspraak maken met Freek over openstaande vragen}
+%%%\task{Guus}{Afspraak maken met Freek en Bernard om plan te presenteren}
+%%%\task{Stefan}{Werkwijze bij de iteraties beschrijven in readme.md}
+%%%\task{Stefan}{Domein analyse aanpassen en specifiek maken}
+%%%\task{Jeroen}{Domein analyse aanpassen en specifiek maken}
+%%%\task{Jeroen}{Extra iteratie vanwege onderzoekscontext verwerken in planning}
+%%%\task{Jeroen}{Vooraf iteratie afstem momenten vastleggen (na akkoord planning)}
+%%%\task{Guus}{Inhoud eigen domein analyse afstemmen met Freek}
+%%%\task{Stefan}{Inhoud eigen domein analyse afstemmen met Freek}
+%%%\task{Jeroen}{Inhoud eigen domein analyse afstemmen met Freek}
+%%%\task{Jeroen}{Opvragen source code van de analyse tools}
+%%%\task{Stefan}{Downloaden en installeren pandoc, experimenteren met markdown}
+%%%\task{Jeroen}{Experimenteren met markdown}
+%%%\task{Guus}{Uitzoeken of images in markdown goed werken}
+%%%\task{Allen}{Besluit nemen over systeemdocumentatie}
+
+\listoftasks
 
 
 \topic{Besluiten}
-\decisiontheme{DA}{Theme for a decision}
+\decisiontheme{DA}{Domein analyse}
 \decision{DA}{Besluit wie welke domeinanalyse doet}[
 Guus doet de toolkit. Jeroen neemt de integratie van verificatie modules
 voor zijn rekening met de cycle checker als uitgangspunt. Stefan doet
