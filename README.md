@@ -85,7 +85,8 @@ We use markdown with pandoc format for most of the system documentation
 Development process
 ===================
 
-Todo
+We use Disciplined Agile Delivery (DAD) for our process and use a cloud based
+agile management tool to visualise our work and to keep track of the progress.
 
 Compile and install
 ===================
