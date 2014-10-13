@@ -76,12 +76,11 @@ We use two document formats: LaTeX and markdown.
 Project documentation
 ---------------------
 We use LaTeX for most of the project documents like the plan, a tutorial or a guide. 
-Any kind of document that needs to look good on paper and is more than just a screenfull.
+Any kind of document that needs to look good on paper and is more than just a screenful.
 
 System documentation
 --------------------
-We use markdown with pandoc format for most of the system documentation (excluding the
-larger documents containing architecture or design documents). 
+We use markdown with pandoc format for most of the system documentation 
 
 Development process
 ===================
