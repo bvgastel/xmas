@@ -38,24 +38,23 @@ cycle checker en voor Stefan de combinatorial objects.
     \begin{tabular}{|p{2.5cm}|p{10cm}|}
     \hline
         {\bf vb}		& {\bf beschrijving} \\\hline
-        Platform onafhankelijk UI toolkit & Uitgaande van de high level
-requirements voor het ontwerp
-					    tool, zoals platform
-onafhankelijkheid, uitbreidbaarheid
-					    en hechte integratie: kies een UI
-toolkit die het
-					    beste past bij dit project en dit
-probleem gebied.\\\hline
-        combinatorische cycle checker & je zou de combinatorische cycle checker
-kunnen bestuderen inclusief de datastructuur die
-					deze tool deelt met de andere
-analysetools en een domeinanalyse kunnen doen
-					over hoe deze tool geintegreerd kan
-worden met jullie tool.\\\hline
-        combinatorial objects &  een onderzoek hoe om te gaan met combinatorial
-objects.
-				    Bv hoe grafisch weer te geven, hoe op te
-slaan in de data structuur\\\hline
+
+Platform onafhankelijk UI toolkit &
+Uitgaande van de high level requirements voor het ontwerp tool, zoals platform
+onafhankelijkheid, uitbreidbaarheid en hechte integratie: kies een UI
+toolkit die het beste past bij dit project en dit probleem gebied.\\\hline
+
+Integratie van verificatietools &
+Een analyse van de huidige en mogelijke toekomstige verificatietools. Welke
+datastructuren gebruiken zij intern en welke datastructuren kunnen de tools
+met elkaar delen? Hoe kunnen de verificatietools worden ge\"integreerd met
+de ontwerptool? De combinatorische cycle checker is een goede basis om mee
+te beginnen.\\\hline
+
+combinatorial objects &
+een onderzoek hoe om te gaan met combinatorial objects. Bv hoe grafisch weer
+te geven, hoe op te slaan in de data structuur.\\\hline
+
     \end{tabular}
 \end{center}
 
@@ -115,20 +114,26 @@ with efficiency and usability.
 %    \caption{Scope definition of combinatorial objects}
 %    \label{fig: da-objects}
 %\end{figure}
-    \subfloat[Combinatoric cycle checker]{%
+    \subfloat[Integration of verification tools]{%
     \begin{boxedminipage}[b]{.32\textwidth}
 	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
 	    Student: Jeroen Kleijn.
-	    \paragraph{Goal} Integrate the combinatoric cycle checker with the
-design tool. Determine the specific interface. Determine the common interface
-	    with other tools.
-	    \paragraph{In scope} Combinatoric cycle checker. Integration.
-	    \paragraph{Out of scope} The design tool.
-	    \paragraph{Overlap} The choices made in the integration analysis
-have implementation consequences for this domain analysis and vice versa.
-	    \paragraph{Results} This tool is not yet integrated into the design
-tool.
-	    \todo[inline,caption={cycle checker}]{is this true?}
+	    \paragraph{Goal} Integrate the verification tools, initially the
+	    combinatoric cycle checker, with the design tool. Determine the specific
+	    datastructures and programming interfaces shared between verification tools
+	    and design tool. Determine how the verification tools should communicate with
+	    each other (if necessary) and how the results of the verification tools will be
+	    presented to the design tool. Investigate how the integration of verification
+	    tools and design tool can be made extensible to allow easy integration of future
+	    verification tools.
+	    \paragraph{In scope} Integration of verification tools. Combinatoric cycle checker.
+	    \paragraph{Out of scope} Visual representation of feedback in the design tool
+	    \paragraph{Overlap} The choices made with regards to datastructures have
+	    implementation consequences for the way the design tool must provide data to the
+	    verification tools and vice versa (feedback).
+	    \paragraph{Results} This analysis will provide input to the architecture of the
+	    design tool, specifically the integration of verification tools with the design
+	    tool.
 	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \end{boxedminipage}
     }% subfig
