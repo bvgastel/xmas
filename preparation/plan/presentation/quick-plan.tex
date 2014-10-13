@@ -1,12 +1,27 @@
 \documentclass[10pt]{beamer}
 
+%%
+%% Examples in comment for including certain frames
+%%
+%%\includeonlyframes{outline,overview}
+%%
+%% This will include only the frames with labels outline and overview
+%%
+%% \begin{frame}[label=overview]
+%%
+%% \end{frame}
+
+%%\includeonlyframes{hulpmiddelen}
+
 \usepackage{ucs}
-\usepackage[utf8]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage{beamerthemebars}
 
 \usepackage{subfigure}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
 
 \title[Plan]{An overview of the project plan\\ for rebuilding WickedXMAS}
 \subtitle[Overview]{An Overview}
@@ -15,10 +30,19 @@
 \institute[OU nl]{Open University The Netherlands}
 %%\logo{\includegraphics[scale=.25]{oulogo.pdf}}    <- OU has no logo that I could download
 
+
 \begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
 
 \frame{\maketitle}   % <-- generate frame with title.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{1-quick-plan-project}
 \include{2-quick-plan-process}
 \include{3-quick-plan-schedule}
