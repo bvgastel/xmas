@@ -46,10 +46,10 @@ Mode=LaTeX
 
 [item:1-quick-plan-project.tex]
 archive=true
-column=0
+column=51
 encoding=UTF-8
 highlight=LaTeX
-line=85
+line=105
 mode=LaTeX
 open=true
 order=1
@@ -95,10 +95,10 @@ open=true
 order=0
 
 [view-settings,view=0,item:1-quick-plan-project.tex]
-CursorColumn=0
-CursorLine=85
+CursorColumn=51
+CursorLine=105
 JumpList=
-ViMarks=.,85,0,[,85,0,],85,0
+ViMarks=.,94,83,[,94,83,],94,83
 
 [view-settings,view=0,item:2-quick-plan-process.tex]
 CursorColumn=16
