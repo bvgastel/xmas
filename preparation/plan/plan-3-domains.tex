@@ -4,10 +4,10 @@
 
 \section{Domeinanalyse}
 
-De domeinanalyse ligt op het domein van de klant (Bernard): het geeft een
-deelprobleem. Met een domeinanalyse licht je
-\'e\'en deel van het probleem uit het geheel en bestudeer je dat gedetailleerder
-en wetenschappelijker dan de andere deelproblemen.
+De domeinanalyse ligt op het domein van de klant: het geeft een deelprobleem.
+Met een domeinanalyse licht je \'e\'en deel van het probleem uit het geheel
+en bestudeer je dat gedetailleerder en wetenschappelijker dan de andere
+deelproblemen.
 
 Ervaring wijst uit dat het belangrijk is de domeinanalyses als eerste te doen.
 Dat ondersteunt het project en voorkomt
@@ -19,29 +19,28 @@ ondersteunend is aan het project. De valkuil is om een te breed onderwerp te
 nemen. Hieronder de voorbeelden van goede onderwerpen
 voor een domeinanalyse die voor ons als input hebben gediend.
 
-De uitkomst van een domeinanalyse is een beschrijving van het probleem,
+De uitkomsten van een domeinanalyse zijn een beschrijving van het probleem,
 een beschrijving van de alternatieven, een beschrijving van de keuze criteria en
 een gewogen aanbeveling. Gewogen betekent dat de aanbeveling naar objectieve
-criteria plaatsvindt.
-De beslissing is een team effort, waarbij de klant (Bernard in dit geval)
-de doorslaggevende stem heeft.
+criteria plaatsvindt. De beslissing is een team effort, waarbij de klant
+de doorslaggevende stem heeft. De uitwerking evenals de beoordeling van
+een domeinanalyse is individueel.
 
-De beoordeling van elke domeinanalyse is individueel evenals de uitwerking.
-
-We kiezen er voor om de meest onzekere delen van het project als eerste doen.
-Hiermee halen we het grootste risico uit het
-project. Zie figuur \ref{fig: domain-analysis} voor de uitwerking per persoon.
-De keuze van het team is voor Guus de UI toolkit, voor Jeroen de combinatorische
-cycle checker en voor Stefan de combinatorial objects.
+In het project kiezen we voor de grootste risico's eerst. Dit zijn met name
+de integratie en de user interface met ontwikkelomgeving.
+Hiermee halen we het grootste risico uit het project. Zie figuur \ref{fig: domain-analysis}
+voor de uitwerking per persoon. De keuze van het team is voor Guus de UI toolkit,
+voor Jeroen de integratie (met combinatorische cycle checker) en voor Stefan de
+combinatorial objects.
 
 \begin{center}
-    \begin{tabular}{|p{2.5cm}|p{10cm}|}
+    \begin{tabular}{|p{13em}|p{22em}|}
     \hline
         {\bf vb}		& {\bf beschrijving} \\\hline
 
-Platform onafhankelijk UI toolkit &
+Platform onafhankelijk toolkit &
 Uitgaande van de high level requirements voor het ontwerp tool, zoals platform
-onafhankelijkheid, uitbreidbaarheid en hechte integratie: kies een UI
+onafhankelijkheid, uitbreidbaarheid en hechte integratie: kies een user interface
 toolkit die het beste past bij dit project en dit probleem gebied.\\\hline
 
 Integratie van verificatietools &
@@ -62,27 +61,27 @@ te geven, hoe op te slaan in de data structuur.\\\hline
 \begin{figure}[!h]
     \subfloat[UI toolkit]{%
     \begin{boxedminipage}[b]{.32\textwidth}
-	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	{\small\sf
 	    Student: Guus Bonnema.
 	    \paragraph{Goal}
-	    Find the toolkit combination that optimally satisfies the high level
-requirements as specified in the project plan.
+	    Find the toolkit combination that optimally satisfies the
+	    high level requirements as specified in the project plan.
 	    \paragraph{In scope}
 	    The high level architecture and the user interface toolkit.
-Influence on IPC toolkits, concurrency toolkits en integration toolkits.
+	    Influence on IPC toolkits, concurrency toolkits en integration toolkits.
 	    The influence on development environment.
 	    \paragraph{Out of scope}
-	    Any non UI toolkits are out of scope, unless a clear relationship
-exists.
+	    Any non UI toolkits are out of scope, unless a clear
+	    relationship exists.
 	    \paragraph{Overlap}
 	    Overlap with integration as many toolkits have approaches to
-integrating components. Also the constraints that follow
+	    integrating components. Also the constraints that follow
 	    from the domain analysis on integration will influence the resulting
-decision.
+	    decision.
 	    \paragraph{Results}
 	    The domain analysis results in advice on use of toolkits and on time
-necessary to master the toolkits.
-	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	    necessary to master the toolkits.
+	}% small
     \end{boxedminipage}
     }% subfig
 %    \caption{Scope of toolkit domain analysis}
@@ -90,7 +89,7 @@ necessary to master the toolkits.
 %\end{figure}
     \subfloat[Combinatorial objects]{%
     \begin{boxedminipage}[b]{.32\textwidth}
-	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	{\small\sf%%%%%%%%%%%%%%%%%%%%%%%%%%
 	    Student: Stefan Versluys.
 	    \paragraph{Goal}
 	    Find a way of how combinatorial objects can be structured and
@@ -108,7 +107,7 @@ verification tools which concerns efficient data structures and exchange.
 	    \paragraph{Results}
 	    This analysis will show what options that are available in contrast
 with efficiency and usability.
-	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	}% small %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \end{boxedminipage}
     }% subfig
 %    \caption{Scope definition of combinatorial objects}
@@ -116,15 +115,12 @@ with efficiency and usability.
 %\end{figure}
     \subfloat[Integration of verification tools]{%
     \begin{boxedminipage}[b]{.32\textwidth}
-	{\tiny%%%%%%%%%%%%%%%%%%%%%%%%%%
+	{\small\sf%%%%%%%%%%%%%%%%%%%%%%%%%%
 	    Student: Jeroen Kleijn.
 	    \paragraph{Goal} Integrate the verification tools, initially the
 	    combinatoric cycle checker, with the design tool. Determine the specific
 	    datastructures and programming interfaces shared between verification tools
-	    and design tool. Determine how the verification tools should communicate with
-	    each other (if necessary) and how the results of the verification tools will be
-	    presented to the design tool. Investigate how the integration of verification
-	    tools and design tool can be made extensible to allow easy integration of future
+	    and design tool. Determine communication, integration, extensibility of
 	    verification tools.
 	    \paragraph{In scope} Integration of verification tools. Combinatoric cycle checker.
 	    \paragraph{Out of scope} Visual representation of feedback in the design tool
@@ -134,15 +130,15 @@ with efficiency and usability.
 	    \paragraph{Results} This analysis will provide input to the architecture of the
 	    design tool, specifically the integration of verification tools with the design
 	    tool.
-	}% tiny %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	}% small %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \end{boxedminipage}
     }% subfig
 
 %    \paragraph{Requirements for domain analysis}
-    \begin{boxedminipage}[c]{.8\textwidth}
+    \begin{boxedminipage}[c]{.98\textwidth}
     \begin{itemize}
 	\item At least an initial idea of the high level view of the system
-should be available. The final high level
+		should be available. The final high level
 		view will depend on the choices made here and for the toolkits.
 	\item The high level requirements must be defined and agreed on.
     \end{itemize}

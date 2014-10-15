@@ -5,12 +5,13 @@
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
+\usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
 \usepackage[dutch]{babel}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks = true,
-    citecolor = airforceblue,
+    citecolor = blue,
     linkcolor = blue
 }
 \usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
@@ -45,7 +46,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\secformat[1]{%
     {\fontsize{60}{60}\selectfont\thesection}%
-    \quad\rule[-8pt]{2pt}{40pt}\quad
+    \ifthenelse{\equal{\thesection}{}}{}{\quad\rule[-8pt]{2pt}{40pt}\quad}
     \parbox[b]{.7\textwidth}{\filright\bfseries #1}}%
 \titleformat{\section}[block]
     {\filright\normalfont\sffamily}{}{0pt}{\secformat}
@@ -118,11 +119,13 @@
 
 \appendix
 
+\bibliography{plan.bib}
 \section{Definities}
 \begin{description}
+ \item[analyse module] synoniem met verificatie module
  \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
  \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
 \end{description}
 
-\bibliography{plan.bib}
+
 \end{document} ;########################### end document ##################################;

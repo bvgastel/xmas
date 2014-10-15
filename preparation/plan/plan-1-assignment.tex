@@ -11,8 +11,8 @@ Freek Verbeek verwoordt de business case in de projectaanvraag
 als volgt.
 
 \begin{quote}
-    \tiny
-    De Network-on-Chip (NoC) groep van de OU doet onderzoek
+    \small\sf
+    ``De Network-on-Chip (NoC) groep van de OU doet onderzoek
     naar nieuwe methoden om NoC ontwerpen (moderne manier van
     ontwerpen van processoren) foutvrij te krijgen met behoud van
     efficiëntie. De NoC groep heeft een aantal tools ter ondersteuning
@@ -35,7 +35,7 @@ als volgt.
 
     Deze problemen moeten opgelost worden, danwel door een grote
     refactoring van de bestaande code, danwel door het opnieuw
-    bouwen.
+    bouwen.''
 \end{quote}
 
 Omdat dit het afstudeerproject is van drie studenten, zijn er geen financi\"ele overwegingen.
@@ -44,7 +44,7 @@ zijn al gedekt als onderdeel van de cursus Afstudeer Bachelor Informatica (ABI).
 
 De baten zijn vooral betere onderhoudbaarheid en uitbreidbaarheid en een bredere ondersteuning van platform.
 Deze verbeteringen ondersteunen met name het chip ontwerp onderzoek aan universiteiten en bedrijven. Dankzij een betere integratie
-tussen ontwerptool en analysetools optimaliseren de onderzoekers hun workflow. Het aantal handelingen
+tussen ontwerptool en verificatie tools optimaliseren de onderzoekers hun workflow. Het aantal handelingen
 dat zij moeten uitvoeren zijn minder dan met het huidig tool en de directe feedback in de user interface
 versnelt het lokaliseren en verhelpen van fouten in een ontwerp.
 
@@ -72,7 +72,7 @@ syntactische of semantische checks). Bernard en Freek nemen het onderhoud van he
 %%            1 tabel met per stakeholder de project en systeem-belangen en -doelstellingen
 
 \begin{figure}
-{\tiny
+{\small\sf
 \begin{center}
 \begin{tabular}{lll}\hline
 {\bf Stakeholder}    & {\bf Projectrollen}   & {\bf omgevingsrollen} \\\hline
@@ -88,7 +88,7 @@ Bedrijfsmedewerkers  &                       & Onderzoeker, gebruiker \\
 \caption{Stakeholders en hun rollen}\label{fig:stakeholders}
 \end{figure}
 
-{\tiny
+{\small\sf
 \begin{center}
 \begin{tabular}{llllll}\hline
 {\bf Stakeholder}    & {\bf Verband}   & {\bf Rol}     & {\bf Freq} & {\bf Belang} & {\bf Invloed}\\\hline
@@ -122,13 +122,14 @@ Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen
 \begin{description}
  \item[platformen] Het onderzoeksteam werkt met Mac OS, ontwikkelteam met MS Windows en Linux, de opdrachtgever en studenten met MS Windows, Linux of Mac OS.
 		    Dit genereert requirements voor platform onafhankelijkheid van ontwikkelomgeving, taal en toolkits die we gebruiken.
- \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerp tool (wat ons onderwerp is) en analyse tools (tools die nog
-		    in ontwikkeling zijn, maar deels al gebouwd). De uitdaging is een hoge graad van integratie van deze componenten, zo onafhankelijk mogelijk.
-		    Dit genereert requirements voor onderhoudbaarheid, component interfaces, applicatie structuur. De analyse tools zijn alle C++ programma's.
+ \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerp tool (wat ons onderwerp is) en verificatie tools (tools die
+		    deel gebouwd en deels in ontwikkeling zijn). De uitdaging is een hoge graad van integratie van deze componenten, zo onafhankelijk mogelijk.
+		    Dit genereert requirements voor onderhoudbaarheid, component interfaces, applicatie structuur. De verificatie tools zijn alle C++ programma's.
 		    De interfaces zijn gebaseerd op JSON.
  \item[onderhoud] Over de tijd heen onderhouden vele mensen de software, die elkaar niet spreken. Dit genereert requirements met betrekking tot documentatie,
 		    onderhoudbaarheid en toegankelijkheid.
- \item[Uitbreiding] De huidige software is moeilijk uitbreidbaar op de wijze die de opdrachtgever graag wil.
+ \item[Uitbreiding] De huidige software is moeilijk uitbreidbaar op de wijze die de opdrachtgever graag wil. De wens is relatief gemakkelijk een nieuwe
+		    verificatie module te kunnen toevoegen.
  \item[functie] Het ontwerp tool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het xmas paper \cite{chatterjee-kishinevsky:xmas}.
 		Het  huidige ontwerp tool: WickedXMas geeft de richting aan implementatie van de functionaliteit en de interface, maar is
 		niet beperkend of maatgevend daarvoor.
@@ -139,7 +140,7 @@ Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen
 Het project is een succes als
 
 \begin{itemize}
- \item het design tool een ontwerp kan maken in de xmas taal en de analyse tools kan aanroepen voor controle.
+ \item het design tool een ontwerp kan maken in de xmas taal en de verificatie tools kan aanroepen voor controle.
  \item Gebruikers van het tool op de volgende platforms kan draaien:
  \begin{itemize}
     \item MS Windows vanaf versie 7 64 bits (32 bits via emulatie)
@@ -176,8 +177,8 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
 
 \begin{figure}[ht]
 \begin{center}
-\tiny
-\begin{tabular}{|c|c|p{20em}|p{30em}|}
+\small\sf
+\begin{tabular}{|c|c|p{17em}|p{22em}|}
 \hline
 {\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting} \\\hline
   \ok & 1 & Stakeholders zijn niet op het gewenste moment beschikbaar  & De opdrachtgever en de begeleider hebben een beperkte tijd
@@ -205,8 +206,8 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
 
 \begin{figure}[!ht]
 \begin{center}
-\tiny
-\begin{tabular}{|p{20em}p{30em}c|}
+\small\sf
+\begin{tabular}{|p{17em}p{22em}c|}
 \hline
     {\bf Maatregel} & {\bf Toelichting} & {\bf risico} \\\hline
     Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider & 1\\\hline
