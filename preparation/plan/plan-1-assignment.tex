@@ -175,60 +175,132 @@ Zie figuur \ref{fig: risico} voor een overzicht van de risico's die we onderkenn
 een overzicht van de maatregelen die we nemen ter compensatie van risico's. Voor elk risico op \'e\'en na hebben we een
 maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor een vraag hierover.}.
 
+
+\begin{center}
+    \label{fig: risico}
+    \tablecaption{Relevante risico's voor dit project}
+    \tablehead{\hline {\bf nr} & \multicolumn{2}{l|}{\bf risico }\\\hline
+    {} & {\bf oorzaak} & {\bf maatregel}\\\hline}
+    \tabletail{\hline \multicolumn{3}{r}{\emph{verder op de volgende pagina}}\\}
+    \tablelasttail{\hline \multicolumn{3}{r}{\emph{Einde tabel relevante risico's}}\\}
+    \small\sf
+    \begin{supertabular}{|c|p{23em}|p{13em}|}
+	1	& \multicolumn{2}{c|}{\sf\emph{vertraging in het project of de oplevering}}
+		\\\hline
+		& Stakeholders niet beschikbaar wanneer dat gewenst is
+		& skype(1),email(2),contact-momenten(1a)
+		\\\hline
+		& Agile methode is nieuw voor teamleden.
+		& DAD(8), tools(?)
+		\\\hline
+		& OU heeft traag support
+		& Github (6a)
+		\\\hline
+		& Geografische spreiding leidt tot communicatie problemen
+		    met kwaliteitsvermindering tot gevolg
+		& skype(4), coordinatie(5), tools (6a, 6b)
+		\\\hline
+		& C++ is nog relatief nieuw voor 2 van de 3 programmeurs
+		& leren(9), review(10)
+		\\\hline
+		& Het kost tijd om de bestaande verificatietools en de achterliggende
+		    \xmas\ -materie op te nemen.
+		& tijd inplannen (11 en onderzoekscontext)
+		\\\hline
+	2 	& \multicolumn{2}{c|}{\sf\emph{Systeem kwaliteitsafname}}
+		\\\hline
+		& Agile is nieuw voor teamleden
+		& agile (7), agile tool (6b)
+		\\\hline
+		& Structuurverval bij nieuwe features is een natuurlijk
+		gevolg
+		& Refactoring (3), Architectuur(12)
+		\\\hline
+		& Geografische spreiding leidt tot communicatie problemen
+		met kwaliteitsvermindering tot gevolg
+		& skype(4), teamviewer(?), agile tool(6b)
+		\\\hline
+		& Ervaring met C++ beperkt met mogelijke gevolgen
+		voor de kwaliteit (fouten, best practices missen)
+		& leren(9), review(10)
+		\\\hline
+	3	& \multicolumn{2}{c|}{\sf\emph{Product kwaliteitsafname}}
+		\\\hline
+		& Verificatie tools merken een fout niet op.
+		& testen en feedback users, eventueel beta versie
+		\\\hline
+        \end{supertabular}
+
+    \end{center}
+
 \begin{figure}[ht]
 \begin{center}
 \small\sf
-\begin{tabular}{|c|c|p{12.5em}|p{21em}|c|c|}
+\begin{tabular}{|c|c|p{12.5em}|p{21em}|}
 \hline
-{\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting} & {\bf Kans} & {\bf Ernst} \\\hline
+{\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting}  \\\hline
+
   \ok & 1 & Stakeholders zijn niet op het gewenste moment beschikbaar  & De opdrachtgever en de begeleider hebben een beperkte tijd
-					beschikbaar. De andere stakeholders zijn niet beschikbaar. & hoog & middel \\\hline
-  \ok & 2 & Project verloopt niet goed door gebrek aan Agile ervaring & De teamleden hebben vooral ervaring met waterval projecten. & hoog & middel \\\hline
-  \ok & 3 & Vertraging van activiteiten door trage support (OU) & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken. & middel & laag \\\hline
+					beschikbaar. De andere stakeholders zijn niet beschikbaar.
+					Dit kan leiden tot vertraging.  \\\hline
+  \ok & 2 & Project verloopt moeizamer door gebrek aan Agile ervaring &
+	    De teamleden hebben vooral ervaring met waterval projecten. Dit kan trager verloop veroorzaken.
+	     \\\hline
+  \ok & 3 & Vertraging van activiteiten door trage support (OU) &
+  De support van de OU lijkt niet al te voortvarend. Dit kan vertraging veroorzaken.  \\\hline
   \ok & 4 & Er is meer tijd nodig dan gedacht om de materiekennis op te doen & Het kost tijd om de bestaande verificatietools en de achterliggende
-					\xmas\ -materie op te nemen. & laag & middel \\\hline
+					\xmas\ -materie op te nemen.  \\\hline
   \ok & 5 & Communicatieproblemen treden op door geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
-				organiseren voor overleg tijdens het project. & middel & middel \\\hline
+				organiseren voor overleg tijdens het project.  \\\hline
   \ok & 6 & Ontstaan van structuurverval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuurverval een
-				natuurlijk gevolg. & middel & hoog \\\hline
-  \ok & 7 & Weinig ervaring met c++ leidt tot lagere kwaliteit en bruikbaarheid van de opgeleverde software & Het team heeft maar \'e\'en ervaren C++ programmeur en deze
-  heeft vooral ervaring met embedded systems. Dit gebrek aan ervaring kan er toe leiden dat de softwareontwikkeling vertraging oploopt. In de
-  beschikbare tijd kunnen minder features worden ontwikkeld dan oorspronkelijk gepland. Verkeerd gebruik (bad practices) van de programmeertaal kan een bedreiging zijn
-  voor de softwarekwaliteit. & middel & hoog \\\hline
-  \ding{"38} & 8 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken. & laag & hoog \\\hline
+				natuurlijk gevolg.  \\\hline
+  \ok & 7 & Weinig ervaring met c++ leidt tot minder features & Het team heeft maar \'e\'en ervaren
+	    C++ programmeur en deze heeft vooral ervaring met embedded systems. Dit gebrek aan ervaring kan er toe leiden dat de softwareontwikkeling
+	    vertraging oploopt. In de beschikbare tijd kunnen minder features worden ontwikkeld dan oorspronkelijk gepland.  \\\hline
+  \ok & 8 & Weinig ervaring met c++ leidt tot niet toepassen best practices & De onervaren C++ programmeurs passen niet de best practices toe.
+	    \\\hline
+  \ding{"38} & 9 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken. \\\hline
 
 \end{tabular}
 \end{center}
  \caption{Relevante risico's voor dit project}
- \label{fig: risico}
+ \label{fig: risico-oud}
 \end{figure}
 
 
 \begin{figure}[!ht]
 \begin{center}
 \small\sf
-\begin{tabular}{|p{17em}p{22em}c|}
+\begin{tabular}{|r|p{17em}|p{20em}|}
 \hline
-    {\bf Maatregel} & {\bf Toelichting} & {\bf risico} \\\hline
-    Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider & 1\\\hline
-    Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
-				    een kans op vertraging. & 1\\\hline
-    Regelmatige refactor (per taak) & Een refactor na uitvoeren en testen van een taak, levert
-					een goed gestructureerd systeem na elke iteratie. & 6\\\hline
-    Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken & 5\\\hline
-    Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken & 5\\\hline
-    Ondersteuning zoeken buiten de OU & Een trage ondersteuning kan op kritieke momenten
+    {\bf id} & {\bf Maatregel} & {\bf Toelichting} \\\hline
+    1 & Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider \\\hline
+    1a & vaste communicatiemomenten afspreken & Dit vermindert het effect van risioco 1 (stakeholder beschikbaarheid)\\\hline
+    2 & Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
+				    een kans op vertraging.\\\hline
+    3 & Refactoring & Een refactor na uitvoeren en testen van een taak, levert
+					een goed gestructureerd systeem na elke iteratie.\\\hline
+    4 & Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken\\\hline
+    5 & Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken\\\hline
+    6 & Ondersteuning zoeken buiten de OU & Een trage ondersteuning kan op kritieke momenten
 					het gehele project vertragen. Door minder op
-					OU support te leunen, verminderen we die afhankelijkheid & 3\\\hline
-    Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
-				problemen met het proces & 2\\\hline
-    C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
+					OU support te leunen, vermijden we het risico\\\hline
+    6a & Gebruik Github	& Vermijdt risico traag OU support\\\hline
+    6b & Gebruik agile tool & Vermindert risico van kwaliteitsafname\\\hline
+    7 & Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
+				problemen met het proces\\\hline
+    8 & DAD methode kiezen & DAD is beter geschikt voor mensen die minder
+    ervaring met agile hebben.\\\hline
+    9 & C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
 			met onze achtergrondkennis van programmeertalen en
-			van Java, het risico op vertraging voor zijn & 7\\\hline
-    Review door de ervaren C++ & Learning on the job onder begeleiding van
-				het teamlid dat C++ ervaring heeft & 7\\\hline
-    Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domeinanalyse en het bepalen van de
-			architectuur. Dit beperkt het gevaar van te vroeg implementeren & 4\\\hline
+			van Java, het risico op vertraging voor zijn\\\hline
+    10 & Review door de ervaren C++ programmeur & Learning on the job onder begeleiding van
+				het teamlid dat C++ ervaring heeft\\\hline
+    11 & Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domeinanalyse en het bepalen van de
+			architectuur. Dit beperkt het gevaar van te vroeg implementeren\\\hline
+    12 & Architectuur & Vergroot de kans dat de structuur a priori geschikt is voor de applicatie en
+			voor de nieuwe features.
+		       \\\hline
 \end{tabular}
 \end{center}
  \caption{Risico reductie}\label{fig: risico reductie}
