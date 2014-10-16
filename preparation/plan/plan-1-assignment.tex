@@ -40,30 +40,30 @@ als volgt.
 
 Omdat dit het afstudeerproject is van drie studenten, zijn er geen financi\"ele overwegingen.
 De kosten die er zijn (inzet opdrachtgever en begeleider) vallen onder het afstuderen. Deze kosten
-zijn al gedekt als onderdeel van de cursus Afstudeer Bachelor Informatica (ABI).
+zijn al gedekt als onderdeel van de cursus Afstudeerproject Bachelor Informatica (ABI).
 
-De baten zijn vooral betere onderhoudbaarheid en uitbreidbaarheid en een bredere ondersteuning van platform.
-Deze verbeteringen ondersteunen met name het chip ontwerp onderzoek aan universiteiten en bedrijven. Dankzij een betere integratie
-tussen ontwerptool en verificatie tools optimaliseren de onderzoekers hun workflow. Het aantal handelingen
-dat zij moeten uitvoeren zijn minder dan met het huidig tool en de directe feedback in de user interface
+De baten zijn vooral betere onderhoudbaarheid en uitbreidbaarheid en een bredere ondersteuning van platformen.
+Deze verbeteringen ondersteunen met name het chipontwerponderzoek aan universiteiten en bedrijven. Dankzij een betere integratie
+tussen ontwerptool en verificatietools optimaliseren de onderzoekers hun workflow. Het aantal handelingen
+dat zij moeten uitvoeren is minder dan met het huidig tool en de directe feedback in de user interface
 versnelt het lokaliseren en verhelpen van fouten in een ontwerp.
 
 \subsection{Vision}\label{sec: vision}
 
-Deze sectie geeft aan wat de opdrachtgever ziet als ideale uitkomst van het project. Het ontwerp tool is
+Deze sectie geeft aan wat de opdrachtgever ziet als ideale uitkomst van het project. Het ontwerptool is
 bedoeld voor wetenschappers van universiteiten en van bedrijven (o.a. Intel). Onderzoekers op verschillende
-platformen kunnen het ontwerp tool gemakkelijk downloaden, installeren en gebruiken. Het tool toont op verzoek
-tijdens het ontwerp fouten van verificatie tools.
+platformen kunnen het ontwerptool gemakkelijk downloaden, installeren en gebruiken. Het tool toont op verzoek
+tijdens het ontwerp fouten die door de verificatietools zijn gevonden.
 
-Het programma is goed gestructureerd, uit te breiden met nieuwe analyses en verificaties en NoC onderzoekers
-kunnen gemakkelijk nieuwe primitieven defini\"eren. Ten slotte kunnen de \xmas\ onderzoekers onze bestanden
+Het programma is goed gestructureerd, uit te breiden met nieuwe verificatietools en NoC onderzoekers
+kunnen gemakkelijk nieuwe primitieven defini\"eren. Ten slotte kunnen de \xmas\ -onderzoekers onze bestanden
 converteren naar een ander formaat zoals Verilog.
 
 \subsection{Stakeholders}
 
 Opdrachtgever is Bernard van Gastel van de Open Universiteit. Begeleider is Freek Verbeek van de Open Universiteit.
-De doelgroep voor gebruikers van het ontwerp tool zijn medewerkers van universiteiten en onderzoekers van bedrijven zoals
-Intel en LLC. Een kleine groep van xMAS onderzoekers van zowel de universiteit als bedrijven gebruiken het ontwerp tool
+De doelgroep voor gebruikers van het ontwerptool bestaat uit medewerkers van universiteiten en onderzoekers van bedrijven zoals
+Intel en LLC. Een kleine groep van \xmas\ -onderzoekers van zowel de universiteit als bedrijven gebruiken het ontwerptool
 vanuit de optiek van onderzoek naar verbetering van NoC ontwerp. Doelstellingen voor deze groep zijn chip import
 en export van bestandsformaten (zoals Verilog) en verificatie van aspecten van correctheid (deadlock, livelock,
 syntactische of semantische checks). Bernard en Freek nemen het onderhoud van het tool voor hun rekening.
@@ -121,16 +121,16 @@ Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen
 
 \begin{description}
  \item[platformen] Het onderzoeksteam werkt met Mac OS, ontwikkelteam met MS Windows en Linux, de opdrachtgever en studenten met MS Windows, Linux of Mac OS.
-		    Dit genereert requirements voor platform onafhankelijkheid van ontwikkelomgeving, taal en toolkits die we gebruiken.
- \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerp tool (wat ons onderwerp is) en verificatie tools (tools die
+		    Dit genereert requirements voor platformonafhankelijkheid van ontwikkelomgeving, taal en toolkits die we gebruiken.
+ \item[integratie] Het systeem bestaat uit meerdere modulen, grofweg aangeduid als ontwerptool (wat ons onderwerp is) en verificatietools (tools die
 		    deel gebouwd en deels in ontwikkeling zijn). De uitdaging is een hoge graad van integratie van deze componenten, zo onafhankelijk mogelijk.
-		    Dit genereert requirements voor onderhoudbaarheid, component interfaces, applicatie structuur. De verificatie tools zijn alle C++ programma's.
+		    Dit genereert requirements voor onderhoudbaarheid, componentinterfaces en applicatiestructuur. De verificatietools zijn alle C++ programma's.
 		    De interfaces zijn gebaseerd op JSON.
  \item[onderhoud] Over de tijd heen onderhouden vele mensen de software, die elkaar niet spreken. Dit genereert requirements met betrekking tot documentatie,
 		    onderhoudbaarheid en toegankelijkheid.
  \item[Uitbreiding] De huidige software is moeilijk uitbreidbaar op de wijze die de opdrachtgever graag wil. De wens is relatief gemakkelijk een nieuwe
-		    verificatie module te kunnen toevoegen.
- \item[functie] Het ontwerp tool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het xmas paper \cite{chatterjee-kishinevsky:xmas}.
+		    verificatiemodule te kunnen toevoegen.
+ \item[functie] Het ontwerptool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het \xmas\ paper \cite{chatterjee-kishinevsky:xmas}.
 		Het  huidige ontwerp tool: WickedXMas geeft de richting aan implementatie van de functionaliteit en de interface, maar is
 		niet beperkend of maatgevend daarvoor.
 \end{description}
@@ -140,7 +140,7 @@ Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen
 Het project is een succes als
 
 \begin{itemize}
- \item het design tool een ontwerp kan maken in de xmas taal en de verificatie tools kan aanroepen voor controle.
+ \item het ontwerptool een ontwerp kan maken in de \xmas\ taal en de verificatietools kan aanroepen voor controle.
  \item Gebruikers van het tool op de volgende platforms kan draaien:
  \begin{itemize}
     \item MS Windows vanaf versie 7 64 bits (32 bits via emulatie)
@@ -152,7 +152,7 @@ Het project is een succes als
 Het project is een groot succes als het project een succes is en:
 
 \begin{itemize}
- \item De gebruiker kan validatie en verificatie software aanzetten of uitzetten
+ \item De gebruiker kan validatie- en verificatiesoftware aanzetten of uitzetten
  \item De gebruiker kan nieuwe primitieven maken en aankoppelen.
 \end{itemize}
 
@@ -160,18 +160,18 @@ Het project is mislukt als het ontwerp tool geen succes is.
 
 \subsection{Risico}
 
-De onderkende risico's zijn vooral project risico's. De meeste project risico's komen voort uit de
+De onderkende risico's zijn vooral projectrisico's. De meeste projectrisico's komen voort uit de
 geografische spreiding van het team (i.e. de studenten) en opdrachtgever
 en begeleider. Diverse maatregelen zijn dan ook gericht op het verminderen
-van het risico's die de spreiding veroorzaakt.
+van de risico's die de spreiding veroorzaakt.
 
 
-Omdat het gaat om herstructureren/herbouwen van bestaande programmatuur zijn er weinig systeem risico's.
-Inhoudelijke kennis is bij de opdrachtgever en de begeleider voorhanden. Het grootste systeem risico is het kiezen
-van een user interface toolkit en de ontwikkelomgeving. Dit onderdeel bepaalt de platform onafhankelijkheid
+Omdat het gaat om herstructureren/herbouwen van bestaande programmatuur zijn er weinig systeemrisico's.
+Inhoudelijke kennis is bij de opdrachtgever en de begeleider voorhanden. Het grootste systeemrisico is het kiezen
+van een user interface toolkit en de ontwikkelomgeving. Dit onderdeel bepaalt de platformonafhankelijkheid
 en heeft invloed op de architectuur. Het plan besteedt apart aandacht aan dit onderdeel in een domeinanalyse.
 
-Zie figuur \ref{fig: risico} een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
+Zie figuur \ref{fig: risico} voor een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
 een overzicht van de maatregelen die we nemen ter compensatie van risico's. Voor elk risico op \'e\'en na hebben we een
 maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor een vraag hierover.}.
 
@@ -186,7 +186,7 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
   \ok & 2 & Project verloopt niet goed door gebrek aan Agile ervaring & De teamleden hebben vooral ervaring met waterval projecten. & hoog & middel \\\hline
   \ok & 3 & Vertraging van activiteiten door trage support (OU) & De support van de OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken. & middel & laag \\\hline
   \ok & 4 & Er is meer tijd nodig dan gedacht om de materiekennis op te doen & Het kost tijd om de bestaande verificatietools en de achterliggende
-					xmas-materie op te nemen. & laag & middel \\\hline
+					\xmas\ -materie op te nemen. & laag & middel \\\hline
   \ok & 5 & Communicatieproblemen treden op door geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
 				organiseren voor overleg tijdens het project. & middel & middel \\\hline
   \ok & 6 & Ontstaan van structuurverval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuurverval een
@@ -223,13 +223,12 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
     Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
 				problemen met het proces & 2\\\hline
     C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
-			met onze achtergrond kennis van programmeer talen en
+			met onze achtergrondkennis van programmeertalen en
 			van Java, het risico op vertraging voor zijn & 7\\\hline
     Review door de ervaren C++ & Learning on the job onder begeleiding van
 				het teamlid dat C++ ervaring heeft & 7\\\hline
-    Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domein
-				analyse en de het bepalen van de architectuur.
-				Dit beperkt het gevaar van te vroeg implementeren & 4\\\hline
+    Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domeinanalyse en het bepalen van de
+			architectuur. Dit beperkt het gevaar van te vroeg implementeren & 4\\\hline
 \end{tabular}
 \end{center}
  \caption{Risico reductie}\label{fig: risico reductie}
