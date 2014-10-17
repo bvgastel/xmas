@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,draft]{article}
+\documentclass[a4paper,11pt]{article}
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
@@ -27,11 +27,14 @@
 
 \bibliographystyle{alpha}
 
+\hyphenation{re-quire-ments re-quire-ment}
+
 \author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
 \date{16/10/14}
 
 \title{Plan van aanpak voor \xmas\ ontwerptool}
 
+\setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
 
 %% Document is in subdocumenten gesplitst.
 
@@ -42,6 +45,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\xmas}{x\textsc{mas}}%
 \newcommand{\ok}{$\checkmark$}
+
+\newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
 
@@ -84,7 +89,7 @@
 \listoftodos
 
 \section{Open punten}
-
+\label{sec: open-punten}
 \begin{enumerate}
  \item Is het de bedoeling dat de ontwerpen die met deze tool gemaakt kunnen worden ook voor de productie van een
  chip gebruikt zullen worden, m.a.w. bestaat er een risico dat fouten door deze tool leiden tot een

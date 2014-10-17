@@ -165,33 +165,34 @@ geografische spreiding van het team (i.e. de studenten) en opdrachtgever
 en begeleider. Diverse maatregelen zijn dan ook gericht op het verminderen
 van de risico's die de spreiding veroorzaakt.
 
-
-Omdat het gaat om herstructureren/herbouwen van bestaande programmatuur zijn er weinig systeemrisico's.
-Inhoudelijke kennis is bij de opdrachtgever en de begeleider voorhanden. Het grootste systeemrisico is het kiezen
+Het gaat om herstructureren dan wel herbouwen van bestaande programmatuur. Daarom zijn er weinig systeemrisico's.
+De inhoudelijke kennis is bij de opdrachtgever en de begeleider aanwezig. Het grootste systeemrisico is het kiezen
 van een user interface toolkit en de ontwikkelomgeving. Dit onderdeel bepaalt de platformonafhankelijkheid
-en heeft invloed op de architectuur. Het plan besteedt apart aandacht aan dit onderdeel in een domeinanalyse.
+en heeft invloed op de architectuur. Het plan besteedt apart aandacht aan het onderdeel in een domeinanalyse om
+vroegtijdig dit risico weg te nemen.
 
 Zie figuur \ref{fig: risico} voor een overzicht van de risico's die we onderkennen en figuur \ref{fig: risico reductie} voor
 een overzicht van de maatregelen die we nemen ter compensatie van risico's. Voor elk risico op \'e\'en na hebben we een
-maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor een vraag hierover.}.
-
+maatregel bedacht. Het risico voor fouten in het ontwerp accepteren we maar zie paragraaf \ref{sec: open-punten} voor
+een vraag hierover bij de open punten.
 
 \begin{center}
     \label{fig: risico}
+    \sf
     \tablecaption{Relevante risico's voor dit project}
-    \tablehead{\hline {\bf nr} & \multicolumn{2}{l|}{\bf risico }\\\hline
-    {} & {\bf oorzaak} & {\bf maatregel}\\\hline}
+    \tablehead{\hline & \multicolumn{2}{c|}{\bf risico }\\\hline
+    {} & \multicolumn{1}{c|}{\bf oorzaak} & \multicolumn{1}{c|}{\bf maatregel}\\\hline}
     \tabletail{\hline \multicolumn{3}{r}{\emph{verder op de volgende pagina}}\\}
     \tablelasttail{\hline \multicolumn{3}{r}{\emph{Einde tabel relevante risico's}}\\}
     \small\sf
     \begin{supertabular}{|c|p{23em}|p{13em}|}
-	1	& \multicolumn{2}{c|}{\sf\emph{vertraging in het project of de oplevering}}
+	1	& \multicolumn{2}{c|}{\sf\emph{\large vertraging in het project of de oplevering}}
 		\\\hline
 		& Stakeholders niet beschikbaar wanneer dat gewenst is
-		& skype(1),email(2),contact-momenten(1a)
+		& skype(1),email(2),contact momenten(1a)
 		\\\hline
 		& Agile methode is nieuw voor teamleden.
-		& DAD(8), tools(?)
+		& DAD(8), tools(6a, 6b, 6c)
 		\\\hline
 		& OU heeft traag support
 		& Github (6a)
@@ -207,14 +208,14 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
 		    \xmas\ -materie op te nemen.
 		& tijd inplannen (11 en onderzoekscontext)
 		\\\hline
-	2 	& \multicolumn{2}{c|}{\sf\emph{Systeem kwaliteitsafname}}
+	2 	& \multicolumn{2}{c|}{\sf\emph{\large Systeem kwaliteitsafname}}
 		\\\hline
 		& Agile is nieuw voor teamleden
 		& agile (7), agile tool (6b)
 		\\\hline
 		& Structuurverval bij nieuwe features is een natuurlijk
 		gevolg
-		& Refactoring (3), Architectuur(12)
+		& Vaak refactoren (3), Architectuur(12)
 		\\\hline
 		& Geografische spreiding leidt tot communicatie problemen
 		met kwaliteitsvermindering tot gevolg
@@ -224,84 +225,53 @@ maatregel bedacht. De laatste accepteren we\footnote{Zie de open punten, voor ee
 		voor de kwaliteit (fouten, best practices missen)
 		& leren(9), review(10)
 		\\\hline
-	3	& \multicolumn{2}{c|}{\sf\emph{Product kwaliteitsafname}}
+	3	& \multicolumn{2}{c|}{\sf\emph{\large Product kwaliteitsafname}}
 		\\\hline
-		& Verificatie tools merken een fout niet op.
+		& Verificatie tools merken een fout niet op met consequenties voor
+		  in productie name van chips\footnote{Zie open vragen}.
 		& testen en feedback users, eventueel beta versie
 		\\\hline
         \end{supertabular}
-
-    \end{center}
-
-\begin{figure}[ht]
-\begin{center}
-\small\sf
-\begin{tabular}{|c|c|p{12.5em}|p{21em}|}
-\hline
-{\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting}  \\\hline
-
-  \ok & 1 & Stakeholders zijn niet op het gewenste moment beschikbaar  & De opdrachtgever en de begeleider hebben een beperkte tijd
-					beschikbaar. De andere stakeholders zijn niet beschikbaar.
-					Dit kan leiden tot vertraging.  \\\hline
-  \ok & 2 & Project verloopt moeizamer door gebrek aan Agile ervaring &
-	    De teamleden hebben vooral ervaring met waterval projecten. Dit kan trager verloop veroorzaken.
-	     \\\hline
-  \ok & 3 & Vertraging van activiteiten door trage support (OU) &
-  De support van de OU lijkt niet al te voortvarend. Dit kan vertraging veroorzaken.  \\\hline
-  \ok & 4 & Er is meer tijd nodig dan gedacht om de materiekennis op te doen & Het kost tijd om de bestaande verificatietools en de achterliggende
-					\xmas\ -materie op te nemen.  \\\hline
-  \ok & 5 & Communicatieproblemen treden op door geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
-				organiseren voor overleg tijdens het project.  \\\hline
-  \ok & 6 & Ontstaan van structuurverval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuurverval een
-				natuurlijk gevolg.  \\\hline
-  \ok & 7 & Weinig ervaring met c++ leidt tot minder features & Het team heeft maar \'e\'en ervaren
-	    C++ programmeur en deze heeft vooral ervaring met embedded systems. Dit gebrek aan ervaring kan er toe leiden dat de softwareontwikkeling
-	    vertraging oploopt. In de beschikbare tijd kunnen minder features worden ontwikkeld dan oorspronkelijk gepland.  \\\hline
-  \ok & 8 & Weinig ervaring met c++ leidt tot niet toepassen best practices & De onervaren C++ programmeurs passen niet de best practices toe.
-	    \\\hline
-  \ding{"38} & 9 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken. \\\hline
-
-\end{tabular}
 \end{center}
- \caption{Relevante risico's voor dit project}
- \label{fig: risico-oud}
-\end{figure}
 
 
-\begin{figure}[!ht]
 \begin{center}
-\small\sf
-\begin{tabular}{|r|p{17em}|p{20em}|}
-\hline
-    {\bf id} & {\bf Maatregel} & {\bf Toelichting} \\\hline
-    1 & Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider \\\hline
-    1a & vaste communicatiemomenten afspreken & Dit vermindert het effect van risioco 1 (stakeholder beschikbaarheid)\\\hline
-    2 & Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
-				    een kans op vertraging.\\\hline
-    3 & Refactoring & Een refactor na uitvoeren en testen van een taak, levert
-					een goed gestructureerd systeem na elke iteratie.\\\hline
-    4 & Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken\\\hline
-    5 & Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken\\\hline
-    6 & Ondersteuning zoeken buiten de OU & Een trage ondersteuning kan op kritieke momenten
-					het gehele project vertragen. Door minder op
-					OU support te leunen, vermijden we het risico\\\hline
-    6a & Gebruik Github	& Vermijdt risico traag OU support\\\hline
-    6b & Gebruik agile tool & Vermindert risico van kwaliteitsafname\\\hline
-    7 & Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
-				problemen met het proces\\\hline
-    8 & DAD methode kiezen & DAD is beter geschikt voor mensen die minder
-    ervaring met agile hebben.\\\hline
-    9 & C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
-			met onze achtergrondkennis van programmeertalen en
-			van Java, het risico op vertraging voor zijn\\\hline
-    10 & Review door de ervaren C++ programmeur & Learning on the job onder begeleiding van
-				het teamlid dat C++ ervaring heeft\\\hline
-    11 & Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domeinanalyse en het bepalen van de
-			architectuur. Dit beperkt het gevaar van te vroeg implementeren\\\hline
-    12 & Architectuur & Vergroot de kans dat de structuur a priori geschikt is voor de applicatie en
-			voor de nieuwe features.
-		       \\\hline
-\end{tabular}
+    \label{fig: risico reductie}
+    \small\sf
+    \sf
+    \tablecaption{Maatregelen ter vermindering van risico's}
+    \tablehead{\hline {} & \multicolumn{1}{c|}{\bf Maatregel} & \multicolumn{1}{c|}{\bf toelichting}\\\hline}
+    \tabletail{\hline \multicolumn{3}{r}{\emph{verder op de volgende pagina}}\\}
+    \tablelasttail{\hline \multicolumn{3}{r}{\emph{Einde tabel maatregelen ter vermindering van risico's}}\\}
+    \begin{supertabular}{|r|p{17em}|p{20em}|}
+    \hline
+	{\bf id} & {\bf Maatregel} & {\bf Toelichting} \\\hline
+	1 & Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider \\\hline
+	1a & vaste communicatiemomenten afspreken & Dit vermindert het effect van risioco 1 (stakeholder beschikbaarheid)\\\hline
+	2 & Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
+					een kans op vertraging.\\\hline
+	3 & Refactoring & Een refactor na uitvoeren en testen van een taak, levert
+					    een goed gestructureerd systeem na elke iteratie.\\\hline
+	4 & Skype en chat creatief en vaak gebruiken & Verhoogt de gelijkenis met lokaal samenwerken\\\hline
+	5 & Op afspraak tegelijkertijd bouwen & Verhoogt de kans om samen te werken\\\hline
+	6 & Ondersteuning zoeken buiten de OU & Een trage ondersteuning kan op kritieke momenten
+					    het gehele project vertragen. Door minder op
+					    OU support te leunen, vermijden we het risico\\\hline
+	6a & Gebruik Github	& Vermijdt risico traag OU support\\\hline
+	6b & Gebruik agile tool & Vermindert risico van kwaliteitsafname\\\hline
+	6c & Gebruik mailing list & Verbetert communicatie over email\\\hline
+	7 & Agile literatuur lezen & Door ons actief in agile te verdiepen, verkleinen we de kans op
+				    problemen met het proces\\\hline
+	8 & DAD methode met ondersteunend tool kiezen & DAD is beter geschikt voor mensen die minder
+	ervaring met agile hebben. Het tool zorgt voor gemakkelijkere toepassing van DAD.\\\hline
+	9 & C++ studie doen & Door actief ons C++ 2011 eigen te maken, kunnen we
+			    met onze achtergrondkennis van programmeertalen en
+			    van Java, het risico op vertraging voor zijn\\\hline
+	10 & Review door de ervaren C++ programmeur & Learning on the job onder begeleiding van
+				    het teamlid dat C++ ervaring heeft\\\hline
+	11 & Voldoende tijd voor voorfase & De ontwikkeling pas starten na de domeinanalyse en het bepalen van de
+			    architectuur. Dit beperkt het gevaar van te vroeg implementeren\\\hline
+	12 & Architectuur & Vergroot de kans dat de structuur a priori geschikt is voor de applicatie en
+			    voor de nieuwe features.\\\hline
+    \end{supertabular}
 \end{center}
- \caption{Risico reductie}\label{fig: risico reductie}
-\end{figure}

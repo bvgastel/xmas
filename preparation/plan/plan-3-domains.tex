@@ -35,50 +35,54 @@ combinatorial objects.
 
 \begin{center}
     \begin{tabular}{|p{13em}|p{22em}|}
-    \hline
+	\hline
         {\bf vb}		& {\bf beschrijving} \\\hline
 
-Platformonafhankelijk toolkit &
-Uitgaande van de high level requirements voor het ontwerptool, zoals
-platformonafhankelijkheid, uitbreidbaarheid en hechte integratie: kies een user interface
-toolkit die het beste past bij dit project en dit probleemgebied.\\\hline
+	Platformonafhankelijk toolkit &
+	Uitgaande van de high level requirements voor het ontwerptool, zoals
+	platformonafhankelijkheid, uitbreidbaarheid en hechte integratie: kies een user interface
+	toolkit die het beste past bij dit project en dit probleemgebied.\\\hline
 
-Integratie van verificatietools &
-Een analyse van de huidige en mogelijke toekomstige verificatietools. Welke
-datastructuren gebruiken zij intern en welke datastructuren kunnen de tools
-met elkaar delen? Hoe kunnen de verificatietools worden ge\"integreerd met
-de ontwerptool? De combinatorische cycle checker is een goede basis om mee
-te beginnen.\\\hline
+	Integratie van verificatietools &
+	Een analyse van de huidige en mogelijke toekomstige verificatietools. Welke
+	datastructuren gebruiken zij intern en welke datastructuren kunnen de tools
+	met elkaar delen? Hoe kunnen de verificatietools worden ge\"integreerd met
+	de ontwerptool? De combinatorische cycle checker is een goede basis om mee
+	te beginnen.\\\hline
 
-Combinatorial objects &
-Een onderzoek hoe om te gaan met combinatorial objects. Bijvoorbeeld: hoe grafisch weer
-te geven, hoe op te slaan in de data structuur?\\\hline
+	Combinatorial objects &
+	Een onderzoek hoe om te gaan met combinatorial objects. Bijvoorbeeld: hoe grafisch weer
+	te geven, hoe op te slaan in de data structuur?\\\hline
 
     \end{tabular}
 \end{center}
 
-
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \subfloat[UI toolkit]{%
     \begin{boxedminipage}[b]{.32\textwidth}
 	{\small\sf
-	    Student: Guus Bonnema.
-	    \paragraph{Goal}
+	    \mybox{\em Student: Guus Bonnema.}
+	    %\paragraph{Goal}
+	    \par{\bf Goal.}
 	    Find the toolkit combination that optimally satisfies the
 	    high level requirements as specified in the project plan.
-	    \paragraph{In scope}
+	    %\paragraph{In scope}
+	    \par{\bf Scope.}
 	    The high level architecture and the user interface toolkit.
 	    Influence on IPC toolkits, concurrency toolkits en integration toolkits.
 	    The influence on development environment.
-	    \paragraph{Out of scope}
+	    %\paragraph{Out of scope}
+	    \par{\bf Out of scope.}
 	    Any non UI toolkits are out of scope, unless a clear
 	    relationship exists.
-	    \paragraph{Overlap}
+	    %\paragraph{Overlap}
+	    \par{\bf Overlap.}
 	    Overlap with integration as many toolkits have approaches to
 	    integrating components. Also the constraints that follow
 	    from the domain analysis on integration will influence the resulting
 	    decision.
-	    \paragraph{Results}
+	    %\paragraph{Results}
+	    \par{\bf Results.}
 	    The domain analysis results in advice on use of toolkits and on time
 	    necessary to master the toolkits.
 	}% small
@@ -90,23 +94,28 @@ te geven, hoe op te slaan in de data structuur?\\\hline
     \subfloat[Combinatorial objects]{%
     \begin{boxedminipage}[b]{.32\textwidth}
 	{\small\sf%%%%%%%%%%%%%%%%%%%%%%%%%%
-	    Student: Stefan Versluys.
-	    \paragraph{Goal}
-	    Find a way of how combinatorial objects can be structured and
-visualised in such a way that the high level requirements are optimally
-satisfied.
-	    \paragraph{In scope}
-	    The concept of how combinatorial objects its data can be structured
-and how these can be visualised.
-	    \paragraph{Out of scope}
-	    GUI: How to draw or show objects on a screen.
+	    \mybox{\em Student: Stefan Versluys.}
+	    %\paragraph{Goal}
+	    \par{\bf Goal.}
+	    \raggedright Find a way of how combinatorial objects can be structured and
+	    visualised in such a way that the high level requirements are
+	    optimally satisfied.
+	    %\paragraph{In scope}
+	    \par{\bf Scope.}
+	    \raggedright The concept of how combinatorial objects its data can be structured
+	    and how these can be visualised.
+	    %\paragraph{Out of scope}
+	    \par{\bf Out of scope.}
+	    \raggedright GUI: How to draw or show objects on a screen.
 	    Verification: How to exchange data structures with the API.
-	    \paragraph{Overlap}
-	    It overlaps both , the GUI toolkit which concerns visulatisation and
-verification tools which concerns efficient data structures and exchange.
-	    \paragraph{Results}
-	    This analysis will show what options that are available in contrast
-with efficiency and usability.
+	    %\paragraph{Overlap}
+	    \par{\bf Overlap.}
+	    \raggedright It overlaps both , the GUI toolkit which concerns visulatisation and
+	    verification tools which concerns efficient data structures and exchange.
+	    %\paragraph{Results}
+	    \par{\bf Results.}
+	    \raggedright This analysis will show what options that are available in contrast
+	    with efficiency and usability.
 	}% small %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \end{boxedminipage}
     }% subfig
@@ -116,18 +125,29 @@ with efficiency and usability.
     \subfloat[Integration of verification tools]{%
     \begin{boxedminipage}[b]{.32\textwidth}
 	{\small\sf%%%%%%%%%%%%%%%%%%%%%%%%%%
-	    Student: Jeroen Kleijn.
-	    \paragraph{Goal} Integrate the verification tools, initially the
+	    \mybox{\em Student: Jeroen Kleijn.}
+	    %\begin{boxedminipage}[t]{\textwidth}{\em Student: Jeroen Kleijn.}\end{boxedminipage}
+	    %\paragraph{Goal}
+	    \par{\bf Goal.}
+	    Integrate the verification tools, initially the
 	    combinatoric cycle checker, with the design tool. Determine the specific
 	    data structures and programming interfaces shared between verification tools
 	    and design tool. Determine communication, integration and extensibility of
 	    verification tools.
-	    \paragraph{In scope} Integration of verification tools. Combinatoric cycle checker.
-	    \paragraph{Out of scope} Visual representation of feedback in the design tool
-	    \paragraph{Overlap} The choices made with regards to data structures have
+	    %\paragraph{In scope}
+	    \par{\bf Scope.}
+	    Integration of verification tools. Combinatoric cycle checker.
+	    %\paragraph{Out of scope}
+	    \par{\bf Out of scope.}
+	    Visual representation of feedback in the design tool
+	    %\paragraph{Overlap}
+	    \par{\bf Overlap.}
+	    The choices made with regards to data structures have
 	    implementation consequences for the way the design tool must provide data to the
 	    verification tools and vice versa (feedback).
-	    \paragraph{Results} This analysis will provide input to the architecture of the
+	    %\paragraph{Results}
+	    \par{\bf Results.}
+	    This analysis will provide input to the architecture of the
 	    design tool, specifically the integration of verification tools with the design
 	    tool.
 	}% small %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,12 +156,10 @@ with efficiency and usability.
 
 %    \paragraph{Requirements for domain analysis}
     \begin{boxedminipage}[c]{.98\textwidth}
-    \begin{itemize}
-	\item At least an initial idea of the high level view of the system
+	\par$\bullet$ At least an initial idea of the high level view of the system
 		should be available. The final high level
 		view will depend on the choices made here and for the toolkits.
-	\item The high level requirements must be defined and agreed on.
-    \end{itemize}
+	\par$\bullet$ The high level requirements must be defined and agreed on.
     \end{boxedminipage}
 
 
