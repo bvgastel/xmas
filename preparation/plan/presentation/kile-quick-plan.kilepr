@@ -46,30 +46,30 @@ Mode=LaTeX
 
 [item:1-quick-plan-project.tex]
 archive=true
-column=51
+column=62
 encoding=UTF-8
 highlight=LaTeX
-line=105
+line=89
 mode=LaTeX
 open=true
 order=1
 
 [item:2-quick-plan-process.tex]
 archive=true
-column=16
+column=18
 encoding=UTF-8
 highlight=LaTeX
-line=16
+line=21
 mode=LaTeX
 open=true
 order=2
 
 [item:3-quick-plan-schedule.tex]
 archive=true
-column=33
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=10
+line=48
 mode=LaTeX
 open=true
 order=3
@@ -86,34 +86,34 @@ order=-1
 
 [item:quick-plan.tex]
 archive=true
-column=2
+column=36
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=37
 mode=LaTeX
 open=true
 order=0
 
 [view-settings,view=0,item:1-quick-plan-project.tex]
-CursorColumn=51
-CursorLine=105
+CursorColumn=62
+CursorLine=89
 JumpList=
-ViMarks=.,94,83,[,94,83,],94,83
+ViMarks=.,83,123,[,83,96,],83,123
 
 [view-settings,view=0,item:2-quick-plan-process.tex]
-CursorColumn=16
-CursorLine=16
+CursorColumn=18
+CursorLine=21
 JumpList=
-ViMarks=.,54,17,[,54,17,],54,17
+ViMarks=.,-1,-1,[,-1,-1,],-1,-1
 
 [view-settings,view=0,item:3-quick-plan-schedule.tex]
-CursorColumn=33
-CursorLine=10
+CursorColumn=0
+CursorLine=48
 JumpList=
 ViMarks=.,13,28,[,13,28,],13,28
 
 [view-settings,view=0,item:quick-plan.tex]
-CursorColumn=2
-CursorLine=13
+CursorColumn=36
+CursorLine=37
 JumpList=
-ViMarks=.,13,1,[,13,0,],13,1
+ViMarks=.,53,11,[,53,11,],53,11

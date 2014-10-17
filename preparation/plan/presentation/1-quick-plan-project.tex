@@ -79,38 +79,75 @@
 
 \end{frame}
 
-\begin{frame}[fragile]{Overview deel 1}{Risico's}
+\begin{frame}[fragile]{Hoofdrisico's}
 
-    Bijna alle risico's hebben een maatregel
-
-
-    {\tiny
-    \begin{tabular}{|c|c|p{15em}|p{25em}|c|c|}
-     \hline
-{\bf } & {\bf nr} & {\bf Risico} & {\bf Toelichting} & {\bf Kans} & {\bf Ernst} \\\hline
-  \ok & 1 & Stakeholders zijn niet op het gewenste moment beschikbaar  & De opdrachtgever en de begeleider hebben een beperkte tijd
-					beschikbaar. De andere stakeholders zijn niet beschikbaar. & hoog & middel \pause\\\hline
-  \ok & 2 & Project verloopt niet goed door gebrek aan Agile ervaring & De teamleden hebben vooral ervaring
-	    met waterval projecten. & hoog & middel \\\hline\pause
-  \ok & 3 & Vertraging van activiteiten door trage support (OU) & De support van de
-	    OU lijkt niet al te voortvarend. Dit kan problemen veroorzaken. & middel & laag \pause\\\hline
-  \ok & 4 & Er is meer tijd nodig dan gedacht om de materiekennis op te doen & Het kost tijd om de bestaande verificatietools en de achterliggende
-					xmas-materie op te nemen. & laag & middel \pause\\\hline
-  \ok & 5 & Communicatieproblemen treden op door geografische spreiding & Het team woont te ver uit elkaar om face to face meetings te
-				organiseren voor overleg tijdens het project. & middel & middel \pause\\\hline
-  \ok & 6 & Ontstaan van structuurverval bij ontwikkeling & Bij het toevoegen van functionaliteit is structuurverval een
-				natuurlijk gevolg. & middel & hoog \pause\\\hline
-  \ok & 7 & Weinig ervaring met c++ leidt tot lagere kwaliteit en bruikbaarheid van de opgeleverde software & Het team heeft maar \'e\'en ervaren C++ programmeur en deze
-  heeft vooral ervaring met embedded systems. Dit gebrek aan ervaring kan er toe leiden dat de softwareontwikkeling vertraging oploopt. In de
-  beschikbare tijd kunnen minder features worden ontwikkeld dan oorspronkelijk gepland. Verkeerd gebruik (bad practices) van de programmeertaal kan een bedreiging zijn
-  voor de softwarekwaliteit. & middel & hoog \pause\\\hline
-  \ding{"38} & 8 & Fouten in ontwerp & Bij het ontwerpen kunnen fouten ontstaan die de controles niet ontdekken. & laag & hoog \\\hline
-
-    \end{tabular}
-
-    }
+    \par{\sf Geografische spreiding \pause $\rightarrow$ direct gevolgen voor communicatie, indirect voor tempo en kwaliteit}
+    \pause
+    \vspace{3em}
+    \par{\sf Stakeholder beschikbaarheid \pause $\rightarrow$ gevolgen voor tempo en kwaliteit}
+    \pause
+    \vspace{3em}
+    \par{\sf Interne risico's \pause $\rightarrow$ gevolgen voor tempo en kwaliteit}
 
 \end{frame}
+
+
+\begin{frame}[fragile]{Overview deel 1}{Risico en oorzaak}
+
+\begin{center}
+    \tiny\sf
+    \begin{tabular}{|c|p{23em}|p{13em}|}
+	\hline
+	1	& \multicolumn{2}{c|}{\sf\emph{\normalsize Vertraging}}
+		\\\hline
+		& Stakeholders niet beschikbaar wanneer dat gewenst is
+		& skype(1),email(2),contact momenten(1a)
+		\\\hline
+		& Agile methode is nieuw voor teamleden.
+		& DAD(8), tools(6a, 6b, 6c)
+		\\\hline
+		& OU heeft traag support
+		& Github (6a)
+		\\\hline
+		& Geografische spreiding leidt tot communicatie problemen
+		    met kwaliteitsvermindering tot gevolg
+		& skype(4), coordinatie(5), tools (6a, 6b)
+		\\\hline
+		& C++ is nog relatief nieuw voor 2 van de 3 programmeurs
+		& leren(9), review(10)
+		\\\hline
+		& Het kost tijd om de bestaande verificatietools en de achterliggende
+		    \xmas\ -materie op te nemen.
+		& tijd inplannen (11 en onderzoekscontext)
+		\\\hline
+	2 	& \multicolumn{2}{c|}{\sf\emph{\normalsize Kwaliteit}}
+		\\\hline
+		& Agile is nieuw voor teamleden
+		& agile (7), agile tool (6b)
+		\\\hline
+		& Structuurverval bij nieuwe features is een natuurlijk
+		gevolg
+		& Vaak refactoren (3), Architectuur(12)
+		\\\hline
+		& Geografische spreiding leidt tot communicatie problemen
+		met kwaliteitsvermindering tot gevolg
+		& skype(4), teamviewer(?), agile tool(6b)
+		\\\hline
+		& Ervaring met C++ beperkt met mogelijke gevolgen
+		voor de kwaliteit (fouten, best practices missen)
+		& leren(9), review(10)
+		\\\hline
+	3	& \multicolumn{2}{c|}{\sf\emph{\normalsize Product}}
+		\\\hline
+		& Verificatie tools merken een fout niet op met consequenties voor
+		  in productie name van chips (Zie open vragen).
+		& testen en feedback users, eventueel beta versie
+		\\\hline
+        \end{tabular}
+\end{center}
+
+\end{frame}
+
 
 \begin{frame}[fragile,label=hulpmiddelen]{Overview deel 2}{Hulpmiddelen}
 
