@@ -1,0 +1,55 @@
+\documentclass[a4paper,11pt,twoside]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Dit is de instructie voor ABI studenten aan de OU.
+%%
+%% Het huidige bestand is gebaseerd op XeLaTeX en
+%% rendert naar een PDF file.
+%%
+%% De output richt zich op tweezijdig afdrukken. Als gevolg
+%% daarvan is de marge van elke pagina gespiegeld.
+%%
+%% Mocht je 1-zijdig willen afdrukken genereer dan de pdf
+%% file zonder de optie ``twoside'' in documentclass.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% Uncomment de includeonly en vul de hoofdstukken in die je
+%% in PDF wilt zien. Zet er een % voor als je alle hoofdstukken wilt zien.
+%% Als je meer onderdelen wilt zien, maak dan een eigen comma separated list.
+%%
+%\includeonly{ov-abi-instructie-overview}
+%\includeonly{ov-abi-instructie-overview, f1-abi-instructie-fase1}
+
+\usepackage{ucs}
+%\usepackage[utf8]{inputenc}
+\usepackage{subfigure}
+\usepackage[dutch,english]{babel}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+%\usepackage{paralist}% for compact lists: compactenum, compactitem
+\usepackage{supertabular}
+\usepackage{dingbat}% for \leftpointright
+
+\author{Guus Bonnema}
+\title{ABI Instructie}
+\date{20/09/14}
+
+\begin{document}
+\selectlanguage{dutch}
+
+\tableofcontents
+
+\include{ov-abi-instructie-overview}
+\include{f1-abi-instructie-fase1}
+\include{f2-abi-instructie-fase2}
+\include{f3a-abi-instructie-fase3a}
+\include{f3b-abi-instructie-fase3b}
+\include{f3c-abi-instructie-fase3c}
+\include{f3d-abi-instructie-fase3d}
+\include{f4-abi-instructie-fase4}
+
+\end{document}
