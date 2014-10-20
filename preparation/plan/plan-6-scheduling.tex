@@ -44,9 +44,7 @@
  \ganttmilestone{Sufficient functionality}{28} \\
 
  \ganttgroup{Transitie}{29}{31} \\
- \ganttbar[bar/.style={rounded corners=5pt}]{Onderzoekscontext}{12}{12}
- \ganttbar[bar/.style={rounded corners=5pt}]{}{15}{15}
- \ganttbar{}{20}{29} \\
+ \ganttbar{Onderzoekscontext}{20}{29} \\
  \ganttbar{Afronding}{30}{32}
  \ganttbar[bar/.style={fill=gray}]{}{32}{37} \\
 
@@ -57,17 +55,15 @@
  \ganttlink{elem3}{elem4}
  \ganttlink{elem4}{elem6}
  \ganttlink{elem6}{elem7}
- \ganttlink{elem6}{elem15}
  \ganttlink{elem7}{elem8}
  \ganttlink{elem8}{elem9}
- \ganttlink{elem8}{elem16}
  \ganttlink{elem9}{elem10}
  \ganttlink{elem10}{elem11}
  \ganttlink{elem11}{elem12}
  \ganttlink{elem12}{elem13}
- \ganttlink{elem13}{elem18}
+ \ganttlink{elem13}{elem16}
+ \ganttlink{elem15}{elem16}
  \ganttlink{elem17}{elem18}
- \ganttlink{elem19}{elem20}
 
 \end{ganttchart}
 \caption{Globale planning met hoofdfasen en belangrijkste mijlpalen}
@@ -77,7 +73,7 @@
 
 \begin{figure}[hp]
 \begin{ganttchart}[
-    today=32
+    today=36
   ]{0}{36}
   \gantttitle{2014}{36} \\
   \gantttitle{september}{18}
@@ -147,8 +143,7 @@
 \end{landscape}
 
 
-
-
+\begin{figure}[h]
 \begin{tabular}{ll}\hline
 {\bf Fase}    & {\bf weken}\\\hline
 Planning             & 2,5 \\
@@ -166,6 +161,34 @@ Afronding	     & 1.5 \\
 \hline
 Totaal               & 27 \\
 \end{tabular}
+\caption{Studielast taken}
+\end{figure}
+
+\begin{figure}[h]
+\begin{tabular}{llp{7cm}}\hline
+{\bf Week}    & {\bf Taak}  & {\bf Toelichting}\\\hline
+38-42         & Planning    \\
+42-45         & Domeinanalyse & 4 weken ingepland i.v.m. vakanties Stefan \& Jeroen \\
+46-48         & Iteratie 0    \\
+49-51         & Iteratie 1    \\
+52-1          &               & vakantieperiode, mogelijk
+				individueel (bijvoorbeeld onderzoekscontext) \\
+2-4           & Iteratie 2    \\
+5-7           & Iteratie 3    \\
+8-10          & Iteratie 4    \\
+11-13         & Iteratie 5    \\
+
+5-14          & Onderzoekcontext & Uitvoering parallel aan de iteraties \\
+15-26         & Afronding     \\
+
+22            & Mijlpaal einde project
+\end{tabular}
+\caption{Planning taken}
+\end{figure}
+
+
+
+
 
 
 \begin{itemize}
@@ -187,14 +210,20 @@ Totaal               & 27 \\
  ]{0}{21}
   \gantttitle{Planning iteraties}{21} \\
   \gantttitlelist{1,...,21}{1} \\
+  \ganttbar[bar label font=\color{blue}]{Overleg start iteratie}{1}{1} \\
   \ganttbar{Requirements}{1}{7} \\
-  \ganttbar{Ontwikkeling}{3}{18} \\
-  \ganttbar{Documentatie}{10}{18} \\
-  \ganttmilestone{Release}{18} \\
-  \ganttbar{Scriptieverslag}{19}{20} \\
-  \ganttbar{Evaluatie}{19}{20} \\
-  \ganttbar{Onderzoekscontext}{19}{20} \\
+  \ganttbar{Ontwikkeling}{3}{19} \\
+  \ganttbar{Documentatie}{10}{19} \\
+  \ganttbar[bar label font=\color{blue}]{Overleg voortgang}{12}{12} \\
+  \ganttmilestone{Release}{19} \\
+  \ganttbar[bar label font=\color{blue}]{Demonstratie software}{20}{20} \\
+  \ganttbar{Scriptieverslag}{20}{21} \\
+  \ganttbar{Onderzoekscontext}{20}{21} \\
   \ganttmilestone{Einde iteratie}{21}
+  
+  \ganttlink{elem2}{elem5}
+  \ganttlink{elem3}{elem5}
+  \ganttlink{elem5}{elem6}
  \end{ganttchart}
  \caption{Globale planning iteraties}
 \end{figure}
@@ -210,26 +239,6 @@ ook een evaluatie plaats van de afgelopen iteratie. \\
 Voor het vaststellen van de requirements zal regelmatig overleg met Bernard plaats
 moeten vinden. Hiervoor is het belangrijk dat in de detailplanning van een iteratie
 rekening wordt gehouden met de beschikbaarheid van Bernard.
-
-
-\begin{tabular}{llp{7cm}}\hline
-{\bf Week}    & {\bf Taak}  & {\bf Extra}\\\hline
-38-42         & Planning    \\
-42-45         & Domeinanalyse & 4 weken ingepland i.v.m. vakanties Stefan \& Jeroen \\
-46-48         & Iteratie 0    \\
-49-51         & Iteratie 1    \\
-52-1          &               & vakantieperiode, mogelijk
-				individueel (bijvoorbeeld onderzoekscontext) \\
-2-4           & Iteratie 2    \\
-5-7           & Iteratie 3    \\
-8-10          & Iteratie 4    \\
-11-13         & Iteratie 5    \\
-14-16         &               \\
-17-18         & Onderzoekcontext \\
-19-20         & Afronding     \\
-22            & Mijlpaal einde project
-
-\end{tabular}
 
 \pagebreak
 
