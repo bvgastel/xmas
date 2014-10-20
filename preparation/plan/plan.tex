@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt,final]{article}
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
@@ -30,7 +30,7 @@
 \hyphenation{re-quire-ments re-quire-ment}
 
 \author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
-\date{16/10/14}
+\date{20/10/2014}
 
 \title{Plan van aanpak voor \xmas\ ontwerptool}
 
@@ -86,34 +86,7 @@
 
 \end{abstract}
 
-\listoftodos
-
-\section{Open punten}
-\label{sec: open-punten}
-\begin{enumerate}
- \item Is het de bedoeling dat de ontwerpen die met deze tool gemaakt kunnen worden ook voor de productie van een
- chip gebruikt zullen worden, m.a.w. bestaat er een risico dat fouten door deze tool leiden tot een
- foutief geproduceerde chip?
- \item wat is het belang van i18n\footnote{Zie appendix} voor systeem documentatie?
- \item wat is het belang van l10n voor de software (variabele namen, menu opties)?
- \item moet communicatie in meerdere talen aanwezig zijn?
-
- \item Open punten m.b.t. vision (zie sectie \ref{sec: vision} op pagina \pageref{sec: vision}).
- \begin{description}
-  \item[Installatie] Moet het mogelijk zijn dat een draaiend tool zelf een update download en installeert (nice to have maybe)?
-  \item[Dynamische controle] Moet het mogelijk zijn controles uit te schakelen of sequentieel te maken?
- \end{description}
-
- \item Open punten m.b.t. doelstellingen (zie sectie \ref{sec: challenges goals} op pagina \pageref{sec: challenges goals}).
- \begin{description}
-    \item[ontwikkeltaal] Zijn er eisen aan de ontwikkeltaal of de ontwikkelomgeving?
-    \item[ontwerp proces] Zijn er wensen ten aanzien van het ontwerp proces ten opzichte van het
-	huidig gerealiseerde WickedXmas? Bijvoorbeeld parallelle verificatie en controle?
-    \item[verificatie tools] Zijn er wensen ten aanzien van de verificatietools zelf? Nieuwe verificatietools?
-    \item[design functionaliteit] Zijn er nog meer wensen ten aanzien van design functionaliteit? Zoals parametrische queue sizes?
-    \item[Multi user repository] Zijn er wensen ten aanzien van multi user repo?
- \end{description}
-\end{enumerate}
+%\listoftodos   %% commented out when creating final document
 
 \include{plan-1-assignment}
 \include{plan-1b-aanpak}

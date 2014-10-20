@@ -84,10 +84,10 @@ order=1
 
 [item:plan-1b-aanpak.tex]
 archive=true
-column=12
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=91
 mode=LaTeX
 open=true
 order=2
@@ -97,7 +97,7 @@ archive=true
 column=21
 encoding=UTF-8
 highlight=LaTeX
-line=12
+line=14
 mode=LaTeX
 open=true
 order=3
@@ -107,27 +107,27 @@ archive=true
 column=5
 encoding=UTF-8
 highlight=LaTeX
-line=131
+line=70
 mode=LaTeX
 open=true
 order=4
 
 [item:plan-4-werkwijze.tex]
 archive=true
-column=0
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=60
+line=100
 mode=LaTeX
 open=true
 order=5
 
 [item:plan-5-planning.tex]
 archive=true
-column=11
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=28
+line=0
 mode=LaTeX
 open=true
 order=6
@@ -144,10 +144,10 @@ order=7
 
 [item:plan.tex]
 archive=true
-column=25
+column=33
 encoding=UTF-8
 highlight=LaTeX
-line=27
+line=3
 mode=LaTeX
 open=true
 order=0
@@ -166,37 +166,37 @@ order=-1
 CursorColumn=12
 CursorLine=276
 JumpList=
-ViMarks=.,217,19,[,217,19,],217,19
+ViMarks=.,176,109,[,176,109,],176,109
 
 [view-settings,view=0,item:plan-1b-aanpak.tex]
-CursorColumn=12
-CursorLine=13
+CursorColumn=17
+CursorLine=91
 JumpList=
 ViMarks=.,13,11,[,13,11,],13,11
 
 [view-settings,view=0,item:plan-2-architecture.tex]
 CursorColumn=21
-CursorLine=12
+CursorLine=14
 JumpList=
 ViMarks=.,12,20,[,12,19,],12,20
 
 [view-settings,view=0,item:plan-3-domains.tex]
 CursorColumn=5
-CursorLine=131
+CursorLine=70
 JumpList=
 ViMarks=.,131,5,[,131,5,],131,5
 
 [view-settings,view=0,item:plan-4-werkwijze.tex]
-CursorColumn=0
-CursorLine=60
+CursorColumn=17
+CursorLine=100
 JumpList=
-ViMarks=.,60,0,[,60,0,],60,0
+ViMarks=.,100,17,[,100,17,],100,17
 
 [view-settings,view=0,item:plan-5-planning.tex]
-CursorColumn=11
-CursorLine=28
+CursorColumn=2
+CursorLine=0
 JumpList=
-ViMarks=.,27,75,[,27,75,],27,75
+ViMarks=.,28,11,[,28,11,],28,11
 
 [view-settings,view=0,item:plan-6-scheduling.tex]
 CursorColumn=17
@@ -205,7 +205,7 @@ JumpList=
 ViMarks=.,184,16,[,184,16,],184,16
 
 [view-settings,view=0,item:plan.tex]
-CursorColumn=25
-CursorLine=27
+CursorColumn=33
+CursorLine=3
 JumpList=
-ViMarks=.,3,27,[,3,27,],3,27
+ViMarks=.,3,32,[,3,27,],3,32
