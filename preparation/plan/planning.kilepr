@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=plan.tex
+lastDocument=plan-6-scheduling.tex
 masterDocument=
 name=planning
 pkg_extIsRegExp=false
@@ -114,10 +114,10 @@ order=4
 
 [item:plan-4-werkwijze.tex]
 archive=true
-column=17
+column=53
 encoding=UTF-8
 highlight=LaTeX
-line=100
+line=65
 mode=LaTeX
 open=true
 order=5
@@ -127,27 +127,27 @@ archive=true
 column=2
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=100
 mode=LaTeX
 open=true
 order=6
 
 [item:plan-6-scheduling.tex]
 archive=true
-column=17
+column=29
 encoding=UTF-8
 highlight=LaTeX
-line=185
+line=94
 mode=LaTeX
 open=true
 order=7
 
 [item:plan.tex]
 archive=true
-column=33
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=3
+line=97
 mode=LaTeX
 open=true
 order=0
@@ -187,25 +187,25 @@ JumpList=
 ViMarks=.,131,5,[,131,5,],131,5
 
 [view-settings,view=0,item:plan-4-werkwijze.tex]
-CursorColumn=17
-CursorLine=100
+CursorColumn=53
+CursorLine=65
 JumpList=
 ViMarks=.,100,17,[,100,17,],100,17
 
 [view-settings,view=0,item:plan-5-planning.tex]
 CursorColumn=2
-CursorLine=0
+CursorLine=100
 JumpList=
 ViMarks=.,28,11,[,28,11,],28,11
 
 [view-settings,view=0,item:plan-6-scheduling.tex]
-CursorColumn=17
-CursorLine=185
+CursorColumn=29
+CursorLine=94
 JumpList=
-ViMarks=.,184,16,[,184,16,],184,16
+ViMarks=.,94,28,[,94,28,],94,28
 
 [view-settings,view=0,item:plan.tex]
-CursorColumn=33
-CursorLine=3
+CursorColumn=0
+CursorLine=97
 JumpList=
-ViMarks=.,3,32,[,3,27,],3,32
+ViMarks=.,32,7,[,32,7,],32,7
