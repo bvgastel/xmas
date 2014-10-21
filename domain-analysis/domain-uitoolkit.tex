@@ -1,0 +1,94 @@
+%%
+%% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
+%%
+\documentclass[a4paper,11pt,final]{article}
+
+\usepackage{subfig}
+\usepackage{wrapfig}% product wrapfigure and wraptable
+\usepackage{array}% additions to tabular
+\usepackage{supertabular}% multiple pages tabular
+\usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
+\usepackage[dutch]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks = true,
+    citecolor = blue,
+    linkcolor = blue
+}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{pgfgantt}
+\usepackage{pdflscape}
+\usepackage[a4paper]{geometry}
+\usepackage{titlesec}% added to change section headers, see newcommand definition.
+\usepackage{boxedminipage}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
+
+\bibliographystyle{alpha}
+
+\author{Guus Bonnema}
+\date{21/10/2014}
+
+\title{Domain analysis for a user interface toolkit}
+
+\setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
+
+%% Document is in subdocumenten gesplitst.
+
+\begin{document}
+
+\selectlanguage{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+
+\newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
+
+%\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\secformat[1]{%
+    {\fontsize{60}{60}\selectfont\thesection}%
+    \ifthenelse{\equal{\thesection}{}}{}{\quad\rule[-8pt]{2pt}{40pt}\quad}
+    \parbox[b]{.7\textwidth}{\filright\bfseries #1}}%
+\titleformat{\section}[block]
+    {\filright\normalfont\sffamily}{}{0pt}{\secformat}
+\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+\begin{abstract}
+    This document researches the available toolkits and develops an advise
+    based on the requirements for the user interface of the design tool for xmas.
+
+    The document starts out by detailing the required characteristics of the toolkit
+    and using the as a basis for the recommendation. Failing a clear advantage in the
+    \emph{must have} requirements, it compares the advantage in the \emph{should have}
+    requirements and failing that in the \emph{could have} requirements.
+
+    In case of multiple tools satisfying all requirements the final recommendation is made
+    based on the teams wishes to learn a specific competence in this project.
+\end{abstract}
+
+%\listoftodos   %% commented out when creating final document
+
+\include{uitoolkit-requirements}
+\include{uitoolkit-information}
+\include{uitoolkit-comparison}
+\include{uitoolkit-recommendation}
+
+%\appendix
+
+%\bibliography{plan.bib}
+%\section{Definities}
+%\begin{description}
+% \item[analyse module] synoniem met verificatie module
+% \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
+% \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
+%\end{description}
+
+
+\end{document} ;########################### end document ##################################;
