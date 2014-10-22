@@ -1,0 +1,6 @@
+read_model -i twoagents.smv
+go
+build_boolean_model
+check_invar_ic3 -v 1 -d    
+quit
+

@@ -1,0 +1,86 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {},
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "src0",
+      "type": "source",
+      "outs": [
+        {
+          "id": "sw1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "value = [0..128] and type in {request,response}"
+        }
+      ]
+    },
+    {
+      "id": "sw1",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "q2",
+          "in_port": 0
+        },
+        {
+          "id": "q3",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "value <= 50 ? type = {request} : type = {response}",
+          "function2": "value < 64 or type in {request}"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "m4",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "m4",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "sink5",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "sink5",
+      "type": "sink"
+    }
+  ]
+}
