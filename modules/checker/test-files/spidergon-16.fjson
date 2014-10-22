@@ -1,0 +1,3983 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {
+    "n": 16,
+    "src": 16,
+    "msg": 2
+  },
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_UP_CW_LOC_CW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_UP_ACR_LOC_OT",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_UP_CW_LOC_CW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_UP_ACR_LOC_OT",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_CW_LOC_CW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_ACR_LOC_OT",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_CW_LOC_CW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_ACR_LOC_OT",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_CCW2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_CCW1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_CW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_CW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw25",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_CCW2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_CCW1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw27",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_ACR_UD",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_ACR_DU",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw23",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 7 && n < 16/4 && msg in {req} && src = 7"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 7"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 7 ?  n <= 16/4 + 7  :  n <= 16/4 - 16 + 7)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 7"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 7"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 7 ?  n > 16/4 + 7  :  n > 16/4 - 16 + 7) and (n > 7 ?  n < 16 - 16/4  + 7  :  n < 16/4 + 7)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 7 ?  n <= 16/4 + 7  :  n <= 16/4 - 16 + 7)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_UP_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 15 && n < 16/4 && msg in {req} && src = 15"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 15"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 15 ?  n <= 16/4 + 15  :  n <= 16/4 - 16 + 15)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 15"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 15"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 15 ?  n > 16/4 + 15  :  n > 16/4 - 16 + 15) and (n > 15 ?  n < 16 - 16/4  + 15  :  n < 16/4 + 15)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 15 ?  n <= 16/4 + 15  :  n <= 16/4 - 16 + 15)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 6 && n < 16/4 && msg in {req} && src = 6"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 6"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 6 ?  n <= 16/4 + 6  :  n <= 16/4 - 16 + 6)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 6"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 6"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 6 ?  n > 16/4 + 6  :  n > 16/4 - 16 + 6) and (n > 6 ?  n < 16 - 16/4  + 6  :  n < 16/4 + 6)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 6 ?  n <= 16/4 + 6  :  n <= 16/4 - 16 + 6)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_UP_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 14 && n < 16/4 && msg in {req} && src = 14"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 14"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 14 ?  n <= 16/4 + 14  :  n <= 16/4 - 16 + 14)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 14"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 14"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 14 ?  n > 16/4 + 14  :  n > 16/4 - 16 + 14) and (n > 14 ?  n < 16 - 16/4  + 14  :  n < 16/4 + 14)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 14 ?  n <= 16/4 + 14  :  n <= 16/4 - 16 + 14)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 5 && n < 16/4 && msg in {req} && src = 5"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 5"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 5 ?  n <= 16/4 + 5  :  n <= 16/4 - 16 + 5)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 5"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 5"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 5 ?  n > 16/4 + 5  :  n > 16/4 - 16 + 5) and (n > 5 ?  n < 16 - 16/4  + 5  :  n < 16/4 + 5)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 5 ?  n <= 16/4 + 5  :  n <= 16/4 - 16 + 5)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_UP_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 13 && n < 16/4 && msg in {req} && src = 13"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 13"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 13 ?  n <= 16/4 + 13  :  n <= 16/4 - 16 + 13)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 13"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 13"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 13 ?  n > 16/4 + 13  :  n > 16/4 - 16 + 13) and (n > 13 ?  n < 16 - 16/4  + 13  :  n < 16/4 + 13)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 13 ?  n <= 16/4 + 13  :  n <= 16/4 - 16 + 13)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 4 && n < 16/4 && msg in {req} && src = 4"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 4"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 4 ?  n <= 16/4 + 4  :  n <= 16/4 - 16 + 4)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 4"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 4"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 4 ?  n > 16/4 + 4  :  n > 16/4 - 16 + 4) and (n > 4 ?  n < 16 - 16/4  + 4  :  n < 16/4 + 4)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_UP_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 4 ?  n <= 16/4 + 4  :  n <= 16/4 - 16 + 4)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_sw9",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_UP_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 12 && n < 16/4 && msg in {req} && src = 12"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 12"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 12 ?  n <= 16/4 + 12  :  n <= 16/4 - 16 + 12)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 12"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 12"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 12 ?  n > 16/4 + 12  :  n > 16/4 - 16 + 12) and (n > 12 ?  n < 16 - 16/4  + 12  :  n < 16/4 + 12)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 12 ?  n <= 16/4 + 12  :  n <= 16/4 - 16 + 12)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_ACR_LOC_OT",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m6",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_ACR_CW_CCW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 3"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m6",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_f16",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_ACR_CW_CCW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m10",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_m11",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n > 3 ?  n <= 16/4 + 3  :  n <= 16/4 - 16 + 3 "
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_CW_LOC_CW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m12",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_m10",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 3"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_sw9",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m12",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_m11",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 3"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m10",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m20",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m11",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m21",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m12",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m6",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_f16",
+      "type": "function",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_sw18",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "msg := msg with {req : rsp}, n := src"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_sw18",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_sw19",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 3 ?  n > 16/4 + 3  :  n > 16/4 - 16 + 3) and (n > 3 ?  n < 16 - 16/4  + 3  :  n < 16/4 + 3)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_sw19",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_UP_m20",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_UP_m21",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 3 ?  n <= 16/4 + 3  :  n <= 16/4 - 16 + 3)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m20",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_UP_m21",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_sw9",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 11 && n < 16/4 && msg in {req} && src = 11"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 11"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 11 ?  n <= 16/4 + 11  :  n <= 16/4 - 16 + 11)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 11"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 11"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 11 ?  n > 16/4 + 11  :  n > 16/4 - 16 + 11) and (n > 11 ?  n < 16 - 16/4  + 11  :  n < 16/4 + 11)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 11 ?  n <= 16/4 + 11  :  n <= 16/4 - 16 + 11)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_ring_UP_ACR_LOC_OT",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m6",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_UP_ACR_CW_CCW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 2"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m6",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_f16",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_ACR_CW_CCW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m10",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_UP_m11",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n > 2 ?  n <= 16/4 + 2  :  n <= 16/4 - 16 + 2 "
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_CW_LOC_CW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m12",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_UP_m10",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 2"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_sw9",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m12",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_UP_m11",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 2"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m10",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m20",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m11",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m21",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m12",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m6",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_f16",
+      "type": "function",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_sw18",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "msg := msg with {req : rsp}, n := src"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_sw18",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_UP_sw19",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 2 ?  n > 16/4 + 2  :  n > 16/4 - 16 + 2) and (n > 2 ?  n < 16 - 16/4  + 2  :  n < 16/4 + 2)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_sw19",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_UP_m20",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_UP_m21",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 2 ?  n <= 16/4 + 2  :  n <= 16/4 - 16 + 2)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m20",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_UP_m21",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_UP_sw9",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 10 && n < 16/4 && msg in {req} && src = 10"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 10"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 10 ?  n <= 16/4 + 10  :  n <= 16/4 - 16 + 10)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 10"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 10"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 10 ?  n > 16/4 + 10  :  n > 16/4 - 16 + 10) and (n > 10 ?  n < 16 - 16/4  + 10  :  n < 16/4 + 10)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 10 ?  n <= 16/4 + 10  :  n <= 16/4 - 16 + 10)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_ring_UP_ACR_LOC_OT",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m6",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_UP_ACR_CW_CCW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 1"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m6",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_UP_f16",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_ACR_CW_CCW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m10",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_UP_m11",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n > 1 ?  n <= 16/4 + 1  :  n <= 16/4 - 16 + 1 "
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_CW_LOC_CW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m12",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_UP_m10",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 1"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_sw9",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m12",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_UP_m11",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 1"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m10",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m20",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m11",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m21",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m12",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m6",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_f16",
+      "type": "function",
+      "outs": [
+        {
+          "id": "ring_ring_UP_sw18",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "msg := msg with {req : rsp}, n := src"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_sw18",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_UP_sw19",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 1 ?  n > 16/4 + 1  :  n > 16/4 - 16 + 1) and (n > 1 ?  n < 16 - 16/4  + 1  :  n < 16/4 + 1)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_sw19",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_UP_m20",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_UP_m21",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 1 ?  n <= 16/4 + 1  :  n <= 16/4 - 16 + 1)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m20",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_UP_m21",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_UP_sw9",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 9 && n < 16/4 && msg in {req} && src = 9"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 9"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 9 ?  n <= 16/4 + 9  :  n <= 16/4 - 16 + 9)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 9"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 9"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 9 ?  n > 16/4 + 9  :  n > 16/4 - 16 + 9) and (n > 9 ?  n < 16 - 16/4  + 9  :  n < 16/4 + 9)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 9 ?  n <= 16/4 + 9  :  n <= 16/4 - 16 + 9)"
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_DOWN_sw27",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_ring_DOWN_MasterSink",
+      "type": "sink"
+    },
+    {
+      "id": "ring_UP_ACR_LOC_OT",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_UP_m6",
+          "in_port": 0
+        },
+        {
+          "id": "ring_UP_ACR_CW_CCW",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 0"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m6",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_UP_f16",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_ACR_CW_CCW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_UP_m10",
+          "in_port": 0
+        },
+        {
+          "id": "ring_UP_m11",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n > 0 ?  n <= 16/4 + 0  :  n <= 16/4 - 16 + 0 "
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_CW_LOC_CW",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_UP_m12",
+          "in_port": 0
+        },
+        {
+          "id": "ring_UP_m10",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 0"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_sw9",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_UP_m12",
+          "in_port": 1
+        },
+        {
+          "id": "ring_UP_m11",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 0"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m10",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_UP_m20",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m11",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_UP_m21",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m12",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_UP_m6",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_f16",
+      "type": "function",
+      "outs": [
+        {
+          "id": "ring_UP_sw18",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "msg := msg with {req : rsp}, n := src"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_sw18",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ACR_UD",
+          "in_port": 0
+        },
+        {
+          "id": "ring_UP_sw19",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 0 ?  n > 16/4 + 0  :  n > 16/4 - 16 + 0) and (n > 0 ?  n < 16 - 16/4  + 0  :  n < 16/4 + 0)"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_sw19",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_UP_m20",
+          "in_port": 0
+        },
+        {
+          "id": "ring_UP_m21",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 0 ?  n <= 16/4 + 0  :  n <= 16/4 - 16 + 0)"
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m20",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_CW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_UP_m21",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_CCW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_src22",
+      "type": "source",
+      "outs": [
+        {
+          "id": "ring_DOWN_sw32",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "n != 8 && n < 16/4 && msg in {req} && src = 8"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw23",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_DOWN_m30",
+          "in_port": 0
+        },
+        {
+          "id": "ring_DOWN_sw24",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 8"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw24",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_DOWN_m26",
+          "in_port": 0
+        },
+        {
+          "id": "ring_DOWN_m28",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 8 ?  n <= 16/4 + 8  :  n <= 16/4 - 16 + 8)"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw25",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_DOWN_m31",
+          "in_port": 0
+        },
+        {
+          "id": "ring_DOWN_m26",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 8"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m26",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_DOWN_m35",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw27",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_DOWN_m31",
+          "in_port": 1
+        },
+        {
+          "id": "ring_DOWN_m28",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "function": "n == 8"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m28",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_DOWN_m34",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_LOCAL_OUT",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "ring_DOWN_MasterSink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 4
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m30",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_DOWN_LOCAL_OUT",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m31",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_DOWN_m30",
+          "in_port": 1
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw32",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_ACR_DU",
+          "in_port": 0
+        },
+        {
+          "id": "ring_DOWN_sw33",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 8 ?  n > 16/4 + 8  :  n > 16/4 - 16 + 8) and (n > 8 ?  n < 16 - 16/4  + 8  :  n < 16/4 + 8)"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_sw33",
+      "type": "xswitch",
+      "outs": [
+        {
+          "id": "ring_DOWN_m35",
+          "in_port": 0
+        },
+        {
+          "id": "ring_DOWN_m34",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "(n > 8 ?  n <= 16/4 + 8  :  n <= 16/4 - 16 + 8)"
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m34",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_CCW1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_m35",
+      "type": "merge",
+      "outs": [
+        {
+          "id": "ring_ring_CW2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "ring_DOWN_MasterSink",
+      "type": "sink"
+    }
+  ]
+}

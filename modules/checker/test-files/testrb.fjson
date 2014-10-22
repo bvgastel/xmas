@@ -1,0 +1,214 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {
+    "x": 2,
+    "y": 2,
+    "dx": 2,
+    "dy": 2,
+    "type": 2
+  },
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "src0",
+      "type": "source",
+      "outs": [
+        {
+          "id": "q1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "x == 0 && y == 0 && dx == 0 && dy== 0 && type == 0"
+        }
+      ]
+    },
+    {
+      "id": "q1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "join2",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "join2",
+      "type": "join",
+      "outs": [
+        {
+          "id": "q4",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "0"
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "fork5",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "fork5",
+      "type": "xfork",
+      "outs": [
+        {
+          "id": "inst3_q8",
+          "in_port": 0
+        },
+        {
+          "id": "q7",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "join2",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "sink8",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "sink8",
+      "type": "sink"
+    },
+    {
+      "id": "inst3_tokens",
+      "type": "source",
+      "outs": [
+        {
+          "id": "inst3_fork1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "x < 2 && y < 2 && dx < 2 && dy < 2 && type < 2"
+        }
+      ]
+    },
+    {
+      "id": "inst3_fork1",
+      "type": "xfork",
+      "outs": [
+        {
+          "id": "q6",
+          "in_port": 0
+        },
+        {
+          "id": "inst3_kCrd",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "inst3_kCrd",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "inst3_join4",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "inst3_join4",
+      "type": "join",
+      "outs": [
+        {
+          "id": "inst3_q7",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "0"
+        }
+      ]
+    },
+    {
+      "id": "inst3_sink5",
+      "type": "sink"
+    },
+    {
+      "id": "inst3_q7",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "inst3_sink5",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 1
+        }
+      ]
+    },
+    {
+      "id": "inst3_q8",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "inst3_join4",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    }
+  ]
+}
