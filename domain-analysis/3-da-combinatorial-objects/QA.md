@@ -1,0 +1,15 @@
+22 oktober 2014 09:06
+=====================
+
+>Q1: "combinatorial objects" bedoel je daarmee de acht xMAS primitieven (sink,source,fork,...)? Omdat in het artikel "Analysis tools 11" een onderscheid gemaakt wordt tussen sequential (sink,source,queue) en combinatorial primitives en het zou me eerder logisch lijken dat ik alle primitieven onder de loep neem om datastructuur en grafische voorstelling te bepalen.
+
+>A1: Nee, een combinatorial object is als een macro. In de paper die we jullie gestuurd hadden zie je in het figuur met de twee agents twee voorbeelden (de credit counter en de nondeterministic delay). Het idee is dat je een een klein netwerkje bouwt dat meerdere keren voorkomt in je design. Dat netwerk is nog "open", i.e., het heeft nog in- en outputs die niet aan sources/sinks verbonden zijn. Wij willen dus een klein netwerkje als combinatorial object op kunnen slaan, zodat we het later weer kunnen gebruiken.
+
+>Q2: De "wck" bestandjes waar de netwerkstructuur in bewaard wordt , is dit een (Intel) standaard of een keuze van de WickedXMas ontwikkelaars ?  
+
+>A2: Dit was onze keuze, in principe laat ik het aan Bernard of jullie deze wel of niet moeten gebruiken.
+
+>Q3: De twee bestanden die "Generate JSON for validator" oplevert is me ook niet helemaal duidelijk , deze maakt opnieuw een wck bestand dat quasi identiek is aan het originele, terwijl het fjson bestand dat zelfde netwerk beschrijft maar dan zonder de grafische items lijkt me. Wat is de preciese bedoeling van de JSON stap in WickedxMAS? 
+
+>A3: Dat hangt sterk samen met de eerste vraag. Zolang er geen combinatorial objects worden gebruikt , zijn de bestanden inderdaad hetzelfde. Maar als er wel combinatorial objects worden gebruikt, dan moeten deze "geflattened" worden naar een "platte" datastructuur. Dat wordt gedaan tijdens die stap.
+
