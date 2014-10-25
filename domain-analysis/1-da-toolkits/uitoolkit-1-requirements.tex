@@ -1,6 +1,7 @@
 \section{Requirements for design tool}
 
-The defined platforms are all ms windows, mac and linux platforms.
+The defined platforms are all ms windows, mac and linux platforms. The goal is to find a
+toolkit for the graphical program and drawing of the primitives and macro's.
 
 \begin{center}
     \label{fig: risico}
@@ -11,35 +12,41 @@ The defined platforms are all ms windows, mac and linux platforms.
     \tabletail{\hline \multicolumn{3}{r}{\emph{Continue on the next page}}\\}
     \tablelasttail{\hline \multicolumn{3}{r}{\emph{Table end main requirements for design tool}}\\}
     \small\sf
-    \begin{supertabular}{|c|p{23em}|p{13em}|}
-	1	& \multicolumn{2}{c|}{\sf\emph{\large {\bf Must have} requirements}}
+    \begin{tabular}{|l|p{7em}|p{23em}|}
+	\hline
+	M	& \multicolumn{2}{c|}{\sf\emph{\large Must have requirements}}
 		\\\hline
-		& Cross platform & The toolkit must run equally well on the
+	M1	& Cross platform & The toolkit must run equally well on the
 				    defined platforms with respect to all relevant features
 		\\\hline
-		& 2D drawing & The toolkit must be able to draw items on a
+	M2	& 2D drawing & The toolkit must be able to draw items on a
 				canvas and treat graphical objects with composite
 				behaviour or properties as a primitive object.
 		\\\hline
-		& C++ integration & The toolkit must integrate seamlessly with
+	M3	& C++ integration & The toolkit must integrate seamlessly with
 				the existing C++ code for analysis and verification tools.
 		\\\hline
-	2	& \multicolumn{2}{c|}{\sf\emph{\large {\bf Should have} requirements}}
+	S	& \multicolumn{2}{c|}{\sf\emph{\large Should have requirements}}
 		\\\hline
-		& expandability & the toolkit should have a means of supporting expandability
+	S1	& expandability & the toolkit should have a means of supporting expandability
 				    in the target toolkit.
-	3	& \multicolumn{2}{c|}{\sf\emph{\large {\bf Could have} requirements}}
 		\\\hline
-		& maintainability & The toolkit could provide some aid in ease of maintenance
+	S2	& installability & The toolkit should assist easy installation or at least not
+				    hinder easy installation.
+		\\\hline
+	C	& \multicolumn{2}{c|}{\sf\emph{\large Could have requirements}}
+		\\\hline
+	C1	& maintainability & The toolkit could provide some aid in ease of maintenance
 				    like a documentation aid.
-        \end{supertabular}
+		\\\hline
+	C2	& plugability	& The toolkit could assist in creating plugins for the application
+		\\\hline
+	N	& \multicolumn{2}{c|}{\sf\emph{\large Nice to have requirements}}
+		\\\hline
+	N1	& install util	& The toolkit could actively assist in creating installation
+				    packages for each of the defined platforms.
+		\\\hline
+    \end{tabular}
 \end{center}
 
 
-\begin{center}
-\begin{supertabular}{lll}
-× & × & ×\\
-× & × & ×\\
-× & × & ×
-\end{supertabular}
-\end{center}

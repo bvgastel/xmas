@@ -1,16 +1,16 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt,draft]{article}
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
 \usepackage{array}% additions to tabular
 \usepackage{supertabular}% multiple pages tabular
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
-\usepackage[dutch]{babel}
+\usepackage[english]{babel}
 \usepackage{graphicx}
-\usepackage{hyperref}
+\usepackage{hyperref}% Load after biblatex
 \hypersetup{
     colorlinks = true,
     citecolor = blue,
@@ -25,7 +25,9 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 
-\bibliographystyle{alpha}
+\bibliographystyle{plain}% unsrt, plain, alpha, abbrv
+
+\newcommand{\biburl}[1]{\hspace*{\fill}\\\url{#1} accessed on 25 oct 2014}
 
 \author{Guus Bonnema}
 \date{21/10/2014}
@@ -48,7 +50,7 @@
 
 %\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\secformat[1]{%
     {\fontsize{60}{60}\selectfont\thesection}%
     \ifthenelse{\equal{\thesection}{}}{}{\quad\rule[-8pt]{2pt}{40pt}\quad}
@@ -56,7 +58,7 @@
 \titleformat{\section}[block]
     {\filright\normalfont\sffamily}{}{0pt}{\secformat}
 \titlespacing*{\section}{0pt}{*3}{*2}[1pc]
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \maketitle
 
@@ -75,20 +77,22 @@
 
 %\listoftodos   %% commented out when creating final document
 
-\include{uitoolkit-requirements}
-\include{uitoolkit-information}
-\include{uitoolkit-comparison}
-\include{uitoolkit-recommendation}
+\include{uitoolkit-1-requirements}
+\include{uitoolkit-2-information}
+\include{uitoolkit-3-comparison}
+\include{uitoolkit-4-recommendation}
 
-%\appendix
+\appendix
 
-%\bibliography{plan.bib}
-%\section{Definities}
-%\begin{description}
+\bibliography{da-uitoolkits.bib}
+\section{Definitions}
+\begin{description}
 % \item[analyse module] synoniem met verificatie module
 % \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
 % \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
-%\end{description}
-
+  \item[GPL] Gnu Public License
+  \item[LGPL] Lesser Gnu Public License
+  \item[MPL] Mozilla Public License
+\end{description}
 
 \end{document} ;########################### end document ##################################;
