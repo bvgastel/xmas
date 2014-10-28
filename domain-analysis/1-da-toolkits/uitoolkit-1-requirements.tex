@@ -55,7 +55,13 @@ As multiple tools satisfy the high level requirements we use team preference and
     \label{tab: appl-requirements}
 \end{center}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% input from team competence tex file (a symbolic link) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  must be input: include is not permitted from an included file
+%%
 \input{team-competence}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% input from team competence tex file (a symbolic link) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Requirements for UI toolkit}
 
@@ -64,11 +70,10 @@ all these demands is summarized in table \ref{tab: uitool-requirements}. Only re
 to the ui toolkit have consequential requirements formulated.
 
 \begin{center}
-    %\tablecaption{Impact of application requirements on UI tool in terms of requirements.}
-    %\tablehead{\hline {\bf id: requirement}     & {\bf impact} & {\bf id } & {\bf UI requirement}\\}
-    %\tabletail{\hline \multicolumn{4}{Continue on next page}}
-    \tablelasttail{\hline \multicolumn{4}{End of UI tool requirements}}
-    \begin{supertabular}{ll||cp{13em}}
+    \begin{longtable}{ll||cp{13em}}
+	{\bf id: requirement}     & {\bf impact} & {\bf id } & {\bf UI requirement}\\\hline\endhead
+	\hline \multicolumn{4}{c}{UI toolkit requirements (Continue on next page)}\endfoot
+	\hline \multicolumn{4}{c}{UI toolkit requirements}\endlastfoot
 	\hline
         M1: Cross platform        & full         & M1-ui1   & ui toolkit runs equally well on the defined platforms for all features.\\
         M2: 2D drawing            & full         & M2-ui1   & ui toolkit has equal 2D features on all defined platforms.\\
@@ -95,9 +100,8 @@ to the ui toolkit have consequential requirements formulated.
         SS2: online agile tools   &              &          & \\
         SS3: distributed team     &              &          & \\
         SC1: platform independent & compatible	 & SC1-ui1  & Prefer a platform independent toolkit.\\
-        \hline
-    \end{supertabular}
-    %%\captionof{table}{Impact of application requirements on UI tool in terms of requirements.}
+    \end{longtable}
+    \captionof{table}{UI Toolkit requirements.}
     \label{tab: uitool-requirements}
 \end{center}
 
@@ -105,10 +109,4 @@ In table \ref{tab: uitool-requirements} the term ``support for plugins''
 is meant to be a weak requirement in the sense that it does not hinder
 the design of plugins. The ability to support plugins directly is a nice
 to have requirement. The derived requirements ``ease of use'' and ``ease of
-learning'' are important requirements
-
-
-
-
-
-
+learning'' are important requirements.
