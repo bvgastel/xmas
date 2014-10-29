@@ -7,31 +7,41 @@ Based on language. C++. Free software.
 
 \begin{center}
     \small\sf
-    \begin{tabular}{lccccp{10em}}
+    \begin{tabular}{lcccccp{10em}}
 	\hline
-        {\bf Toolkit} & {\bf 2D}      & {\bf GUI}     & {\bf C++}                 & W, L, Mac  & \\
-        {\bf Name}    & {\bf drawing} & {\bf widgets} & {\bf integration}         & Platforms  & {\bf Comment}\\
+        {\bf Toolkit} & {\bf Free software} & {\bf Platform} & {\bf C++}   & {\bf 2D} & {\bf GUI}   & {\bf Yay}\\
+        {\bf Name}    & {\bf 0} & {\bf 1}        & {\bf 2}     & {\bf 3}  & {\bf 4}     & {\bf or Nay }\\
         \hline
-        Cairo         &   Y           &      N        & wrapper\footnote{cairomm} &    Y        & Cairo is popular in
-			the open source community for providing cross-platform support for advanced 2D drawing.\\
-        FLTK          &   Y           &               &   Y                       &    Y        & \\
-	fpGUI         &   Y           &               &   Y                       &    Y        & \\
-	GTK+	      &   Y           &      Y        &   Y                       &    Y        & Builds on Cairo and GDK, large community\\
-	JUCE          &   Y           &               &   Y                       &    Y        & One man project\\
-	Mozilla A.F.  &   JS          &               &   maybe			  &    Y        & Very Web oriented\\
-	OpenGL        &   Y           &      N        &   Y                       &    Y        & hardware acceleration and powerful but complex\\
-	Qt	      &   Y           &      Y        &   Y                       &    Y        & Large community\\
-	SDL	      &   Y           &      N        &   Y                       &    Y        & Low level library\\
-	Tk	      &               &      Y        &                           &             & \\
-	Ultimate++    &               &               &                           &             & \\
-	WxWidgets     &               &               &                           &             & \\
-	GDK	      &               &               &                           &             & Low Level Library\\
+        Cairo         & 1 & 1 & 0.9 & 1 & 0 & \\
+        FLTK          & 1 & 1 &     &   &   & \\
+	fpGUI         & 1 & 1 &     &   &   & \\
+	GTK+	      & 1 & 1 & 1   & 1 & 1 & Yay\\
+	JUCE          & 1 & 1 &     &   &   & \\
+	Mozilla A.F.  & 1 & 1 &     &   &   & \\
+	OpenGL        & 1 & 1 & 1   &   & 0 & \\
+	Qt	      & 1 & 1 & 1   &   &   & Yay\\
+	SDL	      & 1 & 1 & 1   &   &   & \\
+	Tk	      & 1 & 1 &     &   &   & \\
+	Ultimate++    & 1 & 1 &     &   &   & \\
+	WxWidgets     & 1 & 1 &     &   &   & \\
+	GDK	      & 1 & 1 &     &   & 0 & \\
 
 	\hline
     \end{tabular}
-    \captionof{table}{Selected tools versus main requirements}
+    \captionof{table}{Selected tools against must have product/project requirements}
 \end{center}
 
+\paragraph{Cairo} wrapper cairomm for C++. C++ integration is not 100\%. Cairo is popular
+in the free software communicty for providing cross-platform
+support for advanced 2D drawing.
+
+\paragraph{GTK+} builds on Cairo and GDK, has a large developer and user community.
+\paragraph{QT} has a large developer and user community.
+\paragraph{JUCE} A one man project.
+\paragraph{Mozilla Application Framework} Very web oriented.
+\paragraph{OpenGL} hardware acceleration and powerful but complex. Low level library.
+\paragraph{SDL} Low level library.
+\paragraph{GDK} Low level library.
 
 
 \section{List of cross platform tools}
@@ -48,7 +58,8 @@ support the application, but has no direct integration with C++.}.
 		of different backends. Cairo is designed to use hardware
 		acceleration when available.
 		The software is free software with a user license based on GPL
-		and MPL. \hspace*{\fill}\\Ref: \cite{wiki:cairo}.
+		and MPL.
+		\hspace*{\fill}\\Ref: \cite{wiki:cairo}.
 
     \item[FLTK] The Fast, Light Toolkit (FLTK, pronounced fulltick) is a
 		cross-platform graphical control element (GUI)
