@@ -90,17 +90,17 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=16
+line=22
 mode=LaTeX
 open=true
 order=1
 
 [item:uitoolkit-1-requirements.tex]
 archive=true
-column=19
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=15
+line=20
 mode=LaTeX
 open=true
 order=2
@@ -137,10 +137,10 @@ order=5
 
 [item:uitoolkit.tex]
 archive=true
-column=13
+column=21
 encoding=UTF-8
 highlight=LaTeX
-line=44
+line=67
 mode=LaTeX
 open=true
 order=0
@@ -150,39 +150,60 @@ CursorColumn=23
 CursorLine=204
 JumpList=
 ViMarks=.,206,57,[,206,55,],206,57
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit-0-problem.tex]
 CursorColumn=0
-CursorLine=16
+CursorLine=22
 JumpList=
-ViMarks=.,15,0,[,15,0,],15,0
+ViMarks=.,27,72,[,28,13,],27,72,^,27,9
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit-1-requirements.tex]
-CursorColumn=19
-CursorLine=15
+CursorColumn=0
+CursorLine=20
 JumpList=
-ViMarks=.,15,18,[,15,18,],15,18
+ViMarks=.,39,0,[,38,75,],39,4,^,39,29
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit-2-information.tex]
 CursorColumn=95
 CursorLine=12
 JumpList=
 ViMarks=.,12,95,[,12,95,],12,95
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit-3-comparison.tex]
 CursorColumn=23
 CursorLine=1
 JumpList=
 ViMarks=
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit-4-recommendation.tex]
 CursorColumn=0
 CursorLine=0
 JumpList=
 ViMarks=
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^
 
 [view-settings,view=0,item:uitoolkit.tex]
-CursorColumn=13
-CursorLine=44
+CursorColumn=21
+CursorLine=67
 JumpList=
-ViMarks=.,44,13,[,44,13,],44,13
+ViMarks=.,67,21,[,67,21,],67,21
+ViRegisterContents=\n,The team has explicit wishes concerning improving or learning competences. Table\n\\\\ref{tab: team-competence-req} specifies these wishes per team member.\n,\n    als open source beschikbaar gesteld worden\\, dus iedereen mag in principe\n    de producten inzien. In de overeenkomst met de opdrachtgever dient op het\n    punt van de rechten duidelijkheid gegeven te worden.''\n\n\\\\end{minipage}\n\n&\n\n\\\\begin{minipage}{.45\\\\textwidth}\n\n    ``We assume open source availability of the team's products so that the \n    products are publicly available. The contract with the customer should \n    be clear on this point.''
+ViRegisterFlags=1,0,0
+ViRegisterNames=-,0,^

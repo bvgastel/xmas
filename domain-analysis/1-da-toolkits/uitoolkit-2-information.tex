@@ -1,52 +1,108 @@
-\section{Information on existing toolkits}
-List of toolkits. Main characteristics according to requirements.
-\section{Pre selection of toolkits}
-Based on language. C++. Free software.
-
 \section{Selected tools versus requirements}
+
+Based on language. C++. Free software.
 
 \begin{center}
     \small\sf
-    \begin{tabular}{lcccccp{10em}}
+    \begin{tabular}{lccccc|cccc}
 	\hline
-        {\bf Toolkit} & {\bf Free software} & {\bf Platform} & {\bf C++}   & {\bf 2D} & {\bf GUI}   & {\bf Yay}\\
-        {\bf Name}    & {\bf 0} & {\bf 1}        & {\bf 2}     & {\bf 3}  & {\bf 4}     & {\bf or Nay }\\
+	{\bf Toolkit} & {\bf Free} & {\bf L-W-M} & {\bf C++}   & {\bf 2D} & {\bf GUI}   
+													& \multicolumn{4}{c}{\em Yay or Nay}\\
+		{\bf Name}    & {\bf 0} & {\bf 1}        & {\bf 2}     & {\bf 3}  & {\bf 4}     
+													& {\bf Yay} & {\bf Part} & {\bf May} & {\bf Nay}\\
         \hline
-        Cairo         & 1 & 1 & 0.9 & 1 & 0 & \\
-        FLTK          & 1 & 1 &     &   &   & \\
-	fpGUI         & 1 & 1 &     &   &   & \\
-	GTK+	      & 1 & 1 & 1   & 1 & 1 & Yay\\
-	JUCE          & 1 & 1 &     &   &   & \\
-	Mozilla A.F.  & 1 & 1 &     &   &   & \\
-	OpenGL        & 1 & 1 & 1   &   & 0 & \\
-	Qt	      & 1 & 1 & 1   &   &   & Yay\\
-	SDL	      & 1 & 1 & 1   &   &   & \\
-	Tk	      & 1 & 1 &     &   &   & \\
-	Ultimate++    & 1 & 1 &     &   &   & \\
-	WxWidgets     & 1 & 1 &     &   &   & \\
-	GDK	      & 1 & 1 &     &   & 0 & \\
+%%%%%%%%%%%%%%%%%% FS  Plat   C++  2D  GUI  Comm  Yay   Part   May   Nay  
+%%%%%%%%%%%%%%%%%%                                      May              
+        Cairo     & 1 & 1   & 0.9 & 1 & 0 &  L  &     & Part &     &     \\
+        FLTK      & 1 & 1   & 1   & 0 & 1 &     &     & Part &     &     \\
+		fpGUI     & 1 & 1   & 0   &   &   &     &     &      &     & Nay \\
+	    GTK+	  & 1 & 1   & 1   & 1 & 1 &  L  & Yay &      &     &     \\
+	    JUCE      & 1 & 1   & 1   & 1 & 1 &  S  & Yay &      &     &     \\
+	Mozilla A.F.  & 1 & 1   & 1   & 1 & 1 &  L  &     &      & May &     \\
+	CEGUI         & 1 & 1   & 1   & 1 & 1 &  S  &     &      & May &     \\
+	OpenGL        & 1 & 1   & 1   & 1 & 0 &  L  &     &      & May &     \\
+	Qt	          & 1 & 1   & 1   & 1 & 1 &  L  & Yay &      &     &     \\
+	Tk	          & 1 & 1   & 0.5 & 1 & 1 &  L  &     &      & May &     \\
+	Ultimate++    & 1 & 0.6 & 0.7 & 1 & 1 &  M  &     &      &     & Nay \\
+	WxWidgets     & 1 & 1   & 1   & 1 & 1 &  L  & Yay &      &     &     \\
+	GDK	          & 1 & 1   & 1   & 1 & 0 &  L  &     &      &     & Nay \\
+	SDL	          & 1 & 1   & 1   &   &   &     &     &      &     & Nay \\
 
 	\hline
     \end{tabular}
     \captionof{table}{Selected tools against must have product/project requirements}
 \end{center}
 
-\paragraph{Cairo} wrapper cairomm for C++. C++ integration is not 100\%. Cairo is popular
-in the free software communicty for providing cross-platform
-support for advanced 2D drawing.
+\paragraph{Cairo: Part} has a wrapper \verb!cairomm! for C++. So C++ integration
+is not 100\%. Cairo is popular in the free software communicty for providing
+cross-platform support for advanced 2D drawing. Other GUI library (notably
+GTK+) already include Cairo.  This library does not contain GUI widgets and so
+should be combined with \verb!SomeGUILibrary!. The verdict for Cairo is Part.
 
-\paragraph{GTK+} builds on Cairo and GDK, has a large developer and user community.
-\paragraph{QT} has a large developer and user community.
-\paragraph{JUCE} A one man project.
-\paragraph{Mozilla Application Framework} Very web oriented.
-\paragraph{OpenGL} hardware acceleration and powerful but complex. Low level library.
-\paragraph{SDL} Low level library.
-\paragraph{GDK} Low level library.
+\paragraph{FLTK: Part} This is a GUI only library. For 2D a different should be
+used and should be combined with \verb!Some2DLibrary!. The verdict is Part.
+
+\paragraph{fpGUI: Nay} is a pascal library based on free pascal (lazarus)
+(\cite{Geldenhuys:fpgui}).  The author is also the sole maintainer of the
+system. According to \cite{wxwidget:comparison} Lazarus has no C++ integration
+to speak of. For this reason we qualify this tool as Nay. 
+
+\paragraph{GTK+: Yay} builds on Cairo and GDK, has a large developer and user
+community.  It fullfills the must-haves and the verdict is Yay. It has a
+wrapper GTKMM for C++. The verdict is Yay.
+
+\paragraph{JUCE: Yay} A one man project with emphasis on audio
+(\cite{juce:juce},\cite{wiki:juce}).  It runs all defined platforms, written in
+C++. The user license is dual GPL and commercial.  The verdict according to
+requirements is Yay.
+
+\paragraph{Mozilla Application Framework: May} The MAF is platform independent,
+very web oriented with a large developer and user community\footnote{All
+firefox users are part of the user community}. The 2D drawing support is SVG
+support. The MAF library contains much more than is necessary for this tool.
+The question is whether this extra is justifiable overhead. The library is
+meant to support a subset of the standard GUI frameworks like GTK+, QT and
+WxWidgets, aimed at web-programs. According to the requirements the verdict is
+a May.
+
+\paragraph{CEGUI: May} This toolkit satisfies the main requirements, but has a
+small developer community (\cite{wiki:cegui} and \cite{cegui:cegui}. Verdict is May.
+ 
+
+\paragraph{OpenGL: May} hardware acceleration and powerful but complex. Low
+level library. It does not directly support any GUI widgets. The verdict is
+May.
+
+\paragraph{Tk: May} Seems to contain everything necessary for both GUI and 2D
+drawing, but C++ integration is not as clear (\cite{wiki:tk}, \cite{tcltk:tk}).
+According to the comparison on WxWidgets for C++ better not use Tk
+(\cite{wxwidget:comparison}).  The verdict for that reason is May.
+
+\paragraph{Ultimate++: May} The framework seems very complete. It does not
+support Mac (\cite{wxwidget:comparison}).  It is not very clear whether this
+framework integrates easily into C++, see \cite{u++:ultimate++}. The verdict is
+Nay.
+
+\paragraph{WxWidgets: Yay} The framework is complete and has no obvious
+disadvantages. According to their comparison to Qt, the two are functional
+comparable (\cite{wxwidget:comparison}).  The verdict is Yay.
+
+\paragraph{SDL: May} This is Low level library meant for 2D development. It
+does not contain any GUI widgets. It may be usable in combination with other
+libraries. The verdict is May.
+
+\paragraph{GDK: Nay} Is a low level library that is ``An intermediate layer
+which isolates GTK+ from the details of the windowing system.'' according to
+\cite{gnome:gdk3}. In the presence of GTK+ the verdict is Nay.
+
+\paragraph{QT: Yay} has a large developer and user community. According to the
+wxwidget comparison with Qt, both are functionally comparable
+(\cite{wxwidget:comparison}).
 
 
 \section{List of cross platform tools}
 
-General source: see \cite{wiki:xplatf}. Leave out non-free software or software
+General source: see \cite{wiki:xplatf}. Left out non-free software or software
 not for defined platforms. Due to the amount of toolkits, any obvious disconnect with C++
 is also reason to drop a choice\footnote{like Lazarus, that in theory might be able to
 support the application, but has no direct integration with C++.}.

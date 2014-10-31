@@ -1,35 +1,56 @@
 \section{Requirements for design tool}
 
-The high level requirements for the project are aimed at the chip design tool. {\em see table \ref{tab: appl-requirements}}.
-Student requirements in terms of competence goals.
+Table \ref{tab: appl-requirements} summarizes the high level requirements for
+the chip design tool. Table \ref{tab: team-competence-req} shows the team
+members' requirements in terms of competence goals. Each requirement may
+transfer as full requirement to the UI tool, partially or not at all. Table
+\ref{tab: uitool-requirements} summarizes the relationship of the project's
+requirements with the user interface toolkit.
 
-Each requirement may transfer as full requirement to the UI tool, partially or not at all. {\em See table \ref{tab: uitool-requirements}}.
-For analysis and comparison of UI tools we use the relevant requirements as defined in table \ref{tab: uitool-requirements}.
-As multiple tools satisfy the high level requirements we use team preference and competence wishes to discriminate and select the tools.
+If multiple tools satisfy the complete set of requirements, then
+team preference will rule the recommendation. Ultimately the customer
+and the team decide depending on the recommendation and any external factors
+like an other domain analysis.
 
-The first requirement $M0$ was specified to ensure the free availability of the ui tool both now and in the future. The source of
-this requirement is a remark from the Open University instructions ``Hulpmiddelen en bronnen'' (``tools and sources'') with the following text:
+\subsection{Free software requirement}
+
+The first requirement $M0$ was specified to ensure the free availability of the
+ui tool both now and in the future. The source of
+this requirement is a remark from the Open University instructions
+``Hulpmiddelen en bronnen'' (``tools and sources'') with the following text:
 
 \vspace{1em}
 
 \begin{tabular}[t]{ll}
 \begin{minipage}{.45\textwidth}
-    ``Wij gaan ervan uit dat de producten van het team uiteindelijk veelal als open source beschikbaar gesteld worden,
-    dus iedereen mag in principe de producten inzien. In de overeenkomst met de opdrachtgever dient op het punt van de rechten
-    duidelijkheid gegeven te worden.''
+
+	``Wij gaan ervan uit dat de producten van het team uiteindelijk veelal als
+	open source beschikbaar gesteld worden, dus iedereen mag in principe de
+	producten inzien. In de overeenkomst met de opdrachtgever dient op het punt
+	van de rechten duidelijkheid gegeven te worden.''
+
 \end{minipage}
+
 &
+
 \begin{minipage}{.45\textwidth}
-    ``We assume open source availability of the team's products so that the products are publicly available.
-    The contract with the customer should be clear on this point.''
+
+	``We assume open source availability of the team's products so that the
+	products are publicly available. The contract with the customer should be
+	clear on this point.''
+
 \end{minipage}
+
 \end{tabular}
 
 \vspace{1em}
 
-\noindent Demanding free software follows from this specification and the fact that non-free software could potentially lead to non-availability of
-the software due to license fees or the author retracting the software. We specify it as a must-have requirement to make this requirement
-be ``clear on this point''.
+\noindent Demanding free software follows from this specification and the fact
+that non-free software could potentially lead to non-availability of the
+software due to license fees or the author retracting the software. We specify
+free software as a must-have requirement to be ``clear on this point''.
+
+\subsection{The project and product requirements}
 
 \begin{center}
     \small\sf
@@ -89,67 +110,84 @@ be ``clear on this point''.
     \label{tab: appl-requirements}
 \end{center}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% input from team competence tex file (a symbolic link) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Team preferences}
+
+%%%%% input from team competence tex file (a symbolic link) %%%%%
 %%
 %%  must be input: include is not permitted from an included file
 %%
 \input{team-competence}
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% input from team competence tex file (a symbolic link) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% input from team competence tex file (a symbolic link) %%%%%
 
 \section{Requirements for UI toolkit}
 
-Using the requirements for the application plus the competence requirements of mij team, the impact of
-all these demands is summarized in table \ref{tab: uitool-requirements}. Only requirements directly relevant
-to the ui toolkit have consequential requirements formulated.
+Using the requirements for the application plus the competence requirements of
+my team, the impact of all these demands is summarized in table \ref{tab:
+uitool-requirements}. Only requirements directly relevant to the ui toolkit
+have consequential requirements formulated.
+
+In table \ref{tab: uitool-requirements} the term ``support for plugins'' is
+meant to be a weak requirement in the sense that it does not hinder the design
+of plugins. The ability to support plugins directly is a nice to have
+requirement. The derived requirements ``ease of use'' and ``ease of learning''
+are important requirements for the people maintaining the system.
+
+Each requirement has a min-factor that reflects the type of requirement : 1.0
+for a must-have requirements, 0.9 for should-have and 0.8 for a could-have
+requirement. However, the factor could be less if the importance for the ui
+tool is diminished.
+
+The team requirements have a type downgraded by 0.1 indicating less importance
+than the product requirements.
+
+\paragraph{Remark.} The term ``ui toolkit'' may indicate one set of tools (like qt) or 
+a multiple sets (like one for 2D and one for GUI elements).
 
 \begin{center}
     \begin{longtable}{ll||ccp{13em}}
 	{\bf id: requirement}     & {\bf impact} & {\bf id } & {\bf min-factor} & {\bf UI requirement}\\\hline\endhead
 	\hline \multicolumn{4}{c}{UI toolkit requirements (Continue on next page)}\endfoot
-	\hline \multicolumn{4}{c}{UI toolkit requirements}\endlastfoot
+	\hline\endlastfoot
 	\hline
-	M0: Free software         & full         &  0  & 1.0 & ui toolkit must be free software as defined by FSF.\\
-        M1: Cross platform        & full         &  1  & 1.0 & ui toolkit runs equally well on the defined platforms for all features.\\
-        M2: C++ integration       & full         &  2  & 0.7 & ui toolkit does not hinder C++ integration in any way.\\
-        M3: 2D drawing            & full         &  3  & 1.0 & ui toolkit has equal 2D features on all defined platforms.\\
-        M4: GUI Widgets           & full         &  4  & 1.0 & ui toolkit has relevant GUI widgets on all defined platforms.\\
-        M5: xmas primitives       & none         &     &     & \\
-        M6: xmas macros           & none         &     &     & \\
-        S1: expandability         & limited      &  5  & 0.9 & ui toolkit does not hinder creating plugins.\\
-        S2: installability        & limited      &  6  & 0.9 & ui toolkit does not hinder install procedure.\\
-        S3: maintainability       & moderate     &  7  & 0.9 & ui toolkit is easy to use.\\
-	                          &              &  8  & 0.9 & ui toolkit is easy to learn.\\
-	                          &              &  9  & 0.9 & ui toolkit is well documented.\\
-	                          &              & 10  & 0.9 & ui toolkit supports observer pattern.\\
-	                          &              & 11  & 0.9 & ui toolkit dev. community should have enough mass.\\
-	                          &              & 12  & 0.9 & ui toolkit user community should have enough mass.\\
-        S4: plugability           & limited      & 13  & 0.9 & ui toolkit should not hinder creating plugins.\\
-        S5: performance	          & moderate     & 14  & 0.9 & ui toolkit should support running concurrent processes for modules.\\
-	                          &              & 15  & 0.9 & ui toolkit should support observer pattern from independent processes.\\
-	                          &              & 16  & 0.9 & ui toolkit should support interruption during concurrent processing.\\
+		M0: Free software    & full         &  0  & 1.0 & ui toolkit must be free software as defined by FSF.\\
+        M1: Cross platform   & full         &  1  & 1.0 & ui toolkit runs equally well on the defined platforms for all features.\\
+        M2: C++ integration  & full         &  2  & 0.7 & ui toolkit does not hinder C++ integration in any way.\\
+        M3: 2D drawing       & full         &  3  & 1.0 & ui toolkit has equal 2D features on all defined platforms.\\
+        M4: GUI Widgets      & full         &  4  & 1.0 & ui toolkit has relevant GUI widgets on all defined platforms.\\
+        M5: xmas primitives  & none         &     &     & \\
+        M6: xmas macros      & none         &     &     & \\
+        S1: expandability    & limited      &  5  & 0.9 & ui toolkit does not hinder creating plugins.\\
+        S2: installability   & limited      &  6  & 0.9 & ui toolkit does not hinder install procedure.\\
+        S3: maintainability  & moderate     &  7  & 0.9 & ui toolkit is easy to use.\\
+	                         &              &  8  & 0.9 & ui toolkit is easy to learn.\\
+	                         &              &  9  & 0.9 & ui toolkit is well documented.\\
+	                         &              & 10  & 0.9 & ui toolkit supports observer pattern.\\
+	                         &              & 11  & 0.9 & ui toolkit dev. community should have enough mass.\\
+	                         &              & 12  & 0.9 & ui toolkit user community should have enough mass.\\
+        S4: plugability      & limited      & 13  & 0.9 & ui toolkit should not hinder creating plugins.\\
+        S5: performance	     & moderate     & 14  & 0.9 & ui toolkit should support running concurrent processes for modules.\\
+	                         &              & 15  & 0.9 & ui toolkit should support observer pattern from independent processes.\\
+	                         &              & 16  & 0.9 & ui toolkit should support interruption during concurrent processing.\\
         N1: install util          & none         &     &     & \\\hline
         %--------------------------------------------------------------------------------------------------------------------------
-        GM1: UI tool	          &              &     &     & Enclosed in requirement M1.\\
-        GS1: Agile	          &              &     &     & \\
-        GS2: C++	          & compatible   & 20  & 0.8 & Prefer a ui toolkit that works with C++.\\
-        GC1: versioncontrol       &              &     &     & \\
-        GC2: req. engineering     &              &     &     & \\\hline
+		GM0: Free Software  &              &     &     & Enclosed in requirement M0.\\  
+        GM1: UI tool	    &              &     &     & Enclosed in requirement M1.\\
+        GS1: Agile	        &              &     &     & \\
+        GS2: C++	        & compatible   & 20  & 0.8 & Prefer a ui toolkit that works with C++.\\
+        GC1: versioncontrol &              &     &     & \\
+        GC2: req. engineering
+						    &              &     &     & \\\hline
         %--------------------------------------------------------------------------------------------------------------------------
-        SS1: agile	          &              &     &     & \\
-        SS2: online agile tools   &              &     &     & \\
-        SS3: distributed team     &              &     &     & \\
-        SC1: platform independent & compatible	 & 21  & 0.8 & Prefer a platform independent toolkit.\\
+        SS1: agile	        &              &     &     & \\
+        SS2: online agile tools
+							&              &     &     & \\
+        SS3: distributed team     
+							&              &     &     & \\
+        SC1: platform independent 
+							& compatible	 & 21  & 0.8 & Prefer a platform independent toolkit.\\
     \end{longtable}
     \captionof{table}{UI Toolkit requirements derived.}
     \label{tab: uitool-requirements}
 \end{center}
 
-In table \ref{tab: uitool-requirements} the term ``support for plugins''
-is meant to be a weak requirement in the sense that it does not hinder
-the design of plugins. The ability to support plugins directly is a nice
-to have requirement. The derived requirements ``ease of use'' and ``ease of
-learning'' are important requirements.
 
-Each requirement has a min-factor that reflects the type of requirement : 1.0 for a must-have requirements, 0.9 for should-have and 0.8
-for a could-have requirement. The team requirements have a type downgraded by 0.1 indicating less importance than the product requirements.

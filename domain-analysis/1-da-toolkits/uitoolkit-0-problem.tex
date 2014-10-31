@@ -1,27 +1,29 @@
-\section{Problem description}
-The customer's request is to build a graphical chip editor for Network on chip designs
-that uses existing C++ program to interface with and that runs on all defined
-platforms: Linux, ms Windows and Mac. This implies part of the solution is a
-user interface tool that works from graphical representation of chip networks.
-This document is the result of gathering information and analysing existing
-user interface tools that we could use for this purpose.
+\section{Problem domain}
+\subsection{Description}
 
-\paragraph{Comparison.} The number of available user interface and 2D drawing toolkits
-is large enough to justify a comparison on the basis of objective criteria. The number
-of features each toolkit has, is large enough to warrant limitation of criteria. The
-structuring drive are the project and product requirements followed by team requirements
-and finally team preference.
+The customer's request is to build a graphical chip editor for Network on chip
+designs that uses existing C++ program to interface with and that runs on all
+defined platforms: Linux, ms Windows and Mac. This implies part of the solution
+is a user interface tool that works from graphical representation of chip
+networks. This document is the result of gathering information and analysing
+existing user interface tools that we could use for this purpose.
 
-\paragraph{Requirements.} The customer specified requirements -- both non-functional and
-functional -- each of which could have implications for the
-choice of user interface toolkit. The team has its own learning requirements which
-could influence the choice as well.
+\subsection{Approach}
+
+\paragraph{Comparison.} The number of available user interface and 2D drawing
+toolkits is large enough to justify a comparison on the basis of objective
+criteria. The number of features each toolkit has, is large enough to warrant
+limitation of criteria. The criteria derive from the project and product
+requirements followed by team requirements and finally team preference.
+
+\paragraph{Requirements.} The customer specified requirements -- both
+non-functional and functional -- each of which could have implications for the
+choice of user interface toolkit. The team members have their learning
+requirements which could influence the choice as well.
 
 \paragraph{Goal.} The primary requirement -- the one that we did not explicitly
 write down when comparing the UI tools -- is that the UI tool \emph{suffices}.
-It does not have to be perfect, it does not have to dazzle. It should do what we
-need it to do: anything else is either superfluous or extra. In the end -- all being
-equal -- the team will choose from the candidates on basis of preference.
-
-
-
+It does not have to be perfect, it does not have to dazzle.
+Anything more than sufficient is extra and not discriminating for this analysis
+document. In the end -- all being equal -- the team will choose from the
+candidates on basis of preference.
