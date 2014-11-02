@@ -53,7 +53,7 @@ This domain analysis concerns combinatorial objects, along with primitive object
 The benefits of combinatorial objects are those of re-usability, it makes complex things look simple and maintainable, it preserves correctness.\\
 When designing an xMAS model in WickedXmas , the designer can make use of combinatorial objects similar as he or she does with primitive objects. Because combinatorial objects are xMAS models these can be edited just as any other kind of xMAS model except that there are unconnected ports as mentioned before.
 
-\section{Vocabulary} 
+\section{Dictionary} 
 Before we can continue explaining this matter, we need a vocabulary. 
 \begin{itemize}
 \item \textbf{WickedXmas}: Name of the tool used to design and analyse xMAS models.
@@ -71,9 +71,72 @@ Before we can continue explaining this matter, we need a vocabulary.
 \end{itemize}
 
 
-
+\newpage
 \section{Primitive objects}
-todo   
+Primitive objects are the base of combinatorial objects and determine the underlying structures. Secondly, when using objects to create a model, there are a lot of similarities between combinatorial and primitive objects. With this knowledge we can say that primitive objects need some explanation as far as these are concerned with combinatorial objects.
+\\The xMAS language has only eight primitive objects, each object has a visual representation and one or more properties which can be changed by the user. Some of these properties requires a valid value otherwise a visual marker, shown as a dot as part of the object, will lit up red instead of green. Finally all objects have one or more ports, ports can be of target or input type and initiator or output type, ports are represented by red filled squares. All ports must be wired to an opposite type of port of a other object to form a valid channel.
+
+
+% wich will be discribed in the next subsections. 
+\subsection{Queue}
+\includegraphics[width=0.5\textwidth]{queue}
+ToDo : description + fjson structure
+\subsection{Function}
+\includegraphics[width=0.5\textwidth]{function}
+\\Property "Function f" is a subset of the C language, an integer which represents the packet is available through variable 'header'. 
+\begin{itemize}
+\item math operators $+,-,*,/,\%$
+\item logical operators $\&\&,||,!$
+\item equality operators $==,<=,>=,<,>$
+\end{itemize} 
+Example function : ret=0;
+\\ToDo : description + fjson structure
+\subsection{Fork}
+\includegraphics[width=0.25\textwidth]{fork}
+\\ToDo : description + fjson structure
+\subsection{Join}
+\includegraphics[width=0.5\textwidth]{join}
+\\ToDo : description + fjson structure
+\subsection{Switch}
+\includegraphics[width=0.5\textwidth]{switch}
+\\Property "Function s" is a subset of the C language, an integer which represents the packet is available through variable 'header'. 
+\begin{itemize}
+\item math operators $+,-,*,/,\%$
+\item logical operators $\&\&,||,!$
+\item equality operators $==,<=,>=,<,>$
+\end{itemize} 
+Example function : return header == 0;
+\\ToDo : description + fjson structure  
+\subsection{Merge}
+\includegraphics[width=0.3\textwidth]{merge}
+\\ToDo : description + fjson structure
+\subsection{Sink}
+\includegraphics[width=0.5\textwidth]{sink}
+\\ToDo : description + fjson structure
+\subsection{Source}
+\includegraphics[width=0.5\textwidth]{source}
+\\Property "Function e" insert types of packets injected at this source. The domain of all packets is available through PacketDomain. 
+\\ToDo : description + fjson structure
+
+\newpage
+\section{Combinatorial objects}
+To create combinatorial objects, which means an open network, we need something to distinguish between an dangling port or a port that can be connected later when re-using the combinatorial object. Example : {p in PacketDomain | p < 100}
+\\ToDo : to be completed
+\subsection{Recursion}
+\subsection{Macro}
+\subsection{Visual representation}
+\subsection{Structure}
+
+\newpage
+\section{Structures}
+ToDo : to be completed
+\subsection{Hierarchical structure}
+\subsection{Flat structure}
+
+\newpage
+\section{Similar domain examples}
+ToDo : example of how a similar product manages re-usable components 
+
 
 
 \end{document} ;########################### end document ##################################;
