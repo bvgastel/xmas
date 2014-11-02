@@ -10,47 +10,71 @@ existing user interface tools that we could use for this purpose. Addiditonally
 the customer has specified some qualitative requirements like maintainability
 and installability.
 
-\subsection{Approach}
-
-The primary goal is that the UI tool suffices: it does not have to be perfect.
-All being equal the team will choose from the candidates on the basis of
-preference.
+\subsection{Requirements for the approach}
 
 The number of available user interface toolkits is large.  Moreover the number
-of features each toolkit has, is large. This warrants careful consideration
-of toolkits where we start from the project's requirements and use the team's
-preference to break any ties.
+of features each toolkit has, is large. This warrants careful consideration of
+toolkits where we start from the project's requirements and use the team's
+preference to break any ties.  The primary goal is that the UI tool suffices:
+it does not have to be perfect.
 
-\subsection{Search}
+\section{Search}
 
-Normally ones searches literature for information on subjects in domain
-analysis.  For toolkits this may not be the most efficient or in fact the most
-effective way of finding the best toolkit. The problem with literature is that
-it is constantly behind on the current, actual state of affairs. Even though
-information on the internet in general is less reliable than literature
-generally is, in this case it forms a better basis to find a more complete list
-of toolkits.
+\subsection{Search apporach}
 
-\section{Selection criteria}
+Normally one searches literature for information on subjects in domain
+analysis.  For toolkits this may not be the most efficient or effective way of
+finding the best toolkit. The problem with literature is that it is constantly
+behind on the current state of affairs. Even though information on the internet
+in general is less reliable than literature generally is, in this case it forms
+a better basis to find a more complete list of toolkits. 
 
-Table \ref{tab: appl-requirements} contains a list of the main requirements for
+Using the en.wikipedia as entrance and fanning out through the links wikipedia
+provides we were able to determine a list of user interface toolkits that in
+practice is sufficient for our goal. The dates on the sites provide information
+on how actual the data is. Crossreferencing sites gives confidence in the
+correctness of the information. The next section lays out the criteria we used
+to select toolkits.
+
+\subsection{Selection criteria}
+
+Table \ref{tab:appl-requirements} contains a list of the main requirements for
 the design tool. These requirements generate criteria which we can use to find
 the most appropriate toolkits available.
 
-Table \ref{tab: team-competence-req} shows a list of the team's preferences. Any
-ties\footnote{toolkits with equal qualification regarding requirements} can be
-broken using the team members preferences. Table \ref{tab: uitool-requirements}
-shows the implications of the requirements resulting in specific user interface
-requirements.
+Table \ref{tab:team-competence-req} shows a list of the team's preferences.
+Any ties\footnote{toolkits with equal qualification regarding requirements} can
+be broken using the team members preferences. Table
+\ref{tab:itool-requirements} shows the implications of the requirements
+resulting in specific user interface requirements.
 
-\section{Selection process}
+The next section shows what the steps we followed and what the results were.
 
-Table \ref{tab: discarded-toolkits} shows the first wave of packages that did
+\subsection{Selection process}
+
+Table \ref{tab:discarded-toolkits} shows the first wave of packages that did
 not make the comparis due to not satisfying one of the important requirements
 (being free software, running on the defined platforms).
 
-Table \ref{tab: compare-main-req} shows the result of the second wave of
+Table \ref{tab:compare-main-req} shows the result of the second wave of
 selection. These packages satisfy all main requirements and need further
-selection.
+selection. 
 
-Table \ref{}\todo{cite} shows the output of phase 3 of the selection.
+\subsection{Result}
+
+We reduced the list of the complete set of user interface toolkits (see
+\ref{tab:discarded-toolkits} and \ref{tab:compare-main-req}) to 3
+candidate toolkits: GTK+, Qt and WxWidget. In terms of main requirements they
+are equal. Remaining task is to determine the best of these alternatives in
+terms of detailed requirements. 
+
+\todo{Final compare}.
+
+\section{Recommendation}
+
+We recommend the team to choose toolkit <GTK+, Qt, WxWidget>\todo{choice} on the basis
+of <what is the main reason>\todo{motive}.
+
+\subsection{Motivation}
+
+We have chosen\todo{Expanded motive}.

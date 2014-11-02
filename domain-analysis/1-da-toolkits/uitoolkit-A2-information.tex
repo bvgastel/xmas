@@ -1,4 +1,4 @@
-\section{Selected tools versus requirements}
+\section{Approach of the selection process}
 
 The character of Graphical User Interface toolkits (GUI toolkits) is such that
 a reasonably recent list of toolkits can only be found on internet. The best
@@ -12,6 +12,8 @@ toolkits available is staggering, so the first step is weeding out the toolkits
 that do not support one of our defined platforms, are not free software of just
 do not interact with C++ sufficiently.  For that reason this analysis does not
 consider the following toolkits:
+
+\section{Phase 1 Preselection of user interface toolkits}
 
 \begin{center}
     \begin{tabular}{|p{7em}|p{25em}|}
@@ -37,44 +39,54 @@ consider the following toolkits:
 	\hline
     \end{tabular}
     \captionof{table}{Platforms not considered with reason}
-	\label{tab: discarded-toolkits}
+	\label{tab:discarded-toolkits}
 \end{center}
 
-Using the main requirements including free software (first column) and the defined platforms (second column)
-Table \ref{tab: compare-main-req} shows the remaining toolkits and their rating according to the 
-main requirements including free software and defined platforms.
 
-Of the toolkits 5 
+\section{Phase 2 Selection of user interface toolkits on main requirements}
+
+Using the main requirements including free software (first column) and the
+defined platforms (second column) Table \ref{tab: compare-main-req} shows the
+remaining toolkits and their rating according to the main requirements
+including free software and defined platforms.
+
+Among the 3 toolkits qualified as ``Maybe'' are some pretty unconventional, but
+powerful frameworks. For instance Gled is a framework that stems from
+scientific work and features the easy distribution of nodes accross threads,
+processes and machines.
+
+The resulting preferred toolkits are GTK+, Qt and WxWidgets due to the size of
+the developer and user community. 
 
 \begin{center}
     \small\sf
     \begin{tabular}{c|lccc|c|ccc}
 	\hline
-	{\bf nr} & {\bf Toolkit} & {\bf C++} & {\bf 2D} & {\bf GUI}  &                 & \multicolumn{3}{c}{\em Yay or Nay} \\
-	         & {\bf Name}    & 			 &          &            & {\bf Community} & {\bf Yay} & {\bf Part} & {\bf Nay} \\
-	         &			     &         	 &          &            &         		   &           & {\bf Maybe}  &         \\
+	{\bf nr} & {\bf Toolkit} & {\bf C++} & {\bf 2D} & {\bf GUI} &            & \multicolumn{3}{c}{\em Yay or Nay} \\
+	         & {\bf Name}    & 			 &          &            & {\bf Community} 	& {\bf Yay} & {\bf Part} & {\bf Nay} \\
+	         &			     &         	 &          &            &         		&           & {\bf Maybe}  &         \\
         \hline
-%%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay  
-%%%%%%%%%%%%%%%%%%                                  Maybe              
-1  &	    GTK+	  	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-2  &	    Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-3  &	    WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-4  &	    JUCE      	& 1   & 1 & 1 &  Small  & Yay &         &     \\
-5  &	    CEGUI     	& 1   & 1 & 1 &  Small  & Yay &         &     \\
-6  &        Gled        & 1   & 1 & 1 &  Small  & Yay &         &     \\
-																\hline
-6  &		Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
-7  &		FLTK      	& 1   & 0 & 1 &         &     & Partial &     \\
-8  & 	    OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
-9  &	SDL				& 1   & 1 & 0 &         &     & Partial &     \\\hline
-10 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Maybe   &     \\\hline
-11 &	Tk	          	& 0.5 & 1 & 1 &  Large  &     &         & Nay \\
-12 &	fpGUI     	  	& 0   &   &   &         &     &         & Nay \\
-13 &	GDK       		& 1   & 1 & 0 &  Large  &     &         & Nay \\
-	\hline
+%%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
+%%%%%%%%%%%%%%%%%%                                  Maybe
+1  &	GTK+		& 1   & 1 & 1 &  Large  & Yay &         &     \\
+2  &	Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\\hline
+4  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+5  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+6  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+\hline
+6  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+7  &	FLTK      	& 1   & 0 & 1 &         &     & Partial &     \\
+8  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+9  &	SDL		& 1   & 1 & 0 &         &     & Partial &     \\\hline
+10 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
+11 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
+12 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
+13 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
+\hline
     \end{tabular}
     \captionof{table}{Selected tools against must have product/project requirements}
-	\label{tab: compare-main-req}
+	\label{tab:compare-main-req}
 \end{center}
 
 \paragraph{GTK+: Yay} builds on Cairo and GDK, has a large developer and user
@@ -89,19 +101,20 @@ wxwidget comparison with Qt, both are functionally comparable
 disadvantages. According to their comparison to Qt, the two are functional
 comparable (\cite{wxwidget:comparison}).  The verdict is Yay.
 
-\paragraph{JUCE: Yay} A one man project with emphasis on audio
+\paragraph{JUCE: Maybe} A one man project with emphasis on audio
 (\cite{juce:juce},\cite{wiki:juce}).  It runs all defined platforms, written in
 C++. The user license is dual GPL and commercial.  The verdict according to
-requirements is Yay.
+requirements is Maybe due to the size of the developer community.
 
-\paragraph{CEGUI: Yay} This toolkit satisfies the main requirements, but has a
+\paragraph{CEGUI: Maybe} This toolkit satisfies the main requirements, but has a
 small developer community (\cite{wiki:cegui} and \cite{cegui:cegui}. The
-verdict for this toolkit is Yay.
+verdict for this toolkit is Maybe due to the size of the developer community.
 
-\paragraph{Gled: Yay} This toolkit satisfies the main requirements, but has a 
-small developer community (\cite{gled:gled}). The verdict is Yay.
+\paragraph{Gled: Maybe} This toolkit satisfies the main requirements, but has a
+small developer community (\cite{gled:gled}). The verdict is Maybe.
 
-\paragraph{Cairo: Partial} has a wrapper \verb!cairomm! for C++.  Cairo is popular
+\paragraph{Cairo: Partial} has a wrapper \verb!cairomm! for C++.  Cairo is
+popular
 in the free software communicty for providing cross-platform support for
 advanced 2D drawing. Other GUI library (notably GTK+) already include Cairo.
 This library does not contain GUI widgets and so should be combined with
@@ -134,7 +147,7 @@ According to the comparison on WxWidgets, for C++ better not use Tk
 \paragraph{fpGUI: Nay} is a pascal library based on free pascal (lazarus)
 (\cite{Geldenhuys:fpgui}).  The author is also the sole maintainer of the
 system. According to \cite{wxwidget:comparison} Lazarus has no C++ integration
-to speak of. For this reason we qualify this tool as Nay. 
+to speak of. For this reason we qualify this tool as Nay.
 
 \paragraph{GDK: Nay} Is a low level library that is ``An intermediate layer
 which isolates GTK+ from the details of the windowing system.'' according to
@@ -273,6 +286,25 @@ integration with C++.}.
 		and GTK+), OpenVMS, OS/2 and AmigaOS. A version for embedded
 		systems is under development.
 		\hspace*{\fill}\\Ref: \cite{wiki:wxwidget}
+
+	\item[Gled]	is a C++ framework for rapid development of applications with
+		support for GUI (using FLTK), 3D-graphics and distributed
+		computing. It extends the ROOT framework (standard data-analysis
+		tool in high-energy physics) with mechanisms for object collection
+		management \& serialization, multi-threaded execution, GUI
+		auto-generation (object browser \& editor) and dynamic visualization
+		(OpenGL). Distributed computing model of Gled is a hierarchy of
+		nodes connected via TCP/IP sockets. Gled provides authentication \&
+		access control, data exchange, proxying of object collections and
+		remote method-call propagation \& execution. Gled can be dynamically
+		extended with library sets. Their creation is facilitated by a set
+		of scripts for creation of user-code stubs. Simple tasks and
+		application configuration can be efficiently done via the
+		interactive C++ interpreter (CINT). Gled is used for development of
+		programs in high energy physics and as a research tool in
+		distributed and grid computing. 
+		\hspace*{\fill}\\Ref: \cite{fltk:gled}
+
     \item[GDK]  (GIMP Drawing Kit) is a library that acts as a wrapper around
 		the low-level functions provided by the underlying windowing
 		and graphics systems. GDK lies between the display server and
@@ -284,5 +316,4 @@ integration with C++.}.
 		Public License (LGPL).
 		\hspace*{\fill}\\Ref: \cite{wiki:gdk}
 \end{description}
-
 
