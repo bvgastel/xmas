@@ -52,23 +52,8 @@
 This domain analysis concerns combinatorial objects, along with primitive objects this kind of objects can be used to design xMAS models with the WickedXmas tool. In fact combinatorial objects are xMAS models itself but left open with unconnected ports, parameterizable and allow recursive reuse.\\
 The benefits of combinatorial objects are those of re-usability, it makes complex things look simple and maintainable, it preserves correctness.\\
 When designing an xMAS model in WickedXmas , the designer can make use of combinatorial objects similar as he or she does with primitive objects. Because combinatorial objects are xMAS models these can be edited just as any other kind of xMAS model except that there are unconnected ports as mentioned before.
+\\To understand the vocabulary used in this document you can read the dictionary section first.
 
-\section{Dictionary} 
-Before we can continue explaining this matter, we need a vocabulary. 
-\begin{itemize}
-\item \textbf{WickedXmas}: Name of the tool used to design and analyse xMAS models.
-\item \textbf{xMAS model}: A model based on Intel's xMAS or e\underline{x}ecutable \underline{M}icro\underline{A}rchitectural \underline{S}pecification, which is a high level design language for communication fabrics. 
-\item \textbf{Primitive Object}: The xMAS language consist of eight primitive objects which are used to create xMAS models. Primitive objects are hard coded.
-\item \textbf{Combinatorial Object}: A composite object which can be made of primitives and combinatorial objects. It is also known as a open xMAS model or macro.
-\item \textbf{Channel}: A connection between an input and output port.
-\item \textbf{Port}: Each object has one or more ports to create a channel, there are initiator and target ports.
-\item \textbf{Initiator}: An output port.
-\item \textbf{Target}: An input port.
-\item \textbf{Open xMAS network}: see combinatorial object.
-\item \textbf{Macro}: see combinatorial object.
-
-
-\end{itemize}
 
 
 \newpage
@@ -79,10 +64,10 @@ Primitive objects are the base of combinatorial objects and determine the underl
 
 % wich will be discribed in the next subsections. 
 \subsection{Queue}
-\includegraphics[width=0.5\textwidth]{queue}
-ToDo : description + fjson structure
+\includegraphics[width=1.0\textwidth]{queue}
+\\ToDo : description + fjson structure
 \subsection{Function}
-\includegraphics[width=0.5\textwidth]{function}
+\includegraphics[width=1.0\textwidth]{function}
 \\Property "Function f" is a subset of the C language, an integer which represents the packet is available through variable 'header'. 
 \begin{itemize}
 \item math operators $+,-,*,/,\%$
@@ -92,13 +77,13 @@ ToDo : description + fjson structure
 Example function : ret=0;
 \\ToDo : description + fjson structure
 \subsection{Fork}
-\includegraphics[width=0.25\textwidth]{fork}
+\includegraphics[width=1.0\textwidth]{fork}
 \\ToDo : description + fjson structure
 \subsection{Join}
-\includegraphics[width=0.5\textwidth]{join}
+\includegraphics[width=1.0\textwidth]{join}
 \\ToDo : description + fjson structure
 \subsection{Switch}
-\includegraphics[width=0.5\textwidth]{switch}
+\includegraphics[width=1.0\textwidth]{switch}
 \\Property "Function s" is a subset of the C language, an integer which represents the packet is available through variable 'header'. 
 \begin{itemize}
 \item math operators $+,-,*,/,\%$
@@ -108,13 +93,13 @@ Example function : ret=0;
 Example function : return header == 0;
 \\ToDo : description + fjson structure  
 \subsection{Merge}
-\includegraphics[width=0.3\textwidth]{merge}
+\includegraphics[width=1.0\textwidth]{merge}
 \\ToDo : description + fjson structure
 \subsection{Sink}
-\includegraphics[width=0.5\textwidth]{sink}
+\includegraphics[width=1.0\textwidth]{sink}
 \\ToDo : description + fjson structure
 \subsection{Source}
-\includegraphics[width=0.5\textwidth]{source}
+\includegraphics[width=1.0\textwidth]{source}
 \\Property "Function e" insert types of packets injected at this source. The domain of all packets is available through PacketDomain. 
 \\ToDo : description + fjson structure
 
@@ -128,7 +113,7 @@ To create combinatorial objects, which means an open network, we need something 
 \subsection{Structure}
 
 \newpage
-\section{Structures}
+\section{JSON}
 ToDo : to be completed
 \subsection{Hierarchical structure}
 \subsection{Flat structure}
@@ -137,6 +122,25 @@ ToDo : to be completed
 \section{Similar domain examples}
 ToDo : example of how a similar product manages re-usable components 
 
+\newpage
+\section{Dictionary} 
+\begin{itemize}
+\item \textbf{WickedXmas}: Name of the tool used to design and analyse xMAS models.
+\item \textbf{xMAS model}: A model based on Intel's xMAS or e\underline{x}ecutable \underline{M}icro\underline{A}rchitectural \underline{S}pecification, which is a high level design language for communication fabrics. 
+\item \textbf{Primitive Object}: The xMAS language consist of eight primitive objects which are used to create xMAS models. Primitive objects are hard coded.
+\item \textbf{Combinatorial Object}: A composite object which can be made of primitives and combinatorial objects. It is also known as a open xMAS model or macro.
+\item \textbf{Channel}: A connection between an input and output port.
+\item \textbf{Port}: Each object has one or more ports to create a channel, there are initiator and target ports.
+\item \textbf{Initiator}: An output port.
+\item \textbf{Target}: An input port.
+\item \textbf{Open xMAS network}: see combinatorial object.
+\item \textbf{Macro or macro block}: see combinatorial object.
+\item \textbf{Configuration}: Represents the current state of a model which means the occupation of queues.
+\item \textbf{wck}: File extension of an xMAS model and contains hierarchical structured JSON.
+\item \textbf{JSON}: \underline{J}avascript \underline{O}bject \underline{N}otation is a readable data file format comparable to XML.
+\item \textbf{fjson}: File extension of an xMAS model and contains flat structured JSON.
+\item \textbf{Message type}: There response or request 
 
+\end{itemize}
 
-\end{document} ;########################### end document ##################################;
+\end{document}
