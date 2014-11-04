@@ -1,0 +1,46 @@
+\section{Phase 2 Selection}
+
+Using the main requirements including free software (first column) and the
+defined platforms (second column) Table \ref{tab:compare-main-req} shows the
+remaining toolkits and their rating according to the main requirements
+including free software and defined platforms.
+
+Among the 3 toolkits qualified as ``Maybe'' are some pretty unconventional, but
+powerful frameworks. For instance Gled is a framework that stems from
+scientific work and features the easy distribution of nodes accross threads,
+processes and machines.
+
+The resulting preferred toolkits are GTK+, Qt and WxWidgets due to the size of
+the developer and user community. 
+
+\begin{center}
+    \small\sf
+    \begin{tabular}{c|lccc|c|ccc}
+	\hline
+	{\bf nr} & {\bf Toolkit} & {\bf C++} & {\bf 2D} & {\bf GUI} &            & \multicolumn{3}{c}{\em Yay or Nay} \\
+	         & {\bf Name}    & 			 &          &            & {\bf Community} 	& {\bf Yay} & {\bf Part} & {\bf Nay} \\
+	         &			     &         	 &          &            &         		&           & {\bf Maybe}  &         \\
+        \hline
+%%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
+%%%%%%%%%%%%%%%%%%                                  Maybe
+1  &	GTK+		& 1   & 1 & 1 &  Large  & Yay &         &     \\
+2  &	Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\\hline
+4  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+5  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+6  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+\hline
+6  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+7  &	FLTK      	& 1   & 0 & 1 &         &     & Partial &     \\
+8  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+9  &	SDL		& 1   & 1 & 0 &         &     & Partial &     \\\hline
+10 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
+11 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
+12 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
+13 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
+\hline
+    \end{tabular}
+    \captionof{table}{Selected tools against must have product/project requirements}
+	\label{tab:compare-main-req}
+\end{center}
+
