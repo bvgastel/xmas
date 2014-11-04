@@ -1,6 +1,9 @@
 %%
 %% Dit is de domeinanalyse: Combinatorial Objects
 %%
+
+%% Freek 26 september:  Een derde domeinanalyse zou kunnen gaan over hoe om te gaan met combinatorial objects (bijv. hoe grafisch weer te geven, hoe op te slaan in de data structuur)
+
 \documentclass[a4paper,11pt,final]{article}
 
 \usepackage{subfig}
@@ -54,18 +57,22 @@ The benefits of combinatorial objects are those of re-usability, it makes comple
 When designing an xMAS model in WickedXmas , the designer can make use of combinatorial objects similar as he or she does with primitive objects. Because combinatorial objects are xMAS models these can be edited just as any other kind of xMAS model except that there are unconnected ports as mentioned before.
 \\To understand the vocabulary used in this document you can read the dictionary section first.
 
-
+\section{xMAS Modelling}
+To visualise an xMAS model in the WickedXmas tool, all objects have graphical properties. To parametrize xMAS models, objects and the models also have some specific properties. Properties and communication logic, which control the message flow during verification, are not used during modelling in the WickedXmas tool.
+\\In other words, this document only concerns the properties necessary to represent an xMAS model so it can be visualized, edited, stored and exchanged with the verification interface.
+ 
 
 \newpage
 \section{Primitive objects}
 Primitive objects are the base of combinatorial objects and determine the underlying structures. Secondly, when using objects to create a model, there are a lot of similarities between combinatorial and primitive objects. With this knowledge we can say that primitive objects need some explanation as far as these are concerned with combinatorial objects.
-\\The xMAS language has only eight primitive objects, each object has a visual representation and one or more properties which can be changed by the user. Some of these properties requires a valid value otherwise a visual marker, shown as a dot as part of the object, will lit up red instead of green. Finally all objects have one or more ports, ports can be of target or input type and initiator or output type, ports are represented by red filled squares. All ports must be wired to an opposite type of port of a other object to form a valid channel.
+\\The xMAS language has only eight primitive objects, each object has a visual representation and one or more properties which can be changed by the user. Some of these properties requires a valid value otherwise a visual marker, shown as a dot as part of the object, will lit up red instead of green. Finally all objects have one or more ports and can be of input or output type. The graphical representation of a port is a red filled square. All ports must be wired to an opposite type of port of a other object to form a valid channel.
+Because the WickedXmas tool is a static graphical design tool and does not hold dynamic data
 
 
 % wich will be discribed in the next subsections. 
 \subsection{Queue}
 \includegraphics[width=1.0\textwidth]{queue}
-\\ToDo : description + fjson structure
+A queue can store data but does not modify it.  
 \subsection{Function}
 \includegraphics[width=1.0\textwidth]{function}
 \\Property "Function f" is a subset of the C language, an integer which represents the packet is available through variable 'header'. 
