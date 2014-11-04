@@ -1,0 +1,155 @@
+\section{Approach of the selection process}
+
+The character of Graphical User Interface toolkits (GUI toolkits) is such that
+a reasonably recent list of toolkits can only be found on internet. The best
+start is wikipedia which links to toolkits, each often linking to other
+toolkits. The set of toolkits studied here is a sound base for finding a
+toolkit that suffices for our needs.
+
+We selected the tools based on various web searches leading among others
+leading to \cite{wiki:xplatf} and \cite{wiki:xplatf_gui}.  The amount of
+toolkits available is staggering, so the first step is weeding out the toolkits
+that do not support one of our defined platforms, are not free software of just
+do not interact with C++ sufficiently.  For that reason this analysis does not
+consider the following toolkits:
+
+\section{Phase 1 Preselection of user interface toolkits}
+
+\begin{center}
+    \begin{tabular}{|p{7em}|p{25em}|}
+	\hline
+	{\bf name} & {\bf reason}\\\hline
+	AppearIQ & non-free software. Ref: \cite{appear:appeariq}.\\
+	Eclipse & a compiler, not a graphical framework. Ref: \cite{wiki:eclipse}.\\
+	GeneXus & non-free software. Also not for linux
+		    or mac. Ref: \cite{wiki:genexus}. \\
+	Haxe & not a graphics platform. Ref: \cite{wiki:haxe}\\
+	Max & not for linux, not free software. Ref: \cite{wiki:max}\\
+	Mono & not a graphics environment, emulation
+		of C\#. Ref: \cite{wiki:mono}.\\
+	MonoCross & aimed at C\#. Ref: \cite{wiki:monocross}.\\
+	MoSync & aimed at mobile platforms, no longer maintained. Ref: \cite{wiki:mosync}.\\
+	Xojo & non-free software. Ref: \cite{wiki:xojo}.\\
+	Smartface & non-free software\footnote{limited edition gratis available}. Ref: \cite{wiki:smartface} and \cite{smartface:license}.\\
+	WebDev & aimed at creating websites. Ref: \cite{wiki:webdev}.\\
+	WinDev & aimed at data centric apps with forms, works with webdev. Ref: \cite{wiki:windev}.\\
+	XPower++ & Insufficient information, looks like an advertisment. Ref: \cite{wiki:xpower++}.\\
+	Lazarus & A Pascal development environment. Ref: \cite{wiki:lazarus}.\\
+	Ultimate++ & Does not support MacOS. Ref: \cite{wiki:ultimate++} and \cite{wxwidget:comparison}.\\
+	\hline
+    \end{tabular}
+    \captionof{table}{Platforms not considered with reason}
+	\label{tab:discarded-toolkits}
+\end{center}
+
+
+\section{Phase 2 Selection of user interface toolkits on main requirements}
+
+Using the main requirements including free software (first column) and the
+defined platforms (second column) Table \ref{tab:compare-main-req} shows the
+remaining toolkits and their rating according to the main requirements
+including free software and defined platforms.
+
+Among the 3 toolkits qualified as ``Maybe'' are some pretty unconventional, but
+powerful frameworks. For instance Gled is a framework that stems from
+scientific work and features the easy distribution of nodes accross threads,
+processes and machines.
+
+The resulting preferred toolkits are GTK+, Qt and WxWidgets due to the size of
+the developer and user community. 
+
+\begin{center}
+    \small\sf
+    \begin{tabular}{c|lccc|c|ccc}
+	\hline
+	{\bf nr} & {\bf Toolkit} & {\bf C++} & {\bf 2D} & {\bf GUI} &            & \multicolumn{3}{c}{\em Yay or Nay} \\
+	         & {\bf Name}    & 			 &          &            & {\bf Community} 	& {\bf Yay} & {\bf Part} & {\bf Nay} \\
+	         &			     &         	 &          &            &         		&           & {\bf Maybe}  &         \\
+        \hline
+%%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
+%%%%%%%%%%%%%%%%%%                                  Maybe
+1  &	GTK+		& 1   & 1 & 1 &  Large  & Yay &         &     \\
+2  &	Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\\hline
+4  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+5  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+6  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+\hline
+6  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+7  &	FLTK      	& 1   & 0 & 1 &         &     & Partial &     \\
+8  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+9  &	SDL		& 1   & 1 & 0 &         &     & Partial &     \\\hline
+10 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
+11 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
+12 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
+13 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
+\hline
+    \end{tabular}
+    \captionof{table}{Selected tools against must have product/project requirements}
+	\label{tab:compare-main-req}
+\end{center}
+
+\paragraph{GTK+: Yay} builds on Cairo and GDK, has a large developer and user
+community.  It fullfills the must-haves and the verdict is Yay. It has a
+wrapper \verb!GTKMM! for C++. The verdict is Yay.
+
+\paragraph{Qt: Yay} has a large developer and user community. According to the
+wxwidget comparison with Qt, both are functionally comparable
+(\cite{wxwidget:comparison}).
+
+\paragraph{WxWidgets: Yay} The framework is complete and has no obvious
+disadvantages. According to their comparison to Qt, the two are functional
+comparable (\cite{wxwidget:comparison}).  The verdict is Yay.
+
+\paragraph{JUCE: Maybe} A one man project with emphasis on audio
+(\cite{juce:juce},\cite{wiki:juce}).  It runs all defined platforms, written in
+C++. The user license is dual GPL and commercial.  The verdict according to
+requirements is Maybe due to the size of the developer community.
+
+\paragraph{CEGUI: Maybe} This toolkit satisfies the main requirements, but has a
+small developer community (\cite{wiki:cegui} and \cite{cegui:cegui}. The
+verdict for this toolkit is Maybe due to the size of the developer community.
+
+\paragraph{Gled: Maybe} This toolkit satisfies the main requirements, but has a
+small developer community (\cite{gled:gled}). The verdict is Maybe.
+
+\paragraph{Cairo: Partial} has a wrapper \verb!cairomm! for C++.  Cairo is
+popular
+in the free software communicty for providing cross-platform support for
+advanced 2D drawing. Other GUI library (notably GTK+) already include Cairo.
+This library does not contain GUI widgets and so should be combined with
+\verb!SomeGUILibrary!. The verdict for Cairo is Partial.
+
+\paragraph{FLTK: Partial} This is a GUI only library. For 2D a different library
+should be used and should be combined with \verb!Some2DLibrary!. The verdict is
+Partial.
+
+\paragraph{OpenGL: Partial} hardware acceleration and powerful but complex. Low
+level library. It does not directly support any GUI widgets. Many GUI libraries
+support the use of an OpenGL library. The verdict is Partial.
+
+\paragraph{SDL: Partial} This is Low level library meant for 2D game
+development. It does not contain GUI widgets. It may be usable in combination
+with other libraries. The verdict is Partial.
+
+\paragraph{Mozilla Application Framework: Maybe} The MAF is platform
+independent, web oriented with a large developer and user
+community\footnote{All firefox users are part of the user community}.  The
+library is meant to support a subset of the standard GUI frameworks like GTK+,
+QT and WxWidgets, aimed at web-programs. Due to the web orientedness and it's
+partial support for widgets the verdict for this toolset is Maybe.
+
+\paragraph{Tk: Nay} Seems to contain everything necessary for both GUI and 2D
+drawing, but C++ integration is not clear (\cite{wiki:tk}, \cite{tcltk:tk}).
+According to the comparison on WxWidgets, for C++ better not use Tk
+(\cite{wxwidget:comparison}).  The verdict for that reason is Nay.
+
+\paragraph{fpGUI: Nay} is a pascal library based on free pascal (lazarus)
+(\cite{Geldenhuys:fpgui}).  The author is also the sole maintainer of the
+system. According to \cite{wxwidget:comparison} Lazarus has no C++ integration
+to speak of. For this reason we qualify this tool as Nay.
+
+\paragraph{GDK: Nay} Is a low level library that is ``An intermediate layer
+which isolates GTK+ from the details of the windowing system.'' according to
+\cite{gnome:gdk3}. In the presence of GTK+ the verdict is Nay.
+
