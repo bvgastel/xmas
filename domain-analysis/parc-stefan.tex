@@ -4,17 +4,41 @@
 
 \begin{enumerate}
 \item "combinatorial objects" bedoel je daarmee de acht xMAS primitieven (sink,source,fork,...)? Omdat in het artikel "Analysis tools 11" een onderscheid gemaakt wordt tussen sequential (sink,source,queue) en combinatorial primitives en het zou me eerder logisch lijken dat ik alle primitieven onder de loep neem om datastructuur en grafische voorstelling te bepalen.
-\\
+
 \textbf{Freek:} Nee, een combinatorial object is als een macro. In de paper die we jullie gestuurd hadden zie je in het figuur met de twee agents twee voorbeelden (de credit counter en de nondeterministic delay). Het idee is dat je een een klein netwerkje bouwt dat meerdere keren voorkomt in je design. Dat netwerk is nog "open", i.e., het heeft nog in- en outputs die niet aan sources/sinks verbonden zijn. Wij willen dus een klein netwerkje als combinatorial object op kunnen slaan, zodat we het later weer kunnen gebruiken.
 
 \item De "wck" bestandjes waar de netwerkstructuur in bewaard wordt , is dit een (Intel) standaard of een keuze van de WickedXMas ontwikkelaars ?  
-\\
+
 \textbf{Freek:} Dit was onze keuze, in principe laat ik het aan Bernard of jullie deze wel of niet moeten gebruiken.
 
 \item De twee bestanden die "Generate JSON for validator" oplevert is me ook niet helemaal duidelijk , deze maakt opnieuw een wck bestand dat quasi identiek is aan het originele, terwijl het fjson bestand dat zelfde netwerk beschrijft maar dan zonder de grafische items lijkt me. Wat is de preciese bedoeling van de JSON stap in WickedxMAS? 
-\\
+
 \textbf{Freek:} Dat hangt sterk samen met de eerste vraag. Zolang er geen combinatorial objects worden gebruikt , zijn de bestanden inderdaad hetzelfde. Maar als er wel combinatorial objects worden gebruikt, dan moeten deze "geflattened" worden naar een "platte" datastructuur. Dat wordt gedaan tijdens die stap.
 
+\end{enumerate}
+
+
+\paragraph{1 november 2014 10:12}
+
+\begin{enumerate}
+\item Er staat dat composite objects geparametriseerd kunnen worden, ik vind enkel een eigenschap 'label' bij een composiet object en de fields in het PacketType window, waar kun je een composiet object parametriseren?'
+
+\textbf{Freek:} De versie die online beschikbaar is bevat deze functionaliteit niet. Dit beantwoordt ook meteen vragen 2 en 3. In een niet-stabiele versie die we hebben is de mogelijkheid opgenomen een composite object een parameter mee te geven, bijv. $n$. Primitieven als functies en switches kunnen van deze parameters gebruik maken. Wat mij betreft is de mogelijkheid om composite objects recursief te kunnen bouwen een "nice-to-have". De mogelijkheid om composite objects een parameter te geven is wel noodzakelijk, omdat zonder deze parameters de composite objects niet erg bruikbaar zijn. Als in de tool een composite object gebruikt wordt, dan moet de gebruiker dus een concrete waarde voor de parameters geven.
+
+
+\item Clicking the 'add tab' kan ik eveneens nergens vinden in de WickedXmas tool, op bepaalde primitieven kan ik wel zodanig klikken dat ik de opties krijg voor 2,3 of 4 ports, maar waar kan ik die add vinden?
+
+\item Als ik recursie test met composiet objecten dan crasht WickedXmas bij de stap om van een wck een flat JSON te maken, dit is voor zover ik zie ook logisch want er is nergens iets dat je kunt instellen om de recursie te beeindigen, dus het aanmaken van de flat JSON gaat in theorie oneindig door, kun je daar iets meer over zeggen?
+
+\textbf{Freek:} Zie vraag 1. Bij het maken van een recursief object moet er een concrete waarde meegegeven worden. Het is aan de gebruiker om de composite object zo te ontwerpen dat dit zorgt voor terminatie.
+
+\item In de documentatie vind ik voor combinatorial objects de benaming composite object,  macro of open netwerk en subnetwerk. Mij lijken deze allen dezelfde betekenis te hebben , de laatste drie zou ik nog kunnen opvatten als de inhoud van een combinatorial of composiet object, klopt dit?
+
+\textbf{Freek:} Goed punt, we zijn niet altijd even precies qua terminologie. Met alledrie duiden we hetzelfde aan. Ik stel voor vanaf nu de term "composite object" te gebruiken.
+
+\item Hebben jullie documentatie die de inhoudelijke structuur van een wck, flat fjson? Het meeste is makkelijk te achterhalen door netwerkjes te maken en de bestanden te analyseren, maar dit kost extra tijd en sluit niet uit dat ik combinaties over het hoofd zie.
+
+\textbf{Freek:} Zie hoofdstuk 8 van de bijlage. Ik zou niet te veel tijd besteden aan de rest van dit document, dit gaat over een erg oude versie dus het kan alleen maar tot verwarring leiden.
 
 \end{enumerate}
 
