@@ -1,46 +1,74 @@
-\section{Phase 2 Selection}
+\section{Phase 2}
 
-Using the main requirements including free software (first column) and the
-defined platforms (second column) Table \ref{tab:compare-main-req} shows the
-remaining toolkits and their rating according to the main requirements
-including free software and defined platforms.
+\subsection{Phase 2 selection}
 
-Among the 3 toolkits qualified as ``Maybe'' are some pretty unconventional, but
-powerful frameworks. For instance Gled is a framework that stems from
+Table \ref{tab:compare-main-req} shows the remaining toolkits and their 
+rating according to the high level requirements. The column {\sc Community} 
+indicates the expected support for the toolkit. A large user 
+commmunity could drive more people toward the developer community and thus
+increase the life expectation of the toolkit and its support. 
+This stimulates confidence in the toolkits' future.
+For {\sf FLTK} and {\sf SDL} the community size is not clear from the home website,
+so size is left out in table \ref{tab:compare-main-req}.
+
+Among the toolkits qualified as {\sf\sc Maybe} are some unconventional, but
+powerful frameworks. For instance {\sc Gled} is a framework that stems from
 scientific work and features the easy distribution of nodes accross threads,
-processes and machines.
+processes and machines. See \cite{greed:gled} for a discussion of the scientific
+goals of the {\sc\sf Greed} project.
 
-The resulting preferred toolkits are GTK+, Qt and WxWidgets due to the size of
-the developer and user community. 
+
+The toolkits qualified as {\sf\sc Partial} leave out either the GUI widgets or 
+the 2D drawing capability. They could still be viable in combination with one
+of the other toolkits.
 
 \begin{center}
     \small\sf
     \begin{tabular}{c|lccc|c|ccc}
 	\hline
-	{\bf nr} & {\bf Toolkit} & {\bf C++} & {\bf 2D} & {\bf GUI} &            & \multicolumn{3}{c}{\em Yay or Nay} \\
-	         & {\bf Name}    & 			 &          &            & {\bf Community} 	& {\bf Yay} & {\bf Part} & {\bf Nay} \\
-	         &			     &         	 &          &            &         		&           & {\bf Maybe}  &         \\
+	{\bf\sf nr} & {\bf\sf Toolkit} & {\bf\sf C++} & {\bf\sf 2D} & {\bf\sf GUI} &            & \multicolumn{3}{c}{\em\bf\sf Yay or Nay} \\
+	         & {\bf\sf Name}    & 			 &          &            & {\bf\sf Community} 	& {\bf\sf Yay} & {\bf\sf Part} & {\bf\sf Nay} \\
+	         &			     &         	 &          &            &         		&           & {\bf\sf Maybe}  &         \\
         \hline
 %%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
 %%%%%%%%%%%%%%%%%%                                  Maybe
 1  &	GTK+		& 1   & 1 & 1 &  Large  & Yay &         &     \\
 2  &	Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\\hline
-4  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
-5  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
-6  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\
+4  &	FLTK      	& 1   & 1 & 1 &         & Yay &         &     \\
 \hline
-6  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
-7  &	FLTK      	& 1   & 0 & 1 &         &     & Partial &     \\
-8  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
-9  &	SDL		& 1   & 1 & 0 &         &     & Partial &     \\\hline
-10 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
-11 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
-12 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
-13 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
+5  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+6  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+7  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+\hline
+8  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+9  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+10 &	SDL			& 1   & 1 & 0 &         &     & Partial &     \\\hline
+11 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
+12 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
+13 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
+14 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
 \hline
     \end{tabular}
     \captionof{table}{Selected tools against must have product/project requirements}
 	\label{tab:compare-main-req}
 \end{center}
 
+\subsection{Phase 2 analysis}
+
+\paragraph{Toolkits included} The toolkits 1 through 3 satify the requirements. 
+The {\sf FLTK} toolkit does not generate confidence due to unclear community size. 
+The toolkits 5 through 7 all have a small community size and therefore are left out for further comparison. 
+The toolkits 8 and 9 satisfy all but one requirement (the GUI) but could still function if they 
+add sufficient function to a GUI oriented toolkit. 
+
+\paragraph{Toolkits excluded}
+Toolkit 10 ({\sf SDL} is not clear on the supporting community, but does seem to have a following. 
+The comparison from WxWdidgets (\cite{wxwidget:comparison}) mentions {\sf SDL} as a viable addition 
+to WxWidgets, but it is oriented towards gaming. The toolkits 12 through 13 do not satisfy the 
+requirements fully, and toolkit 14 (GDK) is low level and incorporated in {\sf GTK+}. 
+The Mozilla Application Framework ({\sf M.A.F.}) is oriented towards the web. The deciding feature 
+is that {\sf MAF} contains a subselection of the regular GUI widgets geared towards html and css.
+
+\paragraph{Next phase}
+contains toolkits $1, 2, 3$ and 8 and 9: {\sf GTK+, Qt, WxWidgets, Cairo and OpenGL}. 
