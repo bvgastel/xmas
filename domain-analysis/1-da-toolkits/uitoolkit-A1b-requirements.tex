@@ -1,0 +1,62 @@
+\section{Requirements for UI toolkit}
+
+Using the requirements for the application plus the competence requirements of
+my team, the impact of all these demands is summarized in table
+\ref{tab:uitool-requirements}. Only requirements directly relevant to the ui
+toolkit have consequential requirements formulated.
+
+In table \ref{tab:uitool-requirements} the term ``support for plugins'' is
+meant to be a weak requirement in the sense that it does not hinder the design
+of plugins. The ability to support plugins directly is a nice to have
+requirement. The derived requirements ``ease of use'' and ``ease of learning''
+are important requirements for the people maintaining the system.
+
+\paragraph{Remark.} The term ``ui toolkit'' may indicate one set of tools (like qt) or
+a multiple sets (like one for 2D and one for GUI elements).
+
+\begin{center}
+    \begin{longtable}{ll||cp{13em}}
+	{\bf id: requirement}     & {\bf impact  } & {\bf id } & {\bf UI requirement}\\\hline\endhead
+	\hline \multicolumn{4}{c}{UI toolkit requirements (Continue on next page)}\endfoot
+	\hline\endlastfoot
+	\hline
+		M0: Free software    & full         &  0  & ui toolkit must be free software as defined by FSF.\\
+        M1: Cross platform   & full         &  1  & ui toolkit runs equally well on the defined platforms for all features.\\
+        M2: C++ integration  & full         &  2  & ui toolkit does not hinder C++ integration in any way.\\
+        M3: 2D drawing       & full         &  3  & ui toolkit has equal 2D features on all defined platforms.\\
+        M4: GUI Widgets      & full         &  4  & ui toolkit has relevant GUI widgets on all defined platforms.\\
+        M5: xmas primitives  & none         &     & \\
+        M6: xmas macros      & none         &     & \\
+        S1: expandability    & limited      &  5  & ui toolkit does not hinder creating plugins.\\
+        S2: installability   & limited      &  6  & ui toolkit does not hinder install procedure.\\
+        S3: maintainability  & moderate     &  7  & ui toolkit is easy to use.\\
+	                         &              &  8  & ui toolkit is easy to learn.\\
+	                         &              &  9  & ui toolkit is well documented.\\
+	                         &              & 10  & ui toolkit supports observer pattern.\\
+	                         &              & 11  & ui toolkit dev. community should have enough mass.\\
+	                         &              & 12  & ui toolkit user community should have enough mass.\\
+        S4: plugability      & limited      & 13  & ui toolkit should not hinder creating plugins.\\
+        S5: performance	     & moderate     & 14  & ui toolkit should support running concurrent processes for modules.\\
+	                         &              & 15  & ui toolkit should support observer pattern from independent processes.\\
+	                         &              & 16  & ui toolkit should support interruption during concurrent processing.\\
+        N1: install util     & none    		&     & \\\hline
+        %--------------------------------------------------------------------------------------------------------------------------
+		GM0: Free Software  &              &     & Enclosed in requirement M0.\\
+        GM1: UI tool	    &              &     & Enclosed in requirement M1.\\
+        GS1: Agile	        &              &     & \\
+        GS2: C++	        & compatible   & 20  & Prefer a ui toolkit that works with C++.\\
+        GC1: versioncontrol &              &     & \\
+        GC2: req. engineering
+						    &              &     & \\\hline
+        %--------------------------------------------------------------------------------------------------------------------------
+        SS1: agile	        &              &     & \\
+        SS2: online agile tools
+							&              &     & \\
+        SS3: distributed team
+							&              &     & \\
+        SC1: platform independent
+							& compatible   & 21  & Prefer a platform independent toolkit.\\
+    \end{longtable}
+    \captionof{table}{UI Toolkit requirements derived.}
+    \label{tab:uitool-requirements}
+\end{center}
