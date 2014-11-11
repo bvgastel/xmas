@@ -2,38 +2,44 @@
 
 \subsection{UI toolkit requirements} 
 
-Table \ref{tab:uitool-requirements} shows the UI toolkit requirements. 
-We can only measure the requirements 7 (ease of use) and 8 (ease of learning) 
-subjectively. In order to compare these qualities this analysis 
-uses the experience we have with the Java Swing library\footnote{This 
-could have been any reasonably well known user interface, but the Swing library 
-is tought at the Open University and should be known to all computer science 
-students at OU at this time.}.
-
-The final comparison takes some lesser requirements into account:
-
-\begin{description}
-	\item[7] The toolkit must be easy to use. 
-	\item[8] The toolkit must be easy to learn.
-	\item[9] The toolkit is well documented.
-	\item[10] The toolkit supports the observer pattern.
-	\item[14] The toolkit supports running concurrent processes\footnote{besides the event thread}.
-	\item[15] The toolkit supports running the observer pattern
-	from concurrent processes.
-\end{description}
+Table \ref{tab:uitool-requirements} shows the tool kit requirements. 
+The main requirements were already tackeled (platform, C++, free software, community).
+The final comparison takes the remaining tool kit requirements into account.
 
 \begin{center}
 	\small\sf
-	\begin{tabular}{l|cccccc|p{15em}}
+	\begin{tabular}{c|p{8em}|p{8em}|cccc|}
 		\hline
-		{bf Toolkit} & {\bf 7} & {\bf 8} & {\bf 9} & {\bf 10} & {\bf 14} & {\bf 15} & {\bf Comment}\\
+		{\bf id} & {\bf req}        & {\bf fitness}     & {\bf GTK+} & {\bf Qt} & {\bf WxWidgets} & {\bf FLTK}\\
 		\hline
-		GTK+         &   =     &    =    &   =     &          &          &          &  \\
-		Qt           &   =     &    =    &   =     &          &          &          &  \\
-		WxWidgets    &   =     &    =    &   =     &          &          &          &  \\
-		\hline
+		    7    & Ease of use      & reputation        & +                      & + & + & +\\
+		    8    & Ease of learning & rep \& tutorials  & +                      & + & + & +\\
+		    9    & Documentation    & website \& rep    & +                      & + & + &  \\
+		    10   & Observer pattern & signal processing & +                      & + & + &  \\
+		    14   & Concurrency      & support for conc. & +                      & + & + &  \\
+		    15   & Conc. observer   & is it possible?   & + \footnote{messaging} & + &   &  \\
+	
 	\end{tabular}
 	\captionof{table}{Final comparison of selected toolkits}
 \end{center}
 
-\paragraph{10 documentation} Both GTK+ and Qt have 
+\paragraph{Use and learning.} We can only measure the requirements for ease of use
+and learning subjectively. This is an experience result and changes in time:
+any tool kit becomes easy to use and learn after enough experience using it. So the only
+measure that we could use is reputation, plus tutorials for ease of learning. 
+
+\paragraph{Use of reputation.} Although subjective, the cumulative criticism and opinions
+indicate real quality. Neither of the systems have bad rep on any
+of the subjectively measurable qualities (7, 8 and 9). Also, the main website for
+the tool kit easily revealed the available documentation. The hypothesis that any one 
+lacks in ease of use, learning or in documentation seems unwarranted. 
+
+\paragraph{Observer pattern.} For our UI the observer pattern is important in two ways.
+Firstly, all signals from the user interface should relay flawlessly to modules, even if
+they execute concurrently. Secondly, any change of status or content in the modules,
+even concurrent modules should relay flawlessly to the user interface thread. Measuring
+this is a question of checking the docs and asking around. 
+
+The tool kit Qt explicitly allows some thread to receive signals from different
+threads or processes, and will execute the method in the thread belonging to the slot.
+For all tool kits the usual concurrency issues apply with respect to sharing of data objects.
