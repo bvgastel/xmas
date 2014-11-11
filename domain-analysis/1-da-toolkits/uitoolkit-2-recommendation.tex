@@ -2,15 +2,21 @@
 
 \subsection{Result}
 
-We reduced the list of the complete set of user interface toolkits (see
-\ref{tab:discarded-toolkits} and \ref{tab:compare-main-req}) to 3
-candidate tool kits: GTK+, Qt and WxWidget. In terms of main requirements they
-are equal. Remaining task is to determine the best of these alternatives in
-terms of detailed requirements. 
+The final selection includes 4 tool kits: GTK+, Qt, WxWidgets and FLTK. Each
+of these tool kits satisfies all requirements either autonomously or 
+in combination with other tool kits (FLTK).
 
-\subsection{Recommendation} We recommend the team to choose toolkit (GTK+, Qt,
-WxWidget)\todo{choice} on the basis of <what is the main reason>\todo{motive}.
+In terms of requirement based selection, the search is finished. We 
+formulate a preference based on the specifics of the tool kits. 
+The decision is up to the team. 
+
+\subsection{Recommendation} 
+
+We recommend the toolkit FLTK for the GUI and additionally \w{boost} for 
+concurrency and the observer pattern.
 
 \subsection{Motivation}
 
-We have chosen\todo{Expanded motive}.
+The only tool kit that exactly satisfies the needs of the project,
+without any additional features is FLTK in combination with a tool
+kit like boost for concurrency and 
