@@ -1,0 +1,36 @@
+Remarks
+=======
+
+Avoid uppercase in filnames
+---------------------------
+
+Prefer lowercase characters in file names, especially filename extentions like .jpg.
+This prevents cross platform troubles. Use a dash "-" or "_" if you have to.
+
+New lines
+---------
+
+When in Latex, do not use "\\" for a new line, unless in a table environment like tabular.
+
+Using an empty line will demarcate a paragraph. If you want the paragraph without an empty
+line you can use \par. If you want the paragraph to start with a name, use \paragraph{parname.} 
+Where parname will be in bold and will have more whitespace following it.
+If you want bold without the whitespace, use an empty line / \par with \textbf{parname.}.
+
+New page
+--------
+
+Prefer not to use \newpage, unless really necessary for the 
+layout. In the current document, each \section is preprended by
+a \newpage: it wastes a lot of paper without added value of
+better layout.
+
+Language
+--------
+
+Because we do not know who will be reading the source files we
+need to restrict even comments to english, so our text is accessible
+to non-dutch speakers.
+
+
+
