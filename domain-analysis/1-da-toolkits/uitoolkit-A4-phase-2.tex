@@ -1,42 +1,31 @@
-\section{Phase 2}
+\section{Phase 2 Main Selection}
 
-\subsection{Phase 2 selection}
+\subsection{Phase 2 selection results}
 
-Table \ref{tab:compare-main-req} shows the remaining tool kits and their rating
-according to the high level requirements. The column {\sc Community} indicates
-the expected support for the tool kit. A large user community could drive more
-people toward the developer community and thus increase the life expectation of
-the tool kit and its support.  This stimulates confidence in the tool kits'
-future.  For {\sf FLTK} and {\sf SDL} the community size is not clear from the
-home website, so size is left out in table \ref{tab:compare-main-req}.
-
-Among the tool kits qualified as {\sf\sc Maybe} are some unconventional, but
-powerful frameworks. For instance {\sc Gled} is a framework that stems from
-scientific work and features the easy distribution of nodes across threads,
-processes and machines. See \cite{greed:gled} for a discussion of the
-scientific goals of the {\sc\sf Greed} project.
-
-The tool kits qualified as {\sf\sc Partial} leave out either the GUI widgets or
-the 2D drawing capability. They could still be viable in combination with one
-of the other tool kits.
+Table \ref{tab:compare-main-req} shows the remaining tool kits. The column {\sc
+Community} indicates the expected support for the tool kit. Among the tool kits
+qualified as \w{Maybe} are some unconventional, but powerful frameworks.  The
+tool kits qualified as \w{Partial} leave out either the GUI widgets or the 2D
+drawing capability. They could still be viable in combination with one of the
+other tool kits.
 
 \begin{center}
     \small\sf
     \begin{tabular}{c|lccc|c|ccc}
 	\hline
-	{\bf\sf nr} & {\bf\sf Toolkit} & {\bf\sf C++} & {\bf\sf 2D} & {\bf\sf GUI} &            & \multicolumn{3}{c}{\em\bf\sf Yay or Nay} \\
-	         & {\bf\sf Name}    & 			 &          &            & {\bf\sf Community} 	& {\bf\sf Yay} & {\bf\sf Part} & {\bf\sf Nay} \\
-	         &			     &         	 &          &            &         		&           & {\bf\sf Maybe}  &         \\
+	\w{nr} & \w{Toolkit} & \w{C++} & \w{2D} & \w{GUI} &    & \multicolumn{3}{c}{\em\bf\sf Yay or Nay} \\
+           & {\bf\sf Name}&        &        &         & \w{Community}& \w{Yay} & \w{Part} & \w{Nay} \\
+           &	          &        &        &         &              &         & {\bf\sf Maybe}  &  \\
         \hline
 %%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
 %%%%%%%%%%%%%%%%%%                                  Maybe
-1  &	GTK+		& 1   & 1 & 1 &  Large  & Yay &         &     \\
-2  &	Qt	      	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-3  &	WxWidgets 	& 1   & 1 & 1 &  Large  & Yay &         &     \\
-4  &	FLTK      	& 1   & 1 & 1 &         & Yay &         &     \\
+1  &	GTK+		& 1   & 1 & 1 &  Active  & Yay &         &     \\
+2  &	Qt	      	& 1   & 1 & 1 &  Active  & Yay &         &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Active  & Yay &         &     \\
+4  &	FLTK      	& 1   & 1 & 1 &  Active  & Yay &         &     \\
 \hline
 5  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
-6  &	CEGUI     	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+6  &	CEGUI     	& 1   & 1 & 1 &  Active &     & Maybe   &     \\
 7  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
 \hline
 8  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
@@ -52,14 +41,13 @@ of the other tool kits.
 	\label{tab:compare-main-req}
 \end{center}
 
-\subsection{Phase 2 analysis}
+\subsection{Phase 2 selection analysis}
 
 \paragraph{Tool kits included} The tool kits 1 through 4 satisfy the
-requirements.  The {\sf FLTK} tool kit does not generate confidence due to an
-unclear community size.  The tool kits 5 through 7 all have a small community
-size and therefore are left out for further comparison.  The tool kits 8 and 9
-satisfy all but one requirement (the GUI) but could still function if they add
-sufficient function to a GUI oriented toolkit. 
+requirements.  
+
+The tool kits 8 and 9 satisfy all but one requirement (the GUI) but could still
+function if they add sufficient function to a GUI oriented toolkit. 
 
 \paragraph{Tool kits excluded} Tool kit 10 ({\sf SDL} is not clear on the
 supporting community, but does seem to have a following.  The comparison from
@@ -70,6 +58,18 @@ incorporated in {\sf GTK+}.  The Mozilla Application Framework ({\sf M.A.F.})
 is oriented towards the web. The deciding feature is that {\sf MAF} contains a
 sub selection of the regular GUI widgets geared towards html and css.
 
-\paragraph{Next phase} contains toolkits $1, 2, 3$ and 8 and 9: {\sf GTK+, Qt,
-WxWidgets, Cairo and OpenGL}. 
+For \w{fpGUI}, \w{sdl} and \w{Gled} the community activity is not clear from
+the home website, so the community is left out in table. The system \w{juce} is
+a one man project and aimed at multimedia and gaming. 
+
+\w{cegui} is a small community of developers specifically aimed at gaming, not graphical
+user interface.
+
+\w{Gled} is a framework that stems from scientific work and features the easy
+distribution of nodes across threads, processes and machines.  See
+\cite{greed:gled} for a discussion of the scientific goals of the \w{Greed}
+project.
+
+\paragraph{Next phase} contains toolkits $1, 2, 3 and 4$: {\sf GTK+, Qt,
+WxWidgets, FLTK} with possible additions of OpenGL or Cairo. 
 
