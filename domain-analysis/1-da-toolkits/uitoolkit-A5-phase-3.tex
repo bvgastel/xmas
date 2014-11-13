@@ -2,8 +2,8 @@
 
 \subsection{UI toolkit requirements} 
 
-Table \ref{tab:uitool-requirements} shows the tool kit requirements. 
-The final comparison takes the remaining tool kit requirements into account.
+Table \ref{tab:uitool-requirements} shows the tool kit requirements.  The final
+comparison takes the remaining tool kit requirements into account.
 
 \vspace{1em}
 \begin{minipage}{.95\textwidth}
@@ -27,34 +27,39 @@ The final comparison takes the remaining tool kit requirements into account.
 	\end{center}
 \end{minipage}
 
-\paragraph{Use and learning.} We can only measure the requirements for ease of use
-and learning subjectively. This is an experience result and changes in time:
-any tool kit becomes easy to use and learn after enough experience using it. So the only
-measure that we could use is reputation, plus tutorials for ease of learning. 
+\paragraph{Use and learning.} We can only measure the requirements for ease of
+use and learning subjectively. This is an experience result and changes in
+time: any tool kit becomes easy to use and learn after enough experience using
+it. So the only measure that we could use is reputation, plus tutorials for
+ease of learning. 
 
-\paragraph{Use of reputation.} Although subjective, the cumulative criticism and opinions
-indicate real quality. Neither of the systems have bad rep on any
-of the subjectively measurable qualities (7, 8 and 9). Also, the main website for
-the tool kit easily revealed the available documentation. The assumption that any one 
-of these tool kits lacks in ease of use, learning or in documentation can be rejected on
-the basis of experience and reputation. 
+\paragraph{Use of reputation.} Although subjective, the cumulative criticism
+and opinions indicate real quality. Neither of the systems have bad rep on any
+of the subjectively measurable qualities (7, 8 and 9). Also, the main website
+for the tool kit easily revealed the available documentation. The assumption
+that any one of these tool kits lacks in ease of use, learning or in
+documentation can be rejected on the basis of experience and reputation. 
 
 \paragraph{Observer pattern.} The observer pattern is important in two ways.
-First, all signals from the user interface should relay flawlessly to modules, even if
-they execute concurrently. Secondly, any change of status or content in the modules,
-even concurrent modules should relay flawlessly to the user interface thread. Measuring
-this is a question of checking the docs and asking around. 
+First, all signals from the user interface should relay flawlessly to modules,
+even if they execute concurrently. Secondly, any change of status or content in
+the modules, even concurrent modules should relay flawlessly to the user
+interface thread. Measuring this is a question of checking the docs and asking
+around. 
 
 
 \subsection{Analysis}
 
-Table \ref{tab:final-comparison} shows that tool kit requirements 7, 8 and 9 are satisfactory for
-all. The observer pattern and concurrent process communication is not as simple. In summary, Qt
-GTK+ and WxWdiget all suffice without modification. For FLTK we need to use one of the
-available cross platform libraries for concurrency and one for the observer pattern, like boost.
+Table \ref{tab:final-comparison} shows that tool kit requirements 7, 8 and 9
+are satisfactory for all. The observer pattern and concurrent process
+communication is not as simple. In summary, Qt GTK+ and WxWdiget all suffice
+without modification. For FLTK we need to use one of the available cross
+platform libraries for concurrency and one for the observer pattern, like
+boost.
 
-As all packages can fulfil the requirements the question is, what distinguishes these tool kits
-and on what basis should we choose? The short answer is: they all suffice. So the choice is no
-longer one of user interface requirements, but one of preference. In order to choose, the next
-section describes each tool kit in detail with their most prominent characteristices.
+As all packages can fulfil the requirements the question is, what distinguishes
+these tool kits and on what basis should we choose? The short answer is: they
+all suffice. So the choice is no longer one of user interface requirements, but
+one of preference. In order to choose, the next section describes each tool kit
+in detail with their most prominent characteristices.
 
