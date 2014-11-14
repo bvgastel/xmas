@@ -2,38 +2,40 @@
 
 \subsection{Result}
 
-The final phase results in 4 tool kits being selected: \w{gtkmm}, \w{qt},
-\w{wxwidgets} and \w{fltk}. Each of these tool kits satisfies all requirements
-either autonomously or in combination with other tool kits. In terms of
-requirement based selection, the search is finished. 
+The final phase results in 4 tool kits: \w{gtkmm}, \w{qt}, \w{wxwidgets} and
+\w{fltk}. Each of these tool kits satisfies all requirements either
+autonomously or in combination with other tool kits. In terms of requirement
+based selection, the search is finished.
 
-There is no way to recommend any one of these tool kits without including other
-preferences, like the target architecture, build tools, extra libraries to be
-used or personal preference. The recommendation is based on my personal
-assessment of the project. The final decision is up to the team.
+\subsection{Considerations}
 
+Considering the goals of the project, and the competence wishes, the team
+has different options as a result of different viewpoints.  One option would be
+to go with a toolkit that is ``\texttt{mean and lean}'' and add libraries only
+where necessary. The other option would be to go with a tool kit that contains
+``all++'' and thus is comfortable allbeit a little bloated. Whatever the
+choice, it will affect the end product. 
 \subsection{Recommendation} 
 
 I recommend using \w{fltk}.
 
 \subsection{Motivation}
 
-The underlying reasoning is that the project emphasizes a Network on Chip
-design, with most user interface effort going into the 2D drawing interface.
-This makes the focus of \w{fltk} on user interface\footnote{``\texttt{lean and
-mean}''} a fine choice. Should we need more emphasis on looks or more complex
-drawing than \w{fltk} can provide, then we could substitute \w{OpenGL} or
-\w{Cairo}\footnote{% Integration of \w{OpenGL} or \w{Cairo} into \w{fltk} is
-trivial}.
+In my recommendation I go with \texttt{mean and lean}.  The recommendation is
+based on extra information (appendix \ref{sec:phase3listing}) and a personal
+assessment of the project. The final decision is up to the team.
 
-The only toolkit that I would recommend against is \w{wxwidget} because the
-resulting binaries seem overweight. This might hamper downloads and installs at
-the user's site, or worse donate a bloated ``feeling'' to our app\footnote{This
-is only perception, but it could hurt general use of the product.}. 
+The project emphasizes a Network on Chip design, with most user interface
+effort going into the 2D drawing interface and the general user interface.
+This makes the focus of \w{fltk} on user interface with respect to gui a good
+choice. Should we need more emphasis on looks or more complex drawing than
+\w{fltk} can provide, then we could substitute \w{OpenGL} or
+\w{Cairo}\footnote{Integration of \w{OpenGL} or \w{Cairo} into \w{fltk} should
+be trivial}.
 
-\paragraph{In conclusion}\,the argument is thin. All being equal, I stand by my
-choice, but with a slight shift of arguments a different choice could be valid.
-This requires the team to really think about what is important in this project
-and choose on that basis.
-
+\par The argument is solid, but with a shift of viewpoints a different
+choice could be valid.  The team should think about what is
+important in this project and decide on that basis. See appendix
+\ref{sec:phase3listing} on page~\pageref{sec:phase3listing} for a summary of
+main characteristics of the selected tool kits.
 
