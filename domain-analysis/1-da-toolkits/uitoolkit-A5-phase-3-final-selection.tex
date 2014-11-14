@@ -53,10 +53,10 @@ around.
 
 Table \ref{tab:final-comparison} shows that tool kit requirements 7, 8 and 9
 are satisfactory for all. The observer pattern and concurrent process
-communication is not as simple. In summary, \w{qt}, \w{gtkmm} and \w{WxWdiget} all suffice
-without modification. For \w{fltk} we need to use one of the available cross
-platform libraries for concurrency and one for the observer pattern, like
-boost.
+communication is not as simple. In summary, \w{qt}, \w{gtkmm} and \w{WxWdiget}
+all suffice without modification. For \w{fltk} we need to use one of the
+available cross platform libraries for concurrency. It turns out to be easy
+to define ones own observer pattern, or use a library for this like \w{boost}.
 
 As all packages can fulfil the requirements the question is, what distinguishes
 these tool kits and on what basis should we choose? The short answer is: they
