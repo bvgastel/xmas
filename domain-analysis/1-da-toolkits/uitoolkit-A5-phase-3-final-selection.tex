@@ -12,7 +12,7 @@ comparison takes the remaining tool kit requirements into account.
 		\small\sf
 		\begin{tabular}{|c|p{9em}|p{8em}|cccc|}
 			\hline
-			{\bf id} & {\bf req}             & {\bf fitness}           & {\bf GTK+} & {\bf Qt} & {\bf Wx} & {\bf FLTK}\\
+			{\bf id} & {\bf req}             & {\bf fitness}           & \w{gtkmm} & \w{qt} & \w{wx} & \w{fltk}\\
 			\hline
 			    7    & Ease of use           & reputation              & +                      & + & + & +\\
 			    8    & Ease of learning      & rep \& tutorials        & +                      & + & + & +\\
@@ -53,8 +53,8 @@ around.
 
 Table \ref{tab:final-comparison} shows that tool kit requirements 7, 8 and 9
 are satisfactory for all. The observer pattern and concurrent process
-communication is not as simple. In summary, Qt GTK+ and WxWdiget all suffice
-without modification. For FLTK we need to use one of the available cross
+communication is not as simple. In summary, \w{qt}, \w{gtkmm} and \w{WxWdiget} all suffice
+without modification. For \w{fltk} we need to use one of the available cross
 platform libraries for concurrency and one for the observer pattern, like
 boost.
 
