@@ -37,32 +37,31 @@
 
 \section{Introduction}
 \paragraph{}
-This domain analysis concerns composite objects,
-along with primitive objects this kind of objects can be used to design xMAS
+This domain analysis concerns composite objects.
+Along with primitive objects this kind of objects can be used to design xMAS
 models with the WickedXmas tool. In fact composite objects are xMAS models
-itself but left open with connection points, parameterizable and allow reuse.
-The benefits of composite objects are those of reusability, it makes complex
-things look simple and maintainable, it preserves correctness.
+themselves.
+The benefits of composite objects are reusability, it makes complex
+things look simple and maintainable.
 
 When designing an xMAS model in WickedXmas, the designer can make use of
-composite objects similar as he or she does with primitive objects. Because
+composite objects in the same way as for primitive objects. Because
 composite objects are xMAS models these can be edited just as any other kind
 of xMAS model except that there are connection points as mentioned before.
 
 \paragraph{}
-In the next section you'll find a briefly description of the WickedXmas tool,
-so you'll get an idea of how composite objects are managed and (re)used.
+In the next section there's a briefly description of the WickedXmas tool,
+which shows how composite objects are managed and (re)used.
 After that there's a description of the properties from primitive objects
 followed by these of composite objects.
 How models are stored as persistent data structures will be discussed in
 the JSON section.
 
-To finalise you'll find a domain example out of an other kind of industry but
-who had the same reason to build a graphical design tool and with a lot of
-similarities.
-Especially the management and facilities of reusable objects is an 
-interesting topic which can inspire future designers or users of the
-WickedXmas tool.
+Section ``P80i'' describes a similar modelling tool. Especially the management
+and facilities of reusable objects is an interesting topic which can inspire
+future designers or users of the WickedXmas tool.
+
+To finalise, P80i is compared against wickedXmas followed by a conclusion section.
 
 \newpage
 \section{WickedXmas}
@@ -83,14 +82,14 @@ the verification interface.
 \caption{WickedXmas Tool and Composite objects}
 \label{fig:wxmCO}
 \end{figure}
-Figure~\ref{fig:wxmCO} shows us the WickedXmas tool visualising the contents
-of "CompositeObject.wck". At the left side we see that this is a composite
-object because of the connection points. At the right side you see how this 
-composite object is visualised when it is reused.
+Figure~\ref{fig:wxmCO} showing the WickedXmas tool visualising the contents
+of "CompositeObject.wck". At the left side the open model of a composite
+object which has connection points. At the right side a composite
+object reused into a larger model.
 
 The toolbar has several buttons, eight of these are used to draw
-primitive objects which are discussed in the next section. You can recognise
-these by the pictogram in the button. Then two other buttons are used to
+primitive objects which are discussed in the next section. Primitives can be
+recognised by the pictogram on the button. Then two other buttons are used to
 draw an input or output connection point followed by a big ``C'' button
 used to add a composite object for reuse.
 The button with the open box image opens the packet configuration
@@ -100,17 +99,17 @@ used into the function property of some objects.
 
 \newpage
 \section{Primitive objects}
-Primitive objects are the base of xMAS models and so they do for composite
+Primitive objects are the base of xMAS models and as well as for composite
 objects, so primitives determine the underlying structures of these.
 Secondly, when using composite objects to create a model, there are a lot of
-similarities with primitive objects. Given this knowledge we can say that
-we can not ignore primitive objects in a context of composite objects, so
+similarities with primitive objects. Given this knowledge, primitive objects cannot
+be ignored in a context of composite objects, so
 primitive objects need some kind of explanation.
 
 The xMAS language has only eight primitive objects,
 each object has a visual representation and one or more properties which can be
-changed during modelling. Some of these properties requires a valid
-value otherwise a visual marker, shown as a dot as part of the object, will lit up red instead of
+changed during modelling. Some of these properties require valid
+values otherwise a marker, shown as a dot as part of the object, will lit up red instead of
 green. Finally all objects have one or more ports and can be of input or output
 type. The graphical representation of a port is a red filled square. 
 To form a valid channel, each port must be wired to exactly one
@@ -211,16 +210,16 @@ dangling port and one that will be connected later when reusing the
 composite object.
 
 There are two kinds of connection points, the input type and the output type.
-In figure~\ref{fig:CompObj} at the left you can find the graphical
-representation of these objects. The properties of connection points are
+In Figure~\ref{fig:CompObj}, at the left, the graphical
+representation of connection points. The properties of connection points are
 the same as those for primitives and do not have any specific properties.
-In the center of figure~\ref{fig:CompObj} a simple example of a
+In the center of Figure~\ref{fig:CompObj} a simple example of a
 composite object being opened e.g. for editing. It is saved as file MyQ.wck
-and can be reused into a larger model as shown right in figure ~\ref{fig:CompObj}.
+and can be reused into a larger model as shown right in Figure ~\ref{fig:CompObj}.
 
-As you can see the filename of a composite object is placed in its
-body when reuse. The size of the body will be adjusted by the number
-of ports, input ports left and output ports at the right side.
+The filename of a composite object is placed in its body when reuse.
+The size of the body will be adjusted by the number of ports,
+input ports left and output ports at the right side.
 
 
 \begin{figure}[here]
@@ -258,23 +257,23 @@ Structure of an empty wck file:
 \color{blue}
 \begin{verbatim}
     {
-      "shapes'': [],
-      "connections'': [],
-      "packet\_types'': null
+      "shapes": [],
+      "connections": [],
+      "packet\_types": null
     }
 \end{verbatim}
 \color{black}
 
 \subsubsection{Member ``shapes''}
-The ``shapes'' member its value is an array of json objects, again each object has several members,
-most of these members are the same for all kind of primitives or composite objects. As you can see
-in the example below the ``qSize'' value is a specific property for a queue type primitive.
+The ``shapes'' member its value is an array of JSON objects, again each object has several members,
+most of these members are the same for all kind of primitives or composite objects. In the JSON example 
+below the ``qSize'' value is a specific property for a queue type primitive.
 So in the current WickedXmas tool there's no uniformness for this, e.g. the token property
 of the join primitive is put into the ``functions'' member, so there's no reason why the qSize couldn't be
 handled in a similar way. The same holds for composite objects where an extra ``fileName'' value is used to
 point to the wck model file and its pathname.
 
-There's a shape types for every primitive, two for the connection points and one for a composite object.
+There's a shapes type for every primitive, two for the connection points and one for a composite object.
 Additional there are also some extended primitives with 3 or 4 in or output ports.
 
 \begin{samepage}
@@ -362,23 +361,32 @@ In the example there are two packets configured.
 
 
 \subsection{Flat structure (fjson)}
-The flat json structure is used to exchange the model with verify tools.
-During translation from ``wck'' to ``fjson'' the xMAS model is statically
-verified. If there are any errors the translation interrupts and no
-fjson will be created.
+The flat JSON structure is used to exchange the model with verification tools.
 
-In a fjson there are no composite objects anymore this because the
-translator replaces the composite object with its ``wck'' content,
-this until all objects has been drill down to the eight primitives.
-Apart from translation, the flat json structure is of no importance
+WickedXmas verification tools can only work with primitive objects. So a model used during
+verification cannot contain any composite objects.
+Because models can be made of primitives and or composite objects the
+latter need to be replaced with their ``wck'' content.
+This process calls flattening and continues until all composite objects have
+been replaced with their ``wck'' content.
+This results in one flat JSON file with only primitives and no composite objects.
+
+Flattening is a recursive process , such a process can only end when there are no cycles in it.
+E.g. suppose two composite objects X and Y, where X and Y call each other.
+When both objects are used into a model than flattening will never end because X need to be
+replaced by the content of Y but Y needs the content of X.
+The same occurs when a composite object calls itself.
+
+To prevent this problem a designer must always make sure that there are no cycles in
+calls amongst composites.
+
+During flattening the xMAS model is statically verified.
+If there are any errors the flattening interrupts and no fjson file will be created.
+Apart from flattening, the flat JSON structure is of no importance
 in the scope of composite objects.
 
-Just one thing to keep in mind, the recursive reuse of a composite
-object at this moment has no way to apply a condition so the
-resursion stops during tranlation to a flat structure.
-
 \newpage
-\section{Similar domain example}
+\section{P80i}
 The company General Electric (GE) has a tool called P80i and is very similar
 to the WickedXmas tool but for an other purpose.
 It has been developed by several companies worldwide amongst these
@@ -418,13 +426,13 @@ which also holds the library of reusable components and environement setup.
 \caption{P80i and reusable design and management}
 \label{fig:p80iObjEditor}
 \end{figure}
-Figure~\ref{fig:p80iObjEditor} shows us how P80i manages reusable components
+Figure~\ref{fig:p80iObjEditor} shows how P80i manages reusable components
 and how a user can define its ports and graphics.
 At the left there's a tree which represents the library of selected
 components for this modelling project.
-A user can add new components and categorise it in the library tree, in the middle
-there's a window showing us how a user can define components and at the right
-how an image can be drawn on the component its body.
+A user can add new components and categorise it in the library tree, the window
+in the middle shows how a user can define components. The right window
+is an example of how an image can be drawn on the component its body.
 
 \begin{figure}[here]
 \includegraphics[width=1.0\textwidth]{p80i.JPG}
@@ -432,15 +440,158 @@ how an image can be drawn on the component its body.
 \label{fig:p80i}
 \end{figure}
 
-Once this is done it need some code behind, again this is also modelling language
-as shown in figure~\ref{fig:p80i}
-At the left side a project tree with the composite objects in use, in the middle 
-there's the model with COBJ1 as composite object and fully right the model
+Once the component its body is defined, the designer also needs to add the model 
+it represents. In P80i the model of such a component is an open model.
+
+At the left side in Figure~\ref{fig:p80i} there's a project tree with the composite objects in use,
+in the middle there's the model with COBJ1 as composite object and fully right the model
 inside COBJ1 which can be edited just as any other model in P80i. Also
 notice the in and output ports which are similar to the connection points
 in WickedXmas.
 
 
+\newpage
+\section{WickedXmas vs. P80i}
+
+In this section WickedXmas is compared with P80i.
+Many development tools have facilities to support the user with managing
+large projects, so does P80i. In WickedXmas this facility is partially available
+through composite objects but with lack of management support.
+
+Each of the following subsections describe a WickedXmas shortcoming and
+how it can be improved based on the analysis of P80i.
+
+\subsection{Composite object management}
+
+\begin{figure}[here]
+\includegraphics[width=0.5\textwidth]{p80i_library.jpg}
+\includegraphics[width=0.5\textwidth]{p80i_library_setup.jpg}
+\caption{P80i Library Tree}
+\label{fig:p80i_library}
+\end{figure}
+
+\paragraph{WickedXmas}\
+
+Composite objects are model files which can be created and edited by the user but
+with no facilities for management, except those of the operating system.
+It is up to the user where to store and how to categorize these objects.
+This can be a hassle when sharing large models that use several composite objects.
+Secondly, composite objects their absolute path and file names
+are stored into the model file. Whenever the model e.g. is copied to an other workstation, 
+composite objects must be stored into a file location with the same name.
+If this is not possible, all ``fileName'' values in the ``wck'' file must be manually changed to the new location.
+
+\paragraph{P80i}\
+
+Libraries in P80i are stored into one location which can be set up in the environement.
+Within this common location each library has its own subfolder.
+The libraries are available through a tree structure $($Figure~\ref{fig:p80i_library}$)$.
+From this tree, the user can easily explore, add existing, create new or edit objects.
+A library has a name, a version and can hold several reusable objects categorized
+into families. In Figure~\ref{fig:p80i_library} library ``bi.pi.cli'' and category
+``Boolean Logic'' are expanded. The reusable objects are ``AND'', ``F\_TRIG'' and so on.
+
+In the P80i tool the file location of the libraries can be set to a standard or relative path name.
+In this way models only refer to object names and makes it easier to share modelling projects.
+
+\subsection{Modularity}
+
+\begin{figure}[here]
+\center
+\includegraphics[width=0.75\textwidth]{p80i_modularity.jpg}
+\caption{P80i Modularity}
+\label{fig:p80i_modularity}
+\end{figure}
+
+\paragraph{WickedXmas}\
+
+In WickedXmas there's no way to split a large modelling project into smaller
+maintainable pieces. Composite objects are the only way to do this, but
+these focus on reusability. It is not always the case that some parts of a
+model are meant for reuse. Sometimes such parts do have some specific
+functionality that can be split from the rest of the model in a submodel.
+An other reason to split large models is because a user is only able to see
+one part of it due to display size. So to prevent exhaust
+scrolling, again it is better to split a large model over several documents.
+ 
+\paragraph{P80i}\
+
+In P80i a model can be drawn on one or more documents (Figure~\ref{fig:p80i_modularity}). 
+In P80i reference objects are used to split models over several documents. There's
+an input and ouput reference object. A reference object cuts a wire that's connecting an
+output to an input. The input and output doesn't have to be on the same document.
+At the same time such a reference is a link to navigate through the full model.
+A reference can also be used on the same document to reduce wiring and so
+preserves the overview.
+
+In Figure~\ref{fig:p80i_modularity} the window on top is one part of a model while the
+bottom window is the other part. Output reference object ``Tag.Reference.000'' in the
+first model refers to input reference object with the same name in the other model. So does
+the reference ``Tag.Reference.001'' which outputs from model part 2 to model part 1.
+
+\subsection{P80i Feature overview}
+
+\begin{center}
+\begin{small}
+\begin{tabular}{ | l | p{6cm} | p{8cm} | }
+\hline
+    \textbf{Nr} & \textbf{Feature} & \textbf{Comment} \\ \hline
+    0 & Reusable object management & Integrated object management.
+    Objects can be easily dragged from a tree into a model. \\ \hline
+    1 & Object designer & Integrated object body designer. A user can draw and define a reusable object its presentation. \\ \hline
+    2 & Object editor & When a user double clicks on an object a document will open showing the model of the object.\\ \hline
+    3 & Modularity & A model can be split over one or more documents. \\ \hline
+    4 & Project based & The tool use project files which hold all related information to a model including reusable objects.\\ \hline
+    5 & Multiple document interface & The user can open several models at the same time. Including models of reusable objects. \\ \hline
+    6 & Model navigation & P80i has several features to make navigation through large models easier. The overview shows the model in
+    a small window. The rectangular area is the part of the model that's shown in the document that has the focus and can be dragged with the mouse.\\ \hline
+    7 & Help &  Pressing funcion key F1 while an object is selected will open a help file of the object.\\ \hline
+    8 & Versioning & Model files include a header with version , author , date and things like that. \\ \hline
+    9 & Extensibility  & The in- or outputs of an object can be defined as extensible. This means that an object e.g. with
+    some inputs can be extended with more inputs. The same holds for outputs. \\ \hline
+    10 & Coloring &  A fault in a model is always red. When using this color also for normal modelling items, as WickedXmas does for the connection points, it makes it harder to find faults by observation. \\ \hline
+    11 & Comment & A user can add comment on a document. P80i also allows hyperlinks, images and OLE objects.\\ \hline
+
+\end{tabular}
+\end{small}
+\end{center}
+
+
+\newpage
+\section{Conclusion}
+
+When models in WickedXmas become larger and need to be shared
+between researchers it is necessary to add features which improves the support of this.
+Composite objects are one piece of the solution to handle large modelling projects.
+But the absence of support to manage these does not help in handling large modelling projects.
+The same can be said about the absence of modularity and portability of model files.
+
+The mockup in Figure~\ref{fig:mockup} gives an idea of how a modern interfaces could look like.
+Such an interface has the elements to support management of a library with
+reusable objects like composite objects.
+Due to modularity a user must be able to work on several items for one single project.
+
+
+\paragraph{So the advice to improve the handling of large modelling
+projects can be done by adding the following features to WickedXmas:}\
+\begin{figure}[here]
+\center
+\includegraphics[width=0.75\textwidth]{mockup.png}
+\caption{Mockup}
+\label{fig:mockup}
+\end{figure}
+\begin{itemize}
+\item Instead of a single document interface use a multiple document interface. By this feature
+the user can open several model related documents simultaneously.
+\item Use a treeview of the project modelling items. This makes it much easier to select and open items.
+In a treeview it is also easy to see what items belong to a project.
+\item Use a treeview for managing the library of composite components.
+\item Make sure that composite objects can be dragged from the library tree to the model.
+\item Double clicking on a composite object opens the model in a model window.
+\item Use a portable project related file structure by remove hardcoded file locations and using a common project file which relates modelling items.
+\item Use a zoom and pan control as the P80i overview. A user can easily scroll and zoom into the model.
+\item Use a tool palette for the favorite objects like primitives and some composites.
+\end{itemize}
 
 
 
@@ -450,11 +601,11 @@ in WickedXmas.
 	\item \textbf{WickedXmas}: Name ofthe tool used to design and analyse xMAS models.
 	\item \textbf{xMAS model}:
 	A model based on Intel's xMAS or e\underline{x}ecutable \underline{M}icro\underline{A}rchitectural \underline{S}pecification,
-	which is ahigh level design language for communication fabrics.
+	which is a high level design language for communication fabrics.
 	\item \textbf{Primitive Object}: The xMAS language consist of eight primitive objects which are used to create xMAS models.
 	Primitive objects are hard coded.
 	\item \textbf{Composite Object}: A composite object which can be made of primitives and composite objects.
-	It is also known as a open xMAS model, macro or combinatorial object.
+	It is also known as an open xMAS model, macro or combinatorial object.
 	\item \textbf{Channel}: A connection between an input and output port.
 	\item \textbf{Port}: Each object has one or more ports to create a channel, there are initiator and target ports.
 	\item \textbf{Connector}: see port.
@@ -479,6 +630,12 @@ in WickedXmas.
 \section{References}
 \begin{itemize}
 	\item \href{http://www.json.org/}{JSON}
+	\item WickedXmas: Designing and Verifying on-chip Communication Fabrics. By Sebastiaan J.C. Joosten,Freek Verbeek and Julien Schmaltz.
+	\item WiCKedXmas Editor Technical Documentation. By Kevin Reintjes, Christiaan Thijssen and Willem Burgers.
+	\item xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification. By Satrajit Chatterjee (Two Sigma Investments, LLC), Michael Kishinevsky and Umit Y. Ogras (Intel Corp.)
+	\item P80i user manual by Converteam (P80i\_Online\_UserManual\_2010.pdf)
+	\item P80i Library development manual by Converteam (Library development manual.pdf)
+	\item P80i tool help file by Converteam (HPCi\_Help.chm)
 \end{itemize}
 
 \end{document}
