@@ -46,6 +46,21 @@ We use git for communication with the following use cases
 	because it does not recognize the branch yet. Once the branch
 	is created on remote with "--set-upstream", you can do a "git push".
 
+3. Working from a branch.
+	While working from a branch, sometimes master is updated and 
+	if you want to be current with master, you need to merge the 
+	changes in master into your branch.
+
+	As long as the branch is only local you can do a rebase (see 
+	several tutorials for how to do this). If you already published
+	the branch, then it is better to merge master into the branch. That
+	way you will not deviate too much from master.
+
+	You switch to a branch with "git checkout branchname" and
+	back to master with "git checkout master". Make sure you
+	only switch with a clean working directory  i.e. after
+	a commit and with no changes unstaged.
+
 2. Collaborator
 	Clone the repo, use it as you normally would with
 	change-commit cycles and when you want to publish do a

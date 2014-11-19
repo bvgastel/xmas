@@ -1,0 +1,73 @@
+\section{Phase 0 Requirement Impact}
+\label{sec:requirement-impact}
+
+\subsection{Phase 0 selection results}
+
+Using the requirements for the application plus the competence requirements of
+the team, the impact of all these demands is summarized in table
+\ref{tab:uitool-requirements}. Only requirements directly relevant to the ui
+toolkit have consequential impact formulated.
+
+In Table \ref{tab:uitool-requirements} the term ``support for plugins'' is
+meant to be a weak requirement in the sense that it does not hinder the design
+of plugins. The ability to support plugins directly is a nice to have
+requirement. The derived requirements ``ease of use'' and ``ease of learning''
+are important requirements for the people maintaining the system.
+
+\paragraph{Remark.} The term ``UI toolkit'' may indicate one set of tools (like
+qt) or a multiple sets (like one for 2D and one for GUI elements).
+
+\begin{center}
+    \begin{longtable}{ll||cp{21em}}
+	{\bf id: requirement}     & {\bf impact  } & {\bf id } & {\bf UI requirement}\\\hline\endhead
+	\hline \multicolumn{4}{c}{UI toolkit requirements (Continue on next page)}\endfoot
+	\hline\endlastfoot
+	\hline
+		M0: Free software    & full         &  0  & UI toolkit must be free software as defined by FSF.\\
+        M1: Cross platform   & full         &  1  & UI toolkit runs equally well on the defined platforms for all features.\\
+        M2: C++ integration  & full         &  2  & UI toolkit does not hinder C++ integration in any way.\\
+        M3: 2D drawing       & full         &  3  & UI toolkit has equal 2D features on all defined platforms.\\
+        M4: GUI Widgets      & full         &  4  & UI toolkit has relevant GUI widgets on all defined platforms.\\
+        M5: xmas primitives  & none         &     & \\
+        M6: xmas macros      & none         &     & \\
+        S1: expandability    & limited      &  5  & UI toolkit does not hinder creating plugins.\\
+        S2: installability   & limited      &  6  & UI toolkit does not hinder install procedure.\\
+        S3: maintainability  & moderate     &  7  & UI toolkit is easy to use.\\
+	                         &              &  8  & UI toolkit is easy to learn.\\
+	                         &              &  9  & UI toolkit is well documented.\\
+	                         &              & 10  & UI toolkit supports observer pattern.\\
+	                         &              & 11  & UI toolkit dev. community should have enough mass
+	                         									and be active in order to inspire confidence 
+	                         									in the tool kits future.\\
+	                         &              & 12  & UI toolkit user community should have enough mass.
+	                         									and be active in order to inspire confidence 
+	                         									in the tool kits future.\\
+        S4: plugability      & limited      & 13  & UI toolkit should not hinder creating plugins.\\
+        S5: performance	     & moderate     & 14  & UI toolkit should support running concurrent processes for modules.\\
+	                         &              & 15  & UI toolkit should support observer pattern from independent processes.\\
+	                         &              & 16  & UI toolkit should support interruption during concurrent processing.\\
+        N1: install util     & none    		&     & \\\hline
+        %--------------------------------------------------------------------------------------------------------------------------
+		GM0: Free Software  &              &     & Enclosed in requirement M0.\\
+        GM1: UI tool	    &              &     & Enclosed in requirement M1.\\
+        GS1: Agile	        &              &     & \\
+        GS2: C++	        & compatible   & 20  & Prefer a UI toolkit that works with C++.\\
+        GC1: versioncontrol &              &     & \\
+        GC2: req. engineering
+						    &              &     & \\\hline
+        %--------------------------------------------------------------------------------------------------------------------------
+        SS1: agile	        &              &     & \\
+        SS2: online agile tools
+							&              &     & \\
+        SS3: distributed team
+							&              &     & \\
+        SC1: platform independent
+							& compatible   & 21  & Prefer a platform independent toolkit.\\\hline
+        %--------------------------------------------------------------------------------------------------------------------------
+		JS1: project        &              &     & \\
+        JS2: C++	        & compatible   & 20  & Prefer a UI toolkit that works with C++.\\
+		JS3: TDD			&              &     & \\
+    \end{longtable}
+    \captionof{table}{UI toolkit requirements derived.}
+    \label{tab:uitool-requirements}
+\end{center}

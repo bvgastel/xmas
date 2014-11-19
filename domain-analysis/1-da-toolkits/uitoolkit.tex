@@ -1,0 +1,136 @@
+%%
+%% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
+%%
+\documentclass[a4paper,11pt,final]{article}
+%
+%% option = draft will generate black except with \color, replace images by a rectangle
+%% option = final will generate color
+%
+
+\usepackage{color}
+\usepackage[all]{nowidow}
+\usepackage{bold-extra}
+\usepackage{footmisc}% granting the ability to use label for a footnote
+\usepackage{subfig}
+\usepackage{wrapfig}% product wrapfigure and wraptable
+\usepackage{array}% additions to tabular
+%\usepackage{supertabular}% multiple pages tabular
+\usepackage{longtable}% multiple pages table like tabular
+\usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}% Load after biblatex
+\hypersetup{
+    colorlinks = true,
+    citecolor = blue,
+    linkcolor = blue
+}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{pdflscape}
+\usepackage[a4paper]{geometry}
+\usepackage{titlesec}% added to change section headers, see newcommand definition.
+\usepackage{boxedminipage}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
+
+\bibliographystyle{plain}% unsrt, plain, alpha, abbrv
+
+\newcommand{\biburl}[1]{\hspace*{\fill}\\\url{#1} accessed oct/nov 2014}
+
+\author{Guus Bonnema\\member of ABI team 33}
+\date{21/10/2014}
+
+\title{\color{blue}Domain analysis for a user interface toolkit}
+
+\setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
+
+%% Document is in subdocumenten gesplitst.
+
+\begin{document}
+
+\selectlanguage{english}
+\hyphenation{func-tio-nal}
+
+\nowidow% needs package nowidow
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+\newcommand{\w}[1]{\textbf{\textsc{#1}}}
+\newcommand\bw[1]{{\color{blue}#1}}
+
+\newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
+
+%\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand\secformat[1]{%
+%    {\fontsize{60}{60}\selectfont\thesection}%
+%    \ifthenelse{\equal{\thesection}{}}{}{\quad\rule[-8pt]{2pt}{40pt}\quad}
+%    \parbox[b]{.7\textwidth}{\filright\bfseries #1}}%
+%\titleformat{\section}[block]
+%    {\filright\normalfont\sffamily}{}{0pt}{\secformat}
+%\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\smp[1]{%
+	\marginpar{\color{blue}\small\bf\textsc#1}
+}%
+\newcommand\smpp[1]{\smp{#1}#1}
+
+
+\maketitle
+
+\begin{abstract}
+
+	\noindent{} This document reflects a \bw{domain analysis} for user
+	interface tools. It looks for available tools that are free to use, will
+	remain available and can do the job required for the design tool of an
+	\xmas{} network.  It describes the user interface tool kits found, the
+	search approach, the criteria derived from requirements and the team
+	preferences, all used in selecting the UI toolkits. The result is a
+	motivated recommendation for the project of team 33 to choose a user
+	interface toolkit. 
+	
+	\paragraph{} The document presents the results from abstract to detailed to
+	facilitate the reader in understanding the document. This presents
+	conclusions first, progressively providing more details. Reading up to and
+	including appendix~\ref{sec:final-listing} leads to full, high level
+	understanding.
+
+\end{abstract}
+
+%\listoftodos   %% commented out when creating final document
+\newpage
+\tableofcontents
+
+\include{uitoolkit-1-problem}
+\include{uitoolkit-2-selection}
+\include{uitoolkit-3-recommendation}
+
+\appendix
+\include{uitoolkit-A1-final-summary}
+\include{uitoolkit-A2-phase-3-final-selection}
+\include{uitoolkit-A3-phase-2-main-selection}
+\include{uitoolkit-A4-requirements}
+\include{uitoolkit-A5-phase-0-impact}
+\include{uitoolkit-A6-phase-1-discard}
+\include{uitoolkit-A7-phase-2-listing}
+
+\bibliography{da-uitoolkits.bib}
+\section{Definitions}
+\begin{description}
+% \item[analyse module] synoniem met verificatie module
+% \item[i18n] Internationalization, referring to translation of menu items, system documentation etc.
+% \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
+  \item[GPL] Gnu Public License
+  \item[LGPL] Lesser Gnu Public License
+  \item[MPL] Mozilla Public License
+  \item[UI] User Interface
+  \item[GUI] Graphical User Interface
+  \item[the defined platforms] for the design application Linux, Mac and MS Windows are the
+  defined platforms.
+
+\end{description}
+
+\end{document} ;########################### end document ##################################;

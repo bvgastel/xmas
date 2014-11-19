@@ -1,0 +1,38 @@
+\section{Result and recommendation}
+\label{sec:recommendation}
+
+\subsection{Considerations and Motivation}
+
+Considering the goals of the project, and the competence wishes, the team has
+different options as a result of different viewpoints.  One option would be to
+go with a toolkit that is ``\texttt{mean and lean}'' and add libraries only
+where necessary. The other option would be to go with a tool kit that contains
+``all++'' and thus is comfortable allbeit a little bloated. Whatever the
+choice, it will affect the end product. 
+
+In my recommendation I go with the tool kit \w{fltk} (pronounce
+\emph{fulltick}) . The tool kit is targetted at workstations and embedded
+hardware. The focus is on being \texttt{mean and lean} and fast and small,
+as advertised on the \w{fltk} web site and user forum.
+
+The recommendation is based on this information (also see appendix
+\ref{sec:final-listing}) and the personal assessment of the project in next
+paragraph. Of course the final decision is up to the team.
+
+The project emphasizes a Network on Chip design, with most user interface
+effort going into the 2D drawing interface and the general user interface.
+This makes the focus of \w{fltk} on user interface with respect to gui a good
+choice. Should we need more emphasis on looks or more complex drawing than
+\w{fltk} can provide, then we could substitute \w{OpenGL} or
+\w{Cairo}\footnote{Integration of \w{OpenGL} or \w{Cairo} into \w{fltk} should
+be trivial}.
+
+\par The argument is solid, but with a shift of viewpoints a different choice
+could be valid.  The team should think about what is important in this project
+and decide on that basis. See appendix \ref{sec:final-listing} for a summary of
+main characteristics of the selected tool kits.
+
+\subsection{Recommendation} 
+
+I recommend using \w{fltk}.
+

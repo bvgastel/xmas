@@ -1,0 +1,74 @@
+\section{Phase 2 Main Selection}
+
+\subsection{Phase 2 selection results}
+
+Table \ref{tab:compare-main-req} shows the remaining tool kits. The column {\sc
+Community} indicates the expected support for the tool kit.  The tool kits
+qualified as \w{Partial} leave out either the GUI widgets or the 2D drawing
+capability. They could still be viable in combination with one of the other
+tool kits. Among the tool kits qualified as \w{Maybe} are some unconventional,
+but powerful frameworks. Still, this analysis only considers the categories
+\w{Yay} or \w{Partial}.
+
+\begin{center}
+    \small\sf
+    \begin{tabular}{c|lccc|c|ccc}
+	\hline
+	\w{nr} & \w{Toolkit} & \w{C++} & \w{2D} & \w{GUI} &    & \multicolumn{3}{c}{\em\bf\sf Yay or Nay} \\
+           & {\bf\sf Name}&        &        &         & \w{Community}& \w{Yay} & \w{Part} & \w{Nay} \\
+           &	          &        &        &         &              &         & {\bf\sf Maybe}  &  \\
+        \hline
+%%%%%%%%%%%%%%%%%%  	  C++  2D  GUI  Comm  Yay   Part   Nay
+%%%%%%%%%%%%%%%%%%                                  Maybe
+1  &	GTK+		& 1   & 1 & 1 &  Active  & Yay &         &     \\
+2  &	Qt	      	& 1   & 1 & 1 &  Active  & Yay &         &     \\
+3  &	WxWidgets 	& 1   & 1 & 1 &  Active  & Yay &         &     \\
+4  &	FLTK      	& 1   & 1 & 1 &  Active  & Yay &         &     \\
+\hline
+5  &	Cairo     	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+6  &	OpenGL 	  	& 1   & 1 & 0 &  Large  &     & Partial &     \\
+7  &	SDL			& 1   & 1 & 0 &         &     & Partial &     \\\hline
+\hline
+8  &	JUCE      	& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+9  &	CEGUI     	& 1   & 1 & 1 &  Active &     & Maybe   &     \\
+10  &	Gled		& 1   & 1 & 1 &  Small  &     & Maybe   &     \\
+11 &	Mozilla A.F.  	& 1   & 1 & 1 &  Large  &     & Web-oriented   &     \\\hline
+12 &	Tk	        & 0.5 & 1 & 1 &  Large  &     &         & Nay \\
+13 &	fpGUI     	& 0   &   &   &         &     &         & Nay \\
+14 &	GDK       	& 1   & 1 & 0 &  Large  &     &         & Nay \\
+\hline
+    \end{tabular}
+    \captionof{table}{Selected tools against must have product/project requirements}
+	\label{tab:compare-main-req}
+\end{center}
+
+\subsection{Phase 2 selection analysis}
+
+\paragraph{Tool kits included} The tool kits 1 through 4 satisfy the
+requirements.  
+
+The tool kits 8 and 9 satisfy all but one requirement (the GUI) but could still
+function if they add sufficient function to a GUI oriented toolkit. 
+
+\paragraph{Tool kits excluded} Tool kit 10 ({\sf SDL}) is not clear on the
+supporting community, but does seem to have a following.  The comparison from
+\w{WxWidgets} (\cite{wxwidget:comparison}) mentions {\sf SDL} as a viable
+addition to \w{WxWidgets}, but oriented towards gaming. The tool kits 12
+through 13 do not satisfy the requirements fully, and tool kit 14 (GDK) is low
+level and incorporated in {\sf GTK+}.  The Mozilla Application Framework ({\sf
+M.A.F.}) is oriented towards the web. The deciding feature is that {\sf MAF}
+contains a sub selection of the regular GUI widgets geared towards html and
+css.
+
+For \w{fpGUI}, \w{sdl} and \w{Gled} the community activity is not clear from
+the home website, so the community is left out in table. The system \w{juce} is
+a one man project and aimed at multimedia and gaming.  \w{cegui} is a small
+community of developers specifically aimed at gaming, not graphical user
+interface.  \w{Gled} is a framework that stems from scientific work and
+features the easy distribution of nodes across threads, processes and machines.
+See \cite{greed:gled} for a discussion of the scientific goals of the \w{Greed}
+project.
+
+\paragraph{Next phase} will contain toolkits $1, 2, 3$ and 4: {\sf GTK+, Qt,
+WxWidgets, FLTK} with possible additions of OpenGL or Cairo. 
+

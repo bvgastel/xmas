@@ -1,0 +1,243 @@
+\section{Phase 2 List of cross platform tool kits}
+\label{sec:phase2-listing}
+
+General source: see \cite{wiki:xplatf}. Left out non-free software or software
+not for defined platforms. Due to the amount of toolkits, any obvious
+disconnect with C++ is also reason to drop a choice\footnote{like Lazarus, that
+in theory might be able to support the application, but has no direct
+integration with C++.}.
+
+\begin{description}
+    \item[Cairo] is a library used to provide a vector graphics-based,
+		device-independent API for software developers. It is designed
+		to provide primitives for 2-dimensional drawing across a number
+		of different backends. Cairo is designed to use hardware
+		acceleration when available.
+		The software is free software with a user license based on GPL
+		and MPL.
+		\hspace*{\fill}\\Ref: \cite{wiki:cairo}.
+
+		Cairo has a wrapper \verb!cairomm! for C++.  Cairo is popular in the
+		free software communicty for providing cross-platform support for
+		advanced 2D drawing. Other GUI library (notably GTK+) already include
+		Cairo. This library does not contain GUI widgets and so should be
+		combined with \verb!SomeGUILibrary!. The verdict for Cairo is Partial.
+
+    \item[FLTK] The Fast, Light Toolkit (FLTK, pronounced fulltick) is a
+		cross-platform graphical control element (GUI)
+		library developed by Bill Spitzak and others. Made to
+		accommodate 3D graphics programming, it has an interface to
+		OpenGL, but it is also suitable for general GUI programming.
+		\hspace*{\fill}\\Ref: \cite{wiki:fltk}.
+
+		FLTK is a GUI only library. For 2D a different library should be used.
+		The toolkit is not included in the final comparison.
+
+    \item[fpGUI] the Free Pascal GUI toolkit, is a cross-platform
+		graphical user interface toolkit developed by Graeme Geldenhuys.
+		fpGUI is open source and free software, licensed under a Modified LGPL
+		license. The toolkit has been implemented using the Free Pascal
+		compiler, meaning it is written in the Object Pascal language.
+		fpGUI consists only of graphical widgets or components, and a
+		cross-platform 2D drawing library.
+		fpGUI is statically linked into programs and is licensed using a
+		modified version of LGPL specially designed to allow static linking to
+		proprietary programs. The only code you need to make available are
+		any changes you made to the fpGUI toolkit - nothing more.
+		\hspace*{\fill}\\Ref: \cite{wiki:fpgui}.
+
+		fpGUI is a pascal library based on free pascal (lazarus).  The author
+		is also the sole maintainer of the system. According to the WxWidget
+		comparison Lazarus has no C++ integration to speak of. For this reason
+		this toolkit is not included in the final comparison.
+		\hspace*{\fill}\\Ref: \cite{Geldenhuys:fpgui} and
+		\cite{wxwidget:comparison}.
+
+	\item[GTK+] (previously GIMP Toolkit, sometimes incorrectly referred to as
+		the GNOME Toolkit) is a cross-platform widget toolkit for creating
+		graphical user interfaces. It is licensed under the terms of the GNU
+		LGPL, allowing both free and proprietary software to use it. It is one
+		of the most popular toolkits for the Wayland and X11 windowing systems,
+		along with Qt.  \hspace*{\fill}\\Ref: \cite{wiki:gtk+}.
+
+		GTK+ builds on Cairo and GDK and has a large developer and user
+		community.  It has a wrapper for C++ (\verb!GTKMM!). It fulfills the
+		main requirements and is included in the final comparison.
+		\hspace*{\fill}\\Ref: \cite{gtkmm:gtk+}.
+
+    \item[JUCE] is a free software, cross-platform C++ application framework, used
+		for the development of GUI applications and plug-ins.
+		The aim of JUCE is to allow software to be written such that
+		the same source code will compile and run identically on Windows,
+		Mac OS X and Linux platforms. It supports various development
+		environments and compilers, such as GCC, Xcode and Visual Studio.
+		\hspace*{\fill}\\Ref: \cite{wiki:juce}.
+
+		A one man project with emphasis on audio.  It runs all defined
+		platforms, written in C++. The user license is dual GPL and commercial.
+		The verdict according to requirements is Maybe due to the size of the
+		developer community. It is not included in the final comparison.
+
+	\item[CEGUI] Crazy Eddie's GUI System is a free library providing windowing
+		and widgets for graphics APIs / engines where such functionality is not
+		natively available, or severely lacking. The library is
+		object-oriented, written in C++, and targeted at game and application
+		developers who should be spending their time creating great games and
+		not on building GUI sub-systems!
+		\hspace*{\fill}\\Ref: \cite{cegui:getting-started}.
+
+		This toolkit satisfies the main requirements, but has a small developer
+		community (\cite{wiki:cegui} and \cite{cegui:cegui}. The verdict for
+		this toolkit is Maybe due to the size of the developer community. It is
+		not included in the final comparison.
+
+    \item[Mozilla Application Framework]
+		 is a collection of cross-platform software components that
+		 make up the Mozilla applications. It was originally known as
+		 XPFE, an abbreviation of cross-platform front end.
+		 While similar to generic cross-platform application
+		 frameworks like GTK+, Qt and wxWidgets, the intent is to
+		 provide a subset of cross-platform functionality suitable for
+		 building network applications like web browsers, leveraging
+		 the cross-platform functionality already built into the Gecko
+		 layout engine.
+		 \hspace*{\fill}\\Ref: \cite{wiki:mozilla_application_framework}.
+
+		 The MAF is platform independent, web oriented with a large developer
+		 and user community\footnote{All firefox users are part of the user
+		 community}.  The library is meant to support a subset of the standard
+		 GUI frameworks like GTK+, QT and WxWidgets, aimed at web-programs. Due
+		 to the web orientedness and it's partial support for widgets this
+		 toolkit is not selected for the final comparison.
+
+    \item[OpenGL] is a cross-language, multi-platform application programming
+		interface (API) for rendering 2D and 3D vector graphics.
+		The API is typically used to interact with a graphics
+		processing unit (GPU), to achieve hardware-accelerated
+		rendering\footnote{OpenGL is a standard that has libraries based on free
+		software and commercial libraries. Programmers never need a license
+		to use an OpenGL library.}.
+		\hspace*{\fill}\\Ref: \cite{wiki:opengl}.
+
+		OpenGL gives hardware acceleration and is a powerful but complex 3D
+		user interface toolkit. It is also a low level library and does not
+		directly support any GUI widgets. Many GUI libraries support the use of
+		an OpenGL library. This toolkit is not selected for final comparison.
+
+    \item[Qt]  (/ˈkjuːt/ "cute", or unofficially as Q-T cue-tee) is a cross-platform
+		application framework that is widely used for developing application
+		software that can be run on various software and hardware platforms
+		with little or no change in the codebase, while having the power and
+		speed of native applications. Qt is currently being developed both
+		by the Qt Company, a subsidiary of Digia, and the Qt Project under
+		open-source governance, involving individual developers and firms
+		working to advance Qt.
+
+		Digia owns the Qt trademark and copyright. Qt is available with
+		both proprietary and open source GPL v3 and LGPL v2 licenses.
+		\hspace*{\fill}\\Ref: \cite{wiki:qt}.
+
+		Qt has a large developer and user community. According
+		to the WxWidget comparison with Qt, both are functionally comparable.
+		\hspace*{\fill}\\Ref: \cite{wxwidget:comparison}.
+
+    \item[Simple DirectMedia Layer] is a cross-platform software development
+		library designed to provide a low level hardware abstraction
+		layer to computer hardware components. Software developers
+		can use it to write high-performance computer games and other
+		multimedia applications that can run on many operating systems
+		such as Android, iOS, Linux, Mac OS X, Windows and other platforms.
+
+		SDL manages video, audio, input devices, CD-ROM, threads, shared
+		object loading, networking and timers.[5] For 3D graphics it can
+		handle an OpenGL or Direct3D context.
+
+		The library is internally written in C and also provides the
+		application programming interface in C, with bindings to other
+		languages available. It is free and open-source software subject
+		to the requirements of the zlib License since version 2.0 and with
+		prior versions subject to the GNU Lesser General Public License.
+		Because of zlib SDL 2.0 is freely available for static linking
+		in commercial closed-source projects, unlike SDL 1.2. SDL is
+		extensively used in the industry in both large and small projects.
+		Over 700 games, 180 applications, and 120 demos have also been
+		posted on the library website.
+
+		It is often believed that SDL is a game engine, but this is not
+		true. However, the library is well-suited for building an engine
+		on top of it.
+		\hspace*{\fill}\\Ref: \cite{wiki:sdl}.
+
+		SDL is a low level library meant for 2D game development. It does not
+		contain GUI widgets. It may be usable in combination with other
+		libraries. It is not selected for final comparison.
+
+	\item[Tk] is a free and open-source, cross-platform widget toolkit that
+		provides a library of basic elements of GUI widgets for building a
+		graphical user interface (GUI) in many different programming languages.
+		\hspace*{\fill}\\Ref: \cite{wiki:tk}.
+
+		Tk seems to contain everything necessary for both GUI and 2D drawing,
+		but C++ integration is not clear (\cite{wiki:tk}, \cite{tcltk:tk}).
+		According to the comparison on WxWidgets, for C++ it is better not to
+		use Tk.  \hspace*{\fill}\\Ref: \cite{wxwidget:comparison}. 
+
+    \item[Ultimate++] is a C++ cross-platform development framework which aims
+		to reduce the code complexity of typical desktop applications
+		by extensively exploiting C++ features.
+		\hspace*{\fill}\\Ref: \cite{wiki:ultimate++}.
+
+    \item[WxWidgets] (formerly wxWindows) is a widget toolkit and tools library
+		for creating graphical user interfaces (GUIs) for cross-platform
+		applications. wxWidgets enables a program's GUI code to compile
+		and run on several computer platforms with minimal or no code
+		changes. It covers systems such as Microsoft Windows, OS X
+		(Carbon and Cocoa), iOS (Cocoa Touch), Linux/Unix (X11, Motif,
+		and GTK+), OpenVMS, OS/2 and AmigaOS. A version for embedded
+		systems is under development.
+		\hspace*{\fill}\\Ref: \cite{wiki:wxwidget}
+
+		The framework is complete and has no obvious disadvantages. According
+		to their comparison to Qt, the two are functional comparable.
+		\hspace*{\fill}\\Ref: \cite{wxwidget:comparison}.  
+
+	\item[Gled]	is a C++ framework for rapid development of applications with
+		support for GUI (using FLTK), 3D-graphics and distributed
+		computing. It extends the ROOT framework (standard data-analysis
+		tool in high-energy physics) with mechanisms for object collection
+		management \& serialization, multi-threaded execution, GUI
+		auto-generation (object browser \& editor) and dynamic visualization
+		(OpenGL). Distributed computing model of Gled is a hierarchy of
+		nodes connected via TCP/IP sockets. Gled provides authentication \&
+		access control, data exchange, proxying of object collections and
+		remote method-call propagation \& execution. Gled can be dynamically
+		extended with library sets. Their creation is facilitated by a set
+		of scripts for creation of user-code stubs. Simple tasks and
+		application configuration can be efficiently done via the
+		interactive C++ interpreter (CINT). Gled is used for development of
+		programs in high energy physics and as a research tool in
+		distributed and grid computing. 
+		\hspace*{\fill}\\Ref: \cite{fltk:gled}
+
+		This toolkit satisfies the main requirements, but has a small developer
+		community (\cite{gled:gled}). It is not included in the final
+		comparison.
+
+    \item[GDK]  (GIMP Drawing Kit) is a library that acts as a wrapper around
+		the low-level functions provided by the underlying windowing
+		and graphics systems. GDK lies between the display server and
+		the GTK+ library, handling basic rendering such as drawing
+		primitives, raster graphics (bitmaps), cursors, fonts, as well
+		as window events and drag-and-drop functionality.
+
+		Like GTK+, GDK is licensed under the GNU Lesser General
+		Public License (LGPL).
+		\hspace*{\fill}\\Ref: \cite{wiki:gdk}
+
+		GDK is a low level library that is ``An intermediate layer which
+		isolates GTK+ from the details of the windowing system.''.  In the
+		presence of GTK+ the toolkit is not included in the final comparison.
+		\hspace*{\fill}\\Ref: \cite{gnome:gdk3}.
+
+\end{description}
+

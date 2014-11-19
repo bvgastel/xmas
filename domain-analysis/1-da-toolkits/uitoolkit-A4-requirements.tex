@@ -1,0 +1,119 @@
+\section{Requirements for design tool}
+
+Table \ref{tab:appl-requirements} on page~\pageref{tab:appl-requirements}
+summarizes the high level requirements for the chip design tool. These are the
+main base for selecting the tool kits. Each requirement may fully impact the UI
+tool, partially or not at all. Table \ref{tab:team-competence-req} on
+page~\pageref{tab:team-competence-req} shows the team members' requirements in
+terms of competence goals.  Table \ref{tab:uitool-requirements} on
+page~\pageref{tab:uitool-requirements} summarizes the impact of the project's
+requirements and the team's competence wishes on the user interface toolkit.
+
+\subsection{Justification of free software requirement}
+
+The requirement for free software was not in the originally formulated high
+level requirements, so some justification follows. This requirement ($M0$) was
+added to ensure the free availability of the UI tool kit. The source of this
+requirement is a remark from the Open University instructions ``Hulpmiddelen en
+bronnen'' (``tools and sources'') with the following text:
+
+\vspace{1em}
+
+\begin{tabular}[t]{ll}
+\begin{minipage}{.45\textwidth}
+
+	``Wij gaan ervan uit dat de producten van het team uiteindelijk veelal als
+	open source beschikbaar gesteld worden, dus iedereen mag in principe de
+	producten inzien. In de overeenkomst met de opdrachtgever dient op het punt
+	van de rechten duidelijkheid gegeven te worden.''
+
+\end{minipage}
+
+&
+
+\begin{minipage}{.45\textwidth}
+
+	``We assume open source availability of the team's products so that the
+	products are publicly available. The contract with the customer should be
+	clear on this point.''
+
+\end{minipage}
+
+\end{tabular}
+
+\vspace{1em}
+
+\noindent Demanding free software follows from this specification and the fact
+that non-free software could potentially lead to non-availability of the
+software due to license fees or the author retracting the software. We specify
+free software as a must-have requirement to be ``clear on this point''.
+
+\subsection{The project and product requirements}
+
+\begin{center}
+    \small\sf
+    \begin{tabular}{|l|p{7em}|p{23em}|}
+	\hline
+	        & \multicolumn{2}{c|}{\sf\em\large requirement class}\\\hline
+	{}      & \multicolumn{1}{c|}{\bf req name} & \multicolumn{1}{c|}{\bf req description}\\\hline
+	M	& \multicolumn{2}{c|}{\sf\emph{\large Must have requirements}}
+		\\\hline
+	M0	& Free software  & The application is free software as defined by the FSF.
+		\\\hline
+	M1	& Cross platform & The application must run equally well on the
+				    defined platforms with respect to all relevant features.
+				    Linux, Mac and MS Windows are the defined platforms.
+		\\\hline
+	M2	& C++ integration & The application must integrate seamlessly with
+				the existing C++ code for analysis and verification tools.
+		\\\hline
+	M3	& 2D drawing & The application must be able to draw items on a
+				canvas and treat graphical objects with composite
+				behaviour or properties as a primitive object.
+		\\\hline
+	M4	& GUI widgets & The application must be able to create GUI widgets
+				on all defined platforms.
+		\\\hline
+	M5      & xmas primitives & The application must be able to draw the 8 xmas
+				    primitives.
+		\\\hline
+	M6	& xmas macros     & The application must be able to define and draw
+				    a macro of xmas primitives.
+		\\\hline
+	S	& \multicolumn{2}{c|}{\sf\emph{\large Should have requirements}}
+		\\\hline
+	S1	& expandability & the application should be expandable in terms of
+				analysis and verification modules, xmas-primitives and
+				network reporting.
+		\\\hline
+	S2	& installability & The application should be easy to install.
+		\\\hline
+	S3	& maintainability & The application should be as easily maintainable as possible.
+		\\\hline
+	S4	& plugability	& The application should use plugins for analysis and
+				verification modules.
+		\\\hline
+	S5	& performance	& The application should be performant enough for the GUI
+				    interface to be ``snappy''
+		\\\hline
+	C	& \multicolumn{2}{c|}{\sf\emph{\large Could have requirements}}
+		\\\hline
+	N	& \multicolumn{2}{c|}{\sf\emph{\large Nice to have requirements}}
+		\\\hline
+	N1	& install util	& It would be nice to have the application provide
+				installable packages to the users.
+		\\\hline
+    \end{tabular}
+    \captionof{table}{High level requirements for the design tool}
+    \label{tab:appl-requirements}
+\end{center}
+
+\subsection{Team preferences}
+
+%%%%% input from team competence tex file (a symbolic link) %%%%%
+%%
+%%  must be input: include is not permitted from an included file
+%%
+\input{team-competence}
+%%%%%% input from team competence tex file (a symbolic link) %%%%%
+

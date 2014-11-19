@@ -1,4 +1,5 @@
-\documentclass[a4paper,11pt,twoside]{article}
+\documentclass[a4paper,11pt,twoside,final]{article}
+%\documentclass[a4paper,11pt,final]{article}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -7,11 +8,15 @@
 %% Het huidige bestand is gebaseerd op XeLaTeX en
 %% rendert naar een PDF file.
 %%
-%% De output richt zich op tweezijdig afdrukken. Als gevolg
+%% Eenzijdig of tweezijdig?
+%% 1 De output richt zich op tweezijdig afdrukken. Als gevolg
 %% daarvan is de marge van elke pagina gespiegeld.
-%%
-%% Mocht je 1-zijdig willen afdrukken genereer dan de pdf
+%% 2 Mocht je 1-zijdig willen afdrukken genereer dan de pdf
 %% file zonder de optie ``twoside'' in documentclass.
+%%
+%% Je kunt er ook voor kiezen om beide versies van pdf
+%% aan te bieden (1-zijdig en 2-zijdig). Dan kan de student
+%% kiezen welke versie de voorkeur heeft.
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -33,13 +38,47 @@
 %\usepackage{paralist}% for compact lists: compactenum, compactitem
 \usepackage{supertabular}
 \usepackage{dingbat}% for \leftpointright
+\usepackage{enumitem}% for compact lists
+\usepackage{framed}
+\usepackage{caption}
+\usepackage{rotating}% for sidewaysfigure and sidewaystable
 
-\author{Guus Bonnema}
+
+\usepackage{ifdraft}
+%% Only ask for pdf presentation mode in final mode, not in draft mode.
+\ifdraft{}{
+    \hypersetup{pdfpagemode=FullScreen}
+}
+
+\hyphenation{
+	Ont-werp-be-slis-sing-en
+	ont-werp-be-slis-sing-en
+	ont-werp-be-slis-sing
+	Ont-werp-be-slis-sing
+	ver-ant-woor-de-lijk-he-den
+	Ver-ant-woor-de-lijk-he-den
+	}
+
+\author{Open Universiteit\\ diverse auteurs}
 \title{ABI Instructie}
-\date{20/09/14}
+\date{23/09/2014}
 
 \begin{document}
 \selectlanguage{dutch}
+
+\setitemize{noitemsep} % for compact lists
+\setenumerate{noitemsep}
+
+\maketitle
+
+\begin{abstract}
+    Dit document is bedoeld voor de student die de afsluitende modulen
+    voor het afstuderen van de bachelor informatica gaat doen of kortweg
+    Afstuderen Bachelor Informatica (ABI). Het beschrijft de activiteiten,
+    fasen, mijlpaalproducten inclusief beoordelingscriteria. Het is een handvat
+    voor de student om het ABI project vorm te geven. Naast dit document zijn
+    er diverse hulpmiddelen in de vorm van online en fysieke boeken en artikelen.
+\end{abstract}
 
 \tableofcontents
 

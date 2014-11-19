@@ -1,0 +1,103 @@
+\section{Final summary of applicable tool kits}
+\label{sec:final-listing}
+
+In order to support the final decision, in the following sections I summarize
+the main characteristics.
+
+\subsection{\w{qt}} 
+
+\w{qt} is a complete development environment based on an extension of C++. It
+supports many features among which are 2D, concurrency and memory management.
+It also has many dependencies as shown in \cite{qt:qt-dep}.
+
+Main characteristic of \w{qt} is that it uses a pre-compiler called
+\texttt{moc} extending standard C++ with facilities needed for signal and
+slots. The owner is a company \w{Digia} that licenses the \w{qt} toolkit both
+as free software and with a commercial license. The tool kit \w{qt} supports
+the observer pattern with signals and slots. 
+
+\paragraph{Why to choose \w{qt}?} Because it is cross platform. It is well
+known and used in many applications. Appealing is also its simple signal and
+slot feature and moreover, support for it's user interface building is 
+widely appreciated.  Finally, \w{qt} has an active community and very clear
+documentation both online and in books. 
+
+\paragraph{Why not to choose \w{qt}?} Because \w{qt} extends C++, uses macro's
+heavily and thus needs an extra pre-processor to build the application. Also,
+it provides a lot more than we need for our application. 
+
+\subsection{\w{gtkmm}}
+
+\w{gtkmm} combines a graphical user interface with many non gui features like
+signals and memory management. For 2D it builds on cairo or opengl. The library
+for gtkmm has some dependencies on other libraries that have their own
+dependencies as shown in \cite{gtkmm:gtk+-dep}.
+
+Main characteristic of \w{gtkmm} is that it is primarily linux oriented and is
+the main development environment for the \w{Gnome} window manager. It uses
+standard C++ and additionally collections and other features from \w{Glib}.
+
+The tool kit \w{gtkmm} supports the observer pattern using signals.
+
+\paragraph{Why choose \w{gtkmm}?} Because it is cross platform. It is well
+known and used in many applications. Because \w{gtkmm} is C++ even if it is a
+wrapper: it does not use macro's heavily. Because it supports cairo natively.
+Finally \w{gtkmm} has an active community and clear documentation both online
+and in books\footnote{\w{qt} has more literature than \w{gtk+}}.
+
+\paragraph{Why not to choose \w{gtkmm}?} Because \w{gtkmm} is linux oriented
+(developments starts from the \w{Gnome} window manager). The primary aim is
+unix, not windows or mac.  Also, it provides a lot more than we need for our
+application.
+
+\subsection{\w{wxwidget}} 
+
+\w{wxwidget} is a complete cross platform development environment. It is built
+as multiple libraries by default. The features cover support for openGL and
+concurrent execution. The \w{wxwidget} depends on different libraries for each
+platform.
+
+Main characteristic of \w{wxwidget} is that it has a separate underlying
+interface to each platform. The result is an application with the look and feel
+of the platform. The disadvantage is that applications run differently on
+different platforms and may show platform dependent errors. Also, the binaries
+of the application are usually bigger than for the other tool kits.
+
+The tool kit \w{wxwidget} does not seem to support the observer pattern
+directly, but some examples of how to define one are available like
+\cite{wxwidget:observer-example}\footnote{The surrounding text is in Russion,
+but the example is clear.}.
+
+\paragraph{Why choose \w{wxwidget}?} Because it is cross platform. It is well
+known and used in many applications.
+ 
+\paragraph{Why not to choose \w{wxwidget}?} It produces overweight applications
+that could make the application feel bloated. Also, it provides more than we
+need for our application.
+
+\subsection{\w{fltk}}
+
+\w{fltk} is a graphical user interface with 2D drawing and nothing more. For
+concurrency we look to another cross platform tool kit, like \w{boost}. The
+tool kit \w{fltk} depends on the window manager X11 or Wayland or Win32.
+
+Main characteristic of \w{fltk} is that it has no additional facilities.  The
+motto "Do one thing and do it right" is one that unix programmers often adhere
+to. The binaries for programs using this tool kit are small in comparison to
+other tool kits. 
+
+The tool kit \w{fltk} does not support an observer pattern, but one can define
+one as stated on the forum at
+url{http://groups.google.com/forum/\#!forum/fltkgeneral}.
+
+\paragraph{Why choose \w{fltk}?} Because it is focussed on graphical user
+interface.  It does one thing and it does it well. It is easy to learn. It is
+easy to combine with other libraries like \w{OpenGL}, \w{Cairo} or \w{boost}.
+The community is active and willing to support users of their
+library\footnote{I found their support to be both fast and objective (in an
+\w{fltk} biased way of course).}. 
+
+\paragraph{Why not to choose \w{fltk}?} Because it does not offer more than
+graphical user interface. Also, the code avoids many C++ constructs like
+namespace and templates.
+
