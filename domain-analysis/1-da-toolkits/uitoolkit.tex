@@ -8,6 +8,7 @@
 %
 
 \usepackage{color}
+\usepackage[all]{nowidow}
 \usepackage{bold-extra}
 \usepackage{footmisc}% granting the ability to use label for a footnote
 \usepackage{subfig}
@@ -49,6 +50,8 @@
 
 \selectlanguage{english}
 \hyphenation{func-tio-nal}
+
+\nowidow% needs package nowidow
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\xmas}{x\textsc{mas}}%
@@ -101,8 +104,7 @@
 \newpage
 \tableofcontents
 
-\include{uitoolkit-0-problem}
-\include{uitoolkit-1-approach}
+\include{uitoolkit-1-problem}
 \include{uitoolkit-2-selection}
 \include{uitoolkit-3-recommendation}
 

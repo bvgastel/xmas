@@ -2,22 +2,19 @@
 \label{sec:final-listing}
 
 In order to support the final decision, in the following sections I summarize
-the main characteristics of the tool kits plus I specify reasons why to choose
-or not to choose that specific tool kit.
+the main characteristics.
 
 \subsection{\w{qt}} 
 
-\w{qt} is a complete development environment based on an extension of C++ with
-a \w{qt} pre-compiler. It supports many features among which are 2D,
-concurrency and memory management. It also has many dependencies as shown in
-\cite{qt:qt-dep}.
+\w{qt} is a complete development environment based on an extension of C++. It
+supports many features among which are 2D, concurrency and memory management.
+It also has many dependencies as shown in \cite{qt:qt-dep}.
 
 Main characteristic of \w{qt} is that it uses a pre-compiler called
 \texttt{moc} extending standard C++ with facilities needed for signal and
 slots. The owner is a company \w{Digia} that licenses the \w{qt} toolkit both
 as free software and with a commercial license. The tool kit \w{qt} supports
-the observer pattern with signals and slots. Defining an independent observer
-and observable should also be possible.
+the observer pattern with signals and slots. 
 
 \paragraph{Why to choose \w{qt}?} Because it is cross platform. It is well
 known and used in many applications. Appealing is also its simple signal and
@@ -40,8 +37,7 @@ Main characteristic of \w{gtkmm} is that it is primarily linux oriented and is
 the main development environment for the \w{Gnome} window manager. It uses
 standard C++ and additionally collections and other features from \w{Glib}.
 
-The tool kit \w{gtkmm} supports the observer pattern using signals. Defining an
-independent observer and observable should also be possible.
+The tool kit \w{gtkmm} supports the observer pattern using signals.
 
 \paragraph{Why choose \w{gtkmm}?} Because it is cross platform. It is well
 known and used in many applications. Because \w{gtkmm} is C++ even if it is a
@@ -102,6 +98,6 @@ library\footnote{I found their support to be both fast and objective (in an
 \w{fltk} biased way of course).}. 
 
 \paragraph{Why not to choose \w{fltk}?} Because it does not offer more than
-graphical user interface. Also, the code shows it's age in using c-strings in
-the API.
+graphical user interface. Also, the code avoids many C++ constructs like
+namespace and templates.
 
