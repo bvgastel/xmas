@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+
+\title{Notulen 014 overleg team 33}
+\author{Stefan}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\begin{Minutes}{Overleg 014 team 33}
+\participant{Jeroen Kleijn, Stefan Versluys}
+\minutesdate{22 november 2014}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Bespreken voortgang domeinanalyses}
+
+Jeroen heeft ondertussen feedback van Freek en zal dit weekend z'n DA afwerken.
+Stefan z'n DA is door Freek, na de laatste aanpassingen van vorige week, definitief ok bevonden.
+
+\topic{Git repository}
+(open item van 15/11)
+Inmiddels heeft de OU een Git server beschikbaar gemaakt. De vraag is of wij van
+deze server gebruik zullen gaan maken of dat de ontwikkeling via github blijft.
+Mogelijk hebben Freek en/of Bernard een voorkeur voor een private repository i.v.m.
+de verspreiding van hun source code.
+--> deze vraag moeten we stellen op de eerst volgende meeting met Freek en Bernard
+
+\topic{SVN repository}
+Bernard heeft ook de svn gegeven waar de C\# sources van de huidige tool te vinden
+zijn. Stefan heeft deze met Vs2010 gebuild als test. 
+
+\topic{Ontwikkelomgeving}
+
+FLTK apps testen met VC2010 onder windows is geen probleem. 
+Code Blocks daarentegen levert heel wat problemen op onder Windows XP als 8.1. 
+Versie 13.12 kan niet zonder aanpassingen aan het fltk script gebruikt worden.
+Bij het builden van de FLTk libraries met make van MinGW onder Code Blocks komen
+er veel warnings. De documetatie README.MSWindows.txt beschrijft dat er aan
+gewerkt wordt om dit op te lossen.
+
+
+
+\topic{Repo Merging DA}
+Guus heeft afgelopen week de DA branches van Stefan en zichzelf gemergt met de master.
+
+
+\topic{Agile tool}
+De eerder getestte agile tools werden kort overlopen en worden maandag verder besproken.  
+In de loop van volgende week moeten we een keuze maken. Eens er een keuze is
+maken we elk een account en gaan we experimenteren.
+
+\topic{Demonstratie WickedXmas}
+
+Tijdens deze demo ging het
+vooral over de verificatie stappen en wat deze op de achtergrond doen.
+Voor Guus kan er in de loop van volgende week een demo gegeven worden.
+
+\topic{Vragen en afspraken}
+\begin{itemize}
+\item Jeroen stuurt een email naar Guus
+\item maandag wordt er beslist om een afspraak te maken met Freek en Bernard i.vm.:
+\begin{itemize}
+\item afronden Domein analyses
+\item voorstel Agile tool
+\item vragen Architectuur of iteratie 0
+\item ...
+\end{itemize}
+ \item Het volgende overleg is maandag 24 november 2014. 
+\end{itemize}
+
+
+\end{Minutes}
+\end{document}
