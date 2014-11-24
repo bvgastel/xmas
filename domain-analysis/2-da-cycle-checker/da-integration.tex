@@ -1,0 +1,478 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[a4paper]{geometry}
+\usepackage{graphicx}
+\usepackage{epsfig}
+
+%opening
+\title{Domain analysis: Integration of verification tools}
+\author{Jeroen Kleijn}
+
+\begin{document}
+
+\maketitle
+
+\section{Rationale}
+
+Advances in chip technology have led to increasingly more and more complex chip
+architectures. This raise in complexity has forced researchers in the field of
+modern chip architecture to search for techniques which allow them to better cope
+with this complexity. One of these techniques is xMAS\cite{chatterjee10,xmas}, a visual modeling
+language that allows the description of system-on-chip designs using high-level constructs.
+
+The WickedXmas\cite{13_toolxmas} tool was created to support the design of these network
+models. Initially this tool primarily allowed visual diagramming of xMAS networks.
+Over time, the tool has been extended with verification tools that allow static
+analysis of the designs.
+
+Like many other software projects, the WickedXmas tool has suffered from a decay in
+software quality due to continuous modifications and the addition of new features.
+Integration of the design part of the tool and the verification tools is suboptimal.
+Using the verification tools is a cumbersome process for the end user requiring many
+steps to perform. Furthermore, from a software architecture point of view, the tool
+is hard to maintain and extend. Many dependencies on external libraries and utilities
+severely hamper portability and deployability of the software.
+
+In order to solve above mentioned issues, a complete rewrite of the WickedXmas tool is
+warranted. Work has already been started on refactoring the available verification tools.
+One of the key design issues involves the extensibility of the software. It should be
+easy to code and integrate new verification tools. In addition, the design tool and
+the various verification tools should integrate well.
+To achieve this level of integration the source code of the new verification tools has
+been examined as part of this domain analysis. The remainder of this document will describe
+the structure of the source code and provide suggestions how the desired level of integration
+can be reached.
+
+\paragraph{Note:}
+One of the assumptions made during this analysis is that the final design tool will be
+written in c++. This assumption allows to investigate the ways in which the data structures
+used by the verification tools can be shared with the design tool. Although this assumption
+is likely valid, results from other domain analyses might express a preference for an
+other choice of programming language.
+
+\tableofcontents
+
+\pagebreak
+
+\section{The WickedXmas tool}
+
+
+Before exploring the internals of the source code we shall, however, first provide an overview
+of the current WickedXmas tool. Specifically, we will briefly highlight the steps involved in
+executing the verification modules.
+
+\begin{figure}[h]
+  \includegraphics[height=5cm]{wickedxmas-arch.eps}
+  \caption{WickedXmas Tool Architecture}
+  \label{fig:wickedxmas-arch}
+\end{figure}
+
+Figure \ref{fig:wickedxmas-arch}\cite[p.~3]{13_toolxmas} depicts the WickedXmas tool architecture.
+The design tool (WiCKeD xMAS UI) stores the network in a text file using JSON notation. Before
+presenting the network to the verification modules (Network Inspection and Deadlock Detection),
+the network description is flattened. This process transforms the hierarchical network into
+a flat list consisting solely of xMAS primitives and the channels connecting their ports. The resulting
+flat json file is then parsed and transformed into C++ source code. The generated source code files are
+used along with C++ code written for the specific task to create several executables. In Figure
+\ref{fig:wickedxmas-arch} the Simulate, Invariant Generation and Deadlock Detection verification modules
+are shown. The modules are run sequentially, results from a module serve as input for modules further down
+the pipeline. For instance, the Simulator runs a simulation on the network and yields information on the
+types of packets each component in the network is able to accept and generate. The Invariant Generation
+uses this information to deduce invariants that hold for the given network. Finally, the Deadlock Detection
+module uses both the Packet Type Information and (simplified) Invariants to perform its task and present
+the results back to the xMAS UI.
+
+\paragraph{Dependencies}
+Several utilities are used while performing these tasks. The conversion from JSON to C++ code is
+handled by a javascript file and processed by phantomjs. A Haskell program takes care of the
+Invariant simplification task. To compile the C++ code and link the object files to form the
+executables a C++ compiler is required. The use of all these different utilities reduces the
+deployability of the WickedXmas tool. All utilities must first be installed on the target system used
+to run the tool.
+
+\paragraph{}
+For a more elaborate explanation we refer to the paper ``WickedXmas: Designing and Verifying on-chip 
+Communication Fabrics'' \cite{13_toolxmas}.
+
+
+\section{New verification modules}
+
+\paragraph{}
+In order to improve the software quality the verification modules are currently being refactored.
+Central to this process is the use of a single set of data structures used by all verification modules.
+All modules are (or will be) written in C++ (C++ 2011). While designing the new data structures
+special attention has been paid to ensure extensibilty. The data structures should not only be
+able to provide current needs but also allow the integration of new verification modules. As of this
+writing, several modules have been ported to use the new data structures in varying degrees. One
+module that has been completely ported is the Combinatoric Cycle Checker. We will use this module
+as an example to illustrate the use of the data structures. This module is relatively easy to
+understand and will therefore serve us well as an example.
+
+\subsection{xMAS data structures}
+
+
+\begin{figure}[h]
+ \includegraphics[width=\textwidth]{images/xmas-components}
+ \caption{xMAS Class Diagram}
+ \label{fig:xmas-components}
+\end{figure}
+
+In this section we will explore the new data structures. Figure \ref{fig:xmas-components} shows a
+UML-diagram describing the core xMAS data structures. Each component in an xMAS network is represented
+by an instance of the abstract XMASComponent class. All components can be identified by their unique name.
+A component has an arbitrary number of ports, the number and type of ports depends on the actual
+component type. For the currently defined primitives, this number varies between 1 and 3.\\
+A port is represented by the Port class. Like XMASComponent, this class is an abstract base class. Actual instances
+of Port are either an Input or an Output. Ports are identified by their name just like components.
+Usually, ports have short identifiers like ``a'' and ``b''. 
+\paragraph{}
+The channels of an xMAS network have no direct class equivalent in the data structures. Rather, a channel is
+formed by the connect() function. Input and Output both contain a pointer to an object of the opposite type.
+The connect() function takes an Input and Output and updates these pointers such that they mutually
+reference each other. The values of these pointers are guarded by an important invariant. At all times, 
+except of course during connect(), an Input should either be disconnected or point to an Output which
+in its turn should point back to the Input. The same statement should hold when switching the roles of
+Input and Output.
+
+\paragraph{}
+Looking at the operations defined on Port, we can divide them into several categories.
+\begin{itemize}
+ \item The first category of operations deals with the identity and status of the port
+ \begin{itemize}
+  \item The Port constructor, destructor, getComponent() and getName() are self-explanatory. They initialize,
+  destroy and query the attributes of a Port.
+  \item isConnected() returns whether the port is connected to an other port or not.
+  \item isConnectedTo(XMASComponent) returns whether this port is connected to a port of the specified component  
+  \item valid() checks if the port is connected and, additionally, if the invariant mentioned earlier holds
+  for this port.
+ \end{itemize}
+ 
+ \item The second category of operations provide information on the channel formed by this port
+ \begin{itemize}
+  \item connect() has been explained above, this operation establishes a channel between two ports
+  \item getTarget() and getTargetPort() return the component and its port that are on the receiving end
+  of the channel. The target port thus is an Input to the component returned by getTarget().
+  \item getInitiator() and getInitiatorPort() return the component and its port that are on the sending end
+  of the channel. The target port thus is an Output from the component returned by getInitiator().
+ \end{itemize}
+  The presence of these methods show the dual role of class Port. It represents not only a port in an
+  xMAS network, but also the channel between two ports, of course provided the port is actually connected.
+  The channel-role is equally well fulfilled by either port.
+ \item The other operations: accept, getPortExtension and clearPortExtension will be explained in detail
+ in the next sections.
+\end{itemize}
+
+\paragraph{}
+Returning our focus to XMASComponent we notice many operations similar to those of Port.
+\begin{itemize}
+ \item The constructor and getName() operations set and query the name of the component.
+ \item valid() returns true if all ports of the component are valid and false if at least one port is not valid.
+ \item beginPort() and endPort() return iterators to loop through all available ports. The type arguments
+ can be used to specify if only input, output or all ports should be returned.
+ \item accept and the -Extension functions will be covered in the next sections.
+\end{itemize}
+
+XMASComponent itself is an abstract class. Each of the 8 xMAS primitive types is represented
+as a separate class inheriting from the XMASComponent base class. Whereas XMASComponent only provides
+access to ports, the primitive classes actually instantiate them. Some primitive types have additional
+attributes, e.g. XMASQueue has an attribute to indicate the queue capacity. Maybe surprising is the 
+fact that other primitive types seem to lack the required extra attributes. For example, XMASFunction
+has no attribute to hold the function to apply to the data packets and XMASSource has no attribute
+specifying what type of packets it should produce. These seemingly missing attributes are stored using
+the extension mechanism covered in the next section.
+
+
+
+\subsection{Extensions}
+
+\paragraph{}
+The classes that represent the 8 xMAS primitives and their base class XMASComponent provide few features
+to support the verification modules. For instance, many modules need to know what packet types a component can
+accept or produce but neither XMASComponent nor its descendants are able to provide this information.
+This design is a deliberate choice. The classes only expose core attributes like their name and the
+ports that are available. However, all components allow extra data to be stored in so called extensions.
+The same mechanism is available to augment ports with arbitrary extra data.
+
+\begin{figure}[h]
+ \includegraphics[width=\textwidth]{images/xmas-hierarchy}
+ \caption{xMAS Class Hierarchy}
+ \label{fig:xmas-hierarchy}
+\end{figure}
+
+\paragraph{}
+Figure \ref{fig:xmas-hierarchy} shows the classes that implement the extension mechanism. Both XMASComponent and Port are
+actually part of a relatively complex class hierarchy.
+At first sight, the extension mechanism appears to be quite complicated. The basic idea, however, is
+very simple. All ports are able to hold a list of PortExtension objects, likewise,
+all components are able to hold a list of XMASComponentExtension objects. Any module can define a new
+Extension class (e.g. CombinatorialCyclePortExtension) and make it a subclass of either PortExtension
+or XMASComponentExtension, depending on whether the extension stores attributes of a port or of a component. 
+The ExtensionContainer class provides methods to add, remove and fetch the extensions of a given type.
+For instance, the cycle checker will call getExtension() using CombinatorialCyclePortExtension as
+the template parameter T.
+
+\paragraph{}
+The linked list of extensions could easily have been implemented using the default STL container
+classes, like std::list or std::forward\_list. The chosen design has a few important advantages.
+The first one is related to the pointers required to maintain the list. Here, each extension
+stores the pointer inside the extension itself by inheriting the next attribute from Extension.
+This approach, called internal storage\cite{linkedlist}, differs from the approach used by the STL lists.
+External storage, as used by STL, is the more generic approach as it places no constraints on
+the value type (see \cite{linkedlist} for details). Since the data structures are self-developed
+and can be designed to incorporate internal storage, the space and run time performance benefits
+of internal storage outweigh the extra effort.
+
+\paragraph{}
+The second aspect of the extensions design concerns type checking. In the diagram this aspect
+is reflected through the use of the generic Extension class and its type attribute. The main
+benefit of this design decision is again performance but additionally it improves type safety.\\
+Each component (or port) holds a heterogeneous list of extensions, each derived from XMASComponentExtension
+(or PortExtension for ports). By equipping class Extension with a template parameter the next attribute's
+type can be accurately specified. To illustrate this, let's take a look at the definition of PortExtension:\\\\
+\emph{class PortExtension : public Extension\textless PortExtension\textgreater \textbraceleft \\
+\textbraceright}\\\\
+The template parameter E of Extension is bound to PortExtension. The result is that the next attribute
+that PortExtension inherits from Extension has type PortExtension*. The compiler can now check that the
+list actually contains extensions derived from PortExtension.
+
+\paragraph{}
+Although the linked list is guaranteed to only contain valid extension types, most verification
+modules are only interested in specific subclasses of PortExtension or XMASComponentExtension.
+ExtensionContainer provides methods to efficiently filter the list of extensions.
+getExtension\textless T\textgreater () returns the first extension whose type matches that of
+template parameter T. getExtensionOfBaseType\textless T\textgreater () also select extensions
+that are derived from T. The type attribute defined in Extension aids ExtensionContainer to
+select the correct Extension.\\
+
+
+\subsection{Visitor Pattern}
+
+\paragraph{}
+The extension mechanism enables vertification modules to augment components and ports with
+arbitrary extra data. Many times it is desirable to extend the behavioural features of the
+classes as well. The Visitor Pattern provides this behavioural complement to extensions.
+
+\paragraph{}
+When the Visitor Pattern is applied to an object-oriented class design, operations normally
+defined on the domain classes are pulled out of the class and accomodated in a new class
+known as a visitor. The Gang of Four defines the Visitor as:\\"Represent an operation to be
+performed on elements of an object structure. Visitor lets you define a new operation without
+changing the classes of the elements on which it operates."\cite{wiki-visitor-pattern}\\
+The visitor pattern is essential for the modularity and extensibility of the verification
+modules. Rather than implementing all verification code inside the domain classes, each
+module defines one or more Visitor classes. Inside these classes the implementation of
+the verification code is placed. Adding a new module does not require a single change to
+XMASComponent, Port or any of the other domain classes.
+
+\paragraph{}
+The Visitor Pattern applied in C++ makes use of two features of the language. The first one
+is function overloading. Overloaded functions have multiple distinct implementations while
+all share the same function name. The functions however differ in the number and type
+of arguments they operate on. When a compiler encounters a call to an overloaded function,
+it inspects the arguments it should pass and uses this information to resolve the correct
+function to call.\\
+The second language feature is dynamic dispatch. Through the use of virtual functions the
+actual function to invoke is determined at run time.\\
+When used together, these features implement double dispatch. Overloaded functions allow
+differentiation based on the arguments of the function, virtual functions allow differentiation
+based on the actual type of the calling object.
+\nocite{stroustrup}
+
+\paragraph{}
+In the class diagram two Visitor interfaces are defined, one for ports and one for components.
+Visitors that implement interface PortVisitor must provide two implementation of the overloaded
+function visit(). One to handle visits to an Input port and one to handle a visit to an Output port.
+Likewise, implementations of interface XMASComponentVisitor must implement the visit method
+for each of the 8 xMAS primitive types.
+
+\begin{figure}[h]
+ \includegraphics[width=\textwidth]{images/visitor-sequence-diagram}
+ \caption{Visitor Sequence Diagram}
+ \label{fig:visitor-sequence-diagram}
+\end{figure}
+
+\paragraph{}
+Figure \ref{fig:visitor-sequence-diagram} shows the Visitor Pattern in action.
+CombinatorialCycleDependencies is an implementation of the XMASComponentVisitor interface.
+In this example, an instance of this class calls the accept method on an XMASComponent
+instance, in this case an XMASMerge. Through dynamic dispatch the accept method as
+defined by XMASMerge is called. The implementation of this method is:\\
+\begin{verbatim}
+void accept(XMASComponentVisitor &v) {
+  v.visit(this);
+}
+\end{verbatim}
+
+Immediately, control is returned to the Visitor class by calling its visit method. Since the method
+is defined as part of the XMASMerge class, the this pointer passed has type XMASMerge*. The compiler
+uses this knowledge to infer that it has to call the overloaded visit method which takes a pointer
+to an XMASMerge component (overloading and dynamic dispatch are combined here to perform double
+dispatch). The CombinatorialCycleDependencies class is now able to execute code specifically written
+to handle an XMAS merge. The diagrams also shows a slightly more complex example where the Visitor
+recursively calls accept on an XMASQueue instance during the processing of a visit to an XMASFork object.
+
+
+\paragraph{Open/Closed Principle}
+Both the Extension mechanism and the Visitor Pattern are applications of the Open/Closed
+Principle. This principle states that: ``Software entities like classes, modules and functions
+should be open for extension but closed for modifications''\cite{oodesign-open-close}. Minimizing
+changes to existing classes that have been tested and used, prevents undesired effects
+on current functionality. Core classes like XMASComponent and Port are used in many different parts
+of the software (see also ???), so changes to these classes have impact on the entire application.
+At the same time, the priniciple dictates that new features can still be added to the software entities.
+
+
+\section{Combinatoric Cycle Checker}
+
+TODO: Explain what the cycle checker does and how the extensions and Visitor pattern are applied.
+
+
+\section{Integration of Verification Tools}
+
+\paragraph{}
+Ultimately, the verification tools must be integrated with the new WickedXMas design tool.
+This section provides suggestions how to realize this integration. First, the
+interdependencies between the modules are discussed.
+
+
+\subsection{Module dependencies}
+
+The execution time of the modules can vary greatly. When large networks are provided as input to the
+modules, algorithms with high run time and space complexity may consume many system resources. Therefore,
+it might be desirable to disable some verification modules if their results are currently not of interest.\\
+The xMAS data structures have been designed with modularity and independency in mind. But, as shown in
+the WickedXMas Tool Architecture, the verification modules don't operate in a completely isolated
+fashion.\\
+The order in which the modules are executed is important. Some module can only be executed after
+the results from other modules are available. In order to provide flexibility in the choice of
+verification modules to run, careful design of the verification modules is necessary.
+If possible, the most time consuming algorithms should be easy to disable. That is, other modules
+should not depend on the results of those modules.
+
+
+\subsection{Using Extensions and Visitors for UI}
+
+\paragraph{}
+The use of Extensions and Visitors is not limited to just the verification modules.
+The same mechanisms can be utilized by the design tool. Properties like the
+position and orientation of an xMAS component on the design canvas can be
+stored in a new Extension class. The Visitor Pattern can be used for
+tasks like rendering an image of a component on the canvas. Another use of
+the pattern is to save and load xMAS networks to and from files.
+
+\paragraph{Composite objects}
+There is however one issue that requires some thought. The verification modules
+currently have no notion of composite objects. The design tool on the other hand
+makes heavy use of composite objects to maintain a clear overview of the network.\\
+We briefly explore three approaches to resolve this issue. All approaches assume that
+a new class, XMASCompositeObject, is introduced to represent a composite object.
+
+\paragraph{}
+In the first approach the XMASComponentVisitor interface is extended with an
+additional method to visit a composite object. The implementations of XMASComponentVisitor
+use the methods of XMASCompositeObject to obtain access to the ports and components
+inside the composite object. This approach is easy to implement. The downside is
+that all verification modules have to be adjusted to implement the new XMASComponentVisitor
+interface.
+
+\paragraph{}
+The second approach tries to hide the existence of composite objects altogether
+from the verification modules. Rather than extending the Visitor interface,
+the accept method of XMASCompositeObject is implemented in a non-default way.
+Instead of passing itself as the argument to visit, the composite object calls
+the accept method on all components inside the composite object, essentially
+performing the flattening step.\\
+The benefit of this approach is that it requires no changes to existing modules.
+On the downside, this approach is harder to implement. Care has to be taken
+that the transparency of composite objects is complete. For example, the objects
+returned by the getInitiator() and getTarget() methods of Port must not return a
+XMASCompositeObject object since the modules are likely to use these methods.
+Possibly special CompositeInput and CompositeOutput classes are required in
+order to implement this approach.\\
+Another issue is that transparency is not always desirable.
+Unlike the verification modules, the design tool sometimes prefers to
+view a composite object in its entirety while at other times the design
+tool wants to access the components inside the composite object.\\
+Whether this second approach is feasible remains a question.
+
+\paragraph{}
+A third approach explicitly executes the flattening step. The design tool
+uses a separate copy of the data structures. Before the network is
+presented to the verification modules, all composite objects are flattened
+to create a network without composite objects. Like the second approach,
+existing verification modules need no modifications. Memory usage will
+increase though to store the two different views of the network. Also,
+feedback from the verification modules must be translated back to the
+orignal network model with composite objects.
+
+
+
+\subsection{Feedback from tools}
+
+TODO: List possible ways to present feedback from verification modules to UI
+
+\begin{itemize}
+ \item Send feedback into an ostream, used currently to output to stdout
+ \item Define feedback interface, implementations for stdout and UI
+ \item Let UI read extensions defined by modules, detailed information (invariants?), increases coupling
+ \item Pass feedback to UI by storing it in an Extension (benefits compared to feedback interface?)
+\end{itemize}
+
+
+
+
+
+
+\section{Glossary}
+\begin{description}
+ \item[(verification) module] 	Software component which applies a verification algorithm to an xMAS network
+ \item[design tool]		Software component to visually model an xMAS network
+ \item[Visitor class]		A software class that implements the Visitor interface
+\end{description}
+
+\begin{thebibliography}{9}
+
+\bibitem{chatterjee10}
+  Chatterjee, Kishinevsky, Ogras,
+  \emph{Quick Formal Modeling of Communication Fabrics to Enable Verification}
+  2010
+  
+\bibitem{xmas}
+  Chatterjee, Kishinevsky, Ogras,
+  \emph{xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification}.
+  2012
+  
+\bibitem{13_toolxmas}
+  Joosten, Verbeek, Schmaltz,
+  \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics}.
+  2012
+  
+  
+\bibitem{linkedlist}
+  \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage}.
+  november 2014
+  
+\bibitem{wiki-visitor-pattern}
+  \emph{https://en.wikipedia.org/wiki/Visitor\_pattern}.
+  november 2014
+
+\bibitem{oodesign-visitor-pattern}
+  \emph{http://www.oodesign.com/visitor-pattern.html}.
+  november 2014
+  
+\bibitem{oodesign-open-close}
+  \emph{http://www.oodesign.com/open-close-principle.html}.
+  november 2014
+  
+\bibitem{stroustrup}
+  Stroustrup,
+  \emph{The C++ Programming Language}.
+  Fourth edition,
+  2013
+  
+  
+  
+\end{thebibliography}
+
+\end{document}
