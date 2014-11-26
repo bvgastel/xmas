@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/hello.dir/hello.cpp.o  -o hello -rdynamic /usr/local/lib/libfltk.a -lpthread -ldl -lSM -lICE -lX11 -lXext -lXinerama -lXfixes -lXcursor -lXft -lfontconfig 
