@@ -6,4 +6,4 @@ find_package(FLTK REQUIRED)
 
 add_executable(abiTest123 main.cpp)
 
-target_link_libraries(abiTest123 fltk)
+target_link_libraries(abiTest123 ${FLTK_LIBRARIES})
