@@ -13,19 +13,32 @@
 %\selectlanguage{dutch}
 
 \begin{Minutes}{Overleg 014 team 33}
-\participant{Face to face meeting Freek and Bernard}
+\participant{Freek Verbeek, Bernard van Gastel, Guus Bonnema}
+\subtitle{Kennismaking en project toelichting}
+\minutetaker{Guus}
 \minutesdate{27 november 2014}
 \location{Toernooiveld 200, Nijmegen (Mercator gebouw)}
 
 \maketitle% This is where LaTeX makes the title
 
+\newcommand{\w}[1]{\textsc{#1}}
+
 \topic{Introduction}
 
-Bernard is promovendus op basis van derden geldstroom (Intel). Freek is
-universitair docent. Als promovendus was NoC zijn onderwerp ( iets met
-fabrics). Guus is OU student met een verleden in IT als programmeur,
-functioneel en technisch ontwerper, informatie analist, en functioneel en
-technisch beheer.
+Dit is een incidenteel overleg ter kennismaking en als secondaire doel een
+completer beeld van het project en de projectbelangen te krijgen.
+
+\paragraph{Bernard van Gastel} Bernard is promovendus op basis van derden geldstroom. 
+Hij had na zijn studie een eigen bedrijf maar kon de trek naar onderzoek niet weerstaan
+en is zijn promotie bij de RU begonnen onder funding van Intel. Hij is nu 3 jaar 
+met promotie bezig en heeft 1 jaar te gaan.
+
+\paragraph{Freek Verbeek} Freek is universitair docent aan de RU. 
+Hij promoveerde aan het RU in communication fabrics (NoC) en concentreert zich
+momenteel op verification tools naast onderwijs en andere onderzoeken.
+
+\paragraph{Guus Bonnema} Guus is OU student met een verleden in IT 
+als programmeur in vele job typen waaronder ontwikkelaar en beheerder.
 
 \paragraph{Rolverdeling} Zowel Bernard als Freek zijn actief bij het project
 betrokken, maar conform onderlinge afspraak bemoeit Bernard zich naar ons toe
@@ -33,9 +46,10 @@ met de inhoud van het project en Freek met de begeleiding.
 Achter de schermen sluiten Freek en Bernard de inhoudelijke aspecten met elkaar kort.
 De begeleiding is alleen zaak voor Freek.
 
-Praktisch gezien is Freek meer gericht op de verificatie modules (bijvoorbeeld
-deadlock detectie) terwijl Bernard gericht is op het hele project ten behoeve
-van zijn promotie. 
+Praktisch gezien is Freek meer gericht op de verificatie modules terwijl
+Bernard gericht is op het hele project ten behoeve van zijn promotie. Bernard
+doet daarnaast actief verificatie modules ontwikkelen en de verification pipeline
+faciliteren (zie topic architectuur).
 
 \topic{Onderzoekscontext} Freek licht de doelen van het project toe. Enerzijds
 zijn er onderzoekers aan de RU (Radboud Universiteit) die analyse en
@@ -47,6 +61,10 @@ Voor onderzoekers maakt het ontwerp tool het mogelijk om de verificatie tools
 (die in ontwikkeling zijn) snel te evalueren. Voor de buitenwereld
 maakt het ontwerp tool de onderzoeken beter toegankelijk en 
 maakt het onderzoek meer indruk in de wetenschappelijke wereld. 
+
+Diverse universiteiten en bedrijven zijn bezig geweest met het WickedXmas tool, maar 
+liepen tegen problemen aan waardoor het tool toch onvoldoende in gebruik is buiten de 
+RU.
 
 \topic{Architectuur}
 
@@ -113,27 +131,35 @@ Ons project moet aan beide problemen een einde maken.
 
 \subtopic{Huidige en gewenste architectuur}
 
-\includegraphics[width=.9\linewidth]{2014-11-27-meeting-architecture-tool}\label{}
-
-De huidige architectuur en de gewenste architectuur van 30 km hoogte ziet er bijna identiek uit (zie 
+\begin{center}
+	\includegraphics[width=.9\linewidth]{2014-11-27-meeting-architecture-tool}
+	\captionof{figure}{High level architecture for GUI and pipeline}
+	\label{fig:architecture-high-level}
+\end{center}
 
 \begin{description} 
 
-	\item[Offline run] Een batch run van verification tools is het vanaf de
-		command line draaien van de meeste of all verificatie tools op een
-		model.  Bij grotere modellen duurt dit langer en wil men dit offline in
-		plaats van online. Soms ook snachts.
+	\item[Offline run van verificatie] Vanaf de command line of vanuit een
+		script kunnen de onderzoekers alle verificitie tools draaien over een
+		model om de uitvoer via logfiles te verzamelen dan wel op standaard
+		output te krijgen. Deze batch run is noodzakelijk bij het
+		verifi\"{e}ren van grotere modellen. Men voert dit ook wel 's nachts
+		uit.
 
-	\item[plugin architectuur] De plugin architectuur is iets dat de verificatie
-		stappen uitvoert voor 1 of meer verificatie tools. Hoe dit precies in
-		elkaar zit is voor ons project buiten scope. Toch is het wel van belang, 
-		omdat wij de verificatie tools moeten kunnen uitvoeren vanuit de gui.
-		Binnen scope is het bouwen van een generieke plugin met zoveel mogelijk
-		boilerplate code. 
-
-	\item[Plugin communicatie] De communicatie tussen plugin en ontwerp tool
-		is onderwerp van discussie. De ideeen zijn gebruik te maken van pipes 
-		of van zeroMQ. Het voordeel van zeroMQ is platform onafhankelijkheid
+	\item[Online run van verificatie] Bij het gebruik van het online design
+		tool moet men selectief verificatie tools kunnen kiezen.  De in te
+		vullen parameters hangen direct samen met de geselecteerde tools.
+		
+	\item[plugin architectuur] De plugin architectuur is iets dat de
+		verificatie stappen uitvoert voor 1 of meer verificatie tools. De
+		werking en samenhang van de verificatie tools zelf is buiten scope. De
+		plugin architectuur en de generieke plugin code is in scope. Het doel
+		van de plugin is de hoeveelheid boilerplate code te minimaliseren en
+		het gemak van introduceren van een nieuw tool te maximalieren.
+		
+	\item[Plugin communicatie] De communicatie tussen plugin en ontwerp tool is
+		onderwerp van discussie. De ideeen zijn gebruik te maken van pipes of
+		van zeroMQ. Het voordeel van zeroMQ is platform onafhankelijkheid
 		terwijl zeroMQ ook gebruik maakt van pipes als de processen op dezelfde
 		machine draaien.
 	
@@ -145,9 +171,15 @@ De huidige architectuur en de gewenste architectuur van 30 km hoogte ziet er bij
 
 	\item[C++ verification tool addition] De huidige C++ datastructuur bevat
 		behalve gegevens voor het model ook gegevens voor de verificatie tools.
-		Het doel is voor caching zodat processing van verificatie minder lang
-		duurt.  Het is ter discussie of deze gegevens in het C++ model
-		thuishoren.  
+		Het doel is caching zodat verificatie minder lang duurt.  Het is ter
+		discussie of deze gegevens in het C++ model thuishoren dan wel ergens
+		anders bij de verificatie modules thuis horen.  
+
+	\item[Additionele libraries] Voor process control en thread control moeten
+		we i.v.m. platform onafhankelijkheid leunen op tools die threads en
+		processen platform onafhankelijk kunnen aansturen. De ideeen gaan
+		uit naar de library \w{Boost}. Zie opmerking in volgend topic over 
+		code van Bernard uit \w{Boost}
 
 \end{description}
 
@@ -160,62 +192,26 @@ omgaat met diverse C++ zaken. Dit betreft onder andere strings (een efficiente
 vorm die je goedkoper kunt kopieren vergelijkbaar met bstring), en onderdelen
 van de boost library. Op verzoek kan hij ons hier mee helpen.
 
-\subtopic{}
+\subtopic{Domain analysis user interface toolkits}
 
-xx
+Bernard heeft de domein analyse volledige gelezen en is het met onze keuze voor
+FLTK eens. 
 
+\subtopic{Boost} Over het gebruik van \w{Boost} waarschuwt Bernard dat deze onder
+apple alleen in zijn geheel te installeren is. Als ik het goed heb begrepen
+moeten alle \w{Boost} libraries vanuit source gecompileerd worden: dat duurt lang.
+Voor Linux en Windows is dit probleem er niet. Bernard heeft voor een ander
+project code uit \w{Boost} ge\"{i}soleerd, dat wij kunnen gebruiken.
 
-\topic{Git repository}
+\subtopic{0mq} Over \w{zeroMQ} is Bernard gematigd terughoudend. De library heeft een goede
+reputatie, maar de voordelen voor ons project zijn beperkt tot platform onafhankelijkheid.
+Omdat platform onafhankelijkheid wel erg belangrijk is en gebruik van \w{0MQ} geen
+merkbare nadelen heeft, lijkt dit een goede keuze.
 
-(open item van 15/11)
-Inmiddels heeft de OU een Git server beschikbaar gemaakt. De vraag is of wij van
-deze server gebruik zullen gaan maken of dat de ontwikkeling via github blijft.
-Mogelijk hebben Freek en/of Bernard een voorkeur voor een private repository i.v.m.
-de verspreiding van hun source code.
---> deze vraag moeten we stellen op de eerst volgende meeting met Freek en Bernard
+\subtopic{Git repository}
 
-\topic{SVN repository}
-Bernard heeft ook de svn gegeven waar de C\# sources van de huidige tool te vinden
-zijn. Stefan heeft deze met Vs2010 gebuild als test. 
-
-\topic{Ontwikkelomgeving}
-
-FLTK apps testen met VC2010 onder windows is geen probleem. 
-Code Blocks daarentegen levert heel wat problemen op onder Windows XP als 8.1. 
-Versie 13.12 kan niet zonder aanpassingen aan het fltk script gebruikt worden.
-Bij het builden van de FLTk libraries met make van MinGW onder Code Blocks komen
-er veel warnings. De documetatie README.MSWindows.txt beschrijft dat er aan
-gewerkt wordt om dit op te lossen.
-
-
-
-\topic{Repo Merging DA}
-Guus heeft afgelopen week de DA branches van Stefan en zichzelf gemergt met de master.
-
-
-\topic{Agile tool}
-De eerder getestte agile tools werden kort overlopen en worden maandag verder besproken.  
-In de loop van volgende week moeten we een keuze maken. Eens er een keuze is
-maken we elk een account en gaan we experimenteren.
-
-\topic{Demonstratie WickedXmas}
-
-Tijdens deze demo ging het
-vooral over de verificatie stappen en wat deze op de achtergrond doen.
-Voor Guus kan er in de loop van volgende week een demo gegeven worden.
-
-\topic{Vragen en afspraken}
-\begin{itemize}
-\item Jeroen stuurt een email naar Guus
-\item maandag wordt er beslist om een afspraak te maken met Freek en Bernard i.vm.:
-\begin{itemize}
-\item afronden Domein analyses
-\item voorstel Agile tool
-\item vragen Architectuur of iteratie 0
-\item ...
-\end{itemize}
- \item Het volgende overleg is maandag 24 november 2014. 
-\end{itemize}
+Bernard geeft aan een kopie te gaan maken van onze huidige github repository. We kunnen 
+voorlopig gebruik blijven maken van de github repo. De git repo van de OU werkt nog niet.
 
 
 \end{Minutes}
