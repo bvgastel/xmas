@@ -249,7 +249,7 @@ select the correct Extension.\\
 \subsection{Visitor Pattern}
 
 \paragraph{}
-The extension mechanism enables vertification modules to augment components and ports with
+The extension mechanism enables verification modules to augment components and ports with
 arbitrary extra data. Many times it is desirable to extend the behavioural features of the
 classes as well. The Visitor Pattern provides this behavioural complement to extensions.
 
@@ -332,8 +332,43 @@ TODO: Explain what the cycle checker does and how the extensions and Visitor pat
 
 \paragraph{}
 Ultimately, the verification tools must be integrated with the new WickedXMas design tool.
-This section provides suggestions how to realize this integration. First, the
-interdependencies between the modules are discussed.
+This section provides suggestions how to realize this integration.
+
+\subsection{Tool Architecture}
+\label{sec:tool-architecture}
+
+\paragraph{}
+In the WickedXMas Tool Architecture the design tool and the verification tools
+are clearly separated software components. The tools are written in varying languages
+and they are implemented as separate executables. Now that all tools are being rewritten
+in a common language (C++), more efficient communication between the verification tools
+is possible. All tools are integrated into a single executable which is executed as a
+single process. Due to this, the tools share the same address space and can directly
+access information produced by other tools.\\
+
+\paragraph{}
+With regards to the integration with the design tool, two choices are available.
+\begin{enumerate}
+ \item The design tool could be integrated completely with the verification module.
+ \begin{itemize}
+  \item Not only the verification tools but also the design tool become part of a single
+  application. Both the design tool and the verification modules operate on the same
+  copy of the xMAS data structures.
+ \end{itemize}
+
+ \item The design tool and the verification tools are implemented as two separate
+ programs.
+ \begin{itemize}
+  \item The design tool launches the verification tools as a new process. Inter-process
+  communication mechanisms are used for communication between the two programs.
+  \item Both software components have their own representation of an xMAS network. The
+  design tool can not directly access the data structures of the verification tools.
+  However, the design tool can reuse source code, like the classes used by the verification
+  tools (XMASComponent and Port). (See also section~\ref{sec:extensions-visitor-design-tool})
+ \end{itemize}
+ 
+\end{enumerate}
+
 
 
 \subsection{Module dependencies}
@@ -348,10 +383,11 @@ The order in which the modules are executed is important. Some module can only b
 the results from other modules are available. In order to provide flexibility in the choice of
 verification modules to run, careful design of the verification modules is necessary.
 If possible, the most time consuming algorithms should be easy to disable. That is, other modules
-should not depend on the results of those modules.
+should minimize dependency on the results of those modules.
 
 
-\subsection{Using Extensions and Visitors for UI}
+\subsection{Using Extensions and Visitors for the design tool}
+\label{sec:extensions-visitor-design-tool}
 
 \paragraph{}
 The use of Extensions and Visitors is not limited to just the verification modules.
@@ -359,7 +395,7 @@ The same mechanisms can be utilized by the design tool. Properties like the
 position and orientation of an xMAS component on the design canvas can be
 stored in a new Extension class. The Visitor Pattern can be used for
 tasks like rendering an image of a component on the canvas. Another use of
-the pattern is to save and load xMAS networks to and from files.
+the pattern is to export xMAS networks to other representations like Verilog.
 
 \paragraph{Composite objects}
 There is however one issue that requires some thought. The verification modules
@@ -408,12 +444,52 @@ orignal network model with composite objects.
 
 
 
+
 \subsection{Feedback from tools}
 
-TODO: List possible ways to present feedback from verification modules to UI
+\paragraph{}
+Feedback produced by the tools can be presented back to the design tool
+in several ways. In this section, the types of feedback and possible
+ways to present feedback to the design tool are covered.
+
+\paragraph{Types of feedback}
+Verification modules may want to provide various types of feedback:
+\begin{itemize}
+ \item errors found in an xMAS design, for example
+ \begin{itemize}
+  \item a combinatoric cycle detected by the cycle checker, the design tool
+  could highlight the components and channels that are part of the cycle.
+  \item an error in a function specification
+ \end{itemize}
+
+ \item information which might be interesting to the user, for example:
+ \begin{itemize}
+  \item invariants
+  \item packet type information
+ \end{itemize}
+
+ \item progress information
+ \begin{itemize}
+  \item Gives the user an indication of the remaining time required by a
+  verification module to verify a network. Not all algorithms are able to
+  provide an accurate progress indication.
+ \end{itemize}
+
+
+\end{itemize}
+
+
+\paragraph{Feedback communication}
 
 \begin{itemize}
- \item Send feedback into an ostream, used currently to output to stdout
+ \item Send feedback to an ostream\\
+ Currently, the verification modules use the standard output stream (stdout)
+ to send feedback (and debugging information) to the user. By generalizing this
+ method to output feedback to an arbitrary ostream, this mechanism can also be
+ used to stream the feedback to the design tool. In order for the design
+ tool to interpret the feedback, a well defined data format must be agreed upon.
+ This format must be capable of transmitting all types of feedback.
+ 
  \item Define feedback interface, implementations for stdout and UI
  \item Let UI read extensions defined by modules, detailed information (invariants?), increases coupling
  \item Pass feedback to UI by storing it in an Extension (benefits compared to feedback interface?)
@@ -421,6 +497,10 @@ TODO: List possible ways to present feedback from verification modules to UI
 
 
 
+
+\section{Recommendations}
+
+TODO
 
 
 
