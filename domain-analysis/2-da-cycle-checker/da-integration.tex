@@ -440,7 +440,7 @@ to create a network without composite objects. Like the second approach,
 existing verification modules need no modifications. Memory usage will
 increase though to store the two different views of the network. Also,
 feedback from the verification modules must be translated back to the
-orignal network model with composite objects.
+original network model with composite objects.
 
 
 
@@ -452,7 +452,7 @@ Feedback produced by the tools can be presented back to the design tool
 in several ways. In this section, the types of feedback and possible
 ways to present feedback to the design tool are covered.
 
-\paragraph{Types of feedback}
+\subsubsection{Types of feedback}
 Verification modules may want to provide various types of feedback:
 \begin{itemize}
  \item errors found in an xMAS design, for example
@@ -479,22 +479,64 @@ Verification modules may want to provide various types of feedback:
 \end{itemize}
 
 
-\paragraph{Feedback communication}
+\subsubsection{Feedback communication}
 
-\begin{itemize}
- \item Send feedback to an ostream\\
- Currently, the verification modules use the standard output stream (stdout)
- to send feedback (and debugging information) to the user. By generalizing this
- method to output feedback to an arbitrary ostream, this mechanism can also be
- used to stream the feedback to the design tool. In order for the design
- tool to interpret the feedback, a well defined data format must be agreed upon.
- This format must be capable of transmitting all types of feedback.
+\paragraph{Send feedback to an ostream}
+Currently, the verification modules use the standard output stream (stdout)
+to send feedback (and debugging information) to the user. By generalizing this
+method to output feedback to an arbitrary ostream, this mechanism can also be
+used to stream the feedback to the design tool. In order for the design
+tool to interpret the feedback, a well defined data format must be agreed upon.
+This format must be capable of transmitting all types of feedback. Also,
+a convention to refer to entities like components and ports must be agreed upon.
+
  
- \item Define feedback interface, implementations for stdout and UI
- \item Let UI read extensions defined by modules, detailed information (invariants?), increases coupling
- \item Pass feedback to UI by storing it in an Extension (benefits compared to feedback interface?)
+\paragraph{Define a custom feedback streaming interface}
+Instead of the (character based) ostream, the verification module passes feedback
+through a streaming interface specifically written for this purpose. Possible
+operations this interface might expose include:
+\begin{itemize}
+ \item info(XMASComponent* component, string message)
+ \item error(Port* port, string message)
+ \item progress(int progress, int total)
 \end{itemize}
+Multiple implementations of this interface can be written. For instance, one
+implementation could simply write the feedback to stdout, using the same output
+format as above. Another implementation could directly access the data structures
+passed, e.g. the XMASComponent of the info operation in the example. In this case,
+the design tool doesn't have to parse the character stream and lookup the component.
+The design tool and the verification modules must share the same address space for
+this method to work correctly though.
 
+
+\paragraph{Let design tool read extensions defined by modules}
+Unlike the previous methods, the verification modules don't send feedback to
+the user at all. Rather, the design tool accesses the extensions created by the
+verification  tools to gather information. When using this method, the feedback is
+pulled by the design tool instead of pushed by the verification modules. As a result,
+the verification modules need only expose their data through the extensions. The
+design tool can decide what information it actually needs and fetch it by itself.
+Detailed and tool-specific information can be communicated without the need to
+define an interface capable of transmitting all message types.\\
+Drawbacks of this method include the increased coupling between design tool and
+verification modules. The design tool must know which extensions each verification
+module uses and write custom code to extract and display the feedback. Another
+issue is that information like progress is hard to extract from just the extensions.
+If possible at all, this would require periodic polling of all components/ports in the
+network to check their status with regards to a verification step.\\
+Again, since the design tool directly accesses the extensions created by the verification
+modules, the design tool and the verification modules must share the same address space.
+
+\paragraph{Pass feedback to design tool by storing it in an Extension}
+This method also uses the Extension mechanism to give the design tool access to the
+verification tools' results. The difference is that all feedback is stored in
+special Extension classes used purely for the purpose of passing feedback. The design
+tool no longer needs to know about the internals of the verification tool, reducing
+coupling. Like the previous method, detailed and tool-specific information is
+available to the design tool, but this time, the verification modules must collect
+the information and store it in the feedback extension.\\
+The same issues with regards to progress information and the ``same address space``-
+restriction apply.
 
 
 
