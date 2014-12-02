@@ -1,4 +1,4 @@
-# XMAS Windows C++ IDE Setup
+# XMAS for Windows C++ IDE Setup
 
 ### Preconditions
   - [fltk] libraries version 1.3.3 installed.
@@ -26,5 +26,5 @@ can be build and run.
 
 [fltk]:http://www.fltk.org/
 [CodeBlocks]:http://www.codeblocks.org/
-[README-FLTK-WINWODS](README-FLTK-WINWODS.md)
+[README-FLTK-WINWODS](README-FLTK-WINDOWS.md)
 
