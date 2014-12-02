@@ -8,7 +8,7 @@ In Windows the fltk libraries default build location is the *ProgramFiles* folde
 On a 64bit system the default *ProgramFiles* folder its environement variable is
 %ProgramFiles(x86)% and %ProgramFiles% on a 32bit system.
 
-How fltk libraries can be build on a Windows system can be found in [README-FLTK-WINDOWS].
+How fltk libraries can be build on a Windows system can be found in [README-FLTK-WINDOWS](/README-FLTK-WINDOWS.md).
 
 ### Setup CodeBlocks
 * Start CodeBlocks
@@ -26,5 +26,5 @@ can be build and run.
 
 [fltk]:http://www.fltk.org/
 [CodeBlocks]:http://www.codeblocks.org/
-[README-FLTK-WINDOWS](/README-FLTK-WINDOWS.md)
+
 
