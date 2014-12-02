@@ -8,7 +8,7 @@
 
 The complete tool consists of a verification pipeline and
 the graphical user interface where the research people
-can design a Network on Chip (\NoC). Both partitions have differing
+can design a Network on Chip (\Noc). Both partitions have differing
 use cases. 
 
 The use case for the verification pipeline is for verifying a model 
@@ -16,7 +16,7 @@ that needs a final check, or for verifying a model that is too
 big to verify completely during graphical edit cycles.
 
 The use case for the graphical editor is for creating, modifying 
-and intermediately verifying the \NoC. The editor allows for 
+and intermediately verifying the \Noc. The editor allows for 
 selecting verification tools to run, and will verify parameters
 before each run.
 
@@ -25,15 +25,20 @@ through a plugin architecture.
 
 \section{Graphical Design Tool}
 
-The graphical editor of \NoC consists of a toolkit containing
+The graphical editor of \Noc consists of a toolkit containing
 the \xmas primitives, the composites available in separate 
 libraries, and the graphical window, and the commands to 
 prepare and execute the verification tools.
 
+The process of designing an \Noc consists of alternating edit-verify cycles.
+Once the model is finished, all parameters per component are filled in, the 
+verify tools are selected, the the controller will copy the current model and
+kick off the verification tools for an execution run.
+
 \begin{center}
-	\includegraphics[width=.9\linewidth]{main_window_design}
-	\captionof{figure}{Screenprint of the main window}
-	\label{fig:screenprint_main_window}
+	\includegraphics[width=.9\linewidth]{../architecture-dynamic}
+	\captionof{figure}{Dynamic process of editing and verifying}
+	\label{fig:dynamic-arch}
 \end{center}
 
 \section{Verification pipeline}
