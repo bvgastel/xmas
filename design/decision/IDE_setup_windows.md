@@ -26,5 +26,5 @@ can be build and run.
 
 [fltk]:http://www.fltk.org/
 [CodeBlocks]:http://www.codeblocks.org/
-[README-FLTK-WINWODS]:././././README-FLTK-WINWODS.md
+[README-FLTK-WINWODS](README-FLTK-WINWODS.md)
 
