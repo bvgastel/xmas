@@ -1,9 +1,11 @@
 # Useful C++ Software libraries
 
-Purpose of this document is describing a comparison of tools
-that can be used for the project.
-Looking for multi threading, interprocess communication and serialization.
-The current product of this project uses mainly JSON and is standalone. 
+This is a comparison of tools that can be used for the project.
+The GUI libraries are FLTK.
+The product is a standalone application and data is currently JSON structured.
+The main properties that this application will need are multi threading or
+processing, inter process communication, serialization, regular expressions,
+streaming, exception handling.
 
   - [POCO C++]
   - [NCBI]
@@ -26,11 +28,12 @@ Library supports multi threading, serialization, ipc (sockets & pipes), regex.
 >to be non popular.
 
 ### Boost
-Boost is a generic library with many features. It supports serialization,
-multi threading, able to start external exe's.
+Boost is a generic library with many features. It has libraries for serialization,
+multi threading. Boost also includes a basic JSON parser, IPC and much more.
 
-...todo
->Conclusion: 
+>Conclusion: Boost is a popular set of high quality libraries.
+>If it comes to multi threading or processing Boost is a good choice.
+>Many simple tryout examples and good documentation.
 
 ### Protocol Buffers
 Google's Protocol Buffers are used for serializing structured data based on RPC.
@@ -57,7 +60,7 @@ MessagePack is like JSON but smaller and faster
 >if the API is already using JSON for streaming and storage.
 
 ### ZeroMQ
-This is a networking library so purely used for communication. In-process,
+This is a networking library, so purely used for communication. In-process,
 interprocess, TCP and multicast.
 
 >Conclusion: A pure communication library but easy to use.
@@ -65,13 +68,16 @@ interprocess, TCP and multicast.
 
 ## Final Conclusion
 
+There is no *best library* it all depends on the needs.
+Boost covers a wide range of good solutions
 Because this project is standalone and the main needs are serialization for
 local storage, communication between processes on the same machine
-which are related to each other. It already uses JSON for serialization and
-communication between processes are C++ objects structures.
-Also multi threading, array's , regular expressions are some of the mechanisms
-that this project needs. So Boost is the most appropriate choice because it
-covers all those needs.
+which are related to each other.
+If communication between processes is local and based on C++ objects
+then Protocol Buffers doesn't add advantages.
+Also multi threading, array's, regular expressions are some of the mechanisms
+that this project will possible need. So Boost is the most appropriate choice because it
+covers many of those mechanisms.
 It is always possible to use Avro or MessagePack next to Boost because these
 are focused on serialization based on JSON.
 
