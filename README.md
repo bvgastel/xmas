@@ -13,6 +13,7 @@ Contents
 - minutes			The minutes, only the TeX sources.
 - preparation	 	Files used during preparation plus plan
 - xmas-info			Information on xmas (pdf)
+- design			The directory containing design documents
 
 
 Use
@@ -106,9 +107,16 @@ agile management tool to visualise our work and to keep track of the progress.
 Compile and install
 ===================
 
-Todo
+- README-FLTK-WINDOWS.md	The instructions to develop from the windows platform
+- README-LINUX.md			The instructions to develop from one of the linux platforms
 
 Dependencies
 ============
 
-Todo
+This project depends on the following libraries:
+
+fltk-1.3.3
+
+We will update this whenever this changes. The following change will probably be the
+boost library.
+
