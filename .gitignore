@@ -1,6 +1,7 @@
 # Our own additions
 *.swp
 *.backup
+build
 
 # Compiled Object files
 *.slo
