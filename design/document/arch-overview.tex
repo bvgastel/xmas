@@ -1,5 +1,13 @@
 \chapter{Architecture Overview}
 
+\todo[inline]{The system as a whole includes the design tool, the verification pipeline and the
+specific verification tools. If we document the design tool only, we leave out essential parts of 
+the system. TBD.}
+
+\todo[inline]{Where to document the verification pipeline and the verification tools?
+Maybe the pipeline in general (without VT specifics) should be documented here. Maybe
+a template for specific VT documentation would come in handy. TBD.}
+
 \section{Partitioning}
 
 \begin{center}
@@ -30,7 +38,7 @@ the online and the offline versions of running the verification tools? I.e. how
 will this architecture reflect on the currently existing verification tools?}
 
 \todo[inline]{Where to flatten the model: in the verification tool or in the design tool (plugin)?
-			   Could a VT work with composites.}
+			   Could a VT work with composites?}
 
 \section{Graphical Design Tool Dynamics}
 
@@ -95,40 +103,39 @@ in a C++ class that derives from \w{VerificationTool}.
 
 \section{Verification Tool repository}
 
-\paragraph{Tool repository} Each tool needs to register with a 
-tool repository from where a control object could load the 
-objects and obtain the necessary meta information. 
+\paragraph{Tool repository} The design tool needs a reference to each 
+verification tool in order to have the user select the 
+verification tools to run. This information whether stored
+in the code or stored in a file, we call the tool repository.
+Each tool needs an entry in the tool repository.
 
-\paragraph{Meta information} Each tool needs certain parameters 
+\paragraph{Tool meta information} Each tool needs certain parameters 
 filled in. The tool should provide a method of entering this data 
 both through a graphical user interface and through providing a 
 file with input.
 
-\paragraph{Generic meta information} Some parameters have no influence
-on the structure of the component, other than specifying the number
-of entries in a queue. Other parameters alter the structure in a way
-that changes the network in size. An example is a number $n$ that
+\paragraph{Generic meta information} Some parameters directly influence 
+the structure of the component. An example is a number $n$ that
 specifies the number of primitives in a spidergon topology (see \cite{}).
+\todo[inline]{These parameters need special care when passing through to the
+verification tools. whether and how to flatten is still subject to discussion.}
 
-\paragraph{Design details} Each verification tool must register 
-with the \w{VTController} or the controller. The registration 
-involves informing the \w{VTController} about function, and parameters 
-of the specific verification tool. The graphical editor will ask the 
-\w{VTController} for available verification tools. This way the connection
-between the graphical design tool and the verification pipeline
-is as loose as possible while keeping control over the dynamics
-in the process.
-
+\paragraph{Control in a loosely coupled way} An way to implement 
+the verification repository is to have each verification tool register 
+with a controller. The registration involves informing the controller
+about function, and parameters of the specific verification tool. 
+The graphical editor will ask the controller for available 
+verification tools. The verification tools should also provide
+a dialog for entering the parameters. This way the connection between 
+the graphical design tool and the verification pipeline is as loose 
+as possible while keeping control over the dynamics in the process.
 
 
 \section{Component repository}
 
-\section{Layer architecture}
-
-\section{Plugin communication}
-
-\section{Primitive toolkit communication}
-
-\section{Toolkit repository}
+\todo[inline]{We need a (non-programmatic) way of defining new components, whether 
+primitive or composite.}
 
 \section{Model repository}
+
+\todo[inline]{Some way of storing models.}
