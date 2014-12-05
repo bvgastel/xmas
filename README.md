@@ -7,17 +7,16 @@ It uses the language Intel detailed in papers concerning xmas
 TODO: add details of these papers.
 
 
-Contents
-========
+Directories (Contents)
+======================
 
 - minutes			The minutes, only the TeX sources.
 - preparation	 	Files used during preparation plus plan
 - xmas-info			Information on xmas (pdf)
 - design			The directory containing design documents
 
-
-Use
-===
+Use of Git
+==========
 
 We use git for communication with the following use cases
 
@@ -119,4 +118,14 @@ fltk-1.3.3
 
 We will update this whenever this changes. The following change will probably be the
 boost library.
+
+Tips
+====
+
+- When using Code::Blocks be sure to increment the option "number of processes"
+  from Settings ... Compiler .... and the tab build options (usually not visible
+  directly, you have to scroll toward it using the arrow).
+
+- Set the warnings in GCC to Wall, and use the extra warnings in Settings ... Compiler ...
+
 
