@@ -122,10 +122,22 @@ boost library.
 Tips
 ====
 
+- Set the warnings in GCC to Wall, and use the extra warnings in Settings ... Compiler ...
+
 - When using Code::Blocks be sure to increment the option "number of processes"
   from Settings ... Compiler .... and the tab build options (usually not visible
   directly, you have to scroll toward it using the arrow).
 
-- Set the warnings in GCC to Wall, and use the extra warnings in Settings ... Compiler ...
+- Switch the hmtl logging for building on (Settings ... Compiler ... build option tab).
 
+- Use the tool configuration option (Tools ... Configure Tools ...). It starts
+  a dialog where you can add any tool you have on your system and use standard
+  macro's to denote directory name, filename etcetera. As an example we use
+  "git diff HEAD ${ACTIVE\_EDITOR\_FILENAME}" with the standard option "Launch
+  tool in a new console windows and wait for a keypress when done".
 
+  This will show the exact output including colouring that we would get
+  using the console.
+
+  I also use "gitk" without parameters and with the option "Launch tool visible (without output redirection)".
+  This will start the graphical output for gitk.
