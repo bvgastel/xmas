@@ -350,6 +350,7 @@ access information produced by other tools.\\
 With regards to the integration with the design tool, two choices are available.
 \begin{enumerate}
  \item The design tool could be integrated completely with the verification module.
+ \emph{(in-process)}
  \begin{itemize}
   \item Not only the verification tools but also the design tool become part of a single
   application. Both the design tool and the verification modules operate on the same
@@ -357,7 +358,7 @@ With regards to the integration with the design tool, two choices are available.
  \end{itemize}
 
  \item The design tool and the verification tools are implemented as two separate
- programs.
+ programs. \emph{(out-of-process)}
  \begin{itemize}
   \item The design tool launches the verification tools as a new process. Inter-process
   communication mechanisms are used for communication between the two programs.
@@ -506,7 +507,7 @@ format as above. Another implementation could directly access the data structure
 passed, e.g. the XMASComponent of the info operation in the example. In this case,
 the design tool doesn't have to parse the character stream and lookup the component.
 The design tool and the verification modules must share the same address space for
-this method to work correctly though.
+the latter implementation to work correctly though.
 
 
 \paragraph{Let design tool read extensions defined by modules}
@@ -542,7 +543,84 @@ restriction apply.
 
 \section{Recommendations}
 
-TODO
+Several options are available to integrate the design tool and the verification
+modules. The recommendations in this section are based on two important use cases:
+\begin{enumerate}
+ \item the application will be used to design and verify xMAS networks
+ \item the design tool will be used to develop and debug verification tools
+\end{enumerate}
+
+The use cases lead to different requirements. In order to support the first use case,
+efficiency of the application is an important aspect. The design tool is an interactive
+application and should be responsive. When verifying large networks, large amount of
+memory and processing time can be consumed.\\
+During development of the verification tools, efficiency is of less concern. Mainly
+small networks are used to debug the tools. More important is the ability to support
+an efficient 'edit-compile-run-debug' cycle. The source code of the verification
+modules will frequently change. After a change has been made, the effort required to
+test the new code should be kept at a minimum.
+
+\paragraph{Tool Architecture}
+Both architecture types discussed in section \ref{sec:tool-architecture}, in-process
+and out-of-process, can be used to implement the two use cases. An in-process architecture
+leads to more efficient communication between design tool and verification modules.
+As such, the first use case would suggest to take this approach. As an additional
+benefit, this approach is easier to implement.\\
+However, an out-of-process might be better suited to support the second use case.
+After a change has been made to a tool, only the source code related to the verification
+tools has to be recompiled, reducing the time spent in the compile phase of the
+'edit-compile-run-debug' cycle. Furthermore, the design tool doesn't even have to
+be restarted to test the changes.\\
+An other reason to opt for the out-of-process architecture is the ability to execute
+the verification tools on an other, maybe more powerful, system.
+
+\paragraph{}
+Both architecture types have advantages and disadvantages. The relative importance
+of the two use cases can be the decisive factor when choosing between them. Since
+the intended use and target audience of the tool may change over time, it is
+recommended to consider the possibility to change the architecture in the future.
+Therefore, solutions that are only viable in both architecture types are preferred.
+
+
+\paragraph{Communication}
+Of the four communication methods described above, only the first two can easily be
+used in an out-of-process architecture. The third and fourth both use extensions
+and this requires either a shared address space between design and verification 
+tools or an (platform specific) inter-process memory sharing technique. Although
+the detailed information available in the extensions is an advantage of these methods,
+simple text messages to describe the feedback are thought to provide enough information.
+In most cases, the code required to 'push' feedback from the verification modules
+is already in place which further reduces the advantages of the third method.
+
+\paragraph{}
+The first two methods are both good candidates. The second method has a few advantages,
+especially when using an in-process architecture. Feedback can be passed more efficient,
+due to the direct access to the components and ports. This is not very important though
+as the feedback interface is very low traffic and data structures like hash maps allow
+efficient lookup of the network objects by id. However, since the second method is capable
+of producing the same output as the first method and furthermore guarantees a consistent
+data format output across all modules, the second method is recommended.
+
+\paragraph{Composite objects}
+The best way to deal with composite objects is not clear yet. Ideally, the verification
+modules will be adapted to handle composite objects. This prevents any communication
+issues that may arise due to the different network representations of the design tool
+and verification modules. Modifying the verification modules might prove to be too
+laborious. In this case, the network must first be flattened. Implicitly using the
+second approach, or explicitly using the third approach.\\
+The second approach is the technically more interesting approach and has the advantage
+of a lower memory footprint. However, the simpler third approach is the safer option
+and therefore recommended.
+
+
+\paragraph{}
+As a final note, if the design tool will be programmed in a language other than
+C++, few options remain. Only an out-of-process architecture is possible. Code
+written to create the verification modules can not be reused, although, of course,
+the same classes and design patterns could be employed in most other languages.
+The best option to establish the communication is through a character stream as
+virtually all platforms and programming languages support this form of
+communication.
 
 
 
