@@ -1,0 +1,47 @@
+\section{Language guidelines}
+
+\subsection{C++ construct preferences}
+
+Our coding strives to use the best of C++ 2011 and to
+avoid coding that may be error prone. Sometimes a construct like
+
+\begin{verbatim}using typename = std::vector<std::string>\end{verbatim}
+
+\noindent should enhance readability provided the \verb%typename% chosen
+makes sense in the context. Table \ref{tab:coding-preferences} lists the
+current coding preferences.
+
+\begin{center}
+	\begin{tabular}{|p{10em}|p{10em}|p{10em}|}
+	\hline
+	{\bf Prefer} & {\bf Avoid} & {\bf Comment}\\\hline
+	shared\_ptr, unique\_ptr & pointer & \\
+	weak\_ptr & & with specific reason\\
+	make\_shared() & new, delete & \\ 
+	\hline
+	\end{tabular}
+	\captionof{table}{Preferences in coding guidelines}
+	\label{tab:coding-preferences}
+\end{center}
+
+\paragraph{Memory management}
+Using smart pointers avoids many of the pointer pitfalls causing
+memory leaks to occur that might go undetected. When creating
+dynamic memory preferring \verb%make_ptr% leads to code that 
+avoids mixing the old paradigm (\verb%new% and \verb%delete%) with
+the new. 
+
+\paragraph{weak\_ptr} 
+A \verb%weak_ptr% we use only with a 
+specific motivation because it requires extra work to make sure 
+that we are referencing an existing smart pointer i.e. it has 
+not been deleted yet.
+
+\paragraph{allocator}
+In most situations the library versions of \verb%vector%, 
+\verb%list% and \verb%string% should suffice and be performant
+enough for our goals. In case explicit memory management is 
+necessary we could use the library class \verb%allocator%. This
+ensures efficient allocation and deallocation of memory with
+knowledge of type information and separating allocation and
+construction of memory.
