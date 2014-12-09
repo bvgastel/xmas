@@ -15,7 +15,14 @@ and %ProgramFiles% on a 32bit system.
 	- Start the downloaded exe
 
 CodeBlocks is now installed in %ProgramFiles%.
-	
+
+### Setup CodeBlocks
+ - Open *Settings* menu
+ - Choose *Compiler...*
+ - Select *Compiler Settings* tab
+ - Select *Compiler flags* tab
+ - Check *Have g++ follow the C++11 ISO C++ language standard*
+ - Check *Enable effective C++ warnings*
 
 ### Setup CodeBlocks for FLTK
 
