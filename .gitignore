@@ -2,6 +2,7 @@
 *.swp
 *.backup
 build
+modules/xmas-vt
 
 # Compiled Object files
 *.slo
