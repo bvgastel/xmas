@@ -325,6 +325,42 @@ At the same time, the priniciple dictates that new features can still be added t
 
 \section{Combinatoric Cycle Checker}
 
+\paragraph{}
+The semantics of an xMAS network can be expressed using the concepts of a combinatorial part and
+a sequential part\cite{analyse-tool-11}. The primitives can be divided into two categories.
+Sources, sinkes and queues are known as sequential primitives. The other five: function,
+fork, join, switch and merge are combinatorial primitives.\\
+Each clock tick a source can generate a packet, a sink can destroy one and a queue can accept
+and/or release a packet; all as long as the necessary conditions hold. The clock ensures
+all sequential primitives are updated at the same time.\\
+The combinatorial objects' task is to route the packets from one sequential primitive to another.
+Of course, the time required to perform this routing depends on the amount and types of
+combinatorial objects along the path from source to destination. But, as far as the simulation of
+the network is concerned, the entire routing occurs during a single clock cycle.\\
+
+One important aspect of an xMAS design is the absence of combinatoric cycles. That is, an xMAS
+network should not contain cycles in the graph consisting of only combinatorial objects.
+Would this be the case, a packet entering the combinatoric cycle could revolve endlessly in
+this loop. The packet would never arrive at its destination and the simulation could not
+complete the clock cycle.
+
+\paragraph{}
+The Combinatoric Cycle Checker is created to detect these cycles in an xMAS network. It uses an
+algorithm based on a standard graph traversal algorithm to detect cycles. Starting at a random
+component, the algorithm executes a depth-first traversal along all channels connected to the
+component. During the traversal, each visited component (including the starting component) is
+marked. Whenever an already marked component is encountered during the traversal, the algorithm
+knows it has detected a cycle.\\
+If a non-combinatorial object is found on a path, a combinatorial cycle can not exist on this
+path and the algorithm continues its traversal on an other path. When all possible paths from
+a component yield no combinatorial cycle, the component is marked as checked. The Cycle Checker
+has completed when all components are marked as checked.
+
+\paragraph{}
+
+
+
+
 TODO: Explain what the cycle checker does and how the extensions and Visitor pattern are applied.
 
 
@@ -571,7 +607,7 @@ After a change has been made to a tool, only the source code related to the veri
 tools has to be recompiled, reducing the time spent in the compile phase of the
 'edit-compile-run-debug' cycle. Furthermore, the design tool doesn't even have to
 be restarted to test the changes.\\
-An other reason to opt for the out-of-process architecture is the ability to execute
+Another reason to opt for the out-of-process architecture is the ability to execute
 the verification tools on an other, maybe more powerful, system.
 
 \paragraph{}
@@ -635,34 +671,34 @@ communication.
 
 \bibitem{chatterjee10}
   Chatterjee, Kishinevsky, Ogras,
-  \emph{Quick Formal Modeling of Communication Fabrics to Enable Verification}
+  \emph{Quick Formal Modeling of Communication Fabrics to Enable Verification},
   2010
   
 \bibitem{xmas}
   Chatterjee, Kishinevsky, Ogras,
-  \emph{xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification}.
+  \emph{xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification},
   2012
   
 \bibitem{13_toolxmas}
   Joosten, Verbeek, Schmaltz,
-  \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics}.
+  \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics},
   2012
   
   
 \bibitem{linkedlist}
-  \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage}.
+  \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage},
   november 2014
   
 \bibitem{wiki-visitor-pattern}
-  \emph{https://en.wikipedia.org/wiki/Visitor\_pattern}.
+  \emph{https://en.wikipedia.org/wiki/Visitor\_pattern},
   november 2014
 
 \bibitem{oodesign-visitor-pattern}
-  \emph{http://www.oodesign.com/visitor-pattern.html}.
+  \emph{http://www.oodesign.com/visitor-pattern.html},
   november 2014
   
 \bibitem{oodesign-open-close}
-  \emph{http://www.oodesign.com/open-close-principle.html}.
+  \emph{http://www.oodesign.com/open-close-principle.html},
   november 2014
   
 \bibitem{stroustrup}
@@ -670,6 +706,11 @@ communication.
   \emph{The C++ Programming Language}.
   Fourth edition,
   2013
+  
+\bibitem{analyse-tool-11}
+  \emph{Inference of channel types in micro-architectural models of on-chip communication networks},
+  2014
+
   
   
   
