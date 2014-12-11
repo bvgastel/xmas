@@ -10,7 +10,7 @@ Detailed information van be found at [Boost Compiler Choice] and [Boost getting 
   - A directory to store C++ tools e.g. *"c:\cpptools"*
 
 ### Build Boost libraries
-Most libraries in boost are header only and do not need to be build. (see [Boost getting started for Windows])
+Most libraries in boost are header only and do not need to be built. (see [Boost getting started for Windows])
 
 (replace * with the version postfix)
 
