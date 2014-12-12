@@ -47,29 +47,8 @@ knowledge of type information and separating allocation and
 construction of memory.
 
 \paragraph{Coding style}
-We adopt the coding style used by the verification tools.
-\begin{itemize}
- \item C-style type specifiers (Type \&x) instead of (Type\&  x)
- \todo[inline]{JK: Not my preference, but that's what the verification tools use}
- \item mixed camelCase member names
- \item capital CamelCase type names
- \item indentation: 4 spaces (no tabs)
- \item opening braces on the same line
- \item don't introduce \{\} blocks for single statements
- \begin{center}
-  \begin{tabular}{|p{10em}|p{10em}|}
-  \hline
-  {\bf Prefer} & {\bf Avoid} \\\hline
-\begin{verbatim}
-if (x)
-    foo();
-\end{verbatim} &
-\begin{verbatim}
-if (x) {
-    foo();
-}
-\end{verbatim} \\\hline
-  \end{tabular}
- \end{center}
-\end{itemize}
+
+The file \verb%CODING-STYLE% in the root of the git tree contains
+the coding style we adhere to. 
+
 
