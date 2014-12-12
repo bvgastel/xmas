@@ -1,10 +1,14 @@
-XMAS
-====
+XMAS DESIGN TOOL
+================
 
 This project is a design tool for NoC system (Network on Chip).
 It uses the language Intel detailed in papers concerning xmas 
 
 TODO: add details of these papers.
+
+To generate the PDF version of this document use the command:
+
+pandoc -f markdown -o readme.pdf readme.md
 
 
 Directories (Contents)
