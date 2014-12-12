@@ -58,7 +58,7 @@ other choice of programming language.
 \section{The WickedXmas tool}
 
 
-Before exploring the internals of the source code we shall, however, first provide an overview
+Before exploring the internals of the source code we shall first provide an overview
 of the current WickedXmas tool. Specifically, we will briefly highlight the steps involved in
 executing the verification modules.
 
@@ -76,7 +76,7 @@ a flat list consisting solely of xMAS primitives and the channels connecting the
 flat json file is then parsed and transformed into C++ source code. The generated source code files are
 used along with C++ code written for the specific task to create several executables. In Figure
 \ref{fig:wickedxmas-arch} the Simulate, Invariant Generation and Deadlock Detection verification modules
-are shown. The modules are run sequentially, results from a module serve as input for modules further down
+are shown. The executables must be run in a fixed order; results from a module can serve as input for modules further down
 the pipeline. For instance, the Simulator runs a simulation on the network and yields information on the
 types of packets each component in the network is able to accept and generate. The Invariant Generation
 uses this information to deduce invariants that hold for the given network. Finally, the Deadlock Detection
@@ -356,12 +356,26 @@ path and the algorithm continues its traversal on an other path. When all possib
 a component yield no combinatorial cycle, the component is marked as checked. The Cycle Checker
 has completed when all components are marked as checked.
 
+\paragraph{Implementation}
+The Combinatoric Cycle Checker is implemented using an extension class, a component visitor
+and several functions to drive the checker. Class CombinatorialCyclePortExtension is, as
+the name already suggests, a PortExtension. It holds two boolean attributes: \emph{checking} to
+indicate whether the algorithm is currently traversing this port and \emph{checked} to indicate
+whether this port has already been checked.\\
+CombinatorialCycleDependencies is an implementation of the XMASComponentVisitor interface.
+The constructor takes a pointer to the Port object that was used to reach the component
+currently being visited. Attribute \emph{p} is initialized with this value. A second attribute,
+\emph{retval}, is an initially empty vector of ports. The various visit member functions will
+fill this vector with the ports that the algorithm should use to continue the traversal. Visits
+to the sequential primitives will leave this vector empty. When a combinatorial primitive is
+visited, all ports other than the current port \emph{p} are added to the vector.
+
 \paragraph{}
-
-
-
-
-TODO: Explain what the cycle checker does and how the extensions and Visitor pattern are applied.
+Inside function checkSignal() the actual algorithm is executed. It is here where the PortExtension
+is created and the \emph{checking} and \emph{checked} values are set. Also the visitor class
+is instantiated and used to visit the component. Depending on the contents of attribute
+\emph{retval}, the algorithm recursively continues its traversal. The Cycle Checker is started
+by calling CombinatorialCycleDetector and passing the set of all components.
 
 
 \section{Integration of Verification Tools}
@@ -401,7 +415,7 @@ With regards to the integration with the design tool, two choices are available.
   \item Both software components have their own representation of an xMAS network. The
   design tool can not directly access the data structures of the verification tools.
   However, the design tool can reuse source code, like the classes used by the verification
-  tools (XMASComponent and Port). (See also section~\ref{sec:extensions-visitor-design-tool})
+  tools (XMASComponent, Port, etc.). (See also section~\ref{sec:extensions-visitor-design-tool})
  \end{itemize}
  
 \end{enumerate}
@@ -633,7 +647,7 @@ The first two methods are both good candidates. The second method has a few adva
 especially when using an in-process architecture. Feedback can be passed more efficient,
 due to the direct access to the components and ports. This is not very important though
 as the feedback interface is very low traffic and data structures like hash maps allow
-efficient lookup of the network objects by id. However, since the second method is capable
+efficient lookup of the xMAS objects by id. However, since the second method is capable
 of producing the same output as the first method and furthermore guarantees a consistent
 data format output across all modules, the second method is recommended.
 
