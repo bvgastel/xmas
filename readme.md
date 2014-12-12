@@ -15,6 +15,26 @@ Directories (Contents)
 - xmas-info			Information on xmas (pdf)
 - design			The directory containing design documents
 
+License
+=======
+
+The xmas-design tool is free software. It is copyrighted by
+the original authors and anyone contributing later on. The
+user license is GPL version 3 or later (at your option).
+
+The file LICENSE-TEMPLATE contains the incantation the should
+precede the code in every source file. The file COPYING contains
+the text of the GPL version 3. 
+
+If the COPYING file is not present you can download it from
+the site of the Free Software Foundation at http://fsf.org.
+
+A short overview of the dependencies between some of the 
+other licenses with GPL version 3 is represented
+in the image below.
+
+![GPL dependencies in short](quick-guide-gplv3-compatibility.png)
+
 Use of Git
 ==========
 
