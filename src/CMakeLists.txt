@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
-project(hello)
+project(xmas)
 
 # the following line is required only if you don't install FLTK
 # or if find_package can't find your installation directory
@@ -11,7 +11,7 @@ set(FLTK_DIR /path/to/fltk)
 find_package(FLTK REQUIRED NO_MODULE)
 include(${FLTK_USE_FILE})
 
-add_executable(hello WIN32 hello.cpp)
+add_executable(xmas WIN32 xmas.cpp)
 
-target_link_libraries(hello fltk)
+target_link_libraries(xmas fltk)
 
