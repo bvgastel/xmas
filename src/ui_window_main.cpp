@@ -25,8 +25,8 @@ MainWindow::MainWindow(int width, int height, char* title) : Fl_Window(width, he
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0,0,this->w(),MENU_BAR_HEIGHT);
         menu->add("&File/&Open", FL_ALT+'o', open_callback,0,FL_MENU_DIVIDER);
         menu->add("&File/E&xit", FL_ALT+FL_F+4, exit_callback,0,0);
-        Fl_Group *grp = new Fl_Group(0,MENU_BAR_HEIGHT,this->w(),this->h()-MENU_BAR_HEIGHT);  // Make a group a child of the window
-        grp->end(); // end the group
+        Fl_Group *grp = new Fl_Group(0,MENU_BAR_HEIGHT,this->w(),this->h()-MENU_BAR_HEIGHT);
+        grp->end();
     end();
     resizable(grp);
     show();
