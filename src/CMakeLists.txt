@@ -8,6 +8,7 @@ project(xmas)
 # not the library folder.
 #set(FLTK_DIR /path/to/fltk)
 
+
 find_package(FLTK REQUIRED)
 include_directories(include ${FLTK_INCLUDE_SEARCH_PATH})
 
@@ -16,5 +17,8 @@ set(XMAS_SRC_FILES main.cpp
 )
 
 add_executable(xmas ${XMAS_SRC_FILES})
+
+set_property(TARGET xmas PROPERTY CXX_STANDARD 11)
+set_property(TARGET xmas PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_link_libraries(xmas ${FLTK_LIBRARIES})

@@ -17,9 +17,9 @@
 
 #include "ui_window_main.h"
 
-#define MENU_BAR_HEIGHT 30
+constexpr int MENU_BAR_HEIGHT {30};     // test C++11 constexpr feature
 
-MainWindow::MainWindow(int width, int height, char* title) : Fl_Window(width, height, title)
+MainWindow::MainWindow(int width, int height, const char* title) : Fl_Window(width, height, title)
 {
     begin();
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0,0,this->w(),MENU_BAR_HEIGHT);
