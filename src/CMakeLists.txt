@@ -6,12 +6,15 @@ project(xmas)
 # or if find_package can't find your installation directory
 # it points to the build directory or the base folder,
 # not the library folder.
-set(FLTK_DIR /path/to/fltk)
+#set(FLTK_DIR /path/to/fltk)
 
-find_package(FLTK REQUIRED NO_MODULE)
-include(${FLTK_USE_FILE})
+find_package(FLTK REQUIRED)
+include_directories(include ${FLTK_INCLUDE_SEARCH_PATH})
 
-add_executable(xmas WIN32 xmas.cpp)
+set(XMAS_SRC_FILES main.cpp
+                   ui_window_main.cpp
+)
 
-target_link_libraries(xmas fltk)
+add_executable(xmas ${XMAS_SRC_FILES})
 
+target_link_libraries(xmas ${FLTK_LIBRARIES})

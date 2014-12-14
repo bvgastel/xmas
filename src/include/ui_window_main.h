@@ -12,7 +12,7 @@
 class MainWindow : public Fl_Window
 {
     public:
-        MainWindow(int width, int height, char* title);
+        MainWindow(int width, int height, const char* title);
         virtual ~MainWindow();
     protected:
         static void open_callback(Fl_Widget*, void* v);

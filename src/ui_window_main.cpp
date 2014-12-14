@@ -17,7 +17,7 @@
 
 #include "ui_window_main.h"
 
-MainWindow::MainWindow(int width, int height, char* title) : Fl_Window(width, height, title)
+MainWindow::MainWindow(int width, int height, const char* title) : Fl_Window(width, height, title)
 {
     begin();
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0,0,this->w(),25);
