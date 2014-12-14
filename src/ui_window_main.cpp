@@ -17,16 +17,19 @@
 
 #include "ui_window_main.h"
 
+#define MENU_BAR_HEIGHT 30
+
 MainWindow::MainWindow(int width, int height, char* title) : Fl_Window(width, height, title)
 {
     begin();
-        Fl_Menu_Bar *menu = new Fl_Menu_Bar(0,0,this->w(),25);
+        Fl_Menu_Bar *menu = new Fl_Menu_Bar(0,0,this->w(),MENU_BAR_HEIGHT);
         menu->add("&File/&Open", FL_ALT+'o', open_callback,0,FL_MENU_DIVIDER);
         menu->add("&File/E&xit", FL_ALT+FL_F+4, exit_callback,0,0);
+        Fl_Group *grp = new Fl_Group(0,MENU_BAR_HEIGHT,this->w(),this->h()-MENU_BAR_HEIGHT);  // Make a group a child of the window
+        grp->end(); // end the group
     end();
-    resizable(this);
+    resizable(grp);
     show();
-
 }
 
 MainWindow::~MainWindow()
@@ -34,7 +37,7 @@ MainWindow::~MainWindow()
 }
 
 /*
-*   Handles the open event
+   Handles the open event
 */
 void MainWindow::open_callback(Fl_Widget*, void* v) {
   char *newfile;
@@ -45,7 +48,7 @@ void MainWindow::open_callback(Fl_Widget*, void* v) {
 }
 
 /*
-*   Handles the exit event
+   Handles the exit event
 */
 void MainWindow::exit_callback(Fl_Widget*, void* v) {
   exit(0);
