@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1416864608 source:/home/gbonnema/Documents/10-studie-ou/T61327-ABI-Afstudeerproject-Bachelor-Informatica/xmas/src/xmas/hello.cpp
-	<FL/Fl.H>
-	<FL/Fl_Window.H>
-	<FL/Fl_Box.H>
-
