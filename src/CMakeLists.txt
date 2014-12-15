@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(xmas)
 
+include(CTest)
 # the following line is required only if you don't install FLTK
 # or if find_package can't find your installation directory
 # it points to the build directory or the base folder,
