@@ -146,3 +146,41 @@ sympy-plots-for-*.tex/
 *.db
 *.vsd
 *.save
+
+###################################
+# Qt.gitignore
+###################################
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+# Qt-es
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*-build-*
+# QtCreator
+*.autosave
+#QtCtreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+#########################################
+# cmake.gitignore
+#########################################
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
