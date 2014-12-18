@@ -1,5 +1,24 @@
 # Unit test tools for GUI
 
+## Modification history
+
+
+* 18-12-2014 Guus Bonnema: added history, problem definition and conclusion
+* 15-12-2014 Stefan Versluys: created GUI testtool comment
+
+## Problem definition
+
+We need to have regression unit testing in order to be able to do
+refactoring during development. We check testing libraries for C++
+for both GUI and non-GUI.
+
+## Conclusion
+
+Only `Qt` has feasible GUI facilities which we will use if appropriate.
+We can use `Qt` for non-GUI as well.
+
+## Detail research
+
 GUI test tools are very specific, in many cases they only
 support one platform and aiming to test a specific type of
 GUI language  such as java, wpf, web...
