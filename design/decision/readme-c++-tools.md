@@ -1,11 +1,26 @@
 # Useful C++ Software libraries
 
+## Modification history
+
+* 18-12-2014 Guus Bonnema: adding problem definition, history and conclusion (summary).
+* 03-12-2014 Stefan Versluys: document creation and subsequent modification
+
+## Problem definition 
+
+We need to know what libraries to use next to the user interface ~~FLTK~~ `Qt`.
 This is a comparison of tools that can be used for the project.
-The GUI libraries are FLTK.
-The product is a standalone application and data is currently JSON structured.
+
+The product is a standalone application and data is currently `JSON` structured.
 The main properties that this application will need are multi threading or
 processing, inter process communication, serialization, regular expressions,
 streaming, exception handling.
+
+## Conclusion
+
+The package `Boost` is the recommended set of libraries to use for features our
+user interface does not provide. See final conclusion at the end of this readme.
+
+## Comparison of libraries that could be used.
 
   - [POCO C++]
   - [NCBI]
@@ -36,7 +51,7 @@ multi threading. Boost also includes a basic JSON parser, IPC and much more.
 >Many simple tryout examples and good documentation.
 
 ### Protocol Buffers
-Google's Protocol Buffers are used for serializing structured data based on RPC.
+Google''s Protocol Buffers are used for serializing structured data based on RPC.
 The structure or message is described by a interface design language (IDL).
 Its main goal is communication over wire and store data in a binary form.
 
