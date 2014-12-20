@@ -42,6 +42,38 @@ in the image below.
 Use of Git
 ==========
 
+Configuring Git
+
+We are developing in a heterogeneous environment with both Unix and Windows
+machines. Therefore it is imperative to have all files in the repository in the
+canonical LF-only format. Therefore, Windows users must run
+
+~~~~~~~~~~~~~~~~~~
+$ git config --global core.autocrlf true
+~~~~~~~~~~~~~~~~~~
+
+to automatically get CRLF line endings which are suitable for the native tools,
+and Unix users should use
+
+~~~~~~~~~~~~~~~~~~
+$ git config --global core.autocrlf input
+~~~~~~~~~~~~~~~~~~
+
+(this is a safety measure for the case where files with CRLF line endings get
+into the file system – this can happen when archives are unpacked, attachments
+saved, etc.).
+
+To be able to create commits which can be pushed to the server, you need to set
+up your committer information correctly:
+
+~~~~~~~~~~~~~~~~~~
+$ git config --global user.name "Your Name"
+$ git config --global user.email "me@example.com"
+~~~~~~~~~~~~~~~~~~
+
+Please do not use nicknames or pseudonyms instead of the real name unless you
+have really good reasons.
+
 We use git for communication with the following use cases
 
 1. New repo
