@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/new.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/save.png</file>
+        <file>images/Composite.png</file>
+        <file>images/Fork.png</file>
+        <file>images/Function.png</file>
+        <file>images/In.png</file>
+        <file>images/Join.png</file>
+        <file>images/Merge.png</file>
+        <file>images/Out.png</file>
+        <file>images/packet.png</file>
+        <file>images/Queue.png</file>
+        <file>images/Sink.png</file>
+        <file>images/Source.png</file>
+        <file>images/Switch.png</file>
+    </qresource>
+</RCC>

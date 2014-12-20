@@ -40,27 +40,26 @@
 
 #include <QtWidgets>
 
-#include "mdichild.h"
+#include "canvasWindow.h"
 
-MdiChild::MdiChild()
+CanvasWindow::CanvasWindow()
 {
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
 }
 
-void MdiChild::newFile()
+void CanvasWindow::newFile()
 {
     static int sequenceNumber = 1;
-
     isUntitled = true;
-    curFile = tr("document%1.wck").arg(sequenceNumber++);
+    curFile = tr("model%1." MODEL_FILE_EXTENSION).arg(sequenceNumber++);
     setWindowTitle(curFile + "[*]");
 
     connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));
 }
 
-bool MdiChild::loadFile(const QString &fileName)
+bool CanvasWindow::loadFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -84,7 +83,7 @@ bool MdiChild::loadFile(const QString &fileName)
     return true;
 }
 
-bool MdiChild::save()
+bool CanvasWindow::save()
 {
     if (isUntitled) {
         return saveAs();
@@ -93,9 +92,9 @@ bool MdiChild::save()
     }
 }
 
-bool MdiChild::saveAs()
+bool CanvasWindow::saveAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Model As"),
                                                     curFile);
     if (fileName.isEmpty())
         return false;
@@ -103,11 +102,11 @@ bool MdiChild::saveAs()
     return saveFile(fileName);
 }
 
-bool MdiChild::saveFile(const QString &fileName)
+bool CanvasWindow::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Test"),
+        QMessageBox::warning(this, tr("Save Model"),
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -123,12 +122,12 @@ bool MdiChild::saveFile(const QString &fileName)
     return true;
 }
 
-QString MdiChild::userFriendlyCurrentFile()
+QString CanvasWindow::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
 }
 
-void MdiChild::closeEvent(QCloseEvent *event)
+void CanvasWindow::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
         event->accept();
@@ -137,12 +136,12 @@ void MdiChild::closeEvent(QCloseEvent *event)
     }
 }
 
-void MdiChild::documentWasModified()
+void CanvasWindow::documentWasModified()
 {
     setWindowModified(document()->isModified());
 }
 
-bool MdiChild::maybeSave()
+bool CanvasWindow::maybeSave()
 {
     if (document()->isModified()) {
         QMessageBox::StandardButton ret;
@@ -160,7 +159,7 @@ bool MdiChild::maybeSave()
     return true;
 }
 
-void MdiChild::setCurrentFile(const QString &fileName)
+void CanvasWindow::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
@@ -169,7 +168,7 @@ void MdiChild::setCurrentFile(const QString &fileName)
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
-QString MdiChild::strippedName(const QString &fullFileName)
+QString CanvasWindow::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }
