@@ -1,16 +1,16 @@
 QT += widgets
 
 HEADERS       = mainWindow.h \
-    canvasWindow.h \
-    _setup.h
+    _setup.h \
+    modelWindow.h
 SOURCES       = main.cpp \
                 mainWindow.cpp \
-    canvasWindow.cpp
-RESOURCES     = \
-    XmasDesigner.qrc
+    modelWindow.cpp
+RESOURCES     = XMD.qrc
+
 
 # install
-target.path = XmasDesigner
+target.path = XMD
 INSTALLS += target
 
 DISTFILES +=

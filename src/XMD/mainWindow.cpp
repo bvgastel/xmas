@@ -41,7 +41,7 @@
 #include <QtWidgets>
 
 #include "mainWindow.h"
-#include "canvasWindow.h"
+#include "modelWindow.h"
 
 MainWindow::MainWindow()
 {
@@ -90,7 +90,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::newFile()
 {
-    CanvasWindow *child = createCanvas();
+    ModelWindow *child = createModel();
     child->newFile();
     child->showMaximized();
     updateMenus();
@@ -101,7 +101,7 @@ void MainWindow::open()
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open"),"",tr("xMAS Files (*.wck)"));
 
     if (!fileName.isEmpty()) {
-        QMdiSubWindow *existing = findCanvas(fileName);
+        QMdiSubWindow *existing = findModel(fileName);
         if (existing) {
             mdiArea->setActiveSubWindow(existing);
             return;
@@ -115,7 +115,7 @@ void MainWindow::open()
 
 bool MainWindow::openFile(const QString &fileName)
 {
-    CanvasWindow *child = createCanvas();
+    ModelWindow *child = createModel();
     const bool succeeded = child->loadFile(fileName);
     if (succeeded){
         setCurrentFile(fileName);
@@ -182,33 +182,33 @@ QString MainWindow::strippedName(const QString &fullFileName)
 
 void MainWindow::save()
 {
-    if (activeCanvas() && activeCanvas()->save())
+    if (activeModel() && activeModel()->save())
         statusBar()->showMessage(tr("Model saved"), 2000);
 }
 
 void MainWindow::saveAs()
 {
-    if (activeCanvas() && activeCanvas()->saveAs())
+    if (activeModel() && activeModel()->saveAs())
         statusBar()->showMessage(tr("Model saved"), 2000);
 }
 
 #ifndef QT_NO_CLIPBOARD
 void MainWindow::cut()
 {
-    if (activeCanvas())
-        activeCanvas()->cut();
+    if (activeModel())
+        activeModel()->cut();
 }
 
 void MainWindow::copy()
 {
-    if (activeCanvas())
-        activeCanvas()->copy();
+    if (activeModel())
+        activeModel()->copy();
 }
 
 void MainWindow::paste()
 {
-    if (activeCanvas())
-        activeCanvas()->paste();
+    if (activeModel())
+        activeModel()->paste();
 }
 #endif
 
@@ -237,37 +237,37 @@ void MainWindow::setPackets()
 
 void MainWindow::updateMenus()
 {
-    bool hasCanvas = (activeCanvas() != 0);
-    saveAct->setEnabled(hasCanvas);
-    saveAsAct->setEnabled(hasCanvas);
-    closeAct->setEnabled(hasCanvas);
-    closeAllAct->setEnabled(hasCanvas);
+    bool hasModel = (activeModel() != 0);
+    saveAct->setEnabled(hasModel);
+    saveAsAct->setEnabled(hasModel);
+    closeAct->setEnabled(hasModel);
+    closeAllAct->setEnabled(hasModel);
 
 #ifndef QT_NO_CLIPBOARD
-    pasteAct->setEnabled(hasCanvas);
+    pasteAct->setEnabled(hasModel);
 #endif
 
 #ifndef QT_NO_CLIPBOARD
-    bool hasSelection = (activeCanvas() &&
-                         activeCanvas()->textCursor().hasSelection());
+    bool hasSelection = (activeModel() &&
+                         activeModel()->textCursor().hasSelection());
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
 #endif
 }
 
-CanvasWindow *MainWindow::createCanvas()
+ModelWindow *MainWindow::createModel()
 {
-    CanvasWindow *canvas = new CanvasWindow;
-    mdiArea->addSubWindow(canvas);
+    ModelWindow *model = new ModelWindow;
+    mdiArea->addSubWindow(model);
 
 #ifndef QT_NO_CLIPBOARD
-    connect(canvas, SIGNAL(copyAvailable(bool)),
+    connect(model, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
-    connect(canvas, SIGNAL(copyAvailable(bool)),
+    connect(model, SIGNAL(copyAvailable(bool)),
             copyAct, SLOT(setEnabled(bool)));
 #endif
 
-    return canvas;
+    return model;
 }
 
 void MainWindow::createActions()
@@ -486,26 +486,26 @@ void MainWindow::writeSettings()
     settings.endGroup();
 }
 
-CanvasWindow *MainWindow::activeCanvas()
+ModelWindow *MainWindow::activeModel()
 {
-    if (QMdiSubWindow *canvas = mdiArea->activeSubWindow())
-        return qobject_cast<CanvasWindow *>(canvas->widget());
+    if (QMdiSubWindow *model = mdiArea->activeSubWindow())
+        return qobject_cast<ModelWindow *>(model->widget());
     return 0;
 }
 
-QMdiSubWindow *MainWindow::findCanvas(const QString &fileName)
+QMdiSubWindow *MainWindow::findModel(const QString &fileName)
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
-    foreach (QMdiSubWindow *canvas, mdiArea->subWindowList()) {
-        CanvasWindow *thiscanvas = qobject_cast<CanvasWindow *>(canvas->widget());
-        if (thiscanvas->currentFile() == canonicalFilePath)
-            return canvas;
+    foreach (QMdiSubWindow *model, mdiArea->subWindowList()) {
+        ModelWindow *thismodel = qobject_cast<ModelWindow *>(model->widget());
+        if (thismodel->currentFile() == canonicalFilePath)
+            return model;
     }
     return 0;
 }
 
-void MainWindow::setCanvasWindow(QWidget *window)
+void MainWindow::setModelWindow(QWidget *window)
 {
     if (!window)
         return;

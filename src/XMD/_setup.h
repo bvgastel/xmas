@@ -3,7 +3,7 @@
 
 
 
-#define TOOL_NAME                   "XmasDesigner 2015"
+#define TOOL_NAME                   "XMAS Model Designer 2015"
 #define TOOL_VERSION                "0.1.0"
 
 
@@ -12,9 +12,9 @@
 #define FJSON_FILE_EXTENSION        "fjson"
 
 
-#define MODEL_FILE_EXTENSION        "xdm"
-#define PROJECT_FILE_EXTENSION      "xdp"
-#define COMPONENT_FILE_EXTENSION    "xdc"
+#define MODEL_FILE_EXTENSION        "xmdm"
+#define PROJECT_FILE_EXTENSION      "xmdp"
+#define COMPONENT_FILE_EXTENSION    "xmdc"
 
 #define MAXIMUM_RECENT_FILES        5
 

@@ -38,44 +38,108 @@
 **
 ****************************************************************************/
 
-#ifndef CANVASWINDOW_H
-#define CANVASWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <QTextEdit>
+#include <QMainWindow>
 #include "_setup.h"
 
 
-class CanvasWindow : public QTextEdit
+QT_BEGIN_NAMESPACE
+class ModelWindow;
+class QAction;
+class QMenu;
+class QMdiArea;
+class QMdiSubWindow;
+class QSignalMapper;
+class QDockWidget;
+class QListWidget;
+class QTreeWidget;
+QT_END_NAMESPACE
+
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    CanvasWindow();
-
-    void newFile();
-    bool loadFile(const QString &fileName);
-    bool save();
-    bool saveAs();
-    bool saveFile(const QString &fileName);
-    QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
+    MainWindow();
+    bool openFile(const QString &fileName);
 
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
-signals:
-
-
 private slots:
-    void documentWasModified();
+    void newFile();
+    void open();
+    void openRecentFile();
+    void save();
+    void saveAs();
+#ifndef QT_NO_CLIPBOARD
+    void cut();
+    void copy();
+    void paste();
+#endif
+    void addPrimitive();
+    void addComposite();
+    void setPackets();
+    void about();
+    void updateMenus();
+    ModelWindow *createModel();
+    void setModelWindow(QWidget *window);
 
 private:
-    bool maybeSave();
+    void createActions();
+    void createMenus();
+    void createToolBars();
+    void createStatusBar();
+    void readSettings();
+    void writeSettings();
+    void createDockWindows();
     void setCurrentFile(const QString &fileName);
+    void updateRecentFileActions();
     QString strippedName(const QString &fullFileName);
-
     QString curFile;
-    bool isUntitled;
+    ModelWindow *activeModel();
+    QMdiSubWindow *findModel(const QString &fileName);
+    QMdiArea *mdiArea;
+    QSignalMapper *windowMapper;
+    QListWidget *outputList;
+    QTreeWidget *projectTree;
+    QMenu *fileMenu;
+    QMenu *editMenu;
+    QMenu *viewMenu;
+    QMenu *helpMenu;
+    QToolBar *fileToolBar;
+    QToolBar *editToolBar;
+    QToolBar *shapeToolBar;
+    //QToolBar *packetToolBar;
+    QAction *newAct;
+    QAction *openAct;
+    QAction *saveAct;
+    QAction *saveAsAct;
+    QAction *closeAct;
+    QAction *closeAllAct;
+    QAction *exitAct;
+#ifndef QT_NO_CLIPBOARD
+    QAction *cutAct;
+    QAction *copyAct;
+    QAction *pasteAct;
+#endif
+    QAction *queueAct;
+    QAction *functionAct;
+    QAction *forkAct;
+    QAction *joinAct;
+    QAction *switchAct;
+    QAction *mergeAct;
+    QAction *sinkAct;
+    QAction *sourceAct;
+    QAction *compositeAct;
+    QAction *inputAct;
+    QAction *outputAct;
+    QAction *packetAct;
+    QAction *aboutAct;
+    QAction *recentFileActs[MAXIMUM_RECENT_FILES];
+    QAction *recentSeparatorAct;
 };
 
 #endif

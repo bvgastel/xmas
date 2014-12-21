@@ -40,15 +40,15 @@
 
 #include <QtWidgets>
 
-#include "canvasWindow.h"
+#include "modelWindow.h"
 
-CanvasWindow::CanvasWindow()
+ModelWindow::ModelWindow()
 {
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
 }
 
-void CanvasWindow::newFile()
+void ModelWindow::newFile()
 {
     static int sequenceNumber = 1;
     isUntitled = true;
@@ -59,7 +59,7 @@ void CanvasWindow::newFile()
             this, SLOT(documentWasModified()));
 }
 
-bool CanvasWindow::loadFile(const QString &fileName)
+bool ModelWindow::loadFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -83,7 +83,7 @@ bool CanvasWindow::loadFile(const QString &fileName)
     return true;
 }
 
-bool CanvasWindow::save()
+bool ModelWindow::save()
 {
     if (isUntitled) {
         return saveAs();
@@ -92,7 +92,7 @@ bool CanvasWindow::save()
     }
 }
 
-bool CanvasWindow::saveAs()
+bool ModelWindow::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Model As"),
                                                     curFile);
@@ -102,7 +102,7 @@ bool CanvasWindow::saveAs()
     return saveFile(fileName);
 }
 
-bool CanvasWindow::saveFile(const QString &fileName)
+bool ModelWindow::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -122,12 +122,12 @@ bool CanvasWindow::saveFile(const QString &fileName)
     return true;
 }
 
-QString CanvasWindow::userFriendlyCurrentFile()
+QString ModelWindow::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
 }
 
-void CanvasWindow::closeEvent(QCloseEvent *event)
+void ModelWindow::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
         event->accept();
@@ -136,12 +136,12 @@ void CanvasWindow::closeEvent(QCloseEvent *event)
     }
 }
 
-void CanvasWindow::documentWasModified()
+void ModelWindow::documentWasModified()
 {
     setWindowModified(document()->isModified());
 }
 
-bool CanvasWindow::maybeSave()
+bool ModelWindow::maybeSave()
 {
     if (document()->isModified()) {
         QMessageBox::StandardButton ret;
@@ -159,7 +159,7 @@ bool CanvasWindow::maybeSave()
     return true;
 }
 
-void CanvasWindow::setCurrentFile(const QString &fileName)
+void ModelWindow::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
@@ -168,7 +168,7 @@ void CanvasWindow::setCurrentFile(const QString &fileName)
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
-QString CanvasWindow::strippedName(const QString &fullFileName)
+QString ModelWindow::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }

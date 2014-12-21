@@ -46,12 +46,12 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(XmasDesigner);
+    Q_INIT_RESOURCE(XMD);
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
     QCommandLineParser parser;
-    parser.setApplicationDescription("xMAS Designer");
+    parser.setApplicationDescription("XMAS Model Designer");
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("file", "The file to open.");
