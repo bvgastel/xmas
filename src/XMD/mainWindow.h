@@ -33,7 +33,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "setup.h"
+#include "_setup.h"
 
 
 QT_BEGIN_NAMESPACE

@@ -31,8 +31,8 @@
 
 #include <QtWidgets>
 
-#include "MainWindow.h"
-#include "ModelWindow.h"
+#include "mainWindow.h"
+#include "modelWindow.h"
 
 MainWindow::MainWindow()
 {

@@ -1,4 +1,4 @@
-#include "ProjectManager.h"
+#include "projectmanager.h"
 
 projectmanager::projectmanager()
 {
