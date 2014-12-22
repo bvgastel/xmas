@@ -8,7 +8,7 @@ SOURCES       = main.cpp \
                 mainwindow.cpp \
                 modelwindow.cpp \
 				projectmanager.cpp
-RESOURCES     = XMD.qrc
+RESOURCES     = xmd.qrc
 
 
 # install
