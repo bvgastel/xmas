@@ -1,0 +1,171 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 001 architecture}
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+
+\begin{Minutes}{Work meeting 001 Architecture Team 33}
+\participant{Bernard van Gastel, Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{Architectuur}
+\minutetaker{Guus}
+\minutesdate{06 december 2014}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\newcommand{\w}[1]{\textsc{#1}}
+
+\topic{Huidige versie WickedXMas} 
+
+\subtopic{Versies van programmatuur}
+
+\paragraph{Bernard} Het probleem van het huidig programma is dat er meerdere
+versies zijn, die dezelfde data net een andere interpretatie geven. Dat wil ik
+nu niet meer: 1 versie, 1 programma. Ook de data moet in slechts 1 versie
+beschikbaar zijn. Er waren te veel eigenaren, waardoor de ontwikkeling uit
+elkaar ging lopen. Ik ben nu de offici\"{e}le eigenaar van het pakket software.
+
+\topic{Communicatie Freek en Bernard}
+
+\paragraph{Bernard} Ik houd Freek op hoofdlijnen op de hoogte. Hij doet 
+hetzelfde bij mij. Daarnaast houd ik ook mijn andere collega onderzoekers op
+de hoogte.
+
+\paragraph{Github}
+
+Bernard heeft toegang tot github gekregen. Onze werk repo staat onder
+gbonnema\footnote{http://www.github.com/gbonnema} en de repo naam is xmas.
+Bernard gaat de repo met \verb%git clone% clonen en \verb%git pull% bijhouden.
+
+\paragraph{Agilefant}
+
+Guus heeft Bernard een uitnodiging gestuurd voor Agilefant, zodat hij mee kan
+kijken met de stories en de voortgang. Hij moet hier nog naar kijken.
+
+\topic{Data en data structuur}
+
+\paragraph{Bernard} De domein analyse van Jeroen is bijzonder duidelijk over
+wat de structuur van de data momenteel is (gezien vanuit de cycle checker).  Ik
+was hier positief verrast over! 
+
+Jullie (team 33) zijn vrij om de data structuur in te richten zoals je het zelf wilt.
+Als het maar effectief is en gemakkelijk te gebruiken, zowel voor het ontwerp tool
+als voor de ontwerper van de verificatie tools.
+
+\topic{Main requirements en prioriteiten}
+
+\paragraph{Bernard} Ik ben het eens met de prioriteiten van de main
+requirements zoals ze in de presentatie staan. De volgorde klopt
+ook.  Bijvoorbeeld performance speelt alleen een rol waar het usability in de
+weg gaat zitten.  Een ander voorbeeld is als we ten behoeve van portability
+iets moeten doen dat onderhoud iets moeilijker maakt dan zij dat zo.
+
+\begin{description}
+
+	\item[Portability] {\color{blue} \it 1st main goal:} Portability is a
+		leading requirement.
+
+	\item[Ease of use / install] {\color{blue} \it 2nd main goal:} Assist in
+		the design of \Noc + Promote tools to outsiders
+
+	\item[Maintainability] {\color{blue} \it 3rd main goal:} A primary
+		requirement.
+
+	\item[Performance] {\color{blue} \it Follows} For all acceptable
+		performance (which is a subjective measure). 
+
+\end{description}
+
+\topic{Architectuur}
+
+\paragraph{Bernard} Ik ben het op hoofdlijnen met de architectuur en de dynamiek eens.
+
+Zie presentatie in github voor details. Guus gaat dat opnemen in een architectuur document 
+onder de subdirectory \texttt{design}.
+
+\subtopic{Proces architectuur}
+\paragraph{Guus} Open staat of we de verificatie tool in hetzelfde proces als de applicatie draaien
+of in een apart proces. Het verschil zit in de mogelijkheid om een aparte user interface thread
+te maken.
+
+\paragraph{Bernard} Als het maar onderdeel van dezelfde applicatie is.
+
+\paragraph{Guus} Voor de gebruiker hoeft er geen verschil te zijn. Alleen technisch
+kun je de verificatie tool terugkoppeling loskoppelen. Doordat het een aparte user
+interface is, kan de gebruiker doorwerken aan het huidig model: wijzigingen aanbrengen.
+De terugkoppeling staat op een ander scherm, zowel textueel als grafisch. Daarmee is de terugkoppeling
+altijd \'{e}\'{e}nduidig.
+
+\paragraph{Bernard} Ik moet terugkoppelen met mijn collega's of zij 
+een aparte terugkoppelingsscherm willen. Ik kom hierop terug.
+
+\paragraph{Guus} Wil je gefabriceerde prototype om te zien hoe dit er uit komt te zien?
+
+\paragraph{Bernard} Dat is niet nodig.
+
+\subtopic{Recursie} We moeten recursie wat uitgebreider bespreken. Hiervoor is een aparte 
+sessie nodig.
+
+\subtopic{Composite} 
+
+\paragraph{Bernard} Het is de bedoeling dat de verificatie tools (VT) altijd werken met een 
+volledig platgeslagen netwerk. Dat komt omdat de VT met de low level informatie werkt
+($t_{rdy}$ en $i_{rdy}$). Als je composites niet platslaat, dan heeft het die informatie niet.
+
+\paragraph{Guus} En als we de semantiek van composites en primitives vangen in een data structuur,
+inclusief de $t_{rdy}$ en $i_{rdy}$?
+
+\paragraph{Bernard} Dat zou met parametrisering te ingewikkeld worden. Is buiten scope.
+
+\subtopic{Geparametriseerde composites}
+
+\paragraph{Bernard} Bij het bestaande tool ligt het genereren van een \w{grid} moeilijk. Dat
+komt door de opzet van het tool dat te ingewikkeld is geworden. Het zou mooi zijn als dit in
+het nieuwe tool\marginpar{aparte sessie} wel gemakkelijk kan. 
+
+\subtopic{Dynamiek}
+
+\paragraph{Bernard} Ik ben het met de dynamiek zoals hier gepresenteerd eens. Het punt van
+terugkoppeling van VT resultaten ga ik met mijn collega's opnemen. 
+
+Hieronder een samenvatting van deze punten.
+
+\subtopic{Plugin architectuur}
+
+\paragraph{Guus} De bedoeling van de plugin architectuur is de boilerplate
+acties binnen ons project op te lossen en de specifieke VT mechanismen binnen
+het VT op te lossen.
+
+Het aanroepen van de plugin gebeurt asynchroon zodat de VT's die draaien het
+ontwerp tool niet in de weg zitten. Er komt een terugkoppeling vanuit de VT
+naar een scherm met de resultaten en de voortgang (progress bar).
+
+\subtopic{Documentatie}
+
+\paragraph{Guus} De bedoeling is deze plaatjes in een document te verenigen, dat
+het overdragen van architectuur en onderhoud gemakkelijker maakt.
+
+Let er op, dat wij maar een deel van de documentatie opleveren, te weten 
+het deel dat met de design tool te maken heeft inclusief plugin architectuur,
+maar zonder de hele VT straat.
+
+\subtopic{Demonstratie}
+
+\paragraph{Bernard} Er komt een filmpje aan van \'{e}\'{e}n van mijn
+collega's. Dat kan ongeveer een week duren vanwege ander werk.
+
+
+\end{Minutes}
+\end{document}

@@ -1,0 +1,35 @@
+\documentclass[12pt,a4paper,titlepage]{report}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage[english]{babel}
+\usepackage{caption}
+\usepackage{xspace}% For a variable space after a macro.
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage[textsize=tiny]{todonotes}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+
+
+\author{A.J. Bonnema}
+\title{Architecture document}
+\begin{document}
+
+\newcommand{\w}[1]{\textsc{#1}}%
+\newcommand{\Noc}{\textsc{NoC}\xspace}% 
+\newcommand{\xmas}{\textsc{XMas}\xspace}%
+\newcommand{\fltk}{\textsc{fltk}\xspace}%
+\newcommand{\boost}{\textsc{Boost}\xspace}%
+\newcommand{\opengl}{\textsc{OpenGL}\xspace}%
+
+\include{arch-intro}
+\include{arch-overview}
+\include{arch-design-guidelines}
+\include{arch-high-level-diagrams}
+\include{arch-language-guidelines}
+\include{arch-platform-constraints}
+\end{document}

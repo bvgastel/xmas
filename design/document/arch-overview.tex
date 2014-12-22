@@ -1,0 +1,141 @@
+\chapter{Architecture Overview}
+
+\todo[inline]{The system as a whole includes the design tool, the verification pipeline and the
+specific verification tools. If we document the design tool only, we leave out essential parts of 
+the system. TBD.}
+
+\todo[inline]{Where to document the verification pipeline and the verification tools?
+Maybe the pipeline in general (without VT specifics) should be documented here. Maybe
+a template for specific VT documentation would come in handy. TBD.}
+
+\section{Partitioning}
+
+\begin{center}
+	\includegraphics[width=.9\linewidth]{../architecture-tool-scope}
+\end{center}
+
+The complete tool consists of a graphical design tool and a verification pipeline.
+The design tool runs online (in a graphical environment) and is meant to aid in 
+designing a Network on Chip (\Noc). The verification tools can run in the online 
+(graphical) environment or in an offline (commandline) environment and are meant 
+to do consistency and correctness checks on a model.
+The case of offline verification is useful for verifying a model that is 
+too big to verify completely during graphical edit cycles.
+
+\paragraph{Usage goal} The goals for running the graphical editor 
+or the verification pipeline may either be creating an \Noc or 
+testing a verification tool. In both cases the dynamics are the same.
+
+\paragraph{Plugin architecture} The verification tools and the graphical 
+design toolkit communicatie through a plugin architecture.
+The runtimes for verification tools will vary -- depending on the input --
+from several seconds to a few minutes or longer. For that reason the 
+verification tools run relatively independently from the graphical 
+design toolkit. 
+
+\todo[inline]{How will the plugin architecture overlap between 
+the online and the offline versions of running the verification tools? I.e. how
+will this architecture reflect on the currently existing verification tools?}
+
+\todo[inline]{Where to flatten the model: in the verification tool or in the design tool (plugin)?
+			   Could a VT work with composites?}
+
+\section{Graphical Design Tool Dynamics}
+
+\pagedepth\maxdimen
+
+\begin{wrapfigure}[9]{i}{0.3\linewidth}
+	\includegraphics[width=.95\linewidth]{../architecture-dynamic-overview}
+	\caption{Dynamic process in overview}
+	\label{fig:overview-dynamic}
+\end{wrapfigure}
+
+The graphical editor of \Noc consists of a toolkit containing
+the \xmas primitives, the composites available in separate 
+libraries, the graphical window, and the commands to 
+prepare and execute the verification tools. The process of 
+designing an \Noc consists of alternating an edit cycle with a verify cycle 
+(see figure \ref{fig:overview-dynamic}).
+
+\paragraph{Step 1 Edit cycle} The editor adds components (primitives or 
+composites) to the \Noc diagram filling in their parameters and connecting 
+components as necessary. Once satisfied the editor switches to prepare 
+for the verfication cycle.
+
+\paragraph{Step 2 Verification cycle} 
+Firstly, the editor chooses the verification tools to be run.
+Secondly, the editor fills in the relevant parameters for running the selected 
+verification tools. Finally, the editor starts the verification processes causing
+the controller to copy the parameters and the current \Noc model and start
+the verification tools selected. See figure \ref{fig:dynamic-arch} for a 
+detailed illustration.
+
+\begin{center}
+	\includegraphics[width=.95\linewidth]{../architecture-dynamic}
+	\captionof{figure}{Dynamic process of editing and verifying}
+	\label{fig:dynamic-arch}
+\end{center}
+
+\paragraph{Verification results} The verification tools 
+will show their results and their progress while running. 
+Depending on the verification tool, the results could be
+graphical or textual or both. The plugin will show either
+textual or graphical output allowing for addition textual 
+or graphical markings on the network drawing.
+
+Remark that the verification tools run in their own
+thread or process depending on whether the output will be
+shown in the design UI thread or an independent 
+UI thread\todo{TBD}.
+
+\paragraph{Communication pattern} The user interface implements
+the observer pattern with respect to data changes.
+Both the design tool and the verification plugin use this pattern to
+propagate changes in the model to the user interface.
+
+\section{Verification pipeline}
+
+\paragraph{Scope.} The verification pipeline itself is
+not in scope for the graphical editor. The connection to the verification 
+pipeline is through the plugin architecture, where a plugin is wrapped 
+in a C++ class that derives from \w{VerificationTool}.
+
+
+\section{Verification Tool repository}
+
+\paragraph{Tool repository} The design tool needs a reference to each 
+verification tool in order to have the user select the 
+verification tools to run. This information whether stored
+in the code or stored in a file, we call the tool repository.
+Each tool needs an entry in the tool repository.
+
+\paragraph{Tool meta information} Each tool needs certain parameters 
+filled in. The tool should provide a method of entering this data 
+both through a graphical user interface and through providing a 
+file with input.
+
+\paragraph{Generic meta information} Some parameters directly influence 
+the structure of the component. An example is a number $n$ that
+specifies the number of primitives in a spidergon topology (see \cite{}).
+\todo[inline]{These parameters need special care when passing through to the
+verification tools. whether and how to flatten is still subject to discussion.}
+
+\paragraph{Control in a loosely coupled way} An way to implement 
+the verification repository is to have each verification tool register 
+with a controller. The registration involves informing the controller
+about function, and parameters of the specific verification tool. 
+The graphical editor will ask the controller for available 
+verification tools. The verification tools should also provide
+a dialog for entering the parameters. This way the connection between 
+the graphical design tool and the verification pipeline is as loose 
+as possible while keeping control over the dynamics in the process.
+
+
+\section{Component repository}
+
+\todo[inline]{We need a (non-programmatic) way of defining new components, whether 
+primitive or composite.}
+
+\section{Model repository}
+
+\todo[inline]{Some way of storing models.}
