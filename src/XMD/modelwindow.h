@@ -33,7 +33,7 @@
 #define MODELWINDOW_H
 
 #include <QTextEdit>
-#include "_setup.h"
+#include "setup.h"
 
 
 class ModelWindow : public QTextEdit
