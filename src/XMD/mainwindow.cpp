@@ -332,47 +332,47 @@ void MainWindow::createActions()
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
 
-    queueAct = new QAction(QIcon(":/images/Queue.png"), tr("Queue"), this);
+    queueAct = new QAction(QIcon(":/images/queue.png"), tr("Queue"), this);
     queueAct->setStatusTip(tr("Draws the ''queue'' primitive"));
     connect(queueAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    functionAct = new QAction(QIcon(":/images/Function.png"), tr("Function"), this);
+    functionAct = new QAction(QIcon(":/images/function.png"), tr("Function"), this);
     functionAct->setStatusTip(tr("Draws the ''function'' primitive"));
     connect(functionAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    forkAct = new QAction(QIcon(":/images/Fork.png"), tr("Fork"), this);
+    forkAct = new QAction(QIcon(":/images/fork.png"), tr("Fork"), this);
     forkAct->setStatusTip(tr("Draws the ''fork'' primitive"));
     connect(forkAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    joinAct = new QAction(QIcon(":/images/Join.png"), tr("Join"), this);
+    joinAct = new QAction(QIcon(":/images/join.png"), tr("Join"), this);
     joinAct->setStatusTip(tr("Draws the ''join'' primitive"));
     connect(joinAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    switchAct = new QAction(QIcon(":/images/Switch.png"), tr("Switch"), this);
+    switchAct = new QAction(QIcon(":/images/switch.png"), tr("Switch"), this);
     switchAct->setStatusTip(tr("Draws the ''switch'' primitive"));
     connect(switchAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    mergeAct = new QAction(QIcon(":/images/Merge.png"), tr("Merge"), this);
+    mergeAct = new QAction(QIcon(":/images/merge.png"), tr("Merge"), this);
     mergeAct->setStatusTip(tr("Draws the ''merge'' primitive"));
     connect(mergeAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    sinkAct = new QAction(QIcon(":/images/Sink.png"), tr("Sink"), this);
+    sinkAct = new QAction(QIcon(":/images/sink.png"), tr("Sink"), this);
     sinkAct->setStatusTip(tr("Draws the ''sink'' primitive"));
     connect(sinkAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    sourceAct = new QAction(QIcon(":/images/Source.png"), tr("Source"), this);
+    sourceAct = new QAction(QIcon(":/images/source.png"), tr("Source"), this);
     sourceAct->setStatusTip(tr("Draws the ''source'' primitive"));
     connect(sourceAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    inputAct = new QAction(QIcon(":/images/In.png"), tr("Input"), this);
+    inputAct = new QAction(QIcon(":/images/in.png"), tr("Input"), this);
     inputAct->setStatusTip(tr("Draws an ''Input connection point''"));
     connect(inputAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    outputAct = new QAction(QIcon(":/images/Out.png"), tr("Output"), this);
+    outputAct = new QAction(QIcon(":/images/out.png"), tr("Output"), this);
     outputAct->setStatusTip(tr("Draws an ''Output connection point''"));
     connect(outputAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
 
-    compositeAct = new QAction(QIcon(":/images/Composite.png"), tr("Composite"), this);
+    compositeAct = new QAction(QIcon(":/images/composite.png"), tr("Composite"), this);
     compositeAct->setStatusTip(tr("Draws a ''Composite''"));
     connect(compositeAct, SIGNAL(triggered()), this, SLOT(addComposite()));
 
