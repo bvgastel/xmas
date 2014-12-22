@@ -1,11 +1,13 @@
 QT += widgets
 
 HEADERS       = mainwindow.h \
-                modelWindow.h \
-    setup.h
+                modelwindow.h \
+				projectmanager.h \
+			    setup.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
-                modelwindow.cpp
+                modelwindow.cpp \
+				projectmanager.cpp
 RESOURCES     = XMD.qrc
 
 
