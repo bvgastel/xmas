@@ -31,7 +31,7 @@
 
 #include <QtWidgets>
 
-#include "modelWindow.h"
+#include "modelwindow.h"
 
 ModelWindow::ModelWindow()
 {
