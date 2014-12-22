@@ -58,7 +58,7 @@ other choice of programming language.
 \section{The WickedXmas tool}
 
 
-Before exploring the internals of the source code we shall, however, first provide an overview
+Before exploring the internals of the source code we shall first provide an overview
 of the current WickedXmas tool. Specifically, we will briefly highlight the steps involved in
 executing the verification modules.
 
@@ -76,7 +76,7 @@ a flat list consisting solely of xMAS primitives and the channels connecting the
 flat json file is then parsed and transformed into C++ source code. The generated source code files are
 used along with C++ code written for the specific task to create several executables. In Figure
 \ref{fig:wickedxmas-arch} the Simulate, Invariant Generation and Deadlock Detection verification modules
-are shown. The modules are run sequentially, results from a module serve as input for modules further down
+are shown. The executables must be run in a fixed order; results from a module can serve as input for modules further down
 the pipeline. For instance, the Simulator runs a simulation on the network and yields information on the
 types of packets each component in the network is able to accept and generate. The Invariant Generation
 uses this information to deduce invariants that hold for the given network. Finally, the Deadlock Detection
@@ -325,7 +325,57 @@ At the same time, the priniciple dictates that new features can still be added t
 
 \section{Combinatoric Cycle Checker}
 
-TODO: Explain what the cycle checker does and how the extensions and Visitor pattern are applied.
+\paragraph{}
+The semantics of an xMAS network can be expressed using the concepts of a combinatorial part and
+a sequential part\cite{analyse-tool-11}. The primitives can be divided into two categories.
+Sources, sinkes and queues are known as sequential primitives. The other five: function,
+fork, join, switch and merge are combinatorial primitives.\\
+Each clock tick a source can generate a packet, a sink can destroy one and a queue can accept
+and/or release a packet; all as long as the necessary conditions hold. The clock ensures
+all sequential primitives are updated at the same time.\\
+The combinatorial objects' task is to route the packets from one sequential primitive to another.
+Of course, the time required to perform this routing depends on the amount and types of
+combinatorial objects along the path from source to destination. But, as far as the simulation of
+the network is concerned, the entire routing occurs during a single clock cycle.\\
+
+One important aspect of an xMAS design is the absence of combinatoric cycles. That is, an xMAS
+network should not contain cycles in the graph consisting of only combinatorial objects.
+Would this be the case, a packet entering the combinatoric cycle could revolve endlessly in
+this loop. The packet would never arrive at its destination and the simulation could not
+complete the clock cycle.
+
+\paragraph{}
+The Combinatoric Cycle Checker is created to detect these cycles in an xMAS network. It uses an
+algorithm based on a standard graph traversal algorithm to detect cycles. Starting at a random
+component, the algorithm executes a depth-first traversal along all channels connected to the
+component. During the traversal, each visited component (including the starting component) is
+marked. Whenever an already marked component is encountered during the traversal, the algorithm
+knows it has detected a cycle.\\
+If a non-combinatorial object is found on a path, a combinatorial cycle can not exist on this
+path and the algorithm continues its traversal on an other path. When all possible paths from
+a component yield no combinatorial cycle, the component is marked as checked. The Cycle Checker
+has completed when all components are marked as checked.
+
+\paragraph{Implementation}
+The Combinatoric Cycle Checker is implemented using an extension class, a component visitor
+and several functions to drive the checker. Class CombinatorialCyclePortExtension is, as
+the name already suggests, a PortExtension. It holds two boolean attributes: \emph{checking} to
+indicate whether the algorithm is currently traversing this port and \emph{checked} to indicate
+whether this port has already been checked.\\
+CombinatorialCycleDependencies is an implementation of the XMASComponentVisitor interface.
+The constructor takes a pointer to the Port object that was used to reach the component
+currently being visited. Attribute \emph{p} is initialized with this value. A second attribute,
+\emph{retval}, is an initially empty vector of ports. The various visit member functions will
+fill this vector with the ports that the algorithm should use to continue the traversal. Visits
+to the sequential primitives will leave this vector empty. When a combinatorial primitive is
+visited, all ports other than the current port \emph{p} are added to the vector.
+
+\paragraph{}
+Inside function checkSignal() the actual algorithm is executed. It is here where the PortExtension
+is created and the \emph{checking} and \emph{checked} values are set. Also the visitor class
+is instantiated and used to visit the component. Depending on the contents of attribute
+\emph{retval}, the algorithm recursively continues its traversal. The Cycle Checker is started
+by calling CombinatorialCycleDetector and passing the set of all components.
 
 
 \section{Integration of Verification Tools}
@@ -350,6 +400,7 @@ access information produced by other tools.\\
 With regards to the integration with the design tool, two choices are available.
 \begin{enumerate}
  \item The design tool could be integrated completely with the verification module.
+ \emph{(in-process)}
  \begin{itemize}
   \item Not only the verification tools but also the design tool become part of a single
   application. Both the design tool and the verification modules operate on the same
@@ -357,14 +408,14 @@ With regards to the integration with the design tool, two choices are available.
  \end{itemize}
 
  \item The design tool and the verification tools are implemented as two separate
- programs.
+ programs. \emph{(out-of-process)}
  \begin{itemize}
   \item The design tool launches the verification tools as a new process. Inter-process
   communication mechanisms are used for communication between the two programs.
   \item Both software components have their own representation of an xMAS network. The
   design tool can not directly access the data structures of the verification tools.
   However, the design tool can reuse source code, like the classes used by the verification
-  tools (XMASComponent and Port). (See also section~\ref{sec:extensions-visitor-design-tool})
+  tools (XMASComponent, Port, etc.). (See also section~\ref{sec:extensions-visitor-design-tool})
  \end{itemize}
  
 \end{enumerate}
@@ -506,7 +557,7 @@ format as above. Another implementation could directly access the data structure
 passed, e.g. the XMASComponent of the info operation in the example. In this case,
 the design tool doesn't have to parse the character stream and lookup the component.
 The design tool and the verification modules must share the same address space for
-this method to work correctly though.
+the latter implementation to work correctly though.
 
 
 \paragraph{Let design tool read extensions defined by modules}
@@ -542,7 +593,84 @@ restriction apply.
 
 \section{Recommendations}
 
-TODO
+Several options are available to integrate the design tool and the verification
+modules. The recommendations in this section are based on two important use cases:
+\begin{enumerate}
+ \item the application will be used to design and verify xMAS networks
+ \item the design tool will be used to develop and debug verification tools
+\end{enumerate}
+
+The use cases lead to different requirements. In order to support the first use case,
+efficiency of the application is an important aspect. The design tool is an interactive
+application and should be responsive. When verifying large networks, large amount of
+memory and processing time can be consumed.\\
+During development of the verification tools, efficiency is of less concern. Mainly
+small networks are used to debug the tools. More important is the ability to support
+an efficient 'edit-compile-run-debug' cycle. The source code of the verification
+modules will frequently change. After a change has been made, the effort required to
+test the new code should be kept at a minimum.
+
+\paragraph{Tool Architecture}
+Both architecture types discussed in section \ref{sec:tool-architecture}, in-process
+and out-of-process, can be used to implement the two use cases. An in-process architecture
+leads to more efficient communication between design tool and verification modules.
+As such, the first use case would suggest to take this approach. As an additional
+benefit, this approach is easier to implement.\\
+However, an out-of-process might be better suited to support the second use case.
+After a change has been made to a tool, only the source code related to the verification
+tools has to be recompiled, reducing the time spent in the compile phase of the
+'edit-compile-run-debug' cycle. Furthermore, the design tool doesn't even have to
+be restarted to test the changes.\\
+Another reason to opt for the out-of-process architecture is the ability to execute
+the verification tools on an other, maybe more powerful, system.
+
+\paragraph{}
+Both architecture types have advantages and disadvantages. The relative importance
+of the two use cases can be the decisive factor when choosing between them. Since
+the intended use and target audience of the tool may change over time, it is
+recommended to consider the possibility to change the architecture in the future.
+Therefore, solutions that are only viable in both architecture types are preferred.
+
+
+\paragraph{Communication}
+Of the four communication methods described above, only the first two can easily be
+used in an out-of-process architecture. The third and fourth both use extensions
+and this requires either a shared address space between design and verification 
+tools or an (platform specific) inter-process memory sharing technique. Although
+the detailed information available in the extensions is an advantage of these methods,
+simple text messages to describe the feedback are thought to provide enough information.
+In most cases, the code required to 'push' feedback from the verification modules
+is already in place which further reduces the advantages of the third method.
+
+\paragraph{}
+The first two methods are both good candidates. The second method has a few advantages,
+especially when using an in-process architecture. Feedback can be passed more efficient,
+due to the direct access to the components and ports. This is not very important though
+as the feedback interface is very low traffic and data structures like hash maps allow
+efficient lookup of the xMAS objects by id. However, since the second method is capable
+of producing the same output as the first method and furthermore guarantees a consistent
+data format output across all modules, the second method is recommended.
+
+\paragraph{Composite objects}
+The best way to deal with composite objects is not clear yet. Ideally, the verification
+modules will be adapted to handle composite objects. This prevents any communication
+issues that may arise due to the different network representations of the design tool
+and verification modules. Modifying the verification modules might prove to be too
+laborious. In this case, the network must first be flattened. Implicitly using the
+second approach, or explicitly using the third approach.\\
+The second approach is the technically more interesting approach and has the advantage
+of a lower memory footprint. However, the simpler third approach is the safer option
+and therefore recommended.
+
+
+\paragraph{}
+As a final note, if the design tool will be programmed in a language other than
+C++, few options remain. Only an out-of-process architecture is possible. Code
+written to create the verification modules can not be reused, although, of course,
+the same classes and design patterns could be employed in most other languages.
+The best option to establish the communication is through a character stream as
+virtually all platforms and programming languages support this form of
+communication.
 
 
 
@@ -557,34 +685,34 @@ TODO
 
 \bibitem{chatterjee10}
   Chatterjee, Kishinevsky, Ogras,
-  \emph{Quick Formal Modeling of Communication Fabrics to Enable Verification}
+  \emph{Quick Formal Modeling of Communication Fabrics to Enable Verification},
   2010
   
 \bibitem{xmas}
   Chatterjee, Kishinevsky, Ogras,
-  \emph{xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification}.
+  \emph{xMAS: Quick Formal Modeling of Communication Fabrics to Enable Verification},
   2012
   
 \bibitem{13_toolxmas}
   Joosten, Verbeek, Schmaltz,
-  \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics}.
+  \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics},
   2012
   
   
 \bibitem{linkedlist}
-  \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage}.
+  \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage},
   november 2014
   
 \bibitem{wiki-visitor-pattern}
-  \emph{https://en.wikipedia.org/wiki/Visitor\_pattern}.
+  \emph{https://en.wikipedia.org/wiki/Visitor\_pattern},
   november 2014
 
 \bibitem{oodesign-visitor-pattern}
-  \emph{http://www.oodesign.com/visitor-pattern.html}.
+  \emph{http://www.oodesign.com/visitor-pattern.html},
   november 2014
   
 \bibitem{oodesign-open-close}
-  \emph{http://www.oodesign.com/open-close-principle.html}.
+  \emph{http://www.oodesign.com/open-close-principle.html},
   november 2014
   
 \bibitem{stroustrup}
@@ -592,6 +720,11 @@ TODO
   \emph{The C++ Programming Language}.
   Fourth edition,
   2013
+  
+\bibitem{analyse-tool-11}
+  \emph{Inference of channel types in micro-architectural models of on-chip communication networks},
+  2014
+
   
   
   
