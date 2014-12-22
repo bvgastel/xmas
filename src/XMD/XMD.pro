@@ -1,8 +1,8 @@
 QT += widgets
 
 HEADERS       = mainwindow.h \
-                _setup.h \
-                modelWindow.h
+                modelWindow.h \
+    setup.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 modelwindow.cpp
