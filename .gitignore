@@ -2,6 +2,7 @@
 *.swp
 *.backup
 build
+src/build*
 modules/xmas-vt
 *~
 
