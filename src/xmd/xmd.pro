@@ -12,7 +12,7 @@ RESOURCES     = xmd.qrc
 
 
 # install
-target.path = XMD
+target.path = xmd
 INSTALLS += target
 
 DISTFILES +=

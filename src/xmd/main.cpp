@@ -37,7 +37,7 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(XMD);
+    Q_INIT_RESOURCE(xmd);
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
