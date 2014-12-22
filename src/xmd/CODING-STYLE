@@ -69,17 +69,16 @@ int main(int argc, char **argv) {
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* TBD: parameter variable names end in underscore ?
 
 Formatting:
 -----------
-* Indentation:
+* Indentation
 
   1.) Do not use tabs [4].
 
   2.) Indentations are 4 characters deep [4].
 
-* Whitespace:
+* Whitespace
 
   3.) Do not leave whitespaces at the end of lines.
 
@@ -106,8 +105,10 @@ Formatting:
           calculateSalary(age, years);  <->  calculateSalary( age, years ); 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  8.) For pointers or references, use
-      either a single space after '*' or '&', but not before (C++ style),
+  8.) For pointers or references, use either C++ style or C style.
+  	  We prefer C style, because that coincides better with semantics (see beware).
+
+      So, either a single space after '*' or '&', but not before (C++ style),
 
           Example:
 
@@ -129,12 +130,10 @@ Formatting:
               T *v and T &v
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  9.) No space after a cast [4].
-
  10.) Do not use spaces around '.' or '->',
       nor between unary operators and operands.
 
-* Braces:
+* Braces
 
  11.) Function implementations, class, struct and namespace declarations
       always have the opening brace on the start of a line [4].
@@ -146,7 +145,7 @@ Formatting:
       only one line [4].
 
 
-* Statements:
+* Statements
 
  14.) Do not put multiple statements on a single line.
 
@@ -154,26 +153,24 @@ Formatting:
 
  15.) Case labels are on the same column as the switch [4].
 
-* Line breaks:
+* Line breaks
 
  16.) Try to keep lines shorter than 100 characters, inserting line breaks
       as necessary [4].
 
-* Pointers:
+* Pointers
 
- 17.) In C++, a null pointer is 0; not 0l, 0L or NULL.
+ 17.) In C++, a null pointer is nullPtr (not any of the 0-literals).
 
 
-Variable declaration:
----------------------
+Variable declaration
+--------------------
 
  18.) Each variable declaration on a new line [4].
 
  19.) Variables and functions start with a lowercase letter.
 
- 20.) Classes always start with a capital letter.
-
- 21.) Each new word in a name starts with a capital letter [4].
+ 20.) Classes always start with a capital letter and have CamelCase names.
 
  22.) Member variables start with "m_".
 
@@ -206,6 +203,7 @@ Variable declaration:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  26.) Use static const variables instead of defining integers or floats.
+ 		i.e. avoid a macro DEFINE.
 
           Rationale:
 
@@ -227,8 +225,7 @@ Casting:
 License:
 --------
  28.) All source code and related data files must have the following
-      license header from the first line on of the file (see also [5],
-      checked by Krazy [6]).
+      license header from the first line on of the file (see also [5])
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /*
@@ -279,7 +276,7 @@ Includes:
               Paths are set in the make files. Rearranging or moving files
               should not be followed by source code editing.
 
- 33.) Header includes should be listed in the following order and grouped:
+ 33.) Header includes should be listed in the following order and grouped
 
         - own header
 
@@ -323,7 +320,7 @@ Include guards:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  37.) Do not use leading or trailing underscores on the include guard macro
-      as they are reserved for compiler/libc use (checked by Krazy [6]?).
+      as they are reserved for compiler/libc use.
 
           Example:
 
@@ -394,10 +391,9 @@ C++:
       Make all getters const.
 
  44.) It might be a good idea to make the constructors explicit
-      (checked by Krazy [6]).
 
-Metrics:
---------
+Metrics
+-------
 
 - loc = lines of code
 
@@ -406,8 +402,9 @@ Metrics:
 - Refactor methods, which have more than  200 loc per method.
 
 
-Astyle:
--------
+Astyle
+------
+
 You can use astyle to format one or several files with the following command:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -429,5 +426,4 @@ astyle --indent=spaces=4 --brackets=linux \
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This applies some of the rules in section 'Formatting'.
-
 
