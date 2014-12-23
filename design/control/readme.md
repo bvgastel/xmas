@@ -18,6 +18,8 @@ Why do we need a controller?
 
 A picture of the controller design in UML.
 
+![Control class diagram](control.png "The UML vision of control")
+
 # Controller function
 
 The controller contains the following functions:
@@ -38,7 +40,19 @@ The controller contains the following functions:
 
 # Controller dynamics
 
+## Designer dynamics
 
+* Creating a new process using QProcess for the designer
+* Using QSettings for the applications options
+* Starting the designer with the appropriate options
+
+## VT dynamics
+
+* Creating a new VTList using the setting through QSettings
+* Selecting the initial VTs through the settings
+* Starting VT instances using QThread
+* Creating a window of error and warning messages if on gui, or redirecting to standard
+  output or standard error if on commandline.
 
 # Controller structure
 
