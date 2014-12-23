@@ -13,6 +13,7 @@ RESOURCES     = xmd.qrc
 
 # install
 target.path = xmd
+TARGET = xmas-designer
 INSTALLS += target
 
 DISTFILES +=
