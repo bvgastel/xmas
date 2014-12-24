@@ -2,6 +2,16 @@
 #include <sstream>
 #include "control.h"
 
+
+/**
+ * Constructor for Control.
+ *
+ * Connects slots and retrieves options from the commandline.
+ *
+ * @brief Control::Control
+ * @param argc
+ * @param argv
+ */
 Control::Control(int argc, char *argv[]) :
     m_app(argc, argv),
     m_consoleReader(this)
@@ -11,13 +21,25 @@ Control::Control(int argc, char *argv[]) :
 
     getOptions(m_opt);
 
+    /**
+     * @brief connect the consoleReader to Control
+     */
     connect(this, SIGNAL(finished()), this, SLOT(quit()));
     connect(&m_consoleReader, SIGNAL(textReceived(QString)),this, SLOT(processCommand(QString)));
 
 
+    if (m_opt.commandline) {
+        // Console only, no GUI.
+        std::cout << "Start console version of Control" << std::endl;
+    } else {
+        std::cout << "Start GUI version of Control" << std::endl;
+        m_designer = std::make_shared<Designer>();
+    }
+
 }
 
-std::stringstream &Control::appData(std::stringstream &data) {
+std::stringstream &Control::appData(std::stringstream &data)
+{
     data << "Application name = " << m_app.applicationName().toStdString() << std::endl;
     data << "Application file path = " << m_app.applicationFilePath().toStdString() << std::endl;
     data << "Application dir path = " << m_app.applicationDirPath().toStdString() << std::endl;
@@ -25,7 +47,8 @@ std::stringstream &Control::appData(std::stringstream &data) {
     return data;
 }
 
-std::stringstream &Control::paramData(std::stringstream &data) {
+std::stringstream &Control::paramData(std::stringstream &data)
+{
     data << "commandline = " << (m_opt.commandline ? "true" : "false") << std::endl;
     data << "runAll = " << (m_opt.runAll ? "true" : "false") << std::endl;
     data << "outputDir = '" << m_opt.outputDir.toStdString() << "'" << std::endl;
@@ -37,7 +60,8 @@ std::stringstream &Control::paramData(std::stringstream &data) {
     return data;
 }
 
-int Control::exec() {
+int Control::exec()
+{
     std::cout << "============= Enter quit to end the program ==============" << std::endl;
     return m_app.exec();
 }
@@ -47,25 +71,28 @@ Control::~Control()
 
 }
 
-void Control::run() {
-    emit finished();
-}
-
-void Control::quit() {
+void Control::quit()
+{
     std::cout << "Shutting down ...." << std::endl;
     m_app.quit();
 }
 
-void Control::processCommand(QString line) {
-    std::cout << "received line = '"<< line.toStdString() << "'"<< std::endl;
-    if (line.toStdString() == "quit") {
-        std::cout << "starting to emit finished()" << "... ";
+void Control::processCommand(QString line)
+{
+    // std::cout << "received line = '"<< line.toStdString() << "'"<< std::endl;
+    QRegExp whiteSpace("(\\ |\\t)");        // Regular expression for space and tab
+    QStringList clist = line.split(whiteSpace);
+    if (clist[0] == "quit" || clist[0] == "q" || clist[0] == "exit") {
         emit finished();
-        std::cout << "finished() emitted ... " << std::endl;
+    } else if (clist[0] == "status"|| clist[0] == "state") {
+        if (m_designer) {
+            m_designer->state();
+        }
     }
 }
 
-void Control::aboutToQuitApp() {
+void Control::aboutToQuitApp()
+{
     std::cout << "About to quit app" << std::endl;
 }
 

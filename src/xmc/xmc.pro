@@ -19,9 +19,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     control.cpp \
-    consolereader.cpp
+    consolereader.cpp \
+    designer.cpp
 
 HEADERS += \
     setup.h \
     control.h \
-    consolereader.h
+    consolereader.h \
+    designer.h

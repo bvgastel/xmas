@@ -4,14 +4,17 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <map>
 
 #include <QCoreApplication>
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QVector>
+#include <QProcess>
 
 #include "setup.h"
 #include "consolereader.h"
+#include "designer.h"
 
 struct Options {
     QStringList args;
@@ -37,17 +40,17 @@ signals:
     void textReceived(QString line);
 
 public slots:
-    void run();
     void processCommand(QString);
     void aboutToQuitApp();
     void quit();
 
 private:
+    void getOptions(Options &);
+
     QApplication m_app;
     Options m_opt;
     ConsoleReader m_consoleReader;
-
-    void getOptions(Options &);
+    std::shared_ptr<Designer> m_designer;
 };
 
 #endif // CONTROL_H
