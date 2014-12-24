@@ -330,7 +330,7 @@ The semantics of an xMAS network can be expressed using the concepts of a combin
 a sequential part\cite{analyse-tool-11}. The primitives can be divided into two categories.
 Sources, sinkes and queues are known as sequential primitives. The other five: function,
 fork, join, switch and merge are combinatorial primitives.\\
-Each clock tick a source can generate a packet, a sink can destroy one and a queue can accept
+Each clock tick a source can produce a packet, a sink can consume one and a queue can accept
 and/or release a packet; all as long as the necessary conditions hold. The clock ensures
 all sequential primitives are updated at the same time.\\
 The combinatorial objects' task is to route the packets from one sequential primitive to another.
@@ -338,11 +338,48 @@ Of course, the time required to perform this routing depends on the amount and t
 combinatorial objects along the path from source to destination. But, as far as the simulation of
 the network is concerned, the entire routing occurs during a single clock cycle.\\
 
+\paragraph{}
 One important aspect of an xMAS design is the absence of combinatoric cycles. That is, an xMAS
 network should not contain cycles in the graph consisting of only combinatorial objects.
-Would this be the case, a packet entering the combinatoric cycle could revolve endlessly in
-this loop. The packet would never arrive at its destination and the simulation could not
-complete the clock cycle.
+Would this be the case, the irdy and trdy signals of the combinatorial objects will never
+stabilize. This can be seen by looking at the equations that define the irdy and trdy signals
+\cite{chatterjee10}. The source and sink primitives irdy and trdy signals are determined by an
+oracle (neglecting the \emph{pre} part for simplicity). Queues are defined to always accept
+data (i.trdy = 1) as long as the queue is not full and release data (o.irdy = 1) as long as
+the queue is not empty. All of these conditions, the oracles and the queue state, are well-defined
+and independent of other components in the network.\\
+In contrast, all combinatorial objects' irdy and trdy equations are defined in terms of the
+irdy and trdy signals produced by the components on the other sides of the channels.
+To determine an irdy or trdy signal of a combinatorial primitive, the connected components'
+irdy and trdy signals should be substituted in the equation. Large chains of combinatorial
+primitives as such yield complex expressions. More so, when a component is part of a
+combinatorial cycle, the state of the irdy or trdy signal occurs on both the left-hand and the right-
+hand side of the equation. Substitution of the right-hand side occurrence of the signal leads
+to an infinite recursion.
+
+\begin{figure}[hp]
+ \includegraphics[height=3cm]{images/fork-join-cycle}
+ \caption{Example of a combinatorial cycle}
+ \label{fig:fork-join-cycle}
+\end{figure}
+
+\paragraph{Example}
+Figure \ref{fig:fork-join-cycle} illustrates a combinatorial cycle. Applying the \emph{a.irdy} equation
+to \emph{fork1} and the \emph{b.trdy} equation to \emph{join1} gives \cite[p.~44]{chatterjee10}:
+\begin{itemize}
+ \item fork1.a.irdy := fork1.i.irdy and fork1.b.trdy = source1.o.irdy and join1.b.trdy
+ \item join1.b.trdy := join1.o.trdy and join1.a.irdy = sink1.o.trdy and fork1.a.irdy
+\end{itemize}
+Substituting the second equation in the first now gives:
+\begin{itemize}
+ \item \underline{fork1.a.irdy} := source1.o.irdy and sink1.o.trdy and \underline{fork1.a.irdy}
+\end{itemize}
+
+
+
+
+
+
 
 \paragraph{}
 The Combinatoric Cycle Checker is created to detect these cycles in an xMAS network. It uses an
