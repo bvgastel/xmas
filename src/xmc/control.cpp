@@ -1,31 +1,45 @@
+#include <string>
+#include <sstream>
 #include "control.h"
 
-Control::Control(int argc, char *argv[])
+Control::Control(int argc, char *argv[]) :
+    m_app(argc, argv),
+    m_consoleReader(this)
 {
-    m_app = std::make_shared<QApplication>(argc, argv);
-    m_app->setApplicationName(applicationName);
-    m_app->setApplicationVersion(applicationVersion);
+    m_app.setApplicationName(applicationName);
+    m_app.setApplicationVersion(applicationVersion);
 
-    std::cout << "Application name = " << m_app->applicationName().toStdString() << std::endl;
-    std::cout << "Application file path = " << m_app->applicationFilePath().toStdString() << std::endl;
-    std::cout << "Application dir path = " << m_app->applicationDirPath().toStdString() << std::endl;
-    std::cout << std::endl;
+    getOptions(m_opt);
 
-    m_opt = getOptions();
+    connect(this, SIGNAL(finished()), this, SLOT(quit()));
+    connect(&m_consoleReader, SIGNAL(textReceived(QString)),this, SLOT(processCommand(QString)));
 
-    std::cout << "commandline = " << (m_opt->commandline ? "true" : "false") << std::endl;
-    std::cout << "runAll = " << (m_opt->runAll ? "true" : "false") << std::endl;
-    std::cout << "outputDir = '" << m_opt->outputDir.toStdString() << "'" << std::endl;
-    std::cout << "positional Arguments = ";
-    for (QString arg : m_opt->args) {
-        std::cout << "'" << arg.toStdString() << "' ";
+
+}
+
+std::stringstream &Control::appData(std::stringstream &data) {
+    data << "Application name = " << m_app.applicationName().toStdString() << std::endl;
+    data << "Application file path = " << m_app.applicationFilePath().toStdString() << std::endl;
+    data << "Application dir path = " << m_app.applicationDirPath().toStdString() << std::endl;
+    data << std::endl;
+    return data;
+}
+
+std::stringstream &Control::paramData(std::stringstream &data) {
+    data << "commandline = " << (m_opt.commandline ? "true" : "false") << std::endl;
+    data << "runAll = " << (m_opt.runAll ? "true" : "false") << std::endl;
+    data << "outputDir = '" << m_opt.outputDir.toStdString() << "'" << std::endl;
+    data << "positional Arguments = ";
+    for (QString arg : m_opt.args) {
+        data << "'" << arg.toStdString() << "' ";
     }
-    std::cout << std::endl;
+    data << std::endl;
+    return data;
 }
 
 int Control::exec() {
-    std::cout << "============= Press Ctrl-C to end program ==============" << std::endl;
-    return m_app->exec();
+    std::cout << "============= Enter quit to end the program ==============" << std::endl;
+    return m_app.exec();
 }
 
 Control::~Control()
@@ -33,9 +47,30 @@ Control::~Control()
 
 }
 
-std::shared_ptr<Options> Control::getOptions()
+void Control::run() {
+    emit finished();
+}
+
+void Control::quit() {
+    std::cout << "Shutting down ...." << std::endl;
+    m_app.quit();
+}
+
+void Control::processCommand(QString line) {
+    std::cout << "received line = '"<< line.toStdString() << "'"<< std::endl;
+    if (line.toStdString() == "quit") {
+        std::cout << "starting to emit finished()" << "... ";
+        emit finished();
+        std::cout << "finished() emitted ... " << std::endl;
+    }
+}
+
+void Control::aboutToQuitApp() {
+    std::cout << "About to quit app" << std::endl;
+}
+
+void Control::getOptions(Options &opt)
 {
-    std::shared_ptr<Options> opt = std::make_shared<Options>();
     QCommandLineParser optParser;
     optParser.setApplicationDescription(applicationDescr);
 
@@ -51,11 +86,10 @@ std::shared_ptr<Options> Control::getOptions()
     optParser.addOption(outputDirectoryOption);
 
     optParser.addPositionalArgument("main", "Input model to process.");
-    optParser.process(*m_app);
+    optParser.process(m_app);
 
-    opt->args = optParser.positionalArguments();
-    opt->commandline = optParser.isSet(commandlineOption);
-    opt->runAll = optParser.isSet(allOption);
-    opt->outputDir = optParser.value(outputDirectoryOption);
-    return opt;
+    opt.args = optParser.positionalArguments();
+    opt.commandline = optParser.isSet(commandlineOption);
+    opt.runAll = optParser.isSet(allOption);
+    opt.outputDir = optParser.value(outputDirectoryOption);
 }

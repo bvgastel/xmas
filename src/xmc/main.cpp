@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <memory>
 
 #include <QCoreApplication>
 #include <QApplication>
@@ -12,11 +11,10 @@
 
 int main(int argc, char *argv[])
 {
-    std::shared_ptr<Control> control = std::make_shared<Control>(argc, argv);
+    Control control(argc, argv);
 
-    int result = control->exec();
-
-    std::cout << "Application result returned was " << result;
+    int result = control.exec();
+    std::cout << "Application result returned was " << result << std::endl;
 
     return result;
 }

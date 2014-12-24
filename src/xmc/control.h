@@ -11,6 +11,7 @@
 #include <QVector>
 
 #include "setup.h"
+#include "consolereader.h"
 
 struct Options {
     QStringList args;
@@ -19,19 +20,34 @@ struct Options {
     QString outputDir;
 };
 
-class Control
+class Control : QObject
 {
+    Q_OBJECT
+
 public:
     Control(int argc, char *argv[]);
     ~Control();
 
     int exec();
+    std::stringstream &appData(std::stringstream &);
+    std::stringstream &paramData(std::stringstream &data);
+
+signals:
+    void finished();
+    void textReceived(QString line);
+
+public slots:
+    void run();
+    void processCommand(QString);
+    void aboutToQuitApp();
+    void quit();
 
 private:
-    std::shared_ptr<QApplication> m_app;
-    std::shared_ptr<Options> m_opt;
+    QApplication m_app;
+    Options m_opt;
+    ConsoleReader m_consoleReader;
 
-    std::shared_ptr<Options> getOptions();
+    void getOptions(Options &);
 };
 
 #endif // CONTROL_H
