@@ -317,7 +317,7 @@ Principle. This principle states that: ``Software entities like classes, modules
 should be open for extension but closed for modifications''\cite{oodesign-open-close}. Minimizing
 changes to existing classes that have been tested and used, prevents undesired effects
 on current functionality. Core classes like XMASComponent and Port are used in many different parts
-of the software (see also ???), so changes to these classes have impact on the entire application.
+of the software (see also \ref{fig:xmas-headers}), so changes to these classes have impact on the entire application.
 At the same time, the priniciple dictates that new features can still be added to the software entities.
 
 
@@ -771,5 +771,17 @@ communication.
   
   
 \end{thebibliography}
+
+\newpage
+
+\appendix
+
+\section{xMAS header files}
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{images/file-dependencies.eps}
+  \caption{xMAS header files}
+  \label{fig:xmas-headers}
+\end{figure}
 
 \end{document}
