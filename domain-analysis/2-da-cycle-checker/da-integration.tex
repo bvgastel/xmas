@@ -401,8 +401,8 @@ when all ports have been marked as 'checked'.
 The Combinatoric Cycle Checker is implemented using an extension class, a component visitor
 and several functions to drive the checker. Class CombinatorialCyclePortExtension is, as
 the name already suggests, a PortExtension. It holds two boolean attributes: \emph{checking} to
-indicate whether the algorithm is currently traversing this port and \emph{checked} to indicate
-whether this port has already been checked.\\
+indicate whether the algorithm is currently traversing this port and \emph{checked} which is
+set to true after the port has been successfully checked.\\
 CombinatorialCycleDependencies is an implementation of the XMASComponentVisitor interface.
 The constructor takes a pointer to the Port object that was used to reach the component
 currently being visited. Attribute \emph{p} is initialized with this value. A second attribute,
