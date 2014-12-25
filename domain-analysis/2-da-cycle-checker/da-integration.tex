@@ -389,7 +389,7 @@ the trdy signal, for output ports this equation is the one that defines the irdy
 Along the traversed path, each port, including the starting port, is marked as 'checking'.
 If the algorithm later visits this port again, it knows it has detected a cycle.
 The traversal along a path ends when it reaches a sequential component. During backtracking,
-all 'checking' marks are reset. If none of the paths starting from a path result in a
+all 'checking' marks are reset. If none of the paths starting from a port result in a
 combinatorial cycle, the port will be marked as 'checked'. The Cycle Checker has completed
 when all ports have been marked as 'checked'.
 
