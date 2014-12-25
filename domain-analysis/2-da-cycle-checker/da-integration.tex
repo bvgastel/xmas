@@ -53,7 +53,7 @@ other choice of programming language.
 
 \tableofcontents
 
-\pagebreak
+\newpage
 
 \section{The WickedXmas tool}
 
@@ -91,10 +91,7 @@ executables a C++ compiler is required. The use of all these different utilities
 deployability of the WickedXmas tool. All utilities must first be installed on the target system used
 to run the tool.
 
-\paragraph{}
-For a more elaborate explanation we refer to the paper ``WickedXmas: Designing and Verifying on-chip 
-Communication Fabrics'' \cite{13_toolxmas}.
-
+\newpage
 
 \section{New verification modules}
 
@@ -118,6 +115,7 @@ understand and will therefore serve us well as an example.
  \label{fig:xmas-components}
 \end{figure}
 
+\paragraph{}
 In this section we will explore the new data structures. Figure \ref{fig:xmas-components} shows a
 UML-diagram describing the core xMAS data structures. Each component in an xMAS network is represented
 by an instance of the abstract XMASComponent class. All components can be identified by their unique name.
@@ -381,17 +379,23 @@ Substituting the second equation in the first now gives:
 
 
 
-\paragraph{}
-The Combinatoric Cycle Checker is created to detect these cycles in an xMAS network. It uses an
-algorithm based on a standard graph traversal algorithm to detect cycles. Starting at a random
-component, the algorithm executes a depth-first traversal along all channels connected to the
-component. During the traversal, each visited component (including the starting component) is
-marked. Whenever an already marked component is encountered during the traversal, the algorithm
-knows it has detected a cycle.\\
-If a non-combinatorial object is found on a path, a combinatorial cycle can not exist on this
-path and the algorithm continues its traversal on an other path. When all possible paths from
-a component yield no combinatorial cycle, the component is marked as checked. The Cycle Checker
-has completed when all components are marked as checked.
+\paragraph{The Combinatoric Cycle Checker}
+The Combinatoric Cycle Checkers job is to detect these combinatorial cycles in an xMAS network.
+It is based on a standard graph traversal algorithm to detect cycles. For all ports of all
+components in the model, the algorithm executes a depth-first traversal. At each step, the
+traversal continues according to the signals on the right-hand side of the equations
+of the current component. For input ports this equation is the one that defines
+the trdy signal, for output ports this equation is the one that defines the irdy signal.\\
+Along the traversed path, each port, including the starting port, is marked as 'checking'.
+If the algorithm later visits this port again, it knows it has detected a cycle.
+The traversal along a path ends when it reaches a sequential component. During backtracking,
+all 'checking' marks are reset. If none of the paths starting from a path result in a
+combinatorial cycle, the port will be marked as 'checked'. The Cycle Checker has completed
+when all ports have been marked as 'checked'.
+
+
+
+
 
 \paragraph{Implementation}
 The Combinatoric Cycle Checker is implemented using an extension class, a component visitor
@@ -405,7 +409,7 @@ currently being visited. Attribute \emph{p} is initialized with this value. A se
 \emph{retval}, is an initially empty vector of ports. The various visit member functions will
 fill this vector with the ports that the algorithm should use to continue the traversal. Visits
 to the sequential primitives will leave this vector empty. When a combinatorial primitive is
-visited, all ports other than the current port \emph{p} are added to the vector.
+visited, all ports required to evaluate the irdy or trdy signal of \emph{p} are added to the vector.
 
 \paragraph{}
 Inside function checkSignal() the actual algorithm is executed. It is here where the PortExtension
@@ -414,6 +418,7 @@ is instantiated and used to visit the component. Depending on the contents of at
 \emph{retval}, the algorithm recursively continues its traversal. The Cycle Checker is started
 by calling CombinatorialCycleDetector and passing the set of all components.
 
+\newpage
 
 \section{Integration of Verification Tools}
 
