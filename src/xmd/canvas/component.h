@@ -53,6 +53,9 @@ QT_END_NAMESPACE
 class Port;
 class Channel;
 
+/**
+ * @brief The Component class
+ */
 class Component : public QGraphicsProxyWidget
 {
         Q_OBJECT
@@ -60,8 +63,8 @@ public:
     enum { Type = UserType + 15 };
     int type() const Q_DECL_OVERRIDE { return Type; }
     Component(QMenu *contextMenu,
-              QGraphicsItem *parent = 0,
-              QGraphicsScene *scene = 0,
+              QGraphicsItem *parent = nullptr,
+              QGraphicsScene *scene = nullptr,
               Qt::WindowFlags wFlags = 0);
     virtual ~Component();
     void paint(QPainter *painter,

@@ -38,61 +38,30 @@ QT_END_NAMESPACE
 class Component;
 class Connection;
 
-Connector::Connector(Component *parent1, QGraphicsScene *scene1, QWidget* widget, Connector::ConnectorType conType1,  int radius)
+/**
+ * Constructor
+ */
+Connector::Connector(Component *parent1,
+                     QGraphicsScene *scene1,
+                     QWidget* widget,
+                     Connector::ConnectorType conType1,
+                     int radius)
         : QGraphicsItem(parent1, scene1),
-     m_connectorType(conType1), m_self(parent1), m_widget(widget), m_radius(radius)
+          m_connectorType(conType1),
+          m_parent(parent1),
+          m_widget(widget),
+          m_radius(radius)
 {
-
     setCacheMode(DeviceCoordinateCache);
     setZValue(2);
     updatePosition();
-
-    if (conType1 == ConnectorType::Input) {
-        m_darkColor =  QColor(Qt::darkYellow);
-    }
-    else if (conType1 == ConnectorType::Output) {
-        m_darkColor =  QColor(Qt::darkRed).light(80);
-    }
-    else {
-        m_darkColor =  QColor(Qt::darkGreen);
-    }
+    m_darkColor =  QColor(Qt::darkRed);
     m_highlight = false;
 }
 
-
-void Connector::updatePosition() {
-    this->prepareGeometryChange();
-
-    if (m_self == NULL || m_widget == NULL) {
-        return;
-    }
-
-    QPointF pPos = m_self->pos();
-    QSize widgetSize = m_widget->size();
-
-    QPointF newPos;
-    if (connectorAlignment() == Connector::Left) {
-        newPos.setX(-m_radius);
-        newPos.setY(parent->subWidgetRect(m_widget).y() + m_self->subWidgetRect(m_widget).height()/2.0);
-    }
-    else if (connectorAlignment() == Connector::Right) {
-        newPos.setX(m_self->rect().width() + m_radius);
-        newPos.setY(m_self->subWidgetRect(m_widget).y()+ m_self->subWidgetRect(m_widget).height()/2.0);
-    }
-    else if (connectorAlignment() == Connector::Bottom) {
-        newPos.setX(m_self->subWidgetRect(m_widget).x() + m_self->subWidgetRect(m_widget).width()/2.0);
-        newPos.setY(m_self->rect().height() + m_radius);
-    }
-    else if (connectorAlignment() == Connector::Top) {
-        newPos.setX(m_self->subWidgetRect(m_widget).x() + m_self->subWidgetRect(m_widget).width()/2.0);
-        newPos.setY(-m_radius);
-    }
-
-    this->setPos(newPos);
-    this->m_connection.updatePosition();
-    update();
-}
-
+/**
+ * Deconstructor
+ */
 Connector::~Connector()
 {
     this->deleteConnections();
@@ -100,4 +69,29 @@ Connector::~Connector()
         this->scene()->removeItem(this);
     }
 }
+
+/**
+ * updatePosition
+ */
+void Connector::updatePosition() {
+    this->prepareGeometryChange();
+    if (m_parent == NULL || m_widget == NULL) {
+        return;
+    }
+
+    QPointF newPos;
+    if (conType1 == ConnectorType::Input) {
+        newPos.setX(-m_radius);
+        newPos.setY(m_parent->subWidgetRect(m_widget).y() + m_parent->subWidgetRect(m_widget).height()/2.0);
+    }
+    else if (conType1 == ConnectorType::Output) {
+        newPos.setX(m_parent->rect().width() + m_radius);
+        newPos.setY(m_parent->subWidgetRect(m_widget).y()+ m_parent->subWidgetRect(m_widget).height()/2.0);
+    }
+
+    this->setPos(newPos);
+    this->m_connection.updatePosition();
+    update();
+}
+
 

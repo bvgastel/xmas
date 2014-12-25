@@ -48,33 +48,45 @@ QT_END_NAMESPACE
 class Connector;
 
 /**
- * A Connection connects two connectors
+ * @brief The Connection class
  */
 class Connection : public QGraphicsLineItem
 {
 public:
     enum { Type = UserType + 4 };
 
-    Connection(Connector *startConnector, Connector *endConnector,
-      QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+    Connection(Connector *startConnector,
+               Connector *endConnector,
+               QGraphicsItem *parent = nullptr,
+               QGraphicsScene *scene = nullptr);
 
     int type() const Q_DECL_OVERRIDE { return Type; }
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     QPainterPath shape() const Q_DECL_OVERRIDE;
 
-    Connector *startConnector() const { return m_startConnector; }
-    Connector *endConnector() const { return m_endConnector; }
+    Connector *startConnector() const
+    {
+        return m_startConnector;
+    }
+    Connector *endConnector() const
+    {
+        return m_endConnector;
+    }
 
     void updatePosition();
 
     virtual ~Connection();
 
 protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget = 0) Q_DECL_OVERRIDE;
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr) Q_DECL_OVERRIDE;
 
-     void recreatePath(QPointF& controlPoint1, QPointF& controlPoint2);
-    QPolygonF createArrowPoly(QPainterPath& p, Connector* connector);
+    void recreatePath(QPointF& controlPoint1,
+                      QPointF& controlPoint2);
+
+    QPolygonF createArrowPoly(QPainterPath& p,
+                              Connector* connector);
 
 private:
     Connector *m_startConnector;

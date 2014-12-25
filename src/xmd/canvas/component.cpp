@@ -31,24 +31,31 @@
 
 #include "component.h"
 
+/**
+ * @brief Component::Component
+ * @param contextMenu
+ * @param parent
+ * @param scene
+ * @param wFlags
+ */
 Component::Component(QMenu *contextMenu,
-                   QGraphicsItem *parent, QGraphicsScene *scene, Qt::WindowFlags wFlags)
-    : QGraphicsProxyWidget(parent,wFlags) , m_maxRadius(1)
+                     QGraphicsItem *parent,
+                     QGraphicsScene *scene,
+                     Qt::WindowFlags wFlags)
+    : QGraphicsProxyWidget(parent,wFlags),
+      m_maxRadius(1)
 {
-
     setCacheMode(DeviceCoordinateCache);
-
     m_contextMenu = contextMenu;
     m_isMoving = false;
-
     setZValue(1);
-    //param
     m_noResize = true;
-    if (m_noResize) {
+    if (m_noResize)
+    {
         m_controlResizeHandles = true;
     }
-    else {
-        //param
+    else
+    {
         m_controlResizeHandles = false;
     }
 
@@ -56,20 +63,28 @@ Component::Component(QMenu *contextMenu,
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsFocusable, true);
 
-    if (scene != NULL){
+    if (scene != nullptr)
+    {
         scene->addItem(this);
     }
-
 }
 
+/**
+ * @brief Component::~Component
+ */
 Component::~Component()
 {
     removeWidgetFromConnectors();
-    if (scene() != NULL) {
+    if (scene() != nullptr)
+    {
         this->scene()->removeItem(this);
     }
 }
 
+/**
+ * @brief Component::boundingRect
+ * @return
+ */
 QRectF Component::boundingRect() const
 {
     QRectF rec(QGraphicsProxyWidget::boundingRect());
@@ -78,21 +93,37 @@ QRectF Component::boundingRect() const
     return rec;
 }
 
-QPainterPath Component::shape() const {
+/**
+ * @brief Component::shape
+ * @return
+ */
+QPainterPath Component::shape() const
+{
     QPainterPath p;
     QRectF rec(QGraphicsProxyWidget::boundingRect());
     p.addRect(rec);
    return p;
 }
 
-void Component::setWidget(QWidget *widget) {
+/**
+ * @brief Component::setWidget
+ * @param widget
+ */
+void Component::setWidget(QWidget *widget)
+{
     QGraphicsProxyWidget::setWidget(widget);
     connect(widget, SIGNAL(destroyed()), this, SLOT(deleted()));
 }
 
-void Component::addConnector(Connector* connector) {
+/**
+ * @brief Component::addConnector
+ * @param connector
+ */
+void Component::addConnector(Connector* connector)
+{
     connectors.append(connector);
-    if (connector->m_radius > m_maxRadius) {
+    if (connector->m_radius > m_maxRadius)
+    {
         m_maxRadius = connector->m_radius;
     }
 
@@ -100,83 +131,139 @@ void Component::addConnector(Connector* connector) {
     prepareGeometryChange();
 }
 
+/**
+ * @brief Component::deleteConnections
+ */
 void Component::deleteConnections()
 {
-    foreach (NodeConnector *c, connectors) {
+    foreach (NodeConnector *c, connectors)
+    {
          c->deleteConnections();
     }
 }
 
-void Component::removeWigetFromConnectors() {
-    foreach (Connector *c, connectors) {
+/**
+ * @brief Component::removeWigetFromConnectors
+ */
+void Component::removeWigetFromConnectors()
+{
+    foreach (Connector *c, connectors)
+    {
         c->removeWidget();
     }
 }
 
+/**
+ * @brief Component::contextMenuEvent
+ * @param event
+ */
 void Component::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
     setSelected(true);
-   if (m_contextMenu != NULL) {
+   if (m_contextMenu != nullptr)
+   {
         m_contextMenu->exec(event->screenPos());
     }
 }
 
+/**
+ * @brief Component::itemChange
+ * @param change
+ * @param value
+ * @return
+ */
 QVariant Component::itemChange(GraphicsItemChange change,
-                              const QVariant &value)
+                               const QVariant &value)
 {
-    if (change == QGraphicsItem::ItemPositionChange) {
+    if (change == QGraphicsItem::ItemPositionChange)
+    {
         updateConnectorsPos();
     }
 
-    if (change == QGraphicsItem::ItemVisibleHasChanged && !value.value<bool>()) {
+    if (change == QGraphicsItem::ItemVisibleHasChanged && !value.value<bool>())
+    {
         deleted();
         return value;
     }
 
-    if (m_controlResizeHandles && change == QGraphicsItem::ItemCursorChange) {
+    if (m_controlResizeHandles && change == QGraphicsItem::ItemCursorChange)
+    {
         QCursor cur = qVariantValue<QCursor>(value);
-        if (cur.shape() == Qt::SizeVerCursor || cur.shape() == Qt::SizeHorCursor || cur.shape() == Qt::SizeBDiagCursor || cur.shape() == Qt::SizeFDiagCursor) {
-            if (m_noResize) {
+        if (cur.shape() == Qt::SizeVerCursor
+                || cur.shape() == Qt::SizeHorCursor
+                || cur.shape() == Qt::SizeBDiagCursor
+                || cur.shape() == Qt::SizeFDiagCursor)
+        {
+            if (m_noResize)
+            {
                 return Qt::ArrowCursor;
             }
             else {
-                foreach (Connector *con, connectors) {
-                    if (con->isUnderMouse()) {
+                foreach (Connector *con, connectors)
+                {
+                    if (con->isUnderMouse())
+                    {
                         return Qt::ArrowCursor;
                     }
                 }
             }
         }
     }
-    if (change == QGraphicsItem::ItemSelectedChange || change == QGraphicsItem::ItemTransformChange || change == QGraphicsItem::ItemScaleChange
-            || change == QGraphicsItem::ItemSendsGeometryChanges || change == QGraphicsItem::ItemMatrixChange) {
+    if (change == QGraphicsItem::ItemSelectedChange
+            || change == QGraphicsItem::ItemTransformChange
+            || change == QGraphicsItem::ItemScaleChange
+            || change == QGraphicsItem::ItemSendsGeometryChanges
+            || change == QGraphicsItem::ItemMatrixChange)
+    {
         updateConnectorsPos();
     }
-    if (change == QGraphicsItem::ItemPositionHasChanged || change == QGraphicsItem::ItemSelectedChange) {
+    if (change == QGraphicsItem::ItemPositionHasChanged
+            || change == QGraphicsItem::ItemSelectedChange)
+    {
         updateConnectorsPos();
     }
 
     return QGraphicsProxyWidget::itemChange(change, value);
 }
 
-void Component::resizeEvent ( QGraphicsSceneResizeEvent * event ) {
+/**
+ * @brief Component::resizeEvent
+ * @param event
+ */
+void Component::resizeEvent ( QGraphicsSceneResizeEvent * event )
+{
     QGraphicsProxyWidget::resizeEvent(event);
     updateConnectorsPos();
 }
 
-
-void Component::hoverMoveEvent ( QGraphicsSceneHoverEvent * event )  {
+/**
+ * @brief Component::hoverMoveEvent
+ * @param event
+ */
+void Component::hoverMoveEvent ( QGraphicsSceneHoverEvent * event )
+{
     event->ignore();
     return;
 }
 
-void Component::updateConnectorsPos() {
-    foreach (NodeConnector *con, connectors) {
+/**
+ * @brief Component::updateConnectorsPos
+ */
+void Component::updateConnectorsPos()
+{
+    foreach (NodeConnector *con, connectors)
+    {
         con->updatePosition();
     }
 }
 
+/**
+ * @brief Component::paint
+ * @param painter
+ * @param option
+ * @param w
+ */
 void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *w)
 {
     QGraphicsProxyWidget::paint(painter, option, w);
@@ -185,38 +272,57 @@ void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 const char* Component::shouldMoveOnClickTypes[] = {"QDialog", "QFrame", "QGroupBox"};
 
-
-bool Component::shouldMoveNode(QGraphicsSceneMouseEvent *mouseEvent) {
+/**
+ * @brief Component::shouldMoveNode
+ * @param mouseEvent
+ * @return
+ */
+bool Component::shouldMoveNode(QGraphicsSceneMouseEvent *mouseEvent)
+{
     QPointF pos = mouseEvent->pos();
     QPointer<QWidget> hitWidget = widget()->childAt(pos.toPoint());
-    if (hitWidget == NULL) {
+    if (hitWidget == nullptr) {
         return true;
     }
     const size_t len = sizeof(shouldMoveOnClickTypes) / sizeof(shouldMoveOnClickTypes[0]);
-    for (size_t i = 0; i < len; ++i) {
-        if (hitWidget->inherits(shouldMoveOnClickTypes[i])) {
+    for (size_t i = 0; i < len; ++i)
+    {
+        if (hitWidget->inherits(shouldMoveOnClickTypes[i]))
+        {
             return true;
         }
     }
     return false;
 }
 
-void Component::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if (shouldMoveNode(mouseEvent)) {
+/**
+ * @brief Component::mousePressEvent
+ * @param mouseEvent
+ */
+void Component::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    if (shouldMoveNode(mouseEvent))
+    {
         QGraphicsItem::mousePressEvent(mouseEvent);
         m_isMoving = true;
-        // what if we have to remove that?
         scene()->clearSelection();
         scene()->clearFocus();
         setSelected(true);
     }
-    else {
+    else
+    {
         QGraphicsProxyWidget::mousePressEvent(mouseEvent);
     }
 }
 
-void Component::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if (m_isMoving) {
+/**
+ * @brief Component::mouseMoveEvent
+ * @param mouseEvent
+ */
+void Component::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    if (m_isMoving)
+    {
         QGraphicsItem::mouseMoveEvent(mouseEvent);
     }
     else {
@@ -224,8 +330,14 @@ void Component::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     }
 }
 
-void Component::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-    if (m_isMoving) {
+/**
+ * @brief Component::mouseReleaseEvent
+ * @param mouseEvent
+ */
+void Component::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    if (m_isMoving)
+    {
         m_isMoving = false;
     }
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
@@ -234,14 +346,27 @@ void Component::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
     setSelected(true);
 }
 
-void Component::hide() {
+/**
+ * @brief Component::hide
+ */
+void Component::hide()
+{
     this->widget()->close();
 }
 
-void Component::deleted() {
+/**
+ * @brief Component::deleted
+ */
+void Component::deleted()
+{
     this->widget()->close();
 }
 
-void Component::deleted(int result) {
+/**
+ * @brief Component::deleted
+ * @param result
+ */
+void Component::deleted(int result)
+{
     this->widget()->close();
 }

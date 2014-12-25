@@ -49,6 +49,9 @@ QT_END_NAMESPACE
 
 class Component;
 
+/**
+ * @brief The Canvas class
+ */
 class Canvas : public QGraphicsScene
 {
         Q_OBJECT
@@ -56,9 +59,11 @@ class Canvas : public QGraphicsScene
 public:
     enum Mode { InsertItem, InsertLine, InsertText, MoveItem, InsertNode, InsertNode2 };
 
-    Canvas(QMenu *itemMenu, QObject *parent = 0);
+    Canvas(QMenu *itemMenu, QObject *parent = nullptr);
     QColor lineColor() const
-        { return m_lineColor; }
+    {
+        return m_lineColor;
+    }
     void setLineColor(const QColor &color);
 
     QMenu *m_itemMenu;
@@ -82,7 +87,6 @@ private:
     bool isItemChange(int type);
     bool m_leftButtonDown;
     QPointF m_startPoint;
-
     Connection* m_tmpConnection;
     Connector* m_tmpConnector;
     Connector* m_existingConnector;

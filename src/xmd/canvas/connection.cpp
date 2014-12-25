@@ -33,10 +33,17 @@
 #include "connection.h"
 #include "connector.h"
 
-
-
-Connection::Connection(Connector *startConnector, Connector *endConnector,
-                       QGraphicsItem *parent, QGraphicsScene *scene)
+/**
+ * @brief Connection::Connection
+ * @param startConnector
+ * @param endConnector
+ * @param parent
+ * @param scene
+ */
+Connection::Connection(Connector *startConnector,
+                       Connector *endConnector,
+                       QGraphicsItem *parent,
+                       QGraphicsScene *scene)
     : QGraphicsLineItem(parent)
 {
     m_startConnector = startConnector;
@@ -47,26 +54,42 @@ Connection::Connection(Connector *startConnector, Connector *endConnector,
     QPointF controlPoint1;
     QPointF controlPoint2;
     recreatePath(controlPoint1, controlPoint2);
-
 }
 
+/**
+ * @brief NodeConnection::boundingRect
+ * @return
+ */
 QRectF NodeConnection::boundingRect() const
 {
     qreal extra = 3;
     return QGraphicsPathItem::boundingRect().normalized().adjusted(-extra, -extra, extra, extra);
 }
 
+/**
+ * @brief NodeConnection::shape
+ * @return
+ */
 QPainterPath NodeConnection::shape() const
 {
     QPainterPath path = QGraphicsPathItem::shape();
     return path;
 }
 
-void Connection::updatePosition() {
+/**
+ * @brief Connection::updatePosition
+ */
+void Connection::updatePosition()
+{
     prepareGeometryChange();
     update();
 }
 
+/**
+ * @brief Connection::recreatePath
+ * @param controlPoint1
+ * @param controlPoint2
+ */
 void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
 {
     QPointF a(mapFromItem(m_startConnector, 0, 0));
@@ -93,127 +116,85 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         rightConn = m_startConnector;
     }
 
-    QPointF bottom;
-    QPointF top;
-    Connector* bottomConn;
-    Connector* topConn;
-    if (a.y() < b.y()) {
-        top = a;
-        topConn = m_startConnector;
-        bottom = b;
-        bottomConn = m_endConnector;
-    }
-    else {
-        top = b;
-        topConn = m_endConnector;
-        bottom = a;
-        bottomConn = m_startConnector;
-    }
-
-
     controlPoint1 = a;
     controlPoint2 = b;
-    //how much to move control point from start or end point, default as used for simple case
+    //how much to move control point from start or end point,
+    //default as used for simple case
     qreal moveX = 0.45 * diffx;
     qreal moveY = 0.45 * diffy;
 
     QSizeF combinedSize(30,30);
-    if (leftConn->parentItem() != NULL) {
+    if (leftConn->parentItem() != nullptr) {
         combinedSize.setWidth(leftConn->parentItem()->boundingRect().width());
         combinedSize.setHeight(leftConn->parentItem()->boundingRect().height());
     }
     else {
-        combinedSize.setWidth(5 * leftConn->mRadius);
-        combinedSize.setWidth(5 * leftConn->mRadius);
+        combinedSize.setWidth(5 * leftConn->m_radius);
+        combinedSize.setWidth(5 * leftConn->m_radius);
     }
-    if (rightConn->parentItem() != NULL) {
+    if (rightConn->parentItem() != nullptr) {
         combinedSize.setWidth(combinedSize.width() + rightConn->parentItem()->boundingRect().width());
         combinedSize.setHeight(combinedSize.height() + rightConn->parentItem()->boundingRect().height());
     }
     else {
-        combinedSize.setWidth(combinedSize.width() + 5 * rightConn->mRadius);
-        combinedSize.setHeight(combinedSize.height() + 5 * rightConn->mRadius);
+        combinedSize.setWidth(combinedSize.width() + 5 * rightConn->m_radius);
+        combinedSize.setHeight(combinedSize.height() + 5 * rightConn->m_radius);
     }
 
 
 
-    if (leftConn->connectorAlignment() == rightConn->connectorAlignment() && leftConn->connectorAlignment() == Connector::Left && right.x() - left.x() < combinedSize.width()/2.0) {
-        controlPoint1.setX(controlPoint1.x() - moveY/2.0 /*- combinedSize.width()/2.0*/);
-        controlPoint2.setX(controlPoint2.x() - moveY/2.0 /*- combinedSize.width()/2.0*/);
+    if (leftConn->connectorType() == rightConn->connectorType()
+            && leftConn->connectorType() == Connector::Input
+            && right.x() - left.x() < combinedSize.width()/2.0) {
+        controlPoint1.setX(controlPoint1.x() - moveY/2.0);
+        controlPoint2.setX(controlPoint2.x() - moveY/2.0);
     }
-    else if (leftConn->connectorAlignment() == rightConn->connectorAlignment() && leftConn->connectorAlignment() == Connector::Right && right.x() - left.x() < combinedSize.width()/2.0) {
-        controlPoint1.setX(controlPoint1.x() + moveY/2.0 /*+ combinedSize.width()/2.0*/);
-        controlPoint2.setX(controlPoint2.x() + moveY/2.0 /*+ combinedSize.width()/2.0*/);
+    else if (leftConn->connectorType() == rightConn->connectorType()
+             && leftConn->connectorType() == Connector::Output
+             && right.x() - left.x() < combinedSize.width()/2.0) {
+        controlPoint1.setX(controlPoint1.x() + moveY/2.0);
+        controlPoint2.setX(controlPoint2.x() + moveY/2.0);
     }
-    else if (leftConn->connectorAlignment() == rightConn->connectorAlignment() && leftConn->connectorAlignment() == Connector::Top && bottom.y() - top.y() < combinedSize.height()/2.0) {
-        controlPoint1.setY(controlPoint1.y() - moveX/2.0 /*- combinedSize.height()/2.0*/);
-        controlPoint2.setY(controlPoint2.y() - moveX/2.0 /*- combinedSize.height()/2.0*/);
-    }
-    else if (leftConn->connectorAlignment() == rightConn->connectorAlignment() && leftConn->connectorAlignment() == Connector::Bottom && bottom.y() - top.y() < combinedSize.height()/2.0) {
-        controlPoint1.setY(controlPoint1.y() + moveX/2.0 /*+ combinedSize.height()/2.0*/);
-        controlPoint2.setY(controlPoint2.y() + moveX/2.0 /*+ combinedSize.height()/2.0*/);
-    }
-    else
-    //the simple case, they face each other the "good" way
-    if (leftConn->connectorAlignment() != Connector::Left && rightConn->connectorAlignment() != Connector::Right
-            && topConn->connectorAlignment() != Connector::Top && bottomConn->connectorAlignment() != Connector::Bottom) {
-
-        //very simple: straight line
-        //controlPoint1 = a + 0.3 * (b-a);
-        //controlPoint2 = a + 0.7 * (b-a);
-
+    else if (leftConn->connectorType() != Connector::Input
+             && rightConn->connectorType() != Connector::Output) {
         controlPoint1 = a;
         controlPoint2 = b;
-        //how much to move control point from start or end point
         qreal moveX = 0.45 * diffx;
         qreal moveY = 0.45 * diffy;
-        if (dist > 5 * (m_startConnector->mRadius)) {
+        if (dist > 5 * (m_startConnector->m_radius)) {
 
-            if (moveX < 3 * (m_startConnector->mRadius)) {
-                moveX = 3 * (m_startConnector->mRadius);
+            if (moveX < 3 * (m_startConnector->m_radius)) {
+                moveX = 3 * (m_startConnector->m_radius);
             }
-            if (moveY < 3 * (m_startConnector->mRadius)) {
-                moveY = 3 * (m_startConnector->mRadius);
+            if (moveY < 3 * (m_startConnector->m_radius)) {
+                moveY = 3 * (m_startConnector->m_radius);
             }
         }
 
-        if (m_startConnector->connectorAlignment() == Connector::Left) {
+        if (m_startConnector->connectorType() == Connector::Input) {
             controlPoint1.setX(controlPoint1.x() - moveX);
         }
-        else if (m_startConnector->connectorAlignment() == Connector::Right) {
+        else if (m_startConnector->connectorAlignment() == Connector::Output) {
             controlPoint1.setX(controlPoint1.x() + moveX);
         }
-        else if (m_startConnector->connectorAlignment() == Connector::Bottom) {
-            controlPoint1.setY(controlPoint1.y() + moveY);
-        }
-        else if (m_startConnector->connectorAlignment() == Connector::Top) {
-            controlPoint1.setY(controlPoint1.y() - moveY);
-        }
 
-        if (m_endConnector->connectorAlignment() == Connector::Left) {
+        if (m_endConnector->connectorType() == Connector::Input) {
             controlPoint2.setX(controlPoint2.x() - moveX);
         }
-        else if (m_endConnector->connectorAlignment() == Connector::Right) {
+        else if (m_endConnector->connectorType() == Connector::Output) {
             controlPoint2.setX(controlPoint2.x() + moveX);
         }
-        else if (m_endConnector->connectorAlignment() == Connector::Bottom) {
-            controlPoint2.setY(controlPoint2.y() + moveY);
-        }
-        else if (m_endConnector->connectorAlignment() == Connector::Top) {
-            controlPoint2.setY(controlPoint2.y() - moveY);
-        }
     }
-    //the bad case, method needs cleanup
-    else {
+     else {
         controlPoint1 = a;
         controlPoint2 = b;
         qreal maxMove = 0.5 * dist;
         moveX = 0.5 * dist;
         moveY = 0.5 * dist;
-        if (m_startConnector->parent != NULL) {
+        if (m_startConnector->parent != nullptr) {
             maxMove = 1 * (m_startConnector->parent->rect().width() + m_startConnector->parent->rect().height());
         }
-        else if (m_endConnector->parent != NULL) {
+        else if (m_endConnector->parent != nullptr) {
             maxMove = 1 * (m_endConnector->parent->rect().width() + m_endConnector->parent->rect().height());
         }
         if (moveX > maxMove) {
@@ -222,58 +203,13 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         if (moveY > maxMove) {
             moveY = maxMove + 0.1 * (moveY-maxMove);
         }
-        if (m_startConnector->connectorAlignment() == Connector::Left) {
-            moveX *= -1;
-            if ((m_startConnector == topConn) == (m_startConnector == rightConn)) {
-                moveY *= -1;//relevantHeight;
-            }
-        }
-        else if (m_startConnector->connectorAlignment() == Connector::Right) {
-            //moveX *= 1;
-            if ((m_startConnector == topConn) == (m_startConnector == leftConn)) {
-                moveY *= -1;//relevantHeight;
-            }
-        }
-        else if (m_startConnector->connectorAlignment() == Connector::Bottom) {
-            //moveY *= 1;
-            if ((m_startConnector == leftConn) == (m_startConnector == topConn)) {
-                moveX *= -1;
-            }
-        }
-        else if (m_startConnector->connectorAlignment() == Connector::Top) {
-            moveY *= -1;
-            if ((m_startConnector == leftConn) == (m_startConnector == bottomConn)) {
-                moveX *= -1;
-            }
-        }
-
-
-        //ugly shit: handle some cases that don't look nice
-        if (m_endConnector == topConn && topConn->connectorAlignment() == Connector::Top && (bottomConn->connectorAlignment() == Connector::Left || bottomConn->connectorAlignment() == Connector::Right)) {
-            moveY *= -1;
-            //moveY = 0;
-        }
-        else if (m_endConnector == bottomConn && bottomConn->connectorAlignment() == Connector::Bottom && (topConn->connectorAlignment() == Connector::Left || topConn->connectorAlignment() == Connector::Right)) {
-            moveY *= -1;
-            //moveY = 0;
-        }
-        else if (m_endConnector == leftConn && leftConn->connectorAlignment() == Connector::Left && (rightConn->connectorAlignment() == Connector::Top || rightConn->connectorAlignment() == Connector::Bottom)) {
-            moveX *= -1;
-            //moveX = 0;
-        }
-        else if (m_endConnector == rightConn && rightConn->connectorAlignment() == Connector::Right && (leftConn->connectorAlignment() == Connector::Top || leftConn->connectorAlignment() == Connector::Bottom)) {
-            moveX *= -1;
-            //moveX = 0;
-        }
-
         controlPoint1.setX(controlPoint1.x() + moveX);
         controlPoint1.setY(controlPoint1.y() + moveY);
 
 
         moveX = 0.5 * dist;
         moveY = 0.5 * dist;
-        // if start was null, then it was already set to end.
-        if (m_startConnector->parent != NULL && m_endConnector->parent != NULL) {
+        if (m_startConnector->parent != nullptr && m_endConnector->parent != nullptr) {
             maxMove = 1 * (m_endConnector->parent->rect().width() + m_endConnector->parent->rect().height());
         }
         if (moveX > maxMove) {
@@ -282,56 +218,6 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         if (moveY > maxMove) {
             moveY = maxMove + 0.1 * (moveY-maxMove);
         }
-        if (m_endConnector->connectorAlignment() == Connector::Left) {
-            moveX *= -1;
-            if ((m_endConnector == topConn) == (m_endConnector == rightConn)) {
-                moveY *= -1;//relevantHeight;
-            }
-        }
-        else if (m_endConnector->connectorAlignment() == Connector::Right) {
-            //moveX *= 1;
-            if ((m_endConnector == topConn) == (m_endConnector == leftConn)) {
-                moveY *= -1;//relevantHeight;
-            }
-        }
-        else if (m_endConnector->connectorAlignment() == Connector::Bottom) {
-            //moveY *= 1;
-            if ((m_startConnector == leftConn) == (m_startConnector == topConn)) {
-                moveX *= -1;
-            }
-        }
-        else if (m_endConnector->connectorAlignment() == Connector::Top) {
-            moveY *= -1;
-            if ((m_startConnector == leftConn) == (m_startConnector == bottomConn)) {
-                moveX *= -1;
-            }
-        }
-
-        /*
-        if (mStartConnector->connectorAlignment() == mEndConnector->connectorAlignment()) {
-            moveX *= 2;
-            moveY *= 2;
-        }*/
-
-
-        //ugly shit: handle some cases that don't look nice
-        if (m_startConnector == topConn && topConn->connectorAlignment() == Connector::Top && (bottomConn->connectorAlignment() == Connector::Left || bottomConn->connectorAlignment() == Connector::Right)) {
-            moveY *= -1;
-            //moveY = 0;
-        }
-        else if (m_startConnector == bottomConn && bottomConn->connectorAlignment() == Connector::Bottom && (topConn->connectorAlignment() == Connector::Left || topConn->connectorAlignment() == Connector::Right)) {
-            moveY *= -1;
-            //moveY = 0;
-        }
-        else if (m_startConnector == leftConn && leftConn->connectorAlignment() == Connector::Left && (rightConn->connectorAlignment() == Connector::Top || rightConn->connectorAlignment() == Connector::Bottom)) {
-            moveX *= -1;
-            //moveX = 0;
-        }
-        else if (m_startConnector == rightConn && rightConn->connectorAlignment() == Connector::Right && (leftConn->connectorAlignment() == Connector::Top || leftConn->connectorAlignment() == Connector::Bottom)) {
-            moveX *= -1;
-            //moveX = 0;
-        }
-
         controlPoint2.setX(controlPoint2.x() + moveX);
         controlPoint2.setY(controlPoint2.y() + moveY);
     }
@@ -342,20 +228,20 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
     this->setPath(p);
 }
 
-
-
-
+/**
+ * @brief Connection::~Connection
+ */
 Connection::~Connection(){
-    if (this->m_startConnector != NULL) {
+    if (this->m_startConnector != nullptr) {
         this->m_startConnector->removeConnection(this);
-        this->m_startConnector = NULL;
+        this->m_startConnector = nullptr;
     }
-    if (this->m_endConnector != NULL) {
+    if (this->m_endConnector != nullptr) {
         this->m_endConnector->removeConnection(this);
-        this->m_endConnector = NULL;
+        this->m_endConnector = nullptr;
     }
 
-    if (scene() != NULL) {
+    if (scene() != nullptr) {
         this->scene()->removeItem(this);
     }
 }

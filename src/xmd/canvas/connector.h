@@ -50,7 +50,7 @@ class Connector : public QGraphicsItem
 {
 public:
     enum { Type = UserType + 6 };
-    int type() const { return Type;}
+    int type() const Q_DECL_OVERRIDE { return Type; }
     enum ConnectorType { Input=1, Output=2 };
     ConnectorType connectorType() const {
         return m_connectorType;
@@ -58,15 +58,13 @@ public:
     void setConnectorType(ConnectorType p) {
         m_connectorType = p;
     }
-    Connector(Component *self, QGraphicsScene *scene, QWidget* widget,
+    Connector(Component *parent, QGraphicsScene *scene, QWidget* widget,
          ConnectorType  ct = Input, const int radius = 7);
 
     Component *getComponent() const {
-        return m_self;
+        return m_parent;
     }
-
     virtual ~Connector();
-
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
@@ -77,12 +75,10 @@ private:
     QWidget m_widget;
     ConnectorType m_connectorType;
     bool m_isConnected;
-    const char m_name;
     Connection m_connection;
-    Component *m_self;
+    Component *m_parent;
     QColor m_darkColor;
     bool m_highlight;
-
 
 };
 
