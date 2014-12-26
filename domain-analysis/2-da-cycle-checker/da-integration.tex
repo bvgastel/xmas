@@ -34,15 +34,23 @@ steps to perform. Furthermore, from a software architecture point of view, the t
 is hard to maintain and extend. Many dependencies on external libraries and utilities
 severely hamper portability and deployability of the software.
 
+\paragraph{}
 In order to solve above mentioned issues, a complete rewrite of the WickedXmas tool is
-warranted. Work has already been started on refactoring the available verification tools.
+warranted. Work has already been started on refactorization of the available verification tools.
 One of the key design issues involves the extensibility of the software. It should be
 easy to code and integrate new verification tools. In addition, the design tool and
 the various verification tools should integrate well.
-To achieve this level of integration the source code of the new verification tools has
-been examined as part of this domain analysis. The remainder of this document will describe
-the structure of the source code and provide suggestions how the desired level of integration
-can be reached.
+
+To achieve this level of integration, the source code of the new verification tools has
+been examined as part of this domain analysis. After a brief overview of the current
+WickedXmas tool, the core classes of the new verification tools will be presented.
+In order to illustrate how these classes are used, one of the verification tools,
+the Combinatoric Cycle Checker, is introduced and its implementation is discussed.\\
+The next part discusses several aspects to achieve the desired level of integration
+of the tools. Several alternatives are presented and the advantages and disadvantages
+of each are listed. Finally, the last section provides recommendations on which
+of the listed alternatives are most suitable.
+
 
 \paragraph{Note:}
 One of the assumptions made during this analysis is that the final design tool will be
@@ -59,8 +67,8 @@ other choice of programming language.
 
 
 Before exploring the internals of the source code we shall first provide an overview
-of the current WickedXmas tool. Specifically, we will briefly highlight the steps involved in
-executing the verification modules.
+of the current WickedXmas tool. Specifically, we will briefly highlight the steps required
+to execute the verification modules.
 
 \begin{figure}[h]
   \includegraphics[height=5cm]{wickedxmas-arch.eps}
@@ -76,7 +84,7 @@ a flat list consisting solely of xMAS primitives and the channels connecting the
 flat json file is then parsed and transformed into C++ source code. The generated source code files are
 used along with C++ code written for the specific task to create several executables. In Figure
 \ref{fig:wickedxmas-arch} the Simulate, Invariant Generation and Deadlock Detection verification modules
-are shown. The executables must be run in a fixed order; results from a module can serve as input for modules further down
+are shown. The executables must usually be run in a fixed order; results from a module can serve as input for modules further down
 the pipeline. For instance, the Simulator runs a simulation on the network and yields information on the
 types of packets each component in the network is able to accept and generate. The Invariant Generation
 uses this information to deduce invariants that hold for the given network. Finally, the Deadlock Detection
@@ -101,7 +109,7 @@ Central to this process is the use of a single set of data structures used by al
 All modules are (or will be) written in C++ (C++ 2011). While designing the new data structures
 special attention has been paid to ensure extensibilty. The data structures should not only be
 able to provide current needs but also allow the integration of new verification modules. As of this
-writing, several modules have been ported to use the new data structures in varying degrees. One
+writing, several modules have been ported in varying degrees to use the new data structures. One
 module that has been completely ported is the Combinatoric Cycle Checker. We will use this module
 as an example to illustrate the use of the data structures. This module is relatively easy to
 understand and will therefore serve us well as an example.
@@ -303,7 +311,7 @@ void accept(XMASComponentVisitor &v) {
 \end{verbatim}
 
 Immediately, control is returned to the Visitor class by calling its visit method. Since the method
-is defined as part of the XMASMerge class, the this pointer passed has type XMASMerge*. The compiler
+is defined as part of the XMASMerge class, the \emph{this} pointer passed has type XMASMerge*. The compiler
 uses this knowledge to infer that it has to call the overloaded visit method which takes a pointer
 to an XMASMerge component (overloading and dynamic dispatch are combined here to perform double
 dispatch). The CombinatorialCycleDependencies class is now able to execute code specifically written
@@ -317,7 +325,7 @@ Principle. This principle states that: ``Software entities like classes, modules
 should be open for extension but closed for modifications''\cite{oodesign-open-close}. Minimizing
 changes to existing classes that have been tested and used, prevents undesired effects
 on current functionality. Core classes like XMASComponent and Port are used in many different parts
-of the software (see also \ref{fig:xmas-headers}), so changes to these classes have impact on the entire application.
+of the software (see also fig.~\ref{fig:xmas-headers}), so changes to these classes have impact on the entire application.
 At the same time, the priniciple dictates that new features can still be added to the software entities.
 
 
@@ -351,8 +359,8 @@ irdy and trdy signals produced by the components on the other sides of the chann
 To determine an irdy or trdy signal of a combinatorial primitive, the connected components'
 irdy and trdy signals should be substituted in the equation. Large chains of combinatorial
 primitives as such yield complex expressions. More so, when a component is part of a
-combinatorial cycle, the state of the irdy or trdy signal occurs on both the left-hand and the right-
-hand side of the equation. Substitution of the right-hand side occurrence of the signal leads
+combinatorial cycle, the same irdy or trdy signal occurs on both the left-hand and the
+right-hand side of the equation. Substitution of the right-hand side occurrence of the signal leads
 to an infinite recursion.
 
 \begin{figure}[hp]
@@ -517,7 +525,7 @@ On the downside, this approach is harder to implement. Care has to be taken
 that the transparency of composite objects is complete. For example, the objects
 returned by the getInitiator() and getTarget() methods of Port must not return a
 XMASCompositeObject object since the modules are likely to use these methods.
-Possibly special CompositeInput and CompositeOutput classes are required in
+Possibly, special CompositeInput and CompositeOutput classes are required in
 order to implement this approach.\\
 Another issue is that transparency is not always desirable.
 Unlike the verification modules, the design tool sometimes prefers to
@@ -714,11 +722,12 @@ The best option to establish the communication is through a character stream as
 virtually all platforms and programming languages support this form of
 communication.
 
-
+\newpage
 
 \section{Glossary}
 \begin{description}
  \item[(verification) module] 	Software component which applies a verification algorithm to an xMAS network
+ \item[verification tool]	Same as verification module
  \item[design tool]		Software component to visually model an xMAS network
  \item[Visitor class]		A software class that implements the Visitor interface
 \end{description}
@@ -740,6 +749,9 @@ communication.
   \emph{WickedXmas: Designing and Verifying on-chip Communication Fabrics},
   2012
   
+\bibitem{analyse-tool-11}
+  \emph{Inference of channel types in micro-architectural models of on-chip communication networks},
+  2014
   
 \bibitem{linkedlist}
   \emph{https://en.wikipedia.org/wiki/Linked\_list\#Internal\_and\_external\_storage},
@@ -762,11 +774,6 @@ communication.
   \emph{The C++ Programming Language}.
   Fourth edition,
   2013
-  
-\bibitem{analyse-tool-11}
-  \emph{Inference of channel types in micro-architectural models of on-chip communication networks},
-  2014
-
   
   
   
