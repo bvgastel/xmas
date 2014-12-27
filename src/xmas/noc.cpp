@@ -1,13 +1,29 @@
+/*********************************************************************
+ *
+ * Copyright (C) Guus Bonnema, 2014
+ *
+ * This file is part of the xmas-design tool.
+ *
+ * The xmas-design tool is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * The xmas-design tool is distributed in the hope that it will be
+ * useful,  but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the xmas-design tool.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ *
+ **********************************************************************/
 #include "noc.h"
 
-Noc::Noc(QString name) : m_name(name), m_comp_map(), m_port_map()
+Noc::Noc(QString name) : m_name(name), m_comp_map(), m_inport_map(), m_outport_map()
 {
-
-}
-
-Noc::Noc(QDataStream nocDataStream)
-{
-    // Create the network from a datastream.
+    // Empty Constructor body
 }
 
 Noc::~Noc()
@@ -36,20 +52,38 @@ Noc &Noc::add(std::shared_ptr<Component> comp) {
 }
 
 /**
- * @brief add a port to the network.
+ * @brief add an InPort to the network.
  *
- * This method adds a port to the network without
+ * This method adds an InPort to the network without
  * creating connections with other ports. @see connect.
  *
- * @param port
- * @return
+ * @param inport
+ * @return Noc
  */
-Noc &Noc::add(std::shared_ptr<Port> port)
+Noc &Noc::add(std::shared_ptr<InPort> inPort)
 {
-    if (m_port_map.find(port->name()) == m_port_map.end()) {
-        m_port_map.insert(port->name(), port);
+    if (m_inport_map.find(inPort->name()) == m_inport_map.end()) {
+        m_inport_map.insert(inPort->name(), inPort);
     }
-    emit portAdded(port);
+    emit inPortAdded(inPort);
+    return *this;
+}
+
+/**
+ * @brief add an OutPort to the network.
+ *
+ * This method adds an OutPort to the network without
+ * creating connections with other ports. @see connect.
+ *
+ * @param outport
+ * @return Noc
+ */
+Noc &Noc::add(std::shared_ptr<OutPort> outPort)
+{
+    if (m_outport_map.find(outPort->name()) == m_outport_map.end()) {
+        m_outport_map.insert(outPort->name(), outPort);
+    }
+    emit outPortAdded(outPort);
     return *this;
 }
 
@@ -114,4 +148,3 @@ bool Noc::hasCycle() {
     bool result = true;
     return result;
 }
-
