@@ -24,9 +24,11 @@
 
 #include <memory>
 
-
-#include "component.h"
 #include "port.h"
+#include "component.h"
+
+class Component;
+class Port;
 
 /**
  * @brief The InPort class

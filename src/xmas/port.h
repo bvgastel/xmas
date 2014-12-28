@@ -32,6 +32,8 @@ enum PortType {
     ANY, IN, OUT
 };
 
+class Component;
+
 /**
  * @brief The Port class
  *
