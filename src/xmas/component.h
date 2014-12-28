@@ -22,10 +22,23 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include <memory>
+
 #include <QString>
+#include <QMap>
 
 #include "xmas_global.h"
+#include "inport.h"
+#include "outport.h"
 
+/**
+ * @brief The Component class
+ *
+ * The component on an Noc. It contains ports (both
+ * in ports and out ports.
+ *
+ *
+ */
 class XMASSHARED_EXPORT Component
 {
 
@@ -39,7 +52,28 @@ public:
 
 private:
 
+    /**
+     * @brief m_name the name of the component
+     */
     QString m_name;
+    /**
+     * @brief m_inport_map A map of input ports by name
+     */
+    QMap<QString, std::shared_ptr<InPort>> m_inport_map;
+    /**
+     * @brief m_outport_map A map of output ports by name
+     */
+    QMap<QString, std::shared_ptr<OutPort>> m_outport_map;
+
+    /**
+     * @brief m_function a function body
+     *
+     * The function body is empty if not applicable.
+     * It is unstructured information for the verification
+     * tools and the reader of the component.
+     *
+     */
+    QString m_function;
 
 
 };

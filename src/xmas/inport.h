@@ -22,8 +22,19 @@
 #ifndef INPORT_H
 #define INPORT_H
 
+#include <memory>
+
+
+#include "component.h"
 #include "port.h"
 
+/**
+ * @brief The InPort class
+ *
+ * The specialised port for reading signals on an NoC wire.
+ * It inherits the name and component from Port.
+ *
+ */
 class InPort : public Port
 {
 public:

@@ -35,12 +35,29 @@ const QString Channel::name() const
 {
     return m_name;
 }
-
+/**
+ * @brief Channel::in
+ *
+ * This is the inport that this channel is connected to.
+ * The channel writes to the inport so the component
+ * can read from the in.
+ *
+ * @return the in port of type InPort.
+ */
 std::shared_ptr<const InPort> Channel::in() const
 {
     return m_in;
 }
 
+/**
+ * @brief Channel::out
+ *
+ * This is the outport that this channel is connected to.
+ * The channel reads from the outport that the
+ * component writes to.
+ *
+ * @return the out port of type OutPort.
+ */
 std::shared_ptr<const OutPort> Channel::out() const
 {
     return m_out;

@@ -38,15 +38,19 @@
  * that create the network:
  *
  * 1. Components
- * 2. Connections.
- * 3. Ports
+ * 2. Ports
+ * 3. Channels between ports on components
  *
  * Each NoC can also function as a component once finished.
+ * Each channel represents 3 wires; irdy, trdy and data (@see channel)
+ *
+ * This class allows the construction of a Noc that can
+ * later be used as a component.
  *
  * If needed the designer can close a Noc with sources and sinks.
  *
  */
-class Noc : public QObject
+class Noc : public Component, public QObject
 {
     Q_OBJECT
 
