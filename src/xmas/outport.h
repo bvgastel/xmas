@@ -24,8 +24,8 @@
 
 #include <memory>
 
-#include "component.h"
 #include "port.h"
+#include "component.h"
 
 /**
  * @brief The OutPort class

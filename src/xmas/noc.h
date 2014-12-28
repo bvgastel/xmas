@@ -28,7 +28,8 @@
 #include <memory>
 
 #include "component.h"
-#include "port.h"
+#include "inport.h"
+#include "outport.h"
 #include "channel.h"
 
 /**
@@ -50,7 +51,7 @@
  * If needed the designer can close a Noc with sources and sinks.
  *
  */
-class Noc : public Component, public QObject
+class Noc : public QObject
 {
     Q_OBJECT
 

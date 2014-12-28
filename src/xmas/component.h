@@ -28,8 +28,9 @@
 #include <QMap>
 
 #include "xmas_global.h"
-#include "inport.h"
-#include "outport.h"
+
+class InPort;
+class OutPort;
 
 /**
  * @brief The Component class
