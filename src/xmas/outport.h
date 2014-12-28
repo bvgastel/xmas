@@ -22,8 +22,17 @@
 #ifndef OUTPORT_H
 #define OUTPORT_H
 
+#include <memory>
+
+#include "component.h"
 #include "port.h"
 
+/**
+ * @brief The OutPort class
+ *
+ * The specialised class for writing signals on an NoC wire.
+ *
+ */
 class OutPort : public Port
 {
 public:

@@ -32,6 +32,13 @@ enum PortType {
     ANY, IN, OUT
 };
 
+/**
+ * @brief The Port class
+ *
+ * An abstract class as a base class for in ports and out ports. Most
+ * of the functionality is in the base class.
+ *
+ */
 class Port
 {
 public:
