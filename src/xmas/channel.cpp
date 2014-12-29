@@ -44,7 +44,7 @@ const QString Channel::name() const
  *
  * @return the in port of type InPort.
  */
-std::shared_ptr<const InPort> Channel::in() const
+std::shared_ptr<const InPort> Channel::initiator() const
 {
     return m_in;
 }
@@ -58,7 +58,7 @@ std::shared_ptr<const InPort> Channel::in() const
  *
  * @return the out port of type OutPort.
  */
-std::shared_ptr<const OutPort> Channel::out() const
+std::shared_ptr<const OutPort> Channel::target() const
 {
     return m_out;
 }

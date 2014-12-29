@@ -51,6 +51,9 @@ public:
 
     const QString name() const;
 
+    Component &add(std::shared_ptr<InPort>);
+    Component &add(std::shared_ptr<OutPort>);
+
 private:
 
     /**

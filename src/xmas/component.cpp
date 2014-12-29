@@ -19,13 +19,30 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
+#include "inport.h"
+#include "outport.h"
 #include "component.h"
 
 
-Component::Component(QString name) : m_name(name)
+Component::Component(QString name)
+    : m_name(name)
 {
 }
 
 const QString Component::name() const {
     return m_name;
+}
+
+Component &Component::add(std::shared_ptr<InPort> in) {
+    if (m_inport_map.find(in->name()) == m_inport_map.end()) {
+        m_inport_map.insert(in->name(), in);
+    }
+    return *this;
+}
+
+Component &Component::add(std::shared_ptr<OutPort> out) {
+    if (m_outport_map.find(out->name()) == m_outport_map.end()) {
+        m_outport_map.insert(out->name(), out);
+    }
+    return *this;
 }

@@ -28,6 +28,7 @@
 
 #include "inport.h"
 #include "outport.h"
+
 /**
  * @brief The Channel class
  *
@@ -63,8 +64,9 @@ public:
    ~Channel();
 
    const QString name() const;
-   std::shared_ptr<const InPort> in() const;
-   std::shared_ptr<const OutPort> out() const;
+
+   inline std::shared_ptr<const InPort> initiator() const;
+   inline std::shared_ptr<const OutPort> target() const;
 
 private:
 
