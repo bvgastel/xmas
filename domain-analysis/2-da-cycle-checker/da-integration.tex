@@ -7,6 +7,7 @@
 
 %opening
 \title{Domain analysis: Integration of verification tools}
+\date{December 27, 2014}
 \author{Jeroen Kleijn}
 
 \begin{document}
@@ -45,10 +46,10 @@ To achieve this level of integration, the source code of the new verification to
 been examined as part of this domain analysis. After a brief overview of the current
 WickedXmas tool, the core classes of the new verification tools will be presented.
 In order to illustrate how these classes are used, one of the verification tools,
-the Combinatoric Cycle Checker, is introduced and its implementation is discussed.\\
-The next part discusses several aspects to achieve the desired level of integration
-of the tools. Several alternatives are presented and the advantages and disadvantages
-of each are listed. Finally, the last section provides recommendations on which
+the Combinatoric Cycle Checker, is introduced and its implementation is explained.\\
+The next part discusses several issues how to realize the integration of the verification
+tools and the design tool. A number of alternatives will be presented and the advantages
+and disadvantages of each are listed. Finally, the last section provides recommendations on which
 of the listed alternatives are most suitable.
 
 
@@ -107,7 +108,7 @@ to run the tool.
 In order to improve the software quality the verification modules are currently being refactored.
 Central to this process is the use of a single set of data structures used by all verification modules.
 All modules are (or will be) written in C++ (C++ 2011). While designing the new data structures
-special attention has been paid to ensure extensibilty. The data structures should not only be
+special attention has been paid to ensure extensibility. The data structures should not only be
 able to provide current needs but also allow the integration of new verification modules. As of this
 writing, several modules have been ported in varying degrees to use the new data structures. One
 module that has been completely ported is the Combinatoric Cycle Checker. We will use this module
