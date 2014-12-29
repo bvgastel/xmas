@@ -21,7 +21,7 @@
  **********************************************************************/
 #include "outport.h"
 
-OutPort::OutPort(QString name, std::shared_ptr<Component> comp) : Port(name, comp)
+OutPort::OutPort(QString name, std::shared_ptr<Component> comp, QString irdy) : Port(name, comp), m_irdy(irdy)
 {
 
 }

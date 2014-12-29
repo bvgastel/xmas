@@ -40,8 +40,13 @@ class Port;
 class InPort : public Port
 {
 public:
-    InPort(QString name, std::shared_ptr<Component> comp);
+    InPort(QString name, std::shared_ptr<Component> comp, QString trdy);
     ~InPort();
+
+    const QString trdy() const { return m_trdy; }
+
+private:
+    const QString m_trdy;
 };
 
 #endif // INPORT_H

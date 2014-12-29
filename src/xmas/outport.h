@@ -24,6 +24,8 @@
 
 #include <memory>
 
+#include <QString>
+
 #include "port.h"
 #include "component.h"
 
@@ -36,8 +38,19 @@
 class OutPort : public Port
 {
 public:
-    OutPort(QString name, std::shared_ptr<Component> comp);
+    OutPort(QString name, std::shared_ptr<Component> comp, QString irdy);
     ~OutPort();
+
+    const QString irdy() const { return m_irdy; }
+
+private:
+
+    /**
+     * @brief m_irdy contains the definition of o.irdy if o is the output port.
+     *
+     * The definition stems from the xmas primitives or a derivative.
+     */
+    const QString m_irdy;
 };
 
 #endif // OUTPORT_H

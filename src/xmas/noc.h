@@ -58,7 +58,7 @@ class Noc : public QObject
 public:
 
     explicit Noc(QString name);
-    ~Noc();
+    virtual ~Noc();
 
     const QString name() const;
 

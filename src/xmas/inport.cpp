@@ -1,4 +1,4 @@
-       /*********************************************************************
+/*********************************************************************
  *
  * Copyright (C) Guus Bonnema, 2014
  *
@@ -21,7 +21,7 @@
  **********************************************************************/
 #include "inport.h"
 
-InPort::InPort(QString name, std::shared_ptr<Component> comp) : Port(name, comp)
+InPort::InPort(QString name, std::shared_ptr<Component> comp, QString trdy) : Port(name, comp), m_trdy(trdy)
 {
 
 }
