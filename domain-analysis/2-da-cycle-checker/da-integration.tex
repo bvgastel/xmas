@@ -16,7 +16,7 @@
 
 \section{Rationale}
 
-Advances in chip technology have led to increasingly more and more complex chip
+Advances in chip technology have led to increasingly more complex chip
 architectures. This raise in complexity has forced researchers in the field of
 modern chip architecture to search for techniques which allow them to better cope
 with this complexity. One of these techniques is xMAS\cite{chatterjee10,xmas}, a visual modeling
@@ -44,7 +44,7 @@ the various verification tools should integrate well.
 
 To achieve this level of integration, the source code of the new verification tools has
 been examined as part of this domain analysis. After a brief overview of the current
-WickedXmas tool, the core classes of the new verification tools will be presented.
+WickedXmas tool, this document will describe the core classes of the new verification tools.
 In order to illustrate how these classes are used, one of the verification tools,
 the Combinatoric Cycle Checker, is introduced and its implementation is explained.\\
 The next part discusses several issues how to realize the integration of the verification
@@ -72,7 +72,7 @@ of the current WickedXmas tool. Specifically, we will briefly highlight the step
 to execute the verification modules.
 
 \begin{figure}[h]
-  \includegraphics[height=5cm]{wickedxmas-arch.eps}
+  \includegraphics[height=5cm]{images/wickedxmas-arch.eps}
   \caption{WickedXmas Tool Architecture}
   \label{fig:wickedxmas-arch}
 \end{figure}
@@ -161,7 +161,7 @@ Looking at the operations defined on Port, we can divide them into several categ
   \item getTarget() and getTargetPort() return the component and its port that are on the receiving end
   of the channel. The target port thus is an Input to the component returned by getTarget().
   \item getInitiator() and getInitiatorPort() return the component and its port that are on the sending end
-  of the channel. The target port thus is an Output from the component returned by getInitiator().
+  of the channel. The initiator port thus is an Output from the component returned by getInitiator().
  \end{itemize}
   The presence of these methods show the dual role of class Port. It represents not only a port in an
   xMAS network, but also the channel between two ports, of course provided the port is actually connected.
