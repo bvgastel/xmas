@@ -375,11 +375,11 @@ Figure \ref{fig:fork-join-cycle} illustrates a combinatorial cycle. Applying the
 to \emph{fork1} and the \emph{b.trdy} equation to \emph{join1} gives \cite[p.~44]{chatterjee10}:
 \begin{itemize}
  \item fork1.a.irdy := fork1.i.irdy and fork1.b.trdy = source1.o.irdy and join1.b.trdy
- \item join1.b.trdy := join1.o.trdy and join1.a.irdy = sink1.o.trdy and fork1.a.irdy
+ \item join1.b.trdy := join1.o.trdy and join1.a.irdy = sink1.i.trdy and fork1.a.irdy
 \end{itemize}
 Substituting the second equation in the first now gives:
 \begin{itemize}
- \item \underline{fork1.a.irdy} := source1.o.irdy and sink1.o.trdy and \underline{fork1.a.irdy}
+ \item \underline{fork1.a.irdy} := source1.o.irdy and sink1.i.trdy and \underline{fork1.a.irdy}
 \end{itemize}
 
 
