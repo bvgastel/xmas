@@ -28,8 +28,6 @@
 #include <memory>
 
 #include "component.h"
-#include "inport.h"
-#include "outport.h"
 #include "channel.h"
 
 /**
@@ -62,9 +60,7 @@ public:
 
     const QString name() const;
 
-    Noc &add(std::shared_ptr<Component> );
-    Noc &add(std::shared_ptr<InPort> inPort);
-    Noc &add(std::shared_ptr<OutPort> outPort);
+    Noc &add(std::shared_ptr<Component> component);
     Noc &add(std::shared_ptr<Channel> channel);
 
     bool valid();
@@ -74,8 +70,6 @@ public:
 signals:
 
     void componentAdded(std::shared_ptr<const Component> comp);
-    void inPortAdded(std::shared_ptr<const InPort> inport);
-    void outPortAdded(std::shared_ptr<const OutPort> outport);
     void channelAdded(std::shared_ptr<const Channel> channel);
 
 private:
@@ -87,14 +81,6 @@ private:
      * @brief m_comp_map map of components by name
      */
     QMap<QString, std::shared_ptr<Component>> m_comp_map;
-    /**
-     * @brief m_inport_map map of InPorts in Noc by name
-     */
-    QMap<QString, std::shared_ptr<InPort>> m_inport_map;
-    /**
-     * @brief m_outport_map map of OutPorts in Noc by name
-     */
-    QMap<QString, std::shared_ptr<OutPort>> m_outport_map;
 
     /**
      * @brief m_connection_map map of connections.
