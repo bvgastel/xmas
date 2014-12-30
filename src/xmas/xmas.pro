@@ -9,6 +9,8 @@ QT       -= gui
 TARGET = xmas
 TEMPLATE = lib
 
+TEMPLATE=subdirs
+
 CONFIG += C++11
 
 DEFINES += XMAS_LIBRARY
@@ -26,3 +28,6 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+SUBDIRS += \
+    TestXmasLib

@@ -60,8 +60,8 @@ public:
 
     const QString name() const;
 
-    Component &add(std::shared_ptr<InPort>);
-    Component &add(std::shared_ptr<OutPort>);
+    Component &add(std::shared_ptr<Component::InPort>);
+    Component &add(std::shared_ptr<Component::OutPort>);
 
 private:
 
