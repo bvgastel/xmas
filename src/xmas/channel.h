@@ -26,8 +26,7 @@
 
 #include <QString>
 
-#include "inport.h"
-#include "outport.h"
+#include "component.h"
 
 /**
  * @brief The Channel class
@@ -60,13 +59,13 @@
 class Channel
 {
 public:
-    explicit Channel(std::shared_ptr<OutPort> out, std::shared_ptr<InPort> in);
+    explicit Channel(std::shared_ptr<Component::OutPort> out, std::shared_ptr<Component::InPort> in);
    ~Channel();
 
    const QString name() const;
 
-   inline std::shared_ptr<const InPort> initiator() const;
-   inline std::shared_ptr<const OutPort> target() const;
+   inline std::shared_ptr<const Component::InPort> initiator() const;
+   inline std::shared_ptr<const Component::OutPort> target() const;
 
 private:
 
@@ -74,11 +73,11 @@ private:
    /**
     * @brief m_out The output port that this channel reads from.
     */
-   std::shared_ptr<OutPort> m_out;
+   std::shared_ptr<Component::OutPort> m_out;
    /**
     * @brief m_in The input port that this channel writes to.
     */
-   std::shared_ptr<InPort> m_in;
+   std::shared_ptr<Component::InPort> m_in;
 
 };
 

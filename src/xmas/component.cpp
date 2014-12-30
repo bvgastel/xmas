@@ -19,8 +19,6 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#include "inport.h"
-#include "outport.h"
 #include "component.h"
 
 
@@ -45,4 +43,37 @@ Component &Component::add(std::shared_ptr<OutPort> out) {
         m_outport_map.insert(out->name(), out);
     }
     return *this;
+}
+
+Component::Port::Port(QString name, std::shared_ptr<Component> comp)
+    : m_name(name), m_comp(comp)
+{
+}
+
+Component::Port::~Port()
+{
+}
+
+const QString Component::Port::name() const {
+    return m_name;
+}
+
+Component::OutPort::OutPort(QString name, std::shared_ptr<Component> comp, QString irdy) : Port(name, comp), m_irdy(irdy)
+{
+
+}
+
+Component::OutPort::~OutPort()
+{
+
+}
+
+Component::InPort::InPort(QString name, std::shared_ptr<Component> comp, QString trdy) : Port(name, comp), m_trdy(trdy)
+{
+
+}
+
+Component::InPort::~InPort()
+{
+
 }

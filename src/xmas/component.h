@@ -29,8 +29,7 @@
 
 #include "xmas_global.h"
 
-class InPort;
-class OutPort;
+class Component;
 
 /**
  * @brief The Component class
@@ -38,14 +37,24 @@ class OutPort;
  * The component on an Noc. It contains ports (both
  * in ports and out ports.
  *
+ * This class contains the nested definitions and declarations of Port
+ * InPort and OutPort. This reflects the tight coupling : outside the
+ * Component these objects would not exist.
+ *
  *
  */
 class XMASSHARED_EXPORT Component
 {
 
 public:
+    /* Nested classes */
+    class Port;
+    class InPort;
+    class OutPort;
+
     Component(QString name);
-    virtual ~Component() {
+    virtual ~Component()
+    {
 
     }
 
@@ -78,6 +87,84 @@ private:
      *
      */
     QString m_function;
+
+
+public:
+    /**
+     * @brief The Port class
+     *
+     * An abstract class as a base class for in ports and out ports. Most
+     * of the functionality is in the base class.
+     * This class is nested inside Component as it is inherently
+     * connected to Component.
+     *
+     */
+    class Port
+    {
+    public:
+        Port(QString name, std::shared_ptr<Component> comp);
+        ~Port();
+
+        const QString name() const;
+
+    private:
+
+        QString m_name;
+        std::shared_ptr<Component> m_comp;
+
+    };
+    /**
+     * @brief The InPort class
+     *
+     * The specialised port for reading signals on an NoC wire.
+     * It inherits the name and component from Port.
+     * This class is nested inside Component as it is inherently
+     * connected to Component.
+     *
+     */
+    class InPort : public Port
+    {
+    public:
+        InPort(QString name, std::shared_ptr<Component> comp, QString trdy);
+        ~InPort();
+
+        const QString trdy() const
+        {
+            return m_trdy;
+        }
+
+    private:
+        const QString m_trdy;
+    };
+
+    /**
+     * @brief The OutPort class
+     *
+     * The specialised class for writing signals on an NoC wire.
+     * This class is nested inside Component as it is inherently
+     * connected to Component.
+     *
+     */
+    class OutPort : public Port
+    {
+    public:
+        OutPort(QString name, std::shared_ptr<Component> comp, QString irdy);
+        ~OutPort();
+
+        const QString irdy() const
+        {
+            return m_irdy;
+        }
+
+    private:
+
+        /**
+         * @brief m_irdy contains the definition of o.irdy if o is the output port.
+         *
+         * The definition stems from the xmas primitives or a derivative.
+         */
+        const QString m_irdy;
+    };
 
 
 };

@@ -21,7 +21,7 @@
  **********************************************************************/
 #include "noc.h"
 
-Noc::Noc(QString name) : m_name(name), m_comp_map(), m_inport_map(), m_outport_map()
+Noc::Noc(QString name) : m_name(name), m_comp_map()
 {
     // Empty Constructor body
 }
@@ -51,41 +51,6 @@ Noc &Noc::add(std::shared_ptr<Component> comp) {
     return *this;
 }
 
-/**
- * @brief add an InPort to the network.
- *
- * This method adds an InPort to the network without
- * creating connections with other ports. @see connect.
- *
- * @param inport
- * @return Noc
- */
-Noc &Noc::add(std::shared_ptr<InPort> inPort)
-{
-    if (m_inport_map.find(inPort->name()) == m_inport_map.end()) {
-        m_inport_map.insert(inPort->name(), inPort);
-    }
-    emit inPortAdded(inPort);
-    return *this;
-}
-
-/**
- * @brief add an OutPort to the network.
- *
- * This method adds an OutPort to the network without
- * creating connections with other ports. @see connect.
- *
- * @param outport
- * @return Noc
- */
-Noc &Noc::add(std::shared_ptr<OutPort> outPort)
-{
-    if (m_outport_map.find(outPort->name()) == m_outport_map.end()) {
-        m_outport_map.insert(outPort->name(), outPort);
-    }
-    emit outPortAdded(outPort);
-    return *this;
-}
 
 /**
  * @brief Connect two components with specified portnames
