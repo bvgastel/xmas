@@ -14,19 +14,13 @@ CONFIG += C++11
 DEFINES += XMAS_LIBRARY
 
 SOURCES += component.cpp \
-    port.cpp \
     noc.cpp \
-    channel.cpp \
-    inport.cpp \
-    outport.cpp
+    channel.cpp
 
 HEADERS += component.h\
         xmas_global.h \
-    port.h \
     noc.h \
-    channel.h \
-    inport.h \
-    outport.h
+    channel.h
 
 unix {
     target.path = /usr/lib
