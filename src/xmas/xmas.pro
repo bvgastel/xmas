@@ -4,30 +4,33 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
-
-TARGET = xmas
-TEMPLATE = lib
-
-TEMPLATE=subdirs
-
-CONFIG += C++11
-
-DEFINES += XMAS_LIBRARY
-
-SOURCES += component.cpp \
-    noc.cpp \
-    channel.cpp
+! include( ../common.pri ) {
+	error( Could not find the common.pri file
+}
 
 HEADERS += component.h\
         xmas_global.h \
     noc.h \
     channel.h
 
+SOURCES += component.cpp \
+    noc.cpp \
+    channel.cpp
+
+CONFIG += C++11
+
+TEMPLATE = lib
+
+QT       -= gui
+
+DEFINES += XMAS_LIBRARY
+
+# By default TARGET is the same as the directory,
+# so it will make libxmas.a (in linux). Uncomment to override.
+# TARGET = target
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-SUBDIRS += \
-    TestXmasLib
