@@ -1,7 +1,7 @@
 # Our own additions
 *.swp
 *.backup
-build
+build*
 src/build*
 modules/xmas-vt
 *~
