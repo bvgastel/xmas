@@ -10,5 +10,6 @@ SUBDIRS = 	xmas \
 # xmasmain must be last
 
 CONFIG += ordered
-SUBDIRS += xmasmain
+SUBDIRS += xmasmain \
+			testmain
 
