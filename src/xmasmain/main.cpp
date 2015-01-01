@@ -20,23 +20,9 @@
   *
   **********************************************************************/
 
-#include <iostream>
+#include "xmas/noc.h"
 
-#include "testrunner.h"
-#include "testnoc.h"
 
-int main(int argc, char *argv[]) {
-
-    std::cout << " number of arguments: " << argc << " and arguments are: ";
-    std::string glue = "";
-    for (int i = 0; i < argc; i++) {
-        std::cout << glue << argv[i];
-        glue = ", ";
-    }
-    std::cout << std::endl;
-
-    TestRunner runner;
-    runner.addTest(new TestNoc());
-
-    runner.runTests();
+int main() {
+    return 0;
 }
