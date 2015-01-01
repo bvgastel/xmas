@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 ! include( ../common.pri ) {
-	error( Could not find the common.pri file
+        error( Could not find the common.pri file)
 }
 
 HEADERS += component.h\
