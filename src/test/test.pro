@@ -10,14 +10,16 @@
 
 QT       += core
 QT      += testlib
-QT       -= gui
 
 CONFIG   += console
+CONFIG   += C++11
+
+QT       -= gui
 CONFIG   -= app_bundle
 
-TEMPLATE = app
+TEMPLATE = lib
 
-SOURCES += main.cpp
+SOURCES += test.cpp
 
 HEADERS += \
     testrunner.h
@@ -25,3 +27,9 @@ HEADERS += \
 # By default TARGET is the same as the directory,
 # so it will make test (in linux). Uncomment to override.
 # TARGET = target
+
+unix {
+	target.path = /usr/lib
+	INSTALLS += target
+}
+
