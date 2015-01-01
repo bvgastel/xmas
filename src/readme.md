@@ -110,7 +110,7 @@ SOURCES += main.cpp
 
 LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
 
-# Will build the final executable in the main project directory.
+# Will build the final executable in the build directory.
 TARGET = test
 ~~~~~~~~~~~~~~~~~~~~~~
 
