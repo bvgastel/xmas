@@ -19,8 +19,7 @@ QT       -= gui
 CONFIG   -= app_bundle
 
 SOURCES += \
-    testnoc.cpp \
-    main.cpp
+    testnoc.cpp
 
 HEADERS += \
     testrunner.h \
