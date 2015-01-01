@@ -1,18 +1,18 @@
 # testmain.pro
 # Contains the main program for the test programs of xmas
 
-! include( ../common.pri ) {
-	error( Could not find the common.pri file )
-}
+include (../xmas/defines.pri)
+# include (../xmd/defines.pri)
+include (../test/defines.pri)
 
 TEMPLATE = app
 
 SOURCES += main.cpp
 
-LIBS += -L../xmas -L../xmd -L../test -L../xmc -lxmas -lxmd -lxmc -ltest
+LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
 
 # We will build the final executable in the build directory.
 
-TARGET = test
+# TARGET = test
 
 

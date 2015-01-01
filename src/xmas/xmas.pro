@@ -8,6 +8,8 @@
         error( Could not find the common.pri file)
 }
 
+include (defines.pri)
+
 HEADERS += component.h\
         xmas_global.h \
     noc.h \

@@ -8,10 +8,13 @@
 	error( Could not find the common.pri file )
 }
 
+include(defines.pri)
+include(../xmas/defines.pri)
+
 QT       += core
 QT      += testlib
 
-CONFIG   += testcase
+# CONFIG   += testcase
 CONFIG   += console
 CONFIG   += C++11
 

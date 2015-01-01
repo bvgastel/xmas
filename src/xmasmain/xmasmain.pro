@@ -3,6 +3,9 @@
 
 TEMPLATE = app
 
+include (../xmas/defines.pri)
+include (../xmd/defines.pri)
+
 SOURCES += main.cpp
 
 LIBS += -L../xmas -L../xmd -lxmas -lxmd
