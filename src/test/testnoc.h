@@ -20,12 +20,29 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#ifndef TESTNOC_H
+#define TESTNOC_H
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
+#include <QObject>
+#include <QtTest/QTest>
 
-    runner.runTests();
-}
+#include "xmas/noc.h"
+
+class TestNoc : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TestNoc(QObject *parent = 0);
+    ~TestNoc();
+
+signals:
+
+private slots:
+    void initTestCase();
+
+    void emptyNoc();
+
+    void cleanupTestCase();
+};
+
+#endif // TESTNOC_H

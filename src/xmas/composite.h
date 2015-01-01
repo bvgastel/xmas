@@ -20,12 +20,24 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#ifndef COMPOSITE_H
+#define COMPOSITE_H
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
+#include <memory>
 
-    runner.runTests();
-}
+#include "component.h"
+#include "noc.h"
+
+class Composite : public Component
+{
+
+public:
+    Composite(std::shared_ptr<Noc> );
+    ~Composite();
+
+private:
+    std::shared_ptr<Noc> m_network;
+
+};
+
+#endif // COMPOSITE_H

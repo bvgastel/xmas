@@ -52,13 +52,14 @@ public:
     class InPort;
     class OutPort;
 
-    Component(QString name);
+    Component(QString name=0);
     virtual ~Component()
     {
 
     }
 
     const QString name() const;
+    void name(const QString name);
 
     Component &add(std::shared_ptr<Component::InPort>);
     Component &add(std::shared_ptr<Component::OutPort>);
