@@ -20,12 +20,16 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#include "composite.h"
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
-
-    runner.runTests();
+Composite::Composite(std::shared_ptr<Noc> network)
+    : m_network(network)
+{
+    name(network->name());
 }
+
+Composite::~Composite()
+{
+
+}
+

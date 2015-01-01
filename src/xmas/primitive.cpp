@@ -20,12 +20,15 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#include "primitive.h"
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
+Primitive::Primitive()
+{
 
-    runner.runTests();
 }
+
+Primitive::~Primitive()
+{
+
+}
+

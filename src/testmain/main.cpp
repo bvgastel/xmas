@@ -20,10 +20,21 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#include <iostream>
+
+#include "test/testrunner.h"
+#include "test/testnoc.h"
 
 int main(int argc, char *argv[]) {
+
+    std::cout << " number of arguments: " << argc << " and arguments are: ";
+    std::string glue = "";
+    for (int i = 0; i < argc; i++) {
+        std::cout << glue << argv[i];
+        glue = ", ";
+    }
+    std::cout << std::endl;
+
     TestRunner runner;
     runner.addTest(new TestNoc());
 

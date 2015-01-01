@@ -20,12 +20,16 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
-#include "testnoc.h"
+#ifndef PRIMITIVE_H
+#define PRIMITIVE_H
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
+#include "component.h"
 
-    runner.runTests();
-}
+class Primitive : public Component
+{
+public:
+    Primitive();
+    ~Primitive();
+};
+
+#endif // PRIMITIVE_H

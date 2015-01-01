@@ -11,11 +11,15 @@
 HEADERS += component.h\
         xmas_global.h \
     noc.h \
-    channel.h
+    channel.h \
+    composite.h \
+    primitive.h
 
 SOURCES += component.cpp \
     noc.cpp \
-    channel.cpp
+    channel.cpp \
+    composite.cpp \
+    primitive.cpp
 
 CONFIG += C++11
 

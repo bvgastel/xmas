@@ -25,10 +25,17 @@
 Component::Component(QString name)
     : m_name(name)
 {
+    if (m_name == "") {
+        m_name = "unknown component";
+    }
 }
 
 const QString Component::name() const {
     return m_name;
+}
+
+void Component::name(const QString name) {
+    m_name = name;
 }
 
 Component &Component::add(std::shared_ptr<InPort> in) {

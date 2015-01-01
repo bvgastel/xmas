@@ -20,12 +20,34 @@
   *
   **********************************************************************/
 
-#include "testrunner.h"
+#include <iostream>
+
 #include "testnoc.h"
 
-int main(int argc, char *argv[]) {
-    TestRunner runner;
-    runner.addTest(new TestNoc());
+TestNoc::TestNoc(QObject *parent) : QObject(parent)
+{
 
-    runner.runTests();
+}
+
+TestNoc::~TestNoc()
+{
+
+}
+
+void TestNoc::initTestCase() {
+    qDebug ("call before anything else");
+}
+
+void TestNoc::cleanupTestCase() {
+    qDebug ("called after any test cases.");
+}
+
+
+void TestNoc::emptyNoc() {
+    QString name = "empty network";
+    std::shared_ptr<Noc> noc = std::make_shared<Noc>(name);
+    std::cout << "Network == noc" << noc << std::endl;
+
+    QString nameExpected = "empty network";
+    QCOMPARE(name, nameExpected);
 }

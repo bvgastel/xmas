@@ -11,18 +11,20 @@
 QT       += core
 QT      += testlib
 
+CONFIG   += testcase
 CONFIG   += console
 CONFIG   += C++11
 
 QT       -= gui
 CONFIG   -= app_bundle
 
-TEMPLATE = lib
-
-SOURCES += test.cpp
+SOURCES += \
+    testnoc.cpp \
+    main.cpp
 
 HEADERS += \
-    testrunner.h
+    testrunner.h \
+    testnoc.h
 
 # By default TARGET is the same as the directory,
 # so it will make test (in linux). Uncomment to override.
