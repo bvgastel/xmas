@@ -26,7 +26,7 @@
 #include <QObject>
 #include <QtTest/QTest>
 
-#include "xmas/noc.h"
+#include "noc.h"
 
 class TestNoc : public QObject
 {
