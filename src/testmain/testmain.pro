@@ -5,6 +5,12 @@ include (../xmas/defines.pri)
 # include (../xmd/defines.pri)
 include (../test/defines.pri)
 
+QT       += core
+QT      += testlib
+
+CONFIG += C++11
+CONFIG += console
+
 TEMPLATE = app
 
 SOURCES += main.cpp

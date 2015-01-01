@@ -1,6 +1,8 @@
 # xmasmain.pro
 # Contains the main program for xmas
 
+CONFIG += C++11
+
 TEMPLATE = app
 
 include (../xmas/defines.pri)
