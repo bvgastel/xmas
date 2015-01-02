@@ -49,5 +49,5 @@ void TestNoc::emptyNoc() {
     std::cout << "Network == noc" << noc << std::endl;
 
     QString nameExpected = "empty network";
-    QCOMPARE(name, nameExpected);
+    QCOMPARE(noc->name(), nameExpected);
 }

@@ -2,7 +2,7 @@
 # Contains the main program for the test programs of xmas
 
 include (../xmas/defines.pri)
-# include (../xmd/defines.pri)
+include (../xmd/defines.pri)
 include (../test/defines.pri)
 
 QT       += core
