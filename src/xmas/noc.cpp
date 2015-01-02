@@ -41,6 +41,9 @@ const QString Noc::name() const {
  * This method adds a component to the network. It does not
  * create connections. @see connect for making connections.
  *
+ * The identification of a component is its name. That means
+ * a component name must be unique within a network.
+ *
  * @return Noc
  */
 Noc &Noc::add(std::shared_ptr<Component> comp) {
@@ -58,6 +61,8 @@ Noc &Noc::add(std::shared_ptr<Component> comp) {
  * Connect the first component using one of its outports
  * with the second component using one of its inports.
  *
+ * The identification of a channel is its name. That means
+ * a channel name must be unique within a network.
  *
  * @param comp_out A reference to the first component
  * @param port_out the outport for the first component
@@ -112,4 +117,26 @@ bool Noc::hasDeadlock() {
 bool Noc::hasCycle() {
     bool result = true;
     return result;
+}
+
+/**********************************************************************************************/
+
+std::ostream &operator<< (std::ostream &os, const std::shared_ptr<Noc> noc) {
+    os << noc->name().toStdString() << "[";
+    std::string glue = "";
+    for(auto comp : noc->m_comp_map) {
+        os << glue << comp;
+        glue = ", ";
+    }
+    os << "]";
+    os.flush();
+    return os;
+}
+
+bool operator== (const Noc &lnoc, const Noc &rnoc) {
+    return true;
+}
+
+bool operator!= (const Noc &lnoc, const Noc &rnoc) {
+    return !(lnoc == rnoc);
 }

@@ -20,31 +20,15 @@
   *
   **********************************************************************/
 
-#ifndef TESTNOC_H
-#define TESTNOC_H
+#ifndef TESTCOMPONENT_H
+#define TESTCOMPONENT_H
 
-#include <QObject>
-#include <QtTest/QTest>
 
-#include "noc.h"
-
-class TestNoc : public QObject
+class TestComponent
 {
-    Q_OBJECT
 public:
-    explicit TestNoc(QObject *parent = 0);
-    ~TestNoc();
-
-signals:
-
-private slots:
-    void initTestCase();
-
-    void emptyNoc();
-    void equalNoc();
-    void unequalNoc();
-
-    void cleanupTestCase();
+    TestComponent();
+    ~TestComponent();
 };
 
-#endif // TESTNOC_H
+#endif // TESTCOMPONENT_H

@@ -84,3 +84,20 @@ Component::InPort::~InPort()
 {
 
 }
+
+std::ostream &operator<< (std::ostream &os, const Component &comp) {
+    os << comp.name() << "[in=(";
+    std::string glue = "";
+    for (auto port : comp.m_inport_map) {
+        os << glue << port;
+        glue = ", ";
+    }
+    os << "), out=(";
+    for (auto port : comp.m_outport_map) {
+        os << glue << port;
+        glue = ", ";
+    }
+    os << ")]";
+    os.flush();
+    return os;
+}
