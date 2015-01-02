@@ -3,6 +3,8 @@
 
 CONFIG += C++11
 
+QT += widgets
+
 TEMPLATE = app
 
 include (../xmas/defines.pri)

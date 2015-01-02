@@ -10,8 +10,8 @@ SUBDIRS =   xmas \
 # xmasmain must be last
 
 CONFIG += ordered
-SUBDIRS += xmasmain \
-           testmain
+SUBDIRS += testmain \
+           xmasmain
 
 # set the subdirectories for the libraries
 
