@@ -46,6 +46,8 @@ class Component;
 class XMASSHARED_EXPORT Component
 {
 
+    friend std::ostream &operator<< (std::ostream &os, const Component &comp);
+
 public:
     /* Nested classes */
     class Port;

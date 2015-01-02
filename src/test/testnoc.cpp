@@ -50,4 +50,27 @@ void TestNoc::emptyNoc() {
 
     QString nameExpected = "empty network";
     QCOMPARE(noc->name(), nameExpected);
+
+}
+
+void TestNoc::equalNoc() {
+    QString name1 = "one noc";
+    QString name2 = "one noc";
+
+    Noc noc1(name1);
+    Noc noc2(name2);
+
+    QCOMPARE(noc1, noc2);
+    QVERIFY(!(noc1 != noc2));
+}
+
+void TestNoc::unequalNoc() {
+    QString name1 = "one noc";
+    QString name2 = "two noc";
+
+    Noc noc1(name1);
+    Noc noc2(name2);
+
+    QVERIFY(!(noc1 == noc2));
+    QVERIFY(noc1 != noc2);
 }

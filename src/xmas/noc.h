@@ -53,6 +53,10 @@ class Noc : public QObject
 {
     Q_OBJECT
 
+    friend std::ostream &operator<< (std::ostream &os, const std::shared_ptr<Noc> noc);
+    friend bool operator== (const Noc &lnoc, const Noc &rnoc);
+    friend bool operator!= (const Noc &lnoc, const Noc &rnoc);
+
 public:
 
     explicit Noc(QString name);
@@ -91,8 +95,11 @@ private:
      * connection.
      */
     QMap<QString, std::shared_ptr<Channel>> m_channel_map;
-
-
 };
+
+std::ostream &operator<< (std::ostream &os, const std::shared_ptr<Noc> noc);
+bool operator== (const Noc &lnoc, const Noc &rnoc);
+bool operator!= (const Noc &lnoc, const Noc &rnoc);
+
 
 #endif // NOC_H
