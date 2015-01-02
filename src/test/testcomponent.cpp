@@ -22,7 +22,7 @@
 
 #include "testcomponent.h"
 
-TestComponent::TestComponent()
+TestComponent::TestComponent(QObject *parent) : QObject(parent)
 {
 
 }
@@ -31,4 +31,41 @@ TestComponent::~TestComponent()
 {
 
 }
+
+void TestComponent::emptyComponent() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::equalComponent() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::unequalComponent() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::componentNoPort() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::componentInPort() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::componentOutPort() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::sink() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::source() {
+    QCOMPARE(1,0);
+}
+
+void TestComponent::merge() {
+    QCOMPARE(1,0);
+}
+
 

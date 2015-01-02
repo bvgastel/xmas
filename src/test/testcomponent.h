@@ -23,12 +23,33 @@
 #ifndef TESTCOMPONENT_H
 #define TESTCOMPONENT_H
 
+#include <QObject>
+#include <QtTest/QTest>
 
-class TestComponent
+#include "component.h"
+
+
+class TestComponent : public QObject
 {
+    Q_OBJECT
+
 public:
-    TestComponent();
+    explicit TestComponent(QObject *parent = 0);
     ~TestComponent();
+
+signals:
+
+
+private slots:
+    void emptyComponent();
+    void equalComponent();
+    void unequalComponent();
+    void componentNoPort();
+    void componentInPort();
+    void componentOutPort();
+    void sink();
+    void source();
+    void merge();
 };
 
 #endif // TESTCOMPONENT_H

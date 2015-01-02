@@ -24,6 +24,7 @@
 
 #include "testrunner.h"
 #include "testnoc.h"
+#include "testcomponent.h"
 
 int main(int argc, char *argv[]) {
 
@@ -37,6 +38,7 @@ int main(int argc, char *argv[]) {
 
     TestRunner runner;
     runner.addTest(new TestNoc());
+    runner.addTest(new TestComponent());
 
     runner.runTests();
 }
