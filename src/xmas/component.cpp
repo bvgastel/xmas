@@ -88,6 +88,12 @@ Component::InPort::~InPort()
 std::ostream &operator<< (std::ostream &os, const Component &comp) {
     os << comp.name() << "[in=(";
     std::string glue = "";
+    // How does for each work ?? For each or for?
+    foreach (port, comp.m_inport_map) {
+        os << glue << port;
+        glue = ", ";
+    }
+
     for (auto port : comp.m_inport_map) {
         os << glue << port;
         glue = ", ";
