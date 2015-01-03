@@ -75,7 +75,7 @@ public:
     QPainterPath shape() const Q_DECL_OVERRIDE;
 
 //  void addConnection(Connection* connection);
-    void Component::addConnector(int type);
+    void addConnector(int type);
     void deleteConnections();
     QList<Connector *> connectors;
 
