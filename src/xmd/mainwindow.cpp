@@ -33,6 +33,7 @@
 
 #include "mainwindow.h"
 #include "modelwindow.h"
+#include "designercontroller.h"
 
 
 MainWindow::MainWindow()
@@ -218,13 +219,44 @@ void MainWindow::about()
  */
 void MainWindow::addComponent(int type)
 {
-     ModelWindow *child = activeModel();
-    if (child != nullptr)
-    {
+    ModelWindow *child = activeModel();
+    if (child) {
         qDebug() << "type = " << type;
 
-        child->addComponent(type);
+        Network& network = child->network();
+        DesignerController dc {network};
+
+        static int counter = 1;
+        std::string counter_str = std::to_string(counter++);
+
+        switch (type) {
+            case ComponentType::Queue:
+                dc.addComponent<XMASQueue>("Queue" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Function:
+                dc.addComponent<XMASFunction>("Function" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Fork:
+                dc.addComponent<XMASFork>("Fork" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Join:
+                dc.addComponent<XMASJoin>("Join" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Switch:
+                dc.addComponent<XMASSwitch>("Switch" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Merge:
+                dc.addComponent<XMASMerge>("Merge" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Sink:
+                dc.addComponent<XMASSink>("Sink" + counter_str, -300, -300, Orientation::North);
+                break;
+            case ComponentType::Source:
+                dc.addComponent<XMASSource>("Source" + counter_str, -300, -300, Orientation::North);
+                break;
+        }
     }
+
 }
 
 void MainWindow::setPackets()
