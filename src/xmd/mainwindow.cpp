@@ -33,6 +33,7 @@
 
 #include "mainwindow.h"
 #include "modelwindow.h"
+#include "designercontroller.h"
 
 
 MainWindow::MainWindow()
@@ -218,13 +219,28 @@ void MainWindow::about()
  */
 void MainWindow::addComponent(int type)
 {
-     ModelWindow *child = activeModel();
+    ModelWindow *child = activeModel();
     if (child != nullptr)
     {
         qDebug() << "type = " << type;
-
         child->addComponent(type);
     }
+
+    if (child) {
+        Network& network = child->network();
+        DesignerController dc {network};
+
+	// *** TODO: Connect the signals/slots somewhere appropriate, e.g. when creating the ModelWindow
+        static bool once = true;
+        if (once) {
+            connect(&network, &Network::componentAdded,
+                    this, &MainWindow::componentAdded);
+            once = false;
+        }
+
+        XMASComponent* c = dc.addComponent<XMASSource>("Source1", 12, 12, Orientation::North);
+    }
+
 }
 
 void MainWindow::setPackets()
@@ -523,6 +539,12 @@ void MainWindow::setModelWindow(QWidget *window)
     if (!window)
         return;
     mdiArea->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
+}
+
+
+void MainWindow::componentAdded(XMASComponent *component)
+{
+    std::cout << "A component has been added: " << component->getName() << std::endl;
 }
 
 void MainWindow::createDockWindows()

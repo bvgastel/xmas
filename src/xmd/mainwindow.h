@@ -52,7 +52,7 @@ class QSignalMapper;
 QT_END_NAMESPACE
 
 class ModelWindow;
-
+class XMASComponent;
 
 class MainWindow : public QMainWindow
 {
@@ -83,6 +83,7 @@ private slots:
     ModelWindow *createModel();
     void setModelWindow(QWidget *window);
 
+    void componentAdded(XMASComponent *component);
 private:
     void createActions();
     void createMenus();

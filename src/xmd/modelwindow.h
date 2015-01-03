@@ -35,6 +35,7 @@
 #include "component.h"
 #include "complib.h"
 #include "setup.h"
+#include "network.h"
 
 class Complib;
 
@@ -53,6 +54,8 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    
+    Network& network() { return m_network; }
 
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
@@ -61,6 +64,8 @@ private slots:
     void documentWasModified();
 
 private:
+    Network m_network;
+  
     QGraphicsScene *m_scene;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
