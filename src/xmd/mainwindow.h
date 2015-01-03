@@ -83,7 +83,6 @@ private slots:
     ModelWindow *createModel();
     void setModelWindow(QWidget *window);
 
-    void componentAdded(XMASComponent *component);
 private:
     void createActions();
     void createMenus();

@@ -34,6 +34,8 @@
 
 #include "modelwindow.h"
 #include "complib.h"
+#include "checker/xmas.h"
+#include "positioncomponentextension.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;
@@ -62,22 +64,12 @@ ModelWindow::ModelWindow(QWidget *parent)
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
 
+    connect(&m_network, &Network::componentAdded, this, &ModelWindow::componentAdded);
 }
 
 ModelWindow::~ModelWindow()
 {
 
-}
-
-void ModelWindow::addComponent(int type)
-{
-    CompLib *lib = new CompLib();
-    Component *c = lib->getComponent(type);
-    if (c != nullptr)
-    {
-        c->setPos(-200,-200);
-        m_scene->addItem(c);
-    }
 }
 
 void ModelWindow::newFile()
@@ -172,6 +164,28 @@ void ModelWindow::documentWasModified()
 {
     //setWindowModified(document()->isModified());
 }
+
+
+#include <iostream> // std::cout
+void ModelWindow::componentAdded(XMASComponent *component)
+{
+    std::cout << "ModelWindow: A component has been added: " << component->getName() << std::endl;
+
+    auto pce = component->getComponentExtension<PositionComponentExtension>();
+
+    CompLib *lib = new CompLib();
+    ComponentType type = component->type();
+    Component *c = lib->getComponent(type);
+    if (c != nullptr)
+    {
+        c->setPos(pce->x(), pce->y());
+        m_scene->addItem(c);
+    }
+}
+
+
+
+
 
 bool ModelWindow::maybeSave()
 {

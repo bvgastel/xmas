@@ -46,7 +46,7 @@ class ModelWindow : public QGraphicsView
 public:
     ModelWindow(QWidget *parent = 0);
     ~ModelWindow();
-    void addComponent(int type);
+
     void newFile();
     bool loadFile(const QString &fileName);
     bool save();
@@ -62,6 +62,7 @@ protected:
 
 private slots:
     void documentWasModified();
+    void componentAdded(XMASComponent *component);
 
 private:
     Network m_network;

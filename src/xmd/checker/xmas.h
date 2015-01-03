@@ -131,6 +131,12 @@ void connect(Output &o, Input &i);
 class XMASComponentExtension : public Extension<XMASComponentExtension> {
 };
 
+// same as defined in complib.h
+enum ComponentType {
+    Sink = 7, Source = 8, Queue = 1, Function = 2, Switch = 5, Fork = 3, Merge = 6, Join = 4, Composite = 11
+};
+
+
 class XMASSink;
 class XMASSource;
 class XMASQueue;
@@ -160,6 +166,8 @@ public:
     virtual ~XMASComponent();
     String getName() const;
     bool valid();
+
+    virtual ComponentType type() const = 0;
 
     template <typename Iterator>
     struct PortIterators {
@@ -216,6 +224,8 @@ public:
         p[0] = &i;
     }
 
+    ComponentType type() const { return ComponentType::Sink; }
+
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
@@ -236,6 +246,8 @@ public:
     XMASSource(const String& name) : XMASComponent(name), o(this, "o") {
         p[0] = &o;
     }
+
+    ComponentType type() const { return ComponentType::Source; }
 
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
@@ -260,6 +272,8 @@ public:
         p[1] = &o;
     }
 
+    ComponentType type() const { return ComponentType::Queue; }
+
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
@@ -281,6 +295,8 @@ public:
         p[0] = &i;
         p[1] = &o;
     }
+
+    ComponentType type() const { return ComponentType::Function; }
 
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
@@ -307,6 +323,8 @@ public:
         p[2] = &b;
     }
 
+    ComponentType type() const { return ComponentType::Switch; }
+
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
@@ -332,6 +350,8 @@ public:
         p[2] = &b;
     }
 
+    ComponentType type() const { return ComponentType::Fork; }
+
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
@@ -356,6 +376,8 @@ public:
         p[2] = &o;
     }
 
+    ComponentType type() const { return ComponentType::Merge; }
+
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
@@ -379,6 +401,8 @@ public:
         p[1] = &b;
         p[2] = &o;
     }
+
+    ComponentType type() const { return ComponentType::Join; }
 
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
