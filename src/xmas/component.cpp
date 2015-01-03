@@ -99,7 +99,7 @@ std::ostream &operator<< (std::ostream &os, const Component &comp) {
         glue = ", ";
     }
     os << "), out=(";
-    for (auto port : comp.m_outport_map) {
+    foreach (auto port , comp.m_outport_map) {
         os << glue << port;
         glue = ", ";
     }

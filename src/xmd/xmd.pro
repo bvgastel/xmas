@@ -14,8 +14,7 @@ HEADERS       = mainwindow.h \
                 connector.h \
                 connection.h \
                 complib.h
-SOURCES       = main.cpp \
-                mainwindow.cpp \
+SOURCES       = mainwindow.cpp \
                 modelwindow.cpp \
                 projectmanager.cpp \
                 component.cpp \
@@ -35,8 +34,10 @@ win32 {
     INSTALLS += target
 }
 
+TEMPLATE = lib
+
 # install
 # target.path = xmd
 # INSTALLS += target
 
-DISTFILES +=
+DISTFILES += XMAS_LIBRARY

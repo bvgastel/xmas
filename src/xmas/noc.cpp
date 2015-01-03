@@ -124,7 +124,7 @@ bool Noc::hasCycle() {
 std::ostream &operator<< (std::ostream &os, const std::shared_ptr<Noc> noc) {
     os << noc->name().toStdString() << "[";
     std::string glue = "";
-    for(auto comp : noc->m_comp_map) {
+    foreach (auto comp , noc->m_comp_map) {
         os << glue << comp;
         glue = ", ";
     }
