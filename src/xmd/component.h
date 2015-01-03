@@ -32,66 +32,61 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <QGraphicsProxyWidget>
+#include <QGraphicsItem>
+#include <QGraphicsSvgItem>
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QMenu>
+
 #include "connector.h"
-#include "connection.h"
 
 QT_BEGIN_NAMESPACE
-class QPixmap;
 class QGraphicsItem;
+class QGraphicsSvgItem;
 class QGraphicsScene;
-class QTextEdit;
 class QGraphicsSceneMouseEvent;
 class QMenu;
 class QGraphicsSceneContextMenuEvent;
 class QPainter;
 class QStyleOptionGraphicsItem;
-class QWidget;
-class QPolygonF;
 QT_END_NAMESPACE
 
-class Port;
-class Channel;
+class Connector;
+class ConnectorType;
 
 /**
  * @brief The Component class
  */
-class Component : public QGraphicsProxyWidget
+class Component : public QGraphicsSvgItem
 {
-        Q_OBJECT
 public:
-    enum { Type = UserType + 15 };
+    enum { Type = UserType + 0 };
     int type() const Q_DECL_OVERRIDE { return Type; }
     Component(QMenu *contextMenu,
-              QGraphicsItem *parent = nullptr,
-              QGraphicsScene *scene = nullptr,
-              Qt::WindowFlags wFlags = 0);
+              QGraphicsItem *parent = 0,
+              QGraphicsScene *scene = 0);
     virtual ~Component();
+
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) Q_DECL_OVERRIDE;
+
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     QPainterPath shape() const Q_DECL_OVERRIDE;
-    void setWidget(QWidget *widget);
-    void addConnection(Connection* nc);
+
+//  void addConnection(Connection* connection);
+    void Component::addConnector(int type);
     void deleteConnections();
     QList<Connector *> connectors;
 
 public slots:
      void deleted();
-     void deleted(int result);
-     void hide();
 
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) Q_DECL_OVERRIDE;
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) Q_DECL_OVERRIDE;
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) Q_DECL_OVERRIDE;
-    bool shouldMoveNode(QGraphicsSceneMouseEvent *mouseEvent);
-    const static char* shouldMoveOnClickTypes[];
-    void hoverMoveEvent ( QGraphicsSceneHoverEvent * event ) Q_DECL_OVERRIDE;
-    void resizeEvent ( QGraphicsSceneResizeEvent * event ) Q_DECL_OVERRIDE;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
     bool m_controlResizeHandles;
     bool m_noResize;
 
@@ -99,9 +94,9 @@ private:
     QMenu *m_contextMenu;
     void updateConnectorsPos();
     bool m_isMoving;
-    void removeWidgetFromConnectors();
-    int m_maxRadius;
-
+    int count(int type) const;
+    QRect bodyRect() const;
+    void updateConnectorPositions();
 };
 
 #endif // COMPONENT_H

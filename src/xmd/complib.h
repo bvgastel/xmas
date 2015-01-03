@@ -28,58 +28,42 @@
  *
  *
  **************************************************************************/
+#ifndef COMPLIB
+#define COMPLIB
 
-#ifndef CONNECTOR_H
-#define CONNECTOR_H
+#include <QGraphicsSvgItem>
 
-#include <QGraphicsItem>
 #include "component.h"
-#include "connection.h"
 
 QT_BEGIN_NAMESPACE
-class QGraphicsSceneMouseEvent;
+class QGraphicsSvgItem;
 QT_END_NAMESPACE
 
 class Component;
-class Connection;
 
-/**
- * A component connector
- */
-class Connector : public QGraphicsItem
+class CompLib
 {
+
 public:
-    enum { Type = UserType + 6 };
-    int type() const Q_DECL_OVERRIDE { return Type; }
-    enum ConnectorType { Input=1, Output=2 };
-    ConnectorType connectorType() const {
-        return m_connectorType;
-    }
-    void setConnectorType(ConnectorType p) {
-        m_connectorType = p;
-    }
-    Connector(Component *parent, QGraphicsScene *scene, QWidget* widget,
-         ConnectorType  ct = Input, const int radius = 7);
+    enum ComponentType { Queue=1, Function=2, Fork=3, Join=4, Switch=5, Merge=6, Sink=7, Source=8, In=9, Out=10, Composite=11,};
 
-    Component *getComponent() const {
-        return m_parent;
-    }
-    virtual ~Connector();
-
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
-
+    Component *getComponent(int type);
+    CompLib();
 private:
-    int m_radius;
-    QWidget m_widget;
-    ConnectorType m_connectorType;
-    bool m_isConnected;
-    Connection m_connection;
-    Component *m_parent;
-    QColor m_darkColor;
-    bool m_highlight;
-
+    Component *m_queue;
+    Component *m_function;
+    Component *m_fork;
+    Component *m_join;
+    Component *m_switch;
+    Component *m_merge;
+    Component *m_sink;
+    Component *m_source;
+    Component *m_in;
+    Component *m_out;
+    Component *m_composite; //test
 };
 
-#endif // CONNECTOR_H
+Q_DECLARE_METATYPE(CompLib::ComponentType)
+
+#endif // COMPLIB
+

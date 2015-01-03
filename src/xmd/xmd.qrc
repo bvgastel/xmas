@@ -18,5 +18,14 @@
         <file>images/sink.png</file>
         <file>images/source.png</file>
         <file>images/switch.png</file>
+        <file>images/svgs/connector.svg</file>
+        <file>images/svgs/fork.svg</file>
+        <file>images/svgs/function.svg</file>
+        <file>images/svgs/join.svg</file>
+        <file>images/svgs/merge.svg</file>
+        <file>images/svgs/queue.svg</file>
+        <file>images/svgs/sink.svg</file>
+        <file>images/svgs/source.svg</file>
+        <file>images/svgs/switch.svg</file>
     </qresource>
 </RCC>

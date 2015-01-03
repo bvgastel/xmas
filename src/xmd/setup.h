@@ -1,6 +1,6 @@
 /************************************************************************
  *
- * Copyright Stefan van der Sluys, 2014
+ * Copyright Stefan Versluys, 2014
  *
  * This file is part of the xmas-design tool.
  *
@@ -17,10 +17,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with the xmas-design tool.  If not, see
  *  <http://www.gnu.org/licenses/>.
+ *
+ *
+ * Parts of this code were copied from Qt examples with following copyright
+ * and license notices:
+ *
+ * Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies)
+ *
+ * under BSD license.
+ *
+ *
  **************************************************************************/
 
-#ifndef _SETUP
-#define _SETUP
+#ifndef SETUP
+#define SETUP
 
 #define TOOL_NAME                   "XMAS Model Designer 2015"
 #define TOOL_VERSION                "0.1.0"
@@ -35,5 +45,5 @@
 
 #define MAXIMUM_RECENT_FILES        5
 
-#endif // _SETUP
+#endif // SETUP
 

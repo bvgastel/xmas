@@ -1,23 +1,24 @@
-QT += widgets
+QT += widgets svg
 
 HEADERS       = mainwindow.h \
                 modelwindow.h \
                 projectmanager.h \
                 setup.h \
-    canvas/connection.h \
-    canvas/connector.h \
-    canvas/component.h \
-    canvas/canvas.h
+                connection.h \
+                connector.h \
+                component.h \
+                complib.h
+				
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 modelwindow.cpp \
                 projectmanager.cpp \
-    canvas/connection.cpp \
-    canvas/connector.cpp \
-    canvas/component.cpp \
-    canvas/canvas.cpp
+                connection.cpp \
+                connector.cpp \
+                component.cpp \
+                complib.cpp
+				
 RESOURCES     = xmd.qrc
-
 
 # install
 target.path = xmd

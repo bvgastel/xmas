@@ -30,8 +30,11 @@
  **************************************************************************/
 
 #include <math.h>
+
 #include "connection.h"
 #include "connector.h"
+
+const qreal Pi = 3.14;
 
 /**
  * @brief Connection::Connection
@@ -42,9 +45,8 @@
  */
 Connection::Connection(Connector *startConnector,
                        Connector *endConnector,
-                       QGraphicsItem *parent,
-                       QGraphicsScene *scene)
-    : QGraphicsLineItem(parent)
+                       QGraphicsItem *parent)
+    : QGraphicsPathItem(parent)
 {
     m_startConnector = startConnector;
     m_endConnector = endConnector;
@@ -57,20 +59,20 @@ Connection::Connection(Connector *startConnector,
 }
 
 /**
- * @brief NodeConnection::boundingRect
+ * @brief Connection::boundingRect
  * @return
  */
-QRectF NodeConnection::boundingRect() const
+QRectF Connection::boundingRect() const
 {
     qreal extra = 3;
     return QGraphicsPathItem::boundingRect().normalized().adjusted(-extra, -extra, extra, extra);
 }
 
 /**
- * @brief NodeConnection::shape
+ * @brief Connection::shape
  * @return
  */
-QPainterPath NodeConnection::shape() const
+QPainterPath Connection::shape() const
 {
     QPainterPath path = QGraphicsPathItem::shape();
     return path;
@@ -129,59 +131,59 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         combinedSize.setHeight(leftConn->parentItem()->boundingRect().height());
     }
     else {
-        combinedSize.setWidth(5 * leftConn->m_radius);
-        combinedSize.setWidth(5 * leftConn->m_radius);
+        combinedSize.setWidth(5 * leftConn->boundingRect().width());
+        combinedSize.setHeight(5 * leftConn->boundingRect().height());
     }
     if (rightConn->parentItem() != nullptr) {
         combinedSize.setWidth(combinedSize.width() + rightConn->parentItem()->boundingRect().width());
         combinedSize.setHeight(combinedSize.height() + rightConn->parentItem()->boundingRect().height());
     }
     else {
-        combinedSize.setWidth(combinedSize.width() + 5 * rightConn->m_radius);
-        combinedSize.setHeight(combinedSize.height() + 5 * rightConn->m_radius);
+        combinedSize.setWidth(combinedSize.width() + 5 * rightConn->boundingRect().width());
+        combinedSize.setHeight(combinedSize.height() + 5 * rightConn->boundingRect().height());
     }
 
 
 
-    if (leftConn->connectorType() == rightConn->connectorType()
-            && leftConn->connectorType() == Connector::Input
+    if (leftConn->getType() == rightConn->getType()
+            && leftConn->getType() == Connector::Input
             && right.x() - left.x() < combinedSize.width()/2.0) {
         controlPoint1.setX(controlPoint1.x() - moveY/2.0);
         controlPoint2.setX(controlPoint2.x() - moveY/2.0);
     }
-    else if (leftConn->connectorType() == rightConn->connectorType()
-             && leftConn->connectorType() == Connector::Output
+    else if (leftConn->getType() == rightConn->getType()
+             && leftConn->getType() == Connector::Output
              && right.x() - left.x() < combinedSize.width()/2.0) {
         controlPoint1.setX(controlPoint1.x() + moveY/2.0);
         controlPoint2.setX(controlPoint2.x() + moveY/2.0);
     }
-    else if (leftConn->connectorType() != Connector::Input
-             && rightConn->connectorType() != Connector::Output) {
+    else if (leftConn->getType() != Connector::Input
+             && rightConn->getType() != Connector::Output) {
         controlPoint1 = a;
         controlPoint2 = b;
         qreal moveX = 0.45 * diffx;
         qreal moveY = 0.45 * diffy;
-        if (dist > 5 * (m_startConnector->m_radius)) {
+        if (dist > 5 * (m_startConnector->boundingRect().width())) {
 
-            if (moveX < 3 * (m_startConnector->m_radius)) {
-                moveX = 3 * (m_startConnector->m_radius);
+            if (moveX < 3 * (m_startConnector->boundingRect().width())) {
+                moveX = 3 * (m_startConnector->boundingRect().width());
             }
-            if (moveY < 3 * (m_startConnector->m_radius)) {
-                moveY = 3 * (m_startConnector->m_radius);
+            if (moveY < 3 * (m_startConnector->boundingRect().height())) {
+                moveY = 3 * (m_startConnector->boundingRect().height());
             }
         }
 
-        if (m_startConnector->connectorType() == Connector::Input) {
+        if (m_startConnector->getType() == Connector::Input) {
             controlPoint1.setX(controlPoint1.x() - moveX);
         }
-        else if (m_startConnector->connectorAlignment() == Connector::Output) {
+        else if (m_startConnector->getType() == Connector::Output) {
             controlPoint1.setX(controlPoint1.x() + moveX);
         }
 
-        if (m_endConnector->connectorType() == Connector::Input) {
+        if (m_endConnector->getType() == Connector::Input) {
             controlPoint2.setX(controlPoint2.x() - moveX);
         }
-        else if (m_endConnector->connectorType() == Connector::Output) {
+        else if (m_endConnector->getType() == Connector::Output) {
             controlPoint2.setX(controlPoint2.x() + moveX);
         }
     }
@@ -191,11 +193,11 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         qreal maxMove = 0.5 * dist;
         moveX = 0.5 * dist;
         moveY = 0.5 * dist;
-        if (m_startConnector->parent != nullptr) {
-            maxMove = 1 * (m_startConnector->parent->rect().width() + m_startConnector->parent->rect().height());
+        if (m_startConnector->component() != nullptr) {
+            maxMove = 1 * (m_startConnector->component()->boundingRect().width() + m_startConnector->component()->boundingRect().height());
         }
-        else if (m_endConnector->parent != nullptr) {
-            maxMove = 1 * (m_endConnector->parent->rect().width() + m_endConnector->parent->rect().height());
+        else if (m_endConnector->component() != nullptr) {
+            maxMove = 1 * (m_endConnector->component()->boundingRect().width() + m_endConnector->component()->boundingRect().height());
         }
         if (moveX > maxMove) {
             moveX = maxMove + 0.1 * (moveX-maxMove);
@@ -206,11 +208,10 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
         controlPoint1.setX(controlPoint1.x() + moveX);
         controlPoint1.setY(controlPoint1.y() + moveY);
 
-
         moveX = 0.5 * dist;
         moveY = 0.5 * dist;
-        if (m_startConnector->parent != nullptr && m_endConnector->parent != nullptr) {
-            maxMove = 1 * (m_endConnector->parent->rect().width() + m_endConnector->parent->rect().height());
+        if (m_startConnector->component() != nullptr && m_endConnector->component() != nullptr) {
+            maxMove = 1 * (m_endConnector->component()->boundingRect().width() + m_endConnector->component()->boundingRect().height());
         }
         if (moveX > maxMove) {
             moveX = maxMove + 0.1 * (moveX-maxMove);
@@ -233,16 +234,49 @@ void Connection::recreatePath(QPointF& controlPoint1, QPointF& controlPoint2)
  */
 Connection::~Connection(){
     if (this->m_startConnector != nullptr) {
-        this->m_startConnector->removeConnection(this);
+        this->m_startConnector->deleteConnection();
         this->m_startConnector = nullptr;
     }
     if (this->m_endConnector != nullptr) {
-        this->m_endConnector->removeConnection(this);
+        this->m_endConnector->deleteConnection();
         this->m_endConnector = nullptr;
     }
 
-    if (scene() != nullptr) {
-        this->scene()->removeItem(this);
-    }
+//    if (scene() != nullptr) {
+//        this->scene()->removeItem(this);
+//    }
+}
+
+void Connection::paint(QPainter *painter,
+                       const QStyleOptionGraphicsItem *option,
+                       QWidget *w)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(w);
+
+    painter->setRenderHint(QPainter::Antialiasing);
+
+    if (m_startConnector == nullptr
+            || m_endConnector == nullptr
+            || m_startConnector->collidesWithItem(m_endConnector))
+        return;
+
+
+    QPointF controlPoint1;
+    QPointF controlPoint2;
+    recreatePath(controlPoint1, controlPoint2);
+
+    QPen mPen = pen();
+    mPen.setColor(Qt::black);
+    painter->setPen(mPen);
+    painter->setBrush(Qt::NoBrush);
+
+    if (isSelected())
+        painter->setPen(QPen(Qt::black, 1, Qt::DashLine));
+
+    QPainterPath& p = this->path();
+    painter->drawPath(p);
+
+
 }
 

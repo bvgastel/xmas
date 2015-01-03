@@ -1,6 +1,6 @@
 /************************************************************************
  *
- * Copyright Stefan van der Sluys, 2014
+ * Copyright Stefan Versluys, 2014
  *
  * This file is part of the xmas-design tool.
  *
@@ -28,15 +28,56 @@
  *
  *
  **************************************************************************/
-
+#include <QGraphicsSvgItem>
+#include <QSvgRenderer>
 #include <QtWidgets>
 
 #include "modelwindow.h"
+#include "complib.h"
 
-ModelWindow::ModelWindow()
+QT_BEGIN_NAMESPACE
+class QFile;
+class QTextStream;
+QT_END_NAMESPACE
+
+class CompLib;
+
+ModelWindow::ModelWindow(QWidget *parent)
+    : QGraphicsView(parent)
 {
+    m_scene = new QGraphicsScene(this);
+    m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    m_scene->setSceneRect(-1000, -1000, 1000, 1000);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    setScene(m_scene);
+    setCacheMode(CacheBackground);
+    setViewportUpdateMode(BoundingRectViewportUpdate);
+    setRenderHint(QPainter::Antialiasing);
+    setTransformationAnchor(AnchorUnderMouse);
+    scale(qreal(1.0), qreal(1.0));
+    setMinimumSize(250, 250);
+
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
+
+}
+
+ModelWindow::~ModelWindow()
+{
+
+}
+
+void ModelWindow::addComponent(int type)
+{
+    CompLib *lib = new CompLib();
+    Component *c = lib->getComponent(type);
+    if (c != nullptr)
+    {
+        c->setPos(-200,-200);
+        m_scene->addItem(c);
+    }
 }
 
 void ModelWindow::newFile()
@@ -46,8 +87,8 @@ void ModelWindow::newFile()
     curFile = tr("model%1." MODEL_FILE_EXTENSION).arg(sequenceNumber++);
     setWindowTitle(curFile + "[*]");
 
-    connect(document(), SIGNAL(contentsChanged()),
-            this, SLOT(documentWasModified()));
+//    connect(document(), SIGNAL(contentsChanged()),
+//            this, SLOT(documentWasModified()));
 }
 
 bool ModelWindow::loadFile(const QString &fileName)
@@ -63,13 +104,13 @@ bool ModelWindow::loadFile(const QString &fileName)
 
     QTextStream in(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    setPlainText(in.readAll());
+    //setPlainText(in.readAll());
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
 
-    connect(document(), SIGNAL(contentsChanged()),
-            this, SLOT(documentWasModified()));
+//    connect(document(), SIGNAL(contentsChanged()),
+//            this, SLOT(documentWasModified()));
 
     return true;
 }
@@ -106,7 +147,7 @@ bool ModelWindow::saveFile(const QString &fileName)
 
     QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    out << toPlainText();
+    //out << toPlainText();
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
@@ -129,12 +170,14 @@ void ModelWindow::closeEvent(QCloseEvent *event)
 
 void ModelWindow::documentWasModified()
 {
-    setWindowModified(document()->isModified());
+    //setWindowModified(document()->isModified());
 }
 
 bool ModelWindow::maybeSave()
 {
-    if (document()->isModified()) {
+//    if (document()->isModified()) {
+    if (false)
+    {
         QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, tr("Test"),
                      tr("'%1' has been modified.\n"
@@ -154,7 +197,7 @@ void ModelWindow::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
-    document()->setModified(false);
+    //document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }

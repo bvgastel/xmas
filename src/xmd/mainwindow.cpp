@@ -1,6 +1,6 @@
 /************************************************************************
  *
- * Copyright Stefan van der Sluys, 2014
+ * Copyright Stefan Versluys, 2014
  *
  * This file is part of the xmas-design tool.
  *
@@ -28,11 +28,12 @@
  *
  *
  **************************************************************************/
-
 #include <QtWidgets>
+#include <QDebug>
 
 #include "mainwindow.h"
 #include "modelwindow.h"
+
 
 MainWindow::MainWindow()
 {
@@ -51,20 +52,20 @@ MainWindow::MainWindow()
     mdiArea->setTabsClosable(true);
 
     setCentralWidget(mdiArea);
+    setWindowTitle(tr(TOOL_NAME));
+    setUnifiedTitleAndToolBarOnMac(true);
+
+    signalMapper = new QSignalMapper(this);
 
     readSettings();
     createActions();
     createMenus();
     createToolBars();
     createStatusBar();
-    updateMenus();
-
-
-    setWindowTitle(tr(TOOL_NAME));
-    setUnifiedTitleAndToolBarOnMac(true);
-
+    updateMenus();  
     createDockWindows();
-    newFile();
+
+    //emit newFile();
 
 }
 
@@ -89,7 +90,7 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open"),"",tr("xMAS Files (*.wck)"));
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open"),"",tr("xMAS Model Files (*.xmdm)"));
 
     if (!fileName.isEmpty()) {
         QMdiSubWindow *existing = findModel(fileName);
@@ -130,7 +131,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
     curFile = fileName;
     setWindowFilePath(curFile);
 
-    QSettings settings("XmasDesigner", "xMAS Design Tool");
+    QSettings settings("XMD", "xMAS Model Design Tool");
     QStringList files = settings.value("recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
@@ -148,7 +149,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::updateRecentFileActions()
 {
-    QSettings settings("XmasDesigner", "xMAS Design Tool");
+    QSettings settings("XMD", "xMAS Model Design Tool");
 
     QStringList files = settings.value("recentFileList").toStringList();
 
@@ -186,20 +187,20 @@ void MainWindow::saveAs()
 #ifndef QT_NO_CLIPBOARD
 void MainWindow::cut()
 {
-    if (activeModel())
-        activeModel()->cut();
+//    if (activeModel())
+//        activeModel()->cut();
 }
 
 void MainWindow::copy()
 {
-    if (activeModel())
-        activeModel()->copy();
+//    if (activeModel())
+//        activeModel()->copy();
 }
 
 void MainWindow::paste()
 {
-    if (activeModel())
-        activeModel()->paste();
+//    if (activeModel())
+//        activeModel()->paste();
 }
 #endif
 
@@ -211,14 +212,19 @@ void MainWindow::about()
                "eXecutable MicroArchitectural Specifications."));
 }
 
-void MainWindow::addPrimitive()
+/**
+ * @brief MainWindow::addComponent
+ * @param type
+ */
+void MainWindow::addComponent(int type)
 {
-//dummy for now
-}
+     ModelWindow *child = activeModel();
+    if (child != nullptr)
+    {
+        qDebug() << "type = " << type;
 
-void MainWindow::addComposite()
-{
-//dummy for now
+        child->addComponent(type);
+    }
 }
 
 void MainWindow::setPackets()
@@ -235,14 +241,14 @@ void MainWindow::updateMenus()
     closeAllAct->setEnabled(hasModel);
 
 #ifndef QT_NO_CLIPBOARD
-    pasteAct->setEnabled(hasModel);
+    //pasteAct->setEnabled(hasModel);
 #endif
 
 #ifndef QT_NO_CLIPBOARD
-    bool hasSelection = (activeModel() &&
-                         activeModel()->textCursor().hasSelection());
-    cutAct->setEnabled(hasSelection);
-    copyAct->setEnabled(hasSelection);
+    //bool hasSelection = (activeModel() &&
+    //                     activeModel()->textCursor().hasSelection());
+    //cutAct->setEnabled(hasSelection);
+    //copyAct->setEnabled(hasSelection);
 #endif
 }
 
@@ -250,12 +256,13 @@ ModelWindow *MainWindow::createModel()
 {
     ModelWindow *model = new ModelWindow;
     mdiArea->addSubWindow(model);
+    setModelWindow(model->window());
 
 #ifndef QT_NO_CLIPBOARD
-    connect(model, SIGNAL(copyAvailable(bool)),
-            cutAct, SLOT(setEnabled(bool)));
-    connect(model, SIGNAL(copyAvailable(bool)),
-            copyAct, SLOT(setEnabled(bool)));
+//    connect(model, SIGNAL(copyAvailable(bool)),
+//            cutAct, SLOT(setEnabled(bool)));
+//    connect(model, SIGNAL(copyAvailable(bool)),
+//            copyAct, SLOT(setEnabled(bool)));
 #endif
 
     return model;
@@ -333,48 +340,63 @@ void MainWindow::createActions()
 
 
     queueAct = new QAction(QIcon(":/images/queue.png"), tr("Queue"), this);
-    queueAct->setStatusTip(tr("Draws the ''queue'' primitive"));
-    connect(queueAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    queueAct->setStatusTip(tr("Draws a ''queue'' primitive"));
+    signalMapper->setMapping(queueAct, CompLib::Queue);
+    connect(queueAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     functionAct = new QAction(QIcon(":/images/function.png"), tr("Function"), this);
-    functionAct->setStatusTip(tr("Draws the ''function'' primitive"));
-    connect(functionAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    functionAct->setStatusTip(tr("Draws a ''function'' primitive"));
+    signalMapper->setMapping(functionAct, CompLib::Function);
+    connect(functionAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     forkAct = new QAction(QIcon(":/images/fork.png"), tr("Fork"), this);
-    forkAct->setStatusTip(tr("Draws the ''fork'' primitive"));
-    connect(forkAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    forkAct->setStatusTip(tr("Draws a ''fork'' primitive"));
+    signalMapper->setMapping(forkAct, CompLib::Fork);
+    connect(forkAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     joinAct = new QAction(QIcon(":/images/join.png"), tr("Join"), this);
-    joinAct->setStatusTip(tr("Draws the ''join'' primitive"));
-    connect(joinAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    joinAct->setStatusTip(tr("Draws a ''join'' primitive"));
+    signalMapper->setMapping(joinAct, CompLib::Join);
+    connect(joinAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     switchAct = new QAction(QIcon(":/images/switch.png"), tr("Switch"), this);
-    switchAct->setStatusTip(tr("Draws the ''switch'' primitive"));
-    connect(switchAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    switchAct->setStatusTip(tr("Draws a ''switch'' primitive"));
+    signalMapper->setMapping(switchAct, CompLib::Switch);
+    connect(switchAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     mergeAct = new QAction(QIcon(":/images/merge.png"), tr("Merge"), this);
-    mergeAct->setStatusTip(tr("Draws the ''merge'' primitive"));
-    connect(mergeAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    mergeAct->setStatusTip(tr("Draws a ''merge'' primitive"));
+    signalMapper->setMapping(mergeAct, CompLib::Merge);
+    connect(mergeAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     sinkAct = new QAction(QIcon(":/images/sink.png"), tr("Sink"), this);
-    sinkAct->setStatusTip(tr("Draws the ''sink'' primitive"));
-    connect(sinkAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    sinkAct->setStatusTip(tr("Draws a ''sink'' primitive"));
+    signalMapper->setMapping(sinkAct, CompLib::Sink);
+    connect(sinkAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     sourceAct = new QAction(QIcon(":/images/source.png"), tr("Source"), this);
     sourceAct->setStatusTip(tr("Draws the ''source'' primitive"));
-    connect(sourceAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    signalMapper->setMapping(sourceAct, CompLib::Source);
+    connect(sourceAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     inputAct = new QAction(QIcon(":/images/in.png"), tr("Input"), this);
     inputAct->setStatusTip(tr("Draws an ''Input connection point''"));
-    connect(inputAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    signalMapper->setMapping(inputAct, CompLib::In);
+    connect(inputAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     outputAct = new QAction(QIcon(":/images/out.png"), tr("Output"), this);
     outputAct->setStatusTip(tr("Draws an ''Output connection point''"));
-    connect(outputAct, SIGNAL(triggered()), this, SLOT(addPrimitive()));
+    signalMapper->setMapping(outputAct, CompLib::Out);
+    connect(outputAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
     compositeAct = new QAction(QIcon(":/images/composite.png"), tr("Composite"), this);
     compositeAct->setStatusTip(tr("Draws a ''Composite''"));
-    connect(compositeAct, SIGNAL(triggered()), this, SLOT(addComposite()));
+    signalMapper->setMapping(compositeAct, CompLib::Composite);
+    connect(compositeAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
+
+    connect(signalMapper, SIGNAL(mapped(int)),
+            this, SLOT(addComponent(int)));
+
 
     packetAct = new QAction(QIcon(":/images/packet.png"), tr("Packet"), this);
     packetAct->setStatusTip(tr("Setup the packets."));
@@ -461,7 +483,7 @@ void MainWindow::createStatusBar()
 
 void MainWindow::readSettings()
 {
-    QSettings settings("XmasDesigner", "xMAS Design Tool");
+    QSettings settings("XMD", "xMAS Model Design Tool");
     settings.beginGroup("MainWindow");
     move(settings.value("pos", QPoint(200, 200)).toPoint());
     resize(settings.value("size", QSize(400, 400)).toSize());
@@ -470,7 +492,7 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
-    QSettings settings("XmasDesigner", "xMAS Design Tool");
+    QSettings settings("XMD", "xMAS Model Design Tool");
     settings.beginGroup("MainWindow");
     settings.setValue("pos", pos());
     settings.setValue("size", size());

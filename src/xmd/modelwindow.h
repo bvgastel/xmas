@@ -1,6 +1,6 @@
 /************************************************************************
  *
- * Copyright Stefan van der Sluys, 2014
+ * Copyright Stefan Versluys, 2014
  *
  * This file is part of the xmas-design tool.
  *
@@ -28,21 +28,24 @@
  *
  *
  **************************************************************************/
-
 #ifndef MODELWINDOW_H
 #define MODELWINDOW_H
 
-#include <QTextEdit>
+#include <QGraphicsView>
+#include "component.h"
+#include "complib.h"
 #include "setup.h"
 
+class Complib;
 
-class ModelWindow : public QTextEdit
+class ModelWindow : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    ModelWindow();
-
+    ModelWindow(QWidget *parent = 0);
+    ~ModelWindow();
+    void addComponent(int type);
     void newFile();
     bool loadFile(const QString &fileName);
     bool save();
@@ -54,19 +57,15 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
-signals:
-
-
 private slots:
     void documentWasModified();
 
 private:
+    QGraphicsScene *m_scene;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     QString strippedName(const QString &fullFileName);
-
     QString curFile;
     bool isUntitled;
 };
-
-#endif
+#endif // MODELWINDOW_H

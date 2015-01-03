@@ -29,69 +29,59 @@
  *
  **************************************************************************/
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef CONNECTOR_H
+#define CONNECTOR_H
 
-#include <QGraphicsLineItem>
+#include <QGraphicsItem>
+#include <QWidget>
+
 #include "component.h"
 #include "connection.h"
 
 QT_BEGIN_NAMESPACE
-class QGraphicsPolygonItem;
-class QGraphicsLineItem;
-class QGraphicsScene;
-class QRectF;
 class QGraphicsSceneMouseEvent;
-class QPainterPath;
+class QPainter;
 QT_END_NAMESPACE
 
-class Connector;
+class Component;
+class Connection;
 
 /**
- * @brief The Connection class
+ * @brief The Connector class
  */
-class Connection : public QGraphicsLineItem
+class Connector : public QGraphicsItem
 {
+
 public:
-    enum { Type = UserType + 4 };
-
-    Connection(Connector *startConnector,
-               Connector *endConnector,
-               QGraphicsItem *parent = nullptr,
-               QGraphicsScene *scene = nullptr);
-
+    enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
+
+    enum ConnectorType { Input=1, Output=2 };
+    ConnectorType getType() const {return m_type;}
+
+    Connector(Component *parent,
+              ConnectorType type = Input);
+    virtual ~Connector();
+
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     QPainterPath shape() const Q_DECL_OVERRIDE;
-
-    Connector *startConnector() const
-    {
-        return m_startConnector;
-    }
-    Connector *endConnector() const
-    {
-        return m_endConnector;
-    }
-
-    void updatePosition();
-
-    virtual ~Connection();
-
-protected:
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
-               QWidget *widget = nullptr) Q_DECL_OVERRIDE;
+               QWidget *widget) Q_DECL_OVERRIDE;
 
-    void recreatePath(QPointF& controlPoint1,
-                      QPointF& controlPoint2);
+    void setConnection(Connection *connection){m_connection = connection;}
+    void deleteConnection();
+    const Component *component() const {return this->m_parent;}
 
-    QPolygonF createArrowPoly(QPainterPath& p,
-                              Connector* connector);
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    Connector *m_startConnector;
-    Connector *m_endConnector;
-
+    const ConnectorType m_type;
+    const Component *m_parent;
+    Connection *m_connection;
+    static const int m_size = 5;
 };
 
-#endif // CONNECTION_H
+#endif // CONNECTOR_H

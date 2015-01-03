@@ -29,69 +29,68 @@
  *
  **************************************************************************/
 
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef CONNECTION_H
+#define CONNECTION_H
 
-#include <QGraphicsScene>
-#include "component.h"
-#include "connection.h"
+#include <QGraphicsPathItem>
+#include <QPen>
+#include <QPainter>
+
 #include "connector.h"
 
 QT_BEGIN_NAMESPACE
+class QGraphicsPolygonItem;
+class QGraphicsPathItem;
+class QGraphicsScene;
+class QRectF;
+class QPen;
 class QGraphicsSceneMouseEvent;
-class QMenu;
-class QPointF;
-class QGraphicsLineItem;
-class QFont;
-class QGraphicsTextItem;
-class QColor;
+class QPainterPath;
 QT_END_NAMESPACE
 
-class Component;
+class Connector;
 
 /**
- * @brief The Canvas class
+ * @brief The Connection class
  */
-class Canvas : public QGraphicsScene
+class Connection : public QGraphicsPathItem
 {
-        Q_OBJECT
-
 public:
-    enum Mode { InsertItem, InsertLine, InsertText, MoveItem, InsertNode, InsertNode2 };
+    enum { Type = UserType + 2 };
 
-    Canvas(QMenu *itemMenu, QObject *parent = nullptr);
-    QColor lineColor() const
+    Connection(Connector *startConnector,
+               Connector *endConnector,
+               QGraphicsItem *parent = 0);
+
+    int type() const Q_DECL_OVERRIDE { return Type; }
+    QRectF boundingRect() const Q_DECL_OVERRIDE;
+    QPainterPath shape() const Q_DECL_OVERRIDE;
+
+    Connector *startConnector() const
     {
-        return m_lineColor;
+        return m_startConnector;
     }
-    void setLineColor(const QColor &color);
+    Connector *endConnector() const
+    {
+        return m_endConnector;
+    }
 
-    QMenu *m_itemMenu;
+    void updatePosition();
 
-public slots:
-    void setMode(Mode mode);
-
-signals:
-    void nodeInserted(QGraphicsItem *item);
-    void nodeItemInserted(Component *item);
-    void itemSelected(QGraphicsItem *item);
+    virtual ~Connection();
 
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget = 0) Q_DECL_OVERRIDE;
 
-    QColor m_lineColor;
-    Mode m_mode;
+    void recreatePath(QPointF& controlPoint1,
+                      QPointF& controlPoint2);
+
 private:
-    bool isItemChange(int type);
-    bool m_leftButtonDown;
-    QPointF m_startPoint;
-    Connection* m_tmpConnection;
-    Connector* m_tmpConnector;
-    Connector* m_existingConnector;
-    Connector* m_lastHighlighted;
+    Connector *m_startConnector;
+    Connector *m_endConnector;
 
 };
 
-#endif // CANVAS_H
+#endif // CONNECTION_H
