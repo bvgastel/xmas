@@ -20,7 +20,10 @@
   *
   **********************************************************************/
 
+#include <memory>
+
 #include "testcomponent.h"
+#include "component.h"
 
 TestComponent::TestComponent(QObject *parent) : QObject(parent)
 {
@@ -33,17 +36,45 @@ TestComponent::~TestComponent()
 }
 
 void TestComponent::emptyComponent() {
-    QCOMPARE(1,0);
+    std::shared_ptr<Component> comp = std::make_shared<Component>("empty");
+    QVERIFY(comp->name() == "empty");
 }
 
 void TestComponent::equalComponent() {
-    QCOMPARE(1,0);
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("one");
+    std::shared_ptr<Component> comp2 = std::make_shared<Component>("one");
+    QVERIFY(*comp1 != *comp2);
 }
 
-void TestComponent::unequalComponent() {
-    QCOMPARE(1,0);
+void TestComponent::unequalComponentName() {
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("one");
+    std::shared_ptr<Component> comp2 = std::make_shared<Component>("two");
+    QVERIFY(*comp1 != *comp2);
 }
 
+void TestComponent::unequalComponentInPort() {
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("one");
+    std::shared_ptr<Component::InPort> in1 = std::make_shared<Component::InPort>("in1", comp1, "formula1");
+    comp1->add(in1);
+    std::shared_ptr<Component> comp2 = std::make_shared<Component>("one");
+    std::shared_ptr<Component::InPort> in2 = std::make_shared<Component::InPort>("in1", comp2, "formula1");
+    comp1->add(in2);
+    QVERIFY(*comp1 != *comp2);
+}
+void TestComponent::unequalComponentOutPort() {
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("one");
+    std::shared_ptr<Component::InPort> in1 = std::make_shared<Component::InPort>("in1", comp1, "formula1");
+    comp1->add(in1);
+    std::shared_ptr<Component> comp2 = std::make_shared<Component>("one");
+    std::shared_ptr<Component::InPort> in2 = std::make_shared<Component::InPort>("in1", comp2, "formula1");
+    comp1->add(in2);
+    QVERIFY(*comp1 != *comp2);
+}
+void TestComponent::unequalComponentFunction() {
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("one");
+    std::shared_ptr<Component> comp2 = std::make_shared<Component>("two");
+    QVERIFY(*comp1 != *comp2);
+}
 void TestComponent::componentNoPort() {
     QCOMPARE(1,0);
 }

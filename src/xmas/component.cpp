@@ -101,3 +101,18 @@ std::ostream &operator<< (std::ostream &os, const Component &comp) {
     os.flush();
     return os;
 }
+
+bool operator== (const Component lcomp, const Component rcomp) {
+    if ((lcomp.m_name != rcomp.m_name)
+        || (lcomp.m_inport_map != rcomp.m_inport_map)
+        || (lcomp.m_outport_map != rcomp.m_outport_map)
+        || (lcomp.m_function != lcomp.m_function)
+        ) {
+        return false;
+    }
+    return true;
+}
+
+bool operator!= (const Component lcomp, const Component rcomp) {
+    return !(lcomp == rcomp);
+}
