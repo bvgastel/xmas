@@ -3,7 +3,7 @@
 
 CONFIG += C++11
 
-QT += widgets
+QT += widgets svg
 
 TEMPLATE = app
 

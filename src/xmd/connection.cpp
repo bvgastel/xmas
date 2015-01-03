@@ -274,7 +274,7 @@ void Connection::paint(QPainter *painter,
     if (isSelected())
         painter->setPen(QPen(Qt::black, 1, Qt::DashLine));
 
-    QPainterPath& p = this->path();
+    const QPainterPath& p = this->path();
     painter->drawPath(p);
 
 
