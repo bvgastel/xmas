@@ -238,7 +238,37 @@ void MainWindow::addComponent(int type)
             once = false;
         }
 
-        XMASComponent* c = dc.addComponent<XMASSource>("Source1", 12, 12, Orientation::North);
+        static int counter = 1;
+
+        std::string counter_str = std::to_string(counter);
+        counter++;
+
+        switch (type) {
+            case CompLib::Queue:
+                dc.addComponent<XMASQueue>("Queue" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Function:
+                dc.addComponent<XMASFunction>("Function" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Fork:
+                dc.addComponent<XMASFork>("Fork" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Join:
+                dc.addComponent<XMASJoin>("Join" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Switch:
+                dc.addComponent<XMASSwitch>("Switch" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Merge:
+                dc.addComponent<XMASMerge>("Merge" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Sink:
+                dc.addComponent<XMASSink>("Sink" + counter_str, 12, 12, Orientation::North);
+                break;
+            case CompLib::Source:
+                dc.addComponent<XMASSource>("Source" + counter_str, 12, 12, Orientation::North);
+                break;
+        }
     }
 
 }
