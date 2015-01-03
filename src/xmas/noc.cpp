@@ -134,6 +134,11 @@ std::ostream &operator<< (std::ostream &os, const std::shared_ptr<Noc> noc) {
 }
 
 bool operator== (const Noc &lnoc, const Noc &rnoc) {
+    if ((lnoc.m_name != rnoc.m_name)
+      || (lnoc.m_comp_map != rnoc.m_comp_map)
+      || (lnoc.m_channel_map != rnoc.m_channel_map)) {
+        return false;
+    }
     return true;
 }
 

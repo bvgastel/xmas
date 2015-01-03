@@ -47,6 +47,8 @@ class XMASSHARED_EXPORT Component
 {
 
     friend std::ostream &operator<< (std::ostream &os, const Component &comp);
+    friend bool operator== (const Component, const Component);
+    friend bool operator!= (const Component, const Component);
 
 public:
     /* Nested classes */
@@ -169,7 +171,11 @@ public:
         const QString m_irdy;
     };
 
-
 };
+
+std::ostream &operator<< (std::ostream &os, const Component &comp);
+bool operator== (const Component, const Component);
+bool operator!= (const Component, const Component);
+
 
 #endif // COMPONENT_H

@@ -43,7 +43,10 @@ signals:
 private slots:
     void emptyComponent();
     void equalComponent();
-    void unequalComponent();
+    void unequalComponentName();
+    void unequalComponentInPort();
+    void unequalComponentOutPort();
+    void unequalComponentFunction();
     void componentNoPort();
     void componentInPort();
     void componentOutPort();
