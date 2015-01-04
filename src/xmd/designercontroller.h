@@ -14,6 +14,8 @@ public:
     template<class T>
     XMASComponent* addComponent(const std::string name, int x, int y, Orientation orientation);
 
+    void addChannel(Output& output, Input& input);
+
 private:
     Network& m_network;
 };

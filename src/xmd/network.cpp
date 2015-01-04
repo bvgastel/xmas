@@ -26,3 +26,13 @@ XMASComponent* Network::addComponent(XMASComponent *component)
     
     return component;
 }
+
+void Network::addChannel(Output &output, Input& input)
+{
+    if (output.isConnected() || input.isConnected())
+        return;         // ports already connected
+
+    ::connect(output, input);
+
+    emit channelAdded(output, input);
+}

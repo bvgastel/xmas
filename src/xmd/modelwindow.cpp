@@ -65,6 +65,7 @@ ModelWindow::ModelWindow(QWidget *parent)
     isUntitled = true;
 
     connect(&m_network, &Network::componentAdded, this, &ModelWindow::componentAdded);
+    connect(&m_network, &Network::channelAdded, this, &ModelWindow::channelAdded);
 }
 
 ModelWindow::~ModelWindow()
@@ -181,6 +182,12 @@ void ModelWindow::componentAdded(XMASComponent *component)
         c->setPos(pce->x(), pce->y());
         m_scene->addItem(c);
     }
+}
+
+void ModelWindow::channelAdded(Output &output, Input &input)
+{
+    std::cout << "ModelWindow: A channel has been added: " << output.getComponent()->getName() << "." << output.getName();
+    std::cout << " - " << input.getComponent()->getName() << "." << input.getName() << std::endl;
 }
 
 

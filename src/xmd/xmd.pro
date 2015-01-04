@@ -17,7 +17,9 @@ HEADERS       = mainwindow.h \
                 positioncomponentextension.h \
                 network.h \
                 designercontroller.h \
+                project.h \
                 checker/xmas.h
+
 SOURCES       = mainwindow.cpp \
                 modelwindow.cpp \
                 projectmanager.cpp \
@@ -27,7 +29,9 @@ SOURCES       = mainwindow.cpp \
                 complib.cpp \
                 network.cpp \
                 designercontroller.cpp \
+                project.cpp \
                 checker/xmas.cpp
+
 RESOURCES     = xmd.qrc
 
 

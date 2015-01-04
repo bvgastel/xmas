@@ -92,6 +92,7 @@ std::ostream &operator <<(std::ostream &out, const Port &c);
 class Output : public Port {
     friend class Input;
     friend void connect(Output &o, Input &i);
+    friend void disconnect(Port &p);
     Input *output;
 public:
     Output(XMASComponent *self, const char *name) : Port(self, name), output(nullptr) {
@@ -110,6 +111,7 @@ public:
 class Input : public Port {
     friend class Output;
     friend void connect(Output &o, Input &i);
+    friend void disconnect(Port &p);
     Output *input;
 public:
     Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr) {
@@ -127,6 +129,7 @@ public:
 
 // connect an Output to an Input
 void connect(Output &o, Input &i);
+void disconnect(Port &p);
 
 class XMASComponentExtension : public Extension<XMASComponentExtension> {
 };

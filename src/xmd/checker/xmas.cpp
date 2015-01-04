@@ -69,6 +69,17 @@ void connect(Output &o, Input &i) {
     o.output = &i;
 }
 
+void disconnect(Port &p) {
+    Input* i = p.getTargetPort();
+    Output* o = p.getInitiatorPort();
+
+    if (i)
+        i->input = nullptr;
+
+    if (o)
+        o->output = nullptr;
+}
+
 XMASComponent::~XMASComponent()
 {
     clearExtensions();
