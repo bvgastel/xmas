@@ -63,6 +63,7 @@ protected:
 private slots:
     void documentWasModified();
     void componentAdded(XMASComponent *component);
+    void channelAdded(Output &output, Input &input);
 
 private:
     Network m_network;

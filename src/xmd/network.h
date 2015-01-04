@@ -6,6 +6,8 @@
 #include <QObject>
 
 class XMASComponent;
+class Input;
+class Output;
 
 class Network : public QObject
 {
@@ -15,9 +17,11 @@ public:
     ~Network();
 
     XMASComponent* addComponent(XMASComponent* component);
+    void addChannel(Output& output, Input& input);
 
 signals:
     void componentAdded(XMASComponent* component);
+    void channelAdded(Output& output, Input& input);
 
 private:
     std::map<std::string, std::unique_ptr<XMASComponent>> m_components;
