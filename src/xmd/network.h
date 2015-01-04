@@ -21,6 +21,7 @@ public:
 
 signals:
     void componentAdded(XMASComponent* component);
+    void componentMoved(XMASComponent* component);
     void channelAdded(Output& output, Input& input);
 
 private:

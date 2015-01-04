@@ -16,6 +16,8 @@ public:
 
     void addChannel(Output& output, Input& input);
 
+    void moveComponent(XMASComponent* component, int x, int y, Orientation orientation);
+
 private:
     Network& m_network;
 };

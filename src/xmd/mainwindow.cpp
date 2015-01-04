@@ -230,8 +230,10 @@ void MainWindow::addComponent(int type)
         std::string counter_str = std::to_string(counter++);
 
         switch (type) {
-            case ComponentType::Queue:
-                dc.addComponent<XMASQueue>("Queue" + counter_str, -300, -300, Orientation::North);
+            case ComponentType::Queue: {
+                    XMASComponent* comp = dc.addComponent<XMASQueue>("Queue" + counter_str, -300, -300, Orientation::North);
+                    dc.moveComponent(comp, -400, 300, Orientation::North);
+                }
                 break;
             case ComponentType::Function:
                 dc.addComponent<XMASFunction>("Function" + counter_str, -300, -300, Orientation::North);

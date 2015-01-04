@@ -65,6 +65,7 @@ ModelWindow::ModelWindow(QWidget *parent)
     isUntitled = true;
 
     connect(&m_network, &Network::componentAdded, this, &ModelWindow::componentAdded);
+    connect(&m_network, &Network::componentMoved, this, &ModelWindow::componentMoved);
     connect(&m_network, &Network::channelAdded, this, &ModelWindow::channelAdded);
 }
 
@@ -182,6 +183,16 @@ void ModelWindow::componentAdded(XMASComponent *component)
         c->setPos(pce->x(), pce->y());
         m_scene->addItem(c);
     }
+}
+
+void ModelWindow::componentMoved(XMASComponent *component)
+{
+    auto pce = component->getComponentExtension<PositionComponentExtension>();
+
+    std::cout << "ModelWindow: A component has been moved: " << component->getName() << " (" << pce->x() << "," << pce->y() << ")" << std::endl;
+
+    // update the UI using the new position in pce
+    // c->setPos(pce->x(), pce->y());               // TODO: must store c somewhere
 }
 
 void ModelWindow::channelAdded(Output &output, Input &input)
