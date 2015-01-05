@@ -22,7 +22,10 @@
 
 #include "primitive.h"
 
-Primitive::Primitive()
+Primitive::Primitive(QString name,
+                     PortList inport_list,
+                     PortList outport_list,
+                     QString function) : Component(name, inport_list, outport_list, function)
 {
 
 }

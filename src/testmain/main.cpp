@@ -26,15 +26,15 @@
 #include "testnoc.h"
 #include "testcomponent.h"
 
-int main(int argc, char *argv[]) {
-
-    std::cout << " number of arguments: " << argc << " and arguments are: ";
-    std::string glue = "";
-    for (int i = 0; i < argc; i++) {
-        std::cout << glue << argv[i];
-        glue = ", ";
-    }
-    std::cout << std::endl;
+/**
+ * @brief main The testdriver.
+ *
+ * This module runs all added tests. Make
+ * sure to add the test class you want to run tests off.
+ *
+ * @return
+ */
+int main() {
 
     TestRunner runner;
     runner.addTest(new TestNoc());

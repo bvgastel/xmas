@@ -22,10 +22,14 @@
 
 #include "composite.h"
 
-Composite::Composite(std::shared_ptr<Noc> network)
-    : m_network(network)
+Composite::Composite(std::shared_ptr<Noc> network,
+                     QString name,
+                     PortList inport_list,
+                     PortList outport_list,
+                     QString function)
+    : Component(name, inport_list, outport_list, function), m_network(network)
 {
-    name(network->name());
+    name = network->name();
 }
 
 Composite::~Composite()

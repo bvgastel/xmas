@@ -32,7 +32,12 @@ class Composite : public Component
 {
 
 public:
-    Composite(std::shared_ptr<Noc> );
+    Composite(std::shared_ptr<Noc> network,
+              QString name,
+              PortList inport_list,
+              PortList outport_list,
+              QString function=""
+             );
     ~Composite();
 
 private:

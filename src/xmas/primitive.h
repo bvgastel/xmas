@@ -28,7 +28,10 @@
 class Primitive : public Component
 {
 public:
-    Primitive();
+    Primitive(QString name,
+              PortList inport_list,
+              PortList outport_list,
+              QString function="");
     ~Primitive();
 };
 

@@ -39,20 +39,26 @@ public:
 
 signals:
 
+private:
+    void checkComponent(std::shared_ptr<Component> comp, QString name, int in_size, int out_size, QString function);
 
 private slots:
     void emptyComponent();
     void equalComponent();
+    void equalComponentInPort();
+    void equalComponentOutPort();
+    void equalComponentFunction();
     void unequalComponentName();
+    void unequalComponentInPortSize();
     void unequalComponentInPort();
-    void unequalComponentOutPort();
+    void unequalComponentOutPortSize();
+    void unequalComponentOutPortName();
+    void unequalComponentOutPortFunction();
     void unequalComponentFunction();
-    void componentNoPort();
-    void componentInPort();
-    void componentOutPort();
-    void sink();
-    void source();
-    void merge();
+
+    void serializeComponent();
+
+private:
 };
 
 #endif // TESTCOMPONENT_H

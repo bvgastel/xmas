@@ -59,25 +59,37 @@
 class Channel
 {
 public:
-    explicit Channel(std::shared_ptr<Component::OutPort> out, std::shared_ptr<Component::InPort> in);
+    explicit Channel(std::shared_ptr<Component> initiator, QString out, std::shared_ptr<Component> target, QString in);
    ~Channel();
 
    const QString name() const;
 
-   inline std::shared_ptr<const Component::InPort> initiator() const;
-   inline std::shared_ptr<const Component::OutPort> target() const;
+   inline std::shared_ptr<const Component> initiator() const { return m_initiator; }
+   inline std::shared_ptr<const Component> target() const { return m_target; }
+
+   inline Component::Function irdy() const { return m_initiator->rdy(m_out); }
+   inline Component::Function trdy() const { return m_target->rdy(m_in); }
 
 private:
 
    QString m_name;
    /**
+    * @brief m_initiator The initiator of the channel
+    */
+   std::shared_ptr<Component> m_initiator;
+   /**
     * @brief m_out The output port that this channel reads from.
     */
-   std::shared_ptr<Component::OutPort> m_out;
+   QString m_out;
+   /**
+    * @brief m_target The target of the channel
+    */
+   std::shared_ptr<Component> m_target;
    /**
     * @brief m_in The input port that this channel writes to.
     */
-   std::shared_ptr<Component::InPort> m_in;
+   QString m_in;
+
 
 };
 

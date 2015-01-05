@@ -22,14 +22,18 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <memory>
+#include <memory> // for shared_ptr, make_shared
+#include <utility> // for pair
 
 #include <QString>
-#include <QMap>
+#include <QHash>
+#include <QVector>
+#include <QDataStream>
 
 #include "xmas_global.h"
 
 class Component;
+
 
 /**
  * @brief The Component class
@@ -37,9 +41,9 @@ class Component;
  * The component on an Noc. It contains ports (both
  * in ports and out ports.
  *
- * This class contains the nested definitions and declarations of Port
- * InPort and OutPort. This reflects the tight coupling : outside the
- * Component these objects would not exist.
+ * This class contains the nested definition and declaration of Port.
+ * This reflects the tight coupling : outside the Component these objects
+ * would not exist.
  *
  *
  */
@@ -47,28 +51,48 @@ class XMASSHARED_EXPORT Component
 {
 
     friend std::ostream &operator<< (std::ostream &os, const Component &comp);
+    friend QDataStream &operator<< (QDataStream &os, const Component &comp);
     friend bool operator== (const Component, const Component);
     friend bool operator!= (const Component, const Component);
 
 public:
+    typedef QString Function;
+    typedef std::pair<QString, QString> PortNamePropPair;
+    typedef QVector<PortNamePropPair > PortList;
+
     /* Nested classes */
     class Port;
-    class InPort;
-    class OutPort;
 
-    Component(QString name=0);
+    Component(QString name,
+              PortList inport_list,
+              PortList outport_list,
+              QString function="");
     virtual ~Component()
     {
 
     }
 
-    const QString name() const;
-    void name(const QString name);
+    inline QString name() const { return m_name; }
+    inline void name(const QString name) { m_name = name; }
 
-    Component &add(std::shared_ptr<Component::InPort>);
-    Component &add(std::shared_ptr<Component::OutPort>);
+    inline Function function() const { return m_function; }
+
+    int in_size() const;
+    int out_size() const;
+
+    // Need inport and outport iterators
+    PortList inList() const;
+    PortList outList() const;
+
+    Function rdy(QString portName) const;
+
+    bool portExists(QString name) const;
+    bool inportExists(QString name) const;
+    bool outportExists(QString name) const;
 
 private:
+
+    PortList portList(QHash<QString, std::shared_ptr<Port>> portmap) const;
 
     /**
      * @brief m_name the name of the component
@@ -77,11 +101,11 @@ private:
     /**
      * @brief m_inport_map A map of input ports by name
      */
-    QMap<QString, std::shared_ptr<InPort>> m_inport_map;
+    QHash<QString, std::shared_ptr<Port>> m_inport_map;
     /**
      * @brief m_outport_map A map of output ports by name
      */
-    QMap<QString, std::shared_ptr<OutPort>> m_outport_map;
+    QHash<QString, std::shared_ptr<Port>> m_outport_map;
 
     /**
      * @brief m_function a function body
@@ -91,91 +115,51 @@ private:
      * tools and the reader of the component.
      *
      */
-    QString m_function;
+    Function m_function;
 
 
 public:
     /**
      * @brief The Port class
      *
-     * An abstract class as a base class for in ports and out ports. Most
-     * of the functionality is in the base class.
+     * The class to represent both in ports and out ports in a component.
      * This class is nested inside Component as it is inherently
-     * connected to Component.
+     * connected to Component. Its role (input or output) depends
+     * on the component. The name identifies the port within the
+     * component.
      *
      */
     class Port
     {
+        friend bool operator==(const Port, const Port);
+
     public:
-        Port(QString name, std::shared_ptr<Component> comp);
+        Port(QString name, QString rdy);
         ~Port();
 
-        const QString name() const;
+        inline QString name() const { return m_name; }
+        inline QString rdy() const {return m_rdy; }
 
     private:
 
         QString m_name;
-        std::shared_ptr<Component> m_comp;
+        Function m_rdy;
 
-    };
-    /**
-     * @brief The InPort class
-     *
-     * The specialised port for reading signals on an NoC wire.
-     * It inherits the name and component from Port.
-     * This class is nested inside Component as it is inherently
-     * connected to Component.
-     *
-     */
-    class InPort : public Port
-    {
-    public:
-        InPort(QString name, std::shared_ptr<Component> comp, QString trdy);
-        ~InPort();
-
-        const QString trdy() const
-        {
-            return m_trdy;
-        }
-
-    private:
-        const QString m_trdy;
-    };
-
-    /**
-     * @brief The OutPort class
-     *
-     * The specialised class for writing signals on an NoC wire.
-     * This class is nested inside Component as it is inherently
-     * connected to Component.
-     *
-     */
-    class OutPort : public Port
-    {
-    public:
-        OutPort(QString name, std::shared_ptr<Component> comp, QString irdy);
-        ~OutPort();
-
-        const QString irdy() const
-        {
-            return m_irdy;
-        }
-
-    private:
-
-        /**
-         * @brief m_irdy contains the definition of o.irdy if o is the output port.
-         *
-         * The definition stems from the xmas primitives or a derivative.
-         */
-        const QString m_irdy;
     };
 
 };
 
 std::ostream &operator<< (std::ostream &os, const Component &comp);
-bool operator== (const Component, const Component);
-bool operator!= (const Component, const Component);
+std::ostream &operator<< (std::ostream &os, const Component::Port &port);
+QDataStream &operator<< (QDataStream &os, const Component &comp);
+QDataStream &operator<< (QDataStream &os, const Component::Port &comp);
 
+bool checkPortEq(const QHash<QString, std::shared_ptr<Component::Port>> &left, const QHash<QString, std::shared_ptr<Component::Port>> &right);
+
+bool operator== (const Component, const Component);
+inline bool operator!= (const Component lcomp, const Component rcomp) { return !(lcomp == rcomp); }
+
+bool operator==(const Component::Port, const Component::Port);
+inline bool operator!=(const Component::Port l_port, const Component::Port r_port) {return !(l_port == r_port); }
 
 #endif // COMPONENT_H
