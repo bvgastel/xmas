@@ -13,14 +13,25 @@ HEADERS       = mainwindow.h \
                 component.h \
                 connector.h \
                 connection.h \
-                complib.h
+                complib.h \
+                positioncomponentextension.h \
+                network.h \
+                designercontroller.h \
+                project.h \
+                checker/xmas.h
+
 SOURCES       = mainwindow.cpp \
                 modelwindow.cpp \
                 projectmanager.cpp \
                 component.cpp \
                 connector.cpp \
                 connection.cpp \
-                complib.cpp
+                complib.cpp \
+                network.cpp \
+                designercontroller.cpp \
+                project.cpp \
+                checker/xmas.cpp
+
 RESOURCES     = xmd.qrc
 
 

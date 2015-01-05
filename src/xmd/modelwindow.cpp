@@ -34,6 +34,8 @@
 
 #include "modelwindow.h"
 #include "complib.h"
+#include "checker/xmas.h"
+#include "positioncomponentextension.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;
@@ -62,22 +64,14 @@ ModelWindow::ModelWindow(QWidget *parent)
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
 
+    connect(&m_network, &Network::componentAdded, this, &ModelWindow::componentAdded);
+    connect(&m_network, &Network::componentMoved, this, &ModelWindow::componentMoved);
+    connect(&m_network, &Network::channelAdded, this, &ModelWindow::channelAdded);
 }
 
 ModelWindow::~ModelWindow()
 {
 
-}
-
-void ModelWindow::addComponent(int type)
-{
-    CompLib *lib = new CompLib();
-    Component *c = lib->getComponent(type);
-    if (c != nullptr)
-    {
-        c->setPos(-200,-200);
-        m_scene->addItem(c);
-    }
 }
 
 void ModelWindow::newFile()
@@ -172,6 +166,44 @@ void ModelWindow::documentWasModified()
 {
     //setWindowModified(document()->isModified());
 }
+
+
+#include <iostream> // std::cout
+void ModelWindow::componentAdded(XMASComponent *component)
+{
+    std::cout << "ModelWindow: A component has been added: " << component->getName() << std::endl;
+
+    auto pce = component->getComponentExtension<PositionComponentExtension>();
+
+    CompLib *lib = new CompLib();
+    ComponentType type = component->type();
+    Component *c = lib->getComponent(type);
+    if (c != nullptr)
+    {
+        c->setPos(pce->x(), pce->y());
+        m_scene->addItem(c);
+    }
+}
+
+void ModelWindow::componentMoved(XMASComponent *component)
+{
+    auto pce = component->getComponentExtension<PositionComponentExtension>();
+
+    std::cout << "ModelWindow: A component has been moved: " << component->getName() << " (" << pce->x() << "," << pce->y() << ")" << std::endl;
+
+    // update the UI using the new position in pce
+    // c->setPos(pce->x(), pce->y());               // TODO: must store c somewhere
+}
+
+void ModelWindow::channelAdded(Output &output, Input &input)
+{
+    std::cout << "ModelWindow: A channel has been added: " << output.getComponent()->getName() << "." << output.getName();
+    std::cout << " - " << input.getComponent()->getName() << "." << input.getName() << std::endl;
+}
+
+
+
+
 
 bool ModelWindow::maybeSave()
 {

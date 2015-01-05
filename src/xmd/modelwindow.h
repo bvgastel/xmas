@@ -35,6 +35,7 @@
 #include "component.h"
 #include "complib.h"
 #include "setup.h"
+#include "network.h"
 
 class Complib;
 
@@ -45,7 +46,7 @@ class ModelWindow : public QGraphicsView
 public:
     ModelWindow(QWidget *parent = 0);
     ~ModelWindow();
-    void addComponent(int type);
+
     void newFile();
     bool loadFile(const QString &fileName);
     bool save();
@@ -53,14 +54,21 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    
+    Network& network() { return m_network; }
 
 protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void documentWasModified();
+    void componentAdded(XMASComponent *component);
+    void componentMoved(XMASComponent *component);
+    void channelAdded(Output &output, Input &input);
 
 private:
+    Network m_network;
+  
     QGraphicsScene *m_scene;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
