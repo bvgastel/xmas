@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(xmd CXX)
 
+add_subdirectory(checker)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -28,3 +30,7 @@ set_property(TARGET xmd PROPERTY CXX_STANDARD 11)
 set_property(TARGET xmd PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_link_libraries(xmd Qt5::Widgets Qt5::Svg)
+
+include(CTest)
+
+add_test(checker-test checker/xMAS-checker-test)
