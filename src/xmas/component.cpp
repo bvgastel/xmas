@@ -26,6 +26,8 @@
 
 #include "component.h"
 
+// using namespace xmas;
+
 /**
  * @brief Component::Component
  *
@@ -174,22 +176,40 @@ std::ostream &operator<< (std::ostream &os, const Component &comp) {
 }
 
 QDataStream &operator<< (QDataStream &ds, const Component &comp) {
-    ds << comp.name() << "[in=(";
-    std::string glue = "";
-
-    foreach (auto port, comp.m_inport_map) {
-        ds << glue.c_str() << *port;
-        glue = ", ";
-    }
-    ds << "), out=(";
-    foreach (auto port, comp.m_outport_map) {
-        ds << glue.c_str() << *port;
-        glue = ", ";
-    }
-    ds << ")]";
-
+    ds << comp.m_name;
+    ds << comp.m_inport_map;
+    ds << comp.m_outport_map;
+    ds << comp.m_function;
     return ds;
 }
+
+QDataStream &operator<< (QDataStream &ds, std::shared_ptr<const Component> comp) {
+    ds << comp->m_name;
+    ds << comp->m_inport_map;
+    ds << comp->m_outport_map;
+    ds << comp->m_function;
+    return ds;
+}
+
+QDataStream &operator>> (QDataStream &ds, Component &comp) {
+    ds >> comp.m_name;
+    ds >> comp.m_inport_map;
+    ds >> comp.m_outport_map;
+    ds >> comp.m_function;
+    return ds;
+}
+
+QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component> &comp) {
+    if (comp == nullptr) {
+        comp = std::make_shared<Component>();
+    }
+    ds >> comp->m_name;
+    ds >> comp->m_inport_map;
+    ds >> comp->m_outport_map;
+    ds >> comp->m_function;
+    return ds;
+}
+
 
 bool operator== (const Component lcomp, const Component rcomp) {
     bool result = true;
@@ -235,7 +255,53 @@ std::ostream &operator<< (std::ostream &os, const Component::Port &port) {
 }
 
 QDataStream &operator<< (QDataStream &ds, const Component::Port &port) {
-    ds << port.name() << "(" << port.rdy() << ")";
+    ds << port.m_name << port.m_rdy;
+    return ds;
+}
+
+/**
+ * @brief operator <<
+ *
+ * The output operator << should get the shared_ptr to Component::Port parameter by value.
+ * The reason is, that passing by value will increment the reference counter
+ * and thus ensure that the memory chunk allocated remains valid for the duration of
+ * this function call.
+ *
+ * Using a reference to shared_ptr does not increment the ref counter thus introducing
+ * the possibility that the memory chunk is no longer valid due to deletion by
+ * one of the non-ref pointers.
+ *
+ * @param ds
+ * @param port
+ * @return
+ */
+QDataStream &operator<< (QDataStream &ds, std::shared_ptr<const Component::Port> port) {
+    ds << port->m_name << port->m_rdy;
+    return ds;
+}
+
+
+QDataStream &operator>> (QDataStream &ds, Component::Port &port) {
+    ds >> port.m_name >> port.m_rdy;
+    return ds;
+}
+
+/**
+ * @brief operator >>
+ *
+ * The input operator >> should get the shared_ptr to Component::Port parameter by reference.
+ * The reason is, that in case the port is a nullptr, the operator must replace the pointer
+ * with the value of a new memory chunk allocated by make_shared<>().
+ *
+ * @param ds
+ * @param port
+ * @return
+ */
+QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component::Port> &port) {
+    if (port == nullptr) {
+        port = std::make_shared<Component::Port>();
+    }
+    ds >> port->m_name >> port->m_rdy;
     return ds;
 }
 

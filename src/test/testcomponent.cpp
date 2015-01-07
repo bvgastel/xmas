@@ -20,6 +20,7 @@
   *
   **********************************************************************/
 
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 
@@ -37,6 +38,7 @@ TestComponent::~TestComponent()
 
 }
 
+
 /**
  * @brief TestComponent::checkComponent
  *
@@ -45,17 +47,21 @@ TestComponent::~TestComponent()
  *  as if a testcase failed. Probably the pre condition for a test
  *  case is not fully satisfied.
  *
- * @param comp          The component you want to check
+ * @param comp          A shared pointer to the component you want to check
  * @param name          The name it should have
  * @param in_size       The number of in ports.
  * @param out_size      The number of out ports.
  * @param function      The value of function.
  */
-void TestComponent::checkComponent(std::shared_ptr<Component> comp, QString name, int in_size, int out_size, QString function) {
-    QVERIFY(comp->name() == name);
-    QVERIFY(comp->in_size() == in_size);
-    QVERIFY(comp->out_size() == out_size);
-    QVERIFY(comp->function() == function);
+inline void TestComponent::checkComponent(std::shared_ptr<Component> comp, QString name, int in_size, int out_size, QString function) {
+    checkComponent(*comp, name, in_size, out_size, function);
+}
+
+void TestComponent::checkComponent(Component comp, QString name, int in_size, int out_size, QString function) {
+    QCOMPARE(comp.name(), name);
+    QCOMPARE(comp.in_size(), in_size);
+    QCOMPARE(comp.out_size(), out_size);
+    QCOMPARE(comp.function(), function);
 }
 
 void TestComponent::emptyComponent() {
@@ -158,8 +164,8 @@ void TestComponent::unequalComponentName() {
     in2.append(p2);
     std::shared_ptr<Component> comp2 = std::make_shared<Component>("name 2", in2, out2, "1");
 
-    checkComponent(comp1, "name 1", 1, 1, "1");
-    checkComponent(comp2, "name 2", 1, 1, "1");
+    checkComponent(comp1, "name 1", 1, 0, "1");
+    checkComponent(comp2, "name 2", 1, 0, "1");
 
     QVERIFY(*comp1 != *comp2);
 }
@@ -277,14 +283,28 @@ void TestComponent::unequalComponentFunction() {
     in2.append(p2);
     std::shared_ptr<Component> comp2 = std::make_shared<Component>("1 function", in2, out2, "2");
 
-    checkComponent(comp1, "name 1", 1, 0, "1");
-    checkComponent(comp2, "name 1", 1, 0, "2");
+    checkComponent(comp1, "1 function", 1, 0, "1");
+    checkComponent(comp2, "1 function", 1, 0, "2");
 
     QVERIFY(*comp1 != *comp2);
 }
 
-// TODO: Finish serializing: how to read from buffer to Component object without default constructor?
-void TestComponent::serializeComponent() {
+/**
+ * @brief TestComponent::serializePtrComponentToComponent
+ *
+ * This testcase compares a component to a copy made through
+ * serialization with the operator>> operator-override.
+ *
+ * First construct a shared_ptr to Component then serialize
+ * it using operator<< and finally copy it to a (non-pointer) component
+ * using operator>>.
+ *
+ */
+void TestComponent::serializePtrComponentToComponent() {
+
+    /*
+     * Construct shared_ptr Component comp1
+     */
     Component::PortList in1 = Component::PortList();
     Component::PortList out1 = Component::PortList();
     Component::PortNamePropPair p1 = {"in1", "function 1"};
@@ -295,14 +315,188 @@ void TestComponent::serializeComponent() {
 
     checkComponent(comp1, "name 1", 1, 1, "1");
 
+    /*
+     * Serialize comp1
+     */
     QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
     QDataStream data(&buffer);
 
-    data << *comp1;
+    data << comp1;
+    buffer.close();
 
-//    Component comp2;
-//    data >> comp2;
+    buffer.open(QIODevice::ReadOnly);
+    QDataStream data2(&buffer);
 
-    QVERIFY(false);
+    /*
+     * Prepare comp2 as nullptr and re-construct from comp1
+     */
+    Component comp2;
+    data2 >> comp2;
+
+    buffer.close();
+
+    checkComponent(comp2, "name 1", 1, 1, "1");
+
+    QCOMPARE(*comp1, comp2);
+
 }
 
+/**
+ * @brief TestComponent::serializePtrComponentToPtrComponent
+ *
+ * This testcase compares a component to a copy made through
+ * serialization with the operator>> operator-override.
+ *
+ * First construct a shared_ptr to Component then serialize
+ * it using operator<< and finally copy it to a new pointer to Component
+ * using operator>>.
+ *
+ */
+void TestComponent::serializePtrComponentToPtrComponent() {
+
+    /*
+     * Construct shared_ptr Component comp1
+     */
+    Component::PortList in1 = Component::PortList();
+    Component::PortList out1 = Component::PortList();
+    Component::PortNamePropPair p1 = {"in1", "function 1"};
+    in1.append(p1);
+    Component::PortNamePropPair p3 = {"out1", "function 1"};
+    out1.append(p3);
+    std::shared_ptr<Component> comp1 = std::make_shared<Component>("name 1", in1, out1, "1");
+
+    checkComponent(comp1, "name 1", 1, 1, "1");
+
+    /*
+     * Serialize comp1
+     */
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    QDataStream data(&buffer);
+
+    data << comp1;
+    buffer.close();
+
+    buffer.open(QIODevice::ReadOnly);
+    QDataStream data2(&buffer);
+
+    /*
+     * Prepare comp2 as nullptr and re-construct from comp1
+     */
+    std::shared_ptr<Component> comp2;
+    data2 >> comp2;
+
+    buffer.close();
+
+    checkComponent(comp2, "name 1", 1, 1, "1");
+
+    QCOMPARE(*comp1, *comp2);
+
+}
+
+/**
+ * @brief TestComponent::serializeComponentToPtrComponent
+ *
+ * This testcase compares a component to a copy made through
+ * serialization with the operator>> operator-override.
+ *
+ * First construct a shared_ptr to Component then serialize
+ * it using operator<< and finally copy it to a new pointer to Component
+ * using operator>>.
+ *
+ */
+void TestComponent::serializeComponentToPtrComponent() {
+
+    /*
+     * Construct shared_ptr Component comp1
+     */
+    Component::PortList in1 = Component::PortList();
+    Component::PortList out1 = Component::PortList();
+    Component::PortNamePropPair p1 = {"in1", "function 1"};
+    in1.append(p1);
+    Component::PortNamePropPair p3 = {"out1", "function 1"};
+    out1.append(p3);
+    Component comp1 = Component("name 1", in1, out1, "1");
+
+    checkComponent(comp1, "name 1", 1, 1, "1");
+
+    /*
+     * Serialize comp1
+     */
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    QDataStream data(&buffer);
+
+    data << comp1;
+    buffer.close();
+
+    buffer.open(QIODevice::ReadOnly);
+    QDataStream data2(&buffer);
+
+    /*
+     * Prepare comp2 as nullptr and re-construct from comp1
+     */
+    std::shared_ptr<Component> comp2;
+    data2 >> comp2;
+
+    buffer.close();
+
+    checkComponent(comp2, "name 1", 1, 1, "1");
+
+    QCOMPARE(comp1, *comp2);
+
+}
+
+/**
+ * @brief TestComponent::serializeComponentToComponent
+ *
+ * This testcase compares a component to a copy made through
+ * serialization with the operator>> operator-override.
+ *
+ * First construct a shared_ptr to Component then serialize
+ * it using operator<< and finally copy it to a new pointer to Component
+ * using operator>>.
+ *
+ */
+void TestComponent::serializeComponentToComponent() {
+
+    /*
+     * Construct shared_ptr Component comp1
+     */
+    Component::PortList in1 = Component::PortList();
+    Component::PortList out1 = Component::PortList();
+    Component::PortNamePropPair p1 = {"in1", "function 1"};
+    in1.append(p1);
+    Component::PortNamePropPair p3 = {"out1", "function 1"};
+    out1.append(p3);
+    Component comp1 = Component("name 1", in1, out1, "1");
+
+    checkComponent(comp1, "name 1", 1, 1, "1");
+
+    /*
+     * Serialize comp1
+     */
+    QBuffer buffer;
+    buffer.open(QIODevice::WriteOnly);
+    QDataStream data(&buffer);
+
+    data << comp1;
+    buffer.close();
+
+    buffer.open(QIODevice::ReadOnly);
+    QDataStream data2(&buffer);
+
+    /*
+     * Prepare comp2 with default constructor and re-construct from comp1
+     */
+    Component comp2;
+    data2 >> comp2;
+
+    buffer.close();
+
+    checkComponent(comp2, "name 1", 1, 1, "1");
+
+    QCOMPARE(comp1, comp2);
+
+}

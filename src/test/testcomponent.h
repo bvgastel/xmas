@@ -41,7 +41,7 @@ signals:
 
 private:
     void checkComponent(std::shared_ptr<Component> comp, QString name, int in_size, int out_size, QString function);
-
+    void checkComponent(Component comp, QString name, int in_size, int out_size, QString function);
 private slots:
     void emptyComponent();
     void equalComponent();
@@ -56,7 +56,10 @@ private slots:
     void unequalComponentOutPortFunction();
     void unequalComponentFunction();
 
-    void serializeComponent();
+    void serializePtrComponentToComponent();
+    void serializePtrComponentToPtrComponent();
+    void serializeComponentToComponent();
+    void serializeComponentToPtrComponent();
 
 private:
 };

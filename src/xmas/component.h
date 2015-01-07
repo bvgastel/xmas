@@ -32,6 +32,8 @@
 
 #include "xmas_global.h"
 
+// namespace xmas {
+
 class Component;
 
 
@@ -51,7 +53,12 @@ class XMASSHARED_EXPORT Component
 {
 
     friend std::ostream &operator<< (std::ostream &os, const Component &comp);
+
     friend QDataStream &operator<< (QDataStream &os, const Component &comp);
+    friend QDataStream &operator<< (QDataStream &os, std::shared_ptr<const Component> comp);
+    friend QDataStream &operator>> (QDataStream &ds, Component &comp);
+    friend QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component> &comp);
+
     friend bool operator== (const Component, const Component);
     friend bool operator!= (const Component, const Component);
 
@@ -62,6 +69,17 @@ public:
 
     /* Nested classes */
     class Port;
+
+    /**
+     * @brief Component Default constructor
+     *
+     * The default constructor is meant to be used only for creating
+     * a component from an input stream or a QDataStream.
+     *
+     */
+    Component() {
+
+    }
 
     Component(QString name,
               PortList inport_list,
@@ -131,9 +149,25 @@ public:
      */
     class Port
     {
+        friend QDataStream &operator<< (QDataStream &ds, const Port &comp);
+        friend QDataStream &operator>> (QDataStream &ds, Port &port);
+        friend QDataStream &operator<< (QDataStream &ds, std::shared_ptr<const Component::Port> port);
+        friend QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component::Port> &port);
         friend bool operator==(const Port, const Port);
 
     public:
+
+        /**
+         * @brief Port
+         *
+         * The default constructor of Port is meant to be used only
+         * by operator overrides for constructing a Port instance
+         * from a default (empty) Port.
+         *
+         * Normally one should never use this constructor outside serialization.
+         *
+         */
+        Port() {}
         Port(QString name, QString rdy);
         ~Port();
 
@@ -141,7 +175,6 @@ public:
         inline QString rdy() const {return m_rdy; }
 
     private:
-
         QString m_name;
         Function m_rdy;
 
@@ -151,8 +184,16 @@ public:
 
 std::ostream &operator<< (std::ostream &os, const Component &comp);
 std::ostream &operator<< (std::ostream &os, const Component::Port &port);
-QDataStream &operator<< (QDataStream &os, const Component &comp);
-QDataStream &operator<< (QDataStream &os, const Component::Port &comp);
+
+QDataStream &operator<< (QDataStream &ds, const Component &comp);
+QDataStream &operator<< (QDataStream &ds, const Component::Port &comp);
+QDataStream &operator<< (QDataStream &ds, std::shared_ptr<const Component::Port> port);
+
+QDataStream &operator>> (QDataStream &ds, Component &comp);
+QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component> &comp);
+
+QDataStream &operator>> (QDataStream &ds, Component::Port &port);
+QDataStream &operator>> (QDataStream &ds, std::shared_ptr<Component::Port> &port);
 
 bool checkPortEq(const QHash<QString, std::shared_ptr<Component::Port>> &left, const QHash<QString, std::shared_ptr<Component::Port>> &right);
 
@@ -161,5 +202,7 @@ inline bool operator!= (const Component lcomp, const Component rcomp) { return !
 
 bool operator==(const Component::Port, const Component::Port);
 inline bool operator!=(const Component::Port l_port, const Component::Port r_port) {return !(l_port == r_port); }
+
+//} // end of namespace xmas
 
 #endif // COMPONENT_H
