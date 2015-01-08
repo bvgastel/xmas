@@ -25,6 +25,7 @@
 #include "testrunner.h"
 #include "testnoc.h"
 #include "testcomponent.h"
+#include "testnetwork.h"
 
 /**
  * @brief main The testdriver.
@@ -39,6 +40,7 @@ int main() {
     TestRunner runner;
     runner.addTest(new TestNoc());
     runner.addTest(new TestComponent());
+    runner.addTest(new TestNetwork());
 
     runner.runTests();
 }
