@@ -65,7 +65,7 @@ class XMASSHARED_EXPORT Component
 public:
     typedef QString Function;
     typedef std::pair<QString, QString> PortNamePropPair;
-    typedef QVector<PortNamePropPair > PortList;
+    typedef QVector<PortNamePropPair> PortList;
 
     /* Nested classes */
     class Port;
@@ -110,6 +110,12 @@ public:
 
 private:
 
+    /**
+     * @brief portList a utility function for inList() and outList()
+     *
+     * @param portmap the input port map or the output port map
+     * @return the PortList
+     */
     PortList portList(QHash<QString, std::shared_ptr<Port>> portmap) const;
 
     /**
