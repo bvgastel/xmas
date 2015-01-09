@@ -20,27 +20,4 @@
   *
   **********************************************************************/
 
-#include <iostream>
-
 #include "testrunner.h"
-#include "testnoc.h"
-#include "testcomponent.h"
-#include "testnetwork.h"
-
-/**
- * @brief main The testdriver.
- *
- * This module runs all added tests. Make
- * sure to add the test class you want to run tests off.
- *
- * @return
- */
-int main() {
-
-    TestRunner runner;
-    runner.addTest(new TestNoc());
-    runner.addTest(new TestComponent());
-    runner.addTest(new TestNetwork());
-
-    runner.runTests();
-}

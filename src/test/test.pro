@@ -10,6 +10,7 @@
 
 include(defines.pri)
 include(../xmas/defines.pri)
+include(../xmd/defines.pri)
 
 QT       += core
 QT      += testlib
@@ -23,12 +24,14 @@ CONFIG   -= app_bundle
 
 SOURCES += \
     testnoc.cpp \
-    testcomponent.cpp
+    testcomponent.cpp \
+    testnetwork.cpp
 
 HEADERS += \
     testrunner.h \
     testnoc.h \
-    testcomponent.h
+    testcomponent.h \
+    testnetwork.h
 
 # By default TARGET is the same as the directory,
 # so it will make test (in linux). Uncomment to override.
