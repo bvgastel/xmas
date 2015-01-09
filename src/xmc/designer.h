@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QProcess>
 
-static const QString designer_exec_name = "xmas-designer";
+static const QString designer_exec_name = "xmasmain";
 
 class Designer : public QObject
 {

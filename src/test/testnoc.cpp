@@ -34,15 +34,6 @@ TestNoc::~TestNoc()
 
 }
 
-void TestNoc::initTestCase() {
-    qDebug ("call before anything else");
-}
-
-void TestNoc::cleanupTestCase() {
-    qDebug ("called after any test cases.");
-}
-
-
 void TestNoc::emptyNoc() {
     QString name = "empty network";
     std::shared_ptr<Noc> noc = std::make_shared<Noc>(name);

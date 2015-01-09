@@ -16,41 +16,47 @@
 #include "consolereader.h"
 #include "designer.h"
 
-struct Options {
-    QStringList args;
-    bool commandline;
-    bool runAll;
-    QString outputDir;
-};
+namespace xmas {
+    namespace xmc {
 
-class Control : QObject
-{
-    Q_OBJECT
+        struct Options {
+            QStringList args;
+            bool commandline;
+            bool runAll;
+            QString outputDir;
+        };
 
-public:
-    Control(int argc, char *argv[]);
-    ~Control();
+        class Control : QObject
+        {
+            Q_OBJECT
 
-    int exec();
-    std::stringstream &appData(std::stringstream &);
-    std::stringstream &paramData(std::stringstream &data);
+        public:
+            Control(int argc, char *argv[]);
+            ~Control();
 
-signals:
-    void finished();
-    void textReceived(QString line);
+            int exec();
+            std::stringstream &appData(std::stringstream &);
+            std::stringstream &paramData(std::stringstream &data);
 
-public slots:
-    void processCommand(QString);
-    void aboutToQuitApp();
-    void quit();
+        signals:
+            void finished();
+            void textReceived(QString line);
 
-private:
-    void getOptions(Options &);
+        public slots:
+            void processCommand(QString);
+            void aboutToQuitApp();
+            void quit();
 
-    QApplication m_app;
-    Options m_opt;
-    ConsoleReader m_consoleReader;
-    std::shared_ptr<Designer> m_designer;
-};
+        private:
+            void getOptions(Options &);
+
+            QApplication m_app;
+            Options m_opt;
+            ConsoleReader m_consoleReader;
+            std::shared_ptr<Designer> m_designer;
+        };
+
+    } // namespace xmc
+} // namespace xmas
 
 #endif // CONTROL_H

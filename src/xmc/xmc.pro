@@ -4,20 +4,21 @@
 #
 #-------------------------------------------------
 
+! include( ../common.pri) {
+	error( Could not find the common.pri file)
+}
+
+include (defines.pri)
+
 QT       += core widgets
 
 QT       -= gui
-
-CONFIG   += C++11
 
 TARGET = xmc
 CONFIG   += console
 CONFIG   -= app_bundle
 
-TEMPLATE = app
-
-
-SOURCES += main.cpp \
+SOURCES += \
     control.cpp \
     consolereader.cpp \
     designer.cpp
@@ -27,3 +28,15 @@ HEADERS += \
     control.h \
     consolereader.h \
     designer.h
+
+unix {
+	target.path = /usr/lib
+	INSTALLS += target
+}
+
+win32 {
+	target.path = xmc
+	INSTALLS += target
+}
+
+

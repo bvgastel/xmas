@@ -3,6 +3,7 @@
 
 include (../xmas/defines.pri)
 include (../xmd/defines.pri)
+include (../xmc/defines.pri)
 include (../test/defines.pri)
 
 QT       += core
@@ -15,7 +16,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
+LIBS += -L../xmas -L../xmd -L../xmc -L../test -lxmas -lxmd -ltest -lxmc
 
 # We will build the final executable in the build directory.
 

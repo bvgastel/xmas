@@ -40,12 +40,7 @@ TestComponent::~TestComponent()
 
 
 /**
- * @brief TestComponent::checkComponent
- *
- *  A private utility function to check some basic characteristics
- *  after creation. Any deviation leads to a normal test deviation
- *  as if a testcase failed. Probably the pre condition for a test
- *  case is not fully satisfied.
+ * @brief TestComponent::checkComponent A convenience class for testing components. Calls the non-pointer version.
  *
  * @param comp          A shared pointer to the component you want to check
  * @param name          The name it should have
@@ -57,6 +52,20 @@ inline void TestComponent::checkComponent(std::shared_ptr<Component> comp, QStri
     checkComponent(*comp, name, in_size, out_size, function);
 }
 
+/**
+ * @brief TestComponent::checkComponent a convenience class for testing components
+ *
+ *  A private utility function to check some basic characteristics
+ *  after creation. Any deviation leads to a normal test deviation
+ *  as if a testcase failed. Probably the pre condition for a test
+ *  case is not fully satisfied.
+ *
+ * @param comp
+ * @param name
+ * @param in_size
+ * @param out_size
+ * @param function
+ */
 void TestComponent::checkComponent(Component comp, QString name, int in_size, int out_size, QString function) {
     QCOMPARE(comp.name(), name);
     QCOMPARE(comp.in_size(), in_size);

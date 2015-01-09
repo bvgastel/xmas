@@ -22,7 +22,7 @@
 
 int main(int argc, char *argv[])
 {
-    Control control(argc, argv);
+    xmas::xmc::Control control(argc, argv);
 
     int result = control.exec();
     std::cout << "Application result returned was " << result << std::endl;

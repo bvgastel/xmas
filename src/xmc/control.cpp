@@ -2,6 +2,7 @@
 #include <sstream>
 #include "control.h"
 
+using namespace xmas::xmc;
 
 /**
  * Constructor for Control.

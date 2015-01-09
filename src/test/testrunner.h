@@ -58,8 +58,14 @@ private slots:
     }
 private:
     void doRunTests() {
+        QStringList testParamList;
+        //
+        // see http://stackoverflow.com/questions/26293155/qtestqexec-hide-passed-messages
+        // for why empty string before -silent
+        testParamList.append("");
+        testParamList.append("-silent");    // want to skip PASS messages
         foreach (QObject * test, m_tests) {
-            m_overallResult|= QTest::qExec(test);
+            m_overallResult|= QTest::qExec(test, testParamList);
         }
     }
 
