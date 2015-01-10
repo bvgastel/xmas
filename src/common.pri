@@ -4,7 +4,7 @@
 INCLUDEPATH += . ..
 WARNINGS += -Wall
 
-TEMPLATE = lib
+#TEMPLATE = lib
 
 CONFIG += C++11
 

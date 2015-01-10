@@ -7,7 +7,7 @@ include (../xmc/defines.pri)
 include (../test/defines.pri)
 
 QT       += core
-QT      += testlib
+QT       += testlib
 
 CONFIG += C++11
 CONFIG += console
@@ -16,13 +16,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-unix {
-    LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
-}
+win32:CONFIG(release, debug|release): LIBS += -L../xmas/release -L../xmd/release -L../test/release -lxmas -lxmd -ltest
+else:win32:CONFIG(debug, debug|release): LIBS += -L../xmas/debug -L../xmd/debug -L../test/debug -lxmas -lxmd -ltest
+else:unix: LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
 
-win32 {
-    LIBS += -L../test/debug -ltest
-}
 
 # We will build the final executable in the build directory.
 

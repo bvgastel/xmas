@@ -6,6 +6,9 @@ include (defines.pri)
 
 QT += widgets svg
 
+CONFIG   += C++11
+CONFIG   += staticlib
+
 HEADERS       = mainwindow.h \
                 modelwindow.h \
                 projectmanager.h \

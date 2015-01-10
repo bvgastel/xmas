@@ -13,12 +13,13 @@ include(../xmas/defines.pri)
 include(../xmd/defines.pri)
 
 QT       += core
-QT      += testlib
+QT       += testlib
 
 # CONFIG   += testcase
-CONFIG   += console
 CONFIG   += C++11
 CONFIG   += staticlib
+
+TEMPLATE = lib
 
 QT       -= gui
 CONFIG   -= app_bundle
@@ -26,7 +27,8 @@ CONFIG   -= app_bundle
 SOURCES += \
     testnoc.cpp \
     testcomponent.cpp \
-    testnetwork.cpp
+    testnetwork.cpp \
+    testrunner.cpp
 
 HEADERS += \
     testrunner.h \

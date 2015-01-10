@@ -19,6 +19,7 @@ CONFIG   += console
 CONFIG   += staticlib
 CONFIG   -= app_bundle
 
+TEMPLATE = lib
 
 SOURCES += \
     control.cpp \
