@@ -39,24 +39,26 @@ provided the performance seems acceptable.
 	\item[C++ constructs lead] We strive to use C++ of the latest standard, currently C++ 2011.
 	This implies the use of the C++ library including containers.
 	
-	\item[Boost] We use \boost as our goto library for portability. For mechanisms that would
-	otherwise require platform dependent code we use \boost. Messaging, process control and
-	interprocess communication is all directed through \boost.
+	\item[qt] We use the GUI library \qt for all GUI code and as much other code as is necessary.
 	
-	\item[fltk] We use the GUI library \fltk (pronounce ``\texttt{fulltick}'') for all GUI code.
-	This takes care of most of the performance concerns for a graphical user interface.
+	\item[OpenGL] For drawing 2D we use qtquick1 with graphicsview or qtquick2 which works with opengl.
+	It looks like we will be using qtquick1 with graphicsview due to some missing features (scrol, zoom, 
+	pan) in qtquick2.
+
+	\item[Other libraries] We use \qt as our goto library for portability. For mechanisms that would
+	otherwise require platform dependent code we use \qt. Messaging, process control and
+	interprocess communication is all directed through \qt. Only if \qt does not suffice do we
+	use other libraries like \boost.
 	
-	\item[OpenGL] Where we need extra drawing power we use \opengl or the \fltk \w{gl} extentions.
-	This takes care of the remaining performance concerns that might exist.
 	
 \end{description}
 
 \section{Observer pattern}
 
-We use our own observer pattern as described in the \w{GoF}. 
-Figure \ref{fig:observer-applied} the pattern applies the principle. 
-Any object wanting to observe one of the subjects, needs to 
-derive from \w{ConcreteObserver}.
+The observer pattern is described in the \w{GoF} \citep{Gamma:1995:DPE:186897}. 
+Figure \ref{fig:observer-applied} shows an implementation of 
+the pattern that applies the principle as 
+described in the book.
 
 \begin{center}
 	\includegraphics[width=.7\linewidth]{ObserverClassDiagram.jpeg}
@@ -69,4 +71,41 @@ derive from \w{ConcreteObserver}.
 	\captionof{figure}{Observer pattern applied}
 	\label{fig:observer-applied}
 \end{center}
+
+The toolkit \qt provides signals and slots for communication 
+between objects in a \qt based system. It is a fundamental mechanism to bind 
+together classes that do not know of each other's existance.
+
+We use this mechanism in place of the observer pattern because it is
+simple and needs no additional programming other than the \code{connect()} 
+statement and the slot method.
+
+The mechanism works as follows:
+
+\begin{enumerate}
+	\item A class emits a signal. Any slot connected to the signal
+	will be executed as a result. This is a one-to-many relationship.
+	Each signal can connect to multiple slots.	
+	
+	\item Many signals can connect to a slot. When any of these signals 
+	emit this will cause the slot to execute. This is a many-to-one relationship.
+	Each slot can have connections from multiple signals.
+	
+	\item Any signal $s_1$ can connect to any other signal $s_2$. The result of
+	emitting the $s_1$ will be a subsequent emission of $s_2$.
+	
+	\item When an object is removed, existing connections it contains are deleted 
+	by the \qt system.
+	
+\end{enumerate}
+
+The slots are normal methods with return values (that the signals ignore) and 
+parameters. The connection processes the parameters only if the signal and the 
+slot have the same parameters with the same types. If they do not, the system 
+ignores the parameters. Any method can call the slots (this is where the return
+value comes in). 
+
+Besides the graphical system that uses signals and slots extensively, we can use
+signals and slots in any class that specifies the \qobj macro. This enables
+inter process communication.
 
