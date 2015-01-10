@@ -52,7 +52,7 @@ class QSignalMapper;
 QT_END_NAMESPACE
 
 class ModelWindow;
-class XMASComponent;
+
 
 class MainWindow : public QMainWindow
 {

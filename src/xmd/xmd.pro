@@ -4,36 +4,30 @@
 
 include (defines.pri)
 
-QT += widgets svg
+QT += widgets svg declarative
 
 HEADERS       = mainwindow.h \
-                modelwindow.h \
                 projectmanager.h \
                 setup.h \
-                component.h \
-                connector.h \
-                connection.h \
-                complib.h \
-                positioncomponentextension.h \
-                network.h \
-                designercontroller.h \
-                project.h \
-                checker/xmas.h
-
+    canvas/complib.h \
+    canvas/component.h \
+    canvas/connection.h \
+    canvas/connector.h \
+    canvas/modelwindow.h \
+    canvas/network.h
+				
 SOURCES       = mainwindow.cpp \
-                modelwindow.cpp \
                 projectmanager.cpp \
-                component.cpp \
-                connector.cpp \
-                connection.cpp \
-                complib.cpp \
-                network.cpp \
-                designercontroller.cpp \
-                project.cpp \
-                checker/xmas.cpp
+    canvas/complib.cpp \
+    canvas/component.cpp \
+    canvas/connection.cpp \
+    canvas/connector.cpp \
+    canvas/modelwindow.cpp \
+    canvas/network.cpp \
+    main.cpp
+    main.cpp \
 
 RESOURCES     = xmd.qrc
-
 
 unix {
     target.path = /usr/lib
@@ -45,10 +39,19 @@ win32 {
     INSTALLS += target
 }
 
-TEMPLATE = lib
+INCLUDEPATH += canvas
 
-# install
-# target.path = xmd
-# INSTALLS += target
+TEMPLATE = app
 
-DISTFILES += XMAS_LIBRARY
+DISTFILES += XMAS_LIBRARY \
+    qml/fork.qml \
+    qml/function.qml \
+    qml/in.qml \
+    qml/join.qml \
+    qml/merge.qml \
+    qml/out.qml \
+    qml/queue.qml \
+    qml/sink.qml \
+    qml/source.qml \
+    qml/spidergon.qml \
+    qml/switch.qml

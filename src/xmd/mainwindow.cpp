@@ -33,7 +33,6 @@
 
 #include "mainwindow.h"
 #include "modelwindow.h"
-#include "designercontroller.h"
 
 
 MainWindow::MainWindow()
@@ -219,46 +218,13 @@ void MainWindow::about()
  */
 void MainWindow::addComponent(int type)
 {
-    ModelWindow *child = activeModel();
-    if (child) {
+     ModelWindow *child = activeModel();
+    if (child != nullptr)
+    {
         qDebug() << "type = " << type;
 
-        Network& network = child->network();
-        DesignerController dc {network};
-
-        static int counter = 1;
-        std::string counter_str = std::to_string(counter++);
-
-        switch (type) {
-            case ComponentType::Queue: {
-                    XMASComponent* comp = dc.addComponent<XMASQueue>("Queue" + counter_str, -300, -300, Orientation::North);
-                    dc.moveComponent(comp, -400, 300, Orientation::North);
-                }
-                break;
-            case ComponentType::Function:
-                dc.addComponent<XMASFunction>("Function" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Fork:
-                dc.addComponent<XMASFork>("Fork" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Join:
-                dc.addComponent<XMASJoin>("Join" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Switch:
-                dc.addComponent<XMASSwitch>("Switch" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Merge:
-                dc.addComponent<XMASMerge>("Merge" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Sink:
-                dc.addComponent<XMASSink>("Sink" + counter_str, -300, -300, Orientation::North);
-                break;
-            case ComponentType::Source:
-                dc.addComponent<XMASSource>("Source" + counter_str, -300, -300, Orientation::North);
-                break;
-        }
+        child->addComponent(type);
     }
-
 }
 
 void MainWindow::setPackets()
@@ -373,57 +339,57 @@ void MainWindow::createActions()
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
 
-    queueAct = new QAction(QIcon(":/images/queue.png"), tr("Queue"), this);
+    queueAct = new QAction(QIcon(":/images/svgs/queue.svg"), tr("Queue"), this);
     queueAct->setStatusTip(tr("Draws a ''queue'' primitive"));
     signalMapper->setMapping(queueAct, CompLib::Queue);
     connect(queueAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    functionAct = new QAction(QIcon(":/images/function.png"), tr("Function"), this);
+    functionAct = new QAction(QIcon(":/images/svgs/function.svg"), tr("Function"), this);
     functionAct->setStatusTip(tr("Draws a ''function'' primitive"));
     signalMapper->setMapping(functionAct, CompLib::Function);
     connect(functionAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    forkAct = new QAction(QIcon(":/images/fork.png"), tr("Fork"), this);
+    forkAct = new QAction(QIcon(":/images/svgs/fork.svg"), tr("Fork"), this);
     forkAct->setStatusTip(tr("Draws a ''fork'' primitive"));
     signalMapper->setMapping(forkAct, CompLib::Fork);
     connect(forkAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    joinAct = new QAction(QIcon(":/images/join.png"), tr("Join"), this);
+    joinAct = new QAction(QIcon(":/images/svgs/join.svg"), tr("Join"), this);
     joinAct->setStatusTip(tr("Draws a ''join'' primitive"));
     signalMapper->setMapping(joinAct, CompLib::Join);
     connect(joinAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    switchAct = new QAction(QIcon(":/images/switch.png"), tr("Switch"), this);
+    switchAct = new QAction(QIcon(":/images/svgs/switch.svg"), tr("Switch"), this);
     switchAct->setStatusTip(tr("Draws a ''switch'' primitive"));
     signalMapper->setMapping(switchAct, CompLib::Switch);
     connect(switchAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    mergeAct = new QAction(QIcon(":/images/merge.png"), tr("Merge"), this);
+    mergeAct = new QAction(QIcon(":/images/svgs/merge.svg"), tr("Merge"), this);
     mergeAct->setStatusTip(tr("Draws a ''merge'' primitive"));
     signalMapper->setMapping(mergeAct, CompLib::Merge);
     connect(mergeAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    sinkAct = new QAction(QIcon(":/images/sink.png"), tr("Sink"), this);
+    sinkAct = new QAction(QIcon(":/images/svgs/sink.svg"), tr("Sink"), this);
     sinkAct->setStatusTip(tr("Draws a ''sink'' primitive"));
     signalMapper->setMapping(sinkAct, CompLib::Sink);
     connect(sinkAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    sourceAct = new QAction(QIcon(":/images/source.png"), tr("Source"), this);
+    sourceAct = new QAction(QIcon(":/images/svgs/source.svg"), tr("Source"), this);
     sourceAct->setStatusTip(tr("Draws the ''source'' primitive"));
     signalMapper->setMapping(sourceAct, CompLib::Source);
     connect(sourceAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    inputAct = new QAction(QIcon(":/images/in.png"), tr("Input"), this);
+    inputAct = new QAction(QIcon(":/images/svgs/in.svg"), tr("Input"), this);
     inputAct->setStatusTip(tr("Draws an ''Input connection point''"));
     signalMapper->setMapping(inputAct, CompLib::In);
     connect(inputAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    outputAct = new QAction(QIcon(":/images/out.png"), tr("Output"), this);
+    outputAct = new QAction(QIcon(":/images/svgs/out.svg"), tr("Output"), this);
     outputAct->setStatusTip(tr("Draws an ''Output connection point''"));
     signalMapper->setMapping(outputAct, CompLib::Out);
     connect(outputAct, SIGNAL(triggered()), signalMapper, SLOT(map()));
 
-    compositeAct = new QAction(QIcon(":/images/composite.png"), tr("Composite"), this);
+    compositeAct = new QAction(QIcon(":/images/svgs/composite.svg"), tr("Composite"), this);
     compositeAct->setStatusTip(tr("Draws a ''Composite''"));
     signalMapper->setMapping(compositeAct, CompLib::Composite);
     connect(compositeAct, SIGNAL(triggered()), signalMapper, SLOT(map()));

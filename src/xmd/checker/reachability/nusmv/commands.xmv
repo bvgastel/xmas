@@ -1,6 +1,0 @@
-read_model -i twoagents.smv
-flatten_hierarchy
-encode_variables
-build_boolean_model
-check_ltlspec_klive -g -d
-quit
