@@ -24,6 +24,7 @@ SOURCES += component.cpp \
     primitive.cpp
 
 CONFIG += C++11
+CONFIG += staticlib
 
 TEMPLATE = lib
 

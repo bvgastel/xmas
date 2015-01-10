@@ -16,7 +16,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-LIBS += -L../xmas -L../xmd -L../xmc -L../test -lxmas -lxmd -ltest -lxmc
+LIBS += -L../test/debug -ltest
 
 # We will build the final executable in the build directory.
 

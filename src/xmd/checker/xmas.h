@@ -12,7 +12,7 @@ using namespace bitpowder::lib;
 // type of wires/signals
 enum SignalType {IRDY, TRDY, DATA};
 // selector to state which ports you are interested in
-enum PortType {ALL, INPUT, OUTPUT};
+enum class PortType {ALL, INPUT, OUTPUT};
 
 class XMASComponent;
 

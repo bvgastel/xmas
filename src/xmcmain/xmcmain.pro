@@ -39,5 +39,5 @@ win32 {
         else: CONFIG(debug, debug|release): LIBS += -L../xmas/debug -L../xmas/debug -L../xmc/debug
 }
 
-LIBS += -lxmas -lxmd -lxmc
+LIBS += -L../xmc/debug -lxmc
 

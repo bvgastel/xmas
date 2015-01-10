@@ -18,6 +18,7 @@ QT      += testlib
 # CONFIG   += testcase
 CONFIG   += console
 CONFIG   += C++11
+CONFIG   += staticlib
 
 QT       -= gui
 CONFIG   -= app_bundle

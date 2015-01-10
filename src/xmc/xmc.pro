@@ -16,7 +16,9 @@ QT       -= gui
 
 TARGET = xmc
 CONFIG   += console
+CONFIG   += staticlib
 CONFIG   -= app_bundle
+
 
 SOURCES += \
     control.cpp \
