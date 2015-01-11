@@ -1,23 +1,23 @@
 import QtQuick 1.1
 import XMAS 1.0
 
-Component {
+QComponent {
     id: comp
     width: 200
     height: 200
     name: "fork"
     connectors: [
         Connector {
-            x: 5; y: 100
+            x: 0; y: 90
             name: "a1"
         },
         Connector {
-            x: 195; y:40
+            x: 180; y:30
             name: "a2"
 
         },
         Connector {
-            x: 195; y:160
+            x: 180; y:150
             name: "a3"
         }
     ]

@@ -1,17 +1,17 @@
 import QtQuick 1.1
 import XMAS 1.0
 
-Component {
+QComponent {
     id: comp
     width: 200
     height: 200
     name: "sink"
-    Image {source: "../images/svgs/sink.svg"}
     connectors: [
         Connector {
-            x: 100; y: 50
+            x: 90; y: 40
             name: "a1"
         }
     ]
+    Image {source: "../images/svgs/sink.svg"}
 }
 

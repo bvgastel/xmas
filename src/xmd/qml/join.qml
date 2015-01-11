@@ -1,26 +1,27 @@
 import QtQuick 1.1
 import XMAS 1.0
 
-Component {
+QComponent {
     id: comp
     width: 200
     height: 200
     name: "join"
-    Image {source: "../images/svgs/join.svg"}
     connectors: [
         Connector {
-            x: 5; y: 40
+            x: 0; y: 30
             name: "a1"
         },
         Connector {
-            x: 5; y:160
+            x: 0; y:150
             name: "a2"
 
         },
         Connector {
-            x: 195; y:100
+            x: 180; y:90
             name: "a3"
         }
     ]
+    Image {source: "../images/svgs/join.svg"}
+
 }
 
