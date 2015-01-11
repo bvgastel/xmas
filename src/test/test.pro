@@ -12,8 +12,9 @@ include(defines.pri)
 include(../xmas/defines.pri)
 include(../xmd/defines.pri)
 
-QT       += core
+QT      += core
 QT      += testlib
+QT      += declarative
 
 # CONFIG   += testcase
 CONFIG   += console

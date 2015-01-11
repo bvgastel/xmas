@@ -1,6 +1,6 @@
 #include "testnetwork.h"
 
-#include "network.h"
+#include "canvas/network.h"
 #include "checker/xmas.h"
 
 TestNetwork::TestNetwork(QObject *parent) : QObject(parent)
