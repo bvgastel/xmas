@@ -1,34 +1,34 @@
 import QtQuick 1.1
 import XMAS 1.0
 
-QComponent {
+Component {
     id: comp
     width: 200
     height: 400
     name: "test composite"
+    Image {source: "../images/svgs/composite.svg"}
     connectors: [
         Connector {
-            x: 0; y: 40
+            x: 5; y: 50
             name: "a1"
         },
         Connector {
-            x: 0; y:80
+            x: 5; y:90
             name: "a2"
 
         },
         Connector {
-            x: 0; y:120
+            x: 5; y:130
             name: "a3"
         },
         Connector {
-            x: 180; y:40
+            x: 195; y:50
             name: "a4"
 
         },
         Connector {
-            x: 180; y:80
+            x: 195; y:90
             name: "a5"
         }
     ]
-    Image {source: "../images/svgs/composite.svg"}
 }

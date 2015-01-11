@@ -43,11 +43,13 @@ const qreal Pi = 3.14;
  * @param parent
  * @param scene
  */
-Connection::Connection()
-    : QDeclarativeItem()
+Connection::Connection(Connector *startConnector,
+                       Connector *endConnector,
+                       QDeclarativeItem *parent)
+    : QDeclarativeItem(parent)
 {
-    //m_startConnector = startConnector;
-    //m_endConnector = endConnector;
+    m_startConnector = startConnector;
+    m_endConnector = endConnector;
     setFlag(QDeclarativeItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemHasNoContents,false);
 

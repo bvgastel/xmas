@@ -39,9 +39,9 @@
  */
 CompLib::CompLib()
 {
-    qmlRegisterType<Component>("XMAS", 1, 0, "XComponent");
-    qmlRegisterType<Connector>("XMAS", 1, 0, "XConnector");
-    qmlRegisterType<Connection>("XMAS", 1, 0, "XConnection");
+
+    qmlRegisterType<Component>("XMAS", 1, 0, "Component");
+    qmlRegisterType<Connector>("XMAS", 1, 0, "Connector");
 
     QDeclarativeEngine engine;
 
