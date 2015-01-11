@@ -60,9 +60,7 @@ class Connection : public QDeclarativeItem
 public:
     enum { Type = UserType + 2 };
 
-    Connection(Connector *startConnector,
-               Connector *endConnector,
-               QDeclarativeItem *parent = 0);
+    Connection();
 
     int type() const Q_DECL_OVERRIDE { return Type; }
 

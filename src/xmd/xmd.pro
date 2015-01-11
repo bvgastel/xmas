@@ -54,4 +54,7 @@ DISTFILES += XMAS_LIBRARY \
     qml/sink.qml \
     qml/source.qml \
     qml/spidergon.qml \
-    qml/switch.qml
+    qml/switch.qml \
+    qml/Connection.qml \
+    qml/Connector.qml \
+    qml/QComponent.qml

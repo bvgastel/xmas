@@ -63,7 +63,7 @@ Component::~Component()
 QRectF Component::boundingRect() const
 {
     QRectF rect = QRect(0,0,this->width(),this->height());
-    rect.adjust(11,11,-11,-11);
+    rect.adjust(21,21,-21,-21);
     return rect;
 }
 

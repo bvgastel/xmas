@@ -55,6 +55,7 @@ class Connector : public QDeclarativeItem
     Q_ENUMS(ConnectorType)
     Q_PROPERTY(QString name READ name WRITE setName)
     Q_PROPERTY(ConnectorType connectorType READ connectorType CONSTANT)
+    Q_PROPERTY(bool connected READ connected NOTIFY connectedChanged )
 
 public:
     enum { Type = UserType + 1 };
@@ -66,8 +67,6 @@ public:
     Connector();
     virtual ~Connector();
 
-    QRectF boundingRect() const Q_DECL_OVERRIDE;
-    QPainterPath shape() const Q_DECL_OVERRIDE;
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget) Q_DECL_OVERRIDE;
@@ -75,21 +74,22 @@ public:
     QString name() const;
     void setName(const QString &name);
 
+    bool connected(){ return m_connected; }
+
     void setConnection(Connection *connection){m_connection = connection;}
     void deleteConnection();
     const Component *component() const {return this->m_parent;}
 
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
+signals:
+    void connectedChanged();
 
 private:
     QString m_name;
     const ConnectorType m_type;
     const Component *m_parent;
     Connection *m_connection;
+    bool m_connected;
     static const int m_size = 5;
-
 };
 
 #endif // CONNECTOR_H

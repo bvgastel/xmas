@@ -48,6 +48,7 @@ Connector::Connector()
     setFlag(QGraphicsItem::ItemHasNoContents,false);
     setAcceptHoverEvents(true);
     m_connection = nullptr;
+    m_connected = false;
     setZValue(1);
 }
 
@@ -60,28 +61,6 @@ Connector::~Connector()
     {
         this->scene()->removeItem(this);
     }
-}
-
-/**
- * @brief Connector::boundingRect
- * @return
- */
-QRectF Connector::boundingRect() const
-{
-    qreal adjust = 1; //pen
-    return QRectF(-m_size - adjust, -m_size - adjust,
-                  2*(m_size + adjust), 2*(m_size + adjust));
-}
-
-/**
- * @brief Connector::shape
- * @return
- */
-QPainterPath Connector::shape() const
-{
-        QPainterPath path;
-    path.addEllipse(-m_size, -m_size, 2*m_size, 2*m_size);
-    return path;
 }
 
 /**
@@ -111,16 +90,11 @@ void Connector::setName(const QString &name)
 void Connector::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* w)
 {
     Q_UNUSED(w);
+    Q_UNUSED(option);
+    Q_UNUSED(painter);
 
-    if (m_connection == nullptr)
-    {
-        painter->setBrush(Qt::red);
-    }
-    else
-    {
-        painter->setBrush(Qt::black);
-    }
-
+    //changing cursorShape is not possible in Quick1 qml
+    // it is in Quick 2
     if (option->state.testFlag(QStyle::State_MouseOver))
     {
         setCursor(Qt::CrossCursor);
@@ -129,26 +103,7 @@ void Connector::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     {
         setCursor(Qt::ArrowCursor);
     }
-    painter->setPen(Qt::NoPen);
-    painter->drawRect(-m_size,-m_size,2*m_size,2*m_size);
-}
 
-/**
- * @brief Connector::mousePressEvent
- * @param event
- */
-void Connector::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    QDeclarativeItem::mousePressEvent(event);
-}
-
-/**
- * @brief Connector::mouseReleaseEvent
- * @param event
- */
-void Connector::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    QDeclarativeItem::mouseReleaseEvent(event);
 }
 
 /**
