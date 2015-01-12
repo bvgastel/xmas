@@ -1,12 +1,21 @@
-\chapter{Architecture Overview}
+cite\chapter{Architecture Overview}
 
-\todo[inline]{The system as a whole includes the design tool, the verification pipeline and the
-specific verification tools. If we document the design tool only, we leave out essential parts of 
-the system. TBD.}
+This document partitions the system into 3 parts:
 
-\todo[inline]{Where to document the verification pipeline and the verification tools?
-Maybe the pipeline in general (without VT specifics) should be documented here. Maybe
-a template for specific VT documentation would come in handy. TBD.}
+\begin{description}
+	\item[Design Tool] This is the graphical and textual representation of the
+	\Noc.
+	\item[VT Plugin tool] This is the connection between the design tool and the verification
+	tools. 
+	\item[VT] The specific verification tools. This currently includes the combinatoric cycle 
+	checker, the deadlock checker and may include tools. They all fit into and use the VT plugin
+	tool.
+\end{description}
+
+This document describes the design tool and the VT plugin. Each verification tool has its own papers
+and documentation. As far as necessary for the plugin, requirements from the VTs are included.
+
+\todo[inline]{Consider a how-to-guide for creating a plugin.}
 
 \section{Partitioning}
 
@@ -37,8 +46,10 @@ design toolkit.
 the online and the offline versions of running the verification tools? I.e. how
 will this architecture reflect on the currently existing verification tools?}
 
-\todo[inline]{Where to flatten the model: in the verification tool or in the design tool (plugin)?
-			   Could a VT work with composites?}
+
+We will flatten the model on behalf of the verification tools in the VT plugin.
+Currently verification tools cannot work with composites but are planned for the future 
+(see \citep[question 14 on page 32]{ou:team23-endreport}).
 
 \section{Graphical Design Tool Dynamics}
 
@@ -116,7 +127,7 @@ file with input.
 
 \paragraph{Generic meta information} Some parameters directly influence 
 the structure of the component. An example is a number $n$ that
-specifies the number of primitives in a spidergon topology (see \cite{}).
+specifies the number of primitives in a spidergon topology (see \cite{chatterjee-kishinevsky:xmas}\todo{check}).
 \todo[inline]{These parameters need special care when passing through to the
 verification tools. whether and how to flatten is still subject to discussion.}
 
