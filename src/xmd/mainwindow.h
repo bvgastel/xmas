@@ -32,7 +32,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "complib.h"
+#include "canvas/complib.h"
 #include "setup.h"
 
 #include <QMainWindow>

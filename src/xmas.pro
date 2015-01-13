@@ -25,7 +25,7 @@ libtest.subdir = test
 # add this to have qmake determine dependencies with
 # the libraries correctly.
 
-test.depends = xmas
+test.depends = xmas xmd
 xmd.depends = xmas
 xmc.depends = xmas xmd
 

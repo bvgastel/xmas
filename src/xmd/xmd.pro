@@ -41,7 +41,7 @@ win32 {
 
 INCLUDEPATH += canvas
 
-TEMPLATE = app
+TEMPLATE = lib
 
 DISTFILES += XMAS_LIBRARY \
     qml/fork.qml \
