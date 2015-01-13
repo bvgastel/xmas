@@ -1,0 +1,116 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 002 Architectuur en Build}
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+
+\begin{Minutes}{Work meeting 002 Architecture and build Team 33}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{Architectuur}
+\minutetaker{Guus}
+\minutesdate{12 januari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\newcommand{\w}[1]{\textsc{#1}\xspace}
+\newcommand{\qml}{\textsc{QML}\xspace}
+\newcommand{\qt}{\textsc{Qt}\xspace}
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}
+
+\topic{Huidige versie WickedXMas} 
+
+\subtopic{Voortgang}
+
+\paragraph{Stefan} Heeft de build met aanwijzigingen van Guus uit Qt groep
+en stack overflow omgezet, voorlopig nog naar \qtquick1. Het kan gemakkelijk
+naar \qtquick2.
+
+\paragraph{Jeroen} Is nog bezig C++ en \qt te leren. Heeft wat issues met
+betrekking tot de huidige build in mail gezet (zie volgend punt). Ook
+zien we compileer problemen met de classes van Bernard. Voor nu laten we die
+er uit.
+
+\paragraph{Guus} Is bezig de architectuur aan te passen op de meest recente
+ontwikkelingen (vooral overgang naar \qt). Is bezig de requirements voor
+de plugin te achterhalen. Nog geen contact gehad met Freek en Bernard is 
+momenteel op vakantie. Moet wel concrete vragen hebben wil ik een afspraak
+met Freek maken.
+
+Het punt is dat de data structuren van Bernard behoorlijk veel complexer zijn 
+dan wij nodig hebben. De vraag is of we deze complexiteit kunnen vervangen door
+standaard library functionaliteit (C++ containers of \qt containers). Dit zijn
+zaken waarvoor we Bernard nodig hebben.
+
+Freek kan ons waarschijnlijk helpen met de requirements rond de verificatie tools
+en wellicht toch meer inzicht in de volledige lijst met verificatie tools.
+
+\paragraph{Besluit} Guus maakt een afspraak met Freek om de huidige stand
+van zaken te bespreken en wat de plugin requirements zijn.
+Voor nu kunnen we verder, maar uiteindelijk moeten we een beslissing
+hebben over hoe met de data structuur om te gaan. Dit is waarschijnlijk
+aan Bernard. We moeten hiervoor wachten tot Bernard terug is.
+
+\subtopic{Gelaagde architectuur: scheiding data en presentatie laag}
+
+Mail van Jeroen dd 11-01-2015 23:09 (Building xmas):
+
+\begin{quote} Een van de nadelen van de aanpak met qml is dat de datalaag dan
+	wordt gedefinieerd in GUI classes, in dit geval QDeclarativeItem. De
+	verificatietools als standalone applicatie wordt hiermee afhankelijk van de
+	designtool, in het bijzonder Qt en QtDeclarative/Quick om een netwerk in te
+	laden en te verifieren. Of dit een probleem is weet ik niet, dat moeten we
+	denk ik aan Bernard voorleggen.
+\end{quote}
+
+\paragraph{Guus} De architectuur is inderdaad gelaagd, maar anders dan web
+applicaties.  De fundamentele lagen hier zijn designer en VTs, met de VT plugin
+er tussen in.  Alle lagen hebben intern een repository architectuur (zie cursus
+software engineering).  
+De communicatie tussen de lagen vindt ook met repo's plaats: het model of het 
+platgeslagen model. De scheiding tussen een data laag en een presentatie
+laag speelt op architectureel niveau geen rol. Toch speelt scheiding tussen
+presentatie en data wel een rol, op een wat lager niveau. De vraag is:
+
+\begin{quote}
+	Kunnen wij de data in \qml gebruiken in het programma voor de VT en VT plugin?
+	Dat wil zeggen, gaat het gebruik van \qml het grafische subsysteem van \qt 
+	meeslepen? Of is \qml daar vrij van?
+\end{quote}
+
+\paragraph{Stefan} Volgens mij is \qml onafhankelijk van het grafische
+subsysteem van \qt. Ik kan er een proefprogramma voor maken.
+
+\paragraph{Besluit} Stefan levert deze week een programma op waarin een data structuur vanuit 
+een bestand via \qml in het geheugen komt, dat zowel (met qtquick2) in de
+designer te tonen is, als (zonder grafische \qt) in een console programma 
+komt.
+
+\subtopic{Builden}
+
+\paragraph{Jeroen} We hebben diverse problemen met de build van de applicatie. Met name
+het linken van de eigen dynamische libraries levert problemen. Het maakt theoretisch
+niet uit of we dynamisch of statisch linken, maar voor onze eigen libraries heeft
+shared link (dynamisch) geen voordelen. Bij statisch weet je zeker dat je de juiste versie hebt.
+
+\paragraph{Guus} De naamgeving van de subdirectory voor xmasmain is misleidend. Dat moet naar xmdmain.
+Uiteindelijk is dat wat het draait. Dit houdt echter ook inhoudelijke wijzigingen in de naam van 
+de \verb%.pro% file en binnen in deze en andere \verb%.pro% files.
+
+\paragraph{Besluit} Jeroen gaat beide wijzigingen uitvoeren: statisch library en naamwijziging.
+Stefan gaat de huidige programmatuur wijzigen van \qtquick1 naar \qtquick2.
+
+\end{Minutes}
+\end{document}
