@@ -14,8 +14,6 @@ for C++ tools.
 
 
 ### C++ Tools 
- - [FLTK]()
- - [Boost]()
  - [Protocol Buffers]()
  - ...
 
