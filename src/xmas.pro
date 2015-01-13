@@ -7,11 +7,11 @@ SUBDIRS =   xmas \
             xmc \
             test
 
-# xmasmain must be last
+# xmdmain must be last
 
 CONFIG += ordered
 SUBDIRS += testmain \
-           xmasmain \
+           xmdmain \
            xmcmain
 
 

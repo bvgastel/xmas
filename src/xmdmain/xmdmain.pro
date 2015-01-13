@@ -1,5 +1,5 @@
-# xmasmain.pro
-# Contains the main program for xmas
+# xmdmain.pro
+# Contains the main program for xmd
 
 CONFIG += C++11
 
