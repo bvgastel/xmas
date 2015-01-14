@@ -42,3 +42,7 @@ unix {
 	INSTALLS += target
 }
 
+win32 {
+    target.path = test
+    INSTALLS += target
+}
