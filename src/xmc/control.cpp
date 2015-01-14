@@ -113,7 +113,8 @@ void Control::getOptions(Options &opt)
             QCoreApplication::translate("main", "directory"));
     optParser.addOption(outputDirectoryOption);
 
-    optParser.addPositionalArgument("main", "Input model to process.");
+    optParser.addPositionalArgument("model",
+                                    QCoreApplication::translate("main","Input model to process."));
     optParser.process(m_app);
 
     opt.args = optParser.positionalArguments();

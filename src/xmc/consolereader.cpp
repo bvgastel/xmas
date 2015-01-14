@@ -16,9 +16,8 @@ ConsoleReader::~ConsoleReader()
 
 }
 
-void ConsoleReader::text(int socket)
+void ConsoleReader::text(int)
 {
-    socket = socket;    // shut the compiler up, unused variable
     QTextStream qin(stdin);
     QString line = qin.readLine();
     emit textReceived(line);

@@ -47,7 +47,6 @@ void TestNoc::cleanupTestCase()
 void TestNoc::emptyNoc() {
     QString name = "empty network";
     std::shared_ptr<Noc> noc = std::make_shared<Noc>(name);
-    std::cout << "Network == noc" << noc << std::endl;
 
     QString nameExpected = "empty network";
     QCOMPARE(noc->name(), nameExpected);
