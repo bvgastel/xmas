@@ -24,14 +24,10 @@ QT       -= gui
 CONFIG   -= app_bundle
 
 SOURCES += \
-    testnoc.cpp \
-    testcomponent.cpp \
     testrunner.cpp
 
 HEADERS += \
-    testrunner.h \
-    testnoc.h \
-    testcomponent.h
+    testrunner.h
 
 # By default TARGET is the same as the directory,
 # so it will make test (in linux). Uncomment to override.
