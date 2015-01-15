@@ -48,8 +48,8 @@ Image {
     property string image
 
     source: image
-    height: 32
-    width: 32
+    height: 48
+    width: 48
 
     MouseArea {
         anchors.fill: parent

@@ -30,5 +30,5 @@ QComponent {
             name: "a5"
         }
     ]
-    Image {source: "../images/svgs/composite.svg"}
+    Image {source: "../content/images/svgs/composite.svg"}
 }

@@ -21,7 +21,7 @@ QComponent {
             name: "a3"
         }
     ]
-    Image {source: "../images/svgs/join.svg"}
+    Image {source: "../content/images/svgs/join.svg"}
 
 }
 

@@ -20,7 +20,7 @@ QComponent {
             name: "a3"
         }
     ]
-    Image {source: "../images/svgs/merge.svg"}
+    Image {source: "../content/images/svgs/merge.svg"}
 
 }
 

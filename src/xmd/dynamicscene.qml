@@ -119,7 +119,7 @@ Item {
     Rectangle {
         id: toolbox
 
-        height: 32
+        height: 48
         color: "lightgrey"
         anchors { right: parent.right; top: parent.top; left: parent.left}
 
@@ -152,6 +152,46 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         componentFile: "../qml/fork.qml"
                         source: "content/images/svgs/fork.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/join.qml"
+                        source: "content/images/svgs/join.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/switch.qml"
+                        source: "content/images/svgs/switch.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/merge.qml"
+                        source: "content/images/svgs/merge.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/sink.qml"
+                        source: "content/images/svgs/sink.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/source.qml"
+                        source: "content/images/svgs/source.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/in.qml"
+                        source: "content/images/svgs/in.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/out.qml"
+                        source: "content/images/svgs/out.svg"
+                    }
+                    PaletteItem {
+                        anchors.verticalCenter: parent.verticalCenter
+                        componentFile: "../qml/spidergon.qml"
+                        source: "content/images/svgs/composite.svg"
                     }
                 }
             }

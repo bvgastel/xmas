@@ -12,6 +12,6 @@ QComponent {
             name: "a1"
         }
     ]
-    Image {source: "../images/svgs/sink.svg"}
+    Image {source: "../content/images/svgs/sink.svg"}
 }
 

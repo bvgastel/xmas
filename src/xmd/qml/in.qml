@@ -12,7 +12,7 @@ QComponent {
             name: "a1"
         }
     ]
-    Image {source: "../images/svgs/in.svg"}
+    Image {source: "../content/images/svgs/in.svg"}
 
 }
 
