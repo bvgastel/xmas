@@ -18,5 +18,19 @@
         <file>images/svgs/in.svg</file>
         <file>images/svgs/out.svg</file>
         <file>images/svgs/composite.svg</file>
+        <file>qml/Connection.qml</file>
+        <file>qml/Connector.qml</file>
+        <file>qml/fork.qml</file>
+        <file>qml/function.qml</file>
+        <file>qml/in.qml</file>
+        <file>qml/join.qml</file>
+        <file>qml/merge.qml</file>
+        <file>qml/out.qml</file>
+        <file>qml/QComponent.qml</file>
+        <file>qml/queue.qml</file>
+        <file>qml/sink.qml</file>
+        <file>qml/source.qml</file>
+        <file>qml/spidergon.qml</file>
+        <file>qml/switch.qml</file>
     </qresource>
 </RCC>
