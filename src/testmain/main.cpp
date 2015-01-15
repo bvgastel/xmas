@@ -38,8 +38,8 @@
 int main() {
 
     TestRunner runner;
-    runner.addTest(new TestNoc());
-    runner.addTest(new TestComponent());
+    //runner.addTest(new TestNoc());
+    //runner.addTest(new TestComponent());
     //runner.addTest(new TestNetwork());
 
     runner.runTests();
