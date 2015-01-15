@@ -51,37 +51,37 @@ CompLib::CompLib()
 //    qm->addMenu("delete");
 //    qm->addMenu("edit");
 
-    QDeclarativeComponent componentQueue(&engine, QUrl::fromLocalFile("../xmd/qml/queue.qml"));
+    QDeclarativeComponent componentQueue(&engine, QUrl("qrc:/qml/queue.qml"));
     m_queue = qobject_cast<Component*>(componentQueue.create());
 
-    QDeclarativeComponent componentFunction(&engine, QUrl::fromLocalFile("../xmd/qml/function.qml"));
+    QDeclarativeComponent componentFunction(&engine, QUrl("qrc:/qml/function.qml"));
     m_function = qobject_cast<Component*>(componentFunction.create());
 
-    QDeclarativeComponent componentFork(&engine, QUrl::fromLocalFile("../xmd/qml/fork.qml"));
+    QDeclarativeComponent componentFork(&engine, QUrl("qrc:/qml/fork.qml"));
     m_fork = qobject_cast<Component*>(componentFork.create());
 
-    QDeclarativeComponent componentJoin(&engine, QUrl::fromLocalFile("../xmd/qml/join.qml"));
+    QDeclarativeComponent componentJoin(&engine, QUrl("qrc:/qml/join.qml"));
     m_join = qobject_cast<Component*>(componentJoin.create());
 
-    QDeclarativeComponent componentSwitch(&engine, QUrl::fromLocalFile("../xmd/qml/switch.qml"));
+    QDeclarativeComponent componentSwitch(&engine, QUrl("qrc:/qml/switch.qml"));
     m_switch = qobject_cast<Component*>(componentSwitch.create());
 
-    QDeclarativeComponent componentMerge(&engine, QUrl::fromLocalFile("../xmd/qml/merge.qml"));
+    QDeclarativeComponent componentMerge(&engine, QUrl("qrc:/qml/merge.qml"));
     m_merge = qobject_cast<Component*>(componentMerge.create());
 
-    QDeclarativeComponent componentSink(&engine, QUrl::fromLocalFile("../xmd/qml/sink.qml"));
+    QDeclarativeComponent componentSink(&engine, QUrl("qrc:/qml/sink.qml"));
     m_sink = qobject_cast<Component*>(componentSink.create());
 
-    QDeclarativeComponent componentSource(&engine, QUrl::fromLocalFile("../xmd/qml/source.qml"));
+    QDeclarativeComponent componentSource(&engine, QUrl("qrc:/qml/source.qml"));
     m_source = qobject_cast<Component*>(componentSource.create());
 
-    QDeclarativeComponent componentIn(&engine, QUrl::fromLocalFile("../xmd/qml/in.qml"));
+    QDeclarativeComponent componentIn(&engine, QUrl("qrc:/qml/in.qml"));
     m_in = qobject_cast<Component*>(componentIn.create());
 
-    QDeclarativeComponent componentOut(&engine, QUrl::fromLocalFile("../xmd/qml/out.qml"));
+    QDeclarativeComponent componentOut(&engine, QUrl("qrc:/qml/out.qml"));
     m_out = qobject_cast<Component*>(componentOut.create());
 
-    QDeclarativeComponent componentComposite(&engine, QUrl::fromLocalFile("../xmd/qml/spidergon.qml"));
+    QDeclarativeComponent componentComposite(&engine, QUrl("qrc:/qml/spidergon.qml"));
     m_composite = qobject_cast<Component*>(componentComposite.create());
 
 }
