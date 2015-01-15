@@ -80,7 +80,7 @@ void Control::quit()
 
 void Control::processCommand(QString line)
 {
-    // std::cout << "received line = '"<< line.toStdString() << "'"<< std::endl;
+    std::cout << "received line = '"<< line.toStdString() << "'"<< std::endl;
     QRegExp whiteSpace("(\\ |\\t)");        // Regular expression for space and tab
     QStringList clist = line.split(whiteSpace);
     if (clist[0] == "quit" || clist[0] == "q" || clist[0] == "exit") {
