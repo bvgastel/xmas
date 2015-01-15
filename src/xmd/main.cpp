@@ -32,8 +32,12 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QQuickView>
 
-#include "mainwindow.h"
+#include "component.h"
+#include "connector.h"
+#include "connection.h"
+#include "network.h"
 
 int main(int argc, char *argv[])
 {
@@ -48,9 +52,16 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
 
-    MainWindow mainWin;
-    foreach (const QString &fileName, parser.positionalArguments())
-        mainWin.openFile(fileName);
-    mainWin.show();
+    qmlRegisterType<Component>("XMAS", 1, 0, "XComponent");
+    qmlRegisterType<Connector>("XMAS", 1, 0, "XConnector");
+    qmlRegisterType<Connection>("XMAS", 1, 0, "XConnection");
+
+    QQuickView *view = new QQuickView;
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->setSource(QUrl("qrc:/dynamicscene.qml"));
+    view->show();
+
+
+
     return app.exec();
 }

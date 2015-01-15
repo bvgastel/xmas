@@ -32,21 +32,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <QtDeclarative>
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QMenu>
-
+#include <QQuickItem>
 #include "connector.h"
-
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-class QGraphicsSceneMouseEvent;
-class QMenu;
-class QGraphicsSceneContextMenuEvent;
-class QPainter;
-class QStyleOptionGraphicsItem;
-QT_END_NAMESPACE
 
 class Connector;
 class ConnectorType;
@@ -54,38 +41,48 @@ class ConnectorType;
 /**
  * @brief The Component class
  */
-class Component : public QDeclarativeItem
+class Component : public QQuickItem
 {    
     Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QDeclarativeListProperty<Connector> connectors READ connectors)
+    Q_ENUMS(Orientation)
+    Q_PROPERTY(quint32 id READ id)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
+    Q_PROPERTY(QPoint position READ position WRITE setPosition NOTIFY positionChanged )
+    Q_PROPERTY(Orientation orientation READ orientation WRITE setOrientation NOTIFY orientationChanged )
+    Q_PROPERTY(QQmlListProperty<Connector> connectors READ connectors)
 
 public:
 
-    Component();
+    enum Orientation { Up, Down, Left, Right };
+
+    Component(QQuickItem * parent=0);
     virtual ~Component();
 
-    void paint(QPainter *painter,
-               const QStyleOptionGraphicsItem *option,
-               QWidget *widget) Q_DECL_OVERRIDE;
+    quint32 id() const {return m_id;}
 
-    QRectF boundingRect() const Q_DECL_OVERRIDE;
-    QPainterPath shape() const Q_DECL_OVERRIDE;
+    QString name() const {return m_name;}
+    void setName(const QString &name) {m_name = name;}
 
-    QString name() const { return m_name; }
-    void setName(const QString &name) {m_name = name; setToolTip(name);}
+    QPoint position() {return m_position;}
+    void setPosition(QPoint &position) {m_position = position;}
 
-    QDeclarativeListProperty<Connector> connectors();
+    Orientation orientation() {return m_orientation;}
+    void setOrientation(Orientation &orientation) {m_orientation = orientation;}
 
-protected:
-    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) Q_DECL_OVERRIDE;
+    QQmlListProperty<Connector> connectors();
+
+signals:
+    void nameChanged();
+    void positionChanged();
+    void orientationChanged();
 
 private:
-    QMenu *m_contextMenu;
-    static void append_connector(QDeclarativeListProperty<Connector> *list, Connector *connector);
+    quint32 m_id;
+    QPoint m_position;
+    Orientation m_orientation;
+    static void append_connector(QQmlListProperty<Connector> *list, Connector *connector);
     QString m_name;
     QList<Connector *> m_connectors;
-
 };
 
 #endif // COMPONENT_H

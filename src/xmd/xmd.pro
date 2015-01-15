@@ -4,31 +4,23 @@
 
 include (defines.pri)
 
-QT += widgets svg declarative
+QT += widgets svg quick qml quickwidgets
 
 HEADERS       = mainwindow.h \
-                projectmanager.h \
                 setup.h \
     canvas/complib.h \
     canvas/component.h \
     canvas/connection.h \
     canvas/connector.h \
-    canvas/modelwindow.h \
     canvas/network.h
 				
-SOURCES       = mainwindow.cpp \
-                projectmanager.cpp \
-    canvas/complib.cpp \
+SOURCES       = canvas/complib.cpp \
     canvas/component.cpp \
     canvas/connection.cpp \
     canvas/connector.cpp \
-    canvas/modelwindow.cpp \
     canvas/network.cpp \
     main.cpp
-    main.cpp \
-
-RESOURCES     = xmd.qrc
-
+    
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -39,12 +31,11 @@ win32 {
     INSTALLS += target
 }
 
-INCLUDEPATH += canvas
+INCLUDEPATH += canvas content qml
 
 TEMPLATE = lib
 
-DISTFILES += XMAS_LIBRARY \
-    qml/fork.qml \
+DISTFILES += qml/fork.qml \
     qml/function.qml \
     qml/in.qml \
     qml/join.qml \
@@ -57,4 +48,14 @@ DISTFILES += XMAS_LIBRARY \
     qml/switch.qml \
     qml/Connection.qml \
     qml/Connector.qml \
-    qml/QComponent.qml
+    qml/QComponent.qml \
+    qml/scene.qml \
+    dynamicscene.qml \
+    content/itemCreation.js \
+    content/PaletteItem.qml \
+    content/ScrollBar.qml \
+    content/Button.qml \
+    content/GenericSceneItem.qml
+
+RESOURCES += \
+    xmd.qrc

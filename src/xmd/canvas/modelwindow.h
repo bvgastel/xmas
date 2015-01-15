@@ -31,19 +31,24 @@
 #ifndef MODELWINDOW_H
 #define MODELWINDOW_H
 
-#include <QGraphicsView>
+#include <QtWidgets>
+#include <QMouseEvent>
+#include <QWheelEvent>
+#include <QQuickView>
+#include <QQuickWidget>
+
 #include "component.h"
 #include "complib.h"
 #include "setup.h"
 
 class Complib;
 
-class ModelWindow : public QGraphicsView
+class ModelWindow : public QQuickWidget
 {
     Q_OBJECT
 
 public:
-    ModelWindow(QWidget *parent = 0);
+    ModelWindow( QWidget * parent = 0);
     ~ModelWindow();
     void addComponent(int type);
     void newFile();
@@ -55,14 +60,13 @@ public:
     QString currentFile() { return curFile; }
 
 protected:
-    void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
+    //void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
     virtual void wheelEvent(QWheelEvent* event) Q_DECL_OVERRIDE;
 
 private slots:
     void documentWasModified();
 
 private:
-    QGraphicsScene *m_scene;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     QString strippedName(const QString &fullFileName);

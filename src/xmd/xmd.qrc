@@ -1,23 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/copy.png</file>
-        <file>images/cut.png</file>
-        <file>images/new.png</file>
-        <file>images/open.png</file>
-        <file>images/paste.png</file>
-        <file>images/save.png</file>
-        <file>images/packet.png</file>
-        <file>images/svgs/fork.svg</file>
-        <file>images/svgs/function.svg</file>
-        <file>images/svgs/join.svg</file>
-        <file>images/svgs/merge.svg</file>
-        <file>images/svgs/queue.svg</file>
-        <file>images/svgs/sink.svg</file>
-        <file>images/svgs/source.svg</file>
-        <file>images/svgs/switch.svg</file>
-        <file>images/svgs/in.svg</file>
-        <file>images/svgs/out.svg</file>
-        <file>images/svgs/composite.svg</file>
         <file>qml/Connection.qml</file>
         <file>qml/Connector.qml</file>
         <file>qml/fork.qml</file>
@@ -28,9 +10,27 @@
         <file>qml/out.qml</file>
         <file>qml/QComponent.qml</file>
         <file>qml/queue.qml</file>
+        <file>qml/scene.qml</file>
         <file>qml/sink.qml</file>
         <file>qml/source.qml</file>
         <file>qml/spidergon.qml</file>
         <file>qml/switch.qml</file>
+        <file>dynamicscene.qml</file>
+        <file>content/Button.qml</file>
+        <file>content/GenericSceneItem.qml</file>
+        <file>content/PaletteItem.qml</file>
+        <file>content/ScrollBar.qml</file>
+        <file>content/images/svgs/composite.svg</file>
+        <file>content/images/svgs/fork.svg</file>
+        <file>content/images/svgs/function.svg</file>
+        <file>content/images/svgs/in.svg</file>
+        <file>content/images/svgs/join.svg</file>
+        <file>content/images/svgs/merge.svg</file>
+        <file>content/images/svgs/out.svg</file>
+        <file>content/images/svgs/queue.svg</file>
+        <file>content/images/svgs/sink.svg</file>
+        <file>content/images/svgs/source.svg</file>
+        <file>content/images/svgs/switch.svg</file>
+        <file>content/itemCreation.js</file>
     </qresource>
 </RCC>

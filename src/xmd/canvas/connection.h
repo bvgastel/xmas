@@ -32,51 +32,26 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include <QtDeclarative>
-#include <QPen>
-#include <QPainter>
-
+#include <QQuickItem>
 #include "connector.h"
-
-QT_BEGIN_NAMESPACE
-class QGraphicsPolygonItem;
-class QGraphicsPathItem;
-class QGraphicsScene;
-class QRectF;
-class QPen;
-class QGraphicsSceneMouseEvent;
-class QPainterPath;
-QT_END_NAMESPACE
 
 class Connector;
 
 /**
  * @brief The Connection class
  */
-class Connection : public QDeclarativeItem
+class Connection : public QQuickItem
 {
     Q_OBJECT
 
 public:
-    enum { Type = UserType + 2 };
 
-    Connection();
-
-    int type() const Q_DECL_OVERRIDE { return Type; }
-
-    QRectF boundingRect() const Q_DECL_OVERRIDE;
-    QPainterPath shape() const Q_DECL_OVERRIDE;
+    Connection(QQuickItem * parent=0);
 
     Connector *startConnector() const { return m_startConnector; }
     Connector *endConnector() const { return m_endConnector; }
 
     virtual ~Connection();
-
-protected:
-    void paint(QPainter *painter,
-               const QStyleOptionGraphicsItem *option,
-               QWidget *widget = 0) Q_DECL_OVERRIDE;
-
 
 private:
     Connector *m_startConnector;

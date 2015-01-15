@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 import XMAS 1.0
 
 QComponent {
@@ -17,6 +17,6 @@ QComponent {
 
         }
     ]
-    Image {source: "../images/svgs/function.svg"}
+    Image {source: "../content/images/svgs/function.svg"}
 }
 

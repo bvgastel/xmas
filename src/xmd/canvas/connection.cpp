@@ -29,48 +29,16 @@
  *
  **************************************************************************/
 
-#include <math.h>
-
 #include "connection.h"
 #include "connector.h"
 
-const qreal Pi = 3.14;
 
 /**
  * @brief Connection::Connection
- * @param startConnector
- * @param endConnector
- * @param parent
- * @param scene
  */
-Connection::Connection()
-    : QDeclarativeItem()
+Connection::Connection(QQuickItem * parent): QQuickItem(parent)
 {
-    //m_startConnector = startConnector;
-    //m_endConnector = endConnector;
-    setFlag(QDeclarativeItem::ItemIsSelectable, true);
-    setFlag(QGraphicsItem::ItemHasNoContents,false);
-
 }
-
-/**
- * @brief Connection::boundingRect
- * @return
- */
-QRectF Connection::boundingRect() const
-{
-    return QDeclarativeItem::boundingRect();
-}
-
-/**
- * @brief Connection::shape
- * @return
- */
-QPainterPath Connection::shape() const
-{
-    return QDeclarativeItem::shape();
-}
-
 
 /**
  * @brief Connection::~Connection
@@ -78,15 +46,3 @@ QPainterPath Connection::shape() const
 Connection::~Connection()
 {
 }
-
-void Connection::paint(QPainter *painter,
-                       const QStyleOptionGraphicsItem *option,
-                       QWidget *w)
-{
-    Q_UNUSED(painter);
-    Q_UNUSED(option);
-    Q_UNUSED(w);
-
-
-}
-

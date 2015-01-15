@@ -32,16 +32,10 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
-#include <QtDeclarative>
-#include <QWidget>
+#include <QQuickItem>
 
 #include "component.h"
 #include "connection.h"
-
-QT_BEGIN_NAMESPACE
-class QGraphicsSceneMouseEvent;
-class QPainter;
-QT_END_NAMESPACE
 
 class Component;
 class Connection;
@@ -49,7 +43,7 @@ class Connection;
 /**
  * @brief The Connector class
  */
-class Connector : public QDeclarativeItem
+class Connector : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(ConnectorType)
@@ -58,18 +52,12 @@ class Connector : public QDeclarativeItem
     Q_PROPERTY(bool connected READ connected NOTIFY connectedChanged )
 
 public:
-    enum { Type = UserType + 1 };
-    int type() const Q_DECL_OVERRIDE { return Type; }
 
     enum ConnectorType { Input=1, Output=2 };
     ConnectorType connectorType() const {return m_type;}
 
-    Connector();
+    Connector(QQuickItem * parent=0);
     virtual ~Connector();
-
-    void paint(QPainter *painter,
-               const QStyleOptionGraphicsItem *option,
-               QWidget *widget) Q_DECL_OVERRIDE;
 
     QString name() const;
     void setName(const QString &name);

@@ -31,7 +31,7 @@
 #ifndef COMPLIB
 #define COMPLIB
 
-#include <QtDeclarative>
+#include <QQmlEngine>
 #include "component.h"
 
 class Component;
@@ -41,21 +41,8 @@ class CompLib
 
 public:
     enum ComponentType { Queue=1, Function=2, Fork=3, Join=4, Switch=5, Merge=6, Sink=7, Source=8, In=9, Out=10, Composite=11,};
-
-    Component *getComponent(int type);
+    Component *createComponent(int type);
     CompLib();
-private:
-    Component *m_queue;
-    Component *m_function;
-    Component *m_fork;
-    Component *m_join;
-    Component *m_switch;
-    Component *m_merge;
-    Component *m_sink;
-    Component *m_source;
-    Component *m_in;
-    Component *m_out;
-    Component *m_composite; //test
 };
 
 #endif // COMPLIB

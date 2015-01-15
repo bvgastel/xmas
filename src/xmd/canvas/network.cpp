@@ -34,9 +34,9 @@
 /**
  * @brief Network::Network
  */
-Network::Network(): QDeclarativeItem()
+Network::Network(QQuickItem * parent): QQuickItem(parent)
 {
-    setFlag(QGraphicsItem::ItemHasNoContents,false);
+    //setFlag(QQuickItem::ItemHasNoContents,false);
 }
 
 /**
@@ -51,9 +51,9 @@ Network::~Network()
  * @brief Network::components
  * @return
  */
-QDeclarativeListProperty<Component> Network::components()
+QQmlListProperty<Component> Network::components()
 {
-    return QDeclarativeListProperty<Component>(this, 0,
+    return QQmlListProperty<Component>(this, 0,
                                                &Network::append_component,
                                                0,
                                                0,
@@ -65,7 +65,7 @@ QDeclarativeListProperty<Component> Network::components()
  * @param list
  * @param component
  */
-void Network::append_component(QDeclarativeListProperty<Component> *list, Component *component)
+void Network::append_component(QQmlListProperty<Component> *list, Component *component)
 {
     Network *network = qobject_cast<Network *>(list->object);
     if (network) {
@@ -78,9 +78,9 @@ void Network::append_component(QDeclarativeListProperty<Component> *list, Compon
  * @brief Network::connections
  * @return
  */
-QDeclarativeListProperty<Connection> Network::connections()
+QQmlListProperty<Connection> Network::connections()
 {
-    return QDeclarativeListProperty<Connection>(this, 0,
+    return QQmlListProperty<Connection>(this, 0,
                                                &Network::append_connection,
                                                0,
                                                0,
@@ -92,7 +92,7 @@ QDeclarativeListProperty<Connection> Network::connections()
  * @param list
  * @param connection
  */
-void Network::append_connection(QDeclarativeListProperty<Connection> *list, Connection *connection)
+void Network::append_connection(QQmlListProperty<Connection> *list, Connection *connection)
 {
     Network *network = qobject_cast<Network *>(list->object);
     if (network) {

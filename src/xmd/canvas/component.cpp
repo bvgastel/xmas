@@ -29,23 +29,15 @@
  *
  **************************************************************************/
 
-#include <QStyleOptionGraphicsItem>
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
 #include "component.h"
 #include "connector.h"
 
 /**
  * @brief Component::Component
  */
-Component::Component(): QDeclarativeItem()
+Component::Component(QQuickItem * parent): QQuickItem(parent),
+    m_orientation(Up)
 {
-    setCacheMode(ItemCoordinateCache);
-    setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemIsSelectable, true);
-    setFlag(QGraphicsItem::ItemIsFocusable, true);
-    setFlag(QGraphicsItem::ItemHasNoContents,false);
-    setAcceptedMouseButtons(Qt::AllButtons);
 }
 
 /**
@@ -56,36 +48,14 @@ Component::~Component()
 
 }
 
-/**
- * @brief Component::boundingRect
- * @return
- */
-QRectF Component::boundingRect() const
-{
-    QRectF rect = QRect(0,0,this->width(),this->height());
-    rect.adjust(21,21,-21,-21);
-    return rect;
-}
-
-
-/**
- * @brief Component::shape
- * @return
- */
-QPainterPath Component::shape() const
-{
-    QPainterPath path;
-    path.addRect(boundingRect());
-    return path;
-}
 
 /**
  * @brief Component::connectors
  * @return
  */
-QDeclarativeListProperty<Connector> Component::connectors()
+QQmlListProperty<Connector> Component::connectors()
 {
-    return QDeclarativeListProperty<Connector>(this, 0,
+    return QQmlListProperty<Connector>(this, 0,
                                                &Component::append_connector,
                                                0,
                                                0,
@@ -97,52 +67,12 @@ QDeclarativeListProperty<Connector> Component::connectors()
  * @param list
  * @param connector
  */
-void Component::append_connector(QDeclarativeListProperty<Connector> *list, Connector *connector)
+void Component::append_connector(QQmlListProperty<Connector> *list, Connector *connector)
 {
     Component *component = qobject_cast<Component *>(list->object);
     if (component) {
         connector->setParentItem(component);
         component->m_connectors.append(connector);
-    }
-}
-
-/**
- * @brief Component::contextMenuEvent
- * @param event
- */
-void Component::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
-{
-   scene()->clearSelection();
-   setSelected(true);
-   if (m_contextMenu != nullptr)
-   {
-        m_contextMenu->exec(event->screenPos());
-   }
-}
-
-/**
- * @brief Component::paint
- * @param painter
- * @param option
- * @param w
- */
-void Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *w)
-{
-    //Q_UNUSED(painter);
-    //Q_UNUSED(option);
-    Q_UNUSED(w);
-    if (option->state & QStyle::State_Selected)
-    {
-//        painter->setPen(QPen(Qt::black,0,Qt::DashLine));
-//        QRectF rect = bodyRect();
-//        rect.adjust(-10,-10,10,10);
-//        painter->drawRect(rect);
-    }
-    if (this->parentItem() == nullptr)
-    {
-        painter->setBrush(Qt::white);
-        painter->setPen(QPen(Qt::black,4));
-        //painter->drawRoundRect(bodyRect(),10,10);
     }
 }
 

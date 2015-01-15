@@ -3,7 +3,7 @@
 
 CONFIG += C++11
 
-QT += widgets svg declarative
+QT += widgets svg declarative quick qml quickwidgets
 
 TEMPLATE = app
 

@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 2.4
 import XMAS 1.0
 
 QComponent {
@@ -14,7 +14,6 @@ QComponent {
         Connector {
             x: 0; y:150
             name: "a2"
-
         },
         Connector {
             x: 180; y:90

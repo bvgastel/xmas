@@ -28,12 +28,11 @@
  *
  *
  **************************************************************************/
-#include <QtWidgets>
-#include <QMouseEvent>
-#include <QWheelEvent>
+
 
 #include "modelwindow.h"
 #include "complib.h"
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 class QFile;
@@ -42,23 +41,13 @@ QT_END_NAMESPACE
 
 class CompLib;
 
-ModelWindow::ModelWindow(QWidget *parent)
-    : QGraphicsView(parent)
+ModelWindow::ModelWindow(QWidget * parent)
+    : QQuickWidget(parent)
 {
-    m_scene = new QGraphicsScene(this);
-    m_scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    m_scene->setSceneRect(-1000, -1000, 1000, 1000);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    setScene(m_scene);
-    setCacheMode(CacheBackground);
-    setViewportUpdateMode(BoundingRectViewportUpdate);
-    setRenderHint(QPainter::Antialiasing);
-    setTransformationAnchor(AnchorUnderMouse);
-    scale(qreal(1.0), qreal(1.0));
-    setMinimumSize(250, 250);
 
-    setAttribute(Qt::WA_DeleteOnClose);
+    setResizeMode(QQuickWidget::SizeRootObjectToView);
+    setSource(QUrl("../xmd/qml/scene.qml"));
+    //setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
 
 }
@@ -71,11 +60,12 @@ ModelWindow::~ModelWindow()
 void ModelWindow::addComponent(int type)
 {
     CompLib *lib = new CompLib();
-    Component *c = lib->getComponent(type);
+    Component *c = lib->createComponent(type);
     if (c != nullptr)
     {
-        c->setPos(-200,-200);
-        m_scene->addItem(c);
+        c->setX(200);
+        c->setY(200);
+        c->setParentItem(this->rootObject());
     }
 }
 
@@ -84,32 +74,29 @@ void ModelWindow::newFile()
     static int sequenceNumber = 1;
     isUntitled = true;
     curFile = tr("model%1." MODEL_FILE_EXTENSION).arg(sequenceNumber++);
-    setWindowTitle(curFile + "[*]");
+    //setWindowTitle(curFile + "[*]");
 
-//    connect(document(), SIGNAL(contentsChanged()),
-//            this, SLOT(documentWasModified()));
 }
 
 bool ModelWindow::loadFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Test"),
-                             tr("Cannot read file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
+//        QMessageBox::warning(this, tr("Test"),
+//                             tr("Cannot read file %1:\n%2.")
+//                             .arg(fileName)
+//                             .arg(file.errorString()));
         return false;
     }
 
-    QTextStream in(&file);
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    //setPlainText(in.readAll());
+
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
 
-//    connect(document(), SIGNAL(contentsChanged()),
-//            this, SLOT(documentWasModified()));
+
 
     return true;
 }
@@ -125,8 +112,8 @@ bool ModelWindow::save()
 
 bool ModelWindow::saveAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Model As"),
-                                                    curFile);
+    QString fileName; //= QFileDialog::getSaveFileName(this, tr("Save Model As"),
+                     //                               curFile);
     if (fileName.isEmpty())
         return false;
 
@@ -137,10 +124,10 @@ bool ModelWindow::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Save Model"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
+//        QMessageBox::warning(this, tr("Save Model"),
+//                             tr("Cannot write file %1:\n%2.")
+//                             .arg(fileName)
+//                             .arg(file.errorString()));
         return false;
     }
 
@@ -158,29 +145,31 @@ QString ModelWindow::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
-void ModelWindow::closeEvent(QCloseEvent *event)
-{
-    if (maybeSave()) {
-        event->accept();
-    } else {
-        event->ignore();
-    }
-}
+//void ModelWindow::closeEvent(QCloseEvent *event)
+//{
+//    if (maybeSave()) {
+//        event->accept();
+//    } else {
+//        event->ignore();
+//    }
+//}
 
 void ModelWindow::wheelEvent(QWheelEvent* event) {
+    Q_UNUSED(event)
 
-    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    if (event->modifiers().testFlag(Qt::ControlModifier)){
-        // Scale the view / do the zoom
-        double scaleFactor = 1.15;
-        if(event->delta() > 0) {
-            // Zoom in
-            scale(scaleFactor, scaleFactor);
-        } else {
-            // Zooming out
-            scale(1.0 / scaleFactor, 1.0 / scaleFactor);
-        }
-    }
+//    setTransformationAnchor(QQuickView::AnchorUnderMouse);
+//    if (event->modifiers().testFlag(Qt::ControlModifier)){
+//        // Scale the view / do the zoom
+//        double scaleFactor = 1.15;
+//        if(event->delta() > 0) {
+//            // Zoom in
+//            scale(scaleFactor, scaleFactor);
+
+//        } else {
+//            // Zooming out
+//            scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+//        }
+//    }
 }
 
 void ModelWindow::documentWasModified()
@@ -190,21 +179,7 @@ void ModelWindow::documentWasModified()
 
 bool ModelWindow::maybeSave()
 {
-//    if (document()->isModified()) {
-    if (false)
-    {
-        QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, tr("Test"),
-                     tr("'%1' has been modified.\n"
-                        "Do you want to save your changes?")
-                     .arg(userFriendlyCurrentFile()),
-                     QMessageBox::Save | QMessageBox::Discard
-                     | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
-            return save();
-        else if (ret == QMessageBox::Cancel)
-            return false;
-    }
+
     return true;
 }
 
@@ -213,8 +188,8 @@ void ModelWindow::setCurrentFile(const QString &fileName)
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
     //document()->setModified(false);
-    setWindowModified(false);
-    setWindowTitle(userFriendlyCurrentFile() + "[*]");
+    //setWindowModified(false);
+    //setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
 QString ModelWindow::strippedName(const QString &fullFileName)

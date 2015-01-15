@@ -29,9 +29,6 @@
  *
  **************************************************************************/
 
-#include <QStyleOptionGraphicsItem>
-#include <QCursor>
-
 #include "connector.h"
 
 class Component;
@@ -40,27 +37,18 @@ class Connection;
 /**
  * @brief Connector::Connector
  */
-Connector::Connector()
-    : QDeclarativeItem(),
+Connector::Connector(QQuickItem *parent) : QQuickItem(parent),
     m_type(Connector::Input)
 {
-    setCacheMode(DeviceCoordinateCache);
-    setFlag(QGraphicsItem::ItemHasNoContents,false);
-    setAcceptHoverEvents(true);
     m_connection = nullptr;
     m_connected = false;
-    setZValue(1);
 }
 
 /**
- * Deconstructor
+ * @brief Connector::~Connector
  */
 Connector::~Connector()
 {
-    if (scene() != nullptr)
-    {
-        this->scene()->removeItem(this);
-    }
 }
 
 /**
@@ -79,31 +67,6 @@ QString Connector::name() const
 void Connector::setName(const QString &name)
 {
     m_name = name;
-}
-
-/**
- * @brief Connector::paint
- * @param painter
- * @param option
- * @param w
- */
-void Connector::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* w)
-{
-    Q_UNUSED(w);
-    Q_UNUSED(option);
-    Q_UNUSED(painter);
-
-    //changing cursorShape is not possible in Quick1 qml
-    // it is in Quick 2
-    if (option->state.testFlag(QStyle::State_MouseOver))
-    {
-        setCursor(Qt::CrossCursor);
-    }
-    else
-    {
-        setCursor(Qt::ArrowCursor);
-    }
-
 }
 
 /**

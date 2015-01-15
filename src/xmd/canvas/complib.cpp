@@ -33,56 +33,12 @@
 
 /**
  * @brief CompLib::CompLib
- * @param contextMenu
- * @param parent
- * @param scene
  */
 CompLib::CompLib()
 {
     qmlRegisterType<Component>("XMAS", 1, 0, "XComponent");
     qmlRegisterType<Connector>("XMAS", 1, 0, "XConnector");
     qmlRegisterType<Connection>("XMAS", 1, 0, "XConnection");
-
-    QDeclarativeEngine engine;
-
-    //(todo) test menu : must be specefic for each component type
-//    QMenu *qm = new QMenu("test");
-//    qm->addMenu("help");
-//    qm->addMenu("delete");
-//    qm->addMenu("edit");
-
-    QDeclarativeComponent componentQueue(&engine, QUrl("qrc:/qml/queue.qml"));
-    m_queue = qobject_cast<Component*>(componentQueue.create());
-
-    QDeclarativeComponent componentFunction(&engine, QUrl("qrc:/qml/function.qml"));
-    m_function = qobject_cast<Component*>(componentFunction.create());
-
-    QDeclarativeComponent componentFork(&engine, QUrl("qrc:/qml/fork.qml"));
-    m_fork = qobject_cast<Component*>(componentFork.create());
-
-    QDeclarativeComponent componentJoin(&engine, QUrl("qrc:/qml/join.qml"));
-    m_join = qobject_cast<Component*>(componentJoin.create());
-
-    QDeclarativeComponent componentSwitch(&engine, QUrl("qrc:/qml/switch.qml"));
-    m_switch = qobject_cast<Component*>(componentSwitch.create());
-
-    QDeclarativeComponent componentMerge(&engine, QUrl("qrc:/qml/merge.qml"));
-    m_merge = qobject_cast<Component*>(componentMerge.create());
-
-    QDeclarativeComponent componentSink(&engine, QUrl("qrc:/qml/sink.qml"));
-    m_sink = qobject_cast<Component*>(componentSink.create());
-
-    QDeclarativeComponent componentSource(&engine, QUrl("qrc:/qml/source.qml"));
-    m_source = qobject_cast<Component*>(componentSource.create());
-
-    QDeclarativeComponent componentIn(&engine, QUrl("qrc:/qml/in.qml"));
-    m_in = qobject_cast<Component*>(componentIn.create());
-
-    QDeclarativeComponent componentOut(&engine, QUrl("qrc:/qml/out.qml"));
-    m_out = qobject_cast<Component*>(componentOut.create());
-
-    QDeclarativeComponent componentComposite(&engine, QUrl("qrc:/qml/spidergon.qml"));
-    m_composite = qobject_cast<Component*>(componentComposite.create());
 
 }
 
@@ -91,32 +47,47 @@ CompLib::CompLib()
  * @param type
  * @return
  */
-Component *CompLib::getComponent(int type)
+Component *CompLib::createComponent(int type)
 {
+
+    QQmlEngine *engine = new QQmlEngine;
+    QQmlComponent component(engine);
+
     switch (type)
     {
     case CompLib::Queue :
-        return m_queue;
+        component.loadUrl(QUrl("qrc:/qml/queue.qml"));
+        break;
     case CompLib::Function :
-        return m_function;
+        component.loadUrl(QUrl("qrc:/qml/function.qml"));
+        break;
     case CompLib::Fork :
-        return m_fork;
+        component.loadUrl(QUrl("qrc:/qml/fork.qml"));
+        break;
     case CompLib::Join :
-        return m_join;
+        component.loadUrl(QUrl("qrc:/qml/join.qml"));
+        break;
     case CompLib::Switch :
-        return m_switch;
+        component.loadUrl(QUrl("qrc:/qml/switch.qml"));
+        break;
     case CompLib::Merge :
-        return m_merge;
+        component.loadUrl(QUrl("qrc:/qml/merge.qml"));
+        break;
     case CompLib::Source :
-        return m_source;
+        component.loadUrl(QUrl("qrc:/qml/source.qml"));
+        break;
     case CompLib::Sink :
-        return m_sink;
+        component.loadUrl(QUrl("qrc:/qml/sink.qml"));
+        break;
     case CompLib::In :
-        return m_in;
+        component.loadUrl(QUrl("qrc:/qml/in.qml"));
+        break;
     case CompLib::Out :
-        return m_out;
+        component.loadUrl(QUrl("qrc:/qml/out.qml"));
+        break;
     case CompLib::Composite :
-        return m_composite;
+        component.loadUrl(QUrl("qrc:/qml/spidergon.qml"));
+        break;
     }
-    return nullptr;
+    return qobject_cast<Component*>(component.create());
 }

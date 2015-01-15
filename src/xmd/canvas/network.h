@@ -32,7 +32,7 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include <QtDeclarative>
+#include <QQuickItem>
 
 #include "component.h"
 #include "connection.h"
@@ -43,26 +43,26 @@ class Connection;
 /**
  * @brief The Network class
  */
-class Network : public QDeclarativeItem
+class Network : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QDeclarativeListProperty<Component> components READ components)
-    Q_PROPERTY(QDeclarativeListProperty<Connection> connections READ connections)
+    Q_PROPERTY(QQmlListProperty<Component> components READ components)
+    Q_PROPERTY(QQmlListProperty<Connection> connections READ connections)
 
 public:
-    Network();
+    Network(QQuickItem * parent=0);
     virtual ~Network();
 
     QString name() const { return m_name; }
     void setName(const QString &name) {m_name = name;}
 
-    QDeclarativeListProperty<Component> components();
-    QDeclarativeListProperty<Connection> connections();
+    QQmlListProperty<Component> components();
+    QQmlListProperty<Connection> connections();
 
 private:
-    static void append_component(QDeclarativeListProperty<Component> *list, Component *component);
-    static void append_connection(QDeclarativeListProperty<Connection> *list, Connection *connection);
+    static void append_component(QQmlListProperty<Component> *list, Component *component);
+    static void append_connection(QQmlListProperty<Connection> *list, Connection *connection);
     QString m_name;
     QList<Component *> m_components;
     QList<Connection *> m_connections;
