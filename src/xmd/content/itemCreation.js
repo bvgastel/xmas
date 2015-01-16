@@ -27,6 +27,8 @@ function loadComponent() {
 }
 
 function createItem() {
+    // TODO: this if sequence has uncatered for "else branch" at the end
+    // Needs closure w.r.t. if-statement branches
     if (itemComponent.status == Component.Ready && draggedItem == null) {
         draggedItem = itemComponent.createObject(scene, {"image": paletteItem.image, "x": posnInWindow.x, "y": posnInWindow.y, "z": 3});
         // make sure created item is above the ground layer
@@ -35,6 +37,7 @@ function createItem() {
         console.log("error creating component");
         console.log(itemComponent.errorString());
     }
+    // What happens if neither ready nor error? Or ready, but dragged? Is this possible?
 }
 
 function continueDrag(mouse)
