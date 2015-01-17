@@ -47,20 +47,40 @@ import "content"
 //import org.qtproject.example 1.0
 
 ApplicationWindow {
+    id: mainwindow
     visible: true
     width: 1000
     height: 800
     minimumWidth: 400
     minimumHeight: 300
+    color: "darkgrey"
 
-    title: "test" //document.documentTitle + " - Text Editor Example"
+    title: "XMAS Model Designer 2015"
 
     MessageDialog {
         id: aboutBox
         title: "About XMD"
-        text: "This is a basic text editor \nwritten with Qt Quick Controls"
+        text: "XMD is an XMAS Model Designer tool"
         icon: StandardIcon.Information
     }
+
+    Action {
+        id: fileOpenAction
+        iconSource: "qrc:/content/images/open.png"
+        iconName: "model-open"
+        text: "Open"
+        onTriggered: fileDialog.open()
+    }
+
+    Action {
+        id: fileSaveAction
+        iconSource: "qrc:/content/images/save.png"
+        iconName: "model-save"
+        text: "Save"
+        //onTriggered: fileDialog.open()
+    }
+
+
 
     Action {
         id: cutAction
@@ -93,7 +113,7 @@ ApplicationWindow {
         id: zoomInAction
         text: "Zoom In"
         shortcut: "+"
-        iconSource: "qrc:/content/images/zoomin.png"
+        iconSource: "qrc:/content/images/zoom-in.png"
         iconName: "zoom-in"
         //onTriggered: textArea.paste()
     }
@@ -102,8 +122,17 @@ ApplicationWindow {
         id: zoomOutAction
         text: "Zoom Out"
         shortcut: "-"
-        iconSource: "qrc:/content/images/zoomout.png"
+        iconSource: "qrc:/content/images/zoom-out.png"
         iconName: "zoom-out"
+        //onTriggered: textArea.paste()
+    }
+
+    Action {
+        id: zoomFitAction
+        text: "Zoom Fit"
+        shortcut: "1"
+        iconSource: "qrc:/content/images/zoom-fit.png"
+        iconName: "zoom-fit"
         //onTriggered: textArea.paste()
     }
 
@@ -113,18 +142,13 @@ ApplicationWindow {
         //onAccepted: document.fileUrl = fileUrl
     }
 
-    Action {
-        id: fileOpenAction
-        iconSource: "qrc:/content/images/open.png"
-        iconName: "model-open"
-        text: "Open"
-        onTriggered: fileDialog.open()
-    }
 
     menuBar: MenuBar {
         Menu {
             title: "&File"
             MenuItem { action: fileOpenAction }
+            MenuItem { action: fileSaveAction }
+            MenuSeparator{}
             MenuItem { text: "Quit"; onTriggered: Qt.quit() }
         }
         Menu {
@@ -132,6 +156,13 @@ ApplicationWindow {
             MenuItem { action: copyAction }
             MenuItem { action: cutAction }
             MenuItem { action: pasteAction }
+        }
+
+        Menu {
+            title: "&View"
+            MenuItem { action: zoomInAction }
+            MenuItem { action: zoomOutAction }
+            MenuItem { action: zoomFitAction }
         }
 
         Menu {
@@ -147,7 +178,7 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 0
             ToolButton { action: fileOpenAction }
-
+            ToolButton { action: fileSaveAction }
             ToolBarSeparator {}
 
 
@@ -159,6 +190,7 @@ ApplicationWindow {
 
             ToolButton { action: zoomInAction }
             ToolButton { action: zoomOutAction }
+            ToolButton { action: zoomFitAction }
 
             ToolBarSeparator {}
 
@@ -167,56 +199,8 @@ ApplicationWindow {
         }
     }
 
-    Loader {source: "canvas.qml"; width: parent.width; height: parent.height }
 
-//    ToolBar {
-//        id: secondaryToolBar
-//        width: parent.width
-
-//        RowLayout {
-//            anchors.fill: parent
-
-//            Item { Layout.fillWidth: true }
-//        }
-//    }
+      Loader {source: "Canvas.qml" ; width: mainwindow.width; height: mainwindow.height}
 
 
-
-
-    //    TextArea {
-    //        Accessible.name: "document"
-    //        id: textArea
-    //        frameVisible: false
-    //        width: parent.width
-    //        anchors.top: secondaryToolBar.bottom
-    //        anchors.bottom: parent.bottom
-    //        baseUrl: "qrc:/"
-    //        //text: document.text
-    //        textFormat: Qt.RichText
-    //        Component.onCompleted: forceActiveFocus()
-    //    }
-
-    //    DocumentHandler {
-    //        id: document
-    //        target: textArea
-    //        cursorPosition: textArea.cursorPosition
-    //        selectionStart: textArea.selectionStart
-    //        selectionEnd: textArea.selectionEnd
-    //        Component.onCompleted: document.fileUrl = "qrc:/example.html"
-    //        onFontSizeChanged: {
-    //            fontSizeSpinBox.valueGuard = false
-    //            fontSizeSpinBox.value = document.fontSize
-    //            fontSizeSpinBox.valueGuard = true
-    //        }
-    //        onFontFamilyChanged: {
-    //            var index = Qt.fontFamilies().indexOf(document.fontFamily)
-    //            if (index == -1) {
-    //                fontFamilyComboBox.currentIndex = 0
-    //                fontFamilyComboBox.special = true
-    //            } else {
-    //                fontFamilyComboBox.currentIndex = index
-    //                fontFamilyComboBox.special = false
-    //            }
-    //        }
-    //    }
 }

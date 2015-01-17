@@ -42,7 +42,7 @@ import QtQuick 2.0
 import "itemCreation.js" as Code
 
 Image {
-    id: paletteItem
+    id: toolbarItem
 
     property string componentFile
     property string image
@@ -53,7 +53,6 @@ Image {
 
     MouseArea {
         anchors.fill: parent
-
         onPressed: Code.startDrag(mouse);
         onPositionChanged: Code.continueDrag(mouse);
         onReleased: Code.endDrag(mouse);

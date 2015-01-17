@@ -49,13 +49,16 @@ DISTFILES += qml/fork.qml \
     qml/QComponent.qml \
 	mainWindow.qml \
     content/itemCreation.js \
-    content/PaletteItem.qml \
     content/ScrollBar.qml \
     content/Button.qml \
     content/GenericSceneItem.qml \
-    content/ToolBar.qml \
     content/MenuBar.qml \
-    canvas.qml
+    content/images/zoom-fit.png \
+    content/images/zoom-in.png \
+    content/images/zoom-out.png \
+    content/XmasToolBar.qml \
+    Canvas.qml \
+    content/ToolBarItem.qml
 
 RESOURCES += \
     xmd.qrc

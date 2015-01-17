@@ -36,9 +36,9 @@ import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import "content"
+import "content/itemCreation.js" as Code
 
 Item {
-    id: window
 
     property int centerOffset: 32
 
@@ -52,9 +52,9 @@ Item {
     Flickable {
         id: view
 
-        anchors { top: toolbox.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
-        contentWidth: 1000
-        contentHeight: 1000
+        anchors { top: toolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+        contentWidth: 2970
+        contentHeight: 2100
 
 
         Rectangle {
@@ -76,102 +76,13 @@ Item {
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 400 }
+            NumberAnimation { properties: "opacity"; duration: 600 }
         }
 
     }
 
-    // top panel
-    Rectangle {
-        id: toolbox
+    XmasToolBar{id: toolbar}
 
-        height: 48
-        gradient: Gradient {
-                 GradientStop { position: 0.0; color: "lightgrey" }
-                 GradientStop { position: 1.0; color: "grey" }
-             }
-        //color: "lightgrey"
-        anchors { right: parent.right; top: parent.top; left: parent.left}
-
-        Column {
-            //anchors.fill: parent
-            spacing: 8
-
-            Rectangle {
-                //width: palette.width + 10; height: palette.height + 10
-                width: parent.width - 100 ; height: palette.height + 10
-                border.color: "black"
-
-                Row {
-                    id: palette
-                    //anchors.centerIn: parent
-
-                    spacing: 15
-
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/queue.qml"
-                        source: "content/images/svgs/queue.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/function.qml"
-                        source: "content/images/svgs/function.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/fork.qml"
-                        source: "content/images/svgs/fork.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/join.qml"
-                        source: "content/images/svgs/join.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/switch.qml"
-                        source: "content/images/svgs/switch.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/merge.qml"
-                        source: "content/images/svgs/merge.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/sink.qml"
-                        source: "content/images/svgs/sink.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/source.qml"
-                        source: "content/images/svgs/source.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/in.qml"
-                        source: "content/images/svgs/in.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/out.qml"
-                        source: "content/images/svgs/out.svg"
-                    }
-                    PaletteItem {
-                        anchors.verticalCenter: parent.verticalCenter
-                        componentFile: "../qml/spidergon.qml"
-                        source: "content/images/svgs/composite.svg"
-                    }
-
-                }
-
-            }
-
-
-
-        }
-    }
 
     // Attach scrollbars to the right and bottom edges of the view.
     ScrollBar {

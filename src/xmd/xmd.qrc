@@ -15,7 +15,6 @@
         <file>qml/spidergon.qml</file>
         <file>qml/switch.qml</file>
         <file>content/GenericSceneItem.qml</file>
-        <file>content/PaletteItem.qml</file>
         <file>content/ScrollBar.qml</file>
         <file>content/images/svgs/composite.svg</file>
         <file>content/images/svgs/fork.svg</file>
@@ -32,8 +31,6 @@
         <file>mainWindow.qml</file>
         <file>content/images/redo.png</file>
         <file>content/images/undo.png</file>
-        <file>content/images/zoomin.png</file>
-        <file>content/images/zoomout.png</file>
         <file>content/images/copy.png</file>
         <file>content/images/cut.png</file>
         <file>content/images/new.png</file>
@@ -41,6 +38,11 @@
         <file>content/images/paste.png</file>
         <file>content/images/save.png</file>
         <file>content/ToolBarSeparator.qml</file>
-        <file>canvas.qml</file>
+        <file>Canvas.qml</file>
+        <file>content/images/zoom-fit.png</file>
+        <file>content/images/zoom-in.png</file>
+        <file>content/images/zoom-out.png</file>
+        <file>content/XmasToolBar.qml</file>
+        <file>content/ToolBarItem.qml</file>
     </qresource>
 </RCC>

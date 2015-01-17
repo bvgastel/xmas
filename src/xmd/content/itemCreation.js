@@ -5,7 +5,7 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = paletteItem.mapToItem(scene, 0, 0);
+    posnInWindow = toolbarItem.mapToItem(scene, 0, 0);
     startingMouse = { x: mouse.x, y: mouse.y }
     loadComponent();
 }
@@ -19,7 +19,7 @@ function loadComponent() {
         return;
     }
 
-    itemComponent = Qt.createComponent(paletteItem.componentFile);
+    itemComponent = Qt.createComponent(toolbarItem.componentFile);
     if (itemComponent.status == Component.Loading)  //Depending on the content, it can be ready or error immediately
         component.statusChanged.connect(createItem);
     else
@@ -30,7 +30,7 @@ function createItem() {
     // TODO: this if sequence has uncatered for "else branch" at the end
     // Needs closure w.r.t. if-statement branches
     if (itemComponent.status == Component.Ready && draggedItem == null) {
-        draggedItem = itemComponent.createObject(scene, {"image": paletteItem.image, "x": posnInWindow.x, "y": posnInWindow.y, "z": 3});
+        draggedItem = itemComponent.createObject(scene, {"image": toolbarItem.image, "x": posnInWindow.x, "y": posnInWindow.y, "z": 3});
         // make sure created item is above the ground layer
     } else if (itemComponent.status == Component.Error) {
         draggedItem = null;
