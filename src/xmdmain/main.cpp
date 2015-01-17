@@ -30,6 +30,7 @@
  **************************************************************************/
 
 #include <QApplication>
+#include <QQmlApplicationEngine>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QQuickView>
@@ -37,8 +38,6 @@
 #include "canvas/component.h"
 #include "canvas/connector.h"
 #include "canvas/connection.h"
-#include "canvas/network.h"
-//#include "canvas/serializer.h"
 
 int main(int argc, char *argv[])
 {
@@ -57,14 +56,20 @@ int main(int argc, char *argv[])
     qmlRegisterType<Connector>("XMAS", 1, 0, "XConnector");
     qmlRegisterType<Connection>("XMAS", 1, 0, "XConnection");
 
-    QQuickView *view = new QQuickView;
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
-    view->setSource(QUrl("qrc:/dynamicscene.qml"));
-    view->show();
+   QQmlApplicationEngine engine(QUrl("qrc:///mainWindow.qml"));
+   Q_UNUSED(engine)
+
+//    QQuickView *view = new QQuickView;
+//    view->setResizeMode(QQuickView::SizeRootObjectToView);
+//    view->setSource(QUrl("qrc:/mainWindow.qml"));
+//    view->show();
+
+
 
 //    MainWindow mainWin;
 //    foreach (const QString &fileName, parser.positionalArguments())
 //        mainWin.openFile(fileName);
 //    mainWin.show();
     return app.exec();
+
 }

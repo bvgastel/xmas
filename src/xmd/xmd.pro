@@ -47,12 +47,15 @@ DISTFILES += qml/fork.qml \
     qml/Connection.qml \
     qml/Connector.qml \
     qml/QComponent.qml \
-    dynamicscene.qml \
+	mainWindow.qml \
     content/itemCreation.js \
     content/PaletteItem.qml \
     content/ScrollBar.qml \
     content/Button.qml \
-    content/GenericSceneItem.qml
+    content/GenericSceneItem.qml \
+    content/ToolBar.qml \
+    content/MenuBar.qml \
+    canvas.qml
 
 RESOURCES += \
     xmd.qrc

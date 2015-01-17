@@ -14,8 +14,6 @@
         <file>qml/source.qml</file>
         <file>qml/spidergon.qml</file>
         <file>qml/switch.qml</file>
-        <file>dynamicscene.qml</file>
-        <file>content/Button.qml</file>
         <file>content/GenericSceneItem.qml</file>
         <file>content/PaletteItem.qml</file>
         <file>content/ScrollBar.qml</file>
@@ -31,5 +29,18 @@
         <file>content/images/svgs/source.svg</file>
         <file>content/images/svgs/switch.svg</file>
         <file>content/itemCreation.js</file>
+        <file>mainWindow.qml</file>
+        <file>content/images/redo.png</file>
+        <file>content/images/undo.png</file>
+        <file>content/images/zoomin.png</file>
+        <file>content/images/zoomout.png</file>
+        <file>content/images/copy.png</file>
+        <file>content/images/cut.png</file>
+        <file>content/images/new.png</file>
+        <file>content/images/open.png</file>
+        <file>content/images/paste.png</file>
+        <file>content/images/save.png</file>
+        <file>content/ToolBarSeparator.qml</file>
+        <file>canvas.qml</file>
     </qresource>
 </RCC>
