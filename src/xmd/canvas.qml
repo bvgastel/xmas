@@ -39,8 +39,7 @@ import "content"
 import "content/itemCreation.js" as Code
 
 Item {
-
-    property int centerOffset: 32
+    property int centerOffset: 48
 
     MouseArea {
         anchors.fill: parent
@@ -51,16 +50,16 @@ Item {
     // Create a flickable to view a large canvas.
     Flickable {
         id: view
-
+        contentY: toolbar.height
+        height: parent.height - toolbar.height
         anchors { top: toolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
-        contentWidth: 2970
-        contentHeight: 2100
-
+        contentWidth: scene.width
+        contentHeight: scene.height
 
         Rectangle {
             id: scene
-            height: view.contentHeight
-            width: view.contentWidth
+            height: 2970
+            width: 2100
             color: "white"
             opacity: 50
             anchors.margins: 50
@@ -81,36 +80,11 @@ Item {
 
     }
 
-    XmasToolBar{id: toolbar}
-
-
-    // Attach scrollbars to the right and bottom edges of the view.
-    ScrollBar {
-        id: verticalScrollBar
-        width: 12; height: view.height-12
-        anchors.right: view.right
-        opacity: 0
-        orientation: Qt.Vertical
-        position: view.visibleArea.yPosition
-        pageSize: view.visibleArea.heightRatio
+    XmasToolBar{
+        id: toolbar
+        height:48
+        anchors {right: parent.right; top: parent.top; left: parent.left}
     }
-
-    ScrollBar {
-        id: horizontalScrollBar
-        width: view.width-12; height: 12
-        anchors.bottom: view.bottom
-        opacity: 0
-        orientation: Qt.Horizontal
-        position: view.visibleArea.xPosition
-        pageSize: view.visibleArea.widthRatio
-    }
-
-    //! [top-level transitions]
-    transitions: Transition {
-        PropertyAnimation { duration: 3000 }
-        ColorAnimation { duration: 3000 }
-    }
-    //! [top-level transitions]
 
     DropShadow {
            anchors.fill: view
@@ -121,6 +95,38 @@ Item {
            color: "#80000000"
            source: view
        }
+
+    // Attach scrollbars to the right and bottom edges of the view.
+      ScrollBar {
+          id: verticalScrollBar
+          width: 12; height: view.height-12
+          anchors.right: view.right
+          opacity: 0
+          orientation: Qt.Vertical
+          position: view.visibleArea.yPosition
+          pageSize: view.visibleArea.heightRatio
+      }
+
+      ScrollBar {
+          id: horizontalScrollBar
+          width: view.width-12; height: 12
+          anchors.bottom: view.bottom
+          opacity: 0
+          orientation: Qt.Horizontal
+          position: view.visibleArea.xPosition
+          pageSize: view.visibleArea.widthRatio
+      }
+
+
+    //! [top-level transitions]
+    transitions: Transition {
+        PropertyAnimation { duration: 3000 }
+        ColorAnimation { duration: 3000 }
+    }
+    //! [top-level transitions]
+
+
+
 
 }
 

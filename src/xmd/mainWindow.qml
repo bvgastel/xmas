@@ -200,7 +200,7 @@ ApplicationWindow {
     }
 
 
-      Loader {source: "Canvas.qml" ; width: mainwindow.width; height: mainwindow.height}
+      Loader {source: "Canvas.qml"; width: mainwindow.width; height: mainwindow.height}
 
 
 }

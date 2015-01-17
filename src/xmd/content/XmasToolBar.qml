@@ -1,96 +1,66 @@
 import QtQuick 2.4
+import QtQuick.Layouts 1.1
 
 
 Rectangle {
-
-    property string target
-
-    id: toolbox
-
-    height: 48
+    id:toolbox
     gradient: Gradient {
-             GradientStop { position: 0.0; color: "grey" }
-             GradientStop { position: 1.0; color: "lightgrey" }
-         }
-    //color: "lightgrey"
-    anchors { right: parent.right; top: parent.top; left: parent.left}
+        GradientStop { position: 0.0; color: "grey" }
+        GradientStop { position: 0.4; color: "lightgrey" }
+        GradientStop { position: 1.0; color: "lightsteelblue" }
+    }
 
-    Column {
-        //anchors.fill: parent
-        spacing: 8
-
-        Rectangle {
-            //width: palette.width + 10; height: palette.height + 10
-            width: parent.width - 100 ; height: palette.height + 10
-            border.color: "black"
-
-            Row {
-                id: palette
-                //anchors.centerIn: parent
-
-                spacing: 15
-
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/queue.qml"
-                    source: "images/svgs/queue.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/function.qml"
-                    source: "images/svgs/function.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/fork.qml"
-                    source: "images/svgs/fork.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/join.qml"
-                    source: "images/svgs/join.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/switch.qml"
-                    source: "images/svgs/switch.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/merge.qml"
-                    source: "images/svgs/merge.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/sink.qml"
-                    source: "images/svgs/sink.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/source.qml"
-                    source: "images/svgs/source.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/in.qml"
-                    source: "images/svgs/in.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/out.qml"
-                    source: "images/svgs/out.svg"
-                }
-                ToolBarItem {
-                    anchors.verticalCenter: parent.verticalCenter
-                    componentFile: "../qml/spidergon.qml"
-                    source: "images/svgs/composite.svg"
-                }
-
-            }
-
+    RowLayout {
+        id: palette
+        anchors.fill: parent
+        anchors.margins: {top: 5; bottom: 5}
+        //Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+        ToolBarItem {
+            componentFile: "../qml/queue.qml"
+            image: "images/svgs/queue.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/function.qml"
+            image: "images/svgs/function.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/fork.qml"
+            image: "images/svgs/fork.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/join.qml"
+            image: "images/svgs/join.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/switch.qml"
+            image: "images/svgs/switch.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/merge.qml"
+            image: "images/svgs/merge.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/sink.qml"
+            image: "images/svgs/sink.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/source.qml"
+            image: "images/svgs/source.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/in.qml"
+            image: "images/svgs/in.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/out.qml"
+            image: "images/svgs/out.svg"
+        }
+        ToolBarItem {
+            componentFile: "../qml/spidergon.qml"
+            image: "images/svgs/composite.svg"
         }
 
-
     }
+
 }
 

@@ -57,7 +57,7 @@ Item {
         id: background
         anchors.fill: parent
         radius: orientation == Qt.Vertical ? (width/2 - 1) : (height/2 - 1)
-        color: "white"
+        color: "lightgrey"
         opacity: 0.3
     }
 

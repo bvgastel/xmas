@@ -39,6 +39,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Layouts 1.1
 import "itemCreation.js" as Code
 
 Image {
@@ -47,9 +48,12 @@ Image {
     property string componentFile
     property string image
 
+    Layout.preferredHeight: parent.height
+    Layout.preferredWidth: parent.height
+
+
     source: image
-    height: 48
-    width: 48
+
 
     MouseArea {
         anchors.fill: parent
@@ -58,3 +62,4 @@ Image {
         onReleased: Code.endDrag(mouse);
     }
 }
+
