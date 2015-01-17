@@ -3,6 +3,8 @@ import XMAS 1.0
 
 //todo : implement common xmas component style
 
+// Remark g.: File name starts with Q: that is not advisable ....
+
 XComponent {
 
     property bool created: false

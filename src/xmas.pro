@@ -2,7 +2,8 @@
 # Contains the overall project file for the xmas project
 
 TEMPLATE = subdirs
-SUBDIRS =   xmas \
+SUBDIRS =   model \
+            xmas \
             xmd \
             xmc \
             test
@@ -17,6 +18,7 @@ SUBDIRS += testmain \
 
 # set the subdirectories for the libraries
 
+libmodel.subdir = model
 libxmas.subdir = xmas
 libxmd.subdir = xmd
 libxmc.subdir = xmc
@@ -25,8 +27,7 @@ libtest.subdir = test
 # add this to have qmake determine dependencies with
 # the libraries correctly.
 
-test.depends = xmas xmd
-xmd.depends = xmas
-xmc.depends = xmas xmd
+#test.depends = xmas model xmd
+# xmc.depends = xmas xmd
 
 
