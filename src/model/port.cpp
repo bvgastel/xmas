@@ -40,7 +40,7 @@ model::Port::~Port()
  *
  * @param rhs The port on the right hand side.
  */
-model::Port::Port(const model::Port &rhs) {
+model::Port::Port(const model::Port &rhs) : QObject() {
     m_name = rhs.m_name;
     m_rdy = rhs.m_rdy;
 }
