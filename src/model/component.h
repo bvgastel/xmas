@@ -49,6 +49,7 @@ public:
     explicit Component(QObject *parent = 0);
     ~Component();
 
+    // TODO: hoe gaan we om met TODO?
 
     //quint32 id() const {return m_id;}
 

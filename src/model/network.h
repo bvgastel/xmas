@@ -26,17 +26,44 @@
 #include <QObject>
 
 #include "component.h"
+#include "channel.h"
+
+namespace model {
 
 class Network : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QQmlListProperty<Component> components READ components WRITE components NOTIFY componentsChanged)
+    Q_PROPERTY(QQmlListProperty<Channel> channels READ channels WRITE channels NOTIFY channelsChanged)
+
 public:
     explicit Network(QObject *parent = 0);
     ~Network();
 
+    QString name() const { return m_name; }
+    void name(QString &name) { m_name = name; }
+
+    QQmlListProperty<Component> components() { return m_components; }
+    void components(QQmlListProperty<Component> &components) { m_components = components; }
+
+    QQmlListProperty<Channel> channels() { return m_channels; }
+    void channels(QQmlListProperty<Channel> &channels) { m_channels = channels; }
+
 signals:
+    void nameChanged();
+    void componentsChanged();
+    void channelsChanged();
 
 public slots:
+
+private:
+    QString m_name;
+    QQmlListProperty<Component> m_components;
+    QQmlListProperty<Channel> m_channels;
 };
+
+} // namespace model
 
 #endif // NETWORK_H

@@ -22,12 +22,12 @@
 
 #include "network.h"
 
-Network::Network(QObject *parent) : QObject(parent)
+model::Network::Network(QObject *parent) : QObject(parent)
 {
 
 }
 
-Network::~Network()
+model::Network::~Network()
 {
 
 }
