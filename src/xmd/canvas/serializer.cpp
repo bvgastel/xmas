@@ -28,22 +28,51 @@
  *
  *
  **************************************************************************/
-#ifndef COMPLIB
-#define COMPLIB
 
-#include <QQmlEngine>
-#include "component.h"
+#include "serializer.h"
 
-class Component;
-
-class CompLib
+/**
+ * @brief Serializer::Serializer
+ * @param parent
+ */
+Serializer::Serializer(QObject *parent) : QObject(parent)
 {
 
-public:
-    enum ComponentType { Queue=1, Function=2, Fork=3, Join=4, Switch=5, Merge=6, Sink=7, Source=8, In=9, Out=10, Composite=11,};
-    Component *createComponent(int type);
-    CompLib();
-};
+}
 
-#endif // COMPLIB
+
+
+
+/**
+ * @brief operator <<
+ * @param ds
+ * @param obj
+ * @return
+ */
+QDataStream &operator<<(QDataStream &ds, const Serializer &obj) {
+    for(int i=0; i<obj.metaObject()->propertyCount(); ++i) {
+//        if(obj.metaObject()->property(i).isStored(&obj)) {
+//            ds << obj.metaObject()->property(i).read(&obj);
+//        }
+    }
+    return ds;
+}
+
+/**
+ * @brief operator >>
+ * @param ds
+ * @param obj
+ * @return
+ */
+QDataStream &operator>>(QDataStream &ds, Serializer &obj) {
+    QVariant var;
+
+    for(int i=0; i<obj.metaObject()->propertyCount(); ++i) {
+//       if(obj.metaObject()->property(i).isStored(&obj)) {
+//            ds >> var;
+//            obj.metaObject()->property(i).write(&obj, var);
+//        }
+    }
+    return ds;
+}
 

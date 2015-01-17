@@ -34,9 +34,9 @@
 /**
  * @brief Network::Network
  */
-Network::Network(QQuickItem * parent): QQuickItem(parent)
+Network::Network(): QQuickItem() // , Serializer()
 {
-    //setFlag(QQuickItem::ItemHasNoContents,false);
+
 }
 
 /**
@@ -53,11 +53,7 @@ Network::~Network()
  */
 QQmlListProperty<Component> Network::components()
 {
-    return QQmlListProperty<Component>(this, 0,
-                                               &Network::append_component,
-                                               0,
-                                               0,
-                                               0);
+    return QQmlListProperty<Component>(nullptr, 0,&Network::append_component,0,0,0);
 }
 
 /**
@@ -80,11 +76,7 @@ void Network::append_component(QQmlListProperty<Component> *list, Component *com
  */
 QQmlListProperty<Connection> Network::connections()
 {
-    return QQmlListProperty<Connection>(this, 0,
-                                               &Network::append_connection,
-                                               0,
-                                               0,
-                                               0);
+    return QQmlListProperty<Connection>(nullptr, 0,&Network::append_connection,0,0,0);
 }
 
 /**

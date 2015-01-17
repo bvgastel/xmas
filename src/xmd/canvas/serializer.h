@@ -29,21 +29,24 @@
  *
  **************************************************************************/
 
-#ifndef SETUP
-#define SETUP
+#ifndef SERIALIZER_H
+#define SERIALIZER_H
 
-#define TOOL_NAME                   "XMAS Model Designer 2015"
-#define TOOL_VERSION                "0.1.0"
+#include <QDataStream>
+#include <QVariant>
+#include <QObject>
 
-#define OLD_FILE_EXTENSION          "wck"
-#define JSON_FILE_EXTENSION         "json"
-#define FJSON_FILE_EXTENSION        "fjson"
+/**
+ * @brief The Serializer class
+ */
+class Serializer : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Serializer(QObject *parent = 0);
+};
 
-#define MODEL_FILE_EXTENSION        "xmdm"
-#define PROJECT_FILE_EXTENSION      "xmdp"
-#define COMPONENT_FILE_EXTENSION    "xmdc"
+QDataStream &operator<<(QDataStream &ds, const Serializer &obj);
+QDataStream &operator>>(QDataStream &ds, Serializer &obj) ;
 
-#define MAXIMUM_RECENT_FILES        5
-
-#endif // SETUP
-
+#endif // SERIALIZER_H

@@ -64,6 +64,36 @@ int main(int argc, char *argv[])
     view->show();
 
 
+
+//    Network *n = new Network;
+//    n->setName("model1");
+
+//    Component *c1 = new Component;
+
+//    c1->setName("comp1");
+//    c1->setPosition(QPoint(100,200));
+//    c1->setOrientation(Component::Orientation::Up);
+
+
+//    n->append_component(n->components()&,c1);
+
+
+
+//    QFile file("file.dat");
+//    file.open(QIODevice::WriteOnly);
+
+//    QDataStream out(&file);   // we will serialize the data into the file
+//    out <<n;
+
+
+//    //file.open(QIODevice::ReadOnly);
+//    //out >> n;
+
+//        file.close();
+
+//qDebug() << "Write network name: " << n->name() << ", component name: " << c1->name;
+
+
 //    MainWindow mainWin;
 //    foreach (const QString &fileName, parser.positionalArguments())
 //        mainWin.openFile(fileName);

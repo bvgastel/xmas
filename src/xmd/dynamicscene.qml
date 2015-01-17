@@ -39,7 +39,10 @@
 ****************************************************************************/
 
 import QtQuick 2.4
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.1
 import "content"
 
 Item {
@@ -47,7 +50,7 @@ Item {
 
     property int centerOffset: 32
 
-    height: 600; width: 800
+    height: 800; width: 1000
 
     MouseArea {
         anchors.fill: parent
@@ -89,8 +92,9 @@ Item {
         id: view
 
         anchors { top: toolbox.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
-        contentWidth: 1000
-        contentHeight: 1000
+        contentWidth: 2500
+        contentHeight: 2500
+
 
         Rectangle {
             id: scene
@@ -99,6 +103,7 @@ Item {
             color: "lightblue"
             opacity: 50
             anchors.margins: 50
+
         }
 
         // Only show the scrollbars when the view is moving.
@@ -129,14 +134,14 @@ Item {
 
             Rectangle {
                 //width: palette.width + 10; height: palette.height + 10
-                width: parent.width ; height: palette.height + 10
+                width: parent.width - 100 ; height: palette.height + 10
                 border.color: "black"
 
                 Row {
                     id: palette
                     //anchors.centerIn: parent
 
-                    spacing: 8
+                    spacing: 15
 
                     PaletteItem {
                         anchors.verticalCenter: parent.verticalCenter
@@ -193,11 +198,34 @@ Item {
                         componentFile: "../qml/spidergon.qml"
                         source: "content/images/svgs/composite.svg"
                     }
+
+                    Button {
+                        id: openFile
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Open"
+                        onClicked: fileDialog.open()
+                    }
+
+                    Button {
+                        id: saveFile
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Save"
+                    }
                 }
+
             }
+
+
+
         }
     }
 
+
+    FileDialog {
+        id: fileDialog
+        nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
+        //onAccepted: document.fileUrl = fileUrl
+    }
 
     // Attach scrollbars to the right and bottom edges of the view.
     ScrollBar {
@@ -219,8 +247,6 @@ Item {
         position: view.visibleArea.xPosition
         pageSize: view.visibleArea.widthRatio
     }
-
-
 
     //! [top-level transitions]
     transitions: Transition {

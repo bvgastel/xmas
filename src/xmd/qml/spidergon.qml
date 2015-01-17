@@ -4,7 +4,7 @@ import XMAS 1.0
 QComponent {
     id: comp
     width: 200
-    height: 400
+    height: 200
     name: "test composite"
     connectors: [
         Connector {

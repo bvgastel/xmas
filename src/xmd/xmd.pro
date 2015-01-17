@@ -6,20 +6,20 @@ include (defines.pri)
 
 QT += widgets svg quick qml quickwidgets
 
-HEADERS       = mainwindow.h \
-                setup.h \
-    canvas/complib.h \
+HEADERS       = \
     canvas/component.h \
     canvas/connection.h \
     canvas/connector.h \
-    canvas/network.h
+    canvas/network.h \
+    canvas/serializer.h
 				
-SOURCES       = canvas/complib.cpp \
+SOURCES       = \
     canvas/component.cpp \
     canvas/connection.cpp \
     canvas/connector.cpp \
     canvas/network.cpp \
-    main.cpp
+    main.cpp \
+    canvas/serializer.cpp
     
 unix {
     target.path = /usr/lib
@@ -49,7 +49,6 @@ DISTFILES += qml/fork.qml \
     qml/Connection.qml \
     qml/Connector.qml \
     qml/QComponent.qml \
-    qml/scene.qml \
     dynamicscene.qml \
     content/itemCreation.js \
     content/PaletteItem.qml \

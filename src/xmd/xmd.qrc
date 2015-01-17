@@ -10,7 +10,6 @@
         <file>qml/out.qml</file>
         <file>qml/QComponent.qml</file>
         <file>qml/queue.qml</file>
-        <file>qml/scene.qml</file>
         <file>qml/sink.qml</file>
         <file>qml/source.qml</file>
         <file>qml/spidergon.qml</file>

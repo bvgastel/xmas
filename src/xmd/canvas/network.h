@@ -34,6 +34,7 @@
 
 #include <QQuickItem>
 
+#include "serializer.h"
 #include "component.h"
 #include "connection.h"
 
@@ -43,7 +44,7 @@ class Connection;
 /**
  * @brief The Network class
  */
-class Network : public QQuickItem
+class Network : public QQuickItem //, public Serializer
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
@@ -51,7 +52,8 @@ class Network : public QQuickItem
     Q_PROPERTY(QQmlListProperty<Connection> connections READ connections)
 
 public:
-    Network(QQuickItem * parent=0);
+    //Network(QQuickItem * parent=0);
+    Network();
     virtual ~Network();
 
     QString name() const { return m_name; }
