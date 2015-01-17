@@ -45,6 +45,7 @@ class Serializer : public QObject
 public:
     explicit Serializer(QObject *parent = 0);
 };
+Q_DECLARE_METATYPE(Serializer)
 
 QDataStream &operator<<(QDataStream &ds, const Serializer &obj);
 QDataStream &operator>>(QDataStream &ds, Serializer &obj) ;
