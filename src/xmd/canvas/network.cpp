@@ -34,7 +34,7 @@
 /**
  * @brief Network::Network
  */
-Network::Network(): QQuickItem() // , Serializer()
+Network::Network(): QQuickItem()
 {
 
 }

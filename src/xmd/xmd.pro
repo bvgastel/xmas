@@ -10,16 +10,14 @@ HEADERS       = \
     canvas/component.h \
     canvas/connection.h \
     canvas/connector.h \
-    canvas/network.h \
-    canvas/serializer.h
+    canvas/network.h
 				
 SOURCES       = \
     canvas/component.cpp \
     canvas/connection.cpp \
     canvas/connector.cpp \
     canvas/network.cpp \
-    main.cpp \
-    canvas/serializer.cpp
+    main.cpp
     
 unix {
     target.path = /usr/lib
@@ -58,3 +56,5 @@ DISTFILES += qml/fork.qml \
 
 RESOURCES += \
     xmd.qrc
+
+FORMS +=
