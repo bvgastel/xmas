@@ -27,8 +27,38 @@
 
 #include "component.h"
 
+// TODO: Consider using smart pointers : does it work well with qml / quick2? ---> Comment in github issue
+
 namespace model {
 
+/**
+ * @brief The Channel class
+ *
+ * The wires between components on an Noc. Each
+ * channel in reality consists of 3 wires:
+ *
+ * 1. The irdy or initiator ready signal wire
+ * 2. The trdy or target ready signal wire
+ * 3. The data wire.
+ *
+ * The data wire can have any type. The irdy
+ * and trdy wires can send a signal when ready.
+ * They are control wires.
+ *
+ * A channel has exactly two components with
+ * on one end the output, from the channel reads
+ * its data and on the other side the in port
+ * to which the channel writes its data.
+ *
+ * The component attached to the outport sends
+ * the signal irdy when ready. The other component
+ * (inport bound) receives this signal.
+ *
+ * The compoent attached to the inport sends
+ * the signal trdy when ready. The other component
+ * (outport bound) receives this signal.
+ *
+ */
 class Channel : public QObject
 {
     Q_OBJECT
@@ -63,7 +93,13 @@ public:
 private:
 
     QString m_name;
+    /**
+     * @brief m_initiator The initiator of the channel
+     */
     Port m_initiator;
+    /**
+     * @brief m_target The target of the channel
+     */
     Port m_target;
 
 };

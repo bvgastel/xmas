@@ -27,6 +27,15 @@
 
 namespace model {
 
+/**
+ * @brief The Port class
+ *
+ * This class represents ports. Both input and output use this
+ * class.
+ *
+ * The port is tightly coupled to a component.
+ *
+ */
 class Port : public QObject
 {
     Q_OBJECT

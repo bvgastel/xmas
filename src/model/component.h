@@ -31,6 +31,15 @@
 
 namespace model {
 
+/**
+ * @brief The Component class
+ *
+ * The component on a network. It contains ports (both
+ * in ports and out ports.
+ *
+ * Ports are tightly coupled with Components: no existance outside components.
+ *
+ */
 class  Component : public QObject
 {
     Q_OBJECT
@@ -49,9 +58,7 @@ public:
     explicit Component(QObject *parent = 0);
     ~Component();
 
-    // TODO: hoe gaan we om met TODO?
-
-    //quint32 id() const {return m_id;}
+    // TODO: are we using todo plugin? Yes: see Help / About plugins ...
 
     QString name() const {return m_name;}
     void name(const QString &name) {m_name = name;}
