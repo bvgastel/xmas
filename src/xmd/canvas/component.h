@@ -85,4 +85,5 @@ private:
     QList<Connector *> m_connectors;
 };
 
+
 #endif // COMPONENT_H

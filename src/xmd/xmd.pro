@@ -16,8 +16,7 @@ SOURCES       = \
     canvas/component.cpp \
     canvas/connection.cpp \
     canvas/connector.cpp \
-    canvas/network.cpp \
-    main.cpp
+    canvas/network.cpp
     
 unix {
     target.path = /usr/lib
@@ -50,8 +49,6 @@ DISTFILES += qml/fork.qml \
 	mainWindow.qml \
     content/itemCreation.js \
     content/ScrollBar.qml \
-    content/Button.qml \
-    content/GenericSceneItem.qml \
     content/MenuBar.qml \
     content/images/zoom-fit.png \
     content/images/zoom-in.png \

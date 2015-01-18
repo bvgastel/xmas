@@ -14,7 +14,6 @@
         <file>qml/source.qml</file>
         <file>qml/spidergon.qml</file>
         <file>qml/switch.qml</file>
-        <file>content/GenericSceneItem.qml</file>
         <file>content/ScrollBar.qml</file>
         <file>content/images/svgs/composite.svg</file>
         <file>content/images/svgs/fork.svg</file>

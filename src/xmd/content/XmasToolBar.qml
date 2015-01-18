@@ -7,13 +7,14 @@ Rectangle {
     gradient: Gradient {
         GradientStop { position: 0.0; color: "grey" }
         GradientStop { position: 0.4; color: "lightgrey" }
-        GradientStop { position: 1.0; color: "lightsteelblue" }
+        GradientStop { position: 1.0; color: "grey" }
     }
 
     RowLayout {
         id: palette
-        anchors.fill: parent
+        anchors {left: parent.left ; top: parent.top ; bottom: parent.bottom}
         anchors.margins: {top: 5; bottom: 5}
+        spacing: 10
         //Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
         ToolBarItem {
             componentFile: "../qml/queue.qml"

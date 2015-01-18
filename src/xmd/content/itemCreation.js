@@ -45,16 +45,18 @@ function continueDrag(mouse)
     if (draggedItem == null)
         return;
 
-    draggedItem.x = mouse.x + posnInWindow.x - startingMouse.x;
-    draggedItem.y = mouse.y + posnInWindow.y - startingMouse.y;
+    draggedItem.x = mouse.x/scene.scale + posnInWindow.x - startingMouse.x;
+    draggedItem.y = mouse.y/scene.scale + posnInWindow.y - startingMouse.y;
 }
 
 function endDrag(mouse)
 {
     if (draggedItem == null)
         return;
-
-    if (draggedItem.y < toolbox.height) { //Don't drop it in the toolbox
+    if (draggedItem.x < scene.x
+            || draggedItem.x > scene.x + scene.width - draggedItem.width
+            || draggedItem.y < scene.y
+            || draggedItem.y > scene.y + scene.height - draggedItem.height) {
         draggedItem.destroy();
         draggedItem = null;
     } else {

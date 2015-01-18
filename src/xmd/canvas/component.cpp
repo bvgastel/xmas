@@ -38,6 +38,7 @@
 Component::Component(QQuickItem * parent): QQuickItem(parent),
     m_orientation(Up)
 {
+
 }
 
 /**

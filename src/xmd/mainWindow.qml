@@ -44,7 +44,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import "content"
-//import org.qtproject.example 1.0
 
 ApplicationWindow {
     id: mainwindow
@@ -79,7 +78,6 @@ ApplicationWindow {
         text: "Save"
         //onTriggered: fileDialog.open()
     }
-
 
 
     Action {
@@ -133,7 +131,7 @@ ApplicationWindow {
         shortcut: "1"
         iconSource: "qrc:/content/images/zoom-fit.png"
         iconName: "zoom-fit"
-        //onTriggered: textArea.paste()
+        //onTriggered:
     }
 
     FileDialog {
@@ -200,7 +198,9 @@ ApplicationWindow {
     }
 
 
-      Loader {source: "Canvas.qml"; width: mainwindow.width; height: mainwindow.height}
-
+    Loader{
+        id: loader
+        source: "Canvas.qml"; anchors.fill: parent
+    }
 
 }
