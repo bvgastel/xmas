@@ -30,6 +30,31 @@
 
 namespace model {
 
+/**
+ * @brief The network class
+ *
+ * The network class (Network on Chip) contains all elements
+ * that create the network:
+ *
+ * 1. Components
+ * 2. Ports
+ * 3. Channels between ports on components
+ *
+ * Each NoC can also function as a component once finished provided it
+ * defines an in and an out component.
+ * Each channel represents 3 wires; irdy, trdy and data (@see channel)
+ *
+ * This class allows the construction of a Noc that can
+ * later be used as a component.
+ *
+ * If needed the designer can close a Noc with sources and sinks.
+ *
+ * TODO: [Network] We need a graph representation for DFS / BFS
+ * Options are adjancency matrix, adj. list or adj. multilists
+ * The problem is that an edge (u, v) can occur multiple times
+ * with different ports on each sides i.e. ports are unique.
+ *
+ */
 class Network : public QObject
 {
     Q_OBJECT

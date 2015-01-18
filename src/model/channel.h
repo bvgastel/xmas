@@ -58,6 +58,9 @@ namespace model {
  * the signal trdy when ready. The other component
  * (outport bound) receives this signal.
  *
+ * TODO: [Channel] We need the data type for the VT
+ * TODO: [Channel] We need to know the components we are connecting
+ *
  */
 class Channel : public QObject
 {

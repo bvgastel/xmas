@@ -35,6 +35,11 @@ namespace model {
  *
  * The port is tightly coupled to a component.
  *
+ * TODO:[Port] We need access to the owning component
+ * This is due to the requirements to do a DFS or BFS graph search
+ * of the network. Also, connecting all ports is a requirements
+ * for network consistency
+ *
  */
 class Port : public QObject
 {
@@ -42,6 +47,7 @@ class Port : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
+    Q_PROPERTY(Component comp READ comp WRITE comp NOTIFY compChanged)
 public:
     explicit Port(QObject *parent = 0);
     ~Port();
@@ -53,6 +59,7 @@ public:
 signals:
     void nameChanged();
     void rdyChanged();
+    void compChanged();
 
 public slots:
 
@@ -62,6 +69,9 @@ public:
 
     QString rdy() const { return m_rdy; }
     void rdy(QString &rdy) { m_rdy = rdy; }
+
+    Component comp() const { return m_comp; }
+    void comp(Component &comp) { m_comp = comp; }
 
 private:
 
@@ -85,6 +95,13 @@ private:
          *
          */
     QString m_rdy;
+    /**
+     * @brief m_comp The name of the containing component
+     *
+     * Each port is tightly coupled with one component.
+     *
+     */
+    Component m_comp;
 
 };
 
