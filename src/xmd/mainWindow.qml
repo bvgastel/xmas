@@ -200,7 +200,7 @@ ApplicationWindow {
 
     Loader{
         id: loader
-        source: "Canvas.qml"; anchors.fill: parent
+        source: "Sheet.qml"; anchors.fill: parent
     }
 
 }

@@ -37,11 +37,11 @@
         <file>content/images/paste.png</file>
         <file>content/images/save.png</file>
         <file>content/ToolBarSeparator.qml</file>
-        <file>Canvas.qml</file>
         <file>content/images/zoom-fit.png</file>
         <file>content/images/zoom-in.png</file>
         <file>content/images/zoom-out.png</file>
         <file>content/XmasToolBar.qml</file>
         <file>content/ToolBarItem.qml</file>
+        <file>Sheet.qml</file>
     </qresource>
 </RCC>

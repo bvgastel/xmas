@@ -54,8 +54,8 @@ DISTFILES += qml/fork.qml \
     content/images/zoom-in.png \
     content/images/zoom-out.png \
     content/XmasToolBar.qml \
-    Canvas.qml \
-    content/ToolBarItem.qml
+    content/ToolBarItem.qml \
+    Sheet.qml
 
 RESOURCES += \
     xmd.qrc

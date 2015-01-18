@@ -39,28 +39,26 @@ import "content"
 
 Item {
     property int centerOffset: 0
-    property real zoomFactor: 0.3
-
-    width: 1000
-    height: 800
-
+    property real zoomFactor: 1.0
     // Create a flickable to view a large drawing.
     Flickable {
         id: view
         anchors { top: toolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+
+        //center the scene by default
+        contentX: (1 - scene.scale) * scene.width * 0.5
+        contentY: (1 - scene.scale) * scene.height * 0.5
         contentWidth: scene.width
         contentHeight: scene.height
-        contentX: 990 //scene.width * zoomFactor
-        contentY: 700 //toolbar.height + contentHeight/2
 
         Rectangle {
             id: scene
             scale: zoomFactor
-            width: 2970
-            height: 2100
+
+            width: 11880
+            height: 8400
             color: "white"
             opacity: 50
-
             }
 
         // Only show the scrollbars when the view is moving.
@@ -81,9 +79,7 @@ Item {
         id: toolbar
         height:48
         anchors {right: parent.right; top: parent.top; left: parent.left}
-
     }
-
 
     DropShadow {
            anchors.fill: view
@@ -125,9 +121,6 @@ Item {
         ColorAnimation { duration: 3000 }
     }
     //! [top-level transitions]
-
-
-
 
 }
 
