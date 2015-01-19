@@ -42,13 +42,16 @@ void TestComponent::testComponentCreation() {
     model::ChipComponent *comp = qobject_cast<model::ChipComponent *>(component.create());
     if (comp) {
         QCOMPARE(comp->name(), QString("testcomp1"));
-        //FIXME: How to read the QQmlListProperty connectors?
-        //qWarning() << comp->connectors.count();
-
-        model::Port *p = comp->at(0);
-        //model::Port *p = comp->connectors[0];
-        //model::Port *p = comp->connectors::port_at(comp->connectors, 0);
-        QCOMPARE(p->name(), QString("testport2"));
+        QCOMPARE(comp->x(), 1);
+        QCOMPARE(comp->y(), 1);
+        QCOMPARE(comp->size(), 2);
+        for (int i = 0; i < comp->size(); i++) {
+            QString n = QString(std::to_string(i+1).c_str());
+            model::Port *p = comp->at(i);
+            QCOMPARE(p->name(), QString("testport").append(n));
+            QCOMPARE(p->rdy(), QString("rdy").append(n));
+            QCOMPARE(p->compName(), QString("compName").append(n));
+        }
     } else {
         QWARN("Creation of Port not successful. Recheck qml and qrc files.");
         QVERIFY(false);

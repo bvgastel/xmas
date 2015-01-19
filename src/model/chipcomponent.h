@@ -47,11 +47,12 @@ class  ChipComponent : public QObject
     Q_OBJECT
 
     Q_ENUMS(Orientation)
-    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged )
-    Q_PROPERTY(QPoint position READ position WRITE position NOTIFY positionChanged )
-    Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged )
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
+    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
+    Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged)
     Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors)
-    Q_PROPERTY(QString function READ function WRITE function NOTIFY functionChanged)
+    Q_PROPERTY(QString func READ func WRITE func NOTIFY funcChanged)
 
 public:
     enum Orientation { Up, Down, Left, Right };
@@ -62,27 +63,29 @@ public:
     QString name() const {return m_name;}
     void name(const QString &name) {m_name = name;}
 
-    QPoint position() {return m_position;}
-    void position(QPoint &position) {m_position = position;}
+    int x() { return m_x; }
+    void x(int &x) { m_x = x; }
+
+    int y() { return m_y; }
+    void y(int &y) { m_y = y; }
 
     Orientation orientation() {return m_orientation;}
     void orientation(Orientation &orientation) {m_orientation = orientation;}
 
-    QString function() { return m_function; }
-    void function(QString &function) { m_function = function; }
+    QString func() { return m_func; }
+    void func(QString &func) { m_func = func; }
 
     QQmlListProperty<Port> connectors();
 
     Port *at(const int index) { return m_portList[index]; }
-
-
-
+    int size() { return m_portList.size(); }
 
 signals:
     void nameChanged();
-    void positionChanged();
+    void xChanged();
+    void yChanged();
     void orientationChanged();
-    void functionChanged();
+    void funcChanged();
 
 public slots:
 
@@ -90,12 +93,11 @@ private:
     static void append_port(QQmlListProperty<Port> *list, Port *port);
     static Port *port_at(QQmlListProperty<Port> *list, int index);
 
-    //quint32 m_id;
-
     QString m_name;
-    QPoint m_position;
+    int m_x;
+    int m_y;
     Orientation m_orientation;
-    QString m_function;
+    QString m_func;
 
     QList<Port *> m_portList;
 
