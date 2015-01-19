@@ -31,7 +31,7 @@ HEADERS += \
     testchipcomponent.h
 
 RESOURCES += \
-    testport.qrc
+    test.qrc
 
 # By default TARGET is the same as the directory,
 # so it will make test (in linux). Uncomment to override.

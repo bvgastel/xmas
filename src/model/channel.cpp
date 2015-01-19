@@ -32,3 +32,38 @@ model::Channel::~Channel()
 
 }
 
+QQmlListProperty<QPoint> model::Channel::ptList() {
+    return QQmlListProperty<QPoint>(this, 0,
+                                          &model::Channel::append_pt,
+                                          0,
+                                          &model::Channel::pt_at,
+                                          0);
+}
+
+/**
+ * @brief Channel::append_pt
+ * @param list
+ * @param connector
+ */
+void model::Channel::append_pt(QQmlListProperty<QPoint> *list,
+                                   QPoint *pt)
+{
+    Channel *channel = qobject_cast<Channel *>(list->object);
+    if (channel) {
+        pt->setParent(channel);
+        channel->m_portList.append(pt);
+    }
+}
+
+/**
+ * @brief port_at returns a pointer to the port at specified index (zero based)
+ *
+ * @param list The property list
+ * @param index The zero based index of the port within the list.
+ * @return the port if successful, nulptr if not successful
+ */
+// FIXME: do we really need a cast to QList in order to get at(index)?
+QPoint *model::ChipComponent::pt_at(QQmlListProperty<QPoint> *property, int index) {
+    return static_cast< QList<QPoint *> *>(property->data)->at(index);
+}
+

@@ -55,17 +55,17 @@ QQmlListProperty<model::Port> model::ChipComponent::connectors()
 }
 
 /**
- * @brief Component::append_connector
+ * @brief ChipComponent::append_port
  * @param list
  * @param connector
  */
 void model::ChipComponent::append_port(QQmlListProperty<model::Port> *list,
                                    model::Port *port)
 {
-    ChipComponent *component = qobject_cast<ChipComponent *>(list->object);
-    if (component) {
-        port->setParent(component);
-        component->m_portList.append(port);
+    ChipComponent *chip_component = qobject_cast<ChipComponent *>(list->object);
+    if (chip_component) {
+        port->setParent(chip_component);
+        chip_component->m_portList.append(port);
     }
 }
 

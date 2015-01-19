@@ -51,7 +51,7 @@ class  ChipComponent : public QObject
     Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
     Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged)
-    Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors)
+    Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors NOTIFY connectorsChanged)
     Q_PROPERTY(QString func READ func WRITE func NOTIFY funcChanged)
 
 public:
@@ -86,6 +86,7 @@ signals:
     void yChanged();
     void orientationChanged();
     void funcChanged();
+    void connectorsChanged();
 
 public slots:
 

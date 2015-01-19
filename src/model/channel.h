@@ -67,8 +67,11 @@ class Channel : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(Port initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
-    Q_PROPERTY(Port target READ target WRITE target NOTIFY targetChanged)
+    Q_PROPERTY(QString initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
+    Q_PROPERTY(QString in_port READ in_port WRITE in_port NOTIFY in_portChanged)
+    Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
+    Q_PROPERTY(QString out_port READ out_port WRITE setOut_port NOTIFY out_portChanged)
+    Q_PROPERTY(QQmlListProperty<QPoint> ptList READ ptList NOTIFY ptListChanged)
 
     // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
 
@@ -79,7 +82,10 @@ public:
 signals:
     void nameChanged();
     void initiatorChanged();
+    void in_portChanged();
     void targetChanged();
+    void out_portChanged();
+    void ptListChanged();
 
 public slots:
 
@@ -89,26 +95,50 @@ public:
     QString name() const { return m_name; }
     void name(QString &name) { m_name = name; }
 
-    Port initiator() const { return m_initiator; }
-    void initiator(Port &initiator) { m_initiator = initiator; }
+    QString initiator() const { return m_initiator; }
+    void initiator(QString &initiator) { m_initiator = initiator; }
 
-    Port target() const { return m_target; }
-    void target(Port &target) { m_target = target; }
+    QString in_port() const { return m_in_port; }
+    void in_port(QString &in_port) { m_in_port = in_port; }
+
+    QString target() const { return m_target; }
+    void target(QString &target) { m_target = target; }
+
+    QString out_port() const { return m_out_port; }
+    void out_port(QString &out_port) { m_out_port = out_port; }
+
+    QQmlListProperty<QPoint *> ptList();
+
+    QPoint *at(const int index) { return m_ptList.at(index); }
 
 private:
+    static void append_pt(QQmlListProperty<QPoint> *list, QPoint *port);
+    static QPoint *pt_at(QQmlListProperty<QPoint> *list, int index);
 
     QString m_name;
-    // FIXME: [Channel] should not *contain* a port: it should contain a (logical) pointer
-    // Replace Port in channel by combination of component name and portname
-    // TODO: [Channel] Can qml contain QPair or pair?
     /**
-     * @brief m_initiator The initiator of the channel
+     * @brief m_initiator The initiator of the channel: name of the chip component.
      */
-    Port m_initiator;
+    QString m_initiator;
     /**
-     * @brief m_target The target of the channel
+     * @brief m_in_port The input port from the initiator.
      */
-    Port m_target;
+    QString m_in_port;
+    /**
+     * @brief m_target The target of the channel: name of the chip component.
+     */
+    QString m_target;
+    /**
+     * @brief m_out_port The output port to the target.
+     */
+    QString m_out_port;
+    /**
+     * @brief m_ptList A list of points that fix a corner in the connecting line
+     *
+     * Between input and output port, the line can have additional points fixed that
+     * it will pass. These points are listed in a QList.
+     */
+    QList<QPoint *> m_ptList;
 
 };
 
