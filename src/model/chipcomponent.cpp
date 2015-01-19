@@ -20,21 +20,23 @@
   *
   **********************************************************************/
 
-#include "component.h"
+#include <QtQml>
+
+#include "port.h"
+#include "chipcomponent.h"
 
 /**
  * @brief Component::Component Constructor and default constructor
  * @param parent
  */
-model::Component::Component(QObject *parent) : QObject(parent), m_orientation(Up)
+model::ChipComponent::ChipComponent(QObject *parent) : QObject(parent), m_orientation(Up)
 {
-
 }
 
 /**
  * @brief Component::~Component Destructor
  */
-model::Component::~Component()
+model::ChipComponent::~ChipComponent()
 {
 
 }
@@ -43,12 +45,12 @@ model::Component::~Component()
  * @brief Component::connectors
  * @return
  */
-QQmlListProperty<model::Port> model::Component::connectors()
+QQmlListProperty<model::Port> model::ChipComponent::connectors()
 {
     return QQmlListProperty<model::Port>(this, 0,
-                                               &model::Component::append_port,
+                                               &model::ChipComponent::append_port,
                                                0,
-                                               0,
+                                               &model::ChipComponent::port_at,
                                                0);
 }
 
@@ -57,12 +59,24 @@ QQmlListProperty<model::Port> model::Component::connectors()
  * @param list
  * @param connector
  */
-void model::Component::append_port(QQmlListProperty<model::Port> *list,
+void model::ChipComponent::append_port(QQmlListProperty<model::Port> *list,
                                    model::Port *port)
 {
-    Component *component = qobject_cast<Component *>(list->object);
+    ChipComponent *component = qobject_cast<ChipComponent *>(list->object);
     if (component) {
         port->setParent(component);
         component->m_portList.append(port);
     }
+}
+
+/**
+ * @brief port_at returns a pointer to the port at specified index (zero based)
+ *
+ * @param list The property list
+ * @param index The zero based index of the port within the list.
+ * @return the port if successful, nulptr if not successful
+ */
+// FIXME: do we really need a cast to QList in order to get at(index)?
+model::Port *model::ChipComponent::port_at(QQmlListProperty<model::Port> *property, int index) {
+    return static_cast< QList<model::Port *> *>(property->data)->at(index);
 }

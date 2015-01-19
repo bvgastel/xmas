@@ -20,25 +20,15 @@
   *
   **********************************************************************/
 
-#include <iostream>
+#include "portlist.h"
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
+PortList::PortList(QObject *parent) : QObject(parent)
+{
 
-/**
- * @brief main The testdriver.
- *
- * This module runs all tests added to the testset.
- *
- * @return 0
- */
-int main() {
-
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-
-    runner.runTests();
-    return 0;
 }
+
+PortList::~PortList()
+{
+
+}
+

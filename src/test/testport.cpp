@@ -19,26 +19,39 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
+#include <QtQml>
 
-#include <iostream>
-
-#include "testrunner.h"
 #include "testport.h"
-#include "testchipcomponent.h"
+
+
+TestPort::TestPort(QObject *parent) : QObject(parent)
+{
+
+}
+
+TestPort::~TestPort()
+{
+
+}
 
 /**
- * @brief main The testdriver.
+ * @brief TestPort::testPortCreation A simple test for creating a Port.
  *
- * This module runs all tests added to the testset.
- *
- * @return 0
+ * No further test necessary: QML takes care of all
  */
-int main() {
+void TestPort::testPortCreation() {
+    qmlRegisterType<model::Port>("Model", 1, 0, "Port");
+    QQmlEngine engine;
+    QQmlComponent component(&engine, QUrl("qrc:testport_1.qml"));
+    model::Port *port = qobject_cast<model::Port *>(component.create());
+    if (port) {
+        QCOMPARE(port->name(), QString("testport1"));
+        QCOMPARE(port->rdy(), QString("rdy1"));
+        QCOMPARE(port->compName(), QString("compName1"));
+    } else {
+        QWARN("Creation of Port not successful. Recheck qml and qrc files.");
+        QVERIFY(false);
+    }
 
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-
-    runner.runTests();
-    return 0;
 }
+

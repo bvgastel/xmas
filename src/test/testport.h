@@ -20,25 +20,27 @@
   *
   **********************************************************************/
 
-#include <iostream>
+#ifndef TESTPORT_H
+#define TESTPORT_H
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
+#include <QTest>
+#include <QObject>
 
-/**
- * @brief main The testdriver.
- *
- * This module runs all tests added to the testset.
- *
- * @return 0
- */
-int main() {
+#include "port.h"
 
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
+class TestPort : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TestPort(QObject *parent = 0);
+    ~TestPort();
 
-    runner.runTests();
-    return 0;
-}
+signals:
+
+public slots:
+
+private slots:
+    void testPortCreation();
+};
+
+#endif // TESTPORT_H

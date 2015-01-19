@@ -25,7 +25,7 @@
 
 #include <QObject>
 
-#include "component.h"
+#include "chipcomponent.h"
 
 // TODO: Consider using smart pointers : does it work well with qml / quick2? ---> Comment in github issue
 

@@ -20,8 +20,8 @@
   *
   **********************************************************************/
 
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef CHIPCOMPONENT_H
+#define CHIPCOMPONENT_H
 
 #include <QObject>
 #include <QPoint>
@@ -42,7 +42,7 @@ namespace model {
  * Ports are tightly coupled with Components: no existance outside components.
  *
  */
-class  Component : public QObject
+class  ChipComponent : public QObject
 {
     Q_OBJECT
 
@@ -50,14 +50,14 @@ class  Component : public QObject
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged )
     Q_PROPERTY(QPoint position READ position WRITE position NOTIFY positionChanged )
     Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged )
-    Q_PROPERTY(QQmlListProperty<Port> connectors READ connectors)
+    Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors)
     Q_PROPERTY(QString function READ function WRITE function NOTIFY functionChanged)
 
 public:
     enum Orientation { Up, Down, Left, Right };
 
-    explicit Component(QObject *parent = 0);
-    ~Component();
+    explicit ChipComponent(QObject *parent = 0);
+    ~ChipComponent();
 
     QString name() const {return m_name;}
     void name(const QString &name) {m_name = name;}
@@ -73,6 +73,10 @@ public:
 
     QQmlListProperty<Port> connectors();
 
+    Port *at(const int index) { return m_portList[index]; }
+
+
+
 
 signals:
     void nameChanged();
@@ -84,6 +88,7 @@ public slots:
 
 private:
     static void append_port(QQmlListProperty<Port> *list, Port *port);
+    static Port *port_at(QQmlListProperty<Port> *list, int index);
 
     //quint32 m_id;
 
@@ -99,4 +104,4 @@ public:
 
 } // namespace model
 
-#endif // COMPONENT_H
+#endif // CHIPCOMPONENT_H

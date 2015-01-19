@@ -20,11 +20,12 @@
   *
   **********************************************************************/
 
+#include <QtQml>
+
 #include "port.h"
 
 model::Port::Port(QObject *parent) : QObject(parent)
 {
-
 }
 
 model::Port::~Port()

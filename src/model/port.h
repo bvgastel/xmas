@@ -25,8 +25,6 @@
 
 #include <QObject>
 
-#include "component.h"
-
 namespace model {
 
 /**
@@ -49,8 +47,8 @@ class Port : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
-    // FIXME: [Port] cannot have Component as property, maybe comp name
-    Q_PROPERTY(Component comp READ comp WRITE comp NOTIFY compChanged)
+    // TODO: [Port] Having compName as property: is it unique enough?
+    Q_PROPERTY(QString compName READ compName WRITE compName NOTIFY compNameChanged)
 public:
     explicit Port(QObject *parent = 0);
     ~Port();
@@ -62,7 +60,7 @@ public:
 signals:
     void nameChanged();
     void rdyChanged();
-    void compChanged();
+    void compNameChanged();
 
 public slots:
 
@@ -73,8 +71,8 @@ public:
     QString rdy() const { return m_rdy; }
     void rdy(QString &rdy) { m_rdy = rdy; }
 
-    model::Component comp() const { return m_comp; }
-    void comp(model::Component &comp) { m_comp = comp; }
+    QString compName() const { return m_compName; }
+    void compName(QString &compName) { m_compName = compName; }
 
 private:
 
@@ -101,10 +99,11 @@ private:
     /**
      * @brief m_comp The name of the containing component
      *
-     * Each port is tightly coupled with one component.
+     * Each port is tightly coupled with one component and should
+     * be connected as soon as it is created in the qml files.
      *
      */
-    Component m_comp;
+    QString m_compName;
 
 };
 
