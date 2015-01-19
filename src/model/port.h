@@ -25,6 +25,8 @@
 
 #include <QObject>
 
+#include "component.h"
+
 namespace model {
 
 /**
@@ -47,6 +49,7 @@ class Port : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
+    // FIXME: [Port] cannot have Component as property, maybe comp name
     Q_PROPERTY(Component comp READ comp WRITE comp NOTIFY compChanged)
 public:
     explicit Port(QObject *parent = 0);
@@ -70,8 +73,8 @@ public:
     QString rdy() const { return m_rdy; }
     void rdy(QString &rdy) { m_rdy = rdy; }
 
-    Component comp() const { return m_comp; }
-    void comp(Component &comp) { m_comp = comp; }
+    model::Component comp() const { return m_comp; }
+    void comp(model::Component &comp) { m_comp = comp; }
 
 private:
 

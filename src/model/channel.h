@@ -70,6 +70,8 @@ class Channel : public QObject
     Q_PROPERTY(Port initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
     Q_PROPERTY(Port target READ target WRITE target NOTIFY targetChanged)
 
+    // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
+
 public:
     explicit Channel(QObject *parent = 0);
     ~Channel();
@@ -96,6 +98,9 @@ public:
 private:
 
     QString m_name;
+    // FIXME: [Channel] should not *contain* a port: it should contain a (logical) pointer
+    // Replace Port in channel by combination of component name and portname
+    // TODO: [Channel] Can qml contain QPair or pair?
     /**
      * @brief m_initiator The initiator of the channel
      */

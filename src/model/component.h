@@ -29,6 +29,8 @@
 
 #include "port.h"
 
+// TODO: are we using todo plugin? Yes: see Help / About plugins ...
+
 namespace model {
 
 /**
@@ -45,7 +47,6 @@ class  Component : public QObject
     Q_OBJECT
 
     Q_ENUMS(Orientation)
-    //Q_PROPERTY(quint32 id READ id)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged )
     Q_PROPERTY(QPoint position READ position WRITE position NOTIFY positionChanged )
     Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged )
@@ -57,8 +58,6 @@ public:
 
     explicit Component(QObject *parent = 0);
     ~Component();
-
-    // TODO: are we using todo plugin? Yes: see Help / About plugins ...
 
     QString name() const {return m_name;}
     void name(const QString &name) {m_name = name;}
