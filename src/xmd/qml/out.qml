@@ -1,17 +1,9 @@
 import QtQuick 2.4
-import XMAS 1.0
 
-QComponent {
-    id: comp
+XComponent {
     width: 200
     height: 200
-    name: "output"
-    connectors: [
-        Connector {
-            x: 90; y: 20
-            name: "a1"
-        }
-    ]
+    type: "output"
+    XConnector {x: 90; y: 20; name: "a1"}
     Image {source: "../content/images/svgs/out.svg"}
 }
-

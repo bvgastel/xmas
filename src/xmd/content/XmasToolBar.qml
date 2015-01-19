@@ -1,13 +1,12 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-
 Rectangle {
     id:toolbox
     gradient: Gradient {
-        GradientStop { position: 0.0; color: "grey" }
-        GradientStop { position: 0.4; color: "lightgrey" }
-        GradientStop { position: 1.0; color: "grey" }
+        GradientStop { position: 0.0; color: "lightgrey" }
+        GradientStop { position: 0.4; color: "white" }
+        GradientStop { position: 1.0; color: "lightgrey" }
     }
 
     RowLayout {
@@ -15,7 +14,6 @@ Rectangle {
         anchors {left: parent.left ; top: parent.top ; bottom: parent.bottom}
         anchors.margins: {top: 5; bottom: 5}
         spacing: 10
-        //Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
         ToolBarItem {
             componentFile: "../qml/queue.qml"
             image: "images/svgs/queue.svg"

@@ -32,12 +32,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
-
 #include <QQmlApplicationEngine>
-#include "canvas/component.h"
-#include "canvas/connector.h"
-#include "canvas/connection.h"
-
 
 int main(int argc, char *argv[])
 {
@@ -51,10 +46,6 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
-
-    qmlRegisterType<Component>("XMAS", 1, 0, "XComponent");
-    qmlRegisterType<Connector>("XMAS", 1, 0, "XConnector");
-    qmlRegisterType<Connection>("XMAS", 1, 0, "XConnection");
 
     QQmlApplicationEngine engine(QUrl("qrc:///mainWindow.qml"));
     Q_UNUSED(engine)

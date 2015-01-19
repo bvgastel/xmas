@@ -44,14 +44,14 @@ import "itemCreation.js" as Code
 
 Image {
     id: toolbarItem
-    Layout.preferredHeight: parent.height
-    Layout.preferredWidth: parent.height
-    source: image
 
     property string componentFile
     property string image
-
     property bool created: false
+
+    Layout.preferredHeight: parent.height
+    Layout.preferredWidth: parent.height
+    source: image
 
     MouseArea {
         anchors.fill: parent

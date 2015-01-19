@@ -6,17 +6,9 @@ include (defines.pri)
 
 QT += widgets svg quick qml quickwidgets
 
-HEADERS       = \
-    canvas/component.h \
-    canvas/connection.h \
-    canvas/connector.h \
-    canvas/network.h
+HEADERS       = 
 				
-SOURCES       = \
-    canvas/component.cpp \
-    canvas/connection.cpp \
-    canvas/connector.cpp \
-    canvas/network.cpp
+SOURCES       = 
     
 unix {
     target.path = /usr/lib
@@ -28,7 +20,7 @@ win32 {
     INSTALLS += target
 }
 
-INCLUDEPATH += canvas content qml
+INCLUDEPATH += content qml
 
 TEMPLATE = lib
 
@@ -43,19 +35,16 @@ DISTFILES += qml/fork.qml \
     qml/source.qml \
     qml/spidergon.qml \
     qml/switch.qml \
-    qml/Connection.qml \
-    qml/Connector.qml \
-    qml/QComponent.qml \
 	mainWindow.qml \
     content/itemCreation.js \
     content/ScrollBar.qml \
     content/MenuBar.qml \
-    content/images/zoom-fit.png \
-    content/images/zoom-in.png \
-    content/images/zoom-out.png \
     content/XmasToolBar.qml \
     content/ToolBarItem.qml \
-    Sheet.qml
+    Sheet.qml \
+    qml/XComponent.qml \
+    qml/XConnector.qml \
+    qml/XConnection.qml
 
 RESOURCES += \
     xmd.qrc

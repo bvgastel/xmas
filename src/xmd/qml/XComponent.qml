@@ -1,24 +1,20 @@
 import QtQuick 2.4
-import XMAS 1.0
 
-//todo : implement common xmas component style
-
-// Remark g.: File name starts with Q: that is not advisable ....
-
-XComponent {
-
-    property bool created: false
-    property bool selected: false
-
+Item {
     id: comp
     width: 200
     height: 200
+    focus: true
+    property bool created: false
+    property bool selected: false
+    property string type: "default"
+    property string name: ""
 
-//    Keys.onDeletePressed: comp.destroy()
-//    Keys.onLeftPressed: x=x-10
-//    Keys.onRightPressed: x=x+10
-//    Keys.onDownPressed: y=y+10
-//    Keys.onUpPressed: y=y-10
+    Keys.onDeletePressed: comp.destroy()
+    Keys.onLeftPressed: x=x-10
+    Keys.onRightPressed: x=x+10
+    Keys.onDownPressed: y=y+10
+    Keys.onUpPressed: y=y-10
 
     MouseArea {
         anchors.fill: comp
@@ -29,7 +25,7 @@ XComponent {
 
         onClicked: {
             selected = !selected
-            comp.focus = selected
+            scope.focus = !scope.focus
         }
 
         //onExited: selection.visible = false
@@ -52,12 +48,14 @@ XComponent {
         color: "lightsteelblue"
         border.color: "blue"
         border.width: 2
-        visible: selected
+        visible: scope.focus
         //opacity: 0.5
         z:-1
     }
 
-
-
+    FocusScope {
+        id: scope
+        x: comp.x; y: comp.y
+        width: comp.width; height: comp.height
+    }
 }
-

@@ -113,7 +113,7 @@ ApplicationWindow {
         shortcut: "+"
         iconSource: "qrc:/content/images/zoom-in.png"
         iconName: "zoom-in"
-        //onTriggered: textArea.paste()
+        onTriggered: sheet.zoomIn()
     }
 
     Action {
@@ -122,7 +122,7 @@ ApplicationWindow {
         shortcut: "-"
         iconSource: "qrc:/content/images/zoom-out.png"
         iconName: "zoom-out"
-        //onTriggered: textArea.paste()
+        onTriggered: sheet.zoomOut()
     }
 
     Action {
@@ -131,7 +131,7 @@ ApplicationWindow {
         shortcut: "1"
         iconSource: "qrc:/content/images/zoom-fit.png"
         iconName: "zoom-fit"
-        //onTriggered:
+        onTriggered: sheet.zoomFit()
     }
 
     FileDialog {
@@ -197,10 +197,16 @@ ApplicationWindow {
         }
     }
 
+    Sheet{
+        id:sheet
+        anchors.fill: parent}
 
-    Loader{
-        id: loader
-        source: "Sheet.qml"; anchors.fill: parent
+
+    statusBar: StatusBar {
+        RowLayout {
+            anchors.fill: parent
+            Label { text: "Ready" }
+        }
     }
 
 }

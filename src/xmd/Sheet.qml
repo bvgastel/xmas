@@ -39,7 +39,28 @@ import "content"
 
 Item {
     property int centerOffset: 0
-    property real zoomFactor: 1.0
+    property real zoomFactor: 0.25
+
+    function zoomFit()
+    {
+        zoomFactor = 1.0;
+    }
+    function zoomIn()
+    {
+        zoomFactor = zoomFactor + 0.1;
+        if (zoomFactor > 5) zoomFactor = 5
+        view.resizeContent(scene.width * zoomFactor
+                           , scene.height * zoomFactor,
+                           scene.Center)
+    }
+    function zoomOut()
+    {
+        zoomFactor = zoomFactor - 0.1;
+        if (zoomFactor < 0.1) zoomFactor = 0.1
+    }
+
+    focus: true
+    z: -10
     // Create a flickable to view a large drawing.
     Flickable {
         id: view
@@ -81,22 +102,22 @@ Item {
         anchors {right: parent.right; top: parent.top; left: parent.left}
     }
 
-    DropShadow {
-           anchors.fill: view
-           horizontalOffset: 3
-           verticalOffset: 3
-           radius: 8.0
-           samples: 16
-           color: "#80000000"
-           source: view
-       }
+//    DropShadow {
+//           anchors.fill: view
+//           horizontalOffset: 3
+//           verticalOffset: 3
+//           radius: 8.0
+//           samples: 16
+//           color: "#80000000"
+//           source: view
+//       }
 
     // Attach scrollbars to the right and bottom edges of the view.
       ScrollBar {
           id: verticalScrollBar
           width: 12; height: view.height-12 - toolbar.height
           anchors.right: view.right
-          anchors.top: toolbar.bottom
+          anchors.top:  toolbar.bottom
           anchors.bottom: view.bottom
           opacity: 0
           orientation: Qt.Vertical
