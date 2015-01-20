@@ -13,7 +13,6 @@ function startDrag(mouse)
 
 //Creation is split into two functions due to an asynchronous wait while
 //possible external files are loaded.
-
 function loadComponent() {
     if (itemComponent != null) { // component has been previously loaded
         createItem();
@@ -45,7 +44,6 @@ function continueDrag(mouse)
 {
     if (draggedItem == null)
         return;
-
     draggedItem.x = mouse.x/scene.scale + posnInWindow.x - startingMouse.x;
     draggedItem.y = mouse.y/scene.scale + posnInWindow.y - startingMouse.y;
 }
@@ -65,4 +63,3 @@ function endDrag(mouse)
         draggedItem = null;
     }
 }
-

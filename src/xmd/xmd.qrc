@@ -43,5 +43,6 @@
         <file>qml/XComponent.qml</file>
         <file>qml/XConnection.qml</file>
         <file>qml/XConnector.qml</file>
+        <file>content/connectionCreation.js</file>
     </qresource>
 </RCC>

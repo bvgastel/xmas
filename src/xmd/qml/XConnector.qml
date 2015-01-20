@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import "../content/connectionCreation.js" as Code
 
 Item {
     id:connector
@@ -19,14 +20,17 @@ Item {
         cursorShape: containsMouse ? Qt.CrossCursor : Qt.ArrowCursor
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
-            if (mouse.button == Qt.LeftButton)
-            { //testing
-                connected = !connected
+            if (mouse.button == Qt.LeftButton && !connected) {
+                Code.beginConnecting(connector)
+                connected = true
             }
-
         }
-
+        onPositionChanged: if (connected) Code.continueConnecting(mouse);
+        onReleased: {
+            Code.endConnecting(mouse);
+        }
     }
 }
+
 
 

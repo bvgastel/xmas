@@ -10,11 +10,16 @@ Item {
     property string type: "default"
     property string name: ""
 
+
+    property int rightBound: comp.parent.width - comp.width
+    property int bottomBound: comp.parent.height - comp.height
+    property int step: 10
+
     Keys.onDeletePressed: comp.destroy()
-    Keys.onLeftPressed: x=x-10
-    Keys.onRightPressed: x=x+10
-    Keys.onDownPressed: y=y+10
-    Keys.onUpPressed: y=y-10
+    Keys.onLeftPressed: x - step < 0 ? x = 0 : x = x - step
+    Keys.onRightPressed: x + step > rightBound ? x = rightBound : x = x + step
+    Keys.onDownPressed: y + step > bottomBound ? y = bottomBound : y = y + step
+    Keys.onUpPressed: y - step < 0 ? y = 0 : y = y - step
 
     MouseArea {
         anchors.fill: comp
@@ -34,8 +39,6 @@ Item {
 
         //onExited: selection.visible = false
 
-        //testing
-        onDoubleClicked: comp.destroy()
         onWheel: {
             if (wheel.modifiers & Qt.ControlModifier) {
                 comp.rotation -= wheel.angleDelta.y /120 * 90;
