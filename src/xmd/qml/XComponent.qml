@@ -22,6 +22,10 @@ Item {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: comp
+        drag.minimumX: 0
+        drag.minimumY: 0
+        drag.maximumX: comp.parent.width - comp.width
+        drag.maximumY: comp.parent.height - comp.height
 
         onClicked: {
             selected = !selected

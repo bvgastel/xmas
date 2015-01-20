@@ -48,10 +48,7 @@ Item {
     function zoomIn()
     {
         zoomFactor = zoomFactor + 0.1;
-        if (zoomFactor > 5) zoomFactor = 5
-        view.resizeContent(scene.width * zoomFactor
-                           , scene.height * zoomFactor,
-                           scene.Center)
+        if (zoomFactor > 2) zoomFactor = 2
     }
     function zoomOut()
     {
@@ -75,7 +72,6 @@ Item {
         Rectangle {
             id: scene
             scale: zoomFactor
-
             width: 11880
             height: 8400
             color: "white"
@@ -102,15 +98,51 @@ Item {
         anchors {right: parent.right; top: parent.top; left: parent.left}
     }
 
-//    DropShadow {
-//           anchors.fill: view
-//           horizontalOffset: 3
-//           verticalOffset: 3
-//           radius: 8.0
-//           samples: 16
-//           color: "#80000000"
-//           source: view
-//       }
+    DropShadow {
+           anchors.fill: view
+           horizontalOffset: 3
+           verticalOffset: 3
+           radius: 8.0
+           samples: 16
+           color: "#80000000"
+           source: view
+       }
+
+
+
+//    Canvas {
+//            id: canvas
+//            anchors.fill: view
+
+//            property real lastX
+//            property real lastY
+//            property color color: "black"
+
+//            onPaint: {
+//                var ctx = getContext('2d')
+//                ctx.lineWidth = 1.5
+//                ctx.strokeStyle = canvas.color
+//                ctx.beginPath()
+//                ctx.moveTo(lastX, lastY)
+//                lastX = area.mouseX
+//                lastY = area.mouseY
+//                ctx.lineTo(lastX, lastY)
+//                ctx.stroke()
+//            }
+//            MouseArea {
+//                id: area
+//                anchors.fill: parent
+//                onPressed: {
+//                    canvas.lastX = mouseX
+//                    canvas.lastY = mouseY
+//                }
+//                onPositionChanged: {
+//                    canvas.requestPaint()
+//                }
+//            }
+//        }
+
+
 
     // Attach scrollbars to the right and bottom edges of the view.
       ScrollBar {
@@ -134,14 +166,6 @@ Item {
           position: view.visibleArea.xPosition
           pageSize: view.visibleArea.widthRatio
       }
-
-
-    //! [top-level transitions]
-    transitions: Transition {
-        PropertyAnimation { duration: 3000 }
-        ColorAnimation { duration: 3000 }
-    }
-    //! [top-level transitions]
 
 }
 
