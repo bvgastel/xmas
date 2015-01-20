@@ -71,6 +71,7 @@ class Channel : public QObject
     Q_PROPERTY(QString in_port READ in_port WRITE in_port NOTIFY in_portChanged)
     Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
     Q_PROPERTY(QString out_port READ out_port WRITE setOut_port NOTIFY out_portChanged)
+    Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
     Q_PROPERTY(QQmlListProperty<QPoint> ptList READ ptList NOTIFY ptListChanged)
 
     // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
@@ -85,6 +86,7 @@ signals:
     void in_portChanged();
     void targetChanged();
     void out_portChanged();
+    void datatypeChanged();
     void ptListChanged();
 
 public slots:
@@ -106,6 +108,9 @@ public:
 
     QString out_port() const { return m_out_port; }
     void out_port(QString &out_port) { m_out_port = out_port; }
+
+    QString datatype() const { return m_datatype; }
+    void datatype(QString &datatype) { m_datatype = datatype; }
 
     QQmlListProperty<QPoint *> ptList();
 
@@ -132,6 +137,10 @@ private:
      * @brief m_out_port The output port to the target.
      */
     QString m_out_port;
+    /**
+     * @brief m_data The data type of the channel
+     */
+    QString m_datatype;
     /**
      * @brief m_ptList A list of points that fix a corner in the connecting line
      *
