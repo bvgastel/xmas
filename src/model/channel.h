@@ -68,9 +68,9 @@ class Channel : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
-    Q_PROPERTY(QString in_port READ in_port WRITE in_port NOTIFY in_portChanged)
+    Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
     Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
-    Q_PROPERTY(QString out_port READ out_port WRITE setOut_port NOTIFY out_portChanged)
+    Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
     Q_PROPERTY(QQmlListProperty<QPoint> ptList READ ptList NOTIFY ptListChanged)
 
@@ -83,9 +83,9 @@ public:
 signals:
     void nameChanged();
     void initiatorChanged();
-    void in_portChanged();
+    void init_portChanged();
     void targetChanged();
-    void out_portChanged();
+    void target_portChanged();
     void datatypeChanged();
     void ptListChanged();
 
@@ -100,25 +100,25 @@ public:
     QString initiator() const { return m_initiator; }
     void initiator(QString &initiator) { m_initiator = initiator; }
 
-    QString in_port() const { return m_in_port; }
-    void in_port(QString &in_port) { m_in_port = in_port; }
+    QString init_port() const { return m_init_port; }
+    void init_port(QString &init_port) { m_init_port = init_port; }
 
     QString target() const { return m_target; }
     void target(QString &target) { m_target = target; }
 
-    QString out_port() const { return m_out_port; }
-    void out_port(QString &out_port) { m_out_port = out_port; }
+    QString target_port() const { return m_target_port; }
+    void target_port(QString &target_port) { m_target_port = target_port; }
 
     QString datatype() const { return m_datatype; }
     void datatype(QString &datatype) { m_datatype = datatype; }
 
-    QQmlListProperty<QPoint *> ptList();
+    QQmlListProperty<QPoint> ptList();
 
-    QPoint *at(const int index) { return m_ptList.at(index); }
+    QPoint *pt(const int index) { return m_ptList.at(index); }
+    int ptSize() const {return m_ptList.size(); }
 
 private:
     static void append_pt(QQmlListProperty<QPoint> *list, QPoint *port);
-    static QPoint *pt_at(QQmlListProperty<QPoint> *list, int index);
 
     QString m_name;
     /**
@@ -128,7 +128,7 @@ private:
     /**
      * @brief m_in_port The input port from the initiator.
      */
-    QString m_in_port;
+    QString m_init_port;
     /**
      * @brief m_target The target of the channel: name of the chip component.
      */
@@ -136,7 +136,7 @@ private:
     /**
      * @brief m_out_port The output port to the target.
      */
-    QString m_out_port;
+    QString m_target_port;
     /**
      * @brief m_data The data type of the channel
      */

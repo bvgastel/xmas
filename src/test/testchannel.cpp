@@ -20,40 +20,42 @@
   *
   **********************************************************************/
 
-#include <QtQml>
+#include <QDebug>
 
-#include "testchipcomponent.h"
+#include "testchannel.h"
 
-TestComponent::TestComponent(QObject *parent) : QObject(parent)
+TestChannel::TestChannel(QObject *parent) : QObject(parent)
 {
 
 }
 
-TestComponent::~TestComponent()
+TestChannel::~TestChannel()
 {
 
 }
 
-void TestComponent::testComponentCreation() {
+void TestChannel::testChannelCreate() {
     qmlRegisterType<model::Port>("Model", 1, 0, "Port");
     qmlRegisterType<model::ChipComponent>("Model", 1, 0, "ChipComponent");
+    qmlRegisterType<model::Channel>("Model", 1, 0, "Channel");
     QQmlEngine engine;
-    QQmlComponent component(&engine, QUrl("qrc:testcomp_1.qml"));
-    model::ChipComponent *comp = qobject_cast<model::ChipComponent *>(component.create());
-    if (comp) {
-        QCOMPARE(comp->name(), QString("testcomp1"));
-        QCOMPARE(comp->x(), 1);
-        QCOMPARE(comp->y(), 1);
-        QCOMPARE(comp->size(), 2);
-        for (int i = 0; i < comp->size(); i++) {
+    QQmlComponent component(&engine, QUrl("qrc:testchannel_1.qml"));
+    model::Channel *channel = qobject_cast<model::Channel *>(component.create());
+    if (channel) {
+        QCOMPARE(channel->name(), QString("testchannel1"));
+        QCOMPARE(channel->initiator(), QString("testinitiator1"));
+        QCOMPARE(channel->init_port(), QString("testinit_port1"));
+        QCOMPARE(channel->target(), QString("testtarget1"));
+        QCOMPARE(channel->target_port(), QString("testtarget_port1"));
+        QCOMPARE(channel->ptSize(), 2);
+        for (int i = 0; i < channel->ptSize(); i++) {
             QString n = QString(std::to_string(i+1).c_str());
-            model::Port *p = comp->at(i);
-            QCOMPARE(p->name(), QString("testport").append(n));
-            QCOMPARE(p->rdy(), QString("rdy").append(n));
-            QCOMPARE(p->compName(), QString("compName").append(n));
+            QPoint *p = channel->pt(i);
+            QCOMPARE(p->x(), i+1);
+            QCOMPARE(p->y(), i+1);
         }
     } else {
-        QWARN("Creation of ChipComponent not successful. Recheck qml and qrc files.");
+        QWARN("Creation of Channel not successful. Recheck qml and qrc files.");
         QVERIFY(false);
     }
 }

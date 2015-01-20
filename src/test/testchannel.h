@@ -20,39 +20,29 @@
   *
   **********************************************************************/
 
+#ifndef TESTCHANNEL_H
+#define TESTCHANNEL_H
+
+#include <QtQml>
+#include <QTest>
+
+#include <QObject>
+
 #include "channel.h"
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
+class TestChannel : public QObject
 {
+    Q_OBJECT
+public:
+    explicit TestChannel(QObject *parent = 0);
+    ~TestChannel();
 
-}
+signals:
 
-model::Channel::~Channel()
-{
+public slots:
 
-}
+private slots:
+    void testChannelCreate();
+};
 
-QQmlListProperty<QPoint> model::Channel::ptList() {
-    return QQmlListProperty<QPoint>(this, 0,
-                                          &model::Channel::append_pt,
-                                          0,
-                                          0,
-                                          0);
-}
-
-/**
- * @brief Channel::append_pt
- * @param list
- * @param connector
- */
-void model::Channel::append_pt(QQmlListProperty<QPoint> *list,
-                                   QPoint *pt)
-{
-    Channel *channel = qobject_cast<Channel *>(list->object);
-    if (channel) {
-        //pt->setParent(channel);
-        channel->m_ptList.append(pt);
-    }
-}
-
-
+#endif // TESTCHANNEL_H

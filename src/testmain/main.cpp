@@ -21,10 +21,12 @@
   **********************************************************************/
 
 #include <iostream>
+#include <QDebug>
 
 #include "testrunner.h"
 #include "testport.h"
 #include "testchipcomponent.h"
+#include "testchannel.h"
 
 /**
  * @brief main The testdriver.
@@ -38,6 +40,7 @@ int main() {
     TestRunner runner;
     runner.addTest(new TestPort());
     runner.addTest(new TestComponent());
+    runner.addTest(new TestChannel());
 
     runner.runTests();
     return 0;

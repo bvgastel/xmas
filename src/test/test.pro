@@ -23,12 +23,14 @@ CONFIG   -= app_bundle
 SOURCES += \
     testrunner.cpp \
     testport.cpp \
-    testchipcomponent.cpp
+    testchipcomponent.cpp \
+    testchannel.cpp
 
 HEADERS += \
     testrunner.h \
     testport.h \
-    testchipcomponent.h
+    testchipcomponent.h \
+    testchannel.h
 
 RESOURCES += \
     test.qrc
