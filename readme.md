@@ -162,7 +162,6 @@ agile management tool to visualise our work and to keep track of the progress.
 Compile and install
 ===================
 
-- README-FLTK-WINDOWS.md	The instructions to develop from the windows platform
 - README-LINUX.md			The instructions to develop from one of the linux platforms
 
 Dependencies
@@ -170,10 +169,10 @@ Dependencies
 
 This project depends on the following libraries:
 
-fltk-1.3.3
+Qt5.4		We specifically use Qml 2
 
-We will update this whenever this changes. The following change will probably be the
-boost library.
+Remark that we use as much from the Qt libraries as is possible.
+
 
 Tips
 ====
@@ -188,7 +187,7 @@ Tips
 
 - Use the tool configuration option (Tools ... Configure Tools ...). It starts
   a dialog where you can add any tool you have on your system and use standard
-  macro's to denote directory name, filename etcetera. As an example we use
+  macros to denote directory name, filename etcetera. As an example we use
   "git diff HEAD ${ACTIVE\_EDITOR\_FILENAME}" with the standard option "Launch
   tool in a new console windows and wait for a keypress when done".
 
