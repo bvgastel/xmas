@@ -25,7 +25,9 @@
 
 #include <QObject>
 
+#include "gridpoint.h"
 #include "chipcomponent.h"
+
 
 // TODO: Consider using smart pointers : does it work well with qml / quick2? ---> Comment in github issue
 
@@ -72,7 +74,7 @@ class Channel : public QObject
     Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
     Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
-    Q_PROPERTY(QQmlListProperty<QPoint> ptList READ ptList NOTIFY ptListChanged)
+    Q_PROPERTY(QQmlListProperty<model::GridPoint> ptList READ ptList NOTIFY ptListChanged)
 
     // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
 
@@ -112,13 +114,13 @@ public:
     QString datatype() const { return m_datatype; }
     void datatype(QString &datatype) { m_datatype = datatype; }
 
-    QQmlListProperty<QPoint> ptList();
+    QQmlListProperty<model::GridPoint> ptList();
 
-    QPoint *pt(const int index) { return m_ptList.at(index); }
+    model::GridPoint *pt(const int index) { return m_ptList.at(index); }
     int ptSize() const {return m_ptList.size(); }
 
 private:
-    static void append_pt(QQmlListProperty<QPoint> *list, QPoint *port);
+    static void append_gridPoint(QQmlListProperty<GridPoint> *property, GridPoint *gridPoint);
 
     QString m_name;
     /**
@@ -147,7 +149,7 @@ private:
      * Between input and output port, the line can have additional points fixed that
      * it will pass. These points are listed in a QList.
      */
-    QList<QPoint *> m_ptList;
+    QList<model::GridPoint *> m_ptList;
 
 };
 

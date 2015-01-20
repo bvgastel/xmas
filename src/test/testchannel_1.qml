@@ -3,13 +3,16 @@ import Model 1.0
 Channel {
     name : "testchannel1"
     initiator : "testinitiator1"
-    in_port : "test_inport1"
-    target : "test_target1"
-    out_port : "test_outport1"
+    init_port : "testinit_port1"
+    target : "testtarget1"
+    target_port : "testtarget_port1"
     datatype : "test_datatype1"
+
     ptList : [
-        point (1, 1),
-        point (2, 2)
+
+        GridPoint { x:1; y:1 },
+        GridPoint { x:2; y:2 }
+
     ]
 }
 

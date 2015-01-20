@@ -20,39 +20,47 @@
   *
   **********************************************************************/
 
-#include "channel.h"
+#ifndef POINT_H
+#define POINT_H
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
-{
+#include <QObject>
 
-}
-
-model::Channel::~Channel()
-{
-
-}
-
-QQmlListProperty<model::GridPoint> model::Channel::ptList() {
-    return QQmlListProperty<model::GridPoint>(this, 0,
-                                          &model::Channel::append_gridPoint,
-                                          0,
-                                          0,
-                                          0);
-}
+namespace model {
 
 /**
- * @brief Channel::append_pt
- * @param property
- * @param gridPoint
+ * @brief The Point class
+ *
+ * The x and y coordinates, both must be >= 0.
  */
-void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *property,
-                                   model::GridPoint *gridPoint)
+class GridPoint : public QObject
 {
-    Channel *channel = qobject_cast<Channel *>(property->object);
-    if (channel) {
-        gridPoint->setParent(channel);
-        channel->m_ptList.append(gridPoint);
-    }
-}
+    Q_OBJECT
+
+    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
+    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
+
+public:
+    explicit GridPoint(QObject *parent = 0);
+    ~GridPoint();
+
+    int x() { return m_x; }
+    void x(int &x) { m_x = x >= 0 ? x : 0; }
+
+    int y() { return m_y; }
+    void y(int &y) { m_y = y >= 0 ? y : 0; }
 
 
+signals:
+    void xChanged();
+    void yChanged();
+
+public slots:
+
+private:
+    int m_x;
+    int m_y;
+};
+
+} // namespace model
+
+#endif // POINT_H

@@ -20,39 +20,33 @@
   *
   **********************************************************************/
 
+#include <QtQml>
+
+#include "utils.h"
+
+#include "gridpoint.h"
+#include "borderpos.h"
+#include "port.h"
 #include "channel.h"
+#include "chipcomponent.h"
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
+model::Utils::Utils()
 {
 
 }
 
-model::Channel::~Channel()
+model::Utils::~Utils()
 {
 
 }
 
-QQmlListProperty<model::GridPoint> model::Channel::ptList() {
-    return QQmlListProperty<model::GridPoint>(this, 0,
-                                          &model::Channel::append_gridPoint,
-                                          0,
-                                          0,
-                                          0);
+void model::Utils::registreModel() {
+    const char *nameSpace = "Model";
+    const int major = 1;
+    const int minor = 0;
+    qmlRegisterType<model::GridPoint>(nameSpace, major, minor, "GridPoint");
+    qmlRegisterType<model::BorderPos>(nameSpace, major, minor, "BorderPos");
+    qmlRegisterType<model::Port>(nameSpace, major, minor, "Port");
+    qmlRegisterType<model::ChipComponent>(nameSpace, major, minor, "ChipComponent");
+    qmlRegisterType<model::Channel>(nameSpace, major, minor, "Channel");
 }
-
-/**
- * @brief Channel::append_pt
- * @param property
- * @param gridPoint
- */
-void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *property,
-                                   model::GridPoint *gridPoint)
-{
-    Channel *channel = qobject_cast<Channel *>(property->object);
-    if (channel) {
-        gridPoint->setParent(channel);
-        channel->m_ptList.append(gridPoint);
-    }
-}
-
-

@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "testchannel.h"
+#include "utils.h"
 
 TestChannel::TestChannel(QObject *parent) : QObject(parent)
 {
@@ -35,9 +36,7 @@ TestChannel::~TestChannel()
 }
 
 void TestChannel::testChannelCreate() {
-    qmlRegisterType<model::Port>("Model", 1, 0, "Port");
-    qmlRegisterType<model::ChipComponent>("Model", 1, 0, "ChipComponent");
-    qmlRegisterType<model::Channel>("Model", 1, 0, "Channel");
+    model::Utils::registreModel();
     QQmlEngine engine;
     QQmlComponent component(&engine, QUrl("qrc:testchannel_1.qml"));
     model::Channel *channel = qobject_cast<model::Channel *>(component.create());
@@ -50,7 +49,7 @@ void TestChannel::testChannelCreate() {
         QCOMPARE(channel->ptSize(), 2);
         for (int i = 0; i < channel->ptSize(); i++) {
             QString n = QString(std::to_string(i+1).c_str());
-            QPoint *p = channel->pt(i);
+            model::GridPoint *p = channel->pt(i);
             QCOMPARE(p->x(), i+1);
             QCOMPARE(p->y(), i+1);
         }

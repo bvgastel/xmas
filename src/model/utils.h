@@ -20,39 +20,20 @@
   *
   **********************************************************************/
 
-#include "channel.h"
+#ifndef UTILS_H
+#define UTILS_H
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
+namespace model {
+
+class Utils
 {
+public:
+    Utils();
+    ~Utils();
 
-}
+    static void registreModel();
+};
 
-model::Channel::~Channel()
-{
+} // namespace model
 
-}
-
-QQmlListProperty<model::GridPoint> model::Channel::ptList() {
-    return QQmlListProperty<model::GridPoint>(this, 0,
-                                          &model::Channel::append_gridPoint,
-                                          0,
-                                          0,
-                                          0);
-}
-
-/**
- * @brief Channel::append_pt
- * @param property
- * @param gridPoint
- */
-void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *property,
-                                   model::GridPoint *gridPoint)
-{
-    Channel *channel = qobject_cast<Channel *>(property->object);
-    if (channel) {
-        gridPoint->setParent(channel);
-        channel->m_ptList.append(gridPoint);
-    }
-}
-
-
+#endif // UTILS_H

@@ -20,39 +20,45 @@
   *
   **********************************************************************/
 
-#include "channel.h"
+#ifndef GRID_H
+#define GRID_H
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
+#include <QObject>
+
+class Grid : public QObject
 {
+    Q_OBJECT
 
-}
+    Q_PROPERTY(int width READ width WRITE width NOTIFY widthChanged)
+    Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
 
-model::Channel::~Channel()
-{
+public:
+    explicit Grid(QObject *parent = 0);
+    ~Grid();
 
-}
+    int width() { return m_width; }
+    void width(int &width) { m_width = width > 0 ? width : 100; }
 
-QQmlListProperty<model::GridPoint> model::Channel::ptList() {
-    return QQmlListProperty<model::GridPoint>(this, 0,
-                                          &model::Channel::append_gridPoint,
-                                          0,
-                                          0,
-                                          0);
-}
-
-/**
- * @brief Channel::append_pt
- * @param property
- * @param gridPoint
- */
-void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *property,
-                                   model::GridPoint *gridPoint)
-{
-    Channel *channel = qobject_cast<Channel *>(property->object);
-    if (channel) {
-        gridPoint->setParent(channel);
-        channel->m_ptList.append(gridPoint);
-    }
-}
+    int height() { return m_height; }
+    void height(int &height) { m_height = height > 0 ? height : 100; }
 
 
+
+signals:
+    void widthChanged();
+    void heightChanged();
+
+public slots:
+
+private:
+    /**
+     * @brief m_width width of the grid, must be > 0.
+     */
+    int m_width;
+    /**
+     * @brief m_height height of the grid, must be > 0.
+     */
+    int m_height;
+};
+
+#endif // GRID_H
