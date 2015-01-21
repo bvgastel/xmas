@@ -35,8 +35,7 @@ TestComponent::~TestComponent()
 }
 
 void TestComponent::testComponentCreation() {
-    qmlRegisterType<model::Port>("Model", 1, 0, "Port");
-    qmlRegisterType<model::ChipComponent>("Model", 1, 0, "ChipComponent");
+    model::Utils::registreModel();
     QQmlEngine engine;
     QQmlComponent component(&engine, QUrl("qrc:testcomp_1.qml"));
     model::ChipComponent *comp = qobject_cast<model::ChipComponent *>(component.create());

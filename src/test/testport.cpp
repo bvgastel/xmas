@@ -40,7 +40,7 @@ TestPort::~TestPort()
  * No further test necessary: QML takes care of all
  */
 void TestPort::testPortCreation() {
-    qmlRegisterType<model::Port>("Model", 1, 0, "Port");
+    model::Utils::registreModel();
     QQmlEngine engine;
     QQmlComponent component(&engine, QUrl("qrc:testport_1.qml"));
     model::Port *port = qobject_cast<model::Port *>(component.create());

@@ -44,9 +44,10 @@ void model::Utils::registreModel() {
     const char *nameSpace = "Model";
     const int major = 1;
     const int minor = 0;
-    qmlRegisterType<model::GridPoint>(nameSpace, major, minor, "GridPoint");
-    qmlRegisterType<model::BorderPos>(nameSpace, major, minor, "BorderPos");
-    qmlRegisterType<model::Port>(nameSpace, major, minor, "Port");
-    qmlRegisterType<model::ChipComponent>(nameSpace, major, minor, "ChipComponent");
-    qmlRegisterType<model::Channel>(nameSpace, major, minor, "Channel");
+    qmlRegisterType<model::Grid>            (nameSpace, major, minor, "Grid");
+    qmlRegisterType<model::GridPoint>       (nameSpace, major, minor, "GridPoint");
+    qmlRegisterType<model::BorderPos>       (nameSpace, major, minor, "BorderPos");
+    qmlRegisterType<model::Port>            (nameSpace, major, minor, "Port");
+    qmlRegisterType<model::ChipComponent>   (nameSpace, major, minor, "ChipComponent");
+    qmlRegisterType<model::Channel>         (nameSpace, major, minor, "Channel");
 }
