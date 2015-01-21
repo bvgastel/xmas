@@ -23,6 +23,7 @@
 #include <QtQml>
 
 #include "testchipcomponent.h"
+#include "utils.h"
 
 TestComponent::TestComponent(QObject *parent) : QObject(parent)
 {

@@ -22,13 +22,34 @@
 
 #include "grid.h"
 
-Grid::Grid(QObject *parent) : QObject(parent)
+model::Grid::Grid(QObject *parent) : QObject(parent)
 {
 
 }
 
-Grid::~Grid()
+model::Grid::Grid(const Grid &rhs) : QObject() {
+    if (this != &rhs) {
+        m_width = rhs.m_width;
+        m_height = rhs.m_height;
+    }
+}
+
+model::Grid::~Grid()
 {
 
+}
+
+void model::Grid::network(QString &network) {
+    // TODO: check network exists, was declared earlier
+    m_network = network;
+}
+
+model::Grid &model::Grid::operator=(const model::Grid &rhs) {
+    if (this != &rhs) {
+        m_width = rhs.m_width;
+        m_height = rhs.m_height;
+        m_network = rhs.m_network;
+    }
+    return *this;
 }
 

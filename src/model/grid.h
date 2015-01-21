@@ -25,16 +25,23 @@
 
 #include <QObject>
 
+namespace model {
+
 class Grid : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(int width READ width WRITE width NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
 
 public:
     explicit Grid(QObject *parent = 0);
+    Grid(const Grid &rhs);
     ~Grid();
+
+    QString network() const { return m_network; }
+    void network(QString &network);
 
     int width() { return m_width; }
     void width(int &width) { m_width = width > 0 ? width : 100; }
@@ -42,15 +49,20 @@ public:
     int height() { return m_height; }
     void height(int &height) { m_height = height > 0 ? height : 100; }
 
-
+    Grid &operator=(const Grid &rhs);
 
 signals:
+    void networkChanged();
     void widthChanged();
     void heightChanged();
 
 public slots:
 
 private:
+    /**
+     * @brief m_network the name of the network
+     */
+    QString m_network;
     /**
      * @brief m_width width of the grid, must be > 0.
      */
@@ -60,5 +72,7 @@ private:
      */
     int m_height;
 };
+
+} // namespace model
 
 #endif // GRID_H

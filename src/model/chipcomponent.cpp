@@ -41,6 +41,11 @@ model::ChipComponent::~ChipComponent()
 
 }
 
+void model::ChipComponent::network(QString &network) {
+    // TODO: Check network name
+    m_network = network;
+}
+
 /**
  * @brief Component::connectors
  * @return

@@ -24,6 +24,7 @@
 
 #include "utils.h"
 
+#include "grid.h"
 #include "gridpoint.h"
 #include "borderpos.h"
 #include "port.h"

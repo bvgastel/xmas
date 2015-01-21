@@ -69,6 +69,7 @@ class Channel : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(QString initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
     Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
     Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
@@ -84,12 +85,15 @@ public:
 
 signals:
     void nameChanged();
+    void networkChanged();
     void initiatorChanged();
     void init_portChanged();
     void targetChanged();
     void target_portChanged();
     void datatypeChanged();
     void ptListChanged();
+
+    void error(QString msg);
 
 public slots:
 
@@ -98,6 +102,9 @@ public:
 
     QString name() const { return m_name; }
     void name(QString &name) { m_name = name; }
+
+    QString network() const { return m_network; }
+    void network(QString &network);
 
     QString initiator() const { return m_initiator; }
     void initiator(QString &initiator) { m_initiator = initiator; }
@@ -122,7 +129,14 @@ public:
 private:
     static void append_gridPoint(QQmlListProperty<GridPoint> *property, GridPoint *gridPoint);
 
+    /**
+     * @brief m_name The identifying name of the channel
+     */
     QString m_name;
+    /**
+     * @brief m_network The name of the network
+     */
+    QString m_network;
     /**
      * @brief m_initiator The initiator of the channel: name of the chip component.
      */

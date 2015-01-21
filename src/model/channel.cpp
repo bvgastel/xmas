@@ -41,6 +41,21 @@ QQmlListProperty<model::GridPoint> model::Channel::ptList() {
 }
 
 /**
+ * @brief model::Channel::network Setter for the networkname
+ *
+ * This method sets the network name, provided the network was declared earlier.
+ * If network name does not exist, the method emits an error signal containing the error message.
+ *
+ * It is up to the user to catch the error with a slot.
+ *
+ * @param network The name of the network
+ */
+void model::Channel::network(QString &network) {
+    // TODO: check network name
+    m_network = network;
+}
+
+/**
  * @brief Channel::append_pt
  * @param property
  * @param gridPoint

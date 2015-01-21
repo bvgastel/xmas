@@ -25,6 +25,8 @@
 
 #include <QObject>
 
+#include "grid.h"
+#include "gridpoint.h"
 #include "chipcomponent.h"
 #include "channel.h"
 

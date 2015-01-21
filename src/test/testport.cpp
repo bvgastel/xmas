@@ -22,7 +22,7 @@
 #include <QtQml>
 
 #include "testport.h"
-
+#include "utils.h"
 
 TestPort::TestPort(QObject *parent) : QObject(parent)
 {
