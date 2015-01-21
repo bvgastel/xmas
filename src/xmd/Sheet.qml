@@ -39,7 +39,7 @@ import "content"
 
 Item {
     property int centerOffset: 0
-    property real zoomFactor: 0.25
+    property real zoomFactor: 1.0
 
     function zoomFit()
     {
@@ -68,15 +68,16 @@ Item {
         contentY: (1 - scene.scale) * scene.height * 0.5
         contentWidth: scene.width
         contentHeight: scene.height
+        //TODO : if flickable is interactive, can't drag a connection --> setup mousearea?
+        interactive: false
 
         Rectangle {
             id: scene
             scale: zoomFactor
-            width: 11880
-            height: 8400
+            width: 2970
+            height: 2100
             color: "white"
-            opacity: 50
-            }
+        }
 
         // Only show the scrollbars when the view is moving.
         states: State {
@@ -89,48 +90,49 @@ Item {
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 600 }
         }
-
     }
 
+    //TODO : move xmastoolbar to mainwindow , so sheet will become just a model drawing
     XmasToolBar{
         id: toolbar
         height:48
         anchors {right: parent.right; top: parent.top; left: parent.left}
     }
 
+    //TODO : in Windows XP DropShadow crash with large scene 11800/8400! Test.
     DropShadow {
-           anchors.fill: view
-           horizontalOffset: 3
-           verticalOffset: 3
-           radius: 8.0
-           samples: 16
-           color: "#80000000"
-           source: view
-       }
+        anchors.fill: view
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8.0
+        samples: 16
+        color: "#80000000"
+        source: view
+    }
 
 
     // Attach scrollbars to the right and bottom edges of the view.
-      ScrollBar {
-          id: verticalScrollBar
-          width: 12; height: view.height-12 - toolbar.height
-          anchors.right: view.right
-          anchors.top:  toolbar.bottom
-          anchors.bottom: view.bottom
-          opacity: 0
-          orientation: Qt.Vertical
-          position: view.visibleArea.yPosition
-          pageSize: view.visibleArea.heightRatio
-      }
+    ScrollBar {
+        id: verticalScrollBar
+        width: 12; height: view.height-12 - toolbar.height
+        anchors.right: view.right
+        anchors.top:  toolbar.bottom
+        anchors.bottom: view.bottom
+        opacity: 0
+        orientation: Qt.Vertical
+        position: view.visibleArea.yPosition
+        pageSize: view.visibleArea.heightRatio
+    }
 
-      ScrollBar {
-          id: horizontalScrollBar
-          width: view.width-12; height: 12
-          anchors.bottom: view.bottom
-          opacity: 0
-          orientation: Qt.Horizontal
-          position: view.visibleArea.xPosition
-          pageSize: view.visibleArea.widthRatio
-      }
+    ScrollBar {
+        id: horizontalScrollBar
+        width: view.width-12; height: 12
+        anchors.bottom: view.bottom
+        opacity: 0
+        orientation: Qt.Horizontal
+        position: view.visibleArea.xPosition
+        pageSize: view.visibleArea.widthRatio
+    }
 
 }
 

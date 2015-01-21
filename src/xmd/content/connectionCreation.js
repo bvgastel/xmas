@@ -1,30 +1,47 @@
-var beginPort = null;
-var endPort = null;
-var connection = null
 
-function beginConnecting(port) {
-    beginPort = port;
-    if (connection != null) { // Connection has been previously loaded
-        createConnection();
-        return;
+var connection = null;
+var component = null;
+
+function doConnect(port) {
+
+    if(connection === null) {
+        if (createConnection(port)) {
+            connection.connector1 = port;
+            console.log("Connection created");
+        }
     }
-
-    connection = Qt.createComponent("../qml/XConnection.qml");
-    if (connection.status === Component.Loading)  //Depending on the content, it can be ready or error immediately
-        connection.statusChanged.connect(createConnection);
     else
-        createConnection();
+    {
+        endConnect(port);
+
+    }
 }
 
-function createConnection(){
-console.log("Connection created");
+function createConnection(port){
+    component = Qt.createComponent("../qml/XConnection.qml");
+    connection = component.createObject(scene, {"x": 0, "y": 0});
+    if (connection === null) {
+        console.log("Error creating connection");
+        return false
+    }
+    return true ;
 }
+
 
 function continueConnecting(port) {
-console.log("Continue connecting");
+    //console.log("Continue connecting");
 }
 
-function endConnecting(port) {
-console.log("End connecting");
+function endConnect(port) {
+    if (connection.connector1 !== null   )
+    {
+        connection.connector2 = port;
+        console.log("Connection made.");
+    }
+    else
+    {
+        connection.destroy();
+        console.log("Connection invalid!");
+    }
 }
 

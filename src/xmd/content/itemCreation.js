@@ -20,7 +20,7 @@ function loadComponent() {
     }
 
     itemComponent = Qt.createComponent(toolbarItem.componentFile);
-    if (itemComponent.status == Component.Loading)  //Depending on the content, it can be ready or error immediately
+    if (itemComponent.status === Component.Loading)  //Depending on the content, it can be ready or error immediately
         component.statusChanged.connect(createItem);
     else
         createItem();
@@ -29,10 +29,10 @@ function loadComponent() {
 function createItem() {
     // TODO: this if sequence has uncatered for "else branch" at the end
     // Needs closure w.r.t. if-statement branches
-    if (itemComponent.status == Component.Ready && draggedItem == null) {
+    if (itemComponent.status === Component.Ready && draggedItem == null) {
         draggedItem = itemComponent.createObject(scene, {"image": toolbarItem.image, "x": posnInWindow.x, "y": posnInWindow.y, "z": 3});
         // make sure created item is above the ground layer
-    } else if (itemComponent.status == Component.Error) {
+    } else if (itemComponent.status === Component.Error) {
         draggedItem = null;
         console.log("error creating component");
         console.log(itemComponent.errorString());
