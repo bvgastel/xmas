@@ -20,14 +20,14 @@
   *
   **********************************************************************/
 
-#ifndef GRID_H
-#define GRID_H
+#ifndef BOARD_H
+#define BOARD_H
 
 #include <QObject>
 
 namespace model {
 
-class Grid : public QObject
+class Board : public QObject
 {
     Q_OBJECT
 
@@ -36,9 +36,9 @@ class Grid : public QObject
     Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
 
 public:
-    explicit Grid(QObject *parent = 0);
-    Grid(const Grid &rhs);
-    ~Grid();
+    explicit Board(QObject *parent = 0);
+    Board(const Board &rhs);
+    ~Board();
 
     QString network() const { return m_network; }
     void network(QString &network);
@@ -49,7 +49,7 @@ public:
     int height() { return m_height; }
     void height(int &height) { m_height = height > 0 ? height : 100; }
 
-    Grid &operator=(const Grid &rhs);
+    Board &operator=(const Board &rhs);
 
 signals:
     void networkChanged();
@@ -75,4 +75,4 @@ private:
 
 } // namespace model
 
-#endif // GRID_H
+#endif // BOARD_H

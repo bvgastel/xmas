@@ -46,6 +46,7 @@ void TestPort::testPortCreation() {
     model::Port *port = qobject_cast<model::Port *>(component.create());
     if (port) {
         QCOMPARE(port->name(), QString("testport1"));
+        QCOMPARE(port->network(), QString("network1"));
         QCOMPARE(port->rdy(), QString("rdy1"));
         QCOMPARE(port->compName(), QString("compName1"));
     } else {

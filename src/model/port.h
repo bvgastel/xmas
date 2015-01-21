@@ -46,8 +46,8 @@ class Port : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
-    // TODO: [Port] Having compName as property: is it unique enough?
     Q_PROPERTY(QString compName READ compName WRITE compName NOTIFY compNameChanged)
 public:
     explicit Port(QObject *parent = 0);
@@ -59,6 +59,7 @@ public:
 
 signals:
     void nameChanged();
+    void networkChanged();
     void rdyChanged();
     void compNameChanged();
 
@@ -67,6 +68,9 @@ public slots:
 public:
     QString name() const { return m_name; }
     void name(QString &name) {m_name = name; }
+
+    QString network() const { return m_network; }
+    void network(QString &name);
 
     QString rdy() const { return m_rdy; }
     void rdy(QString &rdy) { m_rdy = rdy; }
@@ -80,6 +84,10 @@ private:
          * @brief m_name The name of the port, must be unique within Component
          */
     QString m_name;
+    /**
+     * @brief m_network The name of the network
+     */
+    QString m_network;
     /**
          * @brief m_rdy The string indicating when this port is ready.
          *

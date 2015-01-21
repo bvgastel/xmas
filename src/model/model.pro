@@ -18,24 +18,22 @@ SOURCES += \
     network.cpp \
     channel.cpp \
     port.cpp \
-    portlist.cpp \
     chipcomponent.cpp \
     borderpos.cpp \
     utils.cpp \
-    grid.cpp \
-    gridpoint.cpp
+    gridpoint.cpp \
+    board.cpp
 
 HEADERS +=\
         model_global.h \
     network.h \
     channel.h \
     port.h \
-    portlist.h \
     chipcomponent.h \
     borderpos.h \
     utils.h \
-    grid.h \
-    gridpoint.h
+    gridpoint.h \
+    board.h
 
 unix {
     target.path = /usr/local/lib64

@@ -32,6 +32,18 @@ model::Port::~Port()
 {
 
 }
+/**
+ * @brief model::Port::network
+ *
+ * Issues an error if the network name
+ * was not declared earlier.
+ *
+ * @param network The name of the network
+ */
+void model::Port::network(QString &network) {
+    //TODO: check network name
+    m_network = network;
+}
 
 /**
  * @brief model::Port::Port

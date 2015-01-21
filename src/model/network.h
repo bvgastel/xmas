@@ -25,7 +25,7 @@
 
 #include <QObject>
 
-#include "grid.h"
+#include "board.h"
 #include "gridpoint.h"
 #include "chipcomponent.h"
 #include "channel.h"
@@ -63,7 +63,7 @@ class Network : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(Grid grid READ grid WRITE grid NOTIFY gridChanged)
+    Q_PROPERTY(Board board READ board WRITE board NOTIFY boardChanged)
     Q_PROPERTY(QQmlListProperty<ChipComponent> components READ components NOTIFY componentsChanged)
     Q_PROPERTY(QQmlListProperty<Channel> channels READ channels NOTIFY channelsChanged)
 
@@ -74,15 +74,21 @@ public:
     QString name() const { return m_name; }
     void name(QString &name) { m_name = name; }
 
-    Grid grid() const { return m_grid; }
-    void grid(Grid &grid) { m_grid = grid; }
+    Board board() const { return m_board; }
+    void board(Board &board) { m_board = board; }
 
-    QQmlListProperty<ChipComponent> components() { return m_components; }
+    // TODO: Note to self: INVOKE not Q_PROPERTY
+    // see http://doc.qt.io/qt-5/qtqml-cppintegration-data.html : INVOKE not Q_PROPERTY
+    // That way both read and write of QList is cheaper.
+    // CHeck: is this about QList vs QML? Or am I misunderstanding stuff?
 
-    QQmlListProperty<Channel> channels() { return m_channels; }
+
+    QQmlListProperty<ChipComponent> components();
+
+    QQmlListProperty<Channel> channels();
 
 signals:
-    void gridChanged();
+    void boardChanged();
     void nameChanged();
     void componentsChanged();
     void channelsChanged();
@@ -90,10 +96,25 @@ signals:
 public slots:
 
 private:
+    static void append_chipcomponent(
+            QQmlListProperty<ChipComponent> *list,
+            ChipComponent *chip_component);
+
+    static ChipComponent *at_chipcomponent(
+            QQmlListProperty<ChipComponent> *property,
+            int index);
+
+    static void append_channel(QQmlListProperty<Channel> *list,
+                               Channel *channel);
+
+    static Channel *at_channel(QQmlListProperty<Channel> *property,
+                               int index);
+
+
     QString m_name;
-    Grid m_grid;
-    QQmlListProperty<ChipComponent> m_components;
-    QQmlListProperty<Channel> m_channels;
+    Board m_board;
+    QList<ChipComponent *> m_components;
+    QList<Channel *> m_channels;
 };
 
 } // namespace model

@@ -27,12 +27,17 @@ namespace model {
 
 class Utils
 {
+
 public:
     Utils();
     ~Utils();
 
     static void registreModel();
+
 };
+
+// TODO: [Utils] create a generic function for QML creation of class
+// TODO: [Utils] How to generate signals for errors?
 
 } // namespace model
 

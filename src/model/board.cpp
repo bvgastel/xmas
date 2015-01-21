@@ -20,21 +20,37 @@
   *
   **********************************************************************/
 
-#ifndef PORTLIST_H
-#define PORTLIST_H
+#include "board.h"
 
-#include <QObject>
-
-class PortList : public QObject
+model::Board::Board(QObject *parent) : QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit PortList(QObject *parent = 0);
-    ~PortList();
 
-signals:
+}
 
-public slots:
-};
+model::Board::Board(const Board &rhs) : QObject() {
+    if (this != &rhs) {
+        m_network = rhs.m_network;
+        m_width = rhs.m_width;
+        m_height = rhs.m_height;
+    }
+}
 
-#endif // PORTLIST_H
+model::Board::~Board()
+{
+
+}
+
+void model::Board::network(QString &network) {
+    // TODO: check network exists, was declared earlier
+    m_network = network;
+}
+
+model::Board &model::Board::operator=(const model::Board &rhs) {
+    if (this != &rhs) {
+        // TODO: check network exists
+        m_network = rhs.m_network;
+        m_width = rhs.m_width;
+        m_height = rhs.m_height;
+    }
+    return *this;
+}

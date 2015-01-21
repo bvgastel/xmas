@@ -4,6 +4,7 @@ import Model 1.0
 ChipComponent {
 
     name : "testcomp1"
+    network : "testnetwork1"
     x : 1
     y : 1
     orientation : Up
@@ -22,6 +23,4 @@ ChipComponent {
             compName : "compName2"
         }
     ]
-
-
 }

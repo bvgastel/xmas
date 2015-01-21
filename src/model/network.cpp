@@ -32,3 +32,68 @@ model::Network::~Network()
 
 }
 
+QQmlListProperty<model::ChipComponent> model::Network::components() {
+    return QQmlListProperty<model::ChipComponent>(this, m_components);
+//    return QQmlListProperty<model::ChipComponent>(this, 0,
+//                                               &model::Network::append_chipcomponent,
+//                                               0,
+//                                               &model::Network::at_chipcomponent,
+//                                               0);
+}
+
+QQmlListProperty<model::Channel> model::Network::channels() {
+    return QQmlListProperty<model::Channel>(this, m_channels);
+//    return QQmlListProperty<model::Channel>(this, 0,
+//                                               &model::Network::append_channel,
+//                                               0,
+//                                               &model::Network::at_channel,
+//                                               0);
+}
+
+void model::Network::append_chipcomponent(QQmlListProperty<model::ChipComponent> *list,
+                                   model::ChipComponent *chip_component)
+{
+    Network *network = qobject_cast<Network *>(list->object);
+    if (network) {
+        chip_component->setParent(network);
+        network->m_components.append(chip_component);
+    }
+}
+
+
+// FIXME: do we really need a cast to QList in order to get at(index)?
+/**
+ * @brief model::Network::at_component
+ *
+ * @param property
+ * @param index
+ * @return
+ */
+model::ChipComponent *model::Network::at_chipcomponent(QQmlListProperty<model::ChipComponent> *property, int index) {
+    return static_cast< QList<model::ChipComponent *> *>(property->data)->at(index);
+}
+
+
+void model::Network::append_channel(QQmlListProperty<model::Channel> *list,
+                                   model::Channel *channel)
+{
+    Network *network = qobject_cast<Network *>(list->object);
+    if (network) {
+        channel->setParent(network);
+        network->m_channels.append(channel);
+    }
+}
+
+
+// FIXME: do we really need a cast to QList in order to get at(index)?
+/**
+ * @brief model::Network::at_channel
+ *
+ * @param property
+ * @param index
+ * @return
+ */
+model::Channel *model::Network::at_channel(QQmlListProperty<model::Channel> *property, int index) {
+    return static_cast< QList<model::Channel *> *>(property->data)->at(index);
+}
+

@@ -105,7 +105,6 @@ private:
     int m_y;
     Orientation m_orientation;
     QString m_func;
-
     QList<Port *> m_portList;
 
 public:

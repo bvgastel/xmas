@@ -27,6 +27,7 @@
 #include "testport.h"
 #include "testchipcomponent.h"
 #include "testchannel.h"
+#include "testnetwork.h"
 
 /**
  * @brief main The testdriver.
@@ -41,6 +42,7 @@ int main() {
     runner.addTest(new TestPort());
     runner.addTest(new TestComponent());
     runner.addTest(new TestChannel());
+    runner.addTest(new TestNetwork());
 
     runner.runTests();
     return 0;

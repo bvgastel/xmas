@@ -2,6 +2,7 @@ import Model 1.0
 
 Channel {
     name : "testchannel1"
+    network : "network1"
     initiator : "testinitiator1"
     init_port : "testinit_port1"
     target : "testtarget1"

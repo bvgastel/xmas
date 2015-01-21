@@ -24,13 +24,15 @@ SOURCES += \
     testrunner.cpp \
     testport.cpp \
     testchipcomponent.cpp \
-    testchannel.cpp
+    testchannel.cpp \
+    testnetwork.cpp
 
 HEADERS += \
     testrunner.h \
     testport.h \
     testchipcomponent.h \
-    testchannel.h
+    testchannel.h \
+    testnetwork.h
 
 RESOURCES += \
     test.qrc
