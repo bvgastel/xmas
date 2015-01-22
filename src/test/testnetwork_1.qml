@@ -2,11 +2,11 @@ import Model 1.0
 
 Network {
     name : "network1"
-//    board {
-//            network: "network1"
-//            width:5
-//            height:5
-//        }
+    board : {
+            network: "network1"
+            width:5
+            height:5
+        }
 
     components : [
         ChipComponent {

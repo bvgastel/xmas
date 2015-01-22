@@ -64,9 +64,9 @@ class Network : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(Board board READ board WRITE board NOTIFY boardChanged)
-    Q_PROPERTY(QQmlListProperty<ChipComponent> components READ components NOTIFY componentsChanged)
-    Q_PROPERTY(QQmlListProperty<Channel> channels READ channels NOTIFY channelsChanged)
+    Q_PROPERTY(model::Board board READ board WRITE board NOTIFY boardChanged)
+    Q_PROPERTY(QQmlListProperty<model::ChipComponent> components READ components NOTIFY componentsChanged)
+    Q_PROPERTY(QQmlListProperty<model::Channel> channels READ channels NOTIFY channelsChanged)
 
 public:
     explicit Network(QObject *parent = 0);
@@ -84,14 +84,7 @@ public:
         emit boardChanged();
     }
 
-    // TODO: Note to self: INVOKE not Q_PROPERTY
-    // see http://doc.qt.io/qt-5/qtqml-cppintegration-data.html : INVOKE not Q_PROPERTY
-    // That way both read and write of QList is cheaper.
-    // CHeck: is this about QList vs QML? Or am I misunderstanding stuff?
-
-
     QQmlListProperty<ChipComponent> components();
-
     QQmlListProperty<Channel> channels();
 
 signals:
