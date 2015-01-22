@@ -43,6 +43,7 @@ model::Board::~Board()
 void model::Board::network(QString &network) {
     // TODO: check network exists, was declared earlier
     m_network = network;
+    emit networkChanged();
 }
 
 model::Board &model::Board::operator=(const model::Board &rhs) {

@@ -52,10 +52,16 @@ public:
     ~BorderPos();
 
     BorderSide border() { return m_borderSide; }
-    void border(BorderSide &borderSide) { m_borderSide = borderSide; }
+    void border(BorderSide &borderSide) {
+        m_borderSide = borderSide;
+        emit borderChanged();
+    }
 
     int position() { return m_position; }
-    void position(int &position) { m_position = (position < 0 || position > 100) ? 0 : position; }
+    void position(int &position) {
+        m_position = (position < 0 || position > 100) ? 0 : position;
+        emit positionChanged();
+    }
 
 signals:
     void borderChanged();

@@ -72,10 +72,16 @@ public:
     ~Network();
 
     QString name() const { return m_name; }
-    void name(QString &name) { m_name = name; }
+    void name(QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
     Board board() const { return m_board; }
-    void board(Board &board) { m_board = board; }
+    void board(Board &board) {
+        m_board = board;
+        emit boardChanged();
+    }
 
     // TODO: Note to self: INVOKE not Q_PROPERTY
     // see http://doc.qt.io/qt-5/qtqml-cppintegration-data.html : INVOKE not Q_PROPERTY

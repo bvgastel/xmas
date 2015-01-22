@@ -43,6 +43,7 @@ model::Port::~Port()
 void model::Port::network(QString &network) {
     //TODO: check network name
     m_network = network;
+    emit networkChanged();
 }
 
 /**

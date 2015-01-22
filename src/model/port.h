@@ -67,16 +67,25 @@ public slots:
 
 public:
     QString name() const { return m_name; }
-    void name(QString &name) {m_name = name; }
+    void name(QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
     QString network() const { return m_network; }
     void network(QString &name);
 
     QString rdy() const { return m_rdy; }
-    void rdy(QString &rdy) { m_rdy = rdy; }
+    void rdy(QString &rdy) {
+        m_rdy = rdy;
+        emit rdyChanged();
+    }
 
     QString compName() const { return m_compName; }
-    void compName(QString &compName) { m_compName = compName; }
+    void compName(QString &compName) {
+        m_compName = compName;
+        emit compNameChanged();
+    }
 
 private:
 

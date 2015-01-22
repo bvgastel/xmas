@@ -44,10 +44,17 @@ public:
     void network(QString &network);
 
     int width() { return m_width; }
-    void width(int &width) { m_width = width > 0 ? width : 100; }
+
+    void width(int &width) {
+        m_width = width > 0 ? width : 100;
+        emit widthChanged();
+    }
 
     int height() { return m_height; }
-    void height(int &height) { m_height = height > 0 ? height : 100; }
+    void height(int &height) {
+        m_height = height > 0 ? height : 100;
+        emit heightChanged();
+    }
 
     Board &operator=(const Board &rhs);
 

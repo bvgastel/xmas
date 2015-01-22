@@ -20,8 +20,8 @@
   *
   **********************************************************************/
 
-#ifndef POINT_H
-#define POINT_H
+#ifndef GRIDPOINT_H
+#define GRIDPOINT_H
 
 #include <QObject>
 
@@ -44,10 +44,16 @@ public:
     ~GridPoint();
 
     int x() { return m_x; }
-    void x(int &x) { m_x = x >= 0 ? x : 0; }
+    void x(int &x) {
+        m_x = x >= 0 ? x : 0;
+        emit xChanged();
+    }
 
     int y() { return m_y; }
-    void y(int &y) { m_y = y >= 0 ? y : 0; }
+    void y(int &y) {
+        m_y = y >= 0 ? y : 0;
+        emit yChanged();
+    }
 
 
 signals:
@@ -63,4 +69,4 @@ private:
 
 } // namespace model
 
-#endif // POINT_H
+#endif // GRIDPOINT_H

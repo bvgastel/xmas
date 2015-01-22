@@ -101,25 +101,43 @@ public slots:
 public:
 
     QString name() const { return m_name; }
-    void name(QString &name) { m_name = name; }
+    void name(QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
     QString network() const { return m_network; }
     void network(QString &network);
 
     QString initiator() const { return m_initiator; }
-    void initiator(QString &initiator) { m_initiator = initiator; }
+    void initiator(QString &initiator) {
+        m_initiator = initiator;
+        emit initiatorChanged();
+    }
 
     QString init_port() const { return m_init_port; }
-    void init_port(QString &init_port) { m_init_port = init_port; }
+    void init_port(QString &init_port) {
+        m_init_port = init_port;
+        emit init_portChanged();
+    }
 
     QString target() const { return m_target; }
-    void target(QString &target) { m_target = target; }
+    void target(QString &target) {
+        m_target = target;
+        emit targetChanged();
+    }
 
     QString target_port() const { return m_target_port; }
-    void target_port(QString &target_port) { m_target_port = target_port; }
+    void target_port(QString &target_port) {
+        m_target_port = target_port;
+        emit target_portChanged();
+    }
 
     QString datatype() const { return m_datatype; }
-    void datatype(QString &datatype) { m_datatype = datatype; }
+    void datatype(QString &datatype) {
+        m_datatype = datatype;
+        emit datatypeChanged();
+    }
 
     QQmlListProperty<model::GridPoint> ptList();
 

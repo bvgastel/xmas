@@ -62,27 +62,44 @@ public:
     ~ChipComponent();
 
     QString name() const {return m_name;}
-    void name(const QString &name) {m_name = name;}
+    void name(const QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
     QString network() const { return m_network; }
     void network(QString &network);
 
     int x() { return m_x; }
-    void x(int &x) { m_x = x; }
+    void x(int &x) {
+        m_x = x;
+        emit xChanged();
+    }
 
     int y() { return m_y; }
-    void y(int &y) { m_y = y; }
+    void y(int &y) {
+        m_y = y;
+        emit yChanged();
+    }
 
     Orientation orientation() {return m_orientation;}
-    void orientation(Orientation &orientation) {m_orientation = orientation;}
+    void orientation(Orientation &orientation) {
+        m_orientation = orientation;
+        emit orientationChanged();
+    }
 
     QString func() { return m_func; }
-    void func(QString &func) { m_func = func; }
+    void func(QString &func) {
+        m_func = func;
+        emit funcChanged();
+    }
 
     QQmlListProperty<Port> connectors();
 
     Port *at(const int index) { return m_portList[index]; }
-    int size() { return m_portList.size(); }
+    int size() {
+        return m_portList.size();
+    }
 
 signals:
     void nameChanged();

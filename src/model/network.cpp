@@ -33,21 +33,19 @@ model::Network::~Network()
 }
 
 QQmlListProperty<model::ChipComponent> model::Network::components() {
-    return QQmlListProperty<model::ChipComponent>(this, m_components);
-//    return QQmlListProperty<model::ChipComponent>(this, 0,
-//                                               &model::Network::append_chipcomponent,
-//                                               0,
-//                                               &model::Network::at_chipcomponent,
-//                                               0);
+    return QQmlListProperty<model::ChipComponent>(this, 0,
+                                               &model::Network::append_chipcomponent,
+                                               0,
+                                               &model::Network::at_chipcomponent,
+                                               0);
 }
 
 QQmlListProperty<model::Channel> model::Network::channels() {
-    return QQmlListProperty<model::Channel>(this, m_channels);
-//    return QQmlListProperty<model::Channel>(this, 0,
-//                                               &model::Network::append_channel,
-//                                               0,
-//                                               &model::Network::at_channel,
-//                                               0);
+    return QQmlListProperty<model::Channel>(this, 0,
+                                               &model::Network::append_channel,
+                                               0,
+                                               &model::Network::at_channel,
+                                               0);
 }
 
 void model::Network::append_chipcomponent(QQmlListProperty<model::ChipComponent> *list,
@@ -57,6 +55,7 @@ void model::Network::append_chipcomponent(QQmlListProperty<model::ChipComponent>
     if (network) {
         chip_component->setParent(network);
         network->m_components.append(chip_component);
+        emit componentsChanged();
     }
 }
 
@@ -81,6 +80,7 @@ void model::Network::append_channel(QQmlListProperty<model::Channel> *list,
     if (network) {
         channel->setParent(network);
         network->m_channels.append(channel);
+        emit channelsChanged();
     }
 }
 
