@@ -30,20 +30,19 @@
  **************************************************************************/
 
 import QtQuick 2.4
+import "qrc:../content/connectionCreation.js" as Code
 
 //TODO : implement common xmas connection style
 
 Item {
     id: connection
     anchors.fill: parent
-//    width: 100
-//    height: 100
     property var connector1: null
     property var connector2: null
 
     property color color: "darkblue"
     property bool selected: false
-
+    property bool connecting: false
 
     Canvas {
         id: canvas
@@ -53,10 +52,9 @@ Item {
         //NOTE : just a straight line for now
         onPaint: {
             var ctx = getContext('2d')
-            //ctx.clearRect(0, 0, canvas.width, canvas.height);
             connection.selected ? ctx.lineWidth = 8.0 : ctx.lineWidth = 4.0
             ctx.strokeStyle = connection.color
-             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (connector1 !== null && connector1.parent !== null)
             {
                 ctx.beginPath()
@@ -81,9 +79,22 @@ Item {
         MouseArea {
             id: area
             anchors.fill: parent
+            hoverEnabled: connecting
+            preventStealing: connecting
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: {
+                if (mouse.button == Qt.RightButton && connecting) {
+                    Code.abortConnecting(connector1)
+                    connection.destroy()
+                }
+            }
             onPositionChanged: {
                 canvas.requestPaint()
             }
+            onHoveredChanged: {
+                canvas.requestPaint()
+            }
+
         }
     }
 

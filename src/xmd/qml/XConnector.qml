@@ -28,9 +28,8 @@
  *
  *
  **************************************************************************/
-
 import QtQuick 2.4
-import "../content/connectionCreation.js" as Code
+import "qrc:../content/connectionCreation.js" as Code
 
 Item {
     id:connector
@@ -43,17 +42,20 @@ Item {
     Rectangle{
         color: connected ? "black" : "red"
         anchors.fill: parent
+        border.color: "black"
+        border.width: connected || area.containsMouse ? 4 : 0
     }
 
     MouseArea {
+        id: area
         anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: containsMouse ? Qt.CrossCursor : Qt.ArrowCursor
+        hoverEnabled: !connected
+        preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.LeftButton && !connected) {
-                Code.doConnect(connector)
                 connected = true
+                Code.doConnect(connector)
             }
         }
 

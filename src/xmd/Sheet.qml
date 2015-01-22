@@ -68,8 +68,6 @@ Item {
         contentY: (1 - scene.scale) * scene.height * 0.5
         contentWidth: scene.width
         contentHeight: scene.height
-        //TODO : if flickable is interactive, can't drag a connection --> setup mousearea?
-        interactive: false
 
         Rectangle {
             id: scene
