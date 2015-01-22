@@ -63,10 +63,11 @@ void TestNetwork::testNetworkCreation() {
         QCOMPARE(network->name(), QString("network1"));
     } else {
         QString msg;
+        msg.append(QString("error: "));
         foreach(QQmlError error, component.errors()) {
             msg.append(error.toString());
         }
-
+        QWARN(msg.toStdString().c_str());
         QVERIFY2(false, msg.toStdString().c_str());
     }
 

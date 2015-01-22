@@ -29,6 +29,7 @@
 #include "gridpoint.h"
 #include "chipcomponent.h"
 #include "channel.h"
+#include "port.h"
 
 namespace model {
 
