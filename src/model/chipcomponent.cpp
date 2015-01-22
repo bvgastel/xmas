@@ -54,10 +54,10 @@ void model::ChipComponent::network(QString &network) {
 QQmlListProperty<model::Port> model::ChipComponent::connectors()
 {
     return QQmlListProperty<model::Port>(this, 0,
-                                               &model::ChipComponent::append_port,
-                                               0,
-                                               &model::ChipComponent::port_at,
-                                               0);
+                                               &model::ChipComponent::append_port_list,
+                                               &model::ChipComponent::count_port_list,
+                                               &model::ChipComponent::at_port_list,
+                                               &model::ChipComponent::clear_port_list);
 }
 
 /**
@@ -65,14 +65,29 @@ QQmlListProperty<model::Port> model::ChipComponent::connectors()
  * @param list
  * @param connector
  */
-void model::ChipComponent::append_port(QQmlListProperty<model::Port> *list,
+void model::ChipComponent::append_port_list(QQmlListProperty<model::Port> *property,
                                    model::Port *port)
 {
-    ChipComponent *chip_component = qobject_cast<ChipComponent *>(list->object);
+    ChipComponent *chip_component = qobject_cast<ChipComponent *>(property->object);
     if (chip_component) {
         port->setParent(chip_component);
         chip_component->m_portList.append(port);
     }
+}
+
+/**
+ * @brief model::ChipComponent::count_port_list
+ *
+ * @param property
+ * @return the size of the port list.
+ */
+int model::ChipComponent::count_port_list(QQmlListProperty<Port> *property) {
+    ChipComponent *chip_component = qobject_cast<ChipComponent *>(property->object);
+    if (chip_component) {
+        return chip_component->m_portList.size();
+    }
+    //TODO: Should we emit an error signal? How? There is no instance! (static)
+    return 0;
 }
 
 /**
@@ -83,6 +98,13 @@ void model::ChipComponent::append_port(QQmlListProperty<model::Port> *list,
  * @return the port if successful, nulptr if not successful
  */
 // FIXME: do we really need a cast to QList in order to get at(index)?
-model::Port *model::ChipComponent::port_at(QQmlListProperty<model::Port> *property, int index) {
+model::Port *model::ChipComponent::at_port_list(QQmlListProperty<model::Port> *property, int index) {
     return static_cast< QList<model::Port *> *>(property->data)->at(index);
+}
+
+void model::ChipComponent::clear_port_list(QQmlListProperty<Port> *property) {
+    ChipComponent *chip_component = qobject_cast<ChipComponent *>(property->object);
+    if (chip_component) {
+        chip_component->m_portList.clear();
+    }
 }

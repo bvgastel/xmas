@@ -2,61 +2,60 @@ import Model 1.0
 
 Network {
     name : "network1"
-//    board :
-//        Board {
+//    board {
 //            network: "network1"
 //            width:5
 //            height:5
 //        }
 
-    components : [
-        ChipComponent {
+//    components : [
+//        ChipComponent {
 
-            name : "testcomp1"
-            network : "network1"
-            x : 1
-            y : 1
-            orientation : Up
-            func : "function"
-            connectors : [
+//            name : "testcomp1"
+//            network : "network1"
+//            x : 1
+//            y : 1
+//            orientation : Up
+//            func : "function"
+//            connectors : [
 
-                Port {
-                    name : "in1"
-                    rdy : "rdy1"
-                    compName : "compName1"
-                },
+//                Port {
+//                    name : "in1"
+//                    rdy : "rdy1"
+//                    compName : "compName1"
+//                },
 
-                Port {
-                    name : "out1"
-                    rdy : "rdy2"
-                    compName : "compName2"
-                }
-            ]
-        },
-        ChipComponent {
+//                Port {
+//                    name : "out1"
+//                    rdy : "rdy2"
+//                    compName : "compName2"
+//                }
+//            ]
+//        },
+//        ChipComponent {
 
-            name : "testcomp2"
-            network : "network1"
-            x : 3
-            y : 1
-            orientation : Up
-            func : "function"
-            connectors : [
+//            name : "testcomp2"
+//            network : "network1"
+//            x : 3
+//            y : 1
+//            orientation : Up
+//            func : "function"
+//            connectors : [
 
-                Port {
-                    name : "in1"
-                    rdy : "rdy1"
-                    compName : "compName1"
-                },
+//                Port {
+//                    name : "in1"
+//                    rdy : "rdy1"
+//                    compName : "compName1"
+//                },
 
-                Port {
-                    name : "out1"
-                    rdy : "rdy2"
-                    compName : "compName2"
-                }
-            ]
-        }
-    ]
+//                Port {
+//                    name : "out1"
+//                    rdy : "rdy2"
+//                    compName : "compName2"
+//                }
+//            ]
+//        }
+//    ]
 
 //    channels: [
 //        Channel {

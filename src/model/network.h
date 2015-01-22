@@ -102,25 +102,34 @@ signals:
 public slots:
 
 private:
-    static void append_chipcomponent(
+    static void append_comp_list(
             QQmlListProperty<ChipComponent> *list,
             ChipComponent *chip_component);
 
-    static ChipComponent *at_chipcomponent(
+    static int count_comp_list(QQmlListProperty<ChipComponent> *property);
+
+    static ChipComponent *at_comp_list(
             QQmlListProperty<ChipComponent> *property,
             int index);
 
-    static void append_channel(QQmlListProperty<Channel> *list,
+    static void clear_comp_list(QQmlListProperty<ChipComponent> *property);
+
+
+    static void append_channel(QQmlListProperty<Channel> *property,
                                Channel *channel);
+
+    static int count_channel(QQmlListProperty<Channel> *property);
 
     static Channel *at_channel(QQmlListProperty<Channel> *property,
                                int index);
 
+    static void clear_channel(QQmlListProperty<Channel> *property);
+
 
     QString m_name;
     Board m_board;
-    QList<ChipComponent *> m_components;
-    QList<Channel *> m_channels;
+    QList<ChipComponent *> m_comp_list;
+    QList<Channel *> m_channel_list;
 };
 
 } // namespace model

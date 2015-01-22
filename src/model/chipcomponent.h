@@ -113,8 +113,10 @@ signals:
 public slots:
 
 private:
-    static void append_port(QQmlListProperty<Port> *list, Port *port);
-    static Port *port_at(QQmlListProperty<Port> *list, int index);
+    static void append_port_list(QQmlListProperty<Port> *property, Port *port);
+    static int count_port_list(QQmlListProperty<Port> *property);
+    static Port *at_port_list(QQmlListProperty<Port> *property, int index);
+    static void clear_port_list(QQmlListProperty<Port> *property);
 
     QString m_name;
     QString m_network;

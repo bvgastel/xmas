@@ -34,28 +34,36 @@ model::Network::~Network()
 
 QQmlListProperty<model::ChipComponent> model::Network::components() {
     return QQmlListProperty<model::ChipComponent>(this, 0,
-                                               &model::Network::append_chipcomponent,
-                                               0,
-                                               &model::Network::at_chipcomponent,
-                                               0);
+                                               &model::Network::append_comp_list,
+                                               &model::Network::count_comp_list,
+                                               &model::Network::at_comp_list,
+                                               &model::Network::clear_comp_list);
 }
 
 QQmlListProperty<model::Channel> model::Network::channels() {
     return QQmlListProperty<model::Channel>(this, 0,
                                                &model::Network::append_channel,
-                                               0,
+                                               &model::Network::count_channel,
                                                &model::Network::at_channel,
-                                               0);
+                                               &model::Network::clear_channel);
 }
 
-void model::Network::append_chipcomponent(QQmlListProperty<model::ChipComponent> *list,
+int model::Network::count_comp_list(QQmlListProperty<model::ChipComponent> *property) {
+    Network *network = qobject_cast<Network *>(property->object);
+    if (network) {
+        return network->m_comp_list.size();
+    }
+    //TODO: should we emit an error? How? this is static!
+   return 0;
+}
+
+void model::Network::append_comp_list(QQmlListProperty<model::ChipComponent> *property,
                                    model::ChipComponent *chip_component)
 {
-    Network *network = qobject_cast<Network *>(list->object);
+    Network *network = qobject_cast<Network *>(property->object);
     if (network) {
         chip_component->setParent(network);
-        network->m_components.append(chip_component);
-        emit componentsChanged();
+        network->m_comp_list.append(chip_component);
     }
 }
 
@@ -68,19 +76,32 @@ void model::Network::append_chipcomponent(QQmlListProperty<model::ChipComponent>
  * @param index
  * @return
  */
-model::ChipComponent *model::Network::at_chipcomponent(QQmlListProperty<model::ChipComponent> *property, int index) {
+model::ChipComponent *model::Network::at_comp_list(QQmlListProperty<model::ChipComponent> *property, int index) {
     return static_cast< QList<model::ChipComponent *> *>(property->data)->at(index);
 }
 
+void model::Network::clear_comp_list(QQmlListProperty<model::ChipComponent> *property) {
+    Network *network = qobject_cast<Network *>(property->object);
+    if (network) {
+        network->m_comp_list.clear();
+    }
+}
 
-void model::Network::append_channel(QQmlListProperty<model::Channel> *list,
+int model::Network::count_channel(QQmlListProperty<model::Channel> *property) {
+    Network *network = qobject_cast<Network *>(property->object);
+    if (network) {
+        return network->m_channel_list.size();
+    }
+    return 0;
+}
+
+void model::Network::append_channel(QQmlListProperty<model::Channel> *property,
                                    model::Channel *channel)
 {
-    Network *network = qobject_cast<Network *>(list->object);
+    Network *network = qobject_cast<Network *>(property->object);
     if (network) {
         channel->setParent(network);
-        network->m_channels.append(channel);
-        emit channelsChanged();
+        network->m_channel_list.append(channel);
     }
 }
 
@@ -95,5 +116,12 @@ void model::Network::append_channel(QQmlListProperty<model::Channel> *list,
  */
 model::Channel *model::Network::at_channel(QQmlListProperty<model::Channel> *property, int index) {
     return static_cast< QList<model::Channel *> *>(property->data)->at(index);
+}
+
+void model::Network::clear_channel(QQmlListProperty<model::Channel> *property) {
+    Network *network = qobject_cast<Network *>(property->object);
+    if (network) {
+        network->m_channel_list.clear();
+    }
 }
 

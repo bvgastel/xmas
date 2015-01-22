@@ -68,7 +68,6 @@ void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *proper
     if (channel) {
         gridPoint->setParent(channel);
         channel->m_ptList.append(gridPoint);
-        emit ptListChanged();
     }
 }
 
