@@ -28,17 +28,19 @@
  *
  *
  **************************************************************************/
-
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
-import QtGraphicalEffects 1.0
 import "content"
 
-Item {
-    property int centerOffset: 0
+Rectangle {
+    id: sheet
+    scale: zoomFactor
+    width: 2970
+    height: 2100
+    color: "white"
     property real zoomFactor: 1.0
 
     function zoomFit()
@@ -58,132 +60,57 @@ Item {
 
     focus: true
     z: -10
-    // Create a flickable to view a large drawing.
-    Flickable {
-        id: view
-        anchors { top: toolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
 
-        //center the scene by default
-        contentX: (1 - scene.scale) * scene.width * 0.5
-        contentY: (1 - scene.scale) * scene.height * 0.5
-        contentWidth: scene.width
-        contentHeight: scene.height
+    //used to show the wiring path when adding a connection
+    Canvas {
+        id: wire
+        z:20
+        anchors.fill: parent
+        property real mouseX: 0
+        property real mouseY: 0
+        property bool connecting: false
+        property var connector1: null
+        property var connector2: null
 
-        Rectangle {
-            id: scene
-            scale: zoomFactor
-            width: 2970
-            height: 2100
-            color: "white"
-
-            Canvas {
-                id: wire
-                z:20
-                anchors.fill: parent
-                property real mouseX: 0
-                property real mouseY: 0
-                property bool connecting: false
-                property var connector1: null
-                property var connector2: null
-
-                visible: connecting
-                enabled: connecting
-                onPaint: {
-                    var ctx = getContext('2d')
-                    ctx.strokeStyle = "darkblue"
-                    ctx.lineWidth = 4.0
-                    ctx.clearRect(0, 0, wire.width, wire.height);
-                    if (connecting)
-                    {
-                        var x =  connector1.parent.x + connector1.x + connector1.width/2
-                        var y = connector1.parent.y + connector1.y  + connector1.height/2
-                        ctx.beginPath()
-                        ctx.moveTo(x ,y)
-                        ctx.lineTo(mouseX + connector1.width/2,mouseY + connector1.height/2)
-                        ctx.rect(mouseX,mouseY,connector1.width,connector1.height)
-                        ctx.stroke()
-                    }
-
-                }
+        visible: connecting
+        enabled: connecting
+        onPaint: {
+            var ctx = getContext('2d')
+            ctx.strokeStyle = "darkblue"
+            ctx.lineWidth = 4.0
+            ctx.clearRect(0, 0, wire.width, wire.height);
+            if (connecting)
+            {
+                var x =  connector1.parent.x + connector1.x + connector1.width/2
+                var y = connector1.parent.y + connector1.y  + connector1.height/2
+                ctx.beginPath()
+                ctx.moveTo(x ,y)
+                ctx.lineTo(mouseX + connector1.width/2,mouseY + connector1.height/2)
+                ctx.rect(mouseX,mouseY,connector1.width,connector1.height)
+                ctx.stroke()
             }
+        }
+    }
 
-            MouseArea {
-                id: area
-                anchors.fill: wire
-                hoverEnabled: wire.connecting
-                acceptedButtons: Qt.LeftButton | Qt.RightButton
-                onPressed: {
-                    if (mouse.button == Qt.RightButton && wire.connecting) {
-                        wire.connecting = false
-                        wire.connector1.connected = false
-                        wire.connector1 = null
-                        wire.connector2 = null
-                        wire.requestPaint()
-                    }
-                }
-                onPositionChanged: {
-                    wire.mouseX = mouse.x
-                    wire.mouseY = mouse.y
-                    wire.requestPaint()
-                }
+    MouseArea {
+        id: area
+        anchors.fill: wire
+        hoverEnabled: wire.connecting
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onPressed: {
+            if (mouse.button == Qt.RightButton && wire.connecting) {
+                wire.connecting = false
+                wire.connector1.connected = false
+                wire.connector1 = null
+                wire.connector2 = null
+                wire.requestPaint()
             }
-
         }
-
-        // Only show the scrollbars when the view is moving.
-        states: State {
-            name: "ShowBars"
-            when: view.movingVertically || view.movingHorizontally
-            PropertyChanges { target: verticalScrollBar; opacity: 1 }
-            PropertyChanges { target: horizontalScrollBar; opacity: 1 }
-        }
-
-        transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 600 }
+        onPositionChanged: {
+            wire.mouseX = mouse.x
+            wire.mouseY = mouse.y
+            wire.requestPaint()
         }
     }
-
-    //TODO : move xmastoolbar to mainwindow , so sheet will become just a model drawing
-    XmasToolBar{
-        id: toolbar
-        height:48
-        anchors {right: parent.right; top: parent.top; left: parent.left}
-    }
-
-    //TODO : in Windows XP DropShadow crash with large scene 11800/8400! Test.
-    DropShadow {
-        anchors.fill: view
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8.0
-        samples: 16
-        color: "#80000000"
-        source: view
-    }
-
-
-    // Attach scrollbars to the right and bottom edges of the view.
-    ScrollBar {
-        id: verticalScrollBar
-        width: 12; height: view.height-12 - toolbar.height
-        anchors.right: view.right
-        anchors.top:  toolbar.bottom
-        anchors.bottom: view.bottom
-        opacity: 0
-        orientation: Qt.Vertical
-        position: view.visibleArea.yPosition
-        pageSize: view.visibleArea.heightRatio
-    }
-
-    ScrollBar {
-        id: horizontalScrollBar
-        width: view.width-12; height: 12
-        anchors.bottom: view.bottom
-        opacity: 0
-        orientation: Qt.Horizontal
-        position: view.visibleArea.xPosition
-        pageSize: view.visibleArea.widthRatio
-    }
-
 }
 

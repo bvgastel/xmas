@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 
 Rectangle {
     id:toolbox
+    z:1
     gradient: Gradient {
         GradientStop { position: 0.0; color: "lightgrey" }
         GradientStop { position: 0.4; color: "white" }
