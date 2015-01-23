@@ -23,6 +23,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <QtQml>
+
 namespace model {
 
 class Utils
@@ -33,7 +35,7 @@ public:
     ~Utils();
 
     static void registreModel();
-
+    static QString qmlBuildError(QQmlComponent &component);
 };
 
 // TODO: [Utils] create a generic function for QML creation of class

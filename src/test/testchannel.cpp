@@ -42,7 +42,7 @@ void TestChannel::testChannelCreate() {
     model::Channel *channel = qobject_cast<model::Channel *>(component.create());
     if (channel) {
         QCOMPARE(channel->name(), QString("testchannel1"));
-        QCOMPARE(channel->initiator(), QString("testinitiator1"));
+//        QCOMPARE(channel->initiator(), QString("testinitiator1"));
         QCOMPARE(channel->init_port(), QString("testinit_port1"));
         QCOMPARE(channel->target(), QString("testtarget1"));
         QCOMPARE(channel->target_port(), QString("testtarget_port1"));
@@ -54,8 +54,8 @@ void TestChannel::testChannelCreate() {
             QCOMPARE(p->y(), i+1);
         }
     } else {
-        QWARN("Creation of Channel not successful. Recheck qml and qrc files.");
-        QVERIFY(false);
+        QString msg = model::Utils::qmlBuildError(component);
+        QVERIFY2(false, msg.toStdString().c_str());
     }
 }
 

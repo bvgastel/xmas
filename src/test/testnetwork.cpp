@@ -48,8 +48,8 @@ void TestNetwork::testBoardCreation() {
         QCOMPARE(board->width(), 1);
         QCOMPARE(board->height(), 1);
     } else {
-        QWARN("Creation of Board not successful. Recheck qml and qrc files.");
-        QVERIFY(false);
+        QString msg = model::Utils::qmlBuildError(component);
+        QVERIFY2(false, msg.toStdString().c_str());
     }
 
 }
@@ -61,13 +61,12 @@ void TestNetwork::testNetworkCreation() {
     model::Network *network = qobject_cast<model::Network *>(component.create());
     if (network) {
         QCOMPARE(network->name(), QString("network1"));
+        model::Channel *channel = network->channel(0);
+        model::ChipComponent *initiator = channel->initiator();
+        QCOMPARE(initiator->name(), QString("testcomp1"));
+        QCOMPARE(initiator->network(), network->name());
     } else {
-        QString msg;
-        msg.append(QString("error: "));
-        foreach(QQmlError error, component.errors()) {
-            msg.append(error.toString());
-        }
-        QWARN(msg.toStdString().c_str());
+        QString msg = model::Utils::qmlBuildError(component);
         QVERIFY2(false, msg.toStdString().c_str());
     }
 

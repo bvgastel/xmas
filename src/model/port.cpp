@@ -32,46 +32,5 @@ model::Port::~Port()
 {
 
 }
-/**
- * @brief model::Port::network
- *
- * Issues an error if the network name
- * was not declared earlier.
- *
- * @param network The name of the network
- */
-void model::Port::network(QString &network) {
-    //TODO: check network name
-    m_network = network;
-    emit networkChanged();
-}
 
-/**
- * @brief model::Port::Port
- *
- * Copy constructor for Port (necessary for
- * any class that uses Port as value parameter.
- *
- * @param rhs The port on the right hand side.
- */
-model::Port::Port(const model::Port &rhs) : QObject() {
-    m_name = rhs.m_name;
-    m_rdy = rhs.m_rdy;
-}
-
-/**
- * @brief model::Port::operator=
- *
- * The assignment operator for Port from another Port.
- * Self assignment is no issue.
- *
- * @param port
- */
-model::Port &model::Port::operator=(const Port &rhs) {
-    if (&rhs != this) {
-        this->m_name = rhs.m_name;
-        this->m_rdy = rhs.m_rdy;
-    }
-    return *this;
-}
 

@@ -84,6 +84,10 @@ public:
         emit boardChanged();
     }
 
+    Channel *channel(int index) const {
+        return m_channel_list.at(index);
+    }
+
     QQmlListProperty<ChipComponent> components();
     QQmlListProperty<Channel> channels();
 

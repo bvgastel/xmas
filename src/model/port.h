@@ -27,6 +27,8 @@
 
 namespace model {
 
+class ChipComponent;
+
 /**
  * @brief The Port class
  *
@@ -46,22 +48,17 @@ class Port : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
-    Q_PROPERTY(QString compName READ compName WRITE compName NOTIFY compNameChanged)
+    Q_PROPERTY(model::ChipComponent *comp READ comp WRITE comp NOTIFY compChanged)
 public:
     explicit Port(QObject *parent = 0);
     ~Port();
 
-    Port(const Port &);
-
-    Port &operator=(const Port &);
 
 signals:
     void nameChanged();
-    void networkChanged();
     void rdyChanged();
-    void compNameChanged();
+    void compChanged();
 
 public slots:
 
@@ -72,20 +69,20 @@ public:
         emit nameChanged();
     }
 
-    QString network() const { return m_network; }
-    void network(QString &name);
-
     QString rdy() const { return m_rdy; }
     void rdy(QString &rdy) {
         m_rdy = rdy;
         emit rdyChanged();
     }
 
-    QString compName() const { return m_compName; }
-    void compName(QString &compName) {
-        m_compName = compName;
-        emit compNameChanged();
+    ChipComponent *comp() const { return m_comp; }
+    void comp(ChipComponent *comp) {
+        if (m_comp != comp) {
+            m_comp = comp;
+            emit compChanged();
+        }
     }
+
 
 private:
 
@@ -93,10 +90,6 @@ private:
          * @brief m_name The name of the port, must be unique within Component
          */
     QString m_name;
-    /**
-     * @brief m_network The name of the network
-     */
-    QString m_network;
     /**
          * @brief m_rdy The string indicating when this port is ready.
          *
@@ -114,13 +107,13 @@ private:
          */
     QString m_rdy;
     /**
-     * @brief m_comp The name of the containing component
+     * @brief m_comp A pointer to the containing component
      *
      * Each port is tightly coupled with one component and should
      * be connected as soon as it is created in the qml files.
      *
      */
-    QString m_compName;
+    ChipComponent *m_comp;
 
 };
 

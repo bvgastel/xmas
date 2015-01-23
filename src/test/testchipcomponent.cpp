@@ -50,11 +50,10 @@ void TestComponent::testComponentCreation() {
             model::Port *p = comp->at(i);
             QCOMPARE(p->name(), QString("testport").append(n));
             QCOMPARE(p->rdy(), QString("rdy").append(n));
-            QCOMPARE(p->compName(), QString("compName").append(n));
         }
     } else {
-        QWARN("Creation of ChipComponent not successful. Recheck qml and qrc files.");
-        QVERIFY(false);
+        QString msg = model::Utils::qmlBuildError(component);
+        QVERIFY2(false, msg.toStdString().c_str());
     }
 }
 

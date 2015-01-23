@@ -10,7 +10,7 @@ Network {
 
     components : [
         ChipComponent {
-
+            id : testcomp1
             name : "testcomp1"
             network : "network1"
             x : 1
@@ -20,15 +20,17 @@ Network {
             connectors : [
 
                 Port {
+                    id: testcomp1_in1
                     name : "in1"
                     rdy : "rdy1"
-                    compName : "compName1"
+                    comp : testcomp1
                 },
 
                 Port {
+                    id : testcomp1_out1
                     name : "out1"
                     rdy : "rdy2"
-                    compName : "compName2"
+                    comp : testcomp1
                 }
             ]
         }
@@ -38,7 +40,7 @@ Network {
         Channel {
             name : "testchannel1"
             network : "network1"
-            initiator : "testcomp1"
+            initiator : testcomp1
             init_port : "out1"
             target : "testcomp2"
             target_port : "in1"

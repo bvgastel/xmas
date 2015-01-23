@@ -46,12 +46,11 @@ void TestPort::testPortCreation() {
     model::Port *port = qobject_cast<model::Port *>(component.create());
     if (port) {
         QCOMPARE(port->name(), QString("testport1"));
-        QCOMPARE(port->network(), QString("network1"));
         QCOMPARE(port->rdy(), QString("rdy1"));
-        QCOMPARE(port->compName(), QString("compName1"));
+        QVERIFY(port->comp() == nullptr);
     } else {
-        QWARN("Creation of Port not successful. Recheck qml and qrc files.");
-        QVERIFY(false);
+        QString msg = model::Utils::qmlBuildError(component);
+        QVERIFY2(false, msg.toStdString().c_str());
     }
 
 }

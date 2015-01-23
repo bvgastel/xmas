@@ -3,6 +3,7 @@ import Model 1.0
 
 ChipComponent {
 
+    id : testcomp1
     name : "testcomp1"
     network : "testnetwork1"
     x : 1
@@ -14,13 +15,13 @@ ChipComponent {
         Port {
             name : "testport1"
             rdy : "rdy1"
-            compName : "compName1"
+            comp : testcomp1
         },
 
         Port {
             name : "testport2"
             rdy : "rdy2"
-            compName : "compName2"
+            comp : testcomp1
         }
     ]
 }

@@ -42,6 +42,15 @@ model::Utils::~Utils()
 
 }
 
+QString model::Utils::qmlBuildError(QQmlComponent &component) {
+    QString msg;
+    msg.append(QString("QML error: "));
+    foreach(QQmlError error, component.errors()) {
+        msg.append(error.toString());
+    }
+    return msg;
+}
+
 void model::Utils::registreModel() {
     const char *nameSpace = "Model";
     const int major = 1;
