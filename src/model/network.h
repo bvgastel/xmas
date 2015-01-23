@@ -92,12 +92,14 @@ public:
         emit heightChanged();
     }
 
+    QQmlListProperty<ChipComponent> components();
+    QQmlListProperty<Channel> channels();
+
+    /******** non QML methods *****************/
+
     Channel *channel(int index) const {
         return m_channel_list.at(index);
     }
-
-    QQmlListProperty<ChipComponent> components();
-    QQmlListProperty<Channel> channels();
 
 signals:
     void widthChanged();

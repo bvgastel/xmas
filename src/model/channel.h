@@ -70,8 +70,8 @@ class Channel : public QObject
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(model::ChipComponent *initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
-    Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
-    //Q_PROPERTY(model::Port init_port READ init_port WRITE init_port NOTIFY init_portChanged)
+    //Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
+    Q_PROPERTY(model::Port *init_port READ init_port WRITE init_port NOTIFY init_portChanged)
     Q_PROPERTY(model::ChipComponent *target READ target WRITE target NOTIFY targetChanged)
     Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
@@ -115,17 +115,19 @@ public:
         emit initiatorChanged();
     }
 
-    QString init_port() const { return m_init_port; }
-    void init_port(QString &init_port) {
-        m_init_port = init_port;
-        emit init_portChanged();
-    }
-
-//    Port *init_port() const { return m_init_port; }
-//    void init_port(Port *init_port) {
+//    QString init_port() const { return m_init_port; }
+//    void init_port(QString &init_port) {
 //        m_init_port = init_port;
 //        emit init_portChanged();
 //    }
+
+    Port *init_port() const { return m_init_port; }
+    void init_port(Port *init_port) {
+        if (m_init_port != init_port) {
+            m_init_port = init_port;
+            emit init_portChanged();
+        }
+    }
 
     ChipComponent *target() const { return m_target; }
     void target(ChipComponent *target) {
@@ -171,8 +173,8 @@ private:
     /**
      * @brief m_in_port A pointer to the input port from the initiator.
      */
-//    Port *m_init_port;
-    QString m_init_port;
+    Port *m_init_port;
+//    QString m_init_port;
     /**
      * @brief m_target A pointer to the target of the channel.
      */
