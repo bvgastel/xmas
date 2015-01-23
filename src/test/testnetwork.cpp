@@ -48,10 +48,16 @@ void TestNetwork::testNetworkCreation() {
         QCOMPARE(channel->network(), network);
         model::ChipComponent *initiator = channel->initiator();
         model::ChipComponent *target = channel->target();
+        // Check initiator
         QCOMPARE(initiator->name(), QString("testcomp1"));
         QCOMPARE(initiator->network(), network);
+        auto q_out = qobject_cast<model::Outport *> (channel->initiator_port());
+        QVERIFY2(q_out != nullptr, "Initiator port is not an output port!");
+        // Check target
         QCOMPARE(target->name(), QString("testcomp2"));
         QCOMPARE(target->network(), network);
+        auto q_in = qobject_cast<model::Inport *> (channel->target_port());
+        QVERIFY2(q_in != nullptr, "Target port is not an input port!");
     } else {
         QString msg = model::Utils::qmlBuildError(component);
         QVERIFY2(false, msg.toStdString().c_str());

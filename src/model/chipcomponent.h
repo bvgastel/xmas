@@ -33,6 +33,8 @@ namespace model {
 
 class Network;
 
+// TODO: Could we use parent to check relationships? How to check types?
+
 /**
  * @brief The ChipComponent class
  *
@@ -57,6 +59,8 @@ class  ChipComponent : public QObject
     Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors NOTIFY connectorsChanged)
 
     // TODO: We need InPort and OutPort
+
+    // TODO: We need a reverse check of component in Port with this
 
 public:
     enum Orientation { Up, Down, Left, Right };
@@ -100,8 +104,35 @@ public:
     QQmlListProperty<Port> connectors();
 
     Port *at(const int index) { return m_portList[index]; }
-    int size() {
+
+    int count_connectors() {
         return m_portList.size();
+    }
+
+    Port *port(QString name) {
+        foreach (Port *p, m_portList) {
+            if (p->name() == name) {
+                return p;
+            }
+        }
+    }
+
+    Inport *inport(QString name) {
+        foreach(Port *p, m_portList) {
+            auto q = qobject_cast<Inport *>(p);
+            if ( q && q->name() == name) {
+                return q;
+            }
+        }
+    }
+
+    Outport *outport(QString name) {
+        foreach(Port *p, m_portList) {
+            auto q = qobject_cast<Outport *>(p);
+            if ( q && q->name() == name) {
+                return q;
+            }
+        }
     }
 
 signals:
@@ -116,6 +147,8 @@ signals:
 public slots:
 
 private:
+    void clear_port_comp();
+
     static void append_port_list(QQmlListProperty<Port> *property, Port *port);
     static int count_port_list(QQmlListProperty<Port> *property);
     static Port *at_port_list(QQmlListProperty<Port> *property, int index);

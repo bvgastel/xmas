@@ -17,14 +17,14 @@ Network {
             func : "function"
             connectors : [
 
-                Port {
+                Inport {
                     id: testcomp1_in1
                     name : "in1"
                     rdy : "rdy1"
                     comp : testcomp1
                 },
 
-                Port {
+                Outport {
                     id : testcomp1_out1
                     name : "out1"
                     rdy : "rdy2"
@@ -42,18 +42,18 @@ Network {
             func : "function"
             connectors : [
 
-                Port {
+                Inport {
                     id: testcomp2_in1
                     name : "in1"
                     rdy : "rdy1"
-                    comp : testcomp1
+                    comp : testcomp2
                 },
 
-                Port {
+                Outport {
                     id : testcomp2_out1
                     name : "out1"
                     rdy : "rdy2"
-                    comp : testcomp1
+                    comp : testcomp2
                 }
             ]
         }

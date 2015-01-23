@@ -45,12 +45,18 @@ void TestComponent::testComponentCreation() {
         QVERIFY(comp->network() == nullptr);
         QCOMPARE(comp->x(), 1);
         QCOMPARE(comp->y(), 1);
-        QCOMPARE(comp->size(), 2);
-        for (int i = 0; i < comp->size(); i++) {
+        QCOMPARE(comp->count_connectors(), 2);
+        for (int i = 0; i < comp->count_connectors(); i++) {
             QString n = QString(std::to_string(i+1).c_str());
             model::Port *p = comp->at(i);
             QCOMPARE(p->name(), QString("testport").append(n));
             QCOMPARE(p->rdy(), QString("rdy").append(n));
+            auto q = qobject_cast<model::Inport *>(p);
+            QString result;
+            result.append(std::to_string(i).c_str());
+            result.append(q != nullptr ? "=in" : "=out");
+            QString expected = (i == 0 ? "0=in" : "1=out");
+            QCOMPARE(result, expected);     // 0 = in, 1 = out
         }
     } else {
         QString msg = model::Utils::qmlBuildError(component);

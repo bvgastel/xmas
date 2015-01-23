@@ -12,13 +12,13 @@ ChipComponent {
     func : "function"
     connectors : [
 
-        Port {
+        Inport {
             name : "testport1"
             rdy : "rdy1"
             comp : testcomp1
         },
 
-        Port {
+        Outport {
             name : "testport2"
             rdy : "rdy2"
             comp : testcomp1
