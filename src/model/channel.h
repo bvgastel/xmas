@@ -30,8 +30,6 @@
 #include "port.h"
 
 
-// TODO: Consider using smart pointers : does it work well with qml / quick2? ---> Comment in github issue
-
 namespace model {
 
 /**
@@ -74,7 +72,7 @@ class Channel : public QObject
     Q_PROPERTY(model::ChipComponent *initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
     Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
     //Q_PROPERTY(model::Port init_port READ init_port WRITE init_port NOTIFY init_portChanged)
-    Q_PROPERTY(QString target READ target WRITE target NOTIFY targetChanged)
+    Q_PROPERTY(model::ChipComponent *target READ target WRITE target NOTIFY targetChanged)
     Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
     Q_PROPERTY(QQmlListProperty<model::GridPoint> ptList READ ptList NOTIFY ptListChanged)
@@ -129,10 +127,12 @@ public:
 //        emit init_portChanged();
 //    }
 
-    QString target() const { return m_target; }
-    void target(QString &target) {
-        m_target = target;
-        emit targetChanged();
+    ChipComponent *target() const { return m_target; }
+    void target(ChipComponent *target) {
+        if (m_target != target) {
+            m_target = target;
+            emit targetChanged();
+        }
     }
 
     QString target_port() const { return m_target_port; }
@@ -174,9 +174,9 @@ private:
 //    Port *m_init_port;
     QString m_init_port;
     /**
-     * @brief m_target The target of the channel: name of the chip component.
+     * @brief m_target A pointer to the target of the channel.
      */
-    QString m_target;
+    ChipComponent *m_target;
     /**
      * @brief m_out_port The output port to the target.
      */

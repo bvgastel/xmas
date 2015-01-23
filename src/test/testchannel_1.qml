@@ -6,7 +6,7 @@ Channel {
     network : "network1"
     initiator : null
     init_port : "testinit_port1"
-    target : "testtarget1"
+    target : null
     target_port : "testtarget_port1"
     datatype : "test_datatype1"
 

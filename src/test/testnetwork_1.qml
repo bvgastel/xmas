@@ -31,6 +31,31 @@ Network {
                     comp : testcomp1
                 }
             ]
+        },
+        ChipComponent {
+            id : testcomp2
+            name : "testcomp1"
+            network : network1
+            x : 1
+            y : 1
+            orientation : Up
+            func : "function"
+            connectors : [
+
+                Port {
+                    id: testcomp2_in1
+                    name : "in1"
+                    rdy : "rdy1"
+                    comp : testcomp1
+                },
+
+                Port {
+                    id : testcomp2_out1
+                    name : "out1"
+                    rdy : "rdy2"
+                    comp : testcomp1
+                }
+            ]
         }
     ]
 
@@ -40,7 +65,7 @@ Network {
             network : "network1"
             initiator : testcomp1
             init_port : "out1"
-            target : "testcomp2"
+            target : testcomp2
             target_port : "in1"
             datatype : "test_datatype1"
 

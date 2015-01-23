@@ -42,9 +42,9 @@ void TestChannel::testChannelCreate() {
     model::Channel *channel = qobject_cast<model::Channel *>(component.create());
     if (channel) {
         QCOMPARE(channel->name(), QString("testchannel1"));
-//        QCOMPARE(channel->initiator(), QString("testinitiator1"));
+        QVERIFY(channel->initiator() == nullptr);
         QCOMPARE(channel->init_port(), QString("testinit_port1"));
-        QCOMPARE(channel->target(), QString("testtarget1"));
+        QVERIFY(channel->target() == nullptr);
         QCOMPARE(channel->target_port(), QString("testtarget_port1"));
         QCOMPARE(channel->ptSize(), 2);
         for (int i = 0; i < channel->ptSize(); i++) {
