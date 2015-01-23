@@ -42,6 +42,7 @@ void TestComponent::testComponentCreation() {
     model::ChipComponent *comp = qobject_cast<model::ChipComponent *>(component.create());
     if (comp) {
         QCOMPARE(comp->name(), QString("testcomp1"));
+        QVERIFY(comp->network() == nullptr);
         QCOMPARE(comp->x(), 1);
         QCOMPARE(comp->y(), 1);
         QCOMPARE(comp->size(), 2);

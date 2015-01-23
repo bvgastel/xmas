@@ -1,6 +1,7 @@
 import Model 1.0
 
 Network {
+    id : network1
     name : "network1"
     width:5
     height:5
@@ -9,7 +10,7 @@ Network {
         ChipComponent {
             id : testcomp1
             name : "testcomp1"
-            network : "network1"
+            network : network1
             x : 1
             y : 1
             orientation : Up

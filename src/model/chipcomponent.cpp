@@ -41,10 +41,11 @@ model::ChipComponent::~ChipComponent()
 
 }
 
-void model::ChipComponent::network(QString &network) {
-    // TODO: Check network name
-    m_network = network;
-    emit networkChanged();
+void model::ChipComponent::network(model::Network *network) {
+    if (m_network != network) {
+        m_network = network;
+        emit networkChanged();
+    }
 }
 
 /**

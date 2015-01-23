@@ -33,6 +33,8 @@
 
 namespace model {
 
+class Network;
+
 /**
  * @brief The Component class
  *
@@ -48,7 +50,7 @@ class  ChipComponent : public QObject
 
     Q_ENUMS(Orientation)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
+    Q_PROPERTY(model::Network *network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
     Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged)
@@ -67,8 +69,8 @@ public:
         emit nameChanged();
     }
 
-    QString network() const { return m_network; }
-    void network(QString &network);
+    Network *network() const { return m_network; }
+    void network(Network *network);
 
     int x() { return m_x; }
     void x(int &x) {
@@ -119,7 +121,7 @@ private:
     static void clear_port_list(QQmlListProperty<Port> *property);
 
     QString m_name;
-    QString m_network;
+    Network *m_network;
     int m_x;
     int m_y;
     Orientation m_orientation;

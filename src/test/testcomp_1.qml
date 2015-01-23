@@ -5,7 +5,7 @@ ChipComponent {
 
     id : testcomp1
     name : "testcomp1"
-    network : "testnetwork1"
+    network : null
     x : 1
     y : 1
     orientation : Up
