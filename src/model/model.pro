@@ -21,8 +21,7 @@ SOURCES += \
     chipcomponent.cpp \
     borderpos.cpp \
     utils.cpp \
-    gridpoint.cpp \
-    board.cpp
+    gridpoint.cpp
 
 HEADERS +=\
         model_global.h \
@@ -32,8 +31,7 @@ HEADERS +=\
     chipcomponent.h \
     borderpos.h \
     utils.h \
-    gridpoint.h \
-    board.h
+    gridpoint.h
 
 unix {
     target.path = /usr/local/lib64
