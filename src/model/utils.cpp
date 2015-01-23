@@ -57,6 +57,8 @@ void model::Utils::registreModel() {
     qmlRegisterType<model::GridPoint>       (nameSpace, major, minor, "GridPoint");
     qmlRegisterType<model::BorderPos>       (nameSpace, major, minor, "BorderPos");
     qmlRegisterType<model::Port>            (nameSpace, major, minor, "Port");
+    qmlRegisterType<model::Inport>          (nameSpace, major, minor, "Inport");
+    qmlRegisterType<model::Outport>         (nameSpace, major, minor, "Outport");
     qmlRegisterType<model::ChipComponent>   (nameSpace, major, minor, "ChipComponent");
     qmlRegisterType<model::Channel>         (nameSpace, major, minor, "Channel");
     qmlRegisterType<model::Network>         (nameSpace, major, minor, "Network");

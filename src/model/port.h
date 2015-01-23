@@ -117,6 +117,20 @@ private:
 
 };
 
+class Inport : public Port
+{
+    Q_OBJECT
+public:
+    Inport(QObject *parent = 0);
+};
+
+class Outport : public Port
+{
+    Q_OBJECT
+public:
+    Outport(QObject *parent = 0);
+};
+
 } // namespace model
 
 #endif // PORT_H

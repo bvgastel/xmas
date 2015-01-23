@@ -40,7 +40,6 @@ public:
 
 // TODO: [Utils] create a generic function for QML creation of class
 // TODO: [Utils] How to generate signals for errors?
-// TODO: [Utils] How to check for network name (singleton?) --> probably yes (see
 
 } // namespace model
 

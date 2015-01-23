@@ -33,4 +33,12 @@ model::Port::~Port()
 
 }
 
+model::Inport::Inport(QObject *parent) : Port(parent)
+{
+}
+
+model::Outport::Outport(QObject *parent) : Port(parent)
+{
+}
+
 

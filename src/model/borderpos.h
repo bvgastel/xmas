@@ -34,8 +34,11 @@ namespace model {
  * border of a rectangular area. It is meant to be used with Qml 2.0
  * In this case it must be registered with qml.
  *
- * Remark: the position must be a number between 0 and 100. Any attempt
- * outside these boundaries are overwritten with 0.
+ * The position must be a number between 0 and 100. This object
+ * overwrites any value outside [0, 100] with 0.
+ *
+ * The position is relative to the component while it is in
+ * default position.
  *
  */
 class BorderPos : public QObject
@@ -46,7 +49,7 @@ class BorderPos : public QObject
     Q_PROPERTY(BorderSide border READ border WRITE border NOTIFY borderChanged)
     Q_PROPERTY(int position READ position WRITE position NOTIFY positionChanged)
 public:
-    enum BorderSide { Left, Right, Top, Bottom };
+    enum BorderSide { N, S, E, W };
 
     explicit BorderPos(QObject *parent = 0);
     ~BorderPos();
