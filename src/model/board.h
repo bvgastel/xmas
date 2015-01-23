@@ -39,7 +39,7 @@ class Board : public QObject
 
 public:
     explicit Board(QObject *parent = 0);
-    Board(const Board &rhs);
+    //Board(const Board &rhs);
     ~Board();
 
     Network *network() const { return m_network; }

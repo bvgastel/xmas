@@ -25,7 +25,6 @@
 #include <QtQml>
 #include <QDebug>
 
-#include "board.h"
 #include "testnetwork.h"
 
 TestNetwork::TestNetwork(QObject *parent) : QObject(parent)
@@ -35,22 +34,6 @@ TestNetwork::TestNetwork(QObject *parent) : QObject(parent)
 
 TestNetwork::~TestNetwork()
 {
-
-}
-
-void TestNetwork::testBoardCreation() {
-    model::Utils::registreModel();
-    QQmlEngine engine;
-    QQmlComponent component(&engine, QUrl("qrc:testboard_1.qml"));
-    model::Board *board = qobject_cast<model::Board *>(component.create());
-    if (board) {
-        QVERIFY(board->network() == nullptr);
-        QCOMPARE(board->width(), 1);
-        QCOMPARE(board->height(), 1);
-    } else {
-        QString msg = model::Utils::qmlBuildError(component);
-        QVERIFY2(false, msg.toStdString().c_str());
-    }
 
 }
 

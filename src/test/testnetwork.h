@@ -41,7 +41,6 @@ signals:
 public slots:
 
 private slots:
-    void testBoardCreation();
     void testNetworkCreation();
 };
 

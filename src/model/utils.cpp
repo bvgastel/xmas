@@ -24,7 +24,6 @@
 
 #include "utils.h"
 
-#include "board.h"
 #include "gridpoint.h"
 #include "borderpos.h"
 #include "port.h"
@@ -55,7 +54,6 @@ void model::Utils::registreModel() {
     const char *nameSpace = "Model";
     const int major = 1;
     const int minor = 0;
-    qmlRegisterType<model::Board>           (nameSpace, major, minor, "Board");
     qmlRegisterType<model::GridPoint>       (nameSpace, major, minor, "GridPoint");
     qmlRegisterType<model::BorderPos>       (nameSpace, major, minor, "BorderPos");
     qmlRegisterType<model::Port>            (nameSpace, major, minor, "Port");

@@ -25,7 +25,6 @@
 
 #include <QObject>
 
-#include "board.h"
 #include "gridpoint.h"
 #include "chipcomponent.h"
 #include "channel.h"
@@ -64,7 +63,8 @@ class Network : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(model::Board board READ board WRITE board NOTIFY boardChanged)
+    Q_PROPERTY(int width READ width WRITE width NOTIFY widthChanged)
+    Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
     Q_PROPERTY(QQmlListProperty<model::ChipComponent> components READ components NOTIFY componentsChanged)
     Q_PROPERTY(QQmlListProperty<model::Channel> channels READ channels NOTIFY channelsChanged)
 
@@ -78,10 +78,16 @@ public:
         emit nameChanged();
     }
 
-    Board board() const { return m_board; }
-    void board(Board &board) {
-        m_board = board;
-        emit boardChanged();
+    int width() const { return m_width; }
+    void width(int &width) {
+        m_width = width;
+        emit widthChanged();
+    }
+
+    int height() const { return m_height; }
+    void height(int &height) {
+        m_height = height;
+        emit heightChanged();
     }
 
     Channel *channel(int index) const {
@@ -92,7 +98,8 @@ public:
     QQmlListProperty<Channel> channels();
 
 signals:
-    void boardChanged();
+    void widthChanged();
+    void heightChanged();
     void nameChanged();
     void componentsChanged();
     void channelsChanged();
@@ -125,7 +132,8 @@ private:
 
 
     QString m_name;
-    Board m_board;
+    int m_width;
+    int m_height;
     QList<ChipComponent *> m_comp_list;
     QList<Channel *> m_channel_list;
 };
