@@ -44,7 +44,7 @@ void TestNetwork::testBoardCreation() {
     QQmlComponent component(&engine, QUrl("qrc:testboard_1.qml"));
     model::Board *board = qobject_cast<model::Board *>(component.create());
     if (board) {
-        QCOMPARE(board->network(), QString("network1"));
+        QVERIFY(board->network() == nullptr);
         QCOMPARE(board->width(), 1);
         QCOMPARE(board->height(), 1);
     } else {

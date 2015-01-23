@@ -27,11 +27,13 @@ model::Board::Board(QObject *parent) : QObject(parent)
 
 }
 
+// TODO: Do we really need a copy constructor?
 model::Board::Board(const Board &rhs) : QObject() {
     if (this != &rhs) {
         m_network = rhs.m_network;
         m_width = rhs.m_width;
         m_height = rhs.m_height;
+        // TODO: Should we emit networkChanged, widthChanged and heightChanged?
     }
 }
 
@@ -40,10 +42,11 @@ model::Board::~Board()
 
 }
 
-void model::Board::network(QString &network) {
-    // TODO: check network exists, was declared earlier
-    m_network = network;
-    emit networkChanged();
+void model::Board::network(model::Network *network) {
+    if (m_network != network) {
+        m_network = network;
+        emit networkChanged();
+    }
 }
 
 model::Board &model::Board::operator=(const model::Board &rhs) {

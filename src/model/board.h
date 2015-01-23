@@ -27,11 +27,13 @@
 
 namespace model {
 
+class Network;
+
 class Board : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
+    Q_PROPERTY(model::Network *network READ network WRITE network NOTIFY networkChanged)
     Q_PROPERTY(int width READ width WRITE width NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
 
@@ -40,8 +42,8 @@ public:
     Board(const Board &rhs);
     ~Board();
 
-    QString network() const { return m_network; }
-    void network(QString &network);
+    Network *network() const { return m_network; }
+    void network(Network *network);
 
     int width() { return m_width; }
 
@@ -69,7 +71,7 @@ private:
     /**
      * @brief m_network the name of the network
      */
-    QString m_network;
+    Network *m_network;
     /**
      * @brief m_width width of the grid, must be > 0.
      */
