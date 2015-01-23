@@ -28,9 +28,7 @@
  *
  *
  **************************************************************************/
-
 import QtQuick 2.4
-import "qrc:../content/connectionCreation.js" as Code
 
 //TODO : implement common xmas connection style
 
@@ -39,64 +37,7 @@ Item {
     anchors.fill: parent
     property var connector1: null
     property var connector2: null
-
     property color color: "darkblue"
-    property bool selected: false
-    property bool connecting: false
-
-    Canvas {
-        id: canvas
-        anchors.fill: parent
-
-        //TODO : avoid collition with other objects
-        //NOTE : just a straight line for now
-        onPaint: {
-            var ctx = getContext('2d')
-            connection.selected ? ctx.lineWidth = 8.0 : ctx.lineWidth = 4.0
-            ctx.strokeStyle = connection.color
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (connector1 !== null && connector1.parent !== null)
-            {
-                ctx.beginPath()
-                ctx.moveTo(connector1.parent.x + connector1.x + connector1.width/2 ,
-                           connector1.parent.y + connector1.y  + connector1.height/2)
-                if (connector2 !== null && connector2.parent !== null)
-                {
-                    ctx.lineTo(connector2.parent.x + connector2.x + connector2.width/2 ,
-                               connector2.parent.y + connector2.y  + connector2.height/2)
-                }
-                else
-                {
-                    ctx.lineTo(area.mouseX, area.mouseY)
-
-                }
-                ctx.stroke()
-            }
-
-        }
-
-
-        MouseArea {
-            id: area
-            anchors.fill: parent
-            hoverEnabled: connecting
-            preventStealing: connecting
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            onPressed: {
-                if (mouse.button == Qt.RightButton && connecting) {
-                    Code.abortConnecting(connector1)
-                    connection.destroy()
-                }
-            }
-            onPositionChanged: {
-                canvas.requestPaint()
-            }
-            onHoveredChanged: {
-                canvas.requestPaint()
-            }
-
-        }
-    }
 
 }
 

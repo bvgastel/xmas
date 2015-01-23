@@ -8,18 +8,19 @@ function doConnect(port) {
         if (createConnection(port)) {
             connection.connector1 = port;
             console.log("Connection created");
+            return true
         }
     }
     else
     {
         endConnect(port);
-
     }
+    return false
 }
 
 function createConnection(port){
     component = Qt.createComponent("qrc:qml/XConnection.qml");
-    connection = component.createObject(scene, {"x": 0, "y": 0});
+    connection = component.createObject(scene, {"x": port.x, "y": port.y});
     if (connection === null) {
         console.log("Error creating connection");
         return false
@@ -34,7 +35,7 @@ function abortConnecting(port) {
     port.connected = false
     port = null
     connection = null
-    //component = null
+    component = null
 }
 
 function continueConnecting(port) {

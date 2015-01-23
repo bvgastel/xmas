@@ -35,30 +35,33 @@ Item {
     id:connector
     width: 20; height:20
     x:-10; y:-10
-    z: 1
+    z:1
     property bool connected: false
     property string name: "a"
+    property bool containsMouse: false
 
     Rectangle{
         color: connected ? "black" : "red"
         anchors.fill: parent
         border.color: "black"
-        border.width: connected || area.containsMouse ? 4 : 0
+        border.width: area.containsMouse ? 4 : 0
     }
+
+    onConnectedChanged: connected ? 0 : Code.abortConnecting(connector)
 
     MouseArea {
         id: area
         anchors.fill: parent
+        anchors.margins: -10 // magic connector :)
         hoverEnabled: !connected
         preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.LeftButton && !connected) {
                 connected = true
-                Code.doConnect(connector)
             }
         }
-
+        onContainsMouseChanged: connector.containsMouse = containsMouse
     }
 }
 

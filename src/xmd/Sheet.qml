@@ -75,6 +75,59 @@ Item {
             width: 2970
             height: 2100
             color: "white"
+
+            Canvas {
+                id: wire
+                z:20
+                anchors.fill: parent
+                property real mouseX: 0
+                property real mouseY: 0
+                property bool connecting: false
+                property var connector1: null
+                property var connector2: null
+
+                visible: connecting
+                enabled: connecting
+                onPaint: {
+                    var ctx = getContext('2d')
+                    ctx.strokeStyle = "darkblue"
+                    ctx.lineWidth = 4.0
+                    ctx.clearRect(0, 0, wire.width, wire.height);
+                    if (connecting)
+                    {
+                        var x =  connector1.parent.x + connector1.x + connector1.width/2
+                        var y = connector1.parent.y + connector1.y  + connector1.height/2
+                        ctx.beginPath()
+                        ctx.moveTo(x ,y)
+                        ctx.lineTo(mouseX + connector1.width/2,mouseY + connector1.height/2)
+                        ctx.rect(mouseX,mouseY,connector1.width,connector1.height)
+                        ctx.stroke()
+                    }
+
+                }
+            }
+
+            MouseArea {
+                id: area
+                anchors.fill: wire
+                hoverEnabled: wire.connecting
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onPressed: {
+                    if (mouse.button == Qt.RightButton && wire.connecting) {
+                        wire.connecting = false
+                        wire.connector1.connected = false
+                        wire.connector1 = null
+                        wire.connector2 = null
+                        wire.requestPaint()
+                    }
+                }
+                onPositionChanged: {
+                    wire.mouseX = mouse.x
+                    wire.mouseY = mouse.y
+                    wire.requestPaint()
+                }
+            }
+
         }
 
         // Only show the scrollbars when the view is moving.
