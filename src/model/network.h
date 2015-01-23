@@ -68,6 +68,8 @@ class Network : public QObject
     Q_PROPERTY(QQmlListProperty<model::ChipComponent> components READ components NOTIFY componentsChanged)
     Q_PROPERTY(QQmlListProperty<model::Channel> channels READ channels NOTIFY channelsChanged)
 
+    // TODO: Decide: will IN and OUT be general chipcomponents? Or will they be a separate entity?
+
 public:
     explicit Network(QObject *parent = 0);
     ~Network();

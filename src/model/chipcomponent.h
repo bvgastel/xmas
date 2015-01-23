@@ -29,19 +29,18 @@
 
 #include "port.h"
 
-// TODO: are we using todo plugin? Yes: see Help / About plugins ...
-
 namespace model {
 
 class Network;
 
 /**
- * @brief The Component class
+ * @brief The ChipComponent class
  *
- * The component on a network. It contains ports (both
- * in ports and out ports.
+ * The ChipComponent on a network. It contains ports (both
+ * in ports and out ports).
  *
- * Ports are tightly coupled with Components: no existance outside components.
+ * Ports are tightly coupled with ChipComponents: no existance outside components.
+ * For that reason ports are an integral part of chipcomponents.
  *
  */
 class  ChipComponent : public QObject
@@ -49,13 +48,15 @@ class  ChipComponent : public QObject
     Q_OBJECT
 
     Q_ENUMS(Orientation)
-    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(model::Network *network READ network WRITE network NOTIFY networkChanged)
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
     Q_PROPERTY(Orientation orientation READ orientation WRITE orientation NOTIFY orientationChanged)
-    Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors NOTIFY connectorsChanged)
     Q_PROPERTY(QString func READ func WRITE func NOTIFY funcChanged)
+    Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors NOTIFY connectorsChanged)
+
+    // TODO: We need InPort and OutPort
 
 public:
     enum Orientation { Up, Down, Left, Right };
