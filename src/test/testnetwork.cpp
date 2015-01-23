@@ -45,6 +45,7 @@ void TestNetwork::testNetworkCreation() {
     if (network) {
         QCOMPARE(network->name(), QString("network1"));
         model::Channel *channel = network->channel(0);
+        QCOMPARE(channel->network(), network);
         model::ChipComponent *initiator = channel->initiator();
         model::ChipComponent *target = channel->target();
         QCOMPARE(initiator->name(), QString("testcomp1"));

@@ -3,7 +3,7 @@ import Model 1.0
 
 Channel {
     name : "testchannel1"
-    network : "network1"
+    network : null
     initiator : null
     initiator_port : null
     target : null

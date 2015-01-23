@@ -65,7 +65,7 @@ class Channel : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
+    Q_PROPERTY(model::Network *network READ network WRITE network NOTIFY networkChanged)
 
     Q_PROPERTY(model::ChipComponent *initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
     Q_PROPERTY(model::Port *initiator_port READ initiator_port WRITE initiator_port NOTIFY initiator_portChanged)
@@ -106,8 +106,13 @@ public:
         emit nameChanged();
     }
 
-    QString network() const { return m_network; }
-    void network(QString &network);
+    model::Network *network() const { return m_network; }
+    void network(model::Network *network) {
+        if (m_network != network) {
+            m_network = network;
+            emit networkChanged();
+        }
+    }
 
     ChipComponent *initiator() const { return m_initiator; }
     void initiator(ChipComponent *initiator) {
@@ -162,7 +167,7 @@ private:
     /**
      * @brief m_network The name of the network
      */
-    QString m_network;
+    Network *m_network;
     /**
      * @brief m_initiator A pointer to the initiator of the channel
      */

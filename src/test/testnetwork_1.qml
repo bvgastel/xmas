@@ -62,7 +62,7 @@ Network {
     channels: [
         Channel {
             name : "testchannel1"
-            network : "network1"
+            network : network1
             initiator : testcomp1
             initiator_port : testcomp1_out1
             target : testcomp2

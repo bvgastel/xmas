@@ -42,6 +42,7 @@ void TestChannel::testChannelCreate() {
     model::Channel *channel = qobject_cast<model::Channel *>(component.create());
     if (channel) {
         QCOMPARE(channel->name(), QString("testchannel1"));
+        QVERIFY(channel->network() == nullptr);
         QVERIFY(channel->initiator() == nullptr);
         QVERIFY(channel->initiator_port() == nullptr);
         QVERIFY(channel->target() == nullptr);
