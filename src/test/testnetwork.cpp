@@ -46,8 +46,11 @@ void TestNetwork::testNetworkCreation() {
         QCOMPARE(network->name(), QString("network1"));
         model::Channel *channel = network->channel(0);
         model::ChipComponent *initiator = channel->initiator();
+        model::ChipComponent *target = channel->target();
         QCOMPARE(initiator->name(), QString("testcomp1"));
         QCOMPARE(initiator->network(), network);
+        QCOMPARE(target->name(), QString("testcomp2"));
+        QCOMPARE(target->network(), network);
     } else {
         QString msg = model::Utils::qmlBuildError(component);
         QVERIFY2(false, msg.toStdString().c_str());

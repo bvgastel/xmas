@@ -45,7 +45,7 @@ void TestChannel::testChannelCreate() {
         QVERIFY(channel->initiator() == nullptr);
         QVERIFY(channel->initiator_port() == nullptr);
         QVERIFY(channel->target() == nullptr);
-        QCOMPARE(channel->target_port(), QString("testtarget_port1"));
+        QVERIFY(channel->target_port() == nullptr);
         QCOMPARE(channel->ptSize(), 2);
         for (int i = 0; i < channel->ptSize(); i++) {
             QString n = QString(std::to_string(i+1).c_str());

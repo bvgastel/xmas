@@ -59,9 +59,6 @@ namespace model {
  * the signal trdy when ready. The other component
  * (outport bound) receives this signal.
  *
- * TODO: [Channel] We need the data type for the VT
- * TODO: [Channel] We need to know the components we are connecting
- *
  */
 class Channel : public QObject
 {
@@ -74,7 +71,7 @@ class Channel : public QObject
     Q_PROPERTY(model::Port *initiator_port READ initiator_port WRITE initiator_port NOTIFY initiator_portChanged)
 
     Q_PROPERTY(model::ChipComponent *target READ target WRITE target NOTIFY targetChanged)
-    Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
+    Q_PROPERTY(model::Port *target_port READ target_port WRITE target_port NOTIFY target_portChanged)
 
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
 
@@ -114,8 +111,10 @@ public:
 
     ChipComponent *initiator() const { return m_initiator; }
     void initiator(ChipComponent *initiator) {
-        m_initiator = initiator;
-        emit initiatorChanged();
+        if (m_initiator != initiator) {
+            m_initiator = initiator;
+            emit initiatorChanged();
+        }
     }
 
     Port *initiator_port() const { return m_initiator_port; }
@@ -134,10 +133,12 @@ public:
         }
     }
 
-    QString target_port() const { return m_target_port; }
-    void target_port(QString &target_port) {
-        m_target_port = target_port;
-        emit target_portChanged();
+    model::Port *target_port() const { return m_target_port; }
+    void target_port(model::Port *target_port) {
+        if (m_target_port != target_port) {
+            m_target_port = target_port;
+            emit target_portChanged();
+        }
     }
 
     QString datatype() const { return m_datatype; }
@@ -176,9 +177,9 @@ private:
      */
     ChipComponent *m_target;
     /**
-     * @brief m_target_port The target port.
+     * @brief m_target_port A pointer to the target port.
      */
-    QString m_target_port;
+    Port *m_target_port;
     /**
      * @brief m_data The data type of the channel
      */

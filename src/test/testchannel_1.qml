@@ -7,7 +7,7 @@ Channel {
     initiator : null
     initiator_port : null
     target : null
-    target_port : "testtarget_port1"
+    target_port : null
     datatype : "test_datatype1"
 
     ptList : [

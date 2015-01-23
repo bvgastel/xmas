@@ -34,7 +34,7 @@ Network {
         },
         ChipComponent {
             id : testcomp2
-            name : "testcomp1"
+            name : "testcomp2"
             network : network1
             x : 1
             y : 1
@@ -64,9 +64,9 @@ Network {
             name : "testchannel1"
             network : "network1"
             initiator : testcomp1
-            initiator_port : testcomp1_in1
+            initiator_port : testcomp1_out1
             target : testcomp2
-            target_port : "in1"
+            target_port : testcomp2_in1
             datatype : "test_datatype1"
 
             ptList : [
