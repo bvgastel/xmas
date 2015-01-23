@@ -51,12 +51,10 @@ void TestComponent::testComponentCreation() {
             model::Port *p = comp->at(i);
             QCOMPARE(p->name(), QString("testport").append(n));
             QCOMPARE(p->rdy(), QString("rdy").append(n));
-            auto q = qobject_cast<model::Inport *>(p);
-            QString result;
-            result.append(std::to_string(i).c_str());
-            result.append(q != nullptr ? "=in" : "=out");
-            QString expected = (i == 0 ? "0=in" : "1=out");
-            QCOMPARE(result, expected);     // 0 = in, 1 = out
+            // i = 0 ==> in, i == 1 ==> out
+            bool isIn = i == 0 ? true : false;
+            QCOMPARE(p->isInport(), isIn);
+            QCOMPARE(p->isOutport(), !isIn);
         }
     } else {
         QString msg = model::Utils::qmlBuildError(component);

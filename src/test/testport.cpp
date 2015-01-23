@@ -42,14 +42,26 @@ TestPort::~TestPort()
 void TestPort::testPortCreation() {
     model::Utils::registreModel();
     QQmlEngine engine;
-    QQmlComponent component(&engine, QUrl("qrc:testport_1.qml"));
-    model::Port *port = qobject_cast<model::Port *>(component.create());
-    if (port) {
-        QCOMPARE(port->name(), QString("testport1"));
-        QCOMPARE(port->rdy(), QString("rdy1"));
-        QVERIFY(port->comp() == nullptr);
+    QQmlComponent component1(&engine, QUrl("qrc:testport_1.qml"));
+    model::Port *port1 = qobject_cast<model::Port *>(component1.create());
+    if (port1) {
+        QCOMPARE(port1->name(), QString("testport1"));
+        QCOMPARE(port1->rdy(), QString("rdy1"));
+        QCOMPARE(port1->isInport(), true);
+        QCOMPARE(port1->isOutport(), false);
     } else {
-        QString msg = model::Utils::qmlBuildError(component);
+        QString msg = model::Utils::qmlBuildError(component1);
+        QVERIFY2(false, msg.toStdString().c_str());
+    }
+    QQmlComponent component2(&engine, QUrl("qrc:testport_2.qml"));
+    model::Port *port2 = qobject_cast<model::Port *>(component2.create());
+    if (port2) {
+        QCOMPARE(port2->name(), QString("testport2"));
+        QCOMPARE(port2->rdy(), QString("rdy2"));
+        QCOMPARE(port2->isInport(), false);
+        QCOMPARE(port2->isOutport(), true);
+    } else {
+        QString msg = model::Utils::qmlBuildError(component1);
         QVERIFY2(false, msg.toStdString().c_str());
     }
 

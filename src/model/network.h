@@ -97,6 +97,18 @@ public:
 
     /******** non QML methods *****************/
 
+    int count_chipComponents() const {
+        return m_comp_list.size();
+    }
+
+    ChipComponent *chipComponent(int index) const {
+        return m_comp_list.at(index);
+    }
+
+    int count_channels() const {
+        return m_channel_list.size();
+    }
+
     Channel *channel(int index) const {
         return m_channel_list.at(index);
     }

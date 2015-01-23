@@ -56,7 +56,7 @@ void model::Utils::registreModel() {
     const int minor = 0;
     qmlRegisterType<model::GridPoint>       (nameSpace, major, minor, "GridPoint");
     qmlRegisterType<model::BorderPos>       (nameSpace, major, minor, "BorderPos");
-    qmlRegisterType<model::Port>            (nameSpace, major, minor, "Port");
+    qmlRegisterUncreatableType<model::Port> (nameSpace, major, minor, "Port", QString("Port is an abstract class"));
     qmlRegisterType<model::Inport>          (nameSpace, major, minor, "Inport");
     qmlRegisterType<model::Outport>         (nameSpace, major, minor, "Outport");
     qmlRegisterType<model::ChipComponent>   (nameSpace, major, minor, "ChipComponent");

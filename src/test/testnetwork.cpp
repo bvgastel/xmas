@@ -58,6 +58,17 @@ void TestNetwork::testNetworkCreation() {
         QCOMPARE(target->network(), network);
         auto q_in = qobject_cast<model::Inport *> (channel->target_port());
         QVERIFY2(q_in != nullptr, "Target port is not an input port!");
+
+        auto p = qobject_cast<model::Network *>(channel->parent());
+        QVERIFY2(p == network, "Channel does not have correct parent pointer");
+        for(int i=0; i < network->count_chipComponents(); i++) {
+            model::ChipComponent *c = network->chipComponent(i);
+            p = qobject_cast<model::Network *> (c->parent());
+            QString msg("Component does not have correct parent pointer. i=");
+            msg.append(std::to_string(i).c_str());
+            QVERIFY2(p == network, msg.toStdString().c_str());
+        }
+
     } else {
         QString msg = model::Utils::qmlBuildError(component);
         QVERIFY2(false, msg.toStdString().c_str());

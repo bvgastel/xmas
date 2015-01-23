@@ -30,14 +30,21 @@ model::Port::Port(QObject *parent) : QObject(parent)
 
 model::Port::~Port()
 {
-
 }
 
 model::Inport::Inport(QObject *parent) : Port(parent)
 {
 }
 
+model::Inport::~Inport()
+{
+}
+
 model::Outport::Outport(QObject *parent) : Port(parent)
+{
+}
+
+model::Outport::~Outport()
 {
 }
 

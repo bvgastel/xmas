@@ -27,8 +27,6 @@
 
 namespace model {
 
-class ChipComponent;
-
 /**
  * @brief The Port class
  *
@@ -49,16 +47,17 @@ class Port : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString rdy READ rdy WRITE rdy NOTIFY rdyChanged)
-    Q_PROPERTY(model::ChipComponent *comp READ comp WRITE comp NOTIFY compChanged)
 public:
     explicit Port(QObject *parent = 0);
     ~Port();
 
 
+    virtual bool isInport()=0;
+    virtual bool isOutport()=0;
+
 signals:
     void nameChanged();
     void rdyChanged();
-    void compChanged();
 
 public slots:
 
@@ -73,14 +72,6 @@ public:
     void rdy(QString &rdy) {
         m_rdy = rdy;
         emit rdyChanged();
-    }
-
-    ChipComponent *comp() const { return m_comp; }
-    void comp(ChipComponent *comp) {
-        if (m_comp != comp) {
-            m_comp = comp;
-            emit compChanged();
-        }
     }
 
 
@@ -106,14 +97,6 @@ private:
          *
          */
     QString m_rdy;
-    /**
-     * @brief m_comp A pointer to the containing component
-     *
-     * Each port is tightly coupled with one component and should
-     * be connected as soon as it is created in the qml files.
-     *
-     */
-    ChipComponent *m_comp;
 
 };
 
@@ -122,6 +105,10 @@ class Inport : public Port
     Q_OBJECT
 public:
     Inport(QObject *parent = 0);
+    ~Inport();
+
+    bool isInport() { return true; }
+    bool isOutport() { return false; }
 };
 
 class Outport : public Port
@@ -129,6 +116,10 @@ class Outport : public Port
     Q_OBJECT
 public:
     Outport(QObject *parent = 0);
+    ~Outport();
+
+    bool isInport() { return false; }
+    bool isOutport() { return true; }
 };
 
 } // namespace model

@@ -33,7 +33,7 @@ namespace model {
 
 class Network;
 
-// TODO: Could we use parent to check relationships? How to check types?
+// TODO: Could we use parent to check relationships? How to check types? --> virtual isInport / isOutport
 
 /**
  * @brief The ChipComponent class
@@ -59,8 +59,6 @@ class  ChipComponent : public QObject
     Q_PROPERTY(QQmlListProperty<model::Port> connectors READ connectors NOTIFY connectorsChanged)
 
     // TODO: We need InPort and OutPort
-
-    // TODO: We need a reverse check of component in Port with this
 
 public:
     enum Orientation { Up, Down, Left, Right };
@@ -147,7 +145,6 @@ signals:
 public slots:
 
 private:
-    void clear_port_comp();
 
     static void append_port_list(QQmlListProperty<Port> *property, Port *port);
     static int count_port_list(QQmlListProperty<Port> *property);

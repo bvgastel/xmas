@@ -72,7 +72,6 @@ void model::ChipComponent::append_port_list(QQmlListProperty<model::Port> *prope
     ChipComponent *chip_component = qobject_cast<ChipComponent *>(property->object);
     if (chip_component) {
         port->setParent(chip_component);
-        port->comp(chip_component);
         chip_component->m_portList.append(port);
     }
 }
@@ -107,13 +106,7 @@ model::Port *model::ChipComponent::at_port_list(QQmlListProperty<model::Port> *p
 void model::ChipComponent::clear_port_list(QQmlListProperty<Port> *property) {
     ChipComponent *chip_component = qobject_cast<ChipComponent *>(property->object);
     if (chip_component) {
-        chip_component->clear_port_comp();
         chip_component->m_portList.clear();
     }
 }
 
-void model::ChipComponent::clear_port_comp() {
-    foreach(Port *port, m_portList) {
-        port->comp(nullptr);
-    }
-}

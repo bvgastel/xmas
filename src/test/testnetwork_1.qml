@@ -21,14 +21,12 @@ Network {
                     id: testcomp1_in1
                     name : "in1"
                     rdy : "rdy1"
-                    comp : testcomp1
                 },
 
                 Outport {
                     id : testcomp1_out1
                     name : "out1"
                     rdy : "rdy2"
-                    comp : testcomp1
                 }
             ]
         },
@@ -46,14 +44,12 @@ Network {
                     id: testcomp2_in1
                     name : "in1"
                     rdy : "rdy1"
-                    comp : testcomp2
                 },
 
                 Outport {
                     id : testcomp2_out1
                     name : "out1"
                     rdy : "rdy2"
-                    comp : testcomp2
                 }
             ]
         }
