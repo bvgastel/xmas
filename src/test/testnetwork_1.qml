@@ -64,7 +64,7 @@ Network {
             name : "testchannel1"
             network : "network1"
             initiator : testcomp1
-            init_port : testcomp1_in1
+            initiator_port : testcomp1_in1
             target : testcomp2
             target_port : "in1"
             datatype : "test_datatype1"

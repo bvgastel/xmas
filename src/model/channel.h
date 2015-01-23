@@ -69,12 +69,15 @@ class Channel : public QObject
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString network READ network WRITE network NOTIFY networkChanged)
+
     Q_PROPERTY(model::ChipComponent *initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
-    //Q_PROPERTY(QString init_port READ init_port WRITE init_port NOTIFY init_portChanged)
-    Q_PROPERTY(model::Port *init_port READ init_port WRITE init_port NOTIFY init_portChanged)
+    Q_PROPERTY(model::Port *initiator_port READ initiator_port WRITE initiator_port NOTIFY initiator_portChanged)
+
     Q_PROPERTY(model::ChipComponent *target READ target WRITE target NOTIFY targetChanged)
     Q_PROPERTY(QString target_port READ target_port WRITE target_port NOTIFY target_portChanged)
+
     Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
+
     Q_PROPERTY(QQmlListProperty<model::GridPoint> ptList READ ptList NOTIFY ptListChanged)
 
     // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
@@ -87,7 +90,7 @@ signals:
     void nameChanged();
     void networkChanged();
     void initiatorChanged();
-    void init_portChanged();
+    void initiator_portChanged();
     void targetChanged();
     void target_portChanged();
     void datatypeChanged();
@@ -115,17 +118,11 @@ public:
         emit initiatorChanged();
     }
 
-//    QString init_port() const { return m_init_port; }
-//    void init_port(QString &init_port) {
-//        m_init_port = init_port;
-//        emit init_portChanged();
-//    }
-
-    Port *init_port() const { return m_init_port; }
-    void init_port(Port *init_port) {
-        if (m_init_port != init_port) {
-            m_init_port = init_port;
-            emit init_portChanged();
+    Port *initiator_port() const { return m_initiator_port; }
+    void initiator_port(Port *initiator_port) {
+        if (m_initiator_port != initiator_port) {
+            m_initiator_port = initiator_port;
+            emit initiator_portChanged();
         }
     }
 
@@ -171,16 +168,15 @@ private:
     //QString m_initiator;
     ChipComponent *m_initiator;
     /**
-     * @brief m_in_port A pointer to the input port from the initiator.
+     * @brief m_initiator_port A pointer to the initiator port.
      */
-    Port *m_init_port;
-//    QString m_init_port;
+    Port *m_initiator_port;
     /**
-     * @brief m_target A pointer to the target of the channel.
+     * @brief m_target A pointer to the target port.
      */
     ChipComponent *m_target;
     /**
-     * @brief m_out_port The output port to the target.
+     * @brief m_target_port The target port.
      */
     QString m_target_port;
     /**

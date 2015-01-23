@@ -43,7 +43,7 @@ void TestChannel::testChannelCreate() {
     if (channel) {
         QCOMPARE(channel->name(), QString("testchannel1"));
         QVERIFY(channel->initiator() == nullptr);
-        QVERIFY(channel->init_port() == nullptr);
+        QVERIFY(channel->initiator_port() == nullptr);
         QVERIFY(channel->target() == nullptr);
         QCOMPARE(channel->target_port(), QString("testtarget_port1"));
         QCOMPARE(channel->ptSize(), 2);
