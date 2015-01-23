@@ -63,3 +63,36 @@ void model::Utils::registreModel() {
     qmlRegisterType<model::Channel>         (nameSpace, major, minor, "Channel");
     qmlRegisterType<model::Network>         (nameSpace, major, minor, "Network");
 }
+
+/**
+ * @brief readNetwork read the network and return a tuple with
+ *        the result.
+ *
+ * @param urlString A Url as a c string that indicates where to read from.
+ *
+ * @return std::tuple<Network *, QQmlComponent *> which either
+ *  contains a network pointer without errors in component
+ *  or a nullptr for network and a qml component for the errors.
+ *  Use as follows:
+ *
+ *  Network *n;
+ *  QQmlComponent *q;
+ *  std::tie(n, q) = readNetwork("some uri");
+ *
+ *  if(!n) {
+ *      // Print the errors : its a QList in c->errors();
+ *  }
+ *
+ * Both pointers were created on the heap.
+ *
+ * TODO: FINISH THIS!
+ *
+ */
+std::tuple<Network *, QQmlComponent *> readNetwork(const char *urlString) {
+    registreModel();
+    QQmlEngine engine;
+    QQmlComponent *component = new QQmlComponent(&engine, QUrl(urlString));
+    model::Network *network = qobject_cast<model::Network *>(compponent->create());
+
+    return std::make_tuple(network, component);
+}

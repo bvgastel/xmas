@@ -36,9 +36,11 @@ public:
 
     static void registreModel();
     static QString qmlBuildError(QQmlComponent &component);
+    static Network *readNetwork(const char *uri);
+    static Network *readNetwork(QUrl url);
 };
 
-// TODO: [Utils] create a generic function for QML creation of class
+// TODO: [Utils] create a generic function for QML creation of class / of network
 // TODO: [Utils] How to generate signals for errors?
 
 } // namespace model
