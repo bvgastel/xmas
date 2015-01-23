@@ -35,30 +35,29 @@ namespace model {
 /**
  * @brief The Channel class
  *
- * The wires between components on an Noc. Each
- * channel in reality consists of 3 wires:
+ * The wires between components on an Noc. Each channel in reality consists
+ * of 3 wires:
  *
  * 1. The irdy or initiator ready signal wire
  * 2. The trdy or target ready signal wire
  * 3. The data wire.
  *
- * The data wire can have any type. The irdy
- * and trdy wires can send a signal when ready.
- * They are control wires.
+ * The data wire can have any type. The irdy and trdy wires can send a signal
+ * when ready. They are control wires.
  *
- * A channel has exactly two components with
- * on one end the output, from the channel reads
- * its data and on the other side the in port
- * to which the channel writes its data.
+ * A channel connects two components. On one end the output port, from which
+ * the  channel reads its data and on the other end the in port to which the
+ * channel writes its data.
  *
- * The component attached to the outport sends
- * the signal irdy when ready. The other component
- * (inport bound) receives this signal.
+ * The component attached to the outport sends the signal irdy when ready.
+ * The component attached to the inport receives this signal.
  *
- * The compoent attached to the inport sends
- * the signal trdy when ready. The other component
- * (outport bound) receives this signal.
+ * The component attached to the inport sends the signal trdy when ready.
+ * The component attached to the outport receives this signal.
  *
+ *
+ * The component attached to the outport sends the data to the target
+ * only when both irdy and trdy signals are high.
  */
 class Channel : public QObject
 {
