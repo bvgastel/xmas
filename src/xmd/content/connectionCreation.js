@@ -57,3 +57,34 @@ function endConnect(port) {
     }
 }
 
+
+//function checkTarget(connector) {
+//    if (wire.connector1 && wire.connector1 !== connector && wire.connector2 !== connector) {
+//        wire.connector2 = connector
+//        wire.mouseX = connector.x + connector.parent.x
+//        wire.mouseY = connector.y + connector.parent.y
+//        wire.requestPaint()
+//    } else {
+//        wire.connector2 =  wire.connecting ? null : wire.connector2
+//    }
+//}
+
+//function wiring(connector) {
+//    console.log(connector.name)
+//    if (wire.connector1) {
+//        console.log("connectie gemaakt")
+//        wire.connector1 = null
+//        wire.connecting = false
+//        //Code.doConnect(connector)
+//        wire.requestPaint()
+//    } else {
+//        wire.connector1 = connector
+//        wire.mouseX = connector.x + connector.parent.x
+//        wire.mouseY = connector.y + connector.parent.y
+//        wire.connecting = true
+//        console.log("connectie bezig")
+//    }
+
+//}
+
+

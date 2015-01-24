@@ -29,7 +29,7 @@
  *
  **************************************************************************/
 import QtQuick 2.4
-import "qrc:../content/connectionCreation.js" as Code
+import "../content/connectionCreation.js" as Code
 
 Item {
     id:connector
@@ -59,10 +59,15 @@ Item {
         onPressed: {
             if (mouse.button == Qt.LeftButton && !connected) {
                 connected = true
+                sheet.wiring(connector)
             }
         }
-        onContainsMouseChanged: connector.containsMouse = containsMouse
+        onContainsMouseChanged: {
+            connector.containsMouse = containsMouse
+            sheet.checkTarget(connector)
+        }
     }
+
 }
 
 

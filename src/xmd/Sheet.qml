@@ -34,6 +34,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import "content"
+import "content/connectionCreation.js" as Code
 
 Rectangle {
     id: sheet
@@ -60,6 +61,8 @@ Rectangle {
 
     focus: true
     z: -10
+
+
 
     //used to show the wiring path when adding a connection
     Canvas {
@@ -90,6 +93,35 @@ Rectangle {
                 ctx.stroke()
             }
         }
+    }
+
+    function checkTarget(connector) {
+        if (wire.connector1 && wire.connector1 !== connector && wire.connector2 !== connector) {
+            wire.connector2 = connector
+            wire.mouseX = connector.x + connector.parent.x
+            wire.mouseY = connector.y + connector.parent.y
+            wire.requestPaint()
+        } else {
+            wire.connector2 =  wire.connecting ? null : wire.connector2
+        }
+    }
+
+    function wiring(connector) {
+        console.log(connector.name)
+        if (wire.connector1) {
+            console.log("connectie gemaakt")
+            wire.connector1 = null
+            wire.connecting = false
+            //Code.doConnect(connector)
+            wire.requestPaint()
+        } else {
+            wire.connector1 = connector
+            wire.mouseX = connector.x + connector.parent.x
+            wire.mouseY = connector.y + connector.parent.y
+            wire.connecting = true
+            console.log("connectie bezig")
+        }
+
     }
 
     MouseArea {
