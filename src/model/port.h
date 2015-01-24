@@ -27,6 +27,20 @@
 
 namespace model {
 
+/**
+ * @brief The Port class
+ *
+ * This class represents ports. Both input and output use this
+ * class.
+ *
+ * The port is tightly coupled to a component.
+ *
+ * TODO:[Port] We need access to the owning component
+ * This is due to the requirements to do a DFS or BFS graph search
+ * of the network. Also, connecting all ports is a requirements
+ * for network consistency
+ *
+ */
 class Port : public QObject
 {
     Q_OBJECT
@@ -37,9 +51,9 @@ public:
     explicit Port(QObject *parent = 0);
     ~Port();
 
-    Port(const Port &);
 
-    Port &operator=(const Port &);
+    virtual bool isInport()=0;
+    virtual bool isOutport()=0;
 
 signals:
     void nameChanged();
@@ -49,10 +63,17 @@ public slots:
 
 public:
     QString name() const { return m_name; }
-    void name(QString &name) {m_name = name; }
+    void name(QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
     QString rdy() const { return m_rdy; }
-    void rdy(QString &rdy) { m_rdy = rdy; }
+    void rdy(QString &rdy) {
+        m_rdy = rdy;
+        emit rdyChanged();
+    }
+
 
 private:
 
@@ -77,6 +98,28 @@ private:
          */
     QString m_rdy;
 
+};
+
+class Inport : public Port
+{
+    Q_OBJECT
+public:
+    Inport(QObject *parent = 0);
+    ~Inport();
+
+    bool isInport() { return true; }
+    bool isOutport() { return false; }
+};
+
+class Outport : public Port
+{
+    Q_OBJECT
+public:
+    Outport(QObject *parent = 0);
+    ~Outport();
+
+    bool isInport() { return false; }
+    bool isOutport() { return true; }
 };
 
 } // namespace model

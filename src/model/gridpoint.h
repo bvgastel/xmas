@@ -20,30 +20,53 @@
   *
   **********************************************************************/
 
-#include <iostream>
-#include <QDebug>
+#ifndef GRIDPOINT_H
+#define GRIDPOINT_H
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
-#include "testchannel.h"
-#include "testnetwork.h"
+#include <QObject>
+
+namespace model {
 
 /**
- * @brief main The testdriver.
+ * @brief The Point class
  *
- * This module runs all tests added to the testset.
- *
- * @return 0
+ * The x and y coordinates, both must be >= 0.
  */
-int main() {
+class GridPoint : public QObject
+{
+    Q_OBJECT
 
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-    runner.addTest(new TestChannel());
-    runner.addTest(new TestNetwork());
+    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
+    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
 
-    runner.runTests();
-    return 0;
-}
+public:
+    explicit GridPoint(QObject *parent = 0);
+    ~GridPoint();
+
+    int x() { return m_x; }
+    void x(int &x) {
+        m_x = x >= 0 ? x : 0;
+        emit xChanged();
+    }
+
+    int y() { return m_y; }
+    void y(int &y) {
+        m_y = y >= 0 ? y : 0;
+        emit yChanged();
+    }
+
+
+signals:
+    void xChanged();
+    void yChanged();
+
+public slots:
+
+private:
+    int m_x;
+    int m_y;
+};
+
+} // namespace model
+
+#endif // GRIDPOINT_H

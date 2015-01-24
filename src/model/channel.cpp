@@ -32,3 +32,27 @@ model::Channel::~Channel()
 
 }
 
+QQmlListProperty<model::GridPoint> model::Channel::ptList() {
+    return QQmlListProperty<model::GridPoint>(this, 0,
+                                          &model::Channel::append_gridPoint,
+                                          0,
+                                          0,
+                                          0);
+}
+
+/**
+ * @brief Channel::append_pt
+ * @param property
+ * @param gridPoint
+ */
+void model::Channel::append_gridPoint(QQmlListProperty<model::GridPoint> *property,
+                                   model::GridPoint *gridPoint)
+{
+    Channel *channel = qobject_cast<Channel *>(property->object);
+    if (channel) {
+        gridPoint->setParent(channel);
+        channel->m_ptList.append(gridPoint);
+    }
+}
+
+

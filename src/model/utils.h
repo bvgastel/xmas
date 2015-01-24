@@ -20,30 +20,31 @@
   *
   **********************************************************************/
 
-#include <iostream>
-#include <QDebug>
+#ifndef UTILS_H
+#define UTILS_H
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
-#include "testchannel.h"
-#include "testnetwork.h"
+#include <QtQml>
 
-/**
- * @brief main The testdriver.
- *
- * This module runs all tests added to the testset.
- *
- * @return 0
- */
-int main() {
+#include "network.h"
 
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-    runner.addTest(new TestChannel());
-    runner.addTest(new TestNetwork());
+namespace model {
 
-    runner.runTests();
-    return 0;
-}
+class Utils
+{
+
+public:
+    Utils();
+    ~Utils();
+
+    static void registreModel();
+    static QString qmlBuildError(QQmlComponent &component);
+    static std::tuple<model::Network *, QQmlComponent *>readNetwork(const char *uri);
+    static std::tuple<model::Network *, QQmlComponent *>readNetwork(QUrl url);
+};
+
+// TODO: [Utils] create a generic function for QML creation of class / of network
+// TODO: [Utils] How to generate signals for errors?
+
+} // namespace model
+
+#endif // UTILS_H

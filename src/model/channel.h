@@ -25,17 +25,58 @@
 
 #include <QObject>
 
-#include "component.h"
+#include "gridpoint.h"
+#include "chipcomponent.h"
+#include "port.h"
+
 
 namespace model {
 
+/**
+ * @brief The Channel class
+ *
+ * The wires between components on an Noc. Each channel in reality consists
+ * of 3 wires:
+ *
+ * 1. The irdy or initiator ready signal wire
+ * 2. The trdy or target ready signal wire
+ * 3. The data wire.
+ *
+ * The data wire can have any type. The irdy and trdy wires can send a signal
+ * when ready. They are control wires.
+ *
+ * A channel connects two components. On one end the output port, from which
+ * the  channel reads its data and on the other end the in port to which the
+ * channel writes its data.
+ *
+ * The component attached to the outport sends the signal irdy when ready.
+ * The component attached to the inport receives this signal.
+ *
+ * The component attached to the inport sends the signal trdy when ready.
+ * The component attached to the outport receives this signal.
+ *
+ *
+ * The component attached to the outport sends the data to the target
+ * only when both irdy and trdy signals are high.
+ */
 class Channel : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(Port initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
-    Q_PROPERTY(Port target READ target WRITE target NOTIFY targetChanged)
+    Q_PROPERTY(model::Network *network READ network WRITE network NOTIFY networkChanged)
+
+    Q_PROPERTY(model::ChipComponent *initiator READ initiator WRITE initiator NOTIFY initiatorChanged)
+    Q_PROPERTY(model::Port *initiator_port READ initiator_port WRITE initiator_port NOTIFY initiator_portChanged)
+
+    Q_PROPERTY(model::ChipComponent *target READ target WRITE target NOTIFY targetChanged)
+    Q_PROPERTY(model::Port *target_port READ target_port WRITE target_port NOTIFY target_portChanged)
+
+    Q_PROPERTY(QString datatype READ datatype WRITE datatype NOTIFY datatypeChanged)
+
+    Q_PROPERTY(QQmlListProperty<model::GridPoint> ptList READ ptList NOTIFY ptListChanged)
+
+    // FIXME: we probably cannot have Port in a property: what can we do? use the port name and comp name?
 
 public:
     explicit Channel(QObject *parent = 0);
@@ -43,8 +84,15 @@ public:
 
 signals:
     void nameChanged();
+    void networkChanged();
     void initiatorChanged();
+    void initiator_portChanged();
     void targetChanged();
+    void target_portChanged();
+    void datatypeChanged();
+    void ptListChanged();
+
+    void error(QString msg);
 
 public slots:
 
@@ -52,19 +100,101 @@ public slots:
 public:
 
     QString name() const { return m_name; }
-    void name(QString &name) { m_name = name; }
+    void name(QString &name) {
+        m_name = name;
+        emit nameChanged();
+    }
 
-    Port initiator() const { return m_initiator; }
-    void initiator(Port &initiator) { m_initiator = initiator; }
+    model::Network *network() const { return m_network; }
+    void network(model::Network *network) {
+        if (m_network != network) {
+            m_network = network;
+            emit networkChanged();
+        }
+    }
 
-    Port target() const { return m_target; }
-    void target(Port &target) { m_target = target; }
+    ChipComponent *initiator() const { return m_initiator; }
+    void initiator(ChipComponent *initiator) {
+        if (m_initiator != initiator) {
+            m_initiator = initiator;
+            emit initiatorChanged();
+        }
+    }
+
+    Port *initiator_port() const { return m_initiator_port; }
+    void initiator_port(Port *initiator_port) {
+        if (m_initiator_port != initiator_port) {
+            m_initiator_port = initiator_port;
+            emit initiator_portChanged();
+        }
+    }
+
+    ChipComponent *target() const { return m_target; }
+    void target(ChipComponent *target) {
+        if (m_target != target) {
+            m_target = target;
+            emit targetChanged();
+        }
+    }
+
+    model::Port *target_port() const { return m_target_port; }
+    void target_port(model::Port *target_port) {
+        if (m_target_port != target_port) {
+            m_target_port = target_port;
+            emit target_portChanged();
+        }
+    }
+
+    QString datatype() const { return m_datatype; }
+    void datatype(QString &datatype) {
+        m_datatype = datatype;
+        emit datatypeChanged();
+    }
+
+    QQmlListProperty<model::GridPoint> ptList();
+
+    model::GridPoint *pt(const int index) { return m_ptList.at(index); }
+    int ptSize() const {return m_ptList.size(); }
 
 private:
+    static void append_gridPoint(QQmlListProperty<GridPoint> *property, GridPoint *gridPoint);
 
+    /**
+     * @brief m_name The identifying name of the channel
+     */
     QString m_name;
-    Port m_initiator;
-    Port m_target;
+    /**
+     * @brief m_network The name of the network
+     */
+    Network *m_network;
+    /**
+     * @brief m_initiator A pointer to the initiator of the channel
+     */
+    //QString m_initiator;
+    ChipComponent *m_initiator;
+    /**
+     * @brief m_initiator_port A pointer to the initiator port.
+     */
+    Port *m_initiator_port;
+    /**
+     * @brief m_target A pointer to the target port.
+     */
+    ChipComponent *m_target;
+    /**
+     * @brief m_target_port A pointer to the target port.
+     */
+    Port *m_target_port;
+    /**
+     * @brief m_data The data type of the channel
+     */
+    QString m_datatype;
+    /**
+     * @brief m_ptList A list of points that fix a corner in the connecting line
+     *
+     * Between input and output port, the line can have additional points fixed that
+     * it will pass. These points are listed in a QList.
+     */
+    QList<model::GridPoint *> m_ptList;
 
 };
 

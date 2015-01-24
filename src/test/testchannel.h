@@ -20,30 +20,29 @@
   *
   **********************************************************************/
 
-#include <iostream>
-#include <QDebug>
+#ifndef TESTCHANNEL_H
+#define TESTCHANNEL_H
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
-#include "testchannel.h"
-#include "testnetwork.h"
+#include <QtQml>
+#include <QTest>
 
-/**
- * @brief main The testdriver.
- *
- * This module runs all tests added to the testset.
- *
- * @return 0
- */
-int main() {
+#include <QObject>
 
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-    runner.addTest(new TestChannel());
-    runner.addTest(new TestNetwork());
+#include "channel.h"
 
-    runner.runTests();
-    return 0;
-}
+class TestChannel : public QObject
+{
+    Q_OBJECT
+public:
+    explicit TestChannel(QObject *parent = 0);
+    ~TestChannel();
+
+signals:
+
+public slots:
+
+private slots:
+    void testChannelCreate();
+};
+
+#endif // TESTCHANNEL_H

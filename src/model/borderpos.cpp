@@ -20,30 +20,15 @@
   *
   **********************************************************************/
 
-#include <iostream>
-#include <QDebug>
+#include "borderpos.h"
 
-#include "testrunner.h"
-#include "testport.h"
-#include "testchipcomponent.h"
-#include "testchannel.h"
-#include "testnetwork.h"
+model::BorderPos::BorderPos(QObject *parent) : QObject(parent)
+{
 
-/**
- * @brief main The testdriver.
- *
- * This module runs all tests added to the testset.
- *
- * @return 0
- */
-int main() {
-
-    TestRunner runner;
-    runner.addTest(new TestPort());
-    runner.addTest(new TestComponent());
-    runner.addTest(new TestChannel());
-    runner.addTest(new TestNetwork());
-
-    runner.runTests();
-    return 0;
 }
+
+model::BorderPos::~BorderPos()
+{
+
+}
+

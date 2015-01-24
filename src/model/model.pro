@@ -10,20 +10,28 @@ QT       += qml
 TARGET = model
 TEMPLATE = lib
 
+CONFIG += C++11
+
 DEFINES += MODEL_LIBRARY
 
 SOURCES += \
-        component.cpp \
     network.cpp \
     channel.cpp \
-    port.cpp
+    port.cpp \
+    chipcomponent.cpp \
+    borderpos.cpp \
+    utils.cpp \
+    gridpoint.cpp
 
 HEADERS +=\
         model_global.h \
-        component.h \
     network.h \
     channel.h \
-    port.h
+    port.h \
+    chipcomponent.h \
+    borderpos.h \
+    utils.h \
+    gridpoint.h
 
 unix {
     target.path = /usr/local/lib64

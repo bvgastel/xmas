@@ -20,44 +20,32 @@
   *
   **********************************************************************/
 
+#include <QtQml>
+
 #include "port.h"
 
 model::Port::Port(QObject *parent) : QObject(parent)
 {
-
 }
 
 model::Port::~Port()
 {
-
 }
 
-/**
- * @brief model::Port::Port
- *
- * Copy constructor for Port (necessary for
- * any class that uses Port as value parameter.
- *
- * @param rhs The port on the right hand side.
- */
-model::Port::Port(const model::Port &rhs) : QObject() {
-    m_name = rhs.m_name;
-    m_rdy = rhs.m_rdy;
+model::Inport::Inport(QObject *parent) : Port(parent)
+{
 }
 
-/**
- * @brief model::Port::operator=
- *
- * The assignment operator for Port from another Port.
- * Self assignment is no issue.
- *
- * @param port
- */
-model::Port &model::Port::operator=(const Port &rhs) {
-    if (&rhs != this) {
-        this->m_name = rhs.m_name;
-        this->m_rdy = rhs.m_rdy;
-    }
-    return *this;
+model::Inport::~Inport()
+{
 }
+
+model::Outport::Outport(QObject *parent) : Port(parent)
+{
+}
+
+model::Outport::~Outport()
+{
+}
+
 

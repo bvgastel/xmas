@@ -1,30 +1,30 @@
 # testmain.pro
 # Contains the main program for the test programs of xmas
 
-include (../xmas/defines.pri)
-include (../xmd/defines.pri)
-include (../xmc/defines.pri)
-include (../test/defines.pri)
-
 QT       += core
 QT      += testlib
+QT      += qml
 
 CONFIG += C++11
 CONFIG += console
 
 TEMPLATE = app
 
+HEADERS +=
+
 SOURCES += main.cpp
 
-#LIBS += -L../xmas -L../xmd -L../xmc -L../test -lxmas -lxmd -ltest -lxmc
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../model/release/ -lmodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../model/debug/ -lmodel
+else:unix: LIBS += -L$$OUT_PWD/../model/ -lmodel
 
-win32:CONFIG(release, debug|release): LIBS += -L../xmas/release -L../xmd/release -L../xmc/release -L../test/release -lxmas -lxmd -ltest -lxmc
-else:win32:CONFIG(debug, debug|release): LIBS += -L../xmas/debug -L../xmd/debug -L../xmc/debug -L../test/debug -lxmas -lxmd -ltest -lxmc
-else:unix: LIBS += -L../xmas -L../xmd -L../xmc -L../test -lxmas -lxmd -ltest -lxmc
-
-
-# We will build the final executable in the build directory.
-
-# TARGET = test
+INCLUDEPATH += $$PWD/../model
+DEPENDPATH += $$PWD/../model
 
 
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../test/release/ -ltest
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../test/debug/ -ltest
+else:unix: LIBS += -L$$OUT_PWD/../test/ -ltest
+
+INCLUDEPATH += $$PWD/../test
+DEPENDPATH += $$PWD/../test

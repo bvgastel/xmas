@@ -20,48 +20,28 @@
   *
   **********************************************************************/
 
-#ifndef TESTCOMPONENT_H
-#define TESTCOMPONENT_H
+#ifndef TESTCHIPCOMPONENT_H
+#define TESTCHIPCOMPONENT_H
 
+#include <QTest>
 #include <QObject>
-#include <QtTest/QTest>
 
-#include "component.h"
-
+#include "port.h"
+#include "chipcomponent.h"
 
 class TestComponent : public QObject
 {
     Q_OBJECT
-
 public:
     explicit TestComponent(QObject *parent = 0);
     ~TestComponent();
 
 signals:
 
-private:
-    void checkComponent(std::shared_ptr<Component> comp, QString name, int in_size, int out_size, QString function);
-    void checkComponent(Component comp, QString name, int in_size, int out_size, QString function);
+public slots:
+
 private slots:
-    void emptyComponent();
-    void equalComponent();
-    void equalComponentInPort();
-    void equalComponentOutPort();
-    void equalComponentFunction();
-    void unequalComponentName();
-    void unequalComponentInPortSize();
-    void unequalComponentInPort();
-    void unequalComponentOutPortSize();
-    void unequalComponentOutPortName();
-    void unequalComponentOutPortFunction();
-    void unequalComponentFunction();
-
-    void serializePtrComponentToComponent();
-    void serializePtrComponentToPtrComponent();
-    void serializeComponentToComponent();
-    void serializeComponentToPtrComponent();
-
-private:
+    void testComponentCreation();
 };
 
-#endif // TESTCOMPONENT_H
+#endif // TESTCHIPCOMPONENT_H
