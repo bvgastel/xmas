@@ -38,7 +38,7 @@ Item {
     z:1
     property bool connected: false
     property string name: "a"
-    property bool containsMouse: false
+    //property bool containsMouse: false
 
     Rectangle{
         color: connected ? "black" : "red"
@@ -62,8 +62,9 @@ Item {
                 sheet.wiring(connector)
             }
         }
+        //onEntered: sheet.checkTarget(connector)
         onContainsMouseChanged: {
-            connector.containsMouse = containsMouse
+            //connector.containsMouse = containsMouse
             sheet.checkTarget(connector)
         }
     }

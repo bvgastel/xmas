@@ -28,7 +28,6 @@
  *
  *
  **************************************************************************/
-
 import QtQuick 2.4
 
 Item {
@@ -36,13 +35,12 @@ Item {
     width: 200
     height: 200
     focus: true
+    //TODO : scale property: each component can be zoomed seperately
     property bool created: false
     property bool selected: false
     property string type: "default"
     property string name: ""
     property var sheet: parent
-
-
     property int rightBound: comp.parent.width - comp.width
     property int bottomBound: comp.parent.height - comp.height
     property int step: 10
