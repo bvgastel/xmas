@@ -1,0 +1,207 @@
+	\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 004 Contact Bernard }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+\newcommand{\w}[1]{\textsc{#1}\xspace}
+\newcommand{\qml}{\textsc{Qml}\xspace}
+\newcommand{\qt}{\textsc{Qt}\xspace}
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}
+\newcommand{\tv}{\textsc{TeamViewer}\xspace}
+\newcommand{\cpp}{\textsc{C++}\xspace}
+\newcommand{\fltk}{\textsc{Fltk}\xspace}
+\newcommand{\ou}{\textsc{OU}\xspace}
+\newcommand{\signal}{\textsc{signal}\xspace}
+\newcommand{\slot}{\textsc{slot}\xspace}
+
+\begin{Minutes}{Work meeting 004}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{Voortgang, demo en issues}
+\minutetaker{Guus}
+\minutesdate{24 januari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Voortgang}
+
+\paragraph{Design met Qt} Ons laatste gesprek was op 6 december 2014. Sindsdien
+is er het \'e\'en en ander gebeurd, waaronder wisseling van de \fltk library naar
+\qt (die heeft Bernard nog net meegemaakt). Daarna hadden we diverse opties waaronder 
+het gebruik van de standaard user interface op basis van \cpp, graphicsview, 
+het gebruik van \qtquick1 (ook \qml1 genoemd) of \qtquick2 (ook \qml2 genoemd).
+We hebben gekozen voor \qtquick2 omdat dit de toekomst heeft en omdat het beter
+performt: het maakt gebruik van \textsc{OpenGL} voor hardware versnelling. Als een
+computer geen \textsc{OpenGL} heeft dan is er een emulator beschikbaar. Wij hebben
+die nog niet in ons project opgenomen.
+
+\paragraph{Qml2} Het gebruik van \qml2 bracht de vraag of scheiding van data 
+en presentatie hiermee in het gedrang zouden komen (Jeroen), en dat leidde tot 
+de beslissing om het datamodel apart in \qml weer te geven, los van de user interface.
+Dat is inmiddels gebeurd. Stefan heeft zich op de user interface geconcentreerd, Guus op
+het data model.
+
+\paragraph{Demo} Stefan doet een demo van de user interface zoals die er nu uitziet
+met gebruik making van \qml2. Het enige \cpp code dat voorkomt is om het \qt systeem
+te initialiseren en het \qml2 systeem op te starten. De gehele user interface is in 
+\qml2 geschreven. Veel zaken zijn in \qml2 geregeld.
+
+\topic{Contactmomenten}
+
+Bernard legt uit waarom hij de afgelopen periode en de komende periode weinig tijd 
+aan het project kan besteden. De \ou heeft sinds begin december een stormachtige 
+ontwikkeling op reorganisatie gebied doorgemaakt. Alle medewerkers
+boven 63 zijn met vervroegd pensioen gestuurd onder verdeling van het werk onder de
+overige medewerkers. Dit is ongeveer 1/3e van de lesgevende medewerkers. De overige
+2/3e moest dus vanaf begin december alle zeilen bijzetten om de lessen over te nemen.
+
+Bernard is \'e\'en van de gelukkigen en mag zich verheugen in een 50\% docent 
+aanstelling (waarvoor gefeliciteerd!) en 50\% promotie aanstelling. 
+De laatste is nu over twee jaar uitgesmeerd met de verwachting dit 
+na afloop om te zetten in een permanente aanstelling. Bernard moet nu ook op zeer 
+korte termijn lessen voorbereiden van nieuwe vakken. Daarnaast is Freek de komende 
+drie maanden naar Amerika. Hij is nog wel bereikbaar in skype en mail, maar weinig 
+beschikbaar. 
+
+Dit geheel heeft voor ons team als positief neven effect, dat de ontwikkelingen 
+op het gebied van verificatie tools tot juni dit jaar stil komen te liggen. Wij 
+kunnen ons verheugen in een stabiele omgeving wat betreft verificatie tools. 
+Over de negatieve effecten hebben we het niet gehad. \textit{We moeten afspraken maken 
+over contactmomenten met zowel Bernard als Freek.}
+
+\topic{Data model}
+
+E\'en van de vragen was of het data model zich aan de structuur van Bernard moest 
+houden of een vervangende structuur kon invullen. Bernard heeft duidelijk aan dat
+de verificatie tools werken vanuit zijn structuur. Als team kunnen wij de structuur
+wijzigen en verbeteren, maar deze structuur is het uitgangspunt voor de VT's.
+
+\paragraph{communicatie} We hebben afgesproken in kleine stappen te verbeteren, maar 
+groot genoeg dat er ruimte is voor experimenteren. Een voorbeeld van zo'n stap is het 
+toevoegen van composites aan de structuur (die momenteel geen composites kent). 
+
+\paragraph{disk opslag} De manier van opslaan van de structuur is vrij met als 
+restrictie dat we deze wel vanuit een console programma kunnen inlezen (zie volgend punt). 
+Het meest logische is om uit te gaan van de huidige structuur en deze dan op schijf te 
+zetten aangevuld met de mogelijkheid van composites. 
+
+\paragraph{tooling} We kiezen er voor de structuur te kopi\"{e}ren van subversion naar
+github, zodat we kunnen experimenteren zonder de verification tools in de weg te zitten.
+Bovendien hebben we dan maar \'e\'en ontwikkel tool om mee te werken. \textit{Bernard moet nog
+wel een wijziging aanbrengen op de structuur in verband met een kleine correctie. Hij
+laat ons weten wanneer dit is gebeurd en welke source bestanden precies de VT structuur 
+precies zijn.}
+
+\topic{Consequenties en vragen} 
+
+\begin{description}
+
+	\item[\qml2 datamodel] Deze komt te vervallen. Hiervoor komt de structuur van Bernard
+	in de plaats.
+	
+	\item[observer patroon] We blijven \signal en \slot gebruiken om contact tussen
+	het design tool en de VT structuur te waarborgen. Hiermee kunnen we elke wijziging
+	bij het ontwerpen in de design tool direct verwerken in de VT structuur.
+	
+	\item[On the fly controle] Het is gewenst om kleine en korte controles tijdens de 
+	constructie van een network uit te voeren. Dit kan op de achtergrond in een aparte
+	thread of process met terugkoppeling naar de user interface. Bernard denkt hierbij
+	aan de syntax check en de combinatorische checker.
+	
+	\item[Platgeslagen structuur] Hoe we de VT structuur ook vormgeven, uiteindelijk
+	moeten we de structuur platgeslagen aan kunnen bieden. Op dit moment kunnen VTs
+	alleen nog met de platgeslagen structuur werken. Het streven is in de toekomst 
+	met composites te kunnen werken.
+	
+	\item[Verificatie tools] Er zijn 5 stappen in het verificatie proces:
+	
+	\begin{description}
+	
+		\item[Syntax checker] Dit betreft eenvoudige controles van compleetheid en 
+		correctheid.
+		
+		\item[Combinatorisch cycle checker] De cycle checker controleert op interne 
+		cycles van afhankelijkheden. Zie ook de domein analyse van Jeroen.
+		
+		\item[Type inferentie] Dit gaat over het bepalen van de types van het data
+		deel van elk channel.
+		
+		\item[Specificatie checker] Deze checker is innoverend en heeft een duidelijke 
+		meerwaarde. Het controleert het pad dat een datapakket afloopt: waar komt het het 
+		netwerk binnen en waar gaat het er weer uit?
+		
+		\item[Deadlock checker] Hiervan is momenteel een oudere versie van de hand van Freek
+		in productie, die uitgaat van een \textit{brute force} benadering waarbij de breedte van 
+		het datapad bepalend is voor de performance. Bij een breed datapad (32 bits) en veel 
+		componenten explodeert de search space. Bernard is bezig een nieuw concept te bouwen.
+		Tot juni dit jaar gaat hier niets aan gebeuren.
+		
+	\end{description}
+	
+	Dit proces kan later aanvulling vinden met andere verificatie tools, maar op dit moment
+	is dit het gehele proces. Een voorbeeld van toekomstige aanvulling is een \textit{livelock} 
+	checker. 
+	
+	\item[specificatie] Diverse onderdelen van de componenten (zoals specificatie) zijn voor
+	de designer niets anders dan properties terwijl ze invoer zijn voor de VT's zoals de 
+	specificatie checker en de type inferentie tool. Het is van belang dit op te nemen in
+	het design tool, maar het tool hoeft er niets mee te doen.
+	
+	\item[uncore / core] Het onderzoek van deze research concentreert zich op de \w{uncore}. 
+	De technieken zou men ook op de \w{core} kunnen toepassen, maar de huidige research richt 
+	zich daar niet op.
+	
+	De \w{uncore} is alles wat niet bij de \w{core} hoort. De \w{uncore} bevat de \w{fabrics} 
+	en andere elementen, zoals een \w{bus}. Bernard legt uit hoe de huidige hardware 
+	verbetering vindt in het toepassen van \w{fabrics}. Momenteel moeten component ontwerpers 
+	zich bewust zijn van alle andere componenten om die rechtstreeks te kunnen adresseren. 
+	Met \w{fabrics} is het mogelijk de adressering aan de \w{fabrics} over te laten. Dit 
+	levert productie voordelen en performance voordelen op.
+	
+	\item[Aantal componenten per composite] Een composite kan van ca 100 tot 1000 
+	componenten bevatten.  Denk aan een spidergon van 64 nodes, dat levert 
+	ongeveer 1000 componenten op.
+	
+	\item[Aantal componenten per netwerk] Bernard schat dat een groot netwerk $100.000$ 
+	tot maximaal $1.000.000$ componenten kan bevatten. Dat heeft grote gevolgen voor de
+	platgeslagen modellen, maar minder gevolgen voor de designer, omdat we daar met
+	composites en geparametriseerde objecten kunnen werken.
+		
+	\item[component / transitor] Bernard schat 10 - 100 transistors per component, zodat
+	een netwerk van de chipsets met circa 3 miljoen transitors (Intel oudere pentium chipset) 
+	in onze termen uit $30.000$ - $300.000$ componenten bestaat. 
+	
+	\item[VT uitvoering] Bernard legt uit, dat men wel uitvoert vanaf een server
+	waar geen \qt ge\"installeerd is. De console uitvoering van VT's moet dus vrij
+	zijn van \qt.
+
+	Op deze servers heeft men ook niet altijd \textsc{root} rechten. Dit houdt in, dat we 
+	er niet van uit mogen gaan dat men \qt of andere hulp programmatuur kan installeren.
+	We moeten uitgaan van standaard \cpp.
+	
+	\item[VT wijziging] Wie werken er nu aan de verificatie tools? Dit blijken Bernard zelf, 
+	Bas Joosten, Freek Verbeek en soms Julien Schmalz. Zoals opgemerkt: pas weer vanaf juni.
+	Wij krijgen een signaal zodra we de code voor de VT structuur kunnen kopi\"{e}ren.
+	
+	\item[composite voorbeeld] In een interview in het vorige ABI team gaf Freek een antwoord
+	op de vraag waarom platslaan nog steeds nodig is. Hierin noemt hij het feit dat twee
+	composite deadlock vrij kunnen zijn en samen toch een deadlock opleveren. Deze informatie
+	heeft op ons project geen invloed. \textit{Bernard gaat dit bij Freek navragen}. 
+	
+\end{description}
+
+
+\end{Minutes}
+\end{document}
