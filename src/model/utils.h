@@ -25,6 +25,8 @@
 
 #include <QtQml>
 
+#include "network.h"
+
 namespace model {
 
 class Utils
@@ -36,8 +38,8 @@ public:
 
     static void registreModel();
     static QString qmlBuildError(QQmlComponent &component);
-    static Network *readNetwork(const char *uri);
-    static Network *readNetwork(QUrl url);
+    static std::tuple<model::Network *, QQmlComponent *>readNetwork(const char *uri);
+    static std::tuple<model::Network *, QQmlComponent *>readNetwork(QUrl url);
 };
 
 // TODO: [Utils] create a generic function for QML creation of class / of network

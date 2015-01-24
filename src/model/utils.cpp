@@ -88,11 +88,20 @@ void model::Utils::registreModel() {
  * TODO: FINISH THIS!
  *
  */
-std::tuple<Network *, QQmlComponent *> readNetwork(const char *urlString) {
-    registreModel();
+std::tuple<model::Network *, QQmlComponent *> readNetwork(const char *urlString) {
+    model::Utils::registreModel();
     QQmlEngine engine;
     QQmlComponent *component = new QQmlComponent(&engine, QUrl(urlString));
-    model::Network *network = qobject_cast<model::Network *>(compponent->create());
+    model::Network *network = qobject_cast<model::Network *>(component->create());
+
+    return std::make_tuple(network, component);
+}
+
+std::tuple<model::Network *, QQmlComponent *> readNetwork(QUrl url) {
+    model::Utils::registreModel();
+    QQmlEngine engine;
+    QQmlComponent *component = new QQmlComponent(&engine, url);
+    model::Network *network = qobject_cast<model::Network *>(component->create());
 
     return std::make_tuple(network, component);
 }
