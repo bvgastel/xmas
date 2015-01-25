@@ -101,6 +101,7 @@ Rectangle {
             wire.mouseX = connector.x + connector.parent.x
             wire.mouseY = connector.y + connector.parent.y
             wire.requestPaint()
+            // TODO: emit signal for datamodel
         } else {
             wire.connector2 =  wire.connecting ? null : wire.connector2
         }
