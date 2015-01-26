@@ -3,7 +3,6 @@
 
 TEMPLATE = subdirs
 SUBDIRS =   \
-            xmas \
             xmd \
             xmc 
 
@@ -17,7 +16,6 @@ SUBDIRS += \
 
 # set the subdirectories for the libraries
 
-libxmas.subdir = xmas
 libxmd.subdir = xmd
 libxmc.subdir = xmc
 
