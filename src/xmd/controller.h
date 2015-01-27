@@ -31,12 +31,38 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <QVariant>
+#include <QDebug>
 
-class Controller
+class Controller : public QObject
 {
+    Q_OBJECT
+
+signals: //to view
+    bool createComponent(QVariant object);
+    bool createConnection(QVariant object);
+    bool clearNetwork();
+
+public slots:  //from view
+    bool componentCreated(QVariant object);
+    bool componentDestroyed(QVariant object);
+    bool componentChanged(QVariant object);
+    bool connectionCreated(QVariant object);
+    bool connectionDestroyed(QVariant object);
+    bool connectionChanged(QVariant object);
+
 public:
-    Controller();
-    ~Controller();
+    explicit Controller(QObject* parent = 0);
+
 };
 
 #endif // CONTROLLER_H
+
+
+
+
+
+
+
+
+

@@ -31,13 +31,65 @@
 
 #include "controller.h"
 
-Controller::Controller()
+Controller::Controller(QObject* parent)
+    : QObject(parent)
 {
-
 }
 
-Controller::~Controller()
+/**
+ * @brief Controller::componentCreated
+ * @param comp
+ * @return
+ */
+bool Controller::componentCreated(QVariant object)
 {
-
+    Q_UNUSED(object)
+    qDebug() << "Component created by designer";
+    return true;
 }
 
+/**
+ * @brief Controller::componentDestroyed
+ * @param object
+ * @return
+ */
+bool Controller::componentDestroyed(QVariant object)
+{
+    Q_UNUSED(object)
+    qDebug() << "Component destroyed by designer";
+    return true;
+}
+
+/**
+ * @brief Controller::componentChanged
+ * @param object
+ * @return
+ */
+bool Controller::componentChanged(QVariant object)
+{
+    Q_UNUSED(object)
+    qDebug() << "Component changed by designer";
+    return true;
+}
+
+
+bool Controller::connectionCreated(QVariant object)
+{
+    Q_UNUSED(object)
+    qDebug() << "Connection created by designer";
+    return true;
+}
+
+bool Controller::connectionDestroyed(QVariant object)
+{
+    Q_UNUSED(object)
+    qDebug() << "Connection destroyed by designer";
+    return true;
+}
+
+bool Controller::connectionChanged(QVariant object)
+{
+    Q_UNUSED(object)
+    qDebug() << "Connection changed by designer";
+    return true;
+}

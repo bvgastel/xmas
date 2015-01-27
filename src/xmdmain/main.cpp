@@ -34,6 +34,9 @@
 #include <QCommandLineOption>
 #include <QQmlApplicationEngine>
 
+#include <QQmlContext>
+#include "controller.h"
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(xmd);
@@ -47,8 +50,11 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
 
-    QQmlApplicationEngine engine(QUrl("qrc:///mainWindow.qml"));
-    Q_UNUSED(engine)
+    QQmlApplicationEngine engine;
+    Controller controller;
+    QQmlContext* ctx = engine.rootContext();
+    ctx->setContextProperty("controller", &controller);
+    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
     return app.exec();
 

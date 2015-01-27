@@ -29,9 +29,9 @@ else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmas/release/ -lxmas
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmas/debug/ -lxmas
-else:unix: LIBS += -L$$OUT_PWD/../xmas/ -lxmas
+#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmas/release/ -lxmas
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmas/debug/ -lxmas
+#else:unix: LIBS += -L$$OUT_PWD/../xmas/ -lxmas
 
 INCLUDEPATH += $$PWD/../xmas
 DEPENDPATH += $$PWD/../xmas
