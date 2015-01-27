@@ -47,7 +47,8 @@ DISTFILES += qml/fork.qml \
     qml/XComponent.qml \
     qml/XConnector.qml \
     qml/XConnection.qml \
-    content/connectionCreation.js
+    content/connectionCreation.js \
+    qml/Line.qml
 
 RESOURCES += \
     xmd.qrc
