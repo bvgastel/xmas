@@ -3,9 +3,9 @@
 
 #include <deque>
 #include <vector>
-#include "lib/extension.h"
-#include "lib/exception.h"
-#include "lib/simplestring.h"
+#include "extension.h"
+#include "exception.h"
+#include "simplestring.h"
 
 using namespace bitpowder::lib;
 
