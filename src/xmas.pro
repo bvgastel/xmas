@@ -4,7 +4,8 @@
 TEMPLATE = subdirs
 SUBDIRS =   \
             xmd \
-            xmc 
+            xmc \ 
+    datamodel
 
 # xmdmain must be last
 
