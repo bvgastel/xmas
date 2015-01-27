@@ -1,0 +1,100 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 005 Voortgang }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+\newcommand{\w}[1]{\textsc{#1}\xspace}
+\newcommand{\qml}{\textsc{Qml}\xspace}
+\newcommand{\qt}{\textsc{Qt}\xspace}
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}
+\newcommand{\tv}{\textsc{TeamViewer}\xspace}
+\newcommand{\cpp}{\textsc{C++}\xspace}
+\newcommand{\fltk}{\textsc{Fltk}\xspace}
+\newcommand{\ou}{\textsc{OU}\xspace}
+\newcommand{\signal}{\textsc{signal}\xspace}
+\newcommand{\slot}{\textsc{slot}\xspace}
+
+\begin{Minutes}{Work meeting 005}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{Voortgang en hoe nu verder?}
+\minutetaker{Guus}
+\minutesdate{26 januari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Voortgang}
+
+\paragraph{Status} We hebben de subdirectories voor model en test verwijderd
+naar aanleiding van de opmerkingen van Bernard afgelopen zaterdag. Indien nodig kunnen
+we altijd teruggrijpen op de sources.
+
+\topic{Hoe nu verder?}
+We zijn het er over eens dat integratie van xmas.h in onze sources en verbinden met
+onze \qml2 user interface de volgende stappen zijn. Na een discussie over hoe dit
+precies te verbinden met elkaar, maken we de volgende afspraken:
+
+\begin{description}
+
+	\item[integratie xmas.h] Dit moet de eerste stap zijn. xmas.h is verweven met 
+	de bestaande VT's die Bernard tegelijkertijd met xmas.h heeft ontwikkeld.
+	Het idee is om de header files te splitsen zodat we de data laag in een 
+	aparte subdirectory kunnen opslaan. Omdat we geen functies veranderen zal
+	Bernard hier geen bezwaar tegen hebben. \textit{Af te stemmen met Bernard}.
+	
+	\item[koppeling met user interface] Na integratie moeten we de \qml2 user
+	interface koppelen met de data laag. Na wat discussie kwamen we uit op
+	een koppeling met \w{signal} en \w{slot} dat waarschijnlijk efficient 
+	vanuit javascript in \qml2 kan. De andere richting -- van data naar \qml2 --
+	zou op dezelfde manier ook geen problemen mogen opleveren.
+	
+	\item[dubbele data] Stefan opperde het bezwaar dat we de data nu twee
+	keer opslaan. Gezien de keuze voor \qml2 en de enorme voordelen die ontwikkelen
+	met \qml2 met zich mee brengt, lijkt dit onvermijdelijk. Als je echter
+	het systeem op hoog niveau ziet, dan komt de data laag overeen met het \w{model}
+	in het \w{mvc} patroon en de gehele \qml2 applicatie als de presentatie laag.
+	
+	\item[connections] In de user interface van Stefan zijn de connections geen
+	objecten van zichzelf. Dat kan leiden tot problemen wanneer we connecties als
+	objecten moeten gaan benaderen. Stefan heeft hier iets over gevonden. Hier horen
+	we later meer van.
+	
+\end{description}
+
+De volgende stap is nu het integreren van xmas.h. Komende woensdag bekijken we de voortgang
+en de daarop volgende stap.
+
+\topic{Naschrift}
+
+Omdat de tijd van Bernard beperkt is en we weinig contactmomenten gaan hebben, heb ik
+besloten om de uitstaande acties van en naar Bernard in een lijst te zetten.
+Dat voorkomt dat we punten kwijtraken. De lijst werken we elke sessie even af, 
+en halen afgeronde akties eraf.
+
+\begin{figure}
+\begin{tabular}{|l|l|l|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+24-01-2015  & Bernard   & Voert bugfix op xmas.h uit en geef signaal\\\hline
+24-01-2015  & team      & We moeten hernieuwde contactmomenten afspreken\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+26-01-2015  & team      & splitsen header files afstemmen met Bernard\\\hline
+\end{tabular}
+\caption{Aktielijst open punten}
+\end{figure}
+
+\end{Minutes}
+
+\end{document}
