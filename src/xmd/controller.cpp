@@ -45,6 +45,7 @@ bool Controller::componentCreated(QVariant object)
 {
     Q_UNUSED(object)
     qDebug() << "Component created by designer";
+    qDebug() << "object = " << object;
     return true;
 }
 
