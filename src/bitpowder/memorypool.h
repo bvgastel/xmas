@@ -125,7 +125,7 @@ public:
         return current ? current->available : (MEMORYPOOL_SIZE-sizeof(MemoryPoolPage));
     }
     void* next(char alignOn = DEFAULT_ALIGN_ON) {
-        ignore(alignOn);
+        unused(alignOn);
         return current ? &((char*)current->data)[current->size - current->available] : nullptr;
     }
 

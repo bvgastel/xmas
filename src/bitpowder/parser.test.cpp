@@ -323,11 +323,13 @@ struct NumberExpression {
         //std::cout << "number: ";
         //t.value.print(std::cout);
         //std::cout << std::endl;
+        unused(userData);
         retval = Number(t.value);
         return 0;
     }
 
     static PS negativeConstant(PS cont, UserData userData) {
+        unused(userData);
         return cont()
                 .accept('-').error(ERROR_IN_NEGATIVE_CONSTANT)
                 .perform(primary)
@@ -335,12 +337,14 @@ struct NumberExpression {
     }
 
     static PS haakjes(PS cont, UserData userData) {
+        unused(userData);
         return cont()
                 .perform(MyLexer::OPEN, expr, MyLexer::CLOSE)
                 .error(ERROR_IN_HAAKJES_END);
     }
 
     static PS sinFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::SIN_FUNC).error(ERROR_IN_SIN_FUNC).perform(haakjes).modify([](Number &b, UserData) {
             b = b.sin();
             return 0;
@@ -348,6 +352,7 @@ struct NumberExpression {
     }
 
     static PS cosFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::COS_FUNC).error(ERROR_IN_COS_FUNC).perform(haakjes).modify([](Number &b, UserData) {
             b = b.cos();
             return 0;
@@ -355,6 +360,7 @@ struct NumberExpression {
     }
 
     static PS tanFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::TAN_FUNC).error(ERROR_IN_TAN_FUNC).perform(haakjes).modify([](Number & b, UserData) {
             b = b.tan();
             return 0;
@@ -362,6 +368,7 @@ struct NumberExpression {
     }
 
     static PS sqrtFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::SQRT_FUNC).error(ERROR_IN_SQRT_FUNC).perform(haakjes).modify([](Number & b, UserData) {
             b = b.sqrt();
             return 0;
@@ -369,6 +376,7 @@ struct NumberExpression {
     }
 
     static PS logFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::LOG_FUNC).error(ERROR_IN_LOG_FUNC).perform(haakjes).modify([](Number & b, UserData) {
             b = b.log2();
             return 0;
@@ -376,6 +384,7 @@ struct NumberExpression {
     }
 
     static PS powFuncOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(Lexer::POW_FUNC, Lexer::OPEN, expr, Lexer::COMMA).process(expr, [](Number & a, const Number & b, UserData) {
             a = a.pow(b);
             return 0;
@@ -383,51 +392,65 @@ struct NumberExpression {
     }
 
     static PS primary(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(constant, negativeConstant, haakjes, sinFuncOp, cosFuncOp, tanFuncOp, sqrtFuncOp, logFuncOp, powFuncOp);
     }
 
     static PS percentageOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::PERCENTAGE).error(ERROR_IN_PERCENTAGE).modify([](Number & n, UserData userData) {
+            unused(userData);
             n = n/100;
             return 0;
         });
     }
 
     static PS percentage(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(primary).opt(percentageOp);
     }
 
     static PS powOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::INLINE_POW).error(ERROR_IN_POW).process(pow, [](Number & a, Number && b, UserData userData) {
+            unused(userData);
             a = a.pow(b);
             return 0;
         });
     }
 
     static PS powTail(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(powOp).opt(powTail);
     }
 
     static PS pow(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(percentage).opt(powTail);
     }
 
     static PS mulOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::INLINE_MUL).error(ERROR_IN_MUL).process(pow, [](Number & a, const Number & b, UserData userData) {
+            unused(userData);
             a = a*b;
             return 0;
         });
     }
 
     static PS divOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept('/').error(ERROR_IN_DIV).process(pow, [](Number & a, Number && b, UserData userData) {
+            unused(userData);
             a = a/b;
             return 0;
         });
     }
 
     static PS modOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(Lexer::INLINE_MOD).error(ERROR_IN_MOD).process(pow, [](Number & a, Number && b, UserData userData) {
+            unused(userData);
             a = a % b;
             return 0;
         });
@@ -435,23 +458,29 @@ struct NumberExpression {
 
     // multiplicationTail = ('*' pow | '/' pow) [multiplicationTail]
     static PS multiplicationTail(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(mulOp, divOp, modOp).opt(multiplicationTail);
     }
 
     // multiplication =  pow [multiplicationTail]
     static PS multiplication(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(pow).opt(multiplicationTail);
     }
 
     static PS plusOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept('+').process(multiplication, [](Number &a, Number &&b, UserData userData) {
+            unused(userData);
             a = a + b;
             return 0;
         });
     }
 
     static PS minOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept('-').process(multiplication, [](Number &a, Number &&b, UserData userData) {
+            unused(userData);
             a = a - b;
             return 0;
         });
@@ -459,15 +488,18 @@ struct NumberExpression {
 
     // additionTail = '+' multiplication [additionTail] | '-' multiplication [additionTail]
     static PS additionTail(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(plusOp, minOp).opt(additionTail);
     }
 
     // addition = multiplication [additionTail]
     static PS addition(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(multiplication).opt(additionTail);
     }
 
     static PS expr(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(addition);
     }
 };
@@ -670,29 +702,35 @@ struct LispParserState {
 
     // nil -> int = Operator(LispLexer::NIL_OBJECT) {{ nil = 0; return 0; }};
     static PS lispNil(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(LispLexer::NIL_OBJECT).store(0);
     }
 
     // number -> int = int;
     static int lispNumber(int &retval, const Token<int> &t, UserData userData) {
+        unused(userData);
         retval = t.value;
         return 0;
     }
 
     // string -> int = String {{ string = 42; return 0; }};
     static int lispString(int &retval, const Token<String> &t, UserData userData) {
+        unused(userData, t);
         retval = 42;
         return 0;
     }
 
     // primary -> int = nil | number | string;
     static PS primary(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(lispNil, lispNumber, lispString);
     }
 
     // arguments -> std::vector<int> = a:expr { arguments.push_back(a); return 0; } arguments?;
     static Parser<Lexer, 1, std::vector<int>, UserData>& arguments(Parser<Lexer, 1, std::vector<int>, UserData>& cont, UserData userData) {
+        unused(userData);
         return cont().process(expr, [](std::vector<int> &data, int a, UserData userData) {
+            unused(userData);
             std::cout << "parsed " << a << std::endl;
             data.push_back(a);
             return 0;
@@ -710,6 +748,7 @@ struct LispParserState {
      *      }};
      */
     static PS func(PS cont, UserData userData) {
+        unused(userData);
         std::vector<int> args;
         String id;
         return cont().accept(LispLexer::FUNC_OPEN).fetch(id).perform(expr).fetch(arguments, args).accept(LispLexer::FUNC_CLOSE).modify([&id, &args](int &a, UserData) {
@@ -730,10 +769,12 @@ struct LispParserState {
 
     // expr -> int = primary | func;
     static PS expr(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(primary, func);
     }
     // topLevel -> int = expr $;
     static PS topLevelExpr(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(expr).end();
     }
     // UserData := MemoryPool&;

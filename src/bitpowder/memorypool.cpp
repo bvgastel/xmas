@@ -15,6 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 */
+// 2015-01-28 Guus Bonnema: std::size_t is always unsigned since c++11: removed following code
+//checkAssert(c->available >= 0);
+// Remark: the C size_t is equivalent to C++ std::size_t except for the namespace.
 
 #ifdef MEMORY_DEBUG
 #include "memorypool.debug.cpp"
@@ -296,15 +299,10 @@ void* MemoryPool::alloc(size_t size, char alignOn, MemoryPoolPage **pool) {
     while (c == nullptr || size > c->available) {
         c = allocExtra();
     }
-    // 2015-01-28 Guus Bonnema: std::size_t is always unsigned since c++11
-    // TODO: Check
-    //checkAssert(c->available >= 0);     // TODO: check : std::size_t c->available is unsigned: always >= 0
-    // Remark: the C size_t is equivalent to C++ std::size_t except for the namespace.
     checkAssert(size <= c->available);
     // alloc
     void* data = &((char*)c->data)[c->size - c->available];
     c->available -= size;
-    checkAssert(c->available >= 0);
     if (pool != nullptr)
         *pool = c;
     eprintf("alloc returned %p", data);
@@ -453,6 +451,7 @@ void MemoryPool::vacuum() {
 }
 
 MemoryPool::MemoryPool(MemoryPool *from, size_t size, size_t n) : current(nullptr) {
+    unused(n);
     if (from && from->available() >= size) {
         void *data = from->alloc(size+sizeof(MemoryPoolPage));
         if (data) {
@@ -465,6 +464,7 @@ MemoryPool::MemoryPool(MemoryPool *from, size_t size, size_t n) : current(nullpt
 }
 
 MemoryPool::MemoryPool(MemoryPool &from, size_t size, size_t n) : current(nullptr) {
+    unused(n);
     if (from.available() >= size) {
         void* data = from.alloc(size+sizeof(MemoryPoolPage));
         if (data) {

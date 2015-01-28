@@ -48,13 +48,12 @@ namespace lib {
 //
 /**
  * 2015-01-28: Guus Bonnema
- * use 'ignore(param_1, .. ,param_n) ' to avoid compiler warnings for not
+ * use 'unused(param_1, .. ,param_n) ' to avoid compiler warnings for not
  * using a parameter. The function is empty, the compiler will probably
  * optimize the call away.
  */
 
-template <typename T>
-void ignore(T &&)
+template<class... T> void unused(T&&...)
 { }
 
 #if (__cplusplus <= 199711L) && !defined(__GXX_EXPERIMENTAL_CXX0X__)
