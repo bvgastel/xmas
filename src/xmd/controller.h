@@ -28,34 +28,41 @@
  *
  *
  **************************************************************************/
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
-#include <QQmlApplicationEngine>
+#include <QVariant>
+#include <QDebug>
 
-#include <QQmlContext>
-#include "controller.h"
-
-int main(int argc, char *argv[])
+class Controller : public QObject
 {
-    Q_INIT_RESOURCE(xmd);
+    Q_OBJECT
 
-    QApplication app(argc, argv);
-    QCoreApplication::setApplicationVersion(QT_VERSION_STR);
-    QCommandLineParser parser;
-    parser.setApplicationDescription("XMAS Model Designer");
-    parser.addHelpOption();
-    parser.addVersionOption();
-    parser.addPositionalArgument("file", "The file to open.");
-    parser.process(app);
+signals: //to view
+    bool createComponent(QVariant object);
+    bool createConnection(QVariant object);
+    bool clearNetwork();
 
-    QQmlApplicationEngine engine;
-    Controller controller;
-    QQmlContext* ctx = engine.rootContext();
-    ctx->setContextProperty("controller", &controller);
-    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+public slots:  //from view
+    bool componentCreated(QVariant object);
+    bool componentDestroyed(QVariant object);
+    bool componentChanged(QVariant object);
+    bool connectionCreated(QVariant object);
+    bool connectionDestroyed(QVariant object);
+    bool connectionChanged(QVariant object);
 
-    return app.exec();
+public:
+    explicit Controller(QObject* parent = 0);
 
-}
+};
+
+#endif // CONTROLLER_H
+
+
+
+
+
+
+
+
+

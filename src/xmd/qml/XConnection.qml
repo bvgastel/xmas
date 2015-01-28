@@ -39,5 +39,9 @@ Item {
     property var connector2: null
     property color color: "darkblue"
 
+    //TODO add straight pathfinder logic (horizontal/vertical)
+    Line {x:0; y:0; width: 2; length: 100; orientation: Qt.Horizontal}
+
+
 }
 

@@ -6,9 +6,11 @@ include (defines.pri)
 
 QT += widgets svg quick qml quickwidgets
 
-HEADERS       = 
+HEADERS       = \ 
+    controller.h
 				
-SOURCES       = 
+SOURCES       = \ 
+    controller.cpp
     
 unix {
     target.path = /usr/lib
@@ -45,7 +47,8 @@ DISTFILES += qml/fork.qml \
     qml/XComponent.qml \
     qml/XConnector.qml \
     qml/XConnection.qml \
-    content/connectionCreation.js
+    content/connectionCreation.js \
+    qml/Line.qml
 
 RESOURCES += \
     xmd.qrc
