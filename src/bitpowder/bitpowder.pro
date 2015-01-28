@@ -13,7 +13,7 @@ CONFIG += C++11
 
 DEFINES += BITPOWDER_LIBRARY
 
-SOURCES += bitpowder.cpp \
+SOURCES += \
     dispatch.cpp \
     exception.cpp \
     iterators.cpp \
@@ -34,8 +34,8 @@ SOURCES += bitpowder.cpp \
     thread.cpp \
     type_hash.cpp
 
-HEADERS += bitpowder.h\
-        bitpowder_global.h \
+HEADERS += \
+    bitpowder_global.h \
     atomic.h \
     common.h \
     deque.h \

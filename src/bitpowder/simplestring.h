@@ -1,6 +1,6 @@
 /**
-Copyright 2010-2014 Bernard van Gastel, bvgastel@bitpowder.com.
-All rights reserved. This file is part of Bit Powder Libraries.
+Copyright 2010-2015 Bernard van Gastel, bvgastel@bitpowder.com.
+This file is part of Bit Powder Libraries.
 
 Bit Powder Libraries is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #ifndef _BP_STRING_H_
