@@ -7,10 +7,8 @@ include (defines.pri)
 QT += widgets svg quick qml quickwidgets
 
 HEADERS       = \ 
-    controller.h
 				
 SOURCES       = \ 
-    controller.cpp
     
 unix {
     target.path = /usr/lib

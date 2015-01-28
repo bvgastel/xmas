@@ -7,7 +7,12 @@ QT += widgets svg declarative quick qml quickwidgets
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+HEADERS       = \
+    controller.h
+
+SOURCES += \
+    controller.cpp \
+    main.cpp
 
 ##################################################################
 #LIBS += -L../xmas -L../xmd -lxmas -lxmd
