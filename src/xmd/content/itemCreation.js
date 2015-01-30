@@ -60,7 +60,7 @@ function endDrag(mouse)
         draggedItem = null;
     } else {
         draggedItem.created = true;
-        //controller.componentCreated(draggedItem)
+        controller.componentCreated(draggedItem)
 
         draggedItem = null;
     }

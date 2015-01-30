@@ -45,7 +45,7 @@ Item {
     property int bottomBound: comp.parent.height - comp.height
     property int step: 10
 
-    Keys.onDeletePressed: {/* controller.componentDestroyed(comp); */ comp.destroy() }
+    Keys.onDeletePressed: { controller.componentDestroyed(comp); comp.destroy() }
     Keys.onLeftPressed: x - step < 0 ? x = 0 : x = x - step
     Keys.onRightPressed: x + step > rightBound ? x = rightBound : x = x + step
     Keys.onDownPressed: y + step > bottomBound ? y = bottomBound : y = y + step

@@ -33,6 +33,7 @@
 
 #include <QVariant>
 #include <QDebug>
+#include <QQmlApplicationEngine>
 
 class Controller : public QObject
 {
@@ -53,6 +54,14 @@ public slots:  //from view
 
 public:
     explicit Controller(QObject* parent = 0);
+    ~Controller();
+
+private:
+    bool scratch();
+
+    QQmlApplicationEngine engine;
+    QObject *m_window;
+
 
 };
 
