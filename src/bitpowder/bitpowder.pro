@@ -21,7 +21,6 @@ SOURCES += \
     memorypool.cpp \
     memorypool.debug.cpp \
     parser.cpp \
-    parser.test.cpp \
     parser_json.cpp \
     queue.cpp \
     shared_object.cpp \
