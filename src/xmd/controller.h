@@ -56,8 +56,7 @@ public slots:  //from view
     bool testClicked(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);
-<<<<<<< HEAD:src/xmdmain/controller.h
-=======
+
     ~Controller();
 
 private:
@@ -66,8 +65,6 @@ private:
     QQmlApplicationEngine engine;
     QObject *m_window;
 
-
->>>>>>> origin/develop:src/xmd/controller.h
 };
 
 #endif // CONTROLLER_H

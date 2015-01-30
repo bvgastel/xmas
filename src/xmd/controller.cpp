@@ -35,14 +35,14 @@
 #include <QQmlComponent>
 
 #include "controller.h"
-#include "common.h"
+//#include "common.h"
 
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
-    QQmlContext* context = engine.rootContext();
-    context->setContextProperty("controller", this);
-    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+//    QQmlContext* context = engine.rootContext();
+//    context->setContextProperty("controller", this);
+//    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
 
 }
@@ -62,9 +62,15 @@ Controller::~Controller() {
 bool Controller::scratch() {
 
     // Creating a fork: what can we do with it? It's a QObject. To what can we cast it?
-    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
-    QObject *fork = component.create();
-    bitpowder::lib::unused(fork);
+    // @Guus : creation is easier when done at qml site on the right context (sheet)
+    //         here all we need is translating xmas component to QVariant(?) methode
+    //         argument. see the testClick methode a bit lower. For now this one is
+    //         simply called from the view test button. But it shows how c++ can request
+    //         a fork on the sheet. To send also properties I'm working on it :)
+
+//    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
+//    QObject *fork = component.create();
+//    bitpowder::lib::unused(fork);
     return true;
 }
 
