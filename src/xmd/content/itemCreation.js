@@ -21,9 +21,11 @@ function loadComponent() {
 
     itemComponent = Qt.createComponent(toolbarItem.componentFile);
     if (itemComponent.status === Component.Loading)  //Depending on the content, it can be ready or error immediately
-        component.statusChanged.connect(createItem);
-    else
+        Component.statusChanged.connect(createItem);
+    else if (itemComponent.status === Component.Ready)
         createItem();
+    else if (itemComponent.status === Component.Error)
+        console.log("Error loading component")
 }
 
 function createItem() {

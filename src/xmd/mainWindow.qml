@@ -136,6 +136,17 @@ ApplicationWindow {
         onTriggered: sheet.zoomFit()
     }
 
+
+    Action {
+        id: testAction
+        text: "TEST"
+        //shortcut: "1"
+        //iconSource: "qrc:/content/images/zoom-fit.png"
+        //iconName: "zoom-fit"
+        onTriggered: controller.testClicked()
+    }
+
+
     FileDialog {
         id: fileDialog
         nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
@@ -195,6 +206,10 @@ ApplicationWindow {
 
             ToolBarSeparator {}
 
+
+            ToolButton { action: testAction }
+
+            ToolBarSeparator {}
 
             Item { Layout.fillWidth: true }
         }

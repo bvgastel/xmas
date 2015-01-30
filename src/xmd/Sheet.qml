@@ -35,6 +35,8 @@ import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import "content"
 import "content/connectionCreation.js" as Code
+import "controller.js" as Ctrl
+
 
 Rectangle {
     id: sheet
@@ -144,6 +146,12 @@ Rectangle {
             wire.mouseY = mouse.y
             wire.requestPaint()
         }
+    }
+
+    Connections {
+        target: controller
+        onComponentCreate: Ctrl.loadComponent(object) //console.log("component create request")
+
     }
 }
 

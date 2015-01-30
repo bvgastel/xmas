@@ -44,5 +44,6 @@
         <file>qml/XConnection.qml</file>
         <file>qml/XConnector.qml</file>
         <file>content/connectionCreation.js</file>
+        <file>controller.js</file>
     </qresource>
 </RCC>

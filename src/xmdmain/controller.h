@@ -39,7 +39,7 @@ class Controller : public QObject
     Q_OBJECT
 
 signals: //to view
-    bool createComponent(QVariant object);
+    void componentCreate(QVariant object);
     bool createConnection(QVariant object);
     bool clearNetwork();
 
@@ -51,9 +51,10 @@ public slots:  //from view
     bool connectionDestroyed(QVariant object);
     bool connectionChanged(QVariant object);
 
+    //TODO : test can be removed later (stefan)
+    bool testClicked(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);
-
 };
 
 #endif // CONTROLLER_H

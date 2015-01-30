@@ -94,3 +94,17 @@ bool Controller::connectionChanged(QVariant object)
     qDebug() << "Connection changed by designer";
     return true;
 }
+
+
+//TODO : testClicked is a tempory test method and must be removed once done (stefan)
+bool Controller::testClicked()
+{
+    QVariant qv;
+    qDebug() << "test clicked";
+    emit componentCreate(qv);
+    return true;
+}
+
+
+
+
