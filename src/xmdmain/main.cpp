@@ -50,11 +50,12 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
 
-    QQmlApplicationEngine engine;
+
+//    QQmlApplicationEngine engine;
     Controller controller;
-    QQmlContext* ctx = engine.rootContext();
-    ctx->setContextProperty("controller", &controller);
-    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+//    QQmlContext* ctx = engine.rootContext();
+//    ctx->setContextProperty("controller", &controller);
+//    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
     return app.exec();
 

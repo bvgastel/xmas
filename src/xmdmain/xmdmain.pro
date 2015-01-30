@@ -8,10 +8,8 @@ QT += widgets svg declarative quick qml quickwidgets
 TEMPLATE = app
 
 HEADERS       = \
-    controller.h
 
 SOURCES += \
-    controller.cpp \
     main.cpp
 
 ##################################################################
@@ -30,3 +28,19 @@ else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 
 INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
+
+RESOURCES +=
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
+
+INCLUDEPATH += $$PWD/../datamodel
+DEPENDPATH += $$PWD/../datamodel
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../bitpowder
+DEPENDPATH += $$PWD/../bitpowder

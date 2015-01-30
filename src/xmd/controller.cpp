@@ -29,11 +29,43 @@
  *
  **************************************************************************/
 
+#include <QQuickView>
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQmlComponent>
+
 #include "controller.h"
+#include "common.h"
 
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
+    QQmlContext* context = engine.rootContext();
+    context->setContextProperty("controller", this);
+    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+
+
+}
+
+Controller::~Controller() {
+    delete m_window;
+
+}
+
+/**
+ * @brief Controller::scratch
+ *
+ * Scratch method to try out stuff, that we never execute, just a tryout.
+ *
+ * @return
+ */
+bool Controller::scratch() {
+
+    // Creating a fork: what can we do with it? It's a QObject. To what can we cast it?
+    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
+    QObject *fork = component.create();
+    bitpowder::lib::unused(fork);
+    return true;
 }
 
 /**
@@ -43,9 +75,13 @@ Controller::Controller(QObject* parent)
  */
 bool Controller::componentCreated(QVariant object)
 {
-    Q_UNUSED(object)
     qDebug() << "Component created by designer";
-    qDebug() << "object = " << object;
+    qDebug() << "object = " << object << " typename = " << object.typeName() << "data " << object.data();
+    qDebug() << "conversion possible? "
+             << (object.canConvert<int>()? "int;": "not to int;")
+             << (object.canConvert<QString>() ? "QString;" : "not to QString;")
+//             << (object.canConvert<XComponent>() ? "XComponent;" : "not to XComponent;") // How to do?
+             ;
     return true;
 }
 

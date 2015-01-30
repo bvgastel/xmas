@@ -21,16 +21,12 @@ SOURCES += \
     memorypool.cpp \
     memorypool.debug.cpp \
     parser.cpp \
-    parser.test.cpp \
     parser_json.cpp \
-    parser_json.test.cpp \
     queue.cpp \
     shared_object.cpp \
     simplestring.cpp \
-    simplestring.test.cpp \
     stack.cpp \
     stringparse.cpp \
-    stringparse.test.cpp \
     thread.cpp \
     type_hash.cpp
 
