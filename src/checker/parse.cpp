@@ -1165,7 +1165,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> Parse(cons
             ins.insert(ins.begin(), its.begin(), its.end());
 
             int index = (int)jsonConnection["in_port"];
-            if (index < 0 || index >= ins.size())
+            if (index < 0 || static_cast<size_t>(index) >= ins.size())		// FIXME: sign-compare warning
                 throw Exception("non existent input specified");
 
             Input *input = ins[index];
