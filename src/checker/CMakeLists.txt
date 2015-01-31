@@ -160,3 +160,8 @@ if (MINGW)
     set(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "${CMAKE_SHARED_LIBRARY_LINK_C_FLAGS} -static-libgcc -s")
     set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS} -static-libgcc -static-libstdc++ -s")
 endif()
+
+enable_testing()
+include(CTest)
+
+add_test(checker-test ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-test)
