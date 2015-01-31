@@ -19,10 +19,12 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef EXTENSION_H
 #define EXTENSION_H
 
-//#define EXTENSION_USING_CPP_TYPE_INDEX
+#ifdef _MSC_VER                         // FIXME: typeindex should cause less problems on VC++
+#define EXTENSION_USING_CPP_TYPE_INDEX
+#endif
 
 #include "stack.h"
-#include "shared_object.h"
+//#include "shared_object.h"
 
 #ifdef EXTENSION_USING_CPP_TYPE_INDEX
 #include <typeindex>

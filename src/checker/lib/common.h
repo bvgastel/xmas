@@ -35,7 +35,6 @@ extern "C" {
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
-#include <strings.h>
 }
 #include <memory>
 #include <functional>
@@ -325,10 +324,11 @@ template <typename... Args>
 struct Zip : ZipNumbers<0, TypeWrapper<>, Args...> {
 };
 
-template <>
-struct Zip<> {
-    typedef typename Unpack<TypeWrapper<>>::type type;
-};
+// FIXME: commented out to support Visual C++
+//template <>
+//struct Zip<> {
+//    typedef typename Unpack<TypeWrapper<>>::type type;
+//};
 
 
 

@@ -1,7 +1,6 @@
 #include "xmas.h"
 #include <string.h>
 #include <cstring>
-#include <strings.h>
 
 
 XMASComponent *Port::getTarget() {

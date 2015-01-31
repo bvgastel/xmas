@@ -19,11 +19,28 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _BP_STRING_H_
 #define _BP_STRING_H_
 
+#ifdef _MSC_VER
+
+// To avoid compilation issues on Visual C++, use a standard std::string based implementation of String
+#include <string>
+
+class String : public std::string {
+public:
+    String(const std::string& str) : std::string(str) {
+    }
+
+    std::string stl() const {
+        return *this;
+    }
+
+};
+
+#else
+
 extern "C" {
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 #include <limits.h>
 
 #ifdef __MINGW32__
@@ -1728,5 +1745,6 @@ struct hash<bitpowder::lib::HashedString> : public unary_function<bitpowder::lib
 };
 
 }
+#endif // _MSC_VER
 
 #endif
