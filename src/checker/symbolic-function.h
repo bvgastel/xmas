@@ -44,8 +44,12 @@ struct Operator {
   static OperatorPrinter *p_;
 };
 
+// FIXME: unused function warning
+// JK: is the static keyword appropriate? why is a static function defined in a header file?
+//     static seems odd, the function should either be used in a single compilation unit
+//     and defined in a .cpp or defined without static in a .h file (e.g. to allow inlining)
 namespace std {
-static ostream &operator<<(ostream &o, Operator *op) {
+/*static*/ ostream &operator<<(ostream &o, Operator *op) {
   op->accept(o);
   return o;
 }
@@ -245,7 +249,8 @@ SymbolicFunction sym_end_of_queue(XMASQueue *q);
 
 SymbolicFunction sym_input_from(XMASComponent *);
 
-static
+// FIXME: unused function warning
+/*static*/
 void attachSymbolicInverseFunction(XMASFunction *c, SymbolicFunction f) {
   auto *ext = c->getComponentExtension<RealSymbolicInverseFunctionExtension>();
   ext->function = std::move(f);
