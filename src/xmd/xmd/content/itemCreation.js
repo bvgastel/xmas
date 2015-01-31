@@ -24,7 +24,7 @@ function createComponent(parent,component) {
     // Needs closure w.r.t. if-statement branches
     if (component.status === Component.Ready && draggedItem == null) {
         draggedItem = component.createObject(parent)
-        controller.componentCreated(component)
+        //controller.componentCreated(component)
     } else if (component.status === Component.Error) {
         draggedItem = null
         console.log(component.errorString())
