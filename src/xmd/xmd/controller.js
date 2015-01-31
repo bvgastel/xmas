@@ -52,7 +52,7 @@ function loadComponent(object) {
 function createComponent(component) {
     var item
     if (component.status === Component.Ready) {
-        item = component.createObject(sheet, {"x": 200, "y": 200, "z": 3});
+        item = component.createObject(sheet, {"x": 200, "y": 200});
 
     } else if (component.status === Component.Error) {
         item = null;

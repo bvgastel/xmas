@@ -77,7 +77,7 @@ Controller::~Controller() {
 }
 
 //TODO : testClicked is a tempory test method and must be removed once done (stefan)
-bool Controller::testClicked(xmv)
+bool Controller::testClicked()
 {
 
     QVariant qv;
