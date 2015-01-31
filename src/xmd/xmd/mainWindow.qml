@@ -143,7 +143,7 @@ ApplicationWindow {
         //shortcut: "1"
         //iconSource: "qrc:/content/images/zoom-fit.png"
         //iconName: "zoom-fit"
-        onTriggered: controller.testClicked()
+        onTriggered: controller.xmv2xmd()
     }
 
 

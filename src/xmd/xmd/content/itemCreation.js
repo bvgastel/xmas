@@ -1,10 +1,9 @@
-//var itemComponent = null;
 var draggedItem = null;
 var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = toolbarItem.mapToItem(sheet, 0, 0);
+    posnInWindow = toolbarItem.mapToItem(sheet);
     loadComponent(toolbarItem.componentFile);
 }
 

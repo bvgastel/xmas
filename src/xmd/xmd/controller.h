@@ -33,7 +33,6 @@
 
 #include <QVariant>
 #include <QDebug>
-#include <QQmlApplicationEngine>
 
 class Controller : public QObject
 {
@@ -61,9 +60,6 @@ public:
 
 private:
     bool scratch();
-
-    QQmlApplicationEngine engine;
-    QObject *m_window;
 
 };
 

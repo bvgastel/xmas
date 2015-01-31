@@ -35,6 +35,7 @@
 #include <QQmlComponent>
 #include <QQmlProperty>
 #include <QMetaObject>
+#include <QQmlEngine>
 
 #include "controller.h"
 //#include "common.h"
@@ -46,35 +47,9 @@ Controller::Controller(QObject* parent)
 //    context->setContextProperty("controller", this);
 //    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
-
-
-//    QObject *rootObject = engine.rootObjects().first();
-//    QObject *sheet = rootObject->findChild<QObject*>("sheet");
-
-//    Controller controller(sheet);
-//    if (sheet)
-//    {
-//        qDebug() << "test" << sheet << ", rootobjects : " << engine.rootObjects().count();
-
-//    }
-//    else
-//    {
-//       qDebug() << "no sheet found" ;
-//    }
-
-
-
-//    QObject::connect(sheet, SIGNAL(qmlSignal(QString)),
-//                         &controller, SLOT(cppSlot(QString)));
-
-
-
-
-
 }
 
 Controller::~Controller() {
-    delete m_window;
 
 }
 
@@ -82,12 +57,27 @@ Controller::~Controller() {
 bool Controller::xmv2xmd()
 {
 
-    //QVariant qv;
-
-    //info --> http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
-
-    //qDebug() << "test clicked";
-    //emit componentCreate(qv);
+    //@Guus : ik weet niet of het makkelijk is om
+    // QVariant om te zetten maar onderstaande
+    // voorbeeld kan ook. (kende je reeds dacht ik)
+    // alleen dat er een probleem was met de qml
+    // files , deze werkt met resource qrc
+    // Het kan ook zonder emit door object
+    // als parent sheet te geven.
+    // sheet kun je vinden in de rootObjects
+    // via de main engine
+    QQmlEngine engine;
+    QQmlComponent component(&engine,
+            QUrl(QStringLiteral("qrc:///qml/fork.qml")));
+    QObject *object = component.create();
+    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
+    object->setProperty("y",200);
+    object->setProperty("name","fork000");
+    qDebug() << "Object " << object->property("name").toString()
+             << " of type " << object->property("type").toString()
+             << " has been created." ;
+    //emit componentCreate(QVariant(object));
+    delete object;
     return true;
 }
 

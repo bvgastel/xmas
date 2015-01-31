@@ -42,8 +42,8 @@ Item {
     property string type: "default"
     property string name: ""
     property var sheet: parent
-    property int rightBound: comp.parent.width - comp.width
-    property int bottomBound: comp.parent.height - comp.height
+    property int rightBound: 10000 //comp.parent.width - comp.width
+    property int bottomBound: 10000 //comp.parent.height - comp.height
     property int step: 10
 
     Keys.onDeletePressed: {Ctrl.destroy(comp)}
@@ -60,8 +60,8 @@ Item {
         drag.target: comp
         drag.minimumX: 0
         drag.minimumY: 0
-        drag.maximumX: comp.parent.width - comp.width
-        drag.maximumY: comp.parent.height - comp.height
+        drag.maximumX: 10000 ///comp.parent.width - comp.width
+        drag.maximumY: 10000 ///comp.parent.height - comp.height
 
         onClicked: {
             selected = !selected

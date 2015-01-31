@@ -44,26 +44,18 @@ import "itemCreation.js" as Code
 
 Image {
     id: toolbarItem
-width: 20
-height: 20
     property string componentFile
     property string image
 
     Layout.preferredHeight: parent.height
     Layout.preferredWidth: parent.height
 
-    function startDrag(mouse,type)
-    {
-        posnInWindow = toolbarItem.mapToItem(sheet, 0, 0);
-        controller.loadComponent(toolbarItem.componentFile);
-    }
-
     source: image
 
     MouseArea {
         anchors.fill: parent
         onPressed: Code.startDrag(mouse);
-        onPositionChanged: Code.continueDrag(mouse);
-        onReleased: Code.endDrag(mouse);
+        onPositionChanged:Code.continueDrag(mouse);
+        onReleased:Code.endDrag(mouse);
     }
 }
