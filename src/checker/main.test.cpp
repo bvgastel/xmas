@@ -40,7 +40,7 @@ TEST(XMASSource, Simple) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1);
+    ASSERT_EQ(ext->availablePackets.size(), 1U);
     EXPECT_EQ(ext->availablePackets[0], p);
 
     ClearSymbolicTypes(allComponents);
@@ -76,7 +76,7 @@ TEST(XMASSource, SimpleIdentity) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 1);
+    EXPECT_EQ(ext->availablePackets.size(), 1U);
     EXPECT_EQ(ext->availablePackets[0], p);
 
     ClearSymbolicTypes(allComponents);
@@ -112,7 +112,7 @@ TEST(XMASSource, ConvertXtoY) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 1);
+    EXPECT_EQ(ext->availablePackets.size(), 1U);
     SymbolicPacket expectedPacket = {NAMED_ENUM("first", "r","g"), NAMED_ENUM("second", "y")};
     EXPECT_EQ(ext->availablePackets[0], expectedPacket);
 
@@ -149,7 +149,7 @@ TEST(XMASSource, ConvertWithIfThenElse) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 2);
+    EXPECT_EQ(ext->availablePackets.size(), 2U);
     SymbolicPacket expectedPacket = {NAMED_ENUM("first", "g"), NAMED_ENUM("second", "y")};
     EXPECT_EQ(expectedPacket, ext->availablePackets[0]);
     expectedPacket = {NAMED_ENUM("first", "r"), NAMED_ENUM("second", "x")};
@@ -184,7 +184,7 @@ TEST(XMASQueue, Simple) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 1);
+    EXPECT_EQ(ext->availablePackets.size(), 1U);
     EXPECT_EQ(ext->availablePackets[0], p);
 
     ClearSymbolicTypes(allComponents);
@@ -222,7 +222,7 @@ TEST(XMASJoin, Simple) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 1);
+    EXPECT_EQ(ext->availablePackets.size(), 1U);
     SymbolicPacket output = {*inputA.fields.find("first"), *inputB.fields.find("second")};
     EXPECT_EQ(ext->availablePackets[0], output);
 
@@ -260,7 +260,7 @@ TEST(XMASJoin, RestrictedJoin) {
 
     SymbolicTypes(allComponents);
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(1, ext->availablePackets.size());
+    EXPECT_EQ(1U, ext->availablePackets.size());
     EXPECT_EQ(inputA, ext->availablePackets[0]);
 
     ClearSymbolicTypes(allComponents);
@@ -305,7 +305,7 @@ TEST(XMASMerge, Simple) {
     std::cout << "mergeB: " << mergeB->availablePackets[0] << std::endl;
 
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(ext->availablePackets.size(), 1);
+    EXPECT_EQ(ext->availablePackets.size(), 1U);
     SymbolicPacket output = {NAMED_ENUM("first", "x", "y")};
     std::cout << "sink: " << ext->availablePackets[0] << std::endl;
     EXPECT_EQ(output, ext->availablePackets[0]);
@@ -345,7 +345,7 @@ TEST(XMASSwitch, Simple) {
     SymbolicTypes(allComponents);
 
     SymbolicTypesExtension *extA = sinkA.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(extA->availablePackets.size(), 1);
+    ASSERT_EQ(extA->availablePackets.size(), 1U);
     SymbolicPacket outputA = {NAMED_ENUM("first", "REQ"), NAMED_ENUM("second", "x")};
     EXPECT_EQ(extA->availablePackets[0], outputA);
 
@@ -393,11 +393,11 @@ TEST(XMASFork, Simple) {
     SymbolicPacket p = {NAMED_ENUM("first", "r","g"), NAMED_ENUM("second", "x")};
 
     SymbolicTypesExtension *extA = sinkA.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(extA->availablePackets.size(), 1);
+    EXPECT_EQ(extA->availablePackets.size(), 1U);
     EXPECT_EQ(extA->availablePackets[0], p);
 
     SymbolicTypesExtension *extB = sinkB.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    EXPECT_EQ(extB->availablePackets.size(), 1);
+    EXPECT_EQ(extB->availablePackets.size(), 1U);
     EXPECT_EQ(extB->availablePackets[0], p);
 
     ClearSymbolicTypes(allComponents);
@@ -754,7 +754,7 @@ TEST(XMASSource, LoopWithFunction) {
     SymbolicTypes(allComponents);
 
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1);
+    ASSERT_EQ(ext->availablePackets.size(), 1U);
     SymbolicPacket expectedPacket = {NAMED_INTERVAL("x", 10001, 10002)};
     EXPECT_EQ(expectedPacket, ext->availablePackets[0]);
 
@@ -823,7 +823,7 @@ TEST(XMASSource, LoopWithStateMachine) {
     SymbolicTypes(allComponents);
 
     SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1);
+    ASSERT_EQ(ext->availablePackets.size(), 1U);
     SymbolicPacket expectedPacket = {NAMED_INTERVAL("packet", 10, 111)};
     EXPECT_EQ(expectedPacket, ext->availablePackets[0]);
 

@@ -117,7 +117,14 @@ TEST(String, ToNumber) {
     EXPECT_EQ(1012, "1012"_S.toNumber<int>());
     EXPECT_EQ(-1012, "-1012"_S.toNumber<int>());
 
-    EXPECT_EQ(-0x80000000, "-80000000"_S.hexToNumber<int>());
+    // FIXME: comparison between signed and unsigned integer expressions warning (MinGW)
+    // -0x80000000 turns out te be an unsigned integer according to MinGW
+    // Bug in MinGW ?? -0x80000000(L) fits in a 32-bit signed int (represented as 0x80000000)
+    // so according to the c++ spec the literal type should be resolved to (long) int.
+    //   EXPECT_EQ(typeid(-0x80000000L), typeid(long));
+    //   EXPECT_NE(typeid(-0x80000000L), typeid(long));
+
+    EXPECT_EQ((int)-0x80000000, "-80000000"_S.hexToNumber<int>());      // FIXME: explicitly cast to int
     EXPECT_EQ(0x7FFFFFFF, "7fffffff"_S.hexToNumber<int>());
     EXPECT_EQ(0x7FFFFFFF, "7FFFFFFF"_S.hexToNumber<int>());
     EXPECT_EQ(0x10, "10"_S.hexToNumber<int>());
