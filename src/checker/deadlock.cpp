@@ -130,7 +130,7 @@ bool DeadlockChecker(std::set<XMASComponent *> allComponents) {
     for (XMASComponent *c : allComponents) {
         XMASQueue* queue = dynamic_cast<XMASQueue*>(c);
         if (queue) {
-            BIFormula* formula = Block(queue->o); //& !Idle(queue->o));
+            /*BIFormula* formula = */Block(queue->o); //& !Idle(queue->o));	// FIXME: unused-variable warning
         }
     }
     // return result
