@@ -1,10 +1,8 @@
 
 
-function loadComponent(object) {
-
+function loadComponent(type) {
     var qml = ""
-    var type = "fork"
-    var xComponent = null;
+    var component = null;
     switch(type) {
     case "queue":
         qml =  "../qml/queue.qml"
@@ -39,25 +37,33 @@ function loadComponent(object) {
     default:
         qml =  "../qml/spidergon.qml" //test
     }
-    xComponent = Qt.createComponent(qml);
-    if (xComponent.status === Component.Loading)
-        xComponent.statusChanged.connect(createComponent(xComponent));
-    else if (xComponent.status === Component.Ready)
-        createComponent(xComponent);
-    else if (xComponent.status === Component.Error)
-        console.log(xComponent.errorString())
+    component = Qt.createComponent(qml)
+    if (component.status === Component.Loading)
+        component.statusChanged.connect(createComponent(sheet,component));
+    else if (component.status === Component.Ready)
+        createComponent(sheet,component)
+    else if (component.status === Component.Error)
+        console.log(component.errorString())
 
 }
 
-function createComponent(component) {
-    var item
+
+
+function createComponent(parent,component) {
+    var item = null
     if (component.status === Component.Ready) {
-        item = component.createObject(sheet, {"x": 200, "y": 200});
-
+        item = component.createObject(parent)
+        controller.componentCreated(component)
     } else if (component.status === Component.Error) {
-        item = null;
-        console.log(component.errorString());
+        console.log(component.errorString())
     }
-
 }
+
+
+
+function destroy(component){
+    component.destroy()
+    controller.componentDestroyed(component)
+}
+
 

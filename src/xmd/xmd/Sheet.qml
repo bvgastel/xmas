@@ -65,7 +65,6 @@ Rectangle {
     z: -10
 
 
-
     //used to show the wiring path when adding a connection
     Canvas {
         id: wire

@@ -1,44 +1,37 @@
-
-var itemComponent = null;
+//var itemComponent = null;
 var draggedItem = null;
 var posnInWindow;
 
 function startDrag(mouse)
 {
     posnInWindow = toolbarItem.mapToItem(sheet, 0, 0);
-    loadComponent();
+    loadComponent(toolbarItem.componentFile);
 }
 
-//Creation is split into two functions due to an asynchronous wait while
-//possible external files are loaded.
-function loadComponent() {
-    if (itemComponent != null) { // component has been previously loaded
-        createItem();
-        return;
-    }
 
-    itemComponent = Qt.createComponent(toolbarItem.componentFile);
-    if (itemComponent.status === Component.Loading)  //Depending on the content, it can be ready or error immediately
-        Component.statusChanged.connect(createItem);
-    else if (itemComponent.status === Component.Ready)
-        createItem();
-    else if (itemComponent.status === Component.Error)
-        console.log("Error loading component")
+function loadComponent(qml) {
+    var component = Qt.createComponent(qml)
+    if (component.status === Component.Loading)
+        component.statusChanged.connect(createComponent(sheet,component));
+    else if (component.status === Component.Ready)
+        createComponent(sheet,component)
+    else if (component.status === Component.Error)
+        console.log(component.errorString())
 }
 
-function createItem() {
+function createComponent(parent,component) {
     // TODO: this if sequence has uncatered for "else branch" at the end
     // Needs closure w.r.t. if-statement branches
-    if (itemComponent.status === Component.Ready && draggedItem == null) {
-        draggedItem = itemComponent.createObject(sheet, {"x": posnInWindow.x, "y": posnInWindow.y});
-        // make sure created item is above the ground layer
-    } else if (itemComponent.status === Component.Error) {
-        draggedItem = null;
-        console.log("error creating component");
-        console.log(itemComponent.errorString());
+    if (component.status === Component.Ready && draggedItem == null) {
+        draggedItem = component.createObject(parent)
+        controller.componentCreated(component)
+    } else if (component.status === Component.Error) {
+        draggedItem = null
+        console.log(component.errorString())
     }
     // What happens if neither ready nor error? Or ready, but dragged? Is this possible?
 }
+
 
 function continueDrag(mouse)
 {
@@ -59,9 +52,7 @@ function endDrag(mouse)
         draggedItem.destroy();
         draggedItem = null;
     } else {
-        draggedItem.created = true;
         controller.componentCreated(draggedItem)
-
         draggedItem = null;
     }
 }
