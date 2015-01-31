@@ -50,12 +50,12 @@ function loadComponent(object) {
 }
 
 function createComponent(component) {
-    var draggedItem
+    var item
     if (component.status === Component.Ready) {
-        draggedItem = component.createObject(sheet, {"image": "images/svgs/fork.svg", "x": 200, "y": 200, "z": 3});
+        item = component.createObject(sheet, {"x": 200, "y": 200, "z": 3});
 
     } else if (component.status === Component.Error) {
-        draggedItem = null;
+        item = null;
         console.log(component.errorString());
     }
 
