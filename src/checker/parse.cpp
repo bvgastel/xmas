@@ -175,7 +175,7 @@ struct PacketExpression {
     }
 
     static int variable(SymbolicPacketSet &retval, const Token<String> &t, UserData userData) {
-        Interval openVariable = Interval::all();
+        //Interval openVariable = Interval::all();		// FIXME: unused-but-set-variable warning
         //SymbolicIntervalField field = {openVariable.min, openVariable.max};
         retval.values.push_back({std::make_pair(t.value, std::make_shared<SymbolicAnyField>())});
         return 0;
@@ -833,7 +833,7 @@ struct ParsedXMASExpressionSubstituion : public ParsedXMASExpression {
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
         out << "(";
-        bool first = true;
+        //bool first = true;		// FIXME: unused-but-set-variable warning
         for (const auto& e : map) {
             if (e.first == "_"_S)
                 continue;
@@ -848,7 +848,7 @@ struct ParsedXMASExpressionSubstituion : public ParsedXMASExpression {
                 std::tie(it, std::ignore) = enumMap.insert(std::make_pair(e.second, enumMap.size()));
             out << it->second;
             out << " : ";
-            first = false;
+            //first = false;		// FIXME: unused-but-set-variable warning
         }
         auto other = map.find("_");
         if (other == map.end()) {
