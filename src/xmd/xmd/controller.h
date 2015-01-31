@@ -53,7 +53,7 @@ public slots:  //from view
     bool connectionChanged(QVariant object);
 
     //TODO : test can be removed later (stefan)
-    bool testClicked(); //connected to the paste button on the toolbar
+    bool xmv2xmd(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);
 

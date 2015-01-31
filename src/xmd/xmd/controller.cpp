@@ -33,6 +33,8 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
+#include <QQmlProperty>
+#include <QMetaObject>
 
 #include "controller.h"
 //#include "common.h"
@@ -76,16 +78,44 @@ Controller::~Controller() {
 
 }
 
-//TODO : testClicked is a tempory test method and must be removed once done (stefan)
-bool Controller::testClicked(xmv)
+//TODO : to be implemented (empty at the moment)
+bool Controller::xmv2xmd()
 {
 
-    QVariant qv;
+    //QVariant qv;
 
     //info --> http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
 
-    qDebug() << "test clicked";
-    emit componentCreate(qv);
+    //qDebug() << "test clicked";
+    //emit componentCreate(qv);
+    return true;
+}
+
+// TODO: to be implemented toward xmv.
+/**
+ * @brief Controller::componentCreated
+ * @param comp
+ * @return
+ */
+bool Controller::componentCreated(QVariant qvariant)
+{
+    qDebug() << "Component created by designer";
+    QObject *qobject = qvariant_cast<QObject *>(qvariant);
+    QString type = QQmlProperty::read(qobject, "type").toString();
+    QString name = QQmlProperty::read(qobject, "name").toString();
+    qDebug() << name << ", " << type << "TODO: connect to xmv";
+    QObjectList children = qobject->children();
+    qDebug() << "children: " << children;
+    for (QObject *child : qobject->children()) {
+        qDebug() << "child->objectName == '" << child->objectName() << "'";
+        qDebug() << "child->dynamicPropertyNames() == " << child->dynamicPropertyNames();
+        qDebug() << "child" << child;
+//        if (child->objectName() == "XConnector") {  // does not work: is empty
+            QVariant vpname = child->property("name");
+            QString pname = vpname.toString();
+            qDebug() << " port: " << pname;
+//        }
+    }
     return true;
 }
 
@@ -109,24 +139,6 @@ bool Controller::scratch() {
 //    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
 //    QObject *fork = component.create();
 //    bitpowder::lib::unused(fork);
-    return true;
-}
-
-/**
- * @brief Controller::componentCreated
- * @param comp
- * @return
- */
-bool Controller::componentCreated(QVariant object)
-{
-    qDebug() << "Component created by designer";
-    qDebug() << "object = " << object << " typename = " << object.typeName() << "data " << object.data();
-    qDebug() << "conversion possible? "
-             << (object.canConvert<int>()? "int;": "not to int;")
-             << (object.canConvert<QString>() ? "QString;" : "not to QString;")
-//             << (object.canConvert<XComponent>() ? "XComponent;" : "not to XComponent;") // How to do?
-             ;
-
     return true;
 }
 
