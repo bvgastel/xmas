@@ -4,20 +4,20 @@
 TEMPLATE = subdirs
 SUBDIRS =   \
             xmd \
-#            xmc \ 
-#    bitpowder \
-#    datamodel \
+            xmc \ 
+    bitpowder \
+    datamodel \
 
 # xmdmain must be last
 
 CONFIG += ordered
 SUBDIRS += \
            xmdmain \
-#           xmcmain
+           xmcmain
 
 
 # set the subdirectories for the libraries
 
 libxmd.subdir = xmd
-#libxmc.subdir = xmc
+libxmc.subdir = xmc
 
