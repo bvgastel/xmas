@@ -1,5 +1,6 @@
 /**
 Copyright 2010-2015 Bernard van Gastel, bvgastel@bitpowder.com.
+Copyright 2015 Guus Bonnema. minor changes
 This file is part of Bit Powder Libraries.
 
 Bit Powder Libraries is free software: you can redistribute it and/or modify
@@ -44,6 +45,17 @@ extern "C" {
 
 namespace bitpowder {
 namespace lib {
+
+//
+/**
+ * 2015-01-28: Guus Bonnema
+ * use 'unused(param_1, .. ,param_n) ' to avoid compiler warnings for not
+ * using a parameter. The function is empty, the compiler will probably
+ * optimize the call away.
+ */
+
+template<class... T> void unused(T&&...)
+{ }
 
 #if (__cplusplus <= 199711L) && !defined(__GXX_EXPERIMENTAL_CXX0X__)
 #define nullptr 0

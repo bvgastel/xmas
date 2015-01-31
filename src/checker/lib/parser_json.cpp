@@ -140,34 +140,41 @@ struct JSONParserState {
     static const int ERROR_IN_CONSTANT = 10;
 
     static int convertRawString(String &retval, const Token<String> &t, UserData userData) {
+        unused(userData);
         retval = t.value;
         return 0;
     }
 
     static PS nullConstant(PS cont, UserData userData) {
+        unused(userData);
         return cont().accept(JSONLexer::NULL_OBJECT).store(JSONData());
     }
 
     static int convertNumber(JSONData &retval, const Token<int> &t, UserData userData) {
+        unused(userData);
         retval = JSONData(t.value);
         return 0;
     }
 
     static int convertString(JSONData &retval, const Token<String> &t, UserData userData) {
+        unused(userData);
         retval = JSONData(t.value);
         return 0;
     }
 
     static PS primary(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(nullConstant, convertNumber, convertString);
     }
 
     static int applyField(JSONData& v, String& key, JSONData&& value, UserData userData) {
+        unused(userData);
         v.asObject().insert(std::make_pair(key, std::move(value)));
         return 0;
     }
 
     static PS objectField(PS cont, UserData userData) {
+        unused(userData);
         String key;
         JSONData value;
         return cont()
@@ -177,6 +184,7 @@ struct JSONParserState {
                 .modify(applyField, key, std::move(value)).error(-5);
     }
     static PS objectOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().store([](UserData userData) -> JSONData {
             return JSONData::AllocateMap(userData);
         })
@@ -186,14 +194,17 @@ struct JSONParserState {
         .accept(JSONLexer::OBJECT_CLOSE).error(-8);
     }
     static int applyEntry(JSONData& v, JSONData&& value, UserData userData) {
+        unused(userData);
         v.asVector().push_back(std::move(value));
         return 0;
     }
     static PS arrayEntry(PS cont, UserData userData) {
+        unused(userData);
         return cont()
                 .process(expr, applyEntry);
     }
     static PS arrayOp(PS cont, UserData userData) {
+        unused(userData);
         return cont().store([](UserData userData) -> JSONData {
             return JSONData::AllocateVector(userData);
         })
@@ -203,9 +214,11 @@ struct JSONParserState {
         .accept(JSONLexer::ARRAY_CLOSE).error(-9);
     }
     static PS expr(PS cont, UserData userData) {
+        unused(userData);
         return cont().choose(primary, objectOp, arrayOp);
     }
     static PS topLevelExpr(PS cont, UserData userData) {
+        unused(userData);
         return cont().perform(expr).end();
     }
 };

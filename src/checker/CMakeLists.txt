@@ -20,7 +20,7 @@ ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#SET(CMAKE_CXX_COMPILER "clang++")
 ENDIF()
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pipe -g -Werror")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pipe -g -Wall")	# disabled -Werror for now
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 
 #INCLUDE_DIRECTORIES("$ENV{HOME}/bin/z3/include")

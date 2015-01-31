@@ -28,7 +28,7 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 #include <errno.h>
 #include <pthread.h>
 #include <unistd.h>
-#include <sys/sysctl.h>
+//#include <sys/sysctl.h>
 #include <unistd.h>
 
 #ifdef EXTRA_DEBUG
@@ -123,8 +123,8 @@ void MainDispatcher::dispatchQueue(DispatchObjectQueue& queue, lib::Dispatch::Pr
         });
     }
 }
-#endif
-#endif
+#endif // __BLOCKS__
+#endif // __APPLE__
 
 GlobalDispatcher::GlobalDispatcher(int maximumExecuting) : DispatcherFor("GlobalDispatcher", maximumExecuting), cv(m) {
     //std::cerr << "dispatcher inited for " << maximumExecuting << " threads..." << std::endl;

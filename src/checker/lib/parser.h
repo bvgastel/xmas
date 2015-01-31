@@ -19,10 +19,13 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "type_hash.h"
 #include <iostream>
 #include <type_traits>
 #include <tuple>
+
+#include "common.h"
+#include "type_hash.h"
+
 
 /**
  * TODO:
@@ -33,6 +36,7 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace bitpowder {
 namespace lib {
+
 
 class TokenBase {
 public:
@@ -102,6 +106,7 @@ public:
     ParserState& operator=(const ParserState&c) = delete;
 public:
     ParserState(Lexer& lexer,int error = 0) : lexer(&lexer), current() {
+        bitpowder::lib::unused(error);
         for (auto&c : current) {
             c = this->lexer->next();//this->lexer->end() ? nullptr : this->lexer->next();
             //std::cout << "token: " << c << std::endl;

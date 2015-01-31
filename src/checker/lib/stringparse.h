@@ -74,6 +74,7 @@ public:
     typedef StringParse & (*Cont)(StringParse &);
 
     StringParse(const String& input, const T &result = T(), int error = 0) : left(input), result(result), error(0) {
+        unused(error);
         //std::cout << "construct StringParse(" << left.size() << ")" << std::endl;
     }
     StringParse(const StringParse &copy) : left(copy.left), result(copy.result), error(copy.error) {

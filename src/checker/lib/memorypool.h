@@ -96,6 +96,7 @@ public:
     MemoryPoolStatus(MemoryPoolPage* start, MemoryPoolPage* nextPage) : current(start), nextPage(nextPage) {}
 };
 
+// TODO: Check why this is not a typedef or function
 #define DEFAULT_ALIGN_ON sizeof(void*)
 
 class MemoryPool {
@@ -124,6 +125,7 @@ public:
         return current ? current->available : (MEMORYPOOL_SIZE-sizeof(MemoryPoolPage));
     }
     void* next(char alignOn = DEFAULT_ALIGN_ON) {
+        unused(alignOn);
         return current ? &((char*)current->data)[current->size - current->available] : nullptr;
     }
 

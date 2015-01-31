@@ -205,6 +205,7 @@ public:
 };
 
 inline void dispatch(DispatchOperation *operation, Dispatch::Priority priority = Dispatch::PRIORITY_MEDIUM) {
+    bitpowder::lib::unused(priority);
     GlobalDispatcher::globalDispatch(operation);
 }
 
@@ -278,6 +279,7 @@ protected:
 
     void aborted(Exception &e) {
         // failure is not an option, otherwise something very strange is happening
+        bitpowder::lib::unused(e);
         perror("aborted in DispatchQueueFor, should not happen");
         abort();
     }
