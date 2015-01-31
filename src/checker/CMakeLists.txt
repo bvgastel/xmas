@@ -5,6 +5,7 @@ if (NOT MINGW)
     OPTION(BUILD_UNIT_TESTS "Build the unit tests for extensive testing" ON)
     OPTION(NCONCURRENCY "Disable concurrency to speed up certain processes" OFF)
 else()
+    OPTION(BUILD_UNIT_TESTS "Build the unit tests for extensive testing" ON)
     OPTION(NCONCURRENCY "Disable concurrency to speed up certain processes" ON)
 endif (NOT MINGW)
 OPTION(MEMORY_DEBUG "Use slow memory allocator and don't cache any memory allocation, for debug only" OFF)
@@ -94,6 +95,9 @@ if (BUILD_UNIT_TESTS)
 	set(UNITTESTS ${UNITTESTS} ${UNITTESTS-REACHABILITY})
     endif()
     add_executable(${PROJECT_NAME}-test ${test} ${UNITTESTS} ${SRC_LIST})
+
+    set_target_properties(${PROJECT_NAME}-test PROPERTIES COMPILE_DEFINITIONS "_USE_MATH_DEFINES")  # MinGW
+
     set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/ext)
     add_subdirectory(${EXT_PROJECTS_DIR}/gtest)
     add_dependencies(${PROJECT_NAME}-test googletest)
