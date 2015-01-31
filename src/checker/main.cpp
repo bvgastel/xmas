@@ -145,9 +145,9 @@ int acrossDistance(int current, int dest, int total) {
 }
 
 void createSpidergonNodesRange(std::map<std::string, XMASComponent*> &allComponents, int i, int total) {
-    int left = (i+total-1) % total;
-    int right = (i+1) % total;
-    int across = (i+total/2) % total;
+    //int left = (i+total-1) % total;           // FIXME: unused variable warning
+    //int right = (i+1) % total;                // FIXME: unused variable warning
+    //int across = (i+total/2) % total;         // FIXME: unused variable warning
 
     XMASMerge *mergeLeftAndRight = insert<XMASMerge>(allComponents, "mergeLeftAndRight"_S + i);
 

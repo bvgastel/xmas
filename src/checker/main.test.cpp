@@ -474,9 +474,9 @@ int acrossDistance(int current, int dest, int total) {
 }
 
 void createSpidergonNodes(std::map<std::string, XMASComponent*> &allComponents, int i, int total, MemoryPool &mp) {
-    int left = (i+total-1) % total;
-    int right = (i+1) % total;
-    int across = (i+total/2) % total;
+    //int left = (i+total-1) % total;           // FIXME: unused variable warning
+    //int right = (i+1) % total;                // FIXME: unused variable warning
+    //int across = (i+total/2) % total;         // FIXME: unused variable warning
 
     XMASMerge *mergeLeftAndRight = insert<XMASMerge>(allComponents, "mergeLeftAndRight", i);
 
@@ -593,9 +593,10 @@ TEST(Spidergon, DISABLED_Enum) {
 }
 
 void createSpidergonNodesInterval(std::map<std::string, XMASComponent*> &allComponents, int i, int total) {
-    int left = (i+total-1) % total;
-    int right = (i+1) % total;
-    int across = (i+total/2) % total;
+    //int left = (i+total-1) % total;           // FIXME: unused variable warning
+    //int right = (i+1) % total;                // FIXME: unused variable warning
+    //int across = (i+total/2) % total;         // FIXME: unused variable warning
+
 
     XMASMerge *mergeLeftAndRight = insert<XMASMerge>(allComponents, "mergeLeftAndRight", i);
 
