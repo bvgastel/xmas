@@ -77,9 +77,13 @@ Controller::~Controller() {
 }
 
 //TODO : testClicked is a tempory test method and must be removed once done (stefan)
-bool Controller::testClicked()
+bool Controller::testClicked(xmv)
 {
+
     QVariant qv;
+
+    //info --> http://doc.qt.io/qt-5/qtqml-cppintegration-interactqmlfromcpp.html
+
     qDebug() << "test clicked";
     emit componentCreate(qv);
     return true;
@@ -122,6 +126,7 @@ bool Controller::componentCreated(QVariant object)
              << (object.canConvert<QString>() ? "QString;" : "not to QString;")
 //             << (object.canConvert<XComponent>() ? "XComponent;" : "not to XComponent;") // How to do?
              ;
+
     return true;
 }
 
