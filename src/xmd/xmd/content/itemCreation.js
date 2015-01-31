@@ -1,13 +1,11 @@
 
 var itemComponent = null;
 var draggedItem = null;
-var startingMouse;
 var posnInWindow;
 
 function startDrag(mouse)
 {
     posnInWindow = toolbarItem.mapToItem(sheet, 0, 0);
-    startingMouse = { x: mouse.x, y: mouse.y }
     loadComponent();
 }
 
@@ -32,7 +30,7 @@ function createItem() {
     // TODO: this if sequence has uncatered for "else branch" at the end
     // Needs closure w.r.t. if-statement branches
     if (itemComponent.status === Component.Ready && draggedItem == null) {
-        draggedItem = itemComponent.createObject(sheet, {"image": toolbarItem.image, "x": posnInWindow.x, "y": posnInWindow.y, "z": 3});
+        draggedItem = itemComponent.createObject(sheet, {"x": posnInWindow.x, "y": posnInWindow.y});
         // make sure created item is above the ground layer
     } else if (itemComponent.status === Component.Error) {
         draggedItem = null;
@@ -46,8 +44,8 @@ function continueDrag(mouse)
 {
     if (draggedItem == null)
         return;
-    draggedItem.x = mouse.x/sheet.scale + posnInWindow.x - startingMouse.x;
-    draggedItem.y = mouse.y/sheet.scale + posnInWindow.y - startingMouse.y;
+    draggedItem.x = mouse.x/sheet.scale + posnInWindow.x
+    draggedItem.y = mouse.y/sheet.scale + posnInWindow.y
 }
 
 function endDrag(mouse)
