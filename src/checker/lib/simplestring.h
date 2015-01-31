@@ -27,7 +27,10 @@ extern "C" {
 #include <limits.h>
 
 #ifdef __MINGW32__
-int strncasecmp (const char *sz1, const char *sz2, size_t sizeMaxCompare);
+// FIXME: why is strncasecmp redeclared for MINGW32 ??
+//        it causes a warning: 'int _strnicmp(const char*, const char*, size_t)' redeclared without dllimport attribute: previous dllimport ignored [-Wattributes]
+//        and the project builds without errors if the declaration below is commented out.
+//int strncasecmp (const char *sz1, const char *sz2, size_t sizeMaxCompare);
 #endif
 }
 
