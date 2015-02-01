@@ -43,9 +43,6 @@
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
-//    QQmlContext* context = engine.rootContext();
-//    context->setContextProperty("controller", this);
-//    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
 }
 
@@ -94,17 +91,12 @@ bool Controller::componentCreated(QVariant qvariant)
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
     qDebug() << name << ", " << type << "TODO: connect to xmv";
-    QObjectList children = qobject->children();
-    qDebug() << "children: " << children;
     for (QObject *child : qobject->children()) {
-        qDebug() << "child->objectName == '" << child->objectName() << "'";
-        qDebug() << "child->dynamicPropertyNames() == " << child->dynamicPropertyNames();
-        qDebug() << "child" << child;
-//        if (child->objectName() == "XConnector") {  // does not work: is empty
+        if (child->objectName() == "port") {
             QVariant vpname = child->property("name");
             QString pname = vpname.toString();
             qDebug() << " port: " << pname;
-//        }
+        }
     }
     return true;
 }
