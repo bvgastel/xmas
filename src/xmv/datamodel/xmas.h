@@ -7,7 +7,7 @@
 #include "exception.h"
 #include "simplestring.h"
 
-using namespace bitpowder::lib;
+//using namespace bitpowder::lib; // prefer to avoid in header files
 
 // type of wires/signals
 enum SignalType {IRDY, TRDY, DATA};
@@ -18,7 +18,7 @@ class XMASComponent;
 
 // to each port we should
 // extensions to a port should be of type PortExtension
-class PortExtension : public Extension<PortExtension> {
+class PortExtension : public bitpowder::lib::Extension<PortExtension> {
 };
 
 class Input;
@@ -32,7 +32,7 @@ public:
 };
 
 // a port on an xMAS component
-class Port : ExtensionContainer<PortExtension> {
+class Port : bitpowder::lib::ExtensionContainer<PortExtension> {
     const char *name; // due to compiler bug in GCC 4.8, can not be std::string to avoid a memory leak (Input has an "o" argument as name, then "o" get constructed and never deallocted) (maybe due to a lack of virtual descrtuctor)
 public:
     XMASComponent *self;
@@ -128,7 +128,7 @@ public:
 // connect an Output to an Input
 void connect(Output &o, Input &i);
 
-class XMASComponentExtension : public Extension<XMASComponentExtension> {
+class XMASComponentExtension : public bitpowder::lib::Extension<XMASComponentExtension> {
 };
 
 class XMASSink;
@@ -152,13 +152,13 @@ public:
     virtual void visit(XMASJoin *) = 0;
 };
 
-class XMASComponent : public ExtensionContainer<XMASComponentExtension> {
+class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension> {
     std::string name;
 public:
-    XMASComponent(const String& name) : name(name.stl()) {
+    XMASComponent(const bitpowder::lib::String& name) : name(name.stl()) {
     }
     virtual ~XMASComponent();
-    String getName() const;
+    bitpowder::lib::String getName() const;
     bool valid();
 
     template <typename Iterator>
@@ -212,7 +212,7 @@ public:
     Input i;
     Port* p[1];
 
-    XMASSink(const String& name) : XMASComponent(name), i(this, "i") {
+    XMASSink(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i") {
         p[0] = &i;
     }
 
@@ -233,7 +233,7 @@ public:
     Output o;
     Port* p[1];
 
-    XMASSource(const String& name) : XMASComponent(name), o(this, "o") {
+    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o") {
         p[0] = &o;
     }
 
@@ -255,7 +255,8 @@ public:
     Port* p[2];
     size_t c; // capacity
 
-    XMASQueue(const String& name, size_t capacity = 1) : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity) {
+    XMASQueue(const bitpowder::lib::String& name, size_t capacity = 1)
+        : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity) {
         p[0] = &i;
         p[1] = &o;
     }
@@ -277,7 +278,8 @@ public:
     Output o;
     Port* p[2];
 
-    XMASFunction(const String& name) : XMASComponent(name), i(this, "i"), o(this, "o") {
+    XMASFunction(const bitpowder::lib::String& name)
+        : XMASComponent(name), i(this, "i"), o(this, "o") {
         p[0] = &i;
         p[1] = &o;
     }
@@ -301,7 +303,7 @@ public:
     Output b;
     Port* p[3];
 
-    XMASSwitch(const String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b") {
+    XMASSwitch(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b") {
         p[0] = &i;
         p[1] = &a;
         p[2] = &b;
@@ -326,7 +328,7 @@ public:
     Output b;
     Port* p[3];
 
-    XMASFork(const String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b") {
+    XMASFork(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b") {
         p[0] = &i;
         p[1] = &a;
         p[2] = &b;
@@ -350,7 +352,7 @@ public:
     Output o;
     Port* p[3];
 
-    XMASMerge(const String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
+    XMASMerge(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
         p[0] = &a;
         p[1] = &b;
         p[2] = &o;
@@ -374,7 +376,7 @@ public:
     Output o;
     Port* p[3];
 
-    XMASJoin(const String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
+    XMASJoin(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
         p[0] = &a;
         p[1] = &b;
         p[2] = &o;

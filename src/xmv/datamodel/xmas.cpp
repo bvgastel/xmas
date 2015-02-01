@@ -3,7 +3,6 @@
 #include <cstring>
 #include <strings.h>
 
-
 XMASComponent *Port::getTarget() {
     Port *targetPort = getTargetPort();
     return targetPort == nullptr ? nullptr : targetPort->self;
@@ -74,7 +73,7 @@ XMASComponent::~XMASComponent()
     clearExtensions();
 }
 
-String XMASComponent::getName() const {
+bitpowder::lib::String XMASComponent::getName() const {
     return name;
 }
 

@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 
+QT      -= qt
 QT       -= core gui
 
 TARGET = bitpowder
@@ -28,7 +29,8 @@ SOURCES += \
     stack.cpp \
     stringparse.cpp \
     thread.cpp \
-    type_hash.cpp
+    type_hash.cpp \
+
 
 HEADERS += \
     bitpowder_global.h \
@@ -54,7 +56,7 @@ HEADERS += \
     stringparse.h \
     thread.h \
     type_hash.h \
-    zip.h
+    zip.h \
 
 unix {
     target.path = /usr/lib

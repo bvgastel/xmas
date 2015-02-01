@@ -4,16 +4,11 @@
 TEMPLATE = subdirs
 SUBDIRS =   \
     bitpowder \
-    datamodel \
+    datamodel
 
 # xmdmain must be last
 
 CONFIG += ordered
 SUBDIRS += \
-           xmdmain \
-
-
-# set the subdirectories for the libraries
-
-libxmd.subdir = xmd
+           xmvmain \
 

@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT      -= qt
+QT      -= core gui
 
 TARGET = datamodel
 TEMPLATE = lib
