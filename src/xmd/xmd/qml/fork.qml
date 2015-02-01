@@ -7,7 +7,6 @@ XComponent {
     XPort {x: 0; y: 90; name: "a1"}
     XPort {x: 180; y:30; name: "a2"}
     XPort {x: 180; y:150; name: "a3"}
-    //Image {source: "../content/images/svgs/fork.svg"}
     Canvas {
         anchors.fill: parent
         onPaint: {
@@ -18,19 +17,19 @@ XComponent {
             ctx.lineTo(80,200)
             ctx.moveTo(120 ,0)
             ctx.lineTo(120,200)
-            //left channel with arrow
-            ctx.moveTo(10 ,100)
+            //left port with arrow
+            ctx.moveTo(20 ,100)
             ctx.lineTo(60,100)
             ctx.lineTo(60,90)
             ctx.lineTo(80-ctx.lineWidth,100)
             ctx.lineTo(60,110)
             ctx.lineTo(60,100)
             ctx.fill()
-            //right channels
+            //right ports
             ctx.moveTo(120 ,40)
-            ctx.lineTo(190,40)
+            ctx.lineTo(180,40)
             ctx.moveTo(120 ,160)
-            ctx.lineTo(190,160)
+            ctx.lineTo(180,160)
             ctx.stroke()
         }
     }

@@ -11,5 +11,31 @@ XComponent {
     XPort {x: 0; y: 120; name: "a3"}
     XPort {x: 180; y: 40; name: "a4"}
     XPort {x: 180; y: 80; name: "a5"}
-    Image {source: "../content/images/svgs/composite.svg"}
+    Canvas {
+        anchors.fill: parent
+        onPaint: {
+            var ctx = getContext('2d')
+            ctx.strokeStyle = "black"
+            ctx.lineWidth = 5.0
+            ctx.rect(50,25,100,150)
+            //left ports
+            ctx.moveTo(20 ,50)
+            ctx.lineTo(50,50)
+            ctx.moveTo(20,90)
+            ctx.lineTo(50,90)
+            ctx.moveTo(20,130)
+            ctx.lineTo(50,130)
+            //right ports
+            ctx.moveTo(150 ,50)
+            ctx.lineTo(180,50)
+            ctx.moveTo(150,90)
+            ctx.lineTo(180,90)
+            //C
+            ctx.font = "64pt Calibri"
+            ctx.textAlign = "center"
+            ctx.fillStyle = "black"
+            ctx.fillText("C", 100, 120)
+            ctx.stroke()
+        }
+    }
 }
