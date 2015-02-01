@@ -30,13 +30,14 @@
  **************************************************************************/
 import QtQuick 2.4
 
-//TODO : implement common xmas connection style
+//TODO : implement common xmas channel style
 
 Item {
-    id: connection
+    id: channel
+    objectName: "channel"
     anchors.fill: parent
-    property var connector1: null
-    property var connector2: null
+    property var port1: null
+    property var port2: null
     property color color: "darkblue"
 
     //TODO add straight pathfinder logic (horizontal/vertical)

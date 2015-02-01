@@ -32,12 +32,16 @@ import QtQuick 2.4
 import "../content/connectionCreation.js" as Code
 
 Item {
-    id:connector
+    id:port
+    objectName: "port"
     width: 20; height:20
     x:-10; y:-10
     z:1
     property bool connected: false
     property string name: "a"
+    property int type: 0 // input, output
+
+    //orientation = roation property depends of de component body and type
     //property bool containsMouse: false
 
     Rectangle{
@@ -47,25 +51,25 @@ Item {
         border.width: area.containsMouse ? 4 : 0
     }
 
-    onConnectedChanged: connected ? 0 : Code.abortConnecting(connector)
+    onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
 
     MouseArea {
         id: area
         anchors.fill: parent
-        anchors.margins: -10 // magic connector :)
+        anchors.margins: -10 // magic port :)
         hoverEnabled: !connected
         preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.LeftButton && !connected) {
                 connected = true
-                sheet.wiring(connector)
+                sheet.wiring(port)
             }
         }
-        //onEntered: sheet.checkTarget(connector)
+        //onEntered: sheet.checkTarget(port)
         onContainsMouseChanged: {
-            //connector.containsMouse = containsMouse
-            sheet.checkTarget(connector)
+            //port.containsMouse = containsMouse
+            sheet.checkTarget(port)
         }
     }
 

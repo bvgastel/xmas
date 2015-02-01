@@ -32,36 +32,43 @@ import QtQuick 2.4
 import "../controller.js" as Ctrl
 
 Item {
-    id: comp
+    id: component
+    objectName: "component"
     width: 200
     height: 200
     focus: true
-    //TODO : scale property: each component can be zoomed seperately
+    //TODO : scale property: each componentonent can be zoomed seperately
     property bool created: false
     property bool selected: false
     property string type: "default"
     property string name: ""
+
+    // orientation = rotation property
+    // zoom = scale property
+
+
+    //tempory properties (stefan)
     property var sheet: parent
-    property int rightBound: 10000 //comp.parent.width - comp.width
-    property int bottomBound: 10000 //comp.parent.height - comp.height
+    property int rightBound: 10000 //component.parent.width - component.width
+    property int bottomBound: 10000 //component.parent.height - component.height
     property int step: 10
 
-    Keys.onDeletePressed: {Ctrl.destroy(comp)}
+    Keys.onDeletePressed: {Ctrl.destroy(component)}
     Keys.onLeftPressed: x - step < 0 ? x = 0 : x = x - step
     Keys.onRightPressed: x + step > rightBound ? x = rightBound : x = x + step
     Keys.onDownPressed: y + step > bottomBound ? y = bottomBound : y = y + step
     Keys.onUpPressed: y - step < 0 ? y = 0 : y = y - step
 
     MouseArea {
-        anchors.fill: comp
+        anchors.fill: component
         anchors.margins: 10
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        drag.target: comp
+        drag.target: component
         drag.minimumX: 0
         drag.minimumY: 0
-        drag.maximumX: 10000 ///comp.parent.width - comp.width
-        drag.maximumY: 10000 ///comp.parent.height - comp.height
+        drag.maximumX: 10000 ///component.parent.width - component.width
+        drag.maximumY: 10000 ///component.parent.height - component.height
 
         onClicked: {
             selected = !selected
@@ -72,16 +79,16 @@ Item {
 
         onWheel: {
             if (wheel.modifiers & Qt.ControlModifier) {
-                comp.rotation -= wheel.angleDelta.y /120 * 90;
-                if (Math.abs(comp.rotation) < 45)
-                    comp.rotation = 0;
+                component.rotation -= wheel.angleDelta.y /120 * 90;
+                if (Math.abs(component.rotation) < 45)
+                    component.rotation = 0;
             }
         }
     }
 
     Rectangle {
         id: selection
-        anchors.fill: comp
+        anchors.fill: component
         anchors.margins: -2
         color: "lightsteelblue"
         border.color: "blue"
@@ -93,7 +100,7 @@ Item {
 
     FocusScope {
         id: scope
-        x: comp.x; y: comp.y
-        width: comp.width; height: comp.height
+        x: component.x; y: component.y
+        width: component.width; height: component.height
     }
 }

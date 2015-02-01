@@ -4,8 +4,36 @@ XComponent {
     width: 200
     height: 200
     type: "fork"
-    XConnector {x: 0; y: 90; name: "a1"}
-    XConnector {x: 180; y:30; name: "a2"}
-    XConnector {x: 180; y:150; name: "a3"}
-    Image {source: "../content/images/svgs/fork.svg"}
+    XPort {x: 0; y: 90; name: "a1"}
+    XPort {x: 180; y:30; name: "a2"}
+    XPort {x: 180; y:150; name: "a3"}
+    //Image {source: "../content/images/svgs/fork.svg"}
+    Canvas {
+        anchors.fill: parent
+        onPaint: {
+            var ctx = getContext('2d')
+            ctx.strokeStyle = "black"
+            ctx.lineWidth = 5.0
+            ctx.moveTo(80 ,0)
+            ctx.lineTo(80,200)
+            ctx.moveTo(120 ,0)
+            ctx.lineTo(120,200)
+            //left channel with arrow
+            ctx.moveTo(10 ,100)
+            ctx.lineTo(60,100)
+            ctx.lineTo(60,90)
+            ctx.lineTo(80-ctx.lineWidth,100)
+            ctx.lineTo(60,110)
+            ctx.lineTo(60,100)
+            ctx.fill()
+            //right channels
+            ctx.moveTo(120 ,40)
+            ctx.lineTo(190,40)
+            ctx.moveTo(120 ,160)
+            ctx.lineTo(190,160)
+            ctx.stroke()
+        }
+    }
 }
+
+

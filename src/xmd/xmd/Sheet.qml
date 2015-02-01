@@ -40,25 +40,24 @@ import "controller.js" as Ctrl
 
 Rectangle {
     id: sheet
-    scale: zoomFactor
+    scale: 1.0
     width: 2970
     height: 2100
     color: "white"
-    property real zoomFactor: 1.0
 
     function zoomFit()
     {
-        zoomFactor = 1.0;
+        scale = 1.0;
     }
     function zoomIn()
     {
-        zoomFactor = zoomFactor + 0.1;
-        if (zoomFactor > 2) zoomFactor = 2
+        scale = scale + 0.1;
+        if (scale > 2) scale = 2
     }
     function zoomOut()
     {
-        zoomFactor = zoomFactor - 0.1;
-        if (zoomFactor < 0.1) zoomFactor = 0.1
+        scale = scale - 0.1;
+        if (scale < 0.2) scale = 0.2
     }
 
     focus: true
@@ -73,8 +72,8 @@ Rectangle {
         property real mouseX: 0
         property real mouseY: 0
         property bool connecting: false
-        property var connector1: null
-        property var connector2: null
+        property var port1: null
+        property var port2: null
 
         visible: connecting
         enabled: connecting
@@ -85,41 +84,41 @@ Rectangle {
             ctx.clearRect(0, 0, wire.width, wire.height);
             if (connecting)
             {
-                var x =  connector1.parent.x + connector1.x + connector1.width/2
-                var y = connector1.parent.y + connector1.y  + connector1.height/2
+                var x =  port1.parent.x + port1.x + port1.width/2
+                var y = port1.parent.y + port1.y  + port1.height/2
                 ctx.beginPath()
                 ctx.moveTo(x ,y)
-                ctx.lineTo(mouseX + connector1.width/2,mouseY + connector1.height/2)
-                ctx.rect(mouseX,mouseY,connector1.width,connector1.height)
+                ctx.lineTo(mouseX + port1.width/2,mouseY + port1.height/2)
+                ctx.rect(mouseX,mouseY,port1.width,port1.height)
                 ctx.stroke()
             }
         }
     }
 
-    function checkTarget(connector) {
-        if (wire.connector1 && wire.connector1 !== connector && wire.connector2 !== connector) {
-            wire.connector2 = connector
-            wire.mouseX = connector.x + connector.parent.x
-            wire.mouseY = connector.y + connector.parent.y
+    function checkTarget(port) {
+        if (wire.port1 && wire.port1 !== port && wire.port2 !== port) {
+            wire.port2 = port
+            wire.mouseX = port.x + port.parent.x
+            wire.mouseY = port.y + port.parent.y
             wire.requestPaint()
             // TODO: emit signal for datamodel
         } else {
-            wire.connector2 =  wire.connecting ? null : wire.connector2
+            wire.port2 =  wire.connecting ? null : wire.port2
         }
     }
 
-    function wiring(connector) {
-        console.log(connector.name)
-        if (wire.connector1) {
+    function wiring(port) {
+        console.log(port.name)
+        if (wire.port1) {
             console.log("connectie gemaakt")
-            wire.connector1 = null
+            wire.port1 = null
             wire.connecting = false
-            //Code.doConnect(connector)
+            //Code.doConnect(port)
             wire.requestPaint()
         } else {
-            wire.connector1 = connector
-            wire.mouseX = connector.x + connector.parent.x
-            wire.mouseY = connector.y + connector.parent.y
+            wire.port1 = port
+            wire.mouseX = port.x + port.parent.x
+            wire.mouseY = port.y + port.parent.y
             wire.connecting = true
             console.log("connectie bezig")
         }
@@ -134,9 +133,9 @@ Rectangle {
         onPressed: {
             if (mouse.button == Qt.RightButton && wire.connecting) {
                 wire.connecting = false
-                wire.connector1.connected = false
-                wire.connector1 = null
-                wire.connector2 = null
+                wire.port1.connected = false
+                wire.port1 = null
+                wire.port2 = null
                 wire.requestPaint()
             }
         }

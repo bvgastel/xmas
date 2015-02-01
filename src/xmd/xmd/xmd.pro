@@ -45,11 +45,11 @@ DISTFILES += qml/fork.qml \
     content/ToolBarItem.qml \
     Sheet.qml \
     qml/XComponent.qml \
-    qml/XConnector.qml \
-    qml/XConnection.qml \
     content/connectionCreation.js \
     qml/Line.qml \
-	controller.js
+	controller.js \
+    qml/XChannel.qml \
+    qml/XPort.qml
 
 RESOURCES += \
     xmd.qrc

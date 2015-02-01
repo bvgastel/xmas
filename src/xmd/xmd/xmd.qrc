@@ -40,10 +40,10 @@
         <file>content/XmasToolBar.qml</file>
         <file>content/ToolBarItem.qml</file>
         <file>Sheet.qml</file>
-        <file>qml/XComponent.qml</file>
-        <file>qml/XConnection.qml</file>
-        <file>qml/XConnector.qml</file>
         <file>content/connectionCreation.js</file>
         <file>controller.js</file>
+        <file>qml/XChannel.qml</file>
+        <file>qml/XComponent.qml</file>
+        <file>qml/XPort.qml</file>
     </qresource>
 </RCC>

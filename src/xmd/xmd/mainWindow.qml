@@ -227,18 +227,25 @@ ApplicationWindow {
         id: view
         anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
         //center the scene by default
-        contentX: (1 - sheet.zoomFactor) * sheet.width * 0.5
-        contentY: (1 - sheet.zoomFactor) * sheet.height * 0.5
-        contentWidth: sheet.width
-        contentHeight: sheet.height
+        contentX: (1 - sheet.scale) * sheet.width * 0.5
+        contentY: (1 - sheet.scale) * sheet.height * 0.5
+        contentWidth: sheet.width * sheet.scale
+        contentHeight: sheet.height * sheet.scale
+
+//        onFlickEnded: {
+//            console.log("x : " + view.visibleArea.xPosition
+//                        + " wr : " + view.visibleArea.widthRatio
+//                        + " y : " + view.visibleArea.yPosition
+//                        + " hr : " + view.visibleArea.heightRatio)
+//        }
 
         Sheet{
             id:sheet
-            zoomFactor: 0.25
+            transformOrigin: Item.TopLeft
             color: "white"
             width : 2970
             height: 2100
-            anchors.centerIn: parent
+            //anchors.centerIn: parent
 
         }
 
