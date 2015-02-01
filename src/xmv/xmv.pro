@@ -1,10 +1,8 @@
-# xmas.pro
+# xmv.pro
 # Contains the overall project file for the xmas project
 
 TEMPLATE = subdirs
 SUBDIRS =   \
-            xmd \
-            xmc \ 
     bitpowder \
     datamodel \
 
@@ -13,11 +11,9 @@ SUBDIRS =   \
 CONFIG += ordered
 SUBDIRS += \
            xmdmain \
-           xmcmain
 
 
 # set the subdirectories for the libraries
 
 libxmd.subdir = xmd
-libxmc.subdir = xmc
 
