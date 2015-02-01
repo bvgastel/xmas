@@ -1,6 +1,8 @@
 #include "deadlock.h"
 #include "lib/shared_object.h"
 
+using namespace bitpowder::lib;
+
 #define USE_REFCOUNT
 
 struct BIFormula {

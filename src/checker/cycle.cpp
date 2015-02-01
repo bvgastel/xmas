@@ -1,6 +1,8 @@
 #include "cycle.h"
 #include "lib/memorypool.h"
 
+using bitpowder::lib::Exception;
+
 class CombinatorialCycleDependencies : public XMASComponentVisitor {
 public:
     Port *p;

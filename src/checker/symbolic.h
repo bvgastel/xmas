@@ -19,6 +19,9 @@
 #include "lib/spinlock.h"
 #endif
 
+using bitpowder::lib::FastType;
+using bitpowder::lib::FastTypeT;
+
 class SymbolicFieldVisitor;
 
 class SymbolicPacketField {

@@ -13,6 +13,8 @@
 #include "lib/shared_object.h"
 #include "symbolic-visitor.h"
 
+using namespace bitpowder::lib;
+
 class SymbolicForward : public XMASComponentVisitor {
 public:
     Input *input;
