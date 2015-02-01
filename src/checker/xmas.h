@@ -1,15 +1,13 @@
 #ifndef XMAS_H
 #define XMAS_H
 
-//#include <deque>
-//#include <vector>
+#include <deque>                                // FIXME: deque not used by xmas.h
+#include <vector>                               // FIXME: vector not used by xmas.h
 #include "lib/extension.h"
 //#include "lib/exception.h"
 #include "lib/simplestring.h"
 
-//using namespace bitpowder::lib;                       // FIXME: rather no using namespace in header files
-using bitpowder::lib::Extension;
-using bitpowder::lib::ExtensionContainer;
+using namespace bitpowder::lib;
 
 // type of wires/signals
 enum SignalType {IRDY, TRDY, DATA};
