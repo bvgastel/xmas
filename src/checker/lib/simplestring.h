@@ -24,6 +24,9 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 // To avoid compilation issues on Visual C++, use a standard std::string based implementation of String
 #include <string>
 
+namespace bitpowder {
+namespace lib {
+
 class String : public std::string {
 public:
     String(const std::string& str) : std::string(str) {
@@ -34,6 +37,9 @@ public:
     }
 
 };
+
+}
+}
 
 #else
 
