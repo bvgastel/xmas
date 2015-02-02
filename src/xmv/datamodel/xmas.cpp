@@ -5,12 +5,12 @@
 
 XMASComponent *Port::getTarget() {
     Port *targetPort = getTargetPort();
-    return targetPort == nullptr ? nullptr : targetPort->self;
+    return targetPort == nullptr ? nullptr : targetPort->m_owner;
 }
 
 XMASComponent *Port::getInitiator() {
     Port *initPort = getInitiatorPort();
-    return initPort == nullptr ? nullptr : initPort->self;
+    return initPort == nullptr ? nullptr : initPort->m_owner;
 }
 
 std::ostream &operator <<(std::ostream &out, const Port &p) {

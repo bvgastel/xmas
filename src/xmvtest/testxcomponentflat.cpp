@@ -25,7 +25,11 @@ protected:
 };
 
 TEST_F(XCompFlatTest, NameEqTest) {
-    EXPECT_EQ(comp->getName(), "test_comp");
+    EXPECT_EQ(comp->getName(), "test_fork");
+}
+
+TEST_F(XCompFlatTest, SomeThingElse) {
+    EXPECT_NE(comp->getName(), "test_not_a_fork");
 }
 
 } // namespace

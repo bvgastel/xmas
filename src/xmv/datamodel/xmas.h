@@ -7,11 +7,13 @@
 #include "exception.h"
 #include "simplestring.h"
 
-//using namespace bitpowder::lib; // prefer to avoid in header files
-
-// type of wires/signals
+/**
+ * @brief The SignalType enum type of wires/signals
+ */
 enum SignalType {IRDY, TRDY, DATA};
-// selector to state which ports you are interested in
+/**
+ * @brief The PortType enum selector to state which ports you are interested in
+ */
 enum PortType {ALL, INPUT, OUTPUT};
 
 class XMASComponent;
@@ -24,46 +26,148 @@ class PortExtension : public bitpowder::lib::Extension<PortExtension> {
 class Input;
 class Output;
 
-// Using the visitor pattern, an algorithm and the data structure can be split. The algorithm should extend PortVisitor and is called with the data structure elements
+
+/**
+ * @brief The PortVisitor class
+ *
+ * This class represents a visitor class in accordance with the visitor
+ * design pattern.
+ *
+ * The visitor pattern, an algorithm and the data structure are independent.
+ *
+ * The algorithm should extend PortVisitor and is called with the data structure
+ * elements
+ *
+ */
 class PortVisitor {
 public:
     virtual void visit(Input *) = 0;
     virtual void visit(Output *) = 0;
 };
 
-// a port on an xMAS component
+/**
+ * @brief The Port class
+ *
+ * A port on an xMas component.
+ *
+ */
 class Port : bitpowder::lib::ExtensionContainer<PortExtension> {
-    const char *name; // due to compiler bug in GCC 4.8, can not be std::string to avoid a memory leak (Input has an "o" argument as name, then "o" get constructed and never deallocted) (maybe due to a lack of virtual descrtuctor)
+    // due to compiler bug in GCC 4.8, can not be std::string
+    // to avoid a memory leak (Input has an "o" argument as
+    // name, then "o" get constructed and never deallocted)
+    // (maybe due to a lack of virtual descrtuctor)
+    const char *name;
 public:
-    XMASComponent *self;
-    Port(XMASComponent *self, const char *name) : ExtensionContainer<PortExtension>(), name(name), self(self) {
+    /**
+     * @brief self pointer to the containing component
+     *
+     * FIXME: should this pointer be public? if so: write motivation
+     * FIXME: why is this called self, while it points to containing component? --> m_owner
+     */
+    XMASComponent *m_owner;
+    /**
+     * @brief Port
+     *
+     * @param self pointer to self
+     * @param name the name of the port
+     */
+    Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner) {
     }
+
     virtual ~Port();
-    // the component this port is part of
+
+    /**
+     * @brief getComponent
+     *
+     * @return the pointer to this component of which this port is part
+     */
     XMASComponent *getComponent() const {
-        return self;
+        return m_owner;
     }
+
     // the name of the component, e.g. "a", "b", "i", "o"
     const char *getName() const {
         return name;
     }
+
     // this port is valid (is part of a component)
+    /**
+     * @brief valid true if the port is valid
+     *
+     * @return true, if the port is part of a component
+     */
     virtual bool valid() {
-        return self != nullptr;
+        return m_owner != nullptr;
     }
     // abstract methods getting the target port/component or initiator port/component
+    /**
+     * @brief getTargetPort
+     *
+     * (abstract method)
+     *
+     * @return the target port
+     */
     virtual Input *getTargetPort() = 0;
+    /**
+     * @brief getInitiatorPort
+     *
+     * (abstract method)
+     *
+     * @return the initiator port
+     */
     virtual Output *getInitiatorPort() = 0;
+    /**
+     * @brief getTarget
+     *
+     * @return the XMASComponent that owns the target port
+     */
     XMASComponent *getTarget();
+    /**
+     * @brief getInitiator
+     *
+     * @return the XMASComponent that owns the initiator port
+     */
     XMASComponent *getInitiator();
 
+    /**
+     * @brief isConnected
+     *
+     * @return true if the port is connected to a channel
+     */
     virtual bool isConnected() = 0;
+    /**
+     * @brief connectedTo
+     *
+     * @param c an XMASComponent
+     * @return true if this port is connected to the
+     *          specified XMASComponent
+     */
     virtual bool connectedTo(XMASComponent *c) = 0;
 
     // support for the visitor pattern
+    /**
+     * @brief accept support for the visitor pattern
+     *
+     * (abstract method)
+     *
+     * FIXME: why is this method abstract? There is no reason,
+     *      as all sub classes have the same contents.
+     *
+     * @param t the port visitor
+     */
     virtual void accept(PortVisitor &t) = 0;
 
-    // get an extension of a specific type, allocates if not exists
+    /**
+     * @brief getPortExtension get an extension of a specific type, allocates if not exists
+     *
+     *  (template on class PortExtensionType).
+     *
+     * @tparam PortExtensionType
+     *
+     * @param create boolean indication whether to create
+     *
+     * @return a pointer to the PortExtensionType
+     */
     template <class PortExtensionType>
     PortExtensionType* getPortExtension(bool create = true) {
         PortExtensionType *ext = getExtension<PortExtensionType*>();
@@ -74,7 +178,14 @@ public:
         return ext;
     }
 
-    // clear an extension of a specific type
+    /**
+     * @brief clearPortExtension clear an extension of a specific type
+     *
+     *  (template on class PortExtensionType).
+     *
+     * @tparam PortExtensionType
+     *
+     */
     template <class PortExtensionType>
     void clearPortExtension() {
         PortExtensionType *ext = removeExtension<PortExtensionType*>();
@@ -82,19 +193,38 @@ public:
             delete ext;
     }
 
-    // deletes all port extensions
+    /**
+     * @brief clearExtensions deletes all port extensions
+     */
     void clearExtensions();
 };
 
-// ability to print a port to std::cout, etc
+//
+/**
+ * @brief operator <<
+ *
+ * ability to print a port to std::cout, etc
+ *
+ * @param out The output stream
+ * @param c the port
+ * @return a reference to the output stream
+ */
 std::ostream &operator <<(std::ostream &out, const Port &c);
 
+/**
+ * @brief The Output port
+ *
+ * This class represents an output port.
+ *
+ *
+ */
 class Output : public Port {
     friend class Input;
     friend void connect(Output &o, Input &i);
+    // FIXME: why is this Input pointer named output ?
     Input *output;
 public:
-    Output(XMASComponent *self, const char *name) : Port(self, name), output(nullptr) {
+    Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr) {
     }
     Input *getTargetPort();
     Output *getInitiatorPort();
@@ -110,6 +240,7 @@ public:
 class Input : public Port {
     friend class Output;
     friend void connect(Output &o, Input &i);
+    // FIXME: why is this Output pointer named input ?
     Output *input;
 public:
     Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr) {
@@ -126,11 +257,31 @@ public:
 };
 
 // connect an Output to an Input
+/**
+ * @brief connect
+ *
+ * Connects an output to an input
+ *
+ * @param o the output port
+ * @param i the input port
+ */
 void connect(Output &o, Input &i);
 
+/**
+ * @brief The XMASComponentExtension class
+ *
+ * This class represents  .....
+ *
+ * FIXME: describe the XMASComponentExtension class properly: the class contents is empty
+ *
+ */
 class XMASComponentExtension : public bitpowder::lib::Extension<XMASComponentExtension> {
 };
 
+/*
+ * forward declarations of primitives.
+ *
+ */
 class XMASSink;
 class XMASSource;
 class XMASQueue;
@@ -140,6 +291,12 @@ class XMASFork;
 class XMASMerge;
 class XMASJoin;
 
+/**
+ * @brief The XMASComponentVisitor class
+ *
+ * A class to support the visitor pattern for XMASComponent.
+ *
+ */
 class XMASComponentVisitor {
 public:
     virtual void visit(XMASSink *) = 0;
@@ -152,15 +309,37 @@ public:
     virtual void visit(XMASJoin *) = 0;
 };
 
+/**
+ * @brief The XMASComponent class
+ *
+ * FIXME: describe the XMASComponent class properly
+ *
+ */
 class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension> {
     std::string name;
 public:
     XMASComponent(const bitpowder::lib::String& name) : name(name.stl()) {
     }
     virtual ~XMASComponent();
+    /**
+     * @brief getName getter for name
+     *
+     * FIXME: why is the internal name std::string, while it return bitpowder::lib::String?
+     *
+     * @return a bitpowder::lib::String for name of the XMASComponent
+     */
     bitpowder::lib::String getName() const;
+    /**
+     * @brief valid
+     * @return true if the XMASComponent is valid
+     */
     bool valid();
 
+    /**
+     * @brief The PortIterators struct
+     *
+     * @tparam typename Iterator
+     */
     template <typename Iterator>
     struct PortIterators {
         Iterator _begin;
@@ -175,18 +354,78 @@ public:
         }
     };
 
+    /**
+     * @brief beginPort
+     *
+     * The first port of this XMASComponent
+     *
+     * @param type the PortType
+     *
+     * @return an array of pointer to port: a pointer to the first port
+     */
     virtual Port** beginPort(PortType type) = 0;
+    /**
+     * @brief endPort
+     *
+     * @param type the PortType
+     *
+     * @return an array of pointern to port: one past the last port.
+     */
     virtual Port** endPort(PortType type) = 0;
 
+    /**
+     * @brief ports
+     *
+     * The struct containing the ports of all types.
+     *
+     * @param type the port type (default: ALL)
+     *
+     * @return a PortIterators struct
+     */
     PortIterators<Port**> ports(PortType type = PortType::ALL);
+    /**
+     * @brief inputPorts
+     *
+     * The struct containing the ports of input types.
+     *
+     * @return a PortIterators struct
+     */
     PortIterators<Input**> inputPorts();
+    /**
+     * @brief outputPorts
+     *
+     * The struct containing the ports of output types.
+     *
+     * @return a PortIterators struct
+     */
     PortIterators<Output**> outputPorts();
 
+    /**
+     * @brief clearExtensions
+     */
     void clearExtensions();
 
-    // support for the visitor pattern
+    /**
+     * @brief accept support for the visitor pattern
+     *
+     * (abstract method)
+     *
+     * FIXME: why is this method abstract? All subclasses do the same.
+     *
+     * @param v the XMASComponentVisitor
+     *
+     */
     virtual void accept(XMASComponentVisitor &v) = 0;
 
+    /**
+     * @brief getComponentExtension
+     *
+     * @tparam class ComponentExtensionType
+     *
+     * @param create indication whether to create (default = true).
+     *
+     * @return the ComponentExtionsionType
+     */
     template <class ComponentExtensionType>
     ComponentExtensionType* getComponentExtension(bool create = true) {
         ComponentExtensionType *ext = getExtension<ComponentExtensionType*>();
@@ -197,6 +436,14 @@ public:
         return ext;
     }
 
+    /**
+     * @brief clearComponentExtension
+     *
+     * clears and deletes the extension
+     *
+     * @tparam class ComponentExtentionType
+     *
+     */
     template <class ComponentExtensionType>
     void clearComponentExtension() {
         ComponentExtensionType *ext = removeExtension<ComponentExtensionType*>();
@@ -205,14 +452,40 @@ public:
     }
 };
 
+/**
+ * @brief operator <<
+ *
+ * output operator for serializing an XMASComponent to the output stream.
+ *
+ * @param out reference to the output stream
+ * @param c reference to the XMASComponent
+ * @return reference to the output stream
+ */
 std::ostream &operator <<(std::ostream &out, const XMASComponent &c);
 
+/*********************** Primitives ************************************/
+
+/**
+ * @brief The XMASSink class
+ *
+ * The class that represents the primitive definition of a sink.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has only one input port.
+ *
+ */
 class XMASSink : public XMASComponent {
 public:
     Input i;
     Port* p[1];
 
-    XMASSink(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i") {
+    /**
+     * @brief XMASSink Constructor
+     *
+     * @param name the name of the sink
+     */
+    XMASSink(const bitpowder::lib::String& name)
+        : XMASComponent(name), i(this, "i") {
         p[0] = &i;
     }
 
@@ -220,14 +493,36 @@ public:
         v.visit(this);
     }
 
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? nullptr : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::OUTPUT ? nullptr : &p[1];
     }
 };
 
+/**
+ * @brief The XMASSource class
+ *
+ * The class that represents the primitive definition of a source.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has only one output port.
+ */
 class XMASSource : public XMASComponent {
 public:
     Output o;
@@ -240,14 +535,36 @@ public:
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** beginPort(PortType type) {
         return type == PortType::INPUT ? nullptr : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? nullptr : &p[1];
     }
 };
 
+/**
+ * @brief The XMASQueue class
+ *
+ * The class that represents the primitive definition of a queue.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has one input port and one output port and a storage with specified capacity.
+ */
 class XMASQueue : public XMASComponent {
 public:
     Input i;
@@ -255,6 +572,11 @@ public:
     Port* p[2];
     size_t c; // capacity
 
+    /**
+     * @brief XMASQueue constructor with the correct ports defined
+     * @param name the name of the queue.
+     * @param capacity the capacity of the queue.
+     */
     XMASQueue(const bitpowder::lib::String& name, size_t capacity = 1)
         : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity) {
         p[0] = &i;
@@ -264,14 +586,35 @@ public:
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[1] : &p[2];
     }
 };
 
+/**
+ * @brief The XMASQueue class
+ *
+ * The class that represents the primitive definition of a queue.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has one input port and one output port and a storage with specified capacity.
+ */
 class XMASFunction : public XMASComponent {
 public:
     Input i;
@@ -288,14 +631,37 @@ public:
         v.visit(this);
     }
 
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[1] : &p[2];
     }
 };
 
+/**
+ * @brief The XMASSwitch class
+ *
+ * The class that represents the primitive definition of a switch.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has one input port and two output ports and
+ * logic to decide which output channel to chose for a package
+ * Remark: the logic is not part of this class
+ */
 class XMASSwitch : public XMASComponent {
 public:
     Input i;
@@ -313,14 +679,37 @@ public:
         v.visit(this);
     }
 
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[1] : &p[3];
     }
 };
 
+/**
+ * @brief The XMASFork class
+ *
+ * The class that represents the primitive definition of a fork.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has one input port and two output ports.
+ * In the network execution it copies input to both output ports.
+ *
+ */
 class XMASFork : public XMASComponent {
 public:
     Input i;
@@ -337,14 +726,41 @@ public:
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *          ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[1] : &p[3];
     }
 };
 
+/**
+ * @brief The XMASMerge class
+ *
+ * The class that represents the primitive definition of a merge.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has one input port and two output ports and
+ * logic to decide how to combine the input into output
+ * Remark: the logic is not part of this class
+ *
+ * FIXME: in one of the papers a merge could have any number of output channels: true?
+ *
+ *
+ */
 class XMASMerge : public XMASComponent {
 public:
     Input a;
@@ -361,14 +777,38 @@ public:
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[2] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *      ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[2] : &p[3];
     }
 };
 
+/**
+ * @brief The XMASJoin class
+ *
+ * The class that represents the primitive definition of a join.
+ * This class is a subclass of XMASComponent.
+ *
+ * It has two input ports and one output port and
+ * logic to decide how to send input into output
+ * Remark: the logic is not part of this class
+ *
+ */
 class XMASJoin : public XMASComponent {
 public:
     Input a;
@@ -385,9 +825,22 @@ public:
     void accept(XMASComponentVisitor &v) {
         v.visit(this);
     }
+    /**
+     * @brief beginPort Pointer to the first port of type requested
+     *
+     * @param type the type of the port requested
+     * @return the correct port for each type
+     */
     Port** beginPort(PortType type) {
         return type == PortType::OUTPUT ? &p[2] : &p[0];
     }
+    /**
+     * @brief endPort pointer to one past the last port of type requested
+     *
+     * @param type the type of the port requested
+     * @return one past the last port for the type requested, or nullptr if no
+     *      ports of that type are available
+     */
     Port** endPort(PortType type) {
         return type == PortType::INPUT ? &p[2] : &p[3];
     }
