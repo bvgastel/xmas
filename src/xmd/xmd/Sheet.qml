@@ -34,7 +34,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import "content"
-import "content/connectionCreation.js" as Code
+import "content/channelCreation.js" as Code
 import "controller.js" as Ctrl
 
 

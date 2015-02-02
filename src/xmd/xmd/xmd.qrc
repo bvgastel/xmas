@@ -22,7 +22,6 @@
         <file>content/images/svgs/sink.svg</file>
         <file>content/images/svgs/source.svg</file>
         <file>content/images/svgs/switch.svg</file>
-        <file>content/itemCreation.js</file>
         <file>mainWindow.qml</file>
         <file>content/images/redo.png</file>
         <file>content/images/undo.png</file>
@@ -39,11 +38,12 @@
         <file>content/XmasToolBar.qml</file>
         <file>content/ToolBarItem.qml</file>
         <file>Sheet.qml</file>
-        <file>content/connectionCreation.js</file>
         <file>controller.js</file>
         <file>qml/XChannel.qml</file>
         <file>qml/XComponent.qml</file>
         <file>qml/XPort.qml</file>
         <file>content/images/fork.png</file>
+        <file>content/channelCreation.js</file>
+        <file>content/componentCreation.js</file>
     </qresource>
 </RCC>

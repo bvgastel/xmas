@@ -40,7 +40,7 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-import "itemCreation.js" as Code
+import "componentCreation.js" as Code
 
 Image {
     id: toolbarItem

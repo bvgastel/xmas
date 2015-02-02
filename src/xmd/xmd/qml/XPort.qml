@@ -29,7 +29,7 @@
  *
  **************************************************************************/
 import QtQuick 2.4
-import "../content/connectionCreation.js" as Code
+import "../content/channelCreation.js" as Code
 
 Item {
     id:port

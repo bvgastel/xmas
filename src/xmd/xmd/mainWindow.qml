@@ -45,7 +45,6 @@ import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import "content"
-import "content/itemCreation.js" as Code
 
 ApplicationWindow {
     id: mainwindow

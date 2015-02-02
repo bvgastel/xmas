@@ -38,18 +38,18 @@ DISTFILES += qml/fork.qml \
     qml/spidergon.qml \
     qml/switch.qml \
 	mainWindow.qml \
-    content/itemCreation.js \
     content/ScrollBar.qml \
     content/MenuBar.qml \
     content/XmasToolBar.qml \
     content/ToolBarItem.qml \
     Sheet.qml \
     qml/XComponent.qml \
-    content/connectionCreation.js \
     qml/Line.qml \
 	controller.js \
     qml/XChannel.qml \
-    qml/XPort.qml
+    qml/XPort.qml \
+    content/channelCreation.js \
+    content/componentCreation.js
 
 RESOURCES += \
     xmd.qrc
