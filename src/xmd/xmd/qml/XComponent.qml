@@ -53,6 +53,8 @@ Item {
     property int bottomBound: 10000 //component.parent.height - component.height
     property int step: 10
 
+    signal update()
+
     Keys.onDeletePressed: {Ctrl.destroy(component)}
     Keys.onLeftPressed: x - step < 0 ? x = 0 : x = x - step
     Keys.onRightPressed: x + step > rightBound ? x = rightBound : x = x + step
@@ -75,6 +77,7 @@ Item {
             scope.focus = !scope.focus
         }
 
+        onPositionChanged: component.update()
         //onExited: selection.visible = false
 
         onWheel: {
@@ -85,6 +88,9 @@ Item {
             }
         }
     }
+
+    onRotationChanged: component.update()
+    onScaleChanged: component.update()
 
     Rectangle {
         id: selection

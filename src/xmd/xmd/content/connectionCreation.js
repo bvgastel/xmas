@@ -1,61 +1,39 @@
 
-var connection = null;
+var channel = null;
 var component = null;
 
-function doConnect(port) {
-
-    if(connection === null) {
-        if (createConnection(port)) {
-            connection.connector1 = port;
-            console.log("Connection created");
+function doConnect(port1,port2) {
+    if(channel === null) {
+        if (createChannel(port1,port2)) {
+            channel.port1 = port1;
+            channel.port2 = port2;
             return true
         }
-    }
-    else
-    {
-        endConnect(port);
     }
     return false
 }
 
-function createConnection(port){
-    component = Qt.createComponent("qrc:qml/XConnection.qml");
-    connection = component.createObject(scene, {"x": port.x, "y": port.y});
-    if (connection === null) {
-        console.log("Error creating connection");
+function createChannel(port1,port2){
+    component = Qt.createComponent("qrc:///qml/XChannel.qml");
+    channel = component.createObject(sheet);
+    if (channel === null) {
+        console.log("Error creating channel");
         return false
     }
-    connection.connecting = true
+    channel.port1 = port1;
+    channel.port2 = port2;
     return true ;
 }
 
 function abortConnecting(port) {
-    //connection.destroy()
+    //channel.destroy()
     //component.destroy()
     port.connected = false
     port = null
-    connection = null
+    channel = null
     component = null
 }
 
-function continueConnecting(port) {
-    //console.log("Continue connecting");
-}
-
-function endConnect(port) {
-    if (connection.connector1 !== null   )
-    {
-        connection.connector2 = port;
-        connection.connecting = false
-        console.log("Connection made.");
-    }
-    else
-    {
-        component.destroy()
-        connection.destroy();
-        console.log("Connection invalid!");
-    }
-}
 
 
 //function checkTarget(connector) {

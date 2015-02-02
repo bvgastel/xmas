@@ -111,9 +111,11 @@ Rectangle {
         console.log(port.name)
         if (wire.port1) {
             console.log("connectie gemaakt")
+            Code.doConnect(wire.port1,port)
+            Code.channel = null
             wire.port1 = null
+            wire.port2 = null
             wire.connecting = false
-            //Code.doConnect(port)
             wire.requestPaint()
         } else {
             wire.port1 = port

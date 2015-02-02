@@ -40,9 +40,11 @@ Item {
     property bool connected: false
     property string name: "a"
     property int type: 0 // input, output
-
     //orientation = roation property depends of de component body and type
     //property bool containsMouse: false
+
+    signal update()
+    signal removed()
 
     Rectangle{
         color: connected ? "black" : "red"
@@ -52,6 +54,13 @@ Item {
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
+
+    Component.onDestruction: removed()
+
+    Connections {
+     target: parent
+     onUpdate: update()
+     }
 
     MouseArea {
         id: area

@@ -30,8 +30,6 @@
  **************************************************************************/
 import QtQuick 2.4
 
-//TODO : implement common xmas channel style
-
 Item {
     id: channel
     objectName: "channel"
@@ -40,8 +38,57 @@ Item {
     property var port2: null
     property color color: "darkblue"
 
-    //TODO add straight pathfinder logic (horizontal/vertical)
-    Line {x:0; y:0; width: 2; length: 100; orientation: Qt.Horizontal}
+
+    function doUpdate1() {
+        line.requestPaint()
+    }
+    function doUpdate2() {
+        line.requestPaint()
+    }
+
+    function remove() {
+        port1.connected = false
+        port2.connected = false
+        channel.destroy()
+    }
+
+    Component.onDestruction: {}
+
+    //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
+    Canvas {
+        id: line
+        anchors.fill: parent
+        onPaint: {
+            var x1 = mapFromItem(port1,10,10).x
+            var y1 = mapFromItem(port1,10,10).y
+            var x2 = mapFromItem(port2,10,10).x
+            var y2 = mapFromItem(port2,10,10).y
+            var ctx = getContext('2d')
+            ctx.clearRect(0, 0, line.width, line.height);
+            ctx.strokeStyle = "darkblue"
+            ctx.lineWidth = 2.0
+            ctx.beginPath()
+            ctx.moveTo(x1,y1)
+            ctx.lineTo(x2,y2)
+            ctx.stroke()
+        }
+//        MouseArea {
+//            anchors.fill: parent
+//            preventStealing: true
+//        }
+    }
+
+
+    Connections {
+        target: port1
+        onUpdate: doUpdate1()
+        onRemoved: channel.remove()
+    }
+    Connections {
+        target: port2
+        onUpdate: doUpdate2()
+        onRemoved: channel.remove()
+    }
 
 
 }
