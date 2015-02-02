@@ -25,7 +25,7 @@ Rectangle {
         }
         ToolBarItem {
             componentFile: "../qml/fork.qml"
-            image: "images/svgs/fork.svg"
+            image: "images/fork.png"
         }
         ToolBarItem {
             componentFile: "../qml/join.qml"

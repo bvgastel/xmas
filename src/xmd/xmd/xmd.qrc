@@ -13,7 +13,6 @@
         <file>qml/switch.qml</file>
         <file>content/ScrollBar.qml</file>
         <file>content/images/svgs/composite.svg</file>
-        <file>content/images/svgs/fork.svg</file>
         <file>content/images/svgs/function.svg</file>
         <file>content/images/svgs/in.svg</file>
         <file>content/images/svgs/join.svg</file>
@@ -45,5 +44,6 @@
         <file>qml/XChannel.qml</file>
         <file>qml/XComponent.qml</file>
         <file>qml/XPort.qml</file>
+        <file>content/images/fork.png</file>
     </qresource>
 </RCC>
