@@ -84,12 +84,12 @@ Rectangle {
             ctx.clearRect(0, 0, wire.width, wire.height);
             if (connecting)
             {
-                var x =  port1.parent.x + port1.x + port1.width/2
-                var y = port1.parent.y + port1.y  + port1.height/2
+                var x = wire.mapFromItem(port1,10,10).x
+                var y = wire.mapFromItem(port1,10,10).y
                 ctx.beginPath()
                 ctx.moveTo(x ,y)
-                ctx.lineTo(mouseX + port1.width/2,mouseY + port1.height/2)
-                ctx.rect(mouseX,mouseY,port1.width,port1.height)
+                ctx.lineTo(mouseX,mouseY)
+                ctx.rect(mouseX - port1.width/2,mouseY - port1.height/2,port1.width,port1.height)
                 ctx.stroke()
             }
         }
@@ -98,8 +98,8 @@ Rectangle {
     function checkTarget(port) {
         if (wire.port1 && wire.port1 !== port && wire.port2 !== port) {
             wire.port2 = port
-            wire.mouseX = port.x + port.parent.x
-            wire.mouseY = port.y + port.parent.y
+            wire.mouseX = wire.mapFromItem(port,10,10).x
+            wire.mouseY = wire.mapFromItem(port,10,10).y
             wire.requestPaint()
             // TODO: emit signal for datamodel
         } else {
@@ -119,8 +119,8 @@ Rectangle {
             wire.requestPaint()
         } else {
             wire.port1 = port
-            wire.mouseX = port.x + port.parent.x
-            wire.mouseY = port.y + port.parent.y
+            wire.mouseX = port.x
+            wire.mouseY = port.y
             wire.connecting = true
             console.log("connectie bezig")
         }
