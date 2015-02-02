@@ -41,7 +41,7 @@ Item {
     property bool created: false
     property bool selected: false
     property string type: "default"
-    property string name: ""
+    property string name: "c?"
 
     // orientation = rotation property
     // zoom = scale property

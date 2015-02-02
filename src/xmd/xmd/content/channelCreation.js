@@ -7,6 +7,7 @@ function doConnect(port1,port2) {
         if (createChannel(port1,port2)) {
             channel.port1 = port1;
             channel.port2 = port2;
+            controller.channelCreated(channel)
             return true
         }
     }
@@ -33,7 +34,6 @@ function abortConnecting(port) {
     channel = null
     component = null
 }
-
 
 
 //function checkTarget(connector) {

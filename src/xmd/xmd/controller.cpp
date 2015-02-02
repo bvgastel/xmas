@@ -129,10 +129,12 @@ bool Controller::scratch() {
  * @param object
  * @return
  */
-bool Controller::componentDestroyed(QVariant object)
+bool Controller::componentDestroyed(QVariant qvariant)
 {
-    Q_UNUSED(object)
-    qDebug() << "Component destroyed by designer";
+    QObject *qobject = qvariant_cast<QObject *>(qvariant);
+    QString name = QQmlProperty::read(qobject, "name").toString();
+    qDebug() << "Component " + name + " destroyed by designer";
+
     return true;
 }
 
@@ -141,32 +143,34 @@ bool Controller::componentDestroyed(QVariant object)
  * @param object
  * @return
  */
-bool Controller::componentChanged(QVariant object)
+bool Controller::componentChanged(QVariant qvariant)
 {
-    Q_UNUSED(object)
+    Q_UNUSED(qvariant)
     qDebug() << "Component changed by designer";
     return true;
 }
 
 
-bool Controller::connectionCreated(QVariant object)
+bool Controller::channelCreated(QVariant qvariant)
 {
-    Q_UNUSED(object)
-    qDebug() << "Connection created by designer";
+    QObject *qobject = qvariant_cast<QObject *>(qvariant);
+    QString name = QQmlProperty::read(qobject, "name").toString();
+    qDebug() << "Channel " + name + " created by designer";
     return true;
 }
 
-bool Controller::connectionDestroyed(QVariant object)
+bool Controller::channelDestroyed(QVariant qvariant)
 {
-    Q_UNUSED(object)
-    qDebug() << "Connection destroyed by designer";
+    QObject *qobject = qvariant_cast<QObject *>(qvariant);
+     QString name = QQmlProperty::read(qobject, "name").toString();
+     qDebug() << "Channel " + name + " destroyed by designer";
     return true;
 }
 
-bool Controller::connectionChanged(QVariant object)
+bool Controller::channelChanged(QVariant qvariant)
 {
-    Q_UNUSED(object)
-    qDebug() << "Connection changed by designer";
+    Q_UNUSED(qvariant)
+    qDebug() << "Channel changed by designer";
     return true;
 }
 

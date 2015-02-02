@@ -49,10 +49,9 @@ Item {
     function remove() {
         port1.connected = false
         port2.connected = false
-        channel.destroy()
+        destroy(channel)
+        controller.channelDestroyed(channel)
     }
-
-    Component.onDestruction: {}
 
     //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
     Canvas {

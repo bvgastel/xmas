@@ -101,16 +101,13 @@ Rectangle {
             wire.mouseX = wire.mapFromItem(port,10,10).x
             wire.mouseY = wire.mapFromItem(port,10,10).y
             wire.requestPaint()
-            // TODO: emit signal for datamodel
         } else {
             wire.port2 =  wire.connecting ? null : wire.port2
         }
     }
 
     function wiring(port) {
-        console.log(port.name)
         if (wire.port1) {
-            console.log("connectie gemaakt")
             Code.doConnect(wire.port1,port)
             Code.channel = null
             wire.port1 = null
@@ -122,7 +119,6 @@ Rectangle {
             wire.mouseX = port.x
             wire.mouseY = port.y
             wire.connecting = true
-            console.log("connectie bezig")
         }
 
     }

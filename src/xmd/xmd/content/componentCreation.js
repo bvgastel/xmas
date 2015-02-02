@@ -51,6 +51,8 @@ function endDrag(mouse)
         draggedItem.destroy();
         draggedItem = null;
     } else {
+        //TODO generate a unique name or id for each component
+        draggedItem.name = draggedItem.type +  "_xxx"
         controller.componentCreated(draggedItem)
         draggedItem = null;
     }

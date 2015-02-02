@@ -40,16 +40,16 @@ class Controller : public QObject
 
 signals: //to view
     void componentCreate(QVariant object);
-    bool createConnection(QVariant object);
+    bool createChannel(QVariant object);
     bool clearNetwork();
 
 public slots:  //from view
     bool componentCreated(QVariant object);
     bool componentDestroyed(QVariant object);
     bool componentChanged(QVariant object);
-    bool connectionCreated(QVariant object);
-    bool connectionDestroyed(QVariant object);
-    bool connectionChanged(QVariant object);
+    bool channelCreated(QVariant object);
+    bool channelDestroyed(QVariant object);
+    bool channelChanged(QVariant object);
 
     //TODO : test can be removed later (stefan)
     bool xmv2xmd(); //connected to the paste button on the toolbar
