@@ -34,6 +34,7 @@ Item {
     id: channel
     objectName: "channel"
     anchors.fill: parent
+    property int id: 0
     property var port1: null
     property var port2: null
     property color color: "darkblue"

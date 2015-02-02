@@ -37,11 +37,11 @@ Item {
     width: 20; height:20
     x:-10; y:-10
     z:1
+    property int id: 0
     property bool connected: false
     property string name: "a"
     property int type: 0 // input, output
     //orientation = roation property depends of de component body and type
-    //property bool containsMouse: false
 
     signal update()
     signal removed()
