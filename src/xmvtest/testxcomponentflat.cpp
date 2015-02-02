@@ -1,12 +1,34 @@
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE TestXMASComponent
-#include <boost/test/unit_test.hpp>
+#include <gtest/gtest.h>
 #include "xmas.h"
 
-BOOST_AUTO_TEST_CASE( simple_test )
-{
-    XMASComponent *comp = new XMASFork("test_fork");
-    BOOST_CHECK(comp->getName() == "test_comp");
+namespace {
+
+class XCompFlatTest : public ::testing::Test {
+protected:
+    XCompFlatTest() {
+
+    }
+    virtual ~XCompFlatTest() {
+
+    }
+
+    virtual void SetUp() {
+        comp = new XMASFork("test_fork");
+    }
+
+    virtual void TearDown() {
+        delete comp;
+    }
+
+    XMASComponent *comp;
+
+};
+
+TEST_F(XCompFlatTest, NameEqTest) {
+    EXPECT_EQ(comp->getName(), "test_comp");
 }
+
+} // namespace
+
 
 // EOF

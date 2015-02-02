@@ -15,8 +15,8 @@ CONFIG += C++11
 include(deployment.pri)
 qtcAddDeployment()
 
-# Boost test library
-unix|win32: LIBS += -lboost_unit_test_framework
+# Google test library
+unix|win32: LIBS += -lgtest_main -lgtest
 
 # xmv/datamodel debug library
 
@@ -34,3 +34,4 @@ else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/bitpowder/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../xmv/bitpowder
 DEPENDPATH += $$PWD/../xmv/bitpowder
+
