@@ -21,6 +21,17 @@ HEADERS += datamodel.h\
         datamodel_global.h \
     xmas.h
 
+# doesn't appear to work: should distribute header files with debug or release
+#    header_files.files = $$HEADERS
+#    header_files.path = $$PWD
+#    QMAKE_EXTRA_TARGETS += header_files
+
+
+win32 {
+    # target.path = don't know
+    INSTALLS += target
+}
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

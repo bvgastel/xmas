@@ -1724,6 +1724,6 @@ struct hash<bitpowder::lib::HashedString> : public unary_function<bitpowder::lib
     }
 };
 
-}
+} // namespace std
 
 #endif

@@ -10,5 +10,5 @@ SUBDIRS =   \
 
 CONFIG += ordered
 SUBDIRS += \
-           xmvmain \
+           xmvmain
 
