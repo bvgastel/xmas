@@ -37,18 +37,15 @@ Item {
     width: 200
     height: 200
     focus: true
-    //TODO : scale property: each componentonent can be zoomed seperately
-    property bool created: false
-    property bool selected: false
+    property int id: 0
     property string type: "default"
     property string name: "c?"
-
-    // orientation = rotation property
-    // zoom = scale property
-
+    //TODO : scale property: each componentonent can be zoomed seperately
+    property alias size: component.scale
+    property alias orientation: component.rotation
 
     //tempory properties (stefan)
-    property var sheet: parent
+    property bool selected: false
     property int rightBound: 10000 //component.parent.width - component.width
     property int bottomBound: 10000 //component.parent.height - component.height
     property int step: 10
@@ -85,6 +82,15 @@ Item {
                 component.rotation -= wheel.angleDelta.y /120 * 90;
                 if (Math.abs(component.rotation) < 45)
                     component.rotation = 0;
+                if (Math.abs(component.rotation) > 315)
+                    component.rotation = 0;
+            }
+            if (wheel.modifiers & Qt.AltModifier) {
+                component.scale -= wheel.angleDelta.x /120 * 0.25;
+                if (Math.abs(component.scale) < 0.25)
+                    component.scale = 0.25;
+                if (Math.abs(component.scale) > 2.0)
+                    component.scale = 2.0;
             }
         }
     }
