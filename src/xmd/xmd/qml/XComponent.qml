@@ -58,6 +58,15 @@ Item {
     Keys.onDownPressed: y + step > bottomBound ? y = bottomBound : y = y + step
     Keys.onUpPressed: y - step < 0 ? y = 0 : y = y - step
 
+    TextInput {
+        text: component.name
+        rotation: -parent.rotation
+        cursorVisible: false
+        maximumLength: 10
+        wrapMode: TextInput.NoWrap
+        //font.pointSize : 8 / parent.scale
+    }
+
     MouseArea {
         anchors.fill: component
         anchors.margins: 10
