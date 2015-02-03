@@ -13,6 +13,8 @@ XComponent {
     XPort {x: 180; y: 80; name: "a5"}
     Canvas {
         anchors.fill: parent
+        antialiasing: false
+        smooth: false
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
