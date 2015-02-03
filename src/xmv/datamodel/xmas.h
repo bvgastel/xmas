@@ -20,7 +20,8 @@ class XMASComponent;
 
 // to each port we should
 // extensions to a port should be of type PortExtension
-class PortExtension : public bitpowder::lib::Extension<PortExtension> {
+class PortExtension : public bitpowder::lib::Extension<PortExtension>
+{
 };
 
 class Input;
@@ -39,7 +40,8 @@ class Output;
  * elements
  *
  */
-class PortVisitor {
+class PortVisitor
+{
 public:
     virtual void visit(Input *) = 0;
     virtual void visit(Output *) = 0;
@@ -51,7 +53,8 @@ public:
  * A port on an xMas component.
  *
  */
-class Port : bitpowder::lib::ExtensionContainer<PortExtension> {
+class Port : bitpowder::lib::ExtensionContainer<PortExtension>
+{
     // due to compiler bug in GCC 4.8, can not be std::string
     // to avoid a memory leak (Input has an "o" argument as
     // name, then "o" get constructed and never deallocted)
@@ -71,7 +74,8 @@ public:
      * @param self pointer to self
      * @param name the name of the port
      */
-    Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner) {
+    Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner)
+    {
     }
 
     virtual ~Port();
@@ -81,12 +85,14 @@ public:
      *
      * @return the pointer to this component of which this port is part
      */
-    XMASComponent *getComponent() const {
+    XMASComponent *getComponent() const
+    {
         return m_owner;
     }
 
     // the name of the component, e.g. "a", "b", "i", "o"
-    const char *getName() const {
+    const char *getName() const
+    {
         return name;
     }
 
@@ -96,7 +102,8 @@ public:
      *
      * @return true, if the port is part of a component
      */
-    virtual bool valid() {
+    virtual bool valid()
+    {
         return m_owner != nullptr;
     }
     // abstract methods getting the target port/component or initiator port/component
@@ -169,7 +176,8 @@ public:
      * @return a pointer to the PortExtensionType
      */
     template <class PortExtensionType>
-    PortExtensionType* getPortExtension(bool create = true) {
+    PortExtensionType* getPortExtension(bool create = true)
+    {
         PortExtensionType *ext = getExtension<PortExtensionType*>();
         if (ext == nullptr && create) {
             ext = new PortExtensionType();
@@ -187,7 +195,8 @@ public:
      *
      */
     template <class PortExtensionType>
-    void clearPortExtension() {
+    void clearPortExtension()
+    {
         PortExtensionType *ext = removeExtension<PortExtensionType*>();
         if (ext)
             delete ext;
@@ -218,13 +227,15 @@ std::ostream &operator <<(std::ostream &out, const Port &c);
  *
  *
  */
-class Output : public Port {
+class Output : public Port
+{
     friend class Input;
     friend void connect(Output &o, Input &i);
     // FIXME: why is this Input pointer named output ?
     Input *output;
 public:
-    Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr) {
+    Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr)
+    {
     }
     Input *getTargetPort();
     Output *getInitiatorPort();
@@ -232,18 +243,21 @@ public:
     bool connectedTo(XMASComponent *c);
     bool valid();
 
-    void accept(PortVisitor &t) {
+    void accept(PortVisitor &t)
+    {
         t.visit(this);
     }
 };
 
-class Input : public Port {
+class Input : public Port
+{
     friend class Output;
     friend void connect(Output &o, Input &i);
     // FIXME: why is this Output pointer named input ?
     Output *input;
 public:
-    Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr) {
+    Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr)
+    {
     }
     Output *getInitiatorPort();
     Input *getTargetPort();
@@ -251,7 +265,8 @@ public:
     bool connectedTo(XMASComponent *c);
     bool valid();
 
-    void accept(PortVisitor &t) {
+    void accept(PortVisitor &t)
+    {
         t.visit(this);
     }
 };
@@ -275,7 +290,8 @@ void connect(Output &o, Input &i);
  * FIXME: describe the XMASComponentExtension class properly: the class contents is empty
  *
  */
-class XMASComponentExtension : public bitpowder::lib::Extension<XMASComponentExtension> {
+class XMASComponentExtension : public bitpowder::lib::Extension<XMASComponentExtension>
+{
 };
 
 /*
@@ -297,7 +313,8 @@ class XMASJoin;
  * A class to support the visitor pattern for XMASComponent.
  *
  */
-class XMASComponentVisitor {
+class XMASComponentVisitor
+{
 public:
     virtual void visit(XMASSink *) = 0;
     virtual void visit(XMASSource *) = 0;
@@ -315,10 +332,12 @@ public:
  * FIXME: describe the XMASComponent class properly
  *
  */
-class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension> {
+class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension>
+{
     std::string name;
 public:
-    XMASComponent(const bitpowder::lib::String& name) : name(name.stl()) {
+    XMASComponent(const bitpowder::lib::String& name) : name(name.stl())
+    {
     }
     virtual ~XMASComponent();
     /**
@@ -344,12 +363,15 @@ public:
     struct PortIterators {
         Iterator _begin;
         Iterator _end;
-        PortIterators(Iterator begin, Iterator end) : _begin(begin), _end(end) {
+        PortIterators(Iterator begin, Iterator end) : _begin(begin), _end(end)
+        {
         }
-        Iterator begin() {
+        Iterator begin()
+        {
             return _begin;
         }
-        Iterator end() {
+        Iterator end()
+        {
             return _end;
         }
     };
@@ -427,7 +449,8 @@ public:
      * @return the ComponentExtionsionType
      */
     template <class ComponentExtensionType>
-    ComponentExtensionType* getComponentExtension(bool create = true) {
+    ComponentExtensionType* getComponentExtension(bool create = true)
+    {
         ComponentExtensionType *ext = getExtension<ComponentExtensionType*>();
         if (ext == nullptr && create) {
             ext = new ComponentExtensionType();
@@ -445,7 +468,8 @@ public:
      *
      */
     template <class ComponentExtensionType>
-    void clearComponentExtension() {
+    void clearComponentExtension()
+    {
         ComponentExtensionType *ext = removeExtension<ComponentExtensionType*>();
         if (ext)
             delete ext;
@@ -474,7 +498,8 @@ std::ostream &operator <<(std::ostream &out, const XMASComponent &c);
  * It has only one input port.
  *
  */
-class XMASSink : public XMASComponent {
+class XMASSink : public XMASComponent
+{
 public:
     Input i;
     Port* p[1];
@@ -485,11 +510,13 @@ public:
      * @param name the name of the sink
      */
     XMASSink(const bitpowder::lib::String& name)
-        : XMASComponent(name), i(this, "i") {
+        : XMASComponent(name), i(this, "i")
+    {
         p[0] = &i;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
 
@@ -500,7 +527,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? nullptr : &p[0];
     }
     /**
@@ -510,7 +538,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::OUTPUT ? nullptr : &p[1];
     }
 };
@@ -523,16 +552,19 @@ public:
  *
  * It has only one output port.
  */
-class XMASSource : public XMASComponent {
+class XMASSource : public XMASComponent
+{
 public:
     Output o;
     Port* p[1];
 
-    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o") {
+    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
+    {
         p[0] = &o;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
     /**
@@ -542,7 +574,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::INPUT ? nullptr : &p[0];
     }
     /**
@@ -552,7 +585,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? nullptr : &p[1];
     }
 };
@@ -565,7 +599,8 @@ public:
  *
  * It has one input port and one output port and a storage with specified capacity.
  */
-class XMASQueue : public XMASComponent {
+class XMASQueue : public XMASComponent
+{
 public:
     Input i;
     Output o;
@@ -578,12 +613,14 @@ public:
      * @param capacity the capacity of the queue.
      */
     XMASQueue(const bitpowder::lib::String& name, size_t capacity = 1)
-        : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity) {
+        : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity)
+    {
         p[0] = &i;
         p[1] = &o;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
     /**
@@ -592,7 +629,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
     /**
@@ -602,7 +640,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[1] : &p[2];
     }
 };
@@ -615,19 +654,22 @@ public:
  *
  * It has one input port and one output port and a storage with specified capacity.
  */
-class XMASFunction : public XMASComponent {
+class XMASFunction : public XMASComponent
+{
 public:
     Input i;
     Output o;
     Port* p[2];
 
     XMASFunction(const bitpowder::lib::String& name)
-        : XMASComponent(name), i(this, "i"), o(this, "o") {
+        : XMASComponent(name), i(this, "i"), o(this, "o")
+    {
         p[0] = &i;
         p[1] = &o;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
 
@@ -637,7 +679,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
     /**
@@ -647,7 +690,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[1] : &p[2];
     }
 };
@@ -662,20 +706,23 @@ public:
  * logic to decide which output channel to chose for a package
  * Remark: the logic is not part of this class
  */
-class XMASSwitch : public XMASComponent {
+class XMASSwitch : public XMASComponent
+{
 public:
     Input i;
     Output a;
     Output b;
     Port* p[3];
 
-    XMASSwitch(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b") {
+    XMASSwitch(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b")
+    {
         p[0] = &i;
         p[1] = &a;
         p[2] = &b;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
 
@@ -685,7 +732,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
     /**
@@ -695,7 +743,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[1] : &p[3];
     }
 };
@@ -710,20 +759,23 @@ public:
  * In the network execution it copies input to both output ports.
  *
  */
-class XMASFork : public XMASComponent {
+class XMASFork : public XMASComponent
+{
 public:
     Input i;
     Output a;
     Output b;
     Port* p[3];
 
-    XMASFork(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b") {
+    XMASFork(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b")
+    {
         p[0] = &i;
         p[1] = &a;
         p[2] = &b;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
     /**
@@ -732,7 +784,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[1] : &p[0];
     }
     /**
@@ -742,7 +795,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *          ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[1] : &p[3];
     }
 };
@@ -761,20 +815,23 @@ public:
  *
  *
  */
-class XMASMerge : public XMASComponent {
+class XMASMerge : public XMASComponent
+{
 public:
     Input a;
     Input b;
     Output o;
     Port* p[3];
 
-    XMASMerge(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
+    XMASMerge(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
+    {
         p[0] = &a;
         p[1] = &b;
         p[2] = &o;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
     /**
@@ -783,7 +840,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[2] : &p[0];
     }
     /**
@@ -793,7 +851,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *      ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[2] : &p[3];
     }
 };
@@ -809,20 +868,23 @@ public:
  * Remark: the logic is not part of this class
  *
  */
-class XMASJoin : public XMASComponent {
+class XMASJoin : public XMASComponent
+{
 public:
     Input a;
     Input b;
     Output o;
     Port* p[3];
 
-    XMASJoin(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o") {
+    XMASJoin(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
+    {
         p[0] = &a;
         p[1] = &b;
         p[2] = &o;
     }
 
-    void accept(XMASComponentVisitor &v) {
+    void accept(XMASComponentVisitor &v)
+    {
         v.visit(this);
     }
     /**
@@ -831,7 +893,8 @@ public:
      * @param type the type of the port requested
      * @return the correct port for each type
      */
-    Port** beginPort(PortType type) {
+    Port** beginPort(PortType type)
+    {
         return type == PortType::OUTPUT ? &p[2] : &p[0];
     }
     /**
@@ -841,7 +904,8 @@ public:
      * @return one past the last port for the type requested, or nullptr if no
      *      ports of that type are available
      */
-    Port** endPort(PortType type) {
+    Port** endPort(PortType type)
+    {
         return type == PortType::INPUT ? &p[2] : &p[3];
     }
 };
