@@ -36,6 +36,7 @@
 #include <QQmlProperty>
 #include <QMetaObject>
 #include <QQmlEngine>
+#include <QtQml>
 
 #include "controller.h"
 //#include "common.h"

@@ -1,11 +1,14 @@
 import QtQuick 2.4
+import XMAS 1.0
 
 XComponent {
+    id:fork
     width: 200
     height: 200
     type: "queue"
-    XPort {x: 0; y: 90; name: "a1"}
-    XPort {x: 180; y:90; name: "a2"}
+    property int size: 0
+    XPort {x: 0; y: 90; name: "a1"; type:Xmas.Target}
+    XPort {x: 180; y:90; name: "a2"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -23,4 +26,5 @@ XComponent {
             ctx.stroke()
         }
     }
+
 }

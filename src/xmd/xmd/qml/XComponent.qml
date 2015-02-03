@@ -29,6 +29,9 @@
  *
  **************************************************************************/
 import QtQuick 2.4
+import QtQuick.Controls 1.3
+import QtQuick.Dialogs 1.2
+import XMAS 1.0
 import "../controller.js" as Ctrl
 
 Item {
@@ -38,11 +41,12 @@ Item {
     height: 200
     focus: true
     property int id: 0
-    property string type: "default"
-    property string name: "c?"
-    //TODO : scale property: each componentonent can be zoomed seperately
+    property string type: "unknown"
+    property string name: ""
     property alias size: component.scale
     property alias orientation: component.rotation
+    orientation: Xmas.North
+
 
     //tempory properties (stefan)
     property bool selected: false
@@ -80,8 +84,14 @@ Item {
         drag.maximumY: 10000 ///component.parent.height - component.height
 
         onClicked: {
-            selected = !selected
-            scope.focus = !scope.focus
+
+            if (mouse.button == Qt.LeftButton) {
+                selected = !selected
+                scope.focus = !scope.focus
+            }
+             if (mouse.button == Qt.RightButton){
+                 contextMenu.popup()
+             }
         }
 
         onPositionChanged: component.update()
@@ -118,6 +128,34 @@ Item {
         visible: scope.focus
         //opacity: 0.5
         z:-1
+    }
+
+
+
+//    Dialog {
+//        visible: true
+//        title: "Blue sky dialog"
+
+//        contentItem: Rectangle {
+//            color: "lightskyblue"
+//            implicitWidth: 400
+//            implicitHeight: 100
+//            Text {
+//                text: "Hello blue sky!"
+//                color: "navy"
+//                anchors.centerIn: parent
+//            }
+//        }
+//    }
+
+    Menu {
+        id: contextMenu
+        title: "Component"
+        MenuItem {
+            text: "Test"
+            shortcut: "Ctrl+X"
+            //onTriggered: ...
+        }
     }
 
     FocusScope {

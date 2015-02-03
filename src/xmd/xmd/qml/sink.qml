@@ -1,10 +1,11 @@
 import QtQuick 2.4
+import XMAS 1.0
 
 XComponent {
     width: 200
     height: 200
     type: "sink"
-    XPort {x: 90; y: 40; name: "a1"}
+    XPort {x: 90; y: 40; name: "a1"; type:Xmas.Target}
     Canvas {
         anchors.fill: parent
         antialiasing: false

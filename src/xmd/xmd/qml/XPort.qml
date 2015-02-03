@@ -29,7 +29,9 @@
  *
  **************************************************************************/
 import QtQuick 2.4
+import XMAS 1.0
 import "../content/channelCreation.js" as Code
+
 
 Item {
     id:port
@@ -40,8 +42,11 @@ Item {
     property int id: 0
     property bool connected: false
     property string name: "a"
-    property int type: 0 // input, output
-    //orientation = roation property depends of de component body and type
+    property int type: Xmas.Target
+    property alias orientation: port.rotation
+
+
+    orientation: (port.type == Xmas.Target) ? Xmas.West : Xmas.East
 
     signal update()
     signal removed()

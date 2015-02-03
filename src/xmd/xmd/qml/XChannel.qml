@@ -51,7 +51,7 @@ Item {
         port1.connected = false
         port2.connected = false
         destroy(channel)
-        controller.channelDestroyed(channel)
+        //controller.channelDestroyed(channel)
     }
 
     //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)

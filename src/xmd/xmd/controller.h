@@ -37,6 +37,8 @@
 class Controller : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(Orientation)
+    Q_ENUMS(PortType)
 
 signals: //to view
     void componentCreate(QVariant object);
@@ -55,6 +57,17 @@ public slots:  //from view
     bool xmv2xmd(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);
+    enum Orientation {
+        North = 0,
+        East = 90,
+        South = 180,
+        West = 270,
+        NorthWest = 45,
+        SouthWest = 225,
+        NorthEast = 315,
+        SouthEast = 135
+    };
+    enum PortType {Target , Initiator};
 
     ~Controller();
 

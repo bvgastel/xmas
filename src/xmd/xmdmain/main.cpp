@@ -35,6 +35,7 @@
 #include <QQmlApplicationEngine>
 
 #include <QQmlContext>
+#include <QtQml>
 #include "controller.h"
 
 int main(int argc, char *argv[])
@@ -56,6 +57,10 @@ int main(int argc, char *argv[])
     QQmlContext* ctx = engine.rootContext();
     ctx->setContextProperty("controller", &controller);
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+
+    qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
+
+
 
     return app.exec();
 

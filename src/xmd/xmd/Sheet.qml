@@ -96,7 +96,9 @@ Rectangle {
     }
 
     function checkTarget(port) {
-        if (wire.port1 && wire.port1 !== port && wire.port2 !== port) {
+        if (wire.port1
+                && wire.port1 !== port
+                && wire.port2 !== port) {
             wire.port2 = port
             wire.mouseX = wire.mapFromItem(port,10,10).x
             wire.mouseY = wire.mapFromItem(port,10,10).y
@@ -108,12 +110,16 @@ Rectangle {
 
     function wiring(port) {
         if (wire.port1) {
-            Code.doConnect(wire.port1,port)
-            Code.channel = null
-            wire.port1 = null
-            wire.port2 = null
-            wire.connecting = false
-            wire.requestPaint()
+            if(wire.port1.type !== port.type)
+            {
+                Code.doConnect(wire.port1,port)
+                Code.channel = null
+                wire.port1 = null
+                wire.port2 = null
+                wire.connecting = false
+
+            wire.requestPaint() }
+            else { port.connected=false}
         } else {
             wire.port1 = port
             wire.mouseX = port.x
