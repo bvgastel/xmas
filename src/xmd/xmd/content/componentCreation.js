@@ -52,7 +52,7 @@ function endDrag(mouse)
         draggedItem = null;
     } else {
         //TODO generate a unique name or id for each component
-        draggedItem.name = draggedItem.type +  "_xxx"
+        draggedItem.name = draggedItem.type +  "_???"
         controller.componentCreated(draggedItem)
         draggedItem = null;
     }
