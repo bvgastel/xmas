@@ -61,6 +61,7 @@ Item {
     MouseArea {
         anchors.fill: component
         anchors.margins: 10
+        preventStealing: true
         hoverEnabled: false
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
