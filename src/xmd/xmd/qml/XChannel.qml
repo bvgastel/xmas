@@ -41,10 +41,12 @@ Item {
 
 
     function doUpdate1() {
-        line.requestPaint()
+        line.x1 = mapFromItem(port1,10,10).x
+        line.y1 = mapFromItem(port1,10,10).y
     }
     function doUpdate2() {
-        line.requestPaint()
+        line.x2 = mapFromItem(port2,10,10).x
+        line.y2 = mapFromItem(port2,10,10).y
     }
 
     function remove() {
@@ -54,30 +56,17 @@ Item {
         //controller.channelDestroyed(channel)
     }
 
-    //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
-    Canvas {
-        id: line
-        anchors.fill: parent
-        onPaint: {
-            var x1 = mapFromItem(port1,10,10).x
-            var y1 = mapFromItem(port1,10,10).y
-            var x2 = mapFromItem(port2,10,10).x
-            var y2 = mapFromItem(port2,10,10).y
-            var ctx = getContext('2d')
-            ctx.clearRect(0, 0, line.width, line.height);
-            ctx.strokeStyle = "darkblue"
-            ctx.lineWidth = 2.0
-            ctx.beginPath()
-            ctx.moveTo(x1,y1)
-            ctx.lineTo(x2,y2)
-            ctx.stroke()
-        }
-//        MouseArea {
-//            anchors.fill: parent
-//            preventStealing: true
-//        }
-    }
 
+    onPort1Changed: port1 ? doUpdate1() : null
+    onPort2Changed: port2 ? doUpdate2() : null
+
+
+    //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
+    Line {
+        id: line
+        color: "darkblue"
+        size: 2
+    }
 
     Connections {
         target: port1

@@ -45,5 +45,6 @@
         <file>content/images/fork.png</file>
         <file>content/channelCreation.js</file>
         <file>content/componentCreation.js</file>
+        <file>qml/Line.qml</file>
     </qresource>
 </RCC>

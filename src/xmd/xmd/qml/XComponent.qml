@@ -47,7 +47,6 @@ Item {
     property alias orientation: component.rotation
     orientation: Xmas.North
 
-
     //tempory properties (stefan)
     property bool selected: false
     property int rightBound: 10000 //component.parent.width - component.width
@@ -68,7 +67,7 @@ Item {
         cursorVisible: false
         maximumLength: 10
         wrapMode: TextInput.NoWrap
-        //font.pointSize : 8 / parent.scale
+        font.pointSize : 16 // / parent.scale
     }
 
     MouseArea {
@@ -150,7 +149,8 @@ Item {
 
     Menu {
         id: contextMenu
-        title: "Component"
+        title: component.name
+
         MenuItem {
             text: "Test"
             shortcut: "Ctrl+X"
