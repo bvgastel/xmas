@@ -53,7 +53,6 @@ public slots:  //from view
     bool channelDestroyed(QVariant object);
     bool channelChanged(QVariant object);
 
-    //TODO : test can be removed later (stefan)
     bool xmv2xmd(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);

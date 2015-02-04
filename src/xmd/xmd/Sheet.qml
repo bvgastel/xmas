@@ -37,7 +37,6 @@ import "content"
 import "content/channelCreation.js" as Code
 import "controller.js" as Ctrl
 
-
 Rectangle {
     id: sheet
     scale: 1.0
