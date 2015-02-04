@@ -7,7 +7,8 @@ HEADERS +=
 
 
 SOURCES += \
-    testxcomponentflat.cpp
+    testxcomponentflat.cpp \
+    main.cpp
 
 
 CONFIG += C++11
