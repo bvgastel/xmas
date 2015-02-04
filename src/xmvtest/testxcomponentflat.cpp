@@ -66,8 +66,6 @@ TEST(XMASSource, Simple) {
     ClearMessageSpec(allComponents);
 }
 
-
-
 } // namespace
 
 // EOF

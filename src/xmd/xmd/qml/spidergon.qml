@@ -33,7 +33,7 @@ XComponent {
             ctx.moveTo(150,90)
             ctx.lineTo(180,90)
             //C
-            ctx.font = "64pt Impact"
+            ctx.font = "64pt Impact, sans serif"
             ctx.textAlign = "center"
             ctx.fillStyle = "black"
             ctx.fillText("C", 100, 130)
