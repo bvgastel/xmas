@@ -136,16 +136,6 @@ ApplicationWindow {
     }
 
 
-    Action {
-        id: testAction
-        text: "TEST"
-        //shortcut: "1"
-        //iconSource: "qrc:/content/images/zoom-fit.png"
-        //iconName: "zoom-fit"
-        onTriggered: controller.xmv2xmd()
-    }
-
-
     FileDialog {
         id: fileDialog
         nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
@@ -202,11 +192,6 @@ ApplicationWindow {
             ToolButton { action: zoomInAction }
             ToolButton { action: zoomOutAction }
             ToolButton { action: zoomFitAction }
-
-            ToolBarSeparator {}
-
-
-            ToolButton { action: testAction }
 
             ToolBarSeparator {}
 
