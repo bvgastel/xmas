@@ -13,8 +13,6 @@
 #include "lib/shared_object.h"
 #include "symbolic-visitor.h"
 
-using namespace bitpowder::lib;
-
 class SymbolicForward : public XMASComponentVisitor {
 public:
     Input *input;
@@ -213,8 +211,8 @@ void attachSwitchingFunction(XMASSwitch *c, const SymbolicPacket &a)
 }
 
 struct TypeWorkerItem {
-    concurrent_count refcount;
-    shared_object<TypeWorkerItem> next;
+    bitpowder::lib::concurrent_count refcount;
+    bitpowder::lib::shared_object<TypeWorkerItem> next;
     XMASComponent *c;
     std::vector<std::pair<Input*, SymbolicTypesExtension*>> inputs;
     TypeWorker *worker;
@@ -348,7 +346,7 @@ bool iterativePropagate(XMASComponent *c) {
                 somethingHappend = true;
             }
         }
-    } catch (Exception e) {
+    } catch (bitpowder::lib::Exception e) {
         std::cerr << "offending component: " << *c << std::endl;
         std::cerr << e << std::endl;
         throw e;
@@ -477,7 +475,7 @@ std::vector<SymbolicPacket> SymbolicPacket::getIntersection(const SymbolicPacket
                     return fields.find(it.first) == fields.end();
 })) {
         std::cerr << "getIntersection of " << *this << " with " << a << std::endl;
-        throw Exception("can not switch on fields that are possible non-existent");
+        throw bitpowder::lib::Exception("can not switch on fields that are possible non-existent");
     }
     std::vector<SymbolicPacket> retvals;
     retvals.push_back(SymbolicPacket());
@@ -515,7 +513,7 @@ void SymbolicPacket::getDifference(const SymbolicPacket &a, std::function<void(S
                     return fields.find(it.first) == fields.end();
 })) {
         std::cerr << "getDifference of " << *this << " with " << a << std::endl;
-        throw Exception("can not switch on fields that are possible non-existent");
+        throw bitpowder::lib::Exception("can not switch on fields that are possible non-existent");
     }
     // e.g. switch, input = [{a,b},{c,d}], switch function is [{a},{c}], result of _second_ output is [{b}, {c,d}] AND [{a,b},{d}]
     for (auto &it : a.fields) {
@@ -791,7 +789,7 @@ void SymbolicAnyField::getDifference(const std::shared_ptr<SymbolicPacketField> 
 
 bool SymbolicAnyField::operator==(const SymbolicPacketField &sb) const
 {
-    const SymbolicAnyField *b = FastType<SymbolicAnyField>::cast(&sb);
+    const SymbolicAnyField *b = bitpowder::lib::FastType<SymbolicAnyField>::cast(&sb);
     return b;
 }
 

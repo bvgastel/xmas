@@ -1,7 +1,6 @@
 #include "cycle.h"
 #include "lib/memorypool.h"
 
-using bitpowder::lib::Exception;
 
 class CombinatorialCycleDependencies : public XMASComponentVisitor {
 public:
@@ -33,7 +32,7 @@ public:
         } else if (irdy(c->o) == p) { // o.irdy = i.irdy
             retval = {irdy(c->i)};
         } else
-            throw Exception("Function, unknown signal dependency port");
+            throw bitpowder::lib::Exception("Function, unknown signal dependency port");
     }
 
     virtual void visit(XMASSwitch *c) {
@@ -42,7 +41,7 @@ public:
         } else if (irdy(c->a) == p || irdy(c->b) == p) { // {a,b}.irdy = i.irdy
             retval = {irdy(c->i)};
         } else
-            throw Exception("Switch, unknown signal dependency port");
+            throw bitpowder::lib::Exception("Switch, unknown signal dependency port");
     }
 
     virtual void visit(XMASFork *c) {
@@ -53,7 +52,7 @@ public:
         } else if (irdy(c->b) == p) { // b.irdy = i.irdy and a.trdy
             retval = {irdy(c->i), trdy(c->a)};
         } else
-            throw Exception("Fork, unknown signal dependency port");
+            throw bitpowder::lib::Exception("Fork, unknown signal dependency port");
     }
 
     virtual void visit(XMASMerge *c) {
@@ -64,7 +63,7 @@ public:
         } else if (trdy(c->b) == p) { // b.trdy = o.trdy and b.irdy
             retval = {trdy(c->o), irdy(c->b)};
         } else
-            throw Exception("Merge, unknown signal dependency port");
+            throw bitpowder::lib::Exception("Merge, unknown signal dependency port");
     }
 
     virtual void visit(XMASJoin *c) {
@@ -75,7 +74,7 @@ public:
         } else if (trdy(c->b) == p) { // b.trdy = o.trdy and a.irdy
             retval = {trdy(c->o), irdy(c->a)};
         } else
-            throw Exception("Join, unknown signal dependency port");
+            throw bitpowder::lib::Exception("Join, unknown signal dependency port");
     }
 };
 
@@ -122,7 +121,7 @@ bool CombinatorialCycleDetector(XMASComponent *c) {
             if (checkSignal(CombinatorialCycleDependencies::trdy(*p), 0))
                 return true;
         }
-    } catch (Exception &e) {
+    } catch (bitpowder::lib::Exception &e) {
         std::cout << "exception: " << e << std::endl;
     }
     return false;

@@ -39,6 +39,9 @@ using namespace std;
 
 namespace tests {
 
+// FIXME: Find out why this test program contains so much "real" productionlike code
+// FIXME: Find a way to remove output for correct result, but still test the result.
+
 struct Number {
     enum Type {INT, FLOAT, ERROR};
     Type type;
@@ -505,7 +508,7 @@ struct NumberExpression {
 };
 
 int ParseIntegerExpression(const String &str, Number &result) {
-    std::cout << "parsing: " << str << std::endl;
+    //std::cout << "parsing: " << str << std::endl;
     MyLexer lexer(str);
     ParserState<MyLexer, 1> p = ParserState<MyLexer, 1>(lexer);
     Parser<MyLexer, 1, Number, NumberExpression<MyLexer>::UserData> parser(&p, nullptr);
@@ -731,7 +734,7 @@ struct LispParserState {
         unused(userData);
         return cont().process(expr, [](std::vector<int> &data, int a, UserData userData) {
             unused(userData);
-            std::cout << "parsed " << a << std::endl;
+            //std::cout << "parsed " << a << std::endl;
             data.push_back(a);
             return 0;
         }).opt(arguments);
@@ -752,7 +755,7 @@ struct LispParserState {
         std::vector<int> args;
         String id;
         return cont().accept(LispLexer::FUNC_OPEN).fetch(id).perform(expr).fetch(arguments, args).accept(LispLexer::FUNC_CLOSE).modify([&id, &args](int &a, UserData) {
-            std::cout << "function has " << args.size() << " arguments" << std::endl;
+            //std::cout << "function has " << args.size() << " arguments" << std::endl;
             if ("-"_S == id) {
                 for (int i : args)
                     a -= i;
@@ -762,7 +765,7 @@ struct LispParserState {
             } else {
                 return -4;
             }
-            std::cout << "result is " << a << std::endl;
+            //std::cout << "result is " << a << std::endl;
             return 0;
         });
     }

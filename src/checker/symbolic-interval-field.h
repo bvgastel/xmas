@@ -17,15 +17,19 @@ protected:
     interval_type min;
     interval_type max; // not including this value,
 public:
-    SymbolicIntervalField(const SymbolicIntervalField &copy) : SymbolicPacketField(FastType<SymbolicIntervalField>::value), min(copy.min), max(copy.max) {
+    SymbolicIntervalField(const SymbolicIntervalField &copy)
+        : SymbolicPacketField(bitpowder::lib::FastType<SymbolicIntervalField>::value), min(copy.min), max(copy.max) {
         //std::cout << "copy of SymbolicIntervalField" << std::endl;
     }
-    SymbolicIntervalField(SymbolicIntervalField &&copy) : SymbolicPacketField(FastType<SymbolicIntervalField>::value), min(copy.min), max(copy.max) {
+    SymbolicIntervalField(SymbolicIntervalField &&copy)
+        : SymbolicPacketField(bitpowder::lib::FastType<SymbolicIntervalField>::value), min(copy.min), max(copy.max) {
         //std::cout << "move of SymbolicIntervalField" << std::endl;
     }
-    SymbolicIntervalField() : SymbolicPacketField(FastType<SymbolicIntervalField>::value), min(0), max(0) {
+    SymbolicIntervalField()
+        : SymbolicPacketField(bitpowder::lib::FastType<SymbolicIntervalField>::value), min(0), max(0) {
     }
-    SymbolicIntervalField(interval_type min, interval_type max) : SymbolicPacketField(FastType<SymbolicIntervalField>::value), min(min), max(max) {
+    SymbolicIntervalField(interval_type min, interval_type max)
+        : SymbolicPacketField(bitpowder::lib::FastType<SymbolicIntervalField>::value), min(min), max(max) {
     }
 
     std::vector<std::shared_ptr<SymbolicPacketField>> getIntersection(const std::shared_ptr<SymbolicPacketField> & a) const;
@@ -36,7 +40,7 @@ public:
     }
     bool operator==(const SymbolicPacketField &sb) const {
         //const SymbolicIntervalField *b = dynamic_cast<const SymbolicIntervalField*>(&sb);
-        const SymbolicIntervalField *b = FastType<SymbolicIntervalField>::cast(&sb);
+        const SymbolicIntervalField *b = bitpowder::lib::FastType<SymbolicIntervalField>::cast(&sb);
         //SymbolicIntervalField *b = (SymbolicIntervalField*)sb.get();
         //std::cout << *this << " == " << *b << "? (ptr version)" << std::endl;
         return b && min == b->min && max == b->max;
@@ -52,7 +56,7 @@ public:
     bool isCombinable(const std::shared_ptr<SymbolicPacketField> &sa) const {
         //SymbolicIntervalField *a = sa.get() != nullptr ? dynamic_cast<SymbolicIntervalField*>(sa.get()) : nullptr;
         //SymbolicIntervalField *a = (SymbolicIntervalField*)sa.get();
-        SymbolicIntervalField *a = FastType<SymbolicIntervalField>::cast(sa.get());
+        SymbolicIntervalField *a = bitpowder::lib::FastType<SymbolicIntervalField>::cast(sa.get());
         //std::cout << "check field combining " << *(SymbolicPacketField*)this << " with " << *sa << std::endl;
         return a && ((min <= a->min && a->min <= max) || (min <= a->max && a->max <= max));
     }

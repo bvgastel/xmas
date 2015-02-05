@@ -32,7 +32,7 @@ public:
     concurrent_count(int refcount = 0) : refcount(refcount) {
     }
     concurrent_count(const concurrent_count &copy) : refcount(0) {
-        (void)copy;
+        unused(copy);
     }
 
     int operator++(int) {

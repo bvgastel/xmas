@@ -30,6 +30,10 @@ SOURCES += \
     stringparse.cpp \
     thread.cpp \
     type_hash.cpp \
+    parser.test.cpp \
+    parser_json.test.cpp \
+    simplestring.test.cpp \
+    stringparse.test.cpp
 
 
 HEADERS += \

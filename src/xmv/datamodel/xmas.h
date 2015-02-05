@@ -1,10 +1,7 @@
 #ifndef XMAS_H
 #define XMAS_H
 
-#include <deque>
-#include <vector>
 #include "extension.h"
-#include "exception.h"
 #include "simplestring.h"
 
 /**

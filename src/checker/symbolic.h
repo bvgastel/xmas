@@ -19,15 +19,13 @@
 #include "lib/spinlock.h"
 #endif
 
-using bitpowder::lib::FastType;
-using bitpowder::lib::FastTypeT;
 
 class SymbolicFieldVisitor;
 
 class SymbolicPacketField {
 public:
-    FastTypeT type;
-    SymbolicPacketField(FastTypeT type) : type(type) {
+    bitpowder::lib::FastTypeT type;
+    SymbolicPacketField(bitpowder::lib::FastTypeT type) : type(type) {
     }
     virtual std::vector<std::shared_ptr<SymbolicPacketField>> getIntersection(const std::shared_ptr<SymbolicPacketField> & a) const = 0;
     virtual void getDifference(const std::shared_ptr<SymbolicPacketField> & a, std::function<void (std::shared_ptr<SymbolicPacketField> &&)> &&f) const = 0;
@@ -220,7 +218,7 @@ void ClearSymbolicTypes(std::set<XMASComponent *> allComponents);
 
 class SymbolicAnyField : public SymbolicPacketField {
 public:
-    SymbolicAnyField() : SymbolicPacketField(FastType<SymbolicAnyField>::value) {
+    SymbolicAnyField() : SymbolicPacketField(bitpowder::lib::FastType<SymbolicAnyField>::value) {
     }
     virtual std::vector<std::shared_ptr<SymbolicPacketField>> getIntersection(const std::shared_ptr<SymbolicPacketField> & a) const;
     virtual void getDifference(const std::shared_ptr<SymbolicPacketField> & a, std::function<void (std::shared_ptr<SymbolicPacketField> &&)> &&f) const;

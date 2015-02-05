@@ -96,7 +96,6 @@ public:
     MemoryPoolStatus(MemoryPoolPage* start, MemoryPoolPage* nextPage) : current(start), nextPage(nextPage) {}
 };
 
-// TODO: Check why this is not a typedef or function
 #define DEFAULT_ALIGN_ON sizeof(void*)
 
 class MemoryPool {

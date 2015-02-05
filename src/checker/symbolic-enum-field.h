@@ -21,15 +21,17 @@ private:
     int _hash;
 public:
     void updateHash();
-    SymbolicEnumField(const SymbolicEnumField &copy) : SymbolicPacketField(FastType<SymbolicEnumField>::value), values(copy.values), complement(copy.complement), _hash(copy._hash) {
+    SymbolicEnumField(const SymbolicEnumField &copy) : SymbolicPacketField(bitpowder::lib::FastType<SymbolicEnumField>::value),
+        values(copy.values), complement(copy.complement), _hash(copy._hash) {
         //std::cout << "copy of SymbolicEnumField" << std::endl;
     }
-    SymbolicEnumField(SymbolicEnumField &&copy) : SymbolicPacketField(FastType<SymbolicEnumField>::value), values(std::move(copy.values)), complement(copy.complement), _hash(copy._hash) {
+    SymbolicEnumField(SymbolicEnumField &&copy) : SymbolicPacketField(bitpowder::lib::FastType<SymbolicEnumField>::value), values(std::move(copy.values)), complement(copy.complement), _hash(copy._hash) {
         //std::cout << "move of SymbolicEnumField" << std::endl;
     }
-    SymbolicEnumField() : SymbolicPacketField(FastType<SymbolicEnumField>::value), values(), complement(false) {
+    SymbolicEnumField() : SymbolicPacketField(bitpowder::lib::FastType<SymbolicEnumField>::value), values(), complement(false) {
     }
-    SymbolicEnumField(const std::vector<Type> &values, bool complement = false) : SymbolicPacketField(FastType<SymbolicEnumField>::value), values(values), complement(complement) {
+    SymbolicEnumField(const std::vector<Type> &values, bool complement = false) :
+        SymbolicPacketField(bitpowder::lib::FastType<SymbolicEnumField>::value), values(values), complement(complement) {
         std::sort(this->values.begin(), this->values.end());
         updateHash();
     }
@@ -44,7 +46,7 @@ public:
     */
     SymbolicEnumField(std::initializer_list<Type> &&values) : SymbolicEnumField(std::vector<Type>(std::move(values))) {
     }
-    SymbolicEnumField(const Type &value) : SymbolicPacketField(FastType<SymbolicEnumField>::value), values(), complement(false) {
+    SymbolicEnumField(const Type &value) : SymbolicPacketField(bitpowder::lib::FastType<SymbolicEnumField>::value), values(), complement(false) {
         values.push_back(value);
         //values.insert(value);
         updateHash();
@@ -56,7 +58,7 @@ public:
         return complement == b.complement && values == b.values;
     }
     bool operator==(const SymbolicPacketField &sb) const {
-        const SymbolicEnumField *b = FastType<SymbolicEnumField>::cast(&sb);
+        const SymbolicEnumField *b = bitpowder::lib::FastType<SymbolicEnumField>::cast(&sb);
         return b && _hash == b->_hash && complement == b->complement && values == b->values;
     }
     bool valid() const {
@@ -68,7 +70,7 @@ public:
     bool hasValue(const Type &value) const;
     bool contains(const std::shared_ptr<SymbolicPacketField> &f) const;
     bool isCombinable(const std::shared_ptr<SymbolicPacketField> &sa) const {
-        SymbolicEnumField *a = FastType<SymbolicEnumField>::cast(sa.get());
+        SymbolicEnumField *a = bitpowder::lib::FastType<SymbolicEnumField>::cast(sa.get());
         return a && complement == a->complement;
     }
     std::shared_ptr<SymbolicPacketField> combine(const std::shared_ptr<SymbolicPacketField> &f) const;

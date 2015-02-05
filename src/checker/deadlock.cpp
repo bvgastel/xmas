@@ -1,8 +1,6 @@
 #include "deadlock.h"
 #include "lib/shared_object.h"
 
-using namespace bitpowder::lib;
-
 #define USE_REFCOUNT
 
 struct BIFormula {
@@ -10,7 +8,7 @@ struct BIFormula {
     }
 #ifdef USE_REFCOUNT
     int refcount;
-    typedef shared_object<BIFormula> Ref;
+    typedef bitpowder::lib::shared_object<BIFormula> Ref;
     BIFormula() : refcount(0) {
     }
     template <class T, class... Args>
