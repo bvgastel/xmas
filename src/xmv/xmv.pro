@@ -3,7 +3,6 @@
 
 TEMPLATE = subdirs
 SUBDIRS =   \
-    bitpowder \
     datamodel \
     vt
 

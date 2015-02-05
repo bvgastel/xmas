@@ -33,14 +33,6 @@ else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/datamodel/ -ldatamodel
 INCLUDEPATH += $$PWD/../xmv/datamodel
 DEPENDPATH += $$PWD/../xmv/datamodel
 
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/bitpowder/ -lbitpowder
-
-INCLUDEPATH += $$PWD/../xmv/bitpowder
-DEPENDPATH += $$PWD/../xmv/bitpowder
-
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/release/ -lvt
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/debug/ -lvt
 else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/ -lvt
