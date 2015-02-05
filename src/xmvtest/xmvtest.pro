@@ -10,10 +10,6 @@ SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
     testdatamodel.cpp \
-    parser.test.cpp \
-    parser_json.test.cpp \
-    simplestring.test.cpp \
-    stringparse.test.cpp
 
 
 CONFIG += C++11
@@ -40,3 +36,11 @@ else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/ -lvt
 INCLUDEPATH += $$PWD/../xmv/vt
 DEPENDPATH += $$PWD/../xmv/vt
 
+# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/debug/ -lbitpowder
+else:unix: LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../bitpowder
+DEPENDPATH += $$PWD/../build-bitpowder-Desktop-Debug

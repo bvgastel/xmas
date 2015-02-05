@@ -10,3 +10,14 @@ SOURCES += main.cpp
 include(deployment.pri)
 qtcAddDeployment()
 
+
+
+
+# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/debug/ -lbitpowder
+else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder

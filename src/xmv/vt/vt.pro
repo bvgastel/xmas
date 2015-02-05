@@ -33,10 +33,11 @@ else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
 INCLUDEPATH += $$PWD/../datamodel
 DEPENDPATH += $$PWD/../datamodel
 
+# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/debug/ -lbitpowder
+else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/ -lbitpowder
 
-INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../bitpowder
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder

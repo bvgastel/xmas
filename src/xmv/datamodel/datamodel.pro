@@ -45,9 +45,11 @@ unix {
     INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../bitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/debug/ -lbitpowder
+else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder
