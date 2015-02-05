@@ -3,6 +3,7 @@
 *.backup
 build*
 src/build*
+src/checker-build*
 modules/xmas-vt
 *~
 
@@ -185,3 +186,4 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+CMakeLists.txt.user
