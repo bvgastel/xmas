@@ -15,11 +15,19 @@ CONFIG += C++11
 DEFINES += DATAMODEL_LIBRARY
 
 SOURCES += datamodel.cpp \
-    xmas.cpp
+    xmas.cpp \
+    symbolic.cpp \
+    symbolic-visitor.cpp \
+    symbolic-enum-field.cpp \
+    messagespec.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
-    xmas.h
+    xmas.h \
+    symbolic.h \
+    symbolic-visitor.h \
+    symbolic-enum-field.h \
+    messagespec.h
 
 # doesn't appear to work: should distribute header files with debug or release
 #    header_files.files = $$HEADERS

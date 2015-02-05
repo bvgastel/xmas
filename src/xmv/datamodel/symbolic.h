@@ -12,11 +12,11 @@
 #include <unordered_set>
 #include <memory>
 #include <atomic>
-#include "lib/simplestring.h"
-#include "lib/type_hash.h"
+#include "simplestring.h"
+#include "type_hash.h"
 #ifdef CONCURRENCY
-#include "lib/lock.h"
-#include "lib/spinlock.h"
+#include "lock.h"
+#include "spinlock.h"
 #endif
 
 
@@ -44,7 +44,7 @@ public:
     virtual void updateHash() = 0;
 
         // support for the visitor pattern
-    virtual void accept(const String& field, SymbolicFieldVisitor &t) = 0;
+    virtual void accept(const bitpowder::lib::String& field, SymbolicFieldVisitor &t) = 0;
 };
 
 std::ostream &operator <<(std::ostream &out, const SymbolicPacketField &c);
@@ -192,8 +192,7 @@ inline void attach(Output *port, const SymbolicPacket &a) {
 template <class T>
 void attachFunction(XMASFunction *c, T &&f)
 {
-    SymbolicFunctionExtension<std::vector<SymbolicPacket>
-            (const std::vector<SymbolicPacket>&)> *ext = c->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>();
+    SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)> *ext = c->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>();
     ext->function = f;
 }
 
@@ -207,8 +206,7 @@ void attachInverseFunction(XMASFunction *c, T &&f) {
 template <class T>
 void attachFunction(XMASJoin *c, T &&f)
 {
-    SymbolicFunctionExtension<SymbolicPacket (const SymbolicPacket&, const SymbolicPacket&)> *ext
-            = c->getComponentExtension<SymbolicFunctionExtension<SymbolicPacket (const SymbolicPacket&, const SymbolicPacket&)>>();
+    SymbolicFunctionExtension<SymbolicPacket (const SymbolicPacket&, const SymbolicPacket&)> *ext = c->getComponentExtension<SymbolicFunctionExtension<SymbolicPacket (const SymbolicPacket&, const SymbolicPacket&)>>();
     ext->function = f;
 }
 
@@ -234,7 +232,7 @@ public:
     virtual int hash() const;
     virtual void updateHash();
     std::vector<std::shared_ptr<SymbolicPacketField>> negate() const;
-    void accept(const String& field, SymbolicFieldVisitor &v);
+    void accept(const bitpowder::lib::String& field, SymbolicFieldVisitor &v);
 };
 
 namespace std {

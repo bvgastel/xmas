@@ -4,7 +4,8 @@
 TEMPLATE = subdirs
 SUBDIRS =   \
     bitpowder \
-    datamodel
+    datamodel \
+    vt
 
 # xmdmain must be last
 

@@ -7,8 +7,13 @@ HEADERS +=
 
 
 SOURCES += \
-    testxcomponentflat.cpp \
-    main.cpp
+    main.cpp \
+    testcyclechecker.cpp \
+    testdatamodel.cpp \
+    parser.test.cpp \
+    parser_json.test.cpp \
+    simplestring.test.cpp \
+    stringparse.test.cpp
 
 
 CONFIG += C++11
@@ -35,4 +40,11 @@ else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/bitpowder/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../xmv/bitpowder
 DEPENDPATH += $$PWD/../xmv/bitpowder
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/debug/ -lvt
+else:unix: LIBS += -L$$PWD/../build-xmv-Desktop-Debug/vt/ -lvt
+
+INCLUDEPATH += $$PWD/../xmv/vt
+DEPENDPATH += $$PWD/../xmv/vt
 
