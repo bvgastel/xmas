@@ -19,36 +19,42 @@ protected:
     }
 
     virtual void SetUp() {
-        comp = new XMASFork("test_fork");
+        m_source = new XMASSource("source");
+        m_sink = new XMASSink("sink");
+        m_fork = new XMASFork("fork");
+        m_function = new XMASFunction("function");
+        m_join = new XMASJoin("join");
+        m_merge = new XMASMerge("merge");
+        m_queue = new XMASQueue("queue");
     }
 
     virtual void TearDown() {
-        delete comp;
+        delete m_sink;
+        delete m_source;
+        delete m_fork;
+        delete m_function;
+        delete m_join;
+        delete m_merge;
+        delete m_queue;
     }
 
-    XMASComponent *comp;
-
+    XMASSink *m_sink;
+    XMASSource *m_source;
+    XMASFork *m_fork;
+    XMASFunction *m_function;
+    XMASJoin *m_join;
+    XMASMerge *m_merge;
+    XMASQueue *m_queue;
 };
 
-TEST(XMASSource, Simple) {
-    XMASSource source("source");
-    XMASSink sink("sink");
+TEST_F(CycleCheckerTest, Simple) {
+    connect(m_source->o, m_sink->i);
 
-    connect(source.o, sink.i);
     SymbolicPacket p = {NAMED_ENUM("first", "r","g"), NAMED_ENUM("second", "x")};
+    attach(&m_source->o, p);
 
-    attach(&source.o, p);
-
-    EXPECT_TRUE(source.valid());
-    EXPECT_TRUE(sink.valid());
-
-    std::set<XMASComponent*> allComponents = {&source, &sink};
+    std::set<XMASComponent*> allComponents = {m_source, m_sink};
     EXPECT_FALSE(CombinatorialCycleDetector(allComponents));
-
-    SymbolicTypes(allComponents);
-    SymbolicTypesExtension *ext = sink.i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1);
-    EXPECT_EQ(ext->availablePackets[0], p);
 
     ClearSymbolicTypes(allComponents);
     ClearMessageSpec(allComponents);
