@@ -51,24 +51,13 @@ Controller::~Controller() {
 
 }
 
-//TODO : to be implemented (empty at the moment)
 bool Controller::xmv2xmd()
 {
-
-    //@Guus : ik weet niet of het makkelijk is om
-    // QVariant om te zetten maar onderstaande
-    // voorbeeld kan ook. (kende je reeds dacht ik)
-    // alleen dat er een probleem was met de qml
-    // files , deze werkt met resource qrc
-    // Het kan ook zonder emit door object
-    // als parent sheet te geven.
-    // sheet kun je vinden in de rootObjects
-    // via de main engine
     QQmlEngine engine;
     QQmlComponent component(&engine,
             QUrl(QStringLiteral("qrc:///qml/fork.qml")));
     QObject *object = component.create();
-    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
+    object->setProperty("x",200); //de 200 is nu fixed maar komt normaliter van het xmv argument
     object->setProperty("y",200);
     object->setProperty("name","fork000");
     qDebug() << "Object " << object->property("name").toString()
@@ -102,6 +91,22 @@ bool Controller::componentCreated(QVariant qvariant)
     return true;
 }
 
+bool Controller::createPrimitive(const XMASSink &xmas_comp) {
+    QQmlEngine engine;
+    QQmlComponent component(&engine,
+            QUrl(QStringLiteral("qrc:///qml/sink.qml")));
+    QObject *object = component.create();
+    auto ext = xmas_comp.getComponentExtension<XMASSink>();
+    object->setProperty("x",200); // FIXME: Kan x coordinaat niet vinden in xmascomponent
+    object->setProperty("y",200); // idem y
+    object->setProperty("name",xmas_comp.getName());
+    qDebug() << "Object " << object->property("name").toString()
+             << " of type " << object->property("type").toString()
+             << " has been created." ;
+    //emit componentCreate(QVariant(object));
+    delete object;
+    return true;
+}
 
 /**
  * @brief Controller::scratch

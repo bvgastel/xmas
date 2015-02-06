@@ -1,6 +1,6 @@
 
 #include <string>
-#include "lib/memorypool.h"
+#include "memorypool.h"
 #include "parse.h"
 #include "export.h"
 

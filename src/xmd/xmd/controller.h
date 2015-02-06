@@ -33,6 +33,7 @@
 
 #include <QVariant>
 #include <QDebug>
+#include "xmas.h"
 
 class Controller : public QObject
 {
@@ -70,8 +71,19 @@ public:
 
     ~Controller();
 
+
+
 private:
     bool scratch();
+
+    bool primitive(XMASSink comp);
+    bool primitive(XMASSource comp);
+    bool primitive(XMASFork comp);
+    bool primitive(XMASSwitch comp);
+    bool primitive(XMASMerge comp);
+    bool primitive(XMASJoin comp);
+    bool primitive(XMASQueue comp);
+    bool primitive(XMASFunction comp);
 
 };
 

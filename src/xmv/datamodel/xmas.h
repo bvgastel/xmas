@@ -340,7 +340,7 @@ public:
     /**
      * @brief getName getter for name
      *
-     * FIXME: why is the internal name std::string, while it return bitpowder::lib::String?
+     * FIXME: why is the internal name std::string, while it returns bitpowder::lib::String?
      *
      * @return a bitpowder::lib::String for name of the XMASComponent
      */
