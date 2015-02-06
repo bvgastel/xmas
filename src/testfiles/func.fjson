@@ -1,0 +1,46 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {
+    "val ": 2
+  },
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "src",
+      "type": "source",
+      "outs": [
+        {
+          "id": "func",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+	{
+          "init_types": "value in [10..20] and type in {request, response, other}"
+        }
+      ]
+    },
+    {
+      "id": "func",
+      "type": "function",
+      "outs": [
+        {
+          "id": "sink",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function2": "value := value - 10",
+          "function2": "type := type with {request: request1, response: response1, _: other}",
+          "function2": "type := type with {request: request1, response: response1}",
+          "function": "type := type with {request: request1, response: response1, _: o}"
+        }
+      ]
+    },
+    {
+      "id": "sink",
+      "type": "sink"
+    }
+  ]
+}

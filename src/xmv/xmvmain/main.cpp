@@ -119,7 +119,7 @@ T *insert(std::map<std::string, XMASComponent*> &allComponents, const Name &_nam
     //std::cout << name << std::endl;
     if (allComponents.find(name) != allComponents.end()) {
         std::cout << "component already exists: " << name << std::endl;
-        throw Exception(42, __FILE__, __LINE__);
+        throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
     }
     T *comp = new T(name);
     allComponents.insert(std::make_pair((std::string)comp->getName(), comp));
@@ -336,7 +336,9 @@ Output& doMerge(std::map<std::string, XMASComponent*> &allComponents, Output& a,
     return merge->o;
 }
 
-void createMeshNodes(std::map<std::string, XMASComponent*> &allComponents, int x, int y, int width, int height, MemoryPool &mp) {
+void createMeshNodes(std::map<std::string, XMASComponent*> &allComponents,
+                     int x, int y, int width, int height,
+                     bitpowder::lib::MemoryPool &mp) {
 /*
     // every node is both a master and a slave
     XMASSink *sink = insert<XMASSink>(allComponents, "out_local"_S + x + "_" + y);
@@ -470,7 +472,10 @@ void connectMeshNodes(std::map<std::string, XMASComponent*> &allComponents, int 
 }
 
 
-void specMesh(std::map<std::string, XMASComponent*> &allComponents, int x, int y, int width, int height, MemoryPool &mp) {
+void specMesh(std::map<std::string, XMASComponent*> &allComponents,
+              int x, int y, int width, int height,
+              bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::unused(height, mp);
     if (x >= width/2)
         return;
     XMASSource *source = dynamic_cast<XMASSource*>(allComponents[(std::string)("in_local"_S + x + "_" + y)]);
@@ -505,7 +510,7 @@ void MeshTest(int size, bool showSinks, bool showAll) {
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
-    StaticMemoryPool<256> mp;
+    bitpowder::lib::StaticMemoryPool<256> mp;
     std::map<std::string, XMASComponent*> components;
 
     int width = size;
@@ -595,7 +600,7 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 }
 
 void TestFile(const std::string &filename, bool showAll) {
-    MemoryPool mp;
+    bitpowder::lib::MemoryPool mp;
 
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
@@ -672,7 +677,7 @@ int main(int argc, char* argv[]) {
             std::cerr << "- " << argv[0] << " -mesh [size]" << std::endl;
             std::cerr << "- " << argv[0] << " -spidergon [size]" << std::endl;
         }
-    } catch (Exception &e) {
+    } catch (bitpowder::lib::Exception &e) {
         std::cerr << e << std::endl;
     }
 #ifndef __MINGW32__
