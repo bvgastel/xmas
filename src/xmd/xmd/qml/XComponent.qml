@@ -46,20 +46,14 @@ Item {
     property alias size: component.scale
     property alias orientation: component.rotation
     orientation: Xmas.North
+    property bool selected: false
 
     //tempory properties (stefan)
-    property bool selected: false
+
     property int rightBound: 10000 //component.parent.width - component.width
     property int bottomBound: 10000 //component.parent.height - component.height
-    property int step: 10
 
     signal update()
-
-    Keys.onDeletePressed: {Ctrl.destroy(component)}
-    Keys.onLeftPressed: x - step < 0 ? x = 0 : x = x - step
-    Keys.onRightPressed: x + step > rightBound ? x = rightBound : x = x + step
-    Keys.onDownPressed: y + step > bottomBound ? y = bottomBound : y = y + step
-    Keys.onUpPressed: y - step < 0 ? y = 0 : y = y - step
 
     TextInput {
         text: component.name
@@ -86,11 +80,11 @@ Item {
 
             if (mouse.button == Qt.LeftButton) {
                 selected = !selected
-                scope.focus = !scope.focus
+                //scope.focus = !scope.focus
             }
-             if (mouse.button == Qt.RightButton){
-                 contextMenu.popup()
-             }
+            if (mouse.button == Qt.RightButton){
+                contextMenu.popup()
+            }
         }
 
         onPositionChanged: component.update()
@@ -117,35 +111,55 @@ Item {
     onRotationChanged: component.update()
     onScaleChanged: component.update()
 
+
     Rectangle {
         id: selection
         anchors.fill: component
         anchors.margins: -2
         color: "lightsteelblue"
-        border.color: "blue"
-        border.width: 2
-        visible: scope.focus
-        //opacity: 0.5
+        border.color: "steelblue"
+        border.width: 1
+        visible: selected
+        opacity: 0.5
         z:-1
     }
 
+    Connections {
+        target: parent
+        onGroupSelected: component.selected = group.contains(component.x,component.y)
+        onDeleteSelected: if (component.selected) Ctrl.destroy(component)
+        onClearSelection: component.selected = false
+        onMoveSelected: if (component.selected) doMove(dx,dy)
+
+    }
+
+    //TODO : when group move use group boundary!!
+    function doMove(dx,dy){
+        x = x + dx
+        y = y + dy
+        if (x < 0) x = 0
+        if (y < 0) y = 0
+        if (x + width > parent.right) x = parent.right - width
+        if (y + height > parent.bottom) y = parent.bottom - height
+        component.update()
+    }
 
 
-//    Dialog {
-//        visible: true
-//        title: "Blue sky dialog"
+    //    Dialog {
+    //        visible: true
+    //        title: "Blue sky dialog"
 
-//        contentItem: Rectangle {
-//            color: "lightskyblue"
-//            implicitWidth: 400
-//            implicitHeight: 100
-//            Text {
-//                text: "Hello blue sky!"
-//                color: "navy"
-//                anchors.centerIn: parent
-//            }
-//        }
-//    }
+    //        contentItem: Rectangle {
+    //            color: "lightskyblue"
+    //            implicitWidth: 400
+    //            implicitHeight: 100
+    //            Text {
+    //                text: "Hello blue sky!"
+    //                color: "navy"
+    //                anchors.centerIn: parent
+    //            }
+    //        }
+    //    }
 
     Menu {
         id: contextMenu
@@ -158,9 +172,9 @@ Item {
         }
     }
 
-    FocusScope {
-        id: scope
-        x: component.x; y: component.y
-        width: component.width; height: component.height
-    }
+    //    FocusScope {
+    //        id: scope
+    //        x: component.x; y: component.y
+    //        width: component.width; height: component.height
+    //    }
 }
