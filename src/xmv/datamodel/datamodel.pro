@@ -19,7 +19,14 @@ SOURCES += datamodel.cpp \
     symbolic.cpp \
     symbolic-visitor.cpp \
     symbolic-enum-field.cpp \
-    messagespec.cpp
+    messagespec.cpp \
+    export.cpp \
+    serialize_network.cpp \
+    symbolic-function.cpp \
+    symbolic-interval-field.cpp \
+#    symbolic-range-field.cpp \
+    parse.cpp \
+
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -27,7 +34,14 @@ HEADERS += datamodel.h\
     symbolic.h \
     symbolic-visitor.h \
     symbolic-enum-field.h \
-    messagespec.h
+    messagespec.h \
+    export.h \
+    serialize_network.h \
+    symbolic-function.h \
+    symbolic-interval-field.h \
+ #   symbolic-range-field.h \
+    parse.h \
+
 
 # doesn't appear to work: should distribute header files with debug or release
 #    header_files.files = $$HEADERS

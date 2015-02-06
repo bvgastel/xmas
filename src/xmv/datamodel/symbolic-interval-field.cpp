@@ -1,7 +1,7 @@
 #include "symbolic-interval-field.h"
 
 #include <sstream>
-#include "lib/exception.h"
+#include "exception.h"
 
 using namespace bitpowder::lib;
 
@@ -94,6 +94,7 @@ std::vector<std::shared_ptr<SymbolicPacketField>> SymbolicIntervalField::negate(
 
 void SymbolicIntervalField::printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap, const String& key) const
 {
+    bitpowder::lib::unused(enumMap);
     out << key << " >= " << min << " && " << key << " < " << max;
 }
 

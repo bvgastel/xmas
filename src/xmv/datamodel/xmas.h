@@ -471,7 +471,7 @@ public:
         if (ext)
             delete ext;
     }
-};
+}; // class XMASComponent
 
 /**
  * @brief operator <<

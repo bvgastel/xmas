@@ -46,7 +46,8 @@ Configuring Git
 
 We are developing in a heterogeneous environment with both Unix and Windows
 machines. Therefore it is imperative to have all files in the repository in the
-canonical LF-only format. Therefore, Windows users must run
+canonical LF-only format. Therefore, Windows users must configure their editor to 
+create the unix LF-only files in their sources. Also, Windows users should run:
 
 ~~~~~~~~~~~~~~~~~~
 $ git config --global core.autocrlf true

@@ -15,11 +15,15 @@ TEMPLATE = lib
 DEFINES += VT_LIBRARY
 
 SOURCES += vt.cpp \
-    cycle.cpp
+    cycle.cpp \
+#   constraints.cpp \       # does not compile. Used nowhere.
+    deadlock.cpp
 
 HEADERS += vt.h\
         vt_global.h \
-    cycle.h
+    cycle.h \
+#   constraints.h \         # does not compile. Only used in constraints.cpp
+    deadlock.h
 
 unix {
     target.path = /usr/lib
@@ -41,3 +45,6 @@ else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../../bitpowder
 DEPENDPATH += $$PWD/../../bitpowder
+
+DISTFILES += \
+    build-convert.sh

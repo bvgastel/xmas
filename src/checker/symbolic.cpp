@@ -656,6 +656,17 @@ void SymbolicPacket::accept(SymbolicFieldVisitor &visitor) const
     }
 }
 
+void SymbolicPacket::printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap) const
+{
+    bool first = true;
+    for (auto& field : fields) {
+        if (!first)
+            out << " && ";
+        field.second->printOldCSyntax(out, enumMap, field.first);
+        first = false;
+    }
+}
+
 
 void SymbolicTypesExtension::addSymbolicPacket(SymbolicPacket &&p) {
     if (workerItem) {
@@ -840,4 +851,9 @@ std::vector<std::shared_ptr<SymbolicPacketField>> SymbolicAnyField::negate() con
 
 void SymbolicAnyField::accept(const String &field, SymbolicFieldVisitor &v) {
     v.visit(field, this);
+}
+
+void SymbolicAnyField::printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap, const String& key) const
+{
+    out << "true";
 }

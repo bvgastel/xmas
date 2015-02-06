@@ -115,7 +115,7 @@ public:
 
     std::vector<std::shared_ptr<SymbolicPacketField>> negate() const;
 
-    void accept(const String& field, SymbolicFieldVisitor &v) {
+    void accept(const bitpowder::lib::String& field, SymbolicFieldVisitor &v) {
         v.visit(field, this);
     }
 
@@ -125,7 +125,7 @@ public:
     interval_type getMax() const {
         return max;
     }
-    void printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap, const bitpowder::lib::String& key) const;
+    void printOldCSyntax(std::ostream& out, std::map<bitpowder::lib::String, int>& enumMap, const bitpowder::lib::String& key) const;
 };
 
 std::ostream &operator <<(std::ostream &out, const SymbolicIntervalField &c);

@@ -2,7 +2,9 @@
 
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "lib/simplestring.h"
+#include "simplestring.h"
+
+using namespace bitpowder::lib;
 
 class PacketExpressionLexer {
     String original;
@@ -165,11 +167,13 @@ struct PacketExpression {
     static const int ERROR_IN_MOD = 24;
 
     static int intervalInterval(Interval &retval, const Token<Interval> &t, UserData userData) {
+        bitpowder::lib::unused(userData);
         retval = t.value;
         return 0;
     }
 
     static int constant(Constant &retval, const Token<Constant> &t, UserData userData) {
+        bitpowder::lib::unused(userData);
         retval = t.value;
         return 0;
     }
@@ -177,6 +181,7 @@ struct PacketExpression {
     static int variable(SymbolicPacketSet &retval, const Token<String> &t, UserData userData) {
         //Interval openVariable = Interval::all();		// FIXME: unused-but-set-variable warning
         //SymbolicIntervalField field = {openVariable.min, openVariable.max};
+        bitpowder::lib::unused(userData);
         retval.values.push_back({std::make_pair(t.value, std::make_shared<SymbolicAnyField>())});
         return 0;
     }
@@ -185,15 +190,18 @@ struct PacketExpression {
         //std::cout << "Interval: ";
         //t.value.print(std::cout);
         //std::cout << std::endl;
+        bitpowder::lib::unused(userData);
         retval = {t.value, t.value+1};
         return 0;
     }
 
     static PInterval interval(PInterval cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(intervalInterval, constantToInterval);
     }
 
     static PPacketExpr haakjes(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont()
                 .perform(PacketExpressionLexer::OPEN, expr, PacketExpressionLexer::CLOSE)
                 .error(ERROR_IN_HAAKJES_END);
@@ -201,20 +209,25 @@ struct PacketExpression {
 
     static PPacketExpr negate(PPacketExpr cont, UserData) {
         return cont().accept(PacketExpressionLexer::NOT_OP).perform(primary).modify([](SymbolicPacketSet &value, UserData &userData) {
+            bitpowder::lib::unused(userData);
             value.negate();
             return 0;
         });
     }
 
     static PPacketExpr primary(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(variable, haakjes, negate).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             ////std::cout << "returning from primary " << a << std::endl;
             return 0;
         });;
     }
 
     static PPacketExpr equalToInterval(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().process(interval, [](SymbolicPacketSet &retval, const Interval& b, UserData userData) {
+            bitpowder::lib::unused(userData);
             auto interval = std::make_shared<SymbolicIntervalField>(b.min, b.max);
             for (SymbolicPacket &packet : retval.values) {
                 for (typename decltype(packet.fields)::iterator field = packet.fields.begin(); field != packet.fields.end(); ++field) {
@@ -230,18 +243,23 @@ struct PacketExpression {
 
     static PEnum enumEntry(PEnum cont, UserData userData) {
         String value;
+        bitpowder::lib::unused(userData);
         return cont().fetch(value).modify([](Enum &e, const String &value, UserData userData) {
+            bitpowder::lib::unused(userData);
             e.values.push_back(value);
             return 0;
         }, value).opt(PacketExpressionLexer::COMMA, enumEntry);
     }
 
     static PEnum enumDefinition(PEnum cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::SET_OPEN).opt(enumEntry).accept(PacketExpressionLexer::SET_CLOSE);
     }
 
     static PPacketExpr equalToEnum(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().process(enumDefinition, [](SymbolicPacketSet &retval, const Enum& b, UserData userData) {
+            bitpowder::lib::unused(userData);
             auto interval = std::make_shared<SymbolicEnumField>(b.values);
             for (SymbolicPacket &packet : retval.values) {
                 for (typename decltype(packet.fields)::iterator field = packet.fields.begin(); field != packet.fields.end(); ++field) {
@@ -256,47 +274,60 @@ struct PacketExpression {
     }
 
     static PPacketExpr notEqualExprTail(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::NOT_EQUAL).choose(equalToInterval, equalToEnum).modify([](SymbolicPacketSet &value, UserData userData) {
+            bitpowder::lib::unused(userData);
             value.negate();
             return 0;
         });
     }
     static PPacketExpr equalExprTail(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::EQUAL).choose(equalToInterval, equalToEnum);
     }
     static PPacketExpr equalExpr(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(primary).optChoose(equalExprTail, notEqualExprTail).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from equalExpr " << a << std::endl;
             return 0;
         });;
     }
 
    static PInt integerHaakjes(PInt cont, UserData userData) {
-        return cont()
+       bitpowder::lib::unused(userData);
+       return cont()
                 .perform(PacketExpressionLexer::OPEN, constantExpr, PacketExpressionLexer::CLOSE)
                 .error(ERROR_IN_HAAKJES_END);
     }
 
     static PInt integerPrimary(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(constant, integerHaakjes);
     }
 
     static PInt mulOp(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_MUL).error(ERROR_IN_MUL).process(integerPrimary, [](Constant & a, const Constant & b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a*b;
             return 0;
         });
     }
 
     static PInt divOp(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_DIV).error(ERROR_IN_DIV).process(integerPrimary, [](Constant & a, Constant && b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a / b;
             return 0;
         });
     }
 
     static PInt modOp(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_MOD).error(ERROR_IN_MOD).process(integerPrimary, [](Constant & a, Constant && b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a % b;
             return 0;
         });
@@ -304,18 +335,23 @@ struct PacketExpression {
 
     // multiplication =  pow [multiplicationTail]
     static PInt multiplication(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(integerPrimary).repeatChoose(mulOp, divOp, modOp);
     }
 
     static PInt plusOp(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept('+').error(ERROR_IN_PLUS).process(multiplication, [](Constant &a, Constant &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a + b;
             return 0;
         });
     }
 
     static PInt minOp(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept('-').error(ERROR_IN_MIN).process(multiplication, [](Constant &a, Constant &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a - b;
             return 0;
         });
@@ -323,43 +359,55 @@ struct PacketExpression {
 
     // addition = multiplication [additionTail]
     static PInt addition(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(multiplication).repeatChoose(plusOp, minOp);
     }
 
     static PInt constantExpr(PInt cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(addition);
     }
 
     static PPacketExpr lessOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept('<').process(constantExpr, [](SymbolicPacketSet &a, Constant b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.lessAs(b);
             return 0;
         });
     }
 
     static PPacketExpr greaterOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept('>').process(constantExpr, [](SymbolicPacketSet &a, Constant b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.greaterAs(b);
             return 0;
         });
     }
 
     static PPacketExpr lessEqOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_LESS_EQ).process(constantExpr, [](SymbolicPacketSet &a, Constant b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.lessEqualAs(b);
             return 0;
         });
     }
 
     static PPacketExpr greaterEqOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_GREATER_EQ).process(constantExpr, [](SymbolicPacketSet &a, Constant b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.greaterEqualAs(b);
             return 0;
         });
     }
 
     static PPacketExpr compare(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(equalExpr).optChoose(lessOp, lessEqOp, greaterOp, greaterEqOp).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from compare " << a << std::endl;
             return 0;
         });
@@ -368,6 +416,7 @@ struct PacketExpression {
     static PPacketExpr ifThenElseTail(PPacketExpr cont, UserData userData) {
         SymbolicPacketSet a;
         SymbolicPacketSet b;
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::QUESTION).fetch(compare, a).accept(PacketExpressionLexer::COLON).fetch(compare, b).modify([](SymbolicPacketSet &retval, SymbolicPacketSet &&a, SymbolicPacketSet &&b, UserData) {
             SymbolicPacketSet value = retval;
             SymbolicPacketSet valueNegated = value;
@@ -381,6 +430,7 @@ struct PacketExpression {
         }, std::move(a), std::move(b));
     }
     static PPacketExpr ifThenElse(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(compare).opt(ifThenElseTail);
     }
 
@@ -434,34 +484,44 @@ next:
     }
 
     static PPacketExpr andOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::AND_OP).process(ifThenElse, [](SymbolicPacketSet &a, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = performAnd(a, b);
             return 0;
         }).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from andOp" << a << std::endl;
             return 0;
         });
     }
 
     static PPacketExpr orOp(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::OR_OP).process(ifThenElse, [](SymbolicPacketSet &a, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = performOr(a, b);
             return 0;
         }).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from orOp" << a << std::endl;
             return 0;
         });
     }
 
     static PPacketExpr logical(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(ifThenElse).repeatChoose(andOp, orOp).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from logical " << a << std::endl;
             return 0;
         });
     }
 
     static PPacketExpr expr(PPacketExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(logical).modify([](SymbolicPacketSet &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from expr " << a << std::endl;
             return 0;
         });
@@ -469,7 +529,10 @@ next:
 
     static PSpecExpr specExprOr(PSpecExpr cont, UserData userData) {
         String value;
-        return cont().perform(PacketExpressionLexer::OR_OP, PacketExpressionLexer::OPEN).fetch(value).accept(PacketExpressionLexer::COMMA).process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+        bitpowder::lib::unused(userData);
+        return cont().perform(PacketExpressionLexer::OR_OP, PacketExpressionLexer::OPEN).fetch(value).accept(PacketExpressionLexer::COMMA)
+                .process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a | S(endpoint, b.values);
             return 0;
         }, value).accept(PacketExpressionLexer::CLOSE);
@@ -477,7 +540,10 @@ next:
 
     static PSpecExpr specExprAnd(PSpecExpr cont, UserData userData) {
         String value;
-        return cont().perform(PacketExpressionLexer::AND_OP, PacketExpressionLexer::OPEN).fetch(value).accept(PacketExpressionLexer::COMMA).process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+        bitpowder::lib::unused(userData);
+        return cont().perform(PacketExpressionLexer::AND_OP, PacketExpressionLexer::OPEN).fetch(value).
+                accept(PacketExpressionLexer::COMMA).process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = a & S(endpoint, b.values);
             return 0;
         }, value).accept(PacketExpressionLexer::CLOSE);
@@ -485,27 +551,35 @@ next:
 
     static PSpecExpr specExpr(PSpecExpr cont, UserData userData) {
         String value;
-        return cont().accept(PacketExpressionLexer::OPEN).fetch(value).accept(PacketExpressionLexer::COMMA).process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+        bitpowder::lib::unused(userData);
+        return cont().accept(PacketExpressionLexer::OPEN).fetch(value).accept(PacketExpressionLexer::COMMA).
+                process(expr, [](MessageSpec::Ref &a, String endpoint, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = S(endpoint, b.values);
             return 0;
         }, value).accept(PacketExpressionLexer::CLOSE).repeatChoose(specExprAnd, specExprOr);
     }
 
     static PSourceExpr sourceSpecTail(PSourceExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::TO).process(specExpr, [](SpecSet &a, MessageSpec::Ref &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.add(std::move(b));
             return 0;
         });
     }
 
     static PSourceExpr sourceSpec(PSourceExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().process(expr, [](SpecSet &a, SymbolicPacketSet &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a.add(std::move(b));
             return 0;
         }).opt(sourceSpecTail);
     }
 
     static PSourceExpr sourceExpr(PSourceExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(sourceSpec).repeat(PacketExpressionLexer::COMMA, sourceSpec);
     }
 };
@@ -687,6 +761,7 @@ struct ParsedXMASExpressionFieldAccess : public ParsedXMASExpression {
         out << fieldname;
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
+        bitpowder::lib::unused(enumMap);
         out << "p_" << fieldname;
     }
 };
@@ -719,6 +794,7 @@ struct ParsedXMASExpressionAddition : public ParsedXMASExpression {
         out << "(" << *a << ") + (" << *b << ")";
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
+        bitpowder::lib::unused(enumMap);
         out << "(" << *a << ") + (" << *b << ")";
     }
 };
@@ -751,6 +827,7 @@ struct ParsedXMASExpressionMinus : public ParsedXMASExpression {
         out << "(" << *a << ") - (" << *b << ")";
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
+        bitpowder::lib::unused(enumMap);
         out << "(" << *a << ") - (" << *b << ")";
     }
 };
@@ -761,12 +838,14 @@ struct ParsedXMASExpressionMul : public ParsedXMASExpression {
     ParsedXMASExpressionMul(const std::shared_ptr<ParsedXMASExpression> &a, const std::shared_ptr<ParsedXMASExpression> &b) : ParsedXMASExpression(), a(a), b(b) {
     }
     std::vector<std::shared_ptr<SymbolicPacketField>> operator()(const SymbolicPacket &packet) const {
+        bitpowder::lib::unused(packet);
         throw Exception("symbolic semantics of interval multiplication not defined");
     }
     virtual void print(std::ostream &out) const {
         out << "(" << *a << ") * (" << *b << ")";
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
+        bitpowder::lib::unused(enumMap);
         out << "(" << *a << ") * (" << *b << ")";
     }
 };
@@ -777,12 +856,14 @@ struct ParsedXMASExpressionDiv : public ParsedXMASExpression {
     ParsedXMASExpressionDiv(const std::shared_ptr<ParsedXMASExpression> &a, const std::shared_ptr<ParsedXMASExpression> &b) : ParsedXMASExpression(), a(a), b(b) {
     }
     std::vector<std::shared_ptr<SymbolicPacketField>> operator()(const SymbolicPacket &packet) const {
+        bitpowder::lib::unused(packet);
         throw Exception("symbolic semantics of interval division not defined");
     }
     virtual void print(std::ostream &out) const {
         out << "(" << *a << ") / (" << *b << ")";
     }
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
+        bitpowder::lib::unused(enumMap);
         out << "(" << *a << ") / (" << *b << ")";
     }
 };
@@ -879,6 +960,7 @@ struct ParsedXMASExpressionConstant : public ParsedXMASExpression {
     ParsedXMASExpressionConstant(const std::shared_ptr<SymbolicPacketField> &value) : ParsedXMASExpression(), value(value) {
     }
     std::vector<std::shared_ptr<SymbolicPacketField>> operator()(const SymbolicPacket &packet) const {
+        bitpowder::lib::unused(packet);
         return {value};
     }
     virtual void print(std::ostream &out) const {
@@ -917,70 +999,88 @@ struct PacketFunction {
     typedef Parser<Lexer, 1, Switch, UserData> & PSwitch;
 
     static int variable(Expr &value, const Token<String> &token, UserData userData) {
+        bitpowder::lib::unused(userData);
         value = std::make_shared<ParsedXMASExpressionFieldAccess>(token.value);
         return 0;
     }
 
     static int constant(Expr &value, const Token<Constant> &token, UserData userData) {
+        bitpowder::lib::unused(userData);
         value = std::make_shared<ParsedXMASExpressionConstant>(std::make_shared<SymbolicIntervalField>(token.value, token.value+1));
         return 0;
     }
 
     static PExprExpr haakjes(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(PacketFunctionLexer::OPEN, valueExpr, PacketFunctionLexer::CLOSE);
     }
 
     static PExprExpr primary(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(variable, constant, haakjes);
     }
 
     static PExprExpr mulOp(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_MUL).process(primary, [](Expr& a, Expr&& b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = std::make_shared<ParsedXMASExpressionMul>(a, b);
             return 0;
         });
     }
 
     static PExprExpr divOp(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketExpressionLexer::INLINE_DIV).process(primary, [](Expr& a, Expr&& b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = std::make_shared<ParsedXMASExpressionDiv>(a, b);
             return 0;
         });
     }
 
     static PExprExpr multiplication(PExprExpr cont, UserData userData) {
-            return cont().perform(primary).repeatChoose(mulOp, divOp);
+        bitpowder::lib::unused(userData);
+        return cont().perform(primary).repeatChoose(mulOp, divOp);
     }
 
     static PExprExpr plusOp(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketFunctionLexer::PLUS).process(multiplication, [](Expr &a, Expr &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = std::make_shared<ParsedXMASExpressionAddition>(a, b);
             return 0;
         });
     }
 
     static PExprExpr minOp(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().accept(PacketFunctionLexer::MIN).process(multiplication, [](Expr &a, Expr &&b, UserData userData) {
+            bitpowder::lib::unused(userData);
             a = std::make_shared<ParsedXMASExpressionMinus>(a, b);
             return 0;
         });
     }
 
     static PExprExpr additionTail(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(divOp, mulOp, plusOp, minOp).opt(additionTail);
     }
 
     static PMap substitutionFields(PMap cont, UserData userData) {
         String key;
         String value;
+        bitpowder::lib::unused(userData);
         return cont().fetch(key).accept(PacketFunctionLexer::SET_FIELD).fetch(value).modify([](Map &map, String &key, const String &value, UserData userData) {
+            bitpowder::lib::unused(userData);
             map[key] = value;
             return 0;
         }, key, value).opt(PacketFunctionLexer::COMMA_OP, substitutionFields);
     }
 
     static PExprExpr substitutionTail(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(PacketFunctionLexer::WITH_OP, PacketFunctionLexer::SET_OPEN).process(substitutionFields, [](Expr &value, Map &&map, UserData userData) {
+            bitpowder::lib::unused(userData);
             value = std::make_shared<ParsedXMASExpressionSubstituion>(value, std::move(map));
             return 0;
         }).perform(PacketFunctionLexer::SET_CLOSE);
@@ -1006,16 +1106,20 @@ struct PacketFunction {
 
 */
     static PExprExpr valueExprTail(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(additionTail, substitutionTail/*, switchTail*/);
     }
 
     static PExprExpr valueExpr(PExprExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().perform(primary).repeat(valueExprTail);
     }
 
     static PFuncExpr fieldDefinitions(PFuncExpr cont, UserData userData) {
         String variable;
+        bitpowder::lib::unused(userData);
         return cont().fetch(variable).accept(PacketFunctionLexer::ASSIGNMENT_OP).process(valueExpr, [](Func &func, String &variable, const Expr &expr, UserData userData) {
+            bitpowder::lib::unused(userData);
             func->fields[variable] = expr;
             return 0;
         }, variable).opt(PacketFunctionLexer::COMMA_OP, fieldDefinitions);
@@ -1024,14 +1128,18 @@ struct PacketFunction {
     static PFuncExpr ifThenElse(PFuncExpr cont, UserData userData) {
         Func thenPart;
         String condition;
-        return cont().accept(PacketFunctionLexer::IF_OP).fetch(condition).accept(PacketFunctionLexer::THEN_OP).perform(fieldDefinitions).modify([](Func &func, String &condition, UserData userData) {
+        bitpowder::lib::unused(userData);
+        return cont().accept(PacketFunctionLexer::IF_OP).fetch(condition).accept(PacketFunctionLexer::THEN_OP).
+                perform(fieldDefinitions).modify([](Func &func, String &condition, UserData userData) {
             func->hasCondition = true;
             auto result = ParsePacketExpression(condition, userData);
             if (!result)
                 return -1;
             func->conditions = std::move(result.result().values);
             return 0;
-        }, condition).retreive(thenPart).accept(PacketFunctionLexer::ELSE_OP).store(std::make_shared<ParsedXMASFunction>()).perform1(exprTail).modify([](Func &func, Func &thenPart, UserData userData) {
+        }, condition).retreive(thenPart).accept(PacketFunctionLexer::ELSE_OP).store(std::make_shared<ParsedXMASFunction>()).
+                    perform1(exprTail).modify([](Func &func, Func &thenPart, UserData userData) {
+            bitpowder::lib::unused(userData);
             thenPart->next = func;
             func = thenPart;
             return 0;
@@ -1039,11 +1147,14 @@ struct PacketFunction {
     }
 
     static PFuncExpr exprTail(PFuncExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().choose(ifThenElse, fieldDefinitions);
     }
 
     static PFuncExpr expr(PFuncExpr cont, UserData userData) {
+        bitpowder::lib::unused(userData);
         return cont().store(std::make_shared<ParsedXMASFunction>()).choose(exprTail).modify([](Func &a, UserData) {
+            bitpowder::lib::unused(a);
             //std::cout << "returning from expr " << a << std::endl;
             return 0;
         });

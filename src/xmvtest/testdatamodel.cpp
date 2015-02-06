@@ -85,7 +85,7 @@ TEST_F(DataModelTest, ConnectedValid) {
     EXPECT_TRUE(m_sink->valid());
 }
 
-TEST_F(DataModelTest, Simple) {
+TEST_F(DataModelTest, SimpleSymbolics) {
     connect(m_source->o, m_sink->i);
     EXPECT_TRUE(m_source->valid());
     EXPECT_TRUE(m_sink->valid());

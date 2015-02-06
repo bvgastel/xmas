@@ -173,3 +173,22 @@ std::vector<std::shared_ptr<SymbolicPacketField>> SymbolicEnumField::negate() co
     return {std::make_shared<SymbolicEnumField>(values, !complement)};
 }
 
+void SymbolicEnumField::printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap, const String& key) const
+{
+    if (complement)
+        out << "!";
+    out << "(";
+        bool first = true;
+    for (const auto &str : values) {
+        if (!first)
+            out << " || ";
+        auto it = enumMap.find(str);
+        if (it == enumMap.end())
+            std::tie(it, std::ignore) = enumMap.insert(std::make_pair(str, enumMap.size()));
+        out << key << " == " << it->second;
+        first = false;
+    }
+
+    out << ")";
+}
+

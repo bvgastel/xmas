@@ -99,6 +99,7 @@ public:
     void accept(const String& field, SymbolicFieldVisitor &v) {
         v.visit(field, this);
     }
+    void printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap, const bitpowder::lib::String& key) const;
 };
 
 inline bool operator<(const SymbolicEnumField &lhs, const SymbolicEnumField &rhs) {

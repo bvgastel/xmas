@@ -5,11 +5,11 @@ A lot of successful software projects like Linux [1], boost [2], or
 Qt [3] have their own coding style guide. A coding style guide improves code
 quality, readability, and serves as a guideline for new developers.
 
-Every file in xmas-design will sooner or later be ported by applying the guidelines
-described in this document. Every developer should at least consider the points
-made here. And sometimes, there may be a good reason to break a rule.
+Every developer should at least consider the points made here. And sometimes,
+there may be a good reason to break a rule.
 
 // not true yet: Some of the rules are already automatic tested by Krazy [6] every day.
+//               KDE does this systematically. We have not organized this yet.
 
 
 References:
