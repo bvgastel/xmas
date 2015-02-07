@@ -10,7 +10,8 @@ SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
     testdatamodel.cpp \
-    convert.cpp
+    convert.cpp \
+    jsonprinter.test.cpp
 
 
 CONFIG += C++11

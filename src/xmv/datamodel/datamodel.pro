@@ -26,7 +26,7 @@ SOURCES += datamodel.cpp \
     symbolic-interval-field.cpp \
 #    symbolic-range-field.cpp \
     parse.cpp \
-
+    jsonprinter.cpp \
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -41,6 +41,7 @@ HEADERS += datamodel.h\
     symbolic-interval-field.h \
  #   symbolic-range-field.h \
     parse.h \
+    jsonprinter.h \
 
 
 # doesn't appear to work: should distribute header files with debug or release
