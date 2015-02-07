@@ -609,7 +609,7 @@ void TestFile(const std::string &filename, bool showAll) {
     auto& components = parse.first;
 
     auto current = std::chrono::high_resolution_clock::now();
-    std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << " ms" << std::endl;
+    std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
     std::set<XMASComponent*> allComponents;
@@ -622,19 +622,19 @@ void TestFile(const std::string &filename, bool showAll) {
 
     current = std::chrono::high_resolution_clock::now();
 
-    std::cout << "syntactic check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << " ms" << std::endl;
+    std::cout << "syntactic check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
     checkAssert(!CombinatorialCycleDetector(allComponents));
 
     current = std::chrono::high_resolution_clock::now();
-    std::cout << "combi cycle check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << " ms" << std::endl;
+    std::cout << "combi cycle check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
     SymbolicTypes(allComponents);
 
     current = std::chrono::high_resolution_clock::now();
-    std::cout << "type inference in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << " ms" << std::endl;
+    std::cout << "type inference in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
     // output types
@@ -666,7 +666,7 @@ int main(int argc, char* argv[]) {
     */
     try {
         if (argc >= 3 && strcmp("-json", argv[1]) == 0) {
-            TestFile(argv[2], true);
+            TestFile(argv[2], false);
         } else if (argc >= 3 && strcmp("-mesh", argv[1]) == 0) {
             MeshTest(atoi(argv[2]), false, false);
         } else if (argc >= 3 && strcmp("-spidergon", argv[1]) == 0) {
