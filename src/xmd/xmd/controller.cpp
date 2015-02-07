@@ -92,14 +92,15 @@ bool Controller::componentCreated(QVariant qvariant)
 }
 
 bool Controller::createPrimitive(const XMASSink &xmas_comp) {
+    bitpowder::lib::unused(xmas_comp);
     QQmlEngine engine;
     QQmlComponent component(&engine,
             QUrl(QStringLiteral("qrc:///qml/sink.qml")));
     QObject *object = component.create();
-    auto ext = xmas_comp.getComponentExtension<XMASSink>();
+//    auto ext = xmas_comp.getComponentExtension<XMASSink>();
     object->setProperty("x",200); // FIXME: Kan x coordinaat niet vinden in xmascomponent
     object->setProperty("y",200); // idem y
-    object->setProperty("name",xmas_comp.getName());
+//    object->setProperty("name",xmas_comp.getName());
     qDebug() << "Object " << object->property("name").toString()
              << " of type " << object->property("type").toString()
              << " has been created." ;
