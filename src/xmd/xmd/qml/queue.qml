@@ -2,7 +2,7 @@ import QtQuick 2.4
 import XMAS 1.0
 
 XComponent {
-    id:fork
+    id:queue
     width: 200
     height: 200
     type: "queue"
@@ -26,5 +26,21 @@ XComponent {
             ctx.stroke()
         }
     }
+
+    TextInput {
+        text: size
+        rotation: -parent.rotation
+        color: size == 0 ? "red" : "blue"
+        inputMethodHints: Qt.ImhDigitsOnly
+        validator: IntValidator{bottom: 0}
+        wrapMode: TextInput.NoWrap
+        font.pointSize : 16
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        onEditingFinished: {queue.size = text; focus = false}
+        onFocusChanged: if(focus)selectAll()
+    }
+
+
 
 }

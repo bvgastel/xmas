@@ -31,6 +31,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.2
 import XMAS 1.0
 import "../controller.js" as Ctrl
 
@@ -54,15 +55,8 @@ Item {
     property int bottomBound: 10000 //component.parent.height - component.height
 
     signal update()
+    signal showDialog()
 
-    TextInput {
-        text: component.name
-        rotation: -parent.rotation
-        cursorVisible: false
-        maximumLength: 10
-        wrapMode: TextInput.NoWrap
-        font.pointSize : 16 // / parent.scale
-    }
 
     MouseArea {
         anchors.fill: component
@@ -77,7 +71,6 @@ Item {
         drag.maximumY: 10000 ///component.parent.height - component.height
 
         onClicked: {
-
             if (mouse.button == Qt.LeftButton) {
                 selected = !selected
                 //scope.focus = !scope.focus
@@ -86,6 +79,7 @@ Item {
                 contextMenu.popup()
             }
         }
+        onDoubleClicked: component.showDialog()
 
         onPositionChanged: component.update()
         //onExited: selection.visible = false
@@ -110,6 +104,7 @@ Item {
 
     onRotationChanged: component.update()
     onScaleChanged: component.update()
+    onSelectedChanged: focus = selected
 
 
     Rectangle {
@@ -124,13 +119,26 @@ Item {
         z:-1
     }
 
+
+    TextInput {
+        text: name
+        rotation: -parent.rotation
+        color: "blue"
+        wrapMode: TextInput.NoWrap
+        font.pointSize : 16
+        anchors.left: parent.left
+        anchors.top: parent.top
+        onEditingFinished: {name = text; focus = false}
+        onFocusChanged: if(focus)selectAll()
+    }
+
+
     Connections {
         target: parent
         onGroupSelected: component.selected = group.contains(component.x,component.y)
         onDeleteSelected: if (component.selected) Ctrl.destroy(component)
         onClearSelection: component.selected = false
         onMoveSelected: if (component.selected) doMove(dx,dy)
-
     }
 
     //TODO : when group move use group boundary!!
@@ -144,37 +152,13 @@ Item {
         component.update()
     }
 
-
-    //    Dialog {
-    //        visible: true
-    //        title: "Blue sky dialog"
-
-    //        contentItem: Rectangle {
-    //            color: "lightskyblue"
-    //            implicitWidth: 400
-    //            implicitHeight: 100
-    //            Text {
-    //                text: "Hello blue sky!"
-    //                color: "navy"
-    //                anchors.centerIn: parent
-    //            }
-    //        }
-    //    }
-
     Menu {
         id: contextMenu
-        title: component.name
-
         MenuItem {
-            text: "Test"
-            shortcut: "Ctrl+X"
-            //onTriggered: ...
+            text: "Properties"
+            onTriggered: component.showDialog()
         }
     }
 
-    //    FocusScope {
-    //        id: scope
-    //        x: component.x; y: component.y
-    //        width: component.width; height: component.height
-    //    }
+
 }

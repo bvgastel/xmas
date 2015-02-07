@@ -168,6 +168,7 @@ Rectangle {
                 selection.from = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
                 selection.to = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
                 selection.visible = sheet.selecting
+                focus = true
             }
             if (mouse.button == Qt.RightButton) {
                 sheet.selecting = false

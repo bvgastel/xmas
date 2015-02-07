@@ -47,5 +47,7 @@
         <file>content/componentCreation.js</file>
         <file>qml/Line.qml</file>
         <file>content/Selection.qml</file>
+        <file>content/XDialog.qml</file>
+        <file>content/XDialogItem.qml</file>
     </qresource>
 </RCC>

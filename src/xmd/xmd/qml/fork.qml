@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import "../content"
 import XMAS 1.0
 
 XComponent {
@@ -35,6 +36,13 @@ XComponent {
             ctx.lineTo(180,160)
             ctx.stroke()
         }
+    }
+
+    onShowDialog: dialog.visible = true
+    XDialog {
+        id: dialog
+        title: name + " properties"
+
     }
 }
 

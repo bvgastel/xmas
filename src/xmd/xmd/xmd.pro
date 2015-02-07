@@ -50,7 +50,9 @@ DISTFILES += qml/fork.qml \
     qml/XPort.qml \
     content/channelCreation.js \
     content/componentCreation.js \
-    content/Selection.qml
+    content/Selection.qml \
+    content/XDialog.qml \
+    content/XDialogItem.qml
 
 RESOURCES += \
     xmd.qrc
