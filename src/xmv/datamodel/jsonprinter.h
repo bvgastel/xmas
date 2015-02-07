@@ -45,8 +45,8 @@ private:
     std::ostream*   stream;
     bool            ownStream;
 
-    bool            firstProperty;
-    bool            firstElement;
+    bool            firstProperty   = true;
+    bool            firstElement    = true;
 
     enum class State {
         Init,
@@ -69,7 +69,7 @@ JsonPrinter::writeNumber(T value) {
     else
         firstElement = false;
 
-    *stream << std::to_string(value);
+    *stream << value;
 }
 
 template<typename T>

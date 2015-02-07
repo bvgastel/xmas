@@ -20,6 +20,11 @@ JsonPrinter::~JsonPrinter()
 }
 
 void JsonPrinter::startObject()  {
+    if (!firstElement) {
+        *stream << ',';
+    } else {
+        firstElement = false;
+    }
     *stream << '{';
     states.push(State::InObject);
     firstProperty = true;
@@ -30,9 +35,15 @@ void JsonPrinter::endObject() {
         throw JsonPrinter::InvalidStateException {};
     states.pop();
     *stream << '}';
+    firstElement = false;
 }
 
 void JsonPrinter::startArray()  {
+    if (!firstElement) {
+        *stream << ',';
+    } else {
+        firstElement = false;
+    }
     *stream << '[';
     states.push(State::InArray);
     firstElement = true;
@@ -43,6 +54,8 @@ void JsonPrinter::endArray() {
         throw JsonPrinter::InvalidStateException {};
     states.pop();
     *stream << ']';
+    firstElement = false;
+
 }
 
 void JsonPrinter::startProperty(const std::string &name) {
@@ -55,6 +68,7 @@ void JsonPrinter::startProperty(const std::string &name) {
     }
     *stream << '"' << name << '"' << ':';
     states.push(State::InProperty);
+    firstElement = true;
 }
 
 void JsonPrinter::endProperty() {

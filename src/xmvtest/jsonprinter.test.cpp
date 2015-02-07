@@ -42,7 +42,7 @@ TEST_F(JsonPrinterTest, MultipleProperties) {
     pr.endProperty();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), "{\"foo\":\"bar\",\"asdf\":0.120000}");
+    EXPECT_EQ(stream.str(), "{\"foo\":\"bar\",\"asdf\":0.12}");
 }
 
 TEST_F(JsonPrinterTest, PropertyOutsideObject) {
@@ -117,4 +117,50 @@ TEST_F(JsonPrinterTest, MultipleElements) {
     pr.writeNull();
 
     EXPECT_EQ(stream.str(), R"([42,"JSON!",false,null)");
+}
+
+TEST_F(JsonPrinterTest, ArrayInObject) {
+    stream.precision(2);
+    stream << std::scientific;
+
+    pr.startObject();
+    pr.startProperty("array");
+    pr.startArray();
+    pr.writeNull();
+    pr.writeBool(true);
+    pr.writeNumber(1e12);
+
+    pr.startObject();
+    pr.endObject();
+
+    pr.startArray();
+    pr.endArray();
+
+    pr.endArray();
+    pr.endProperty();
+    pr.endObject();
+
+    EXPECT_EQ(stream.str(), R"({"array":[null,true,1.00e+12,{},[]]})");
+}
+
+TEST_F(JsonPrinterTest, ArrayOfObjects) {
+    pr.startArray();
+    pr.startObject();
+    pr.endObject();
+    pr.startObject();
+    pr.endObject();
+    pr.endArray();
+
+    EXPECT_EQ(stream.str(), R"([{},{}])");
+}
+
+TEST_F(JsonPrinterTest, ArrayOfArrays) {
+    pr.startArray();
+    pr.startArray();
+    pr.endArray();
+    pr.startArray();
+    pr.endArray();
+    pr.endArray();
+
+    EXPECT_EQ(stream.str(), R"([[],[]])");
 }
