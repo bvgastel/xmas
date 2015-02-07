@@ -72,7 +72,7 @@ public:
     }
 
     virtual void visit(XMASSink *c) {
-        unused(c);
+        bitpowder::lib::unused(c);
         json["type"] = "sink"_S;
     }
 
@@ -206,6 +206,10 @@ public:
 void Export(std::set<XMASComponent *> allComponents, const JSONData& globals)
 {
     std::ostream& out = std::cout;
+    Export(std::cout, allComponents, globals);
+}
+
+void Export(std::ostream &out, std::set<XMASComponent *> allComponents, const JSONData& globals) {
     MemoryPool mp;
 
     std::map<String,int> enumMap;

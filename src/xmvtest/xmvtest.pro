@@ -10,6 +10,7 @@ SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
     testdatamodel.cpp \
+    convert.cpp
 
 
 CONFIG += C++11
