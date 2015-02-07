@@ -115,8 +115,9 @@ TEST_F(JsonPrinterTest, MultipleElements) {
     pr.writeString("JSON!");
     pr.writeBool(false);
     pr.writeNull();
+    pr.endArray();
 
-    EXPECT_EQ(stream.str(), R"([42,"JSON!",false,null)");
+    EXPECT_EQ(stream.str(), R"([42,"JSON!",false,null])");
 }
 
 TEST_F(JsonPrinterTest, ArrayInObject) {

@@ -45,8 +45,7 @@ private:
     std::ostream*   stream;
     bool            ownStream;
 
-    bool            firstProperty   = true;
-    bool            firstElement    = true;
+    bool            firstItem   = true;     // to skip ',' on first property/element
 
     enum class State {
         Init,
@@ -64,10 +63,10 @@ JsonPrinter::writeNumber(T value) {
     if (states.top() != State::InProperty && states.top() != State::InArray)
         throw JsonPrinter::InvalidStateException {};
 
-    if (states.top() == State::InArray && !firstElement)
+    if (states.top() == State::InArray && !firstItem)
         *stream << ',';
     else
-        firstElement = false;
+        firstItem = false;
 
     *stream << value;
 }

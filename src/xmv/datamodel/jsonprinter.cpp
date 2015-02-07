@@ -20,14 +20,12 @@ JsonPrinter::~JsonPrinter()
 }
 
 void JsonPrinter::startObject()  {
-    if (!firstElement) {
+    if (!firstItem)
         *stream << ',';
-    } else {
-        firstElement = false;
-    }
+
     *stream << '{';
     states.push(State::InObject);
-    firstProperty = true;
+    firstItem = true;
 }
 
 void JsonPrinter::endObject() {
@@ -35,18 +33,16 @@ void JsonPrinter::endObject() {
         throw JsonPrinter::InvalidStateException {};
     states.pop();
     *stream << '}';
-    firstElement = false;
+    firstItem = false;
 }
 
 void JsonPrinter::startArray()  {
-    if (!firstElement) {
+    if (!firstItem)
         *stream << ',';
-    } else {
-        firstElement = false;
-    }
+
     *stream << '[';
     states.push(State::InArray);
-    firstElement = true;
+    firstItem = true;
 }
 
 void JsonPrinter::endArray() {
@@ -54,21 +50,19 @@ void JsonPrinter::endArray() {
         throw JsonPrinter::InvalidStateException {};
     states.pop();
     *stream << ']';
-    firstElement = false;
+    firstItem = false;
 
 }
 
 void JsonPrinter::startProperty(const std::string &name) {
     if (states.top() != State::InObject)
         throw JsonPrinter::InvalidStateException {};
-    if (!firstProperty) {
+    if (!firstItem)
         *stream << ',';
-    } else {
-        firstProperty = false;
-    }
+
     *stream << '"' << name << '"' << ':';
     states.push(State::InProperty);
-    firstElement = true;
+    firstItem = true;
 }
 
 void JsonPrinter::endProperty() {
@@ -81,10 +75,10 @@ void JsonPrinter::writeString(const std::string& value) {
     if (states.top() != State::InProperty && states.top() != State::InArray)
         throw JsonPrinter::InvalidStateException {};
 
-    if (states.top() == State::InArray && !firstElement)
+    if (states.top() == State::InArray && !firstItem)
         *stream << ',';
     else
-        firstElement = false;
+        firstItem = false;
 
     *stream << '"' << value << '"';
 }
@@ -93,10 +87,10 @@ void JsonPrinter::writeBool(bool value) {
     if (states.top() != State::InProperty && states.top() != State::InArray)
         throw JsonPrinter::InvalidStateException {};
 
-    if (states.top() == State::InArray && !firstElement)
+    if (states.top() == State::InArray && !firstItem)
         *stream << ',';
     else
-        firstElement = false;
+        firstItem = false;
 
     *stream << (value ? "true" : "false");
 }
@@ -105,10 +99,10 @@ void JsonPrinter::writeNull() {
     if (states.top() != State::InProperty && states.top() != State::InArray)
         throw JsonPrinter::InvalidStateException {};
 
-    if (states.top() == State::InArray && !firstElement)
+    if (states.top() == State::InArray && !firstItem)
         *stream << ',';
     else
-        firstElement = false;
+        firstItem = false;
 
     *stream << "null";
 }
