@@ -59,6 +59,13 @@ Rectangle {
         if (scale < 0.2) scale = 0.2
     }
 
+    function selectAll()
+    {
+        selection.from = Qt.point(sheet.x,sheet.y)
+        selection.to = Qt.point(sheet.width,sheet.height)
+        sheet.groupSelected(selection)
+    }
+
     focus: true
     z: -10
 
@@ -76,6 +83,7 @@ Rectangle {
     Keys.onRightPressed: moveSelected(gridsize,0)
     Keys.onDownPressed: moveSelected(0,gridsize)
     Keys.onUpPressed: moveSelected(0,-gridsize)
+
 
 
     //used to show the wiring path when adding a connection

@@ -109,6 +109,14 @@ ApplicationWindow {
     }
 
     Action {
+            id: selectAllAction
+            text: "Select All"
+            shortcut: "Ctrl+A"
+            onTriggered: sheet.selectAll()
+            tooltip: "Select All items on the sheet"
+        }
+
+    Action {
         id: zoomInAction
         text: "Zoom In"
         shortcut: "+"
@@ -156,6 +164,8 @@ ApplicationWindow {
             MenuItem { action: copyAction }
             MenuItem { action: cutAction }
             MenuItem { action: pasteAction }
+            MenuSeparator{}
+            MenuItem {action: selectAllAction}
         }
 
         Menu {

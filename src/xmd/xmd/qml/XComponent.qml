@@ -158,6 +158,11 @@ Item {
             text: "Properties"
             onTriggered: component.showDialog()
         }
+        MenuSeparator{}
+        MenuItem {
+            text: "Delete"
+            onTriggered: Ctrl.destroy(component)
+        }
     }
 
 

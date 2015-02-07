@@ -12,11 +12,5 @@ Dialog {
     onDiscard: visible = false
     onAccepted: null
 
-//    RowLayout {
-//        id: palette
-//        anchors.fill: parent
-//        spacing: 10
-//    }
-
 }
 

@@ -29,15 +29,17 @@
  *
  **************************************************************************/
 import QtQuick 2.4
+import QtQuick.Controls 1.3
 
 Item {
     id: channel
     objectName: "channel"
-    anchors.fill: parent
+    focus: true
     property int id: 0
     property var port1: null
     property var port2: null
     property color color: "darkblue"
+    property bool selected: false
 
 
     function doUpdate1() {
@@ -60,12 +62,38 @@ Item {
     onPort1Changed: port1 ? doUpdate1() : null
     onPort2Changed: port2 ? doUpdate2() : null
 
+    onSelectedChanged: {
+        focus = selected
+        line.color = selected ? "lightsteelblue" : "darkblue"
+    }
 
     //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
     Line {
         id: line
         color: "darkblue"
         size: 2
+
+        MouseArea {
+            anchors.fill: parent
+            anchors.margins: 5
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: {
+                if (mouse.button == Qt.LeftButton) {
+                    selected = !selected
+                }
+                if (mouse.button == Qt.RightButton){
+                    contextMenu.popup()
+                }
+            }
+        }
+    }
+
+    Menu {
+        id: contextMenu
+        MenuItem {
+            text: "Delete"
+            onTriggered: channel.remove()
+        }
     }
 
     Connections {
@@ -77,6 +105,13 @@ Item {
         target: port2
         onUpdate: doUpdate2()
         onRemoved: channel.remove()
+    }
+
+    Connections {
+        target: parent
+        onGroupSelected: channel.selected = group.contains(line.x1,line.y1) || group.contains(line.x2,line.y2)
+        onDeleteSelected: if (channel.selected) channel.remove()
+        onClearSelection: channel.selected = false
     }
 
 
