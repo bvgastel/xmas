@@ -23,6 +23,9 @@ public:
     void writeNumber(int value);
     void writeString(const std::string& value);
 
+    void writeNumberProperty(const std::string& name, int value);
+    void writeStringProperty(const std::string& name, const std::string& value);
+
     class InvalidStateException
     {
     };

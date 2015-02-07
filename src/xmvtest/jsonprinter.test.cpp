@@ -70,3 +70,17 @@ TEST_F(JsonPrinterTest, BadPropertyValue) {
         pr.endObject();
     }, JsonPrinter::InvalidStateException);
 }
+
+TEST_F(JsonPrinterTest, NestedObjects) {
+    pr.startObject();
+    pr.writeNumberProperty("test-a", 12);
+    pr.startProperty("foo");
+    pr.startObject();
+    pr.writeStringProperty("bar", "nested object!");
+    pr.endObject();
+    pr.endProperty();
+    pr.writeNumberProperty("test-b", -23);
+    pr.endObject();
+
+    EXPECT_EQ(stream.str(), R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})");
+}
