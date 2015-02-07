@@ -32,6 +32,19 @@ void JsonPrinter::endObject() {
     *stream << '}';
 }
 
+void JsonPrinter::startArray()  {
+    *stream << '[';
+    states.push(State::InArray);
+    firstElement = true;
+}
+
+void JsonPrinter::endArray() {
+    if (states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+    states.pop();
+    *stream << ']';
+}
+
 void JsonPrinter::startProperty(const std::string &name) {
     if (states.top() != State::InObject)
         throw JsonPrinter::InvalidStateException {};
@@ -50,12 +63,21 @@ void JsonPrinter::endProperty() {
     states.pop();
 }
 
+
 void JsonPrinter::writeNumber(int value) {
     *stream << std::to_string(value);
 }
 
 void JsonPrinter::writeString(const std::string& value) {
     *stream << '"' << value << '"';
+}
+
+void JsonPrinter::writeBool(bool value) {
+    *stream << (value ? "true" : "false");
+}
+
+void JsonPrinter::writeNull() {
+    *stream << "null";
 }
 
 void JsonPrinter::writeNumberProperty(const std::string& name, int value) {
@@ -67,5 +89,17 @@ void JsonPrinter::writeNumberProperty(const std::string& name, int value) {
 void JsonPrinter::writeStringProperty(const std::string& name, const std::string& value) {
     startProperty(name);
     writeString(value);
+    endProperty();
+}
+
+void JsonPrinter::writeBoolProperty(const std::string& name, bool value) {
+    startProperty(name);
+    writeBool(value);
+    endProperty();
+}
+
+void JsonPrinter::writeNullProperty(const std::string& name) {
+    startProperty(name);
+    writeNull();
     endProperty();
 }

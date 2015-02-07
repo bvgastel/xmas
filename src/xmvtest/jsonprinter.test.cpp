@@ -84,3 +84,29 @@ TEST_F(JsonPrinterTest, NestedObjects) {
 
     EXPECT_EQ(stream.str(), R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})");
 }
+
+
+TEST_F(JsonPrinterTest, EmptyArray) {
+    pr.startArray();
+    pr.endArray();
+
+    EXPECT_EQ(stream.str(), "[]");
+}
+
+TEST_F(JsonPrinterTest, SingleElement) {
+    pr.startArray();
+    pr.writeBool(true);
+    pr.endArray();
+
+    EXPECT_EQ(stream.str(), "[true]");
+}
+
+TEST_F(JsonPrinterTest, MultipleElements) {
+    pr.startArray();
+    pr.writeNumber(42);
+    pr.writeString("JSON!");
+    pr.writeBool(false);
+    pr.writeNull();
+
+    EXPECT_EQ(stream.str(), R"([42,"JSON!",false,null)");
+}
