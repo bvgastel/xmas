@@ -52,8 +52,8 @@ Item {
     }
 
     function remove() {
-        port1.connected = false
-        port2.connected = false
+        if(port1) port1.connected = false
+        if(port2) port2.connected = false
         destroy(channel)
         //controller.channelDestroyed(channel)
     }
