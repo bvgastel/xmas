@@ -65,18 +65,50 @@ void JsonPrinter::endProperty() {
 
 
 void JsonPrinter::writeNumber(int value) {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstElement)
+        *stream << ',';
+    else
+        firstElement = false;
+
     *stream << std::to_string(value);
 }
 
 void JsonPrinter::writeString(const std::string& value) {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstElement)
+        *stream << ',';
+    else
+        firstElement = false;
+
     *stream << '"' << value << '"';
 }
 
 void JsonPrinter::writeBool(bool value) {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstElement)
+        *stream << ',';
+    else
+        firstElement = false;
+
     *stream << (value ? "true" : "false");
 }
 
 void JsonPrinter::writeNull() {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstElement)
+        *stream << ',';
+    else
+        firstElement = false;
+
     *stream << "null";
 }
 
