@@ -79,6 +79,14 @@ TEST_F(JsonPrinterTest, PlainValueInObject) {
     }, JsonPrinter::InvalidStateException);
 }
 
+TEST_F(JsonPrinterTest, PropertyInArray) {
+    ASSERT_THROW({
+        pr.startArray();
+        pr.writeNumberProperty("bad-property", 100);
+        pr.endArray();
+    }, JsonPrinter::InvalidStateException);
+}
+
 TEST_F(JsonPrinterTest, NestedObjects) {
     pr.startObject();
     pr.writeNumberProperty("test-a", 12);
