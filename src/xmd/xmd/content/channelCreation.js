@@ -1,30 +1,36 @@
-
 var channel = null;
 var component = null;
 
-function doConnect(port1,port2) {
-    if(channel === null) {
-        if (createChannel(port1,port2)) {
-            channel.port1 = port1;
-            channel.port2 = port2;
-            controller.channelCreated(channel)
-            return true
-        }
+function loadcomponent(port1,port2) {
+    // component previously loaded?
+    if (component !== null) {
+        createComponent(port1,port2)
+        return
     }
-    return false
+    component = Qt.createComponent("qrc:///qml/XChannel.qml")
+    // Still loading qml? Call createObject on status changed
+    if (component.status === Component.Loading)
+        component.statusChanged.connect(createComponent(port1,port2));
+    else //...status must be ready or error immediately.
+        createComponent(port1,port2)
 }
 
-function createChannel(port1,port2){
-    component = Qt.createComponent("qrc:///qml/XChannel.qml");
-    channel = component.createObject(sheet);
-    if (channel === null) {
-        console.log("Error creating channel");
-        return false
+function createComponent(port1,port2) {
+    if (component.status === Component.Ready && channel == null) {
+        channel = component.createObject(sheet, {port1:port1,port2:port2})
+    } else if (component.status === Component.Error) {
+        channel = null
+        console.log(component.errorString())
     }
-    channel.port1 = port1;
-    channel.port2 = port2;
-    return true ;
 }
+
+
+function doConnect(port1,port2) {
+    channel = null
+    loadcomponent(port1,port2)
+
+}
+
 
 function abortConnecting(port) {
     //channel.destroy()
@@ -36,33 +42,5 @@ function abortConnecting(port) {
 }
 
 
-//function checkTarget(connector) {
-//    if (wire.connector1 && wire.connector1 !== connector && wire.connector2 !== connector) {
-//        wire.connector2 = connector
-//        wire.mouseX = connector.x + connector.parent.x
-//        wire.mouseY = connector.y + connector.parent.y
-//        wire.requestPaint()
-//    } else {
-//        wire.connector2 =  wire.connecting ? null : wire.connector2
-//    }
-//}
-
-//function wiring(connector) {
-//    console.log(connector.name)
-//    if (wire.connector1) {
-//        console.log("connectie gemaakt")
-//        wire.connector1 = null
-//        wire.connecting = false
-//        //Code.doConnect(connector)
-//        wire.requestPaint()
-//    } else {
-//        wire.connector1 = connector
-//        wire.mouseX = connector.x + connector.parent.x
-//        wire.mouseY = connector.y + connector.parent.y
-//        wire.connecting = true
-//        console.log("connectie bezig")
-//    }
-
-//}
 
 

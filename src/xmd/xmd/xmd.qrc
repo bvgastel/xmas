@@ -46,5 +46,6 @@
         <file>content/channelCreation.js</file>
         <file>content/componentCreation.js</file>
         <file>qml/Line.qml</file>
+        <file>content/Selection.qml</file>
     </qresource>
 </RCC>

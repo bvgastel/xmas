@@ -215,6 +215,7 @@ ApplicationWindow {
         contentY: (1 - sheet.scale) * sheet.height * 0.5
         contentWidth: sheet.width * sheet.scale
         contentHeight: sheet.height * sheet.scale
+        pixelAligned: true
 
 //        onFlickEnded: {
 //            console.log("x : " + view.visibleArea.xPosition
@@ -223,15 +224,15 @@ ApplicationWindow {
 //                        + " hr : " + view.visibleArea.heightRatio)
 //        }
 
+
+
         Sheet{
             id:sheet
             transformOrigin: Item.TopLeft
             color: "white"
             width : 2970
             height: 2100
-            //anchors.centerIn: parent
-
-        }
+         }
 
         // Only show the scrollbars when the view is moving.
         states: State {

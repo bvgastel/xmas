@@ -62,6 +62,21 @@ Rectangle {
     focus: true
     z: -10
 
+    property bool selecting: false
+    property int gridsize: 10
+
+    signal groupSelected(var group)
+    signal moveSelected(var dx,var dy)
+    signal deleteSelected()
+    signal clearSelection()
+
+    Keys.onDeletePressed: deleteSelected()
+    Keys.onEscapePressed: clearSelection()
+    Keys.onLeftPressed: moveSelected(-gridsize,0)
+    Keys.onRightPressed: moveSelected(gridsize,0)
+    Keys.onDownPressed: moveSelected(0,gridsize)
+    Keys.onUpPressed: moveSelected(0,-gridsize)
+
 
     //used to show the wiring path when adding a connection
     Canvas {
@@ -117,7 +132,7 @@ Rectangle {
                 wire.port2 = null
                 wire.connecting = false
 
-            wire.requestPaint() }
+                wire.requestPaint() }
             else { port.connected=false}
         } else {
             wire.port1 = port
@@ -128,10 +143,14 @@ Rectangle {
 
     }
 
+
+    Selection {id: selection}
+
+
     MouseArea {
         id: area
-        anchors.fill: wire
-        hoverEnabled: wire.connecting
+        anchors.fill: sheet
+        hoverEnabled: wire.connecting || sheet.selecting
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.RightButton && wire.connecting) {
@@ -142,7 +161,22 @@ Rectangle {
                 wire.requestPaint()
             }
         }
+        onClicked: {
+            if (mouse.button == Qt.LeftButton) {
+                sheet.selecting = !sheet.selecting
+                sheet.selecting ? sheet.clearSelection() : sheet.groupSelected(selection)
+                selection.from = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
+                selection.to = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
+                selection.visible = sheet.selecting
+            }
+            if (mouse.button == Qt.RightButton) {
+                sheet.selecting = false
+                selection.visible = false
+            }
+        }
+
         onPositionChanged: {
+            selection.to = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
             wire.mouseX = mouse.x
             wire.mouseY = mouse.y
             wire.requestPaint()
