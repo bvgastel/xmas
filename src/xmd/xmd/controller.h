@@ -76,14 +76,14 @@ public:
 private:
     bool scratch();
 
-    bool createPrimitive(const XMASSink &comp);
-    bool createPrimitive(const XMASSource &comp);
-    bool createPrimitive(const XMASFork &comp);
-    bool createPrimitive(const XMASSwitch &comp);
-    bool createPrimitive(const XMASMerge &comp);
-    bool createPrimitive(const XMASJoin &comp);
-    bool createPrimitive(const XMASQueue &comp);
-    bool createPrimitive(const XMASFunction &comp);
+    bool primitive(XMASSink comp);
+    bool primitive(XMASSource comp);
+    bool primitive(XMASFork comp);
+    bool primitive(XMASSwitch comp);
+    bool primitive(XMASMerge comp);
+    bool primitive(XMASJoin comp);
+    bool primitive(XMASQueue comp);
+    bool primitive(XMASFunction comp);
 
 };
 
