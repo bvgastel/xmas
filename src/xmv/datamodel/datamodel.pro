@@ -20,8 +20,7 @@ SOURCES += datamodel.cpp \
     symbolic-visitor.cpp \
     symbolic-enum-field.cpp \
     messagespec.cpp \
-    export.cpp \
-    serialize_network.cpp \
+#    export.cpp \
     symbolic-function.cpp \
     symbolic-interval-field.cpp \
 #    symbolic-range-field.cpp \
@@ -36,7 +35,6 @@ HEADERS += datamodel.h\
     symbolic-enum-field.h \
     messagespec.h \
     export.h \
-    serialize_network.h \
     symbolic-function.h \
     symbolic-interval-field.h \
  #   symbolic-range-field.h \

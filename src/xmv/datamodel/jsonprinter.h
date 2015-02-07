@@ -31,6 +31,8 @@ private:
     std::ostream*   stream;
     bool            ownStream;
 
+    bool            firstProperty;
+
     enum class State {
         Init,
         InObject,
