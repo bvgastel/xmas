@@ -63,19 +63,6 @@ void JsonPrinter::endProperty() {
     states.pop();
 }
 
-
-void JsonPrinter::writeNumber(int value) {
-    if (states.top() != State::InProperty && states.top() != State::InArray)
-        throw JsonPrinter::InvalidStateException {};
-
-    if (states.top() == State::InArray && !firstElement)
-        *stream << ',';
-    else
-        firstElement = false;
-
-    *stream << std::to_string(value);
-}
-
 void JsonPrinter::writeString(const std::string& value) {
     if (states.top() != State::InProperty && states.top() != State::InArray)
         throw JsonPrinter::InvalidStateException {};
@@ -110,12 +97,6 @@ void JsonPrinter::writeNull() {
         firstElement = false;
 
     *stream << "null";
-}
-
-void JsonPrinter::writeNumberProperty(const std::string& name, int value) {
-    startProperty(name);
-    writeNumber(value);
-    endProperty();
 }
 
 void JsonPrinter::writeStringProperty(const std::string& name, const std::string& value) {

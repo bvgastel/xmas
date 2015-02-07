@@ -3,6 +3,7 @@
 
 #include <ostream>
 #include <stack>
+#include <type_traits>
 
 class JsonPrinter
 {
@@ -20,12 +21,18 @@ public:
     void startProperty(const std::string& name);
     void endProperty();
 
-    void writeNumber(int value);
+    template<typename T>
+    typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value>::type
+    writeNumber(T value);
+
     void writeString(const std::string& value);
     void writeBool(bool value);
     void writeNull();
 
-    void writeNumberProperty(const std::string& name, int value);
+    template<typename T>
+    typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value>::type
+    writeNumberProperty(const std::string& name, T value);
+
     void writeStringProperty(const std::string& name, const std::string& value);
     void writeBoolProperty(const std::string& name, bool value);
     void writeNullProperty(const std::string& name);
@@ -50,6 +57,28 @@ private:
     std::stack<State>       states;
 
 };
+
+template<typename T>
+typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value>::type
+JsonPrinter::writeNumber(T value) {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstElement)
+        *stream << ',';
+    else
+        firstElement = false;
+
+    *stream << std::to_string(value);
+}
+
+template<typename T>
+typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value>::type
+JsonPrinter::writeNumberProperty(const std::string& name, T value) {
+    startProperty(name);
+    writeNumber(value);
+    endProperty();
+}
 
 #endif // JSON_PRINTER
 

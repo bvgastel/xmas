@@ -38,11 +38,11 @@ TEST_F(JsonPrinterTest, MultipleProperties) {
     pr.writeString("bar");
     pr.endProperty();
     pr.startProperty("asdf");
-    pr.writeNumber(12);
+    pr.writeNumber(0.12);
     pr.endProperty();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), "{\"foo\":\"bar\",\"asdf\":12}");
+    EXPECT_EQ(stream.str(), "{\"foo\":\"bar\",\"asdf\":0.120000}");
 }
 
 TEST_F(JsonPrinterTest, PropertyOutsideObject) {
