@@ -25,6 +25,8 @@ void JsonPrinter::startObject()  {
 }
 
 void JsonPrinter::endObject() {
+    if (states.top() != State::InObject)
+        throw JsonPrinter::InvalidStateException {};
     *stream << '}';
 }
 
@@ -32,10 +34,13 @@ void JsonPrinter::startProperty(const std::string &name) {
     if (states.top() != State::InObject)
         throw JsonPrinter::InvalidStateException {};
     *stream << '"' << name << '"' << ':';
+    states.push(State::InProperty);
 }
 
 void JsonPrinter::endProperty() {
-
+    if (states.top() != State::InProperty)
+        throw JsonPrinter::InvalidStateException {};
+    states.pop();
 }
 
 void JsonPrinter::writeNumber(int value) {
