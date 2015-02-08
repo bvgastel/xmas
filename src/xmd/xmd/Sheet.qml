@@ -106,8 +106,8 @@ Rectangle {
             ctx.clearRect(0, 0, wire.width, wire.height);
             if (connecting)
             {
-                var x = wire.mapFromItem(port1,10,10).x
-                var y = wire.mapFromItem(port1,10,10).y
+                var x = wire.mapFromItem(port1,5,5).x
+                var y = wire.mapFromItem(port1,5,5).y
                 ctx.beginPath()
                 ctx.moveTo(x ,y)
                 ctx.lineTo(mouseX,mouseY)
@@ -122,8 +122,8 @@ Rectangle {
                 && wire.port1 !== port
                 && wire.port2 !== port) {
             wire.port2 = port
-            wire.mouseX = wire.mapFromItem(port,10,10).x
-            wire.mouseY = wire.mapFromItem(port,10,10).y
+            wire.mouseX = wire.mapFromItem(port,5,5).x
+            wire.mouseY = wire.mapFromItem(port,5,5).y
             wire.requestPaint()
         } else {
             wire.port2 =  wire.connecting ? null : wire.port2

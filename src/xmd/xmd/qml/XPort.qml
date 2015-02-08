@@ -36,8 +36,8 @@ import "../content/channelCreation.js" as Code
 Item {
     id:port
     objectName: "port"
-    width: 20; height:20
-    x:-10; y:-10
+    width: 10; height:10
+    x:-5; y:-5
     z:1
     property int id: 0
     property bool connected: false
@@ -55,7 +55,7 @@ Item {
         color: connected ? "black" : "red"
         anchors.fill: parent
         border.color: "black"
-        border.width: area.containsMouse ? 4 : 0
+        border.width: area.containsMouse ? 2 : 0
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
@@ -70,7 +70,7 @@ Item {
     MouseArea {
         id: area
         anchors.fill: parent
-        anchors.margins: -10 // magic port :)
+        anchors.margins: -5 // magic port :)
         hoverEnabled: !connected
         preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton

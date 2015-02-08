@@ -38,8 +38,8 @@ import "../controller.js" as Ctrl
 Item {
     id: component
     objectName: "component"
-    width: 200
-    height: 200
+    width: 100
+    height: 100
     focus: true
     property int id: 0
     property string type: "unknown"
@@ -60,7 +60,7 @@ Item {
 
     MouseArea {
         anchors.fill: component
-        anchors.margins: 10
+        anchors.margins: 5
         preventStealing: true
         hoverEnabled: false
         acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -125,7 +125,7 @@ Item {
         rotation: -parent.rotation
         color: "blue"
         wrapMode: TextInput.NoWrap
-        font.pointSize : 16
+        font.pointSize : 12
         anchors.left: parent.left
         anchors.top: parent.top
         onEditingFinished: {name = text; focus = false}

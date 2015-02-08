@@ -2,10 +2,10 @@ import QtQuick 2.4
 import XMAS 1.0
 
 XComponent {
-    width: 200
-    height: 200
+    width: 100
+    height: 100
     type: "source"
-    XPort {x: 90; y: 140; name: "a1"; type:Xmas.Initiator}
+    XPort {x:45; y:70; name: "a1"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -13,11 +13,11 @@ XComponent {
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
-            ctx.lineWidth = 5.0
-            ctx.moveTo(100 ,160)
-            ctx.lineTo(100,50)
-            ctx.moveTo(50,50)
-            ctx.lineTo(150,50)
+            ctx.lineWidth = 3.0
+            ctx.moveTo(50,80)
+            ctx.lineTo(50,25)
+            ctx.moveTo(25,25)
+            ctx.lineTo(75,25)
             ctx.stroke()
         }
     }

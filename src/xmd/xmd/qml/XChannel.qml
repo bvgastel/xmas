@@ -43,12 +43,12 @@ Item {
 
 
     function doUpdate1() {
-        line.x1 = mapFromItem(port1,10,10).x
-        line.y1 = mapFromItem(port1,10,10).y
+        line.x1 = mapFromItem(port1,5,5).x
+        line.y1 = mapFromItem(port1,5,5).y
     }
     function doUpdate2() {
-        line.x2 = mapFromItem(port2,10,10).x
-        line.y2 = mapFromItem(port2,10,10).y
+        line.x2 = mapFromItem(port2,5,5).x
+        line.y2 = mapFromItem(port2,5,5).y
     }
 
     function remove() {

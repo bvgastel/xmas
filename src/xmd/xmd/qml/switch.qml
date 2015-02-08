@@ -2,12 +2,12 @@ import QtQuick 2.4
 import XMAS 1.0
 
 XComponent {
-    width: 200
-    height: 200
+    width: 100
+    height: 100
     type: "switch"
-    XPort {x: 0; y: 90; name: "a1"; type:Xmas.Target}
-    XPort {x: 180; y: 30; name: "a2"; type:Xmas.Initiator}
-    XPort {x: 180; y: 150; name: "a3"; type:Xmas.Initiator}
+    XPort {x:0; y:45; name: "a1"; type:Xmas.Target}
+    XPort {x:90; y:15; name: "a2"; type:Xmas.Initiator}
+    XPort {x:90; y:75; name: "a3"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -15,22 +15,22 @@ XComponent {
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
-            ctx.lineWidth = 5.0
-            ctx.moveTo(100 ,0)
-            ctx.lineTo(100,200)
+            ctx.lineWidth = 3.0
+            ctx.moveTo(50,0)
+            ctx.lineTo(50,100)
             //left port with arrow
-            ctx.moveTo(20 ,100)
-            ctx.lineTo(80,100)
-            ctx.lineTo(80,90)
-            ctx.lineTo(100-ctx.lineWidth,100)
-            ctx.lineTo(80,110)
-            ctx.lineTo(80,100)
+            ctx.moveTo(10,50)
+            ctx.lineTo(40,50)
+            ctx.lineTo(40,45)
+            ctx.lineTo(50-ctx.lineWidth,50)
+            ctx.lineTo(40,55)
+            ctx.lineTo(40,50)
             ctx.fill()
             //right ports
-            ctx.moveTo(100 ,40)
-            ctx.lineTo(180,40)
-            ctx.moveTo(100 ,160)
-            ctx.lineTo(180,160)
+            ctx.moveTo(50,20)
+            ctx.lineTo(90,20)
+            ctx.moveTo(50,80)
+            ctx.lineTo(90,80)
             ctx.stroke()
         }
     }
