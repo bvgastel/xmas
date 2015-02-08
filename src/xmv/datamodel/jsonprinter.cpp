@@ -80,7 +80,23 @@ void JsonPrinter::writeString(const std::string& value) {
     else
         firstItem = false;
 
-    *stream << '"' << value << '"';
+    *stream << '"';
+
+    // TODO: encode control codes, for now just encode " \ and \n
+    // unicode control range U+0000..U+001F and U+007F.. U+009F
+    for (char ch : value) {
+        switch (ch) {
+        case '\n':
+            *stream << '\\' << 'n';
+            break;
+        case '"':
+        case '\\':
+            *stream << '\\';        // fall-through
+        default:
+            *stream << ch;
+        }
+    }
+    *stream << '"';
 }
 
 void JsonPrinter::writeBool(bool value) {

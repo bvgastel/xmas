@@ -19,7 +19,7 @@ TEST_F(JsonPrinterTest, EmptyObject) {
     pr.startObject();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), "{}");
+    EXPECT_EQ("{}", stream.str());
 }
 
 TEST_F(JsonPrinterTest, SingleProperty) {
@@ -29,7 +29,7 @@ TEST_F(JsonPrinterTest, SingleProperty) {
     pr.endProperty();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), "{\"test-property\":\"test-value\"}");
+    EXPECT_EQ("{\"test-property\":\"test-value\"}", stream.str());
 }
 
 TEST_F(JsonPrinterTest, MultipleProperties) {
@@ -42,7 +42,7 @@ TEST_F(JsonPrinterTest, MultipleProperties) {
     pr.endProperty();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), "{\"foo\":\"bar\",\"asdf\":0.12}");
+    EXPECT_EQ("{\"foo\":\"bar\",\"asdf\":0.12}", stream.str());
 }
 
 TEST_F(JsonPrinterTest, PropertyOutsideObject) {
@@ -98,7 +98,7 @@ TEST_F(JsonPrinterTest, NestedObjects) {
     pr.writeNumberProperty("test-b", -23);
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})");
+    EXPECT_EQ(R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})", stream.str());
 }
 
 
@@ -106,7 +106,7 @@ TEST_F(JsonPrinterTest, EmptyArray) {
     pr.startArray();
     pr.endArray();
 
-    EXPECT_EQ(stream.str(), "[]");
+    EXPECT_EQ("[]", stream.str());
 }
 
 TEST_F(JsonPrinterTest, SingleElement) {
@@ -114,7 +114,7 @@ TEST_F(JsonPrinterTest, SingleElement) {
     pr.writeBool(true);
     pr.endArray();
 
-    EXPECT_EQ(stream.str(), "[true]");
+    EXPECT_EQ("[true]", stream.str());
 }
 
 TEST_F(JsonPrinterTest, MultipleElements) {
@@ -125,7 +125,7 @@ TEST_F(JsonPrinterTest, MultipleElements) {
     pr.writeNull();
     pr.endArray();
 
-    EXPECT_EQ(stream.str(), R"([42,"JSON!",false,null])");
+    EXPECT_EQ(R"([42,"JSON!",false,null])", stream.str());
 }
 
 TEST_F(JsonPrinterTest, ArrayInObject) {
@@ -149,7 +149,7 @@ TEST_F(JsonPrinterTest, ArrayInObject) {
     pr.endProperty();
     pr.endObject();
 
-    EXPECT_EQ(stream.str(), R"({"array":[null,true,1.00e+12,{},[]]})");
+    EXPECT_EQ(R"({"array":[null,true,1.00e+12,{},[]]})", stream.str());
 }
 
 TEST_F(JsonPrinterTest, ArrayOfObjects) {
@@ -160,7 +160,7 @@ TEST_F(JsonPrinterTest, ArrayOfObjects) {
     pr.endObject();
     pr.endArray();
 
-    EXPECT_EQ(stream.str(), R"([{},{}])");
+    EXPECT_EQ(R"([{},{}])", stream.str());
 }
 
 TEST_F(JsonPrinterTest, ArrayOfArrays) {
@@ -171,5 +171,15 @@ TEST_F(JsonPrinterTest, ArrayOfArrays) {
     pr.endArray();
     pr.endArray();
 
-    EXPECT_EQ(stream.str(), R"([[],[]])");
+    EXPECT_EQ(R"([[],[]])", stream.str());
+}
+
+TEST_F(JsonPrinterTest, StringEncoding) {
+    pr.startArray();
+    pr.writeString("According to the JSON spec \"quotation marks\" and \\reverse solidi\\ must be escaped!");
+    pr.writeString("multiple\nline\nstring\n");
+    pr.endArray();
+
+    EXPECT_EQ(R"(["According to the JSON spec \"quotation marks\" and \\reverse solidi\\ must be escaped!",)"
+               R"("multiple\nline\nstring\n"])", stream.str());
 }
