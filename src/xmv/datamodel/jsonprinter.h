@@ -79,5 +79,73 @@ JsonPrinter::writeNumberProperty(const std::string& name, T value) {
     endProperty();
 }
 
+
+template<typename T>
+struct JsonProperty {
+    std::string name;
+    T value;
+};
+
+struct JsonNull {
+};
+JsonNull jsonnull;
+
+template<typename T>
+inline JsonProperty<T> jsonprop(const std::string& name, T value) {
+    return JsonProperty<T> {name, value};
+}
+
+template<typename T>
+inline typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value, JsonPrinter&>::type
+operator <<(JsonPrinter& pr, JsonProperty<T> prop) {
+    pr.startProperty(prop.name);
+    pr.writeNumber(prop.value);
+    pr.endProperty();
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonProperty<const char*> prop) {
+    pr.startProperty(prop.name);
+    pr.writeString(prop.value);
+    pr.endProperty();
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonProperty<bool> prop) {
+    pr.startProperty(prop.name);
+    pr.writeBool(prop.value);
+    pr.endProperty();
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonProperty<JsonNull> prop) {
+    pr.startProperty(prop.name);
+    pr.writeNull();
+    pr.endProperty();
+    return pr;
+
+}
+template<typename T>
+inline typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value, JsonPrinter&>::type
+operator <<(JsonPrinter& pr, T value) {
+    pr.writeNumber(value);
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, const char* value) {
+    pr.writeString(value);
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, bool value) {
+    pr.writeBool(value);
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonNull) {
+    pr.writeNull();
+    return pr;
+}
+
 #endif // JSON_PRINTER
 

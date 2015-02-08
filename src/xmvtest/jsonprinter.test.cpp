@@ -183,3 +183,19 @@ TEST_F(JsonPrinterTest, StringEncoding) {
     EXPECT_EQ(R"(["According to the JSON spec \"quotation marks\" and \\reverse solidi\\ must be escaped!",)"
                R"("multiple\nline\nstring\n"])", stream.str());
 }
+
+TEST_F(JsonPrinterTest, StreamingObject) {
+    pr.startObject();
+    pr << jsonprop("num", -5.55) << jsonprop("str", "<< streaming operator <<") << jsonprop("test", true) << jsonprop("nil", jsonnull);
+    pr.endObject();
+
+    EXPECT_EQ(R"({"num":-5.55,"str":"<< streaming operator <<","test":true,"nil":null})", stream.str());
+}
+
+TEST_F(JsonPrinterTest, StreamingArray) {
+    pr.startArray();
+    pr << -5.55 << "<< streaming operator <<" << true << jsonnull;
+    pr.endArray();
+
+    EXPECT_EQ(R"([-5.55,"<< streaming operator <<",true,null])", stream.str());
+}
