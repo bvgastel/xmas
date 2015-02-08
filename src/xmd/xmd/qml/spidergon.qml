@@ -6,11 +6,11 @@ XComponent {
     width: 100
     height: 100
     type: "composite"
-    XPort {x: 0; y: 30; name: "a1"; type:Xmas.Target}
-    XPort {x: 0; y: 50; name: "a2"; type:Xmas.Target}
-    XPort {x: 0; y: 70; name: "a3"; type:Xmas.Target}
-    XPort {x: 90; y: 30; name: "a4"; type:Xmas.Initiator}
-    XPort {x: 90; y: 50; name: "a5"; type:Xmas.Initiator}
+    XPort {x: 0; y: 30; name: "t0"; type:Xmas.Target}
+    XPort {x: 0; y: 50; name: "t1"; type:Xmas.Target}
+    XPort {x: 0; y: 70; name: "t2"; type:Xmas.Target}
+    XPort {x: 90; y: 30; name: "i0"; type:Xmas.Initiator}
+    XPort {x: 90; y: 50; name: "i1"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         onPaint: {
