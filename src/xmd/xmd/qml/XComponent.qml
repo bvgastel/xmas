@@ -48,6 +48,7 @@ Item {
     property alias orientation: component.rotation
     orientation: Xmas.North
     property bool selected: false
+    scale: 1.00
 
     //tempory properties (stefan)
 
@@ -56,7 +57,6 @@ Item {
 
     signal update()
     signal showDialog()
-
 
     MouseArea {
         anchors.fill: component

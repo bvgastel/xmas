@@ -8,8 +8,6 @@ XComponent {
     XPort {x:45; y:20; name: "a1"; type:Xmas.Target}
     Canvas {
         anchors.fill: parent
-        antialiasing: false
-        smooth: false
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"

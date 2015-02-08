@@ -102,7 +102,7 @@ Rectangle {
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "darkblue"
-            ctx.lineWidth = 4.0
+            ctx.lineWidth = 2.0
             ctx.clearRect(0, 0, wire.width, wire.height);
             if (connecting)
             {
