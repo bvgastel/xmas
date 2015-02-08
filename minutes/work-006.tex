@@ -1,0 +1,207 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 006 Voortgang }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+\newcommand{\w}[1]{\textsc{#1}\xspace}
+\newcommand{\qml}{\textsc{Qml}\xspace}
+\newcommand{\qt}{\textsc{Qt}\xspace}
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}
+\newcommand{\cpp}{\textsc{C++}\xspace}
+\newcommand{\xmv}{\textsc{Xmv}\xspace}
+\newcommand{\xmd}{\textsc{Xmd}\xspace}
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}
+\newcommand{\vt}{\textsc{Vt}\xspace}
+\newcommand{\src}{\textsc{src}\xspace}
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}
+
+
+\begin{Minutes}{Work meeting 006}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{Voortgang en hoe nu verder?}
+\minutetaker{Guus}
+\minutesdate{7 februari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Voortgang}
+
+\subtopic{Guus} 
+\paragraph{Voortgang} Guus heeft subprojecten geordend en uit elkaar getrokken. Met name de 
+testprojecten heeft hij apart gezet. \bitpowder benaderen we nu uitsluitend als externe
+library: we doen er geen ontwikkeling op omdat het puur ondersteunend is.
+
+Het \xmv bestaat nu uit \datamodel en \vt. \xmd bevat de \qml programmatuur (user interface)
+en \bitpowder staat in een apart subproject onder \src evenals \bitpowder{}test.
+
+Verder is Guus bezig geweest \w{xmas.h} en \w{xmas.cpp} te documenteren, te begrijpen
+en te testen. Sommige testcases apart gezet uit de gewone code naar \xmvtest directory.
+
+\paragraph{Obstakels} De grootste obstakels zijn de ingewikkelde constructies 
+om iets voor elkaar te krijgen in de datalaag. Onder andere gebruikt de code erg veel 
+templates en ook nog wat cooked literals (user defined literals). Guus kon de definitie 
+van \texttt{\_S} en \texttt{\_HS} niet vinden (Jeroen wist dit te vinden: met dank!).
+
+Al met al is het lastig te vinden wat er gebeurt en hoe het werkt. Verder is Guus nog 
+niet dicht bij het verbinden van \xmv met \xmd omdat het moeilijk is de benodigde informatie
+te vinden. Waarschijnlijk moeten we ook informatie toevoegen aan de huidige structuren.
+Mogelijk moeten we de parser hiervoor wijzigen.
+
+\subtopic{Stefan} 
+
+\paragraph{Voortgang} Bezig met het opkuisen van de javascript. Ook kost het
+vergroten van het begrip hoe met \qml om te gaan de nodige tijd: vaak kost het uren
+om iets te uit te zoeken dat je in minuten in elkaar zet zodra je weet hoe het moet.
+Ik heb selecteren van meerdere objecten ingebouwd en verslepen van groepen objecten.
+
+\paragraph{Obstakels} Het selecteren van meerdere objecten loopt tegen problemen
+op, omdat elke object zelf bepaalt of het tegen grenzen aanloopt. We denken dat we het
+slepen een gecoordineerde actie van \w{sheet} moeten maken om het goed te laten lopen.
+Als je nu sleept en een object loopt tegen een grens op, dan gaan de andere objecten 
+uit de selectie door.
+
+\subtopic{Jeroen}
+
+\paragraph{Voortgang} heeft zich verdiept in het testen op basis van TDD. Daarna op 
+\texttt{Jason.org} duidelijke en gedetailleerde informatie over \w{Json} gevonden 
+en TDD toegepast. Jeroen heeft een serialize class gemaakt met testcases. 
+Vandaag pusht hij dat naar de repo.
+
+\paragraph{Obstakels} Jeroen is licht ziek geweest en heeft minder tijd kunnen besteden 
+dan hij had gewenst. 
+
+\topic{Communicatie Freek en Bernard} 
+
+Zie de mail "Scope voor verificatie tools en windows platform"
+van Freek Verbeek van 7-2-2015 01:23, waarin hij akkoord gaat met de eerdere mail van Guus van
+5-2-2015 12:04. Met name de contactmoment na elk van de 3 stappen is voor hem akkoord. Uit 
+deze mail:
+
+\begin{quote}
+
+\textbf{Stappen}
+
+We werken het vervolg in 3 stappen af. Het eindresultaat is een designer waar je netwerken kan definieren inclusief composites, exclusief geparametriseerde objecten. Op de achtergrond draaien we automatisch en periodiek de simpele checks en laten het resultaat verbaal dan wel visueel zien (kleurtjes en dergelijke).
+
+Dat betekent
+
+\begin{description}
+\item[Stap 1. inititiele integratie]
+We integreren het datamodel van Bernard met onze huidige designer. Hierbij doen we alleen wijzigingen als dat nodig is.
+
+\item[Stap 2. composite toevoegen]
+We breiden de implementatie uit met composites. Dat betekent dat we het datamodel van Bernard, uitbreiden met composites en dat opslaan in bestanden (json). Dat houdt ook in, dat we het datamodel moeten platslaan voordat een VT ermee aan de slag kan. Dat is een complicatie dat we in het architectuurplaatje voorzien hebben.
+
+\item[Stap 3. Achtergrond VT]
+We breiden de designer uit met een control programma dat de syntax checker en combinatorische checker op de achtergrond uitvoert en melding via een textscherm doorgeeft. Daarnaast de optie om op verzoek andere VTs te kunnen draaien (dus niet on the fly). De kleurtjes is een extratje.
+\end{description}
+
+\end{quote}
+
+\topic{Werkwijze en nieuwe omstandigheden}
+
+We vragen ons af of onder de gegeven condities van weinig communicatie het predicaat van ``agile'' nog
+wel te hanteren is. Met zo weinig contactmomenten is er extern geen sprake meer van agile ontwikkelen.
+We zullen dus meer aannames moeten doen voor de kleine dingen en de grotere zaken via
+mail moeten voorleggen. Intern blijven we agile werken, maar zonder intensieve betrokkenheid van
+de opdrachtgever. Eigenlijk is dit al vanaf december de status.
+
+Daarnaast is de vraag of de huidige opzet in iteraties wel handig is. Guus gaat hierover  
+nadenken en komt met een nieuwe versie van het projectplan met een iets gewijzigde aanpak. 
+Hierin kunnen we de 3 stappen uit mail van 5-2-2015 12:04 verwerken. 
+
+
+\subtopic{Gebruik Agilefant} In hetzelfde kader van gewijzigde omstandigheden vragen we ons af 
+of het gebruik van \agilefant nog voldoet. Guus en Jeroen gebruiken het niet zoveel meer. Stefan
+is echter enthousiast en stelt dat je insteek praktisch moet zijn en je het natuurlijk wel moet
+gebruiken. Guus en Jeroen kijken (op afstand) bedremmeld....
+
+We spreken af de taken die we deze week gaan uitvoeren in \agilefant op te voeren. Als we er nog
+geen story voor hebben, dan noteren we het als taak zonder story en hangen het later aan een story.
+
+Stefan wijst er op, dat ons project een mooie test is voor agile werken op afstand, de obstakels
+die je moet overwinnen en wat je moet doen om het goed voor je te laten werken.
+
+\topic{Hoe nu verder?}
+
+\subtopic{Guus} gaat zich verder verdiepen in de xmas werking en hoe te integreren. Daarnaast
+gaat hij het projectplan overdenken en komt met een nieuw voorstel. We bespreken dat maandag. Dat
+betekent deze week minder programmeren. Zaterdag moet onze werksessie dat goedmaken.
+
+\subtopic{Stefan} gaat het selecteren verbeteren, zodat het goed werkt, gaat console output
+toevoegen, en gaat dialogs maken zodat de user fields kan invoeren. Deze fields zijn
+afhankelijk van het type component. Toch willen we dat zo generiek mogelijk maken. De
+console output is hard nodig om foutmeldingen uit de designer en uit de \vt's te kunnen 
+tonen.
+
+\subtopic{Jeroen} gaat de serialization classes verder uitwerken, inclusief testcases. Ook zorgt hij
+dat de testcases onder \xmvtest komen in plaats van onder \xmv. We streven er naar
+volgende week een bestand in het geheugen te kunnen laden en vervolgens naar schijf te kunnen
+schrijven. De programmatuur van Bernard laat alleen zien hoe je kunt lezen, niet hoe je
+kunt schrijven.
+
+\subtopic{Werksessie} Het integreren van \xmv en \xmd is nu de belangrijkste en moeilijkste maar 
+de meest essenti\"{e}le klus die ons te wachten staat. Tegelijk moeten we wel eerst een console hebben
+om de output te tonen. Het meest zinvolle is, dat Jeroen en Stefan hun werk voor deze week completeren
+en dat we dan volgende week gezamenlijk aan de integratie werken. Dit is zinvol omdat we de kennis over 
+alle aspecten hard nodig hebben. Stefan heeft specifiek kennis van \qml, Jeroen heeft zich in zijn
+domein analyse in de \w{checker} verdiept en gezamenlijk kunnen we sneller en gemakkelijker tot resultaten
+komen dan alleen. We moeten nog ondervinden hoe we het beste samen kunnen programmeren: dat gaan we 
+volgende week zaterdag meemaken.
+
+\subtopic{Minimale eisen} Minimaal moet het systeem een diagram kunnen tekenen, kunnen opslaan in een bestand
+en kunnen laden om verder aan te werken. We spreken een sessie met Bernard af op 17 februari en tonen wat we 
+dan hebben.
+
+\topic{Naschrift}
+
+Omdat de tijd van Bernard beperkt is en we weinig contactmomenten gaan hebben, hebben we
+besloten om de uitstaande acties van en naar Bernard in een lijst te zetten. Dat voorkomt 
+dat we punten wegraken. De lijst werken we elke sessie even af, en zetten de afgeronde akties in
+de laatste lijst.
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|l|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+07-02-2015  & team      & Vernieuwd plan uitbrengen.\\\hline
+07-02-2015  & team      & Werkwijze opnieuw bezien\\\hline
+07-02-2015  & team      & Afspraak met Bernard voor 21 februari 2015\\\hline
+24-01-2015  & team      & Filmpje van een collega, Bernard geeft een seintje\\\hline
+24-01-2015  & team      & We moeten hernieuwde contactmomenten afspreken\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+\end{tabular}
+\caption{Aktielijst open punten}
+\end{figure}
+
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|l|l|l|}
+\hline
+{\bf datum} & {\bf gereed} & {\bf wie} & {\bf Aktie}                                     & commentaar      \\\hline
+24-01-2015  & 07-02-2015  & Bernard   & Voert bugfix op xmas.h uit en geeft signaal      & uitgevoerd\\\hline
+24-01-2015  & 07-02-2015  & team      & splitsen header files afstemmen met Bernard      & n.v.t.\\\hline
+26-01-2015  & 07-02-2015  & team      & Kan de licentie van \w{bitpower lib} naar GPLv3? & uitgevoerd\\\hline
+\end{tabular}
+\caption{Aktielijst gesloten punten}
+\end{figure}
+
+\end{Minutes}
+
+\end{document}

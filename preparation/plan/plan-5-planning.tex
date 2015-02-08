@@ -41,7 +41,7 @@
 		Documentatie.
 		\end{itemize}
 
-\item \underline{\textbf{Constructie (6 iteraties + 2 keer onderzoekscontext)}}
+\item \underline{\textbf{Constructie ({\gray 6 iteraties} 3 stappen + 2 keer onderzoekscontext)}}
 	\begin{itemize}
 	\item Iteratie 0
 		\begin{itemize}
@@ -56,46 +56,75 @@
 		\item WickedXmas editor ontwikkelen
 		\item documentatie aanpassen
 		\end{itemize}
-		\paragraph{Artefacten}
-		Prototype, documentatie
-	\item Onderzoekscontext
+	\item {\bf Stap 1\marginpar{[febr 2015]} Initi\"{e}le integratie}
+		Deze stap levert een werkend systeem op, dat de meest simpele netwerken
+		kan tekenen, kan opslaan en weer kan laden.
+		\begin{itemize}
+			\item integratie VT datamodel met user interface
+			\item opslaan data in JSON in oorspronkelijke vorm
+		\end{itemize}
+	\item {\bf Stap 2\marginpar{[febr 2015]} Composite toevoegen}
+		Deze stap levert een werkend systeem op, dat een composite kan tekenen en opslaan.
+		\begin{itemize}
+			\item Uitbreiden VT datamodel met composite objects
+			\item Platslaan uitgebreide VT datamodel naar plat VT datamodel
+			\item Opslaan datamodel aangepast aan user interface en uitgebreid met composite
+		\end{itemize}
+	\item {\bf Stap 3\marginpar{[febr 2015]} Achtergrond VT}
+		Deze stap levert een werkend systeem op, dat een netwerk kan tekenen met primitives
+		en composites, deze kan opslaan en laden, en specifieke VTs op de achtergrond kan
+		uitvoeren. Van de VTs toont het textuele meldingen en/of kleurt het foutmelding in de grafiek in.
+		\begin{itemize}
+			\item Design-VT interface met bestaande C++ verificatie tools
+			\item syntax en checker VT integreren met user interface op de achtergrond
+			\item VT foutmeldingen tonen (optioneel inkleuren)
+		\end{itemize}
+		\paragraph{\gray Artefacten}
+{\gray		Prototype, documentatie
+		\item Onderzoekscontext
 	\item Iteratie 2
 		\begin{itemize}
 		\item WickedXmas editor ontwikkelen
 		\item documentatie aanpassen
 		\end{itemize}
-		\paragraph{Artefacten}
-		Prototype, documentatie
+		}%\gray
+		\paragraph{\gray Artefacten}
+{\gray		Prototype, documentatie
 	\item Iteratie 3
 		\begin{itemize}
 		\item WickedXmas editor ontwikkelen
 		\item documentatie aanpassen
 		\end{itemize}
-		\paragraph{Artefacten}
-		Prototype, documentatie
+		}% \gray
+		\paragraph{\gray Artefacten}
+{\gray		Prototype, documentatie
 	\item Iteratie 4
 		\begin{itemize}
 		\item WickedXmas verificatietoolinterface ontwikkelen
 		\item documentatie aanpassen
 		\end{itemize}
-		\paragraph{Artefacten}
-		Prototype, documentatie
+		}%\gray
+		\paragraph{\gray Artefacten}
+{\gray		Prototype, documentatie
 	\item Iteratie 5
 		\begin{itemize}
-		\item WickedXmas verificatietoolinterface ontwikkelen
-		\item documentatie aanpassen
+			\item WickedXmas verificatietoolinterface ontwikkelen
+			\item documentatie aanpassen
 		\end{itemize}
+		}%\gray
 		\paragraph{Artefacten op de ``Sufficient functionality'' mijlpaal }
 		 Een release van de WickedXmas Tool zoals beoogd werd,  documentatie
 	\end{itemize}
 \item \underline{\textbf{Finale transitie (1 iteratie)}}
 	\begin{itemize}
-		\item Finale releases van de nieuwe WickedXmas tool.
-		\item Documentatie bundelen (handleiding).
+		\item {\gray Finale releases van de nieuwe WickedXmas tool.}
+		\item Finale releases van de nieuwe design tool.
+		\item {\gray Documentatie bundelen (handleiding).}
+		\item Documentatie aanpassen, uitbreiden en bundelen (handleiding).
 		\item Onderzoekscontext
 		\item Presentatie geven
 	\end{itemize}
 	\paragraph{Artefacten op de ``Production ready'' mijlpaal}
-	Een presentatie, documentatie en scriptieverslag van de nieuwe WickedXmas tool.
+	 Een presentatie, documentatie en scriptieverslag van de nieuwe {\gray WickedXmas} Design tool.
 
 \end{enumerate}
