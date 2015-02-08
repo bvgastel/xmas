@@ -49,5 +49,8 @@
         <file>content/Selection.qml</file>
         <file>content/XDialog.qml</file>
         <file>content/XDialogItem.qml</file>
+        <file>content/OutputLog.qml</file>
+        <file>content/images/arrow.png</file>
+        <file>content/images/arrowLit.png</file>
     </qresource>
 </RCC>

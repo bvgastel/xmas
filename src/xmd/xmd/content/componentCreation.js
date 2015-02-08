@@ -15,7 +15,7 @@ function loadComponent(qml) {
     else if (component.status === Component.Ready)
         createComponent(sheet,component)
     else if (component.status === Component.Error)
-        console.log(component.errorString())
+        log(component.errorString(),"red")
 }
 
 function createComponent(parent,component) {
@@ -26,7 +26,7 @@ function createComponent(parent,component) {
         //controller.componentCreated(component)
     } else if (component.status === Component.Error) {
         draggedItem = null
-        console.log(component.errorString())
+        log(component.errorString(),"red")
     }
     // What happens if neither ready nor error? Or ready, but dragged? Is this possible?
 }
@@ -54,6 +54,7 @@ function endDrag(mouse)
         //TODO generate a unique name or id for each component
         draggedItem.name = draggedItem.type +  "_???"
         controller.componentCreated(draggedItem)
+        log("component created!","green")
         draggedItem = null;
     }
 }

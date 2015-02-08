@@ -40,7 +40,7 @@
 
 import QtQuick 2.4
 import QtQuick.Controls 1.3
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
@@ -109,12 +109,12 @@ ApplicationWindow {
     }
 
     Action {
-            id: selectAllAction
-            text: "Select All"
-            shortcut: "Ctrl+A"
-            onTriggered: sheet.selectAll()
-            tooltip: "Select All items on the sheet"
-        }
+        id: selectAllAction
+        text: "Select All"
+        shortcut: "Ctrl+A"
+        onTriggered: sheet.selectAll()
+        tooltip: "Select All items on the sheet"
+    }
 
     Action {
         id: zoomInAction
@@ -143,13 +143,17 @@ ApplicationWindow {
         onTriggered: sheet.zoomFit()
     }
 
-
     FileDialog {
         id: fileDialog
         nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
         //onAccepted: document.fileUrl = fileUrl
     }
 
+
+    function log(text,color)
+    {
+       outputLog.log(text,color)
+    }
 
     menuBar: MenuBar {
         Menu {
@@ -216,86 +220,98 @@ ApplicationWindow {
         anchors {right: parent.right;  left: parent.left}
     }
 
-
-    Flickable {
-        id: view
+    SplitView {
         anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
-        //center the scene by default
-        contentX: (1 - sheet.scale) * sheet.width * 0.5
-        contentY: (1 - sheet.scale) * sheet.height * 0.5
-        contentWidth: sheet.width * sheet.scale
-        contentHeight: sheet.height * sheet.scale
-        pixelAligned: true
-
-//        onFlickEnded: {
-//            console.log("x : " + view.visibleArea.xPosition
-//                        + " wr : " + view.visibleArea.widthRatio
-//                        + " y : " + view.visibleArea.yPosition
-//                        + " hr : " + view.visibleArea.heightRatio)
-//        }
-
-
-
-        Sheet{
-            id:sheet
-            transformOrigin: Item.TopLeft
-            color: "white"
-            width : 2970
-            height: 2100
-         }
-
-        // Only show the scrollbars when the view is moving.
-        states: State {
-            name: "ShowBars"
-            when: view.movingVertically || view.movingHorizontally
-            PropertyChanges { target: verticalScrollBar; opacity: 1 }
-            PropertyChanges { target: horizontalScrollBar; opacity: 1 }
-        }
-
-        transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 600 }
-        }
-
-    }
-
-    DropShadow {
-        anchors.fill: view
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8.0
-        samples: 16
-        color: "#80000000"
-        source: view
-    }
-
-    // Attach scrollbars to the right and bottom edges of the view.
-    ScrollBar {
-        id: verticalScrollBar
-        width: 12; height: view.height-12
-        anchors.right: view.right
-        anchors.top: view.top
-        anchors.bottom: view.bottom
-        opacity: 0
         orientation: Qt.Vertical
-        position: view.visibleArea.yPosition
-        pageSize: view.visibleArea.heightRatio
-    }
+        Item {
+            Layout.fillHeight: true
+            Flickable {
+                id: view
+                //anchors.fill: { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+                // anchors.fill: { top: xmasToolbar.bottom ; bottom: logItem.top; left: parent.left; right: parent.right}
 
-    ScrollBar {
-        id: horizontalScrollBar
-        width: view.width-12; height: 12
-        anchors.bottom: view.bottom
-        opacity: 0
-        orientation: Qt.Horizontal
-        position: view.visibleArea.xPosition
-        pageSize: view.visibleArea.widthRatio
-    }
+                //center the scene by default
+                anchors.fill: parent
+                contentX: (1 - sheet.scale) * sheet.width * 0.5
+                contentY: (1 - sheet.scale) * sheet.height * 0.5
+                contentWidth: sheet.width * sheet.scale
+                contentHeight: sheet.height * sheet.scale
+                pixelAligned: true
 
-    statusBar: StatusBar {
-        RowLayout {
-            anchors.fill: parent
-            Label { text: "Ready" }
+                //        onFlickEnded: {
+                //            console.log("x : " + view.visibleArea.xPosition
+                //                        + " wr : " + view.visibleArea.widthRatio
+                //                        + " y : " + view.visibleArea.yPosition
+                //                        + " hr : " + view.visibleArea.heightRatio)
+                //        }
+
+
+
+                Sheet{
+                    id:sheet
+                    transformOrigin: Item.TopLeft
+                    color: "white"
+                    width : 2970
+                    height: 2100
+                }
+
+                // Only show the scrollbars when the view is moving.
+                states: State {
+                    name: "ShowBars"
+                    when: view.movingVertically || view.movingHorizontally
+                    PropertyChanges { target: verticalScrollBar; opacity: 1 }
+                    PropertyChanges { target: horizontalScrollBar; opacity: 1 }
+                }
+
+                transitions: Transition {
+                    NumberAnimation { properties: "opacity"; duration: 600 }
+                }
+
+            }
+
+            DropShadow {
+                anchors.fill: view
+                horizontalOffset: 3
+                verticalOffset: 3
+                radius: 8.0
+                samples: 16
+                color: "#80000000"
+                source: view
+            }
+
+            // Attach scrollbars to the right and bottom edges of the view.
+            ScrollBar {
+                id: verticalScrollBar
+                width: 12; height: view.height-12
+                anchors.right: view.right
+                anchors.top: view.top
+                anchors.bottom: view.bottom
+                opacity: 0
+                orientation: Qt.Vertical
+                position: view.visibleArea.yPosition
+                pageSize: view.visibleArea.heightRatio
+            }
+
+            ScrollBar {
+                id: horizontalScrollBar
+                width: view.width-12; height: 12
+                anchors.bottom: view.bottom
+                opacity: 0
+                orientation: Qt.Horizontal
+                position: view.visibleArea.xPosition
+                pageSize: view.visibleArea.widthRatio
+            }
         }
-    }
 
+        onResizingChanged: {
+            outputLog.lastHeight = outputLog.height
+            outputLog.open = outputLog.lastHeight > 0
+        }
+
+        OutputLog {
+            id: outputLog
+            Layout.minimumHeight: headerHeight
+        }
+
+    }
 }

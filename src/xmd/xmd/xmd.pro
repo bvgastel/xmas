@@ -52,7 +52,8 @@ DISTFILES += qml/fork.qml \
     content/componentCreation.js \
     content/Selection.qml \
     content/XDialog.qml \
-    content/XDialogItem.qml
+    content/XDialogItem.qml \
+    content/OutputLog.qml
 
 RESOURCES += \
     xmd.qrc

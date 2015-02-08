@@ -43,7 +43,7 @@ function loadComponent(type) {
     else if (component.status === Component.Ready)
         createComponent(sheet,component)
     else if (component.status === Component.Error)
-        console.log(component.errorString())
+        log(component.errorString(),"red")
 
 }
 
@@ -54,8 +54,9 @@ function createComponent(parent,component) {
     if (component.status === Component.Ready) {
         item = component.createObject(parent)
         controller.componentCreated(component)
+        log("Component created.","green")
     } else if (component.status === Component.Error) {
-        console.log(component.errorString())
+        log(component.errorString(),"red")
     }
 }
 
@@ -64,6 +65,7 @@ function createComponent(parent,component) {
 function destroy(component){
     component.destroy()
     controller.componentDestroyed(component)
+    log("Component deleted.","black")
 }
 
 

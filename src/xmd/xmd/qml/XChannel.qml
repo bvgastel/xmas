@@ -55,6 +55,7 @@ Item {
         if(port1) port1.connected = false
         if(port2) port2.connected = false
         destroy(channel)
+        log("Channel deleted!","black")
         //controller.channelDestroyed(channel)
     }
 

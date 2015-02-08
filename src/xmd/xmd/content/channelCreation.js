@@ -20,7 +20,7 @@ function createComponent(port1,port2) {
         channel = component.createObject(sheet, {port1:port1,port2:port2})
     } else if (component.status === Component.Error) {
         channel = null
-        console.log(component.errorString())
+        log(component.errorString(),"red")
     }
 }
 
