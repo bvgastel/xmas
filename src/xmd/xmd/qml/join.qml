@@ -56,6 +56,7 @@ XComponent {
         }
     }
 
+    //TODO : replace doubleclick with property dialog. Steals mouse events from XComponent
     MouseArea {
         anchors.fill: parent
         onDoubleClicked:{

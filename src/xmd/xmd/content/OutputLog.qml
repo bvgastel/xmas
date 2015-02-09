@@ -44,11 +44,9 @@ ColumnLayout{
     property int lastHeight: 150
     property int headerHeight:25
 
-    //TODO color per textline
     function log(text,color){
-        logList.textColor = color
-        logList.append(text)
-    }
+       logList.append("<font color=" + color + ">" + text + "</color>")
+     }
 
     Rectangle
     {
@@ -95,7 +93,7 @@ ColumnLayout{
         Layout.fillHeight: true
         readOnly: true
         font.pointSize: 10
-        //font.bold: true
+        textFormat: Qt.RichText
         style: TextAreaStyle {
             backgroundColor: "lightgrey"
         }

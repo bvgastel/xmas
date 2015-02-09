@@ -54,7 +54,7 @@ function endDrag(mouse)
         //TODO generate a unique name or id for each component
         draggedItem.name = draggedItem.type +  "_???"
         controller.componentCreated(draggedItem)
-        log("component created!","green")
+        log("component created!")
         draggedItem = null;
     }
 }

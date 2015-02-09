@@ -87,7 +87,7 @@ ApplicationWindow {
         shortcut: "ctrl+x"
         iconSource: "qrc:/content/images/cut.png"
         iconName: "edit-cut"
-        onTriggered: textArea.cut()
+        onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
     }
 
     Action {
@@ -96,7 +96,7 @@ ApplicationWindow {
         shortcut: "Ctrl+C"
         iconSource: "qrc:/content/images/copy.png"
         iconName: "edit-copy"
-        //onTriggered: textArea.copy()
+        onTriggered: log("Copy Action Clicked.","blue") //textArea.copy()
     }
 
     Action {
@@ -105,7 +105,7 @@ ApplicationWindow {
         shortcut: "ctrl+v"
         iconSource: "qrc:/content/images/paste.png"
         iconName: "edit-paste"
-        //onTriggered: textArea.paste()
+        onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
     }
 
     Action {
