@@ -60,7 +60,9 @@ void JsonPrinter::startProperty(const std::string &name) {
     if (!firstItem)
         *stream << ',';
 
-    *stream << '"' << name << '"' << ':';
+    encodeString(name);
+    *stream << ':';
+
     states.push(State::InProperty);
     firstItem = true;
 }
@@ -71,20 +73,12 @@ void JsonPrinter::endProperty() {
     states.pop();
 }
 
-void JsonPrinter::writeString(const std::string& value) {
-    if (states.top() != State::InProperty && states.top() != State::InArray)
-        throw JsonPrinter::InvalidStateException {};
-
-    if (states.top() == State::InArray && !firstItem)
-        *stream << ',';
-    else
-        firstItem = false;
-
+void JsonPrinter::encodeString(const std::string& str) {
     *stream << '"';
 
     // TODO: encode control codes, for now just encode " \ and \n
     // unicode control range U+0000..U+001F and U+007F.. U+009F
-    for (char ch : value) {
+    for (char ch : str) {
         switch (ch) {
         case '\n':
             *stream << '\\' << 'n';
@@ -97,6 +91,18 @@ void JsonPrinter::writeString(const std::string& value) {
         }
     }
     *stream << '"';
+}
+
+void JsonPrinter::writeString(const std::string& value) {
+    if (states.top() != State::InProperty && states.top() != State::InArray)
+        throw JsonPrinter::InvalidStateException {};
+
+    if (states.top() == State::InArray && !firstItem)
+        *stream << ',';
+    else
+        firstItem = false;
+
+    encodeString(value);
 }
 
 void JsonPrinter::writeBool(bool value) {

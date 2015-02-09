@@ -55,6 +55,8 @@ private:
     };
     std::stack<State>       states;
 
+    void encodeString(const std::string& str);
+
 };
 
 template<typename T>
@@ -88,10 +90,10 @@ struct JsonProperty {
 
 struct JsonNull {
 };
-JsonNull jsonnull;
+constexpr JsonNull jsonnull;
 
 template<typename T>
-inline JsonProperty<T> jsonprop(const std::string& name, T value) {
+inline constexpr JsonProperty<T> jsonprop(const std::string& name, T value) {
     return JsonProperty<T> {name, value};
 }
 
