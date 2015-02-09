@@ -161,12 +161,20 @@ Rectangle {
         hoverEnabled: wire.connecting || sheet.selecting
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
-            if (mouse.button == Qt.RightButton && wire.connecting) {
-                wire.connecting = false
-                wire.port1.connected = false
-                wire.port1 = null
-                wire.port2 = null
-                wire.requestPaint()
+            if (mouse.button == Qt.RightButton)
+            {
+                if(wire.connecting)
+                {
+                    wire.connecting = false
+                    wire.port1.connected = false
+                    wire.port1 = null
+                    wire.port2 = null
+                    wire.requestPaint()
+                }
+                else
+                {
+                    contextMenu.popup()
+                }
             }
         }
         onClicked: {
@@ -196,6 +204,14 @@ Rectangle {
         target: controller
         onComponentCreate: Ctrl.loadComponent(object) //console.log("component create request")
 
+    }
+
+    Menu {
+        id: contextMenu
+        MenuItem {
+            text: "Delete"
+            onTriggered: deleteSelected()
+        }
     }
 }
 
