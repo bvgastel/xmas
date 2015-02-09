@@ -44,7 +44,10 @@ ColumnLayout{
     property int lastHeight: 150
     property int headerHeight:25
 
+
     function log(text,color){
+        //TODO : check for valid color (As QColor.isValidColor(x))
+        if(color === "" || color === null || color === undefined) color ="black"
        logList.append("<font color=" + color + ">" + text + "</color>")
      }
 
@@ -72,7 +75,6 @@ ColumnLayout{
             Image {
                 id:arrow
                 source: "images/arrow.png"
-                //rotation: open ? 0 : 180
                 Layout.alignment: Qt.AlignRight
                 MouseArea{
                     anchors.fill:parent

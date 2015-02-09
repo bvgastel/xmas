@@ -80,9 +80,8 @@ Item {
                 sheet.wiring(port)
             }
         }
-        //onEntered: sheet.checkTarget(port)
+
         onContainsMouseChanged: {
-            //port.containsMouse = containsMouse
             sheet.checkTarget(port)
         }
     }

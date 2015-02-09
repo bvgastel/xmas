@@ -21,7 +21,6 @@ Rectangle {
     function getWidth(sx1,sy1,sx2,sy2)
     {
         var w=Math.sqrt(Math.pow((sx2-sx1),2)+Math.pow((sy2-sy1),2));
-        //console.debug("W: "+w);
         return w;
     }
 

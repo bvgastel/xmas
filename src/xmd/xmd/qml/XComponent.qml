@@ -49,14 +49,11 @@ Item {
     orientation: Xmas.North
     property bool selected: false
     scale: 1.00
-
-    //tempory properties (stefan)
-
-    property int rightBound: 10000 //component.parent.width - component.width
-    property int bottomBound: 10000 //component.parent.height - component.height
+    //transformOrigin: Item.TopLeft
 
     signal update()
     signal showDialog()
+    signal boundReached(var dx, var dy)
 
     MouseArea {
         anchors.fill: component
@@ -65,15 +62,15 @@ Item {
         hoverEnabled: false
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
-        drag.minimumX: 0
-        drag.minimumY: 0
-        drag.maximumX: 10000 ///component.parent.width - component.width
-        drag.maximumY: 10000 ///component.parent.height - component.height
+        drag.minimumX: leftBound()
+        drag.minimumY: topBound()
+        //TODO : replace with sheet bounds
+        drag.maximumX: rightBound()
+        drag.maximumY: bottomBound()
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
                 selected = !selected
-                //scope.focus = !scope.focus
             }
             if (mouse.button == Qt.RightButton){
                 contextMenu.popup()
@@ -103,7 +100,7 @@ Item {
     }
 
     onRotationChanged: component.update()
-    onScaleChanged: component.update()
+    onScaleChanged: doMove(0,0)
     onSelectedChanged: focus = selected
 
 
@@ -141,15 +138,44 @@ Item {
         onMoveSelected: if (component.selected) doMove(dx,dy)
     }
 
-    //TODO : when group move use group boundary!!
+
     function doMove(dx,dy){
         x = x + dx
         y = y + dy
-        if (x < 0) x = 0
-        if (y < 0) y = 0
-        if (x + width > parent.right) x = parent.right - width
-        if (y + height > parent.bottom) y = parent.bottom - height
+        if (x < leftBound())
+        {
+            boundReached(leftBound()-x,0)
+            x = leftBound()
+        }
+        if (y < topBound())
+        {
+            boundReached(0,topBound()-y)
+            y = topBound()
+        }
+        if (x > rightBound())
+        {
+            boundReached(x-rightBound(),0)
+            x = rightBound()
+        }
+        if (y > bottomBound())
+        {
+            boundReached(0,y-bottomBound())
+            y = bottomBound()
+        }
         component.update()
+    }
+
+    function leftBound(){
+        return sheet.margin + width/2 * (scale-1)
+    }
+    function topBound(){
+        return sheet.margin + height/2 * (scale -1)
+    }
+    function rightBound(){
+        return sheet.width - width * scale  - sheet.margin + width/2 * (scale-1)
+    }
+    function bottomBound(){
+        return sheet.height - height * scale  - sheet.margin + height/2 * (scale-1)
     }
 
     Menu {

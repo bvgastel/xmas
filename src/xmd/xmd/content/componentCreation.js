@@ -23,6 +23,7 @@ function createComponent(parent,component) {
     // Needs closure w.r.t. if-statement branches
     if (component.status === Component.Ready && draggedItem == null) {
         draggedItem = component.createObject(parent)
+        //draggedItem.boundReached.connect(test(0,0))
         //controller.componentCreated(component)
     } else if (component.status === Component.Error) {
         draggedItem = null
@@ -31,6 +32,10 @@ function createComponent(parent,component) {
     // What happens if neither ready nor error? Or ready, but dragged? Is this possible?
 }
 
+//function  test(dx,dy){
+//    sheet.boundReached(0,0)
+//    return
+//}
 
 function continueDrag(mouse)
 {

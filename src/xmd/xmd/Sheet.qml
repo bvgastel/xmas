@@ -71,6 +71,7 @@ Rectangle {
 
     property bool selecting: false
     property int gridsize: 10
+    property int margin: 25
 
     signal groupSelected(var group)
     signal moveSelected(var dx,var dy)
@@ -149,6 +150,12 @@ Rectangle {
             wire.connecting = true
         }
 
+    }
+
+
+
+    function boundReached(dx,dy){
+        console.log("boundReached")
     }
 
 
