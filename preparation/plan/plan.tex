@@ -29,7 +29,7 @@
 \usepackage{boxedminipage}
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
-\usepackage{mdframed}
+\usepackage[framemethod=tikz]{mdframed}
 \usepackage{pstricks}
 \usepackage{pstricks-add}
 
@@ -73,6 +73,8 @@
   {\Expr{\Expr{\Div{\Expr{\Mod{\cwhlp{#1}{#2}{#3}-
     \Expr{\Div{\cwhlp{#1}{#2}{#3}}{1460}}}{365}+
          \Expr{\Div{\cwhlp{#1}{#2}{#3}}{1460}}}}{7} +1}}}
+         
+%%  [ [cwhlp(1, 2, 3) - cwhlp(1, 2, 3)/1460] mod 365 + cwhlp(1, 2, 3)/1460 ] / 7 + 1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Use : \calendarweek{03}{12}{2014} returns weeknumber %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -87,9 +89,19 @@
 \newcommand{\ok}{$\checkmark$}
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 \newcommand{\ou}{\textsc{OU}\xspace}
-\newcommand{\een}{\'{e}'{e}n\xspace}
+\newcommand{\een}{\'{e}\'{e}n\xspace}
 
-\newmdenv[backgroundcolor=lightgray,frametitle=Aanpassing febr 2015]{aanpassing1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Definitie aanpassing1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\global\mdfdefinestyle{aanpassing}{%
+	roundcorner=5pt%
+}%
+\newmdenv[backgroundcolor=green!40,%
+		linewidth=2pt,%
+		style=aanpassing,%
+		frametitlerule=true,%
+		frametitlebackgroundcolor=blue!20!green,%
+		frametitle=Aanpassing febr 2015]{aanpassing1}%
 
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
 
@@ -158,5 +170,6 @@
  \item[l10n] Localization, referring to country specific settings such as money, numbers, dates etc.
 \end{description}
 
+\include{plan-schedule-previous}
 
 \end{document} ;########################### end document ##################################;

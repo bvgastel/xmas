@@ -14,6 +14,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Aanpassing1 febr 2015 %%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{aanpassing1}
+	Het schedule wijzigt grondig, voor de activiteiten die nog niet klaar zijn. 
+	We vervangen 4 van de 6 iteraties door 3 stappen en verlengen de einddatum. Per 
+	stap leveren we afgesproken producten op (zie sectie \ref{sec:planning}).
+	De communicatie met de opdrachtgever is sinds december summier en dat blijft zo,
+	gezien de recente ontwikkelingen bij de \ou en de implicaties voor Bernard 
+	en Freek. Om die reden vermoeden wij dat de doorlooptijd wat langer is, hetgeen 
+	de aanleiding is voor deze aanpassing.
+	
+	We hebben ervaren dat we als team een aanlooptijd nodig hebben.
+	Om die reden hebben we de eerste stap het langste gemaakt, de tweede iets korter 
+	en de derde het kortste. Dit is de tweede reden voor verschuiving van de einddatum.
+	
+	De derde reden is dat we daarmee wat ademruimte voor het project cre\"{e}ren. 
+	We voorzien anders een overspannen maand mei en uitloop naar juni. 
+	Een geplande uitloop is beter dan dat ``de omstandigheden''
+	dit opleggen aan het team. De keerzijde is dat we geen uitloop hebben ten
+	opzichte van ons voornemen om voor de zomervakantie klaar te zijn.
+\end{aanpassing1}
+
 \newgeometry{top=5mm,left=10mm,bottom=5mm,right=-90mm}
 
 \ganttset{%
@@ -23,22 +43,27 @@
 	}%
 }
 
-\begin{ganttchart}[
-	today={2015-02-07}, today rule/.style={draw=blue, dashed, ultra thick},
-	progress=today,
+\setganttlinklabel{f-s}{}
+
+\begin{ganttchart}[%
+	today={2015-02-07},%
+	today rule/.style={draw=blue, dashed, ultra thick},%
+	today label=7 febr 2015,%
+	progress=today,%
+	%progress label text=\relax,%
 	%hgrid,
 	%vgrid,
-	x unit=0.9mm,
-	y unit chart=9mm,
-	inline,
- 	group/.append style={draw=black,fill=blue!90},
-	bar/.append style={draw=black,fill=green!50},
-	milestone/.append style={draw=black, shape=circle, fill=gray, rounded corners=3mm},
-	milestone complete /.style={draw=black, shape=circle, fill=green, rounded corners=3mm},
-	milestone incomplete /.style={draw=black, shape=circle, fill=gray, rounded corners=3mm},
+	x unit=0.9mm,%
+	y unit chart=9mm,%
+	inline,%
+ 	group/.append style={draw=black,fill=blue!90},%
+	bar/.append style={draw=black,fill=green!50},%
+	milestone/.append style={draw=black, shape=circle, fill=gray, rounded corners=3mm},%
+	milestone complete /.style={draw=black, shape=circle, fill=green, rounded corners=3mm},%
+	milestone incomplete /.style={draw=black, shape=circle, fill=gray, rounded corners=3mm},%
 %	milestone progress label text={},
-	time slot format=isodate
-]{2014-09-15}{2015-07-12}
+	time slot format=isodate%
+]{2014-09-15}{2015-07-12}%
 	\gantttitlecalendar{year, month=name, week} \\
 	\ganttgroup{Inceptie}{2014-09-15}{2014-11-16} \\
 
@@ -54,94 +79,36 @@
 	\ganttbar[name=it0]{Iter 0}{2014-11-17}{2014-12-01} \\
 	\ganttmilestone[name=m_architecture,progress label text={}]{Proven Architecture}{2014-12-02} \\
 	\ganttbar[name=it1]{Iter 1}{2014-12-02}{2014-12-23} \\
-	\ganttbar[name=step1]{Step 1}{2014-12-23}{2015-03-08} \\
-	\ganttbar[name=step2]{Step 2}{2015-03-09}{2015-05-24} \\
-	\ganttbar[name=step3]{Step 3}{2015-05-25}{2015-06-14} \\
-	\ganttgroup{Transitie}{2015-06-15}{2015-07-05} \\
-	\ganttbar[name=afronding]{Afronding}{2015-06-15}{2015-07-05} \\
-	\ganttmilestone{presentation,progress label text={}}{2015-07-05}
+	\ganttbar[name=stap1]{Stap 1}{2014-12-23}{2015-03-08} \\
+	\ganttbar[name=stap2]{Stap 2}{2015-03-09}{2015-04-26} \\
+	\ganttbar[name=stap3]{Stap 3}{2015-04-27}{2015-06-07} \\
+	\ganttgroup{Transitie}{2015-06-08}{2015-06-29} \\
+	\ganttbar[name=afronding]{Afronding}{2015-06-08}{2015-06-28} \\
+	\ganttmilestone[name=m_presentation,progress label text={}]{presentatie}{2015-07-05}
 	
 	\ganttlink[link type=dr]{planning}{m_planning}
 	\ganttlink[link type=dr]{m_planning}{domein}
 	\ganttlink[link type=dr]{domein}{m_da}
 	\ganttlink[link type=dr]{it0}{m_architecture}
 	\ganttlink[link type=dr]{m_architecture}{it1}
-	\ganttlink[link type=dr]{it1}{step1}
-	\ganttlink[link type=dr]{step1}{step2}
-	\ganttlink[link type=dr]{step2}{step3}
-	\ganttlink[link type=dr]{step3}{afronding}
+	\ganttlink[link type=dr]{it1}{stap1}
+	\ganttlink[link type=dr]{stap1}{stap2}
+	\ganttlink[link type=dr]{stap2}{stap3}
+	\ganttlink[link type=dr]{stap3}{afronding}
 %	\ganttlink[link type=dr]{onderzoekscontext}{afronding} // % No link for onderzoekscontext 
 \end{ganttchart}
-
-%%%%%%%%%%%%%%%%%%%%%% Einde Aanpassing1 febr 2015 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
-\setganttlinklabel{f-s}{}
-
-\begin{figure}[hp]
-{\gray \begin{ganttchart}[hgrid,vgrid,y unit chart=.9cm,
-	%today=4,
-	inline,
-	group/.append style={draw=black,fill=blue!90},
-	bar/.append style={draw=black,fill=green!50}
-	]{0}{42}
- \gantttitle{2014}{15}
- \gantttitle{2015}{28} \\
- \gantttitlelist{38,...,52}{1}
- \gantttitlelist{1,...,28}{1} \\
-
- \ganttgroup{Inceptie}{1}{8} \\
-
- \ganttbar[name=planning]{Planning}{1}{4} \\
- \ganttmilestone[name=m_planning]{Stakeholder consensus}{4} \\
-
- \ganttbar[name=domein]{Domein}{5}{8} \\
- \ganttmilestone[name=m_da]{Domeinanalyse}{8} \\
-
- \ganttgroup{Constructie}{9}{28} \\
-
- \ganttbar[name=it0]{Iter 0}{9}{11} \\
- \ganttmilestone[name=m_architecture]{Proven Architecture}{11} \\
- \ganttbar[name=it1]{Iter 1}{12}{14} \\
- \ganttbar[name=it2]{iter 2}{17}{19} \\
-	 	\ganttbar[name=it3]{Iter 3}{20}{22} \\
- 		\ganttbar[name=it4]{Iter 4}{23}{25} \\
- 		\ganttbar[name=it5]{Iter 5}{26}{28} \\
-
- \ganttmilestone[name=m_suff_func]{Sufficient functionality}{28} \\
-
- \ganttgroup{Transitie}{29}{31} \\
- \ganttbar[name=afronding]{Afronding}{30}{32}\\
- \ganttbar[name=onderzoekscontext]{Onderzoekscontext}{20}{29} \\
- \ganttbar[bar/.style={}]{}{32}{37} \\
- \ganttmilestone{Delighted stakeholders}{37}
-
-    \ganttlink[link type=dr]{planning}{m_planning}
-    \ganttlink[link type=dr]{m_planning}{domein}
-    \ganttlink[link type=dr]{domein}{m_da}
-    \ganttlink[link type=dr]{it0}{m_architecture}
-    \ganttlink[link type=dr]{m_architecture}{it1}
-    \ganttlink[link type=dr]{it1}{it2}	
-    \ganttlink[link type=dr]{it2}{it3}
-    \ganttlink[link type=dr]{it3}{it4}								
-    \ganttlink[link type=dr]{it4}{it5} 							
-    
-    \ganttlink[link type=dr]{it5}{m_suff_func}						
-    \ganttlink[link type=dr]{it2}{onderzoekscontext}
-\end{ganttchart}
-} % gray
-\caption{Globale planning met hoofdfasen en belangrijkste mijlpalen}
-\end{figure}
 
 \pagebreak
 
 \begin{figure}[hp]
 \begin{ganttchart}[
-    hgrid,vgrid,
+	today={37}, % the largest value, as it is finished on 07-02-2015 (febr)
+	today rule/.style={draw=blue, dashed, ultra thick},
+	today label=7 febr 2015,
+	progress=today,
+	progress label text={},
+    %hgrid,vgrid,
     y unit chart=.9cm,
-    %today=36,
     inline,
     group/.append style={draw=black,fill=blue!90},
     bar/.append style={draw=black,fill=green!50}
@@ -172,14 +139,19 @@
   \ganttlink[link type=dr]{elem6}{elem7}
 
 \end{ganttchart}
-\caption{Detailplanning 'Planning'}
+\caption{Detailplanning 'Planning' (gereed bij wijziging op 7 febr 2015)}
 \end{figure}
 
 \pagebreak
 
 \begin{figure}[hp]
 \begin{ganttchart}[
-    hgrid,vgrid,
+	today={32}, % the largest value, as it is finished on 07-02-2015 (febr)
+	today rule/.style={draw=blue, dashed, ultra thick},
+	today label=7 febr 2015,
+	progress=today,
+	progress label text={},
+    %hgrid,vgrid,
     y unit chart=.9cm,
     inline,
     group/.append style={draw=black,fill=blue!90},
@@ -193,13 +165,14 @@
   \gantttitlelist{17,...,31}{1}
   \gantttitlelist{1,...,18}{1}\\
 
-  \ganttmilestone[name=consensus, milestone inline label node/.style={anchor=west},milestone inline label anchor=east]{Stakeholder consensus}{0.5} \\
+  \ganttmilestone[name=consensus, milestone inline label node/.style={anchor=west},
+  					milestone inline label anchor=east]{Stakeholder consensus}{0.5} \\
   \ganttbar[name=demo,
 	bar inline label node/.style={anchor=west},bar inline label anchor=east]{Demonstratie WickedXmas}{2}{2} \\
   %% Domein analyse Guus (GB)
   \ganttbar[name=gb1]{Domeinanalyse GB}{3}{22}
   \ganttbar[name=gb2,bar/.style={fill=gray}]{}{23}{29}
-  \ganttlinkedmilestone[name=dagb]{}{30}\\
+  \ganttlinkedmilestone[name=dagb,progress label text={}]{}{30}\\
   %% Domein analyse Jeroen (JK)
   \ganttbar[name=jk1]{}{3}{4}
   \ganttlinkedbar[name=jk2]{Domeinanalyse JK}{9}{27}
@@ -216,7 +189,7 @@
   \ganttlink[link type=dr]{demo}{sv1}
 
 \end{ganttchart}
-\caption{Detailplanning 'Domeinanalyse'}
+\caption{Detailplanning 'Domeinanalyse' (gereed bij wijziging op 7 febr 2015)}
 \end{figure}
 
 %%\restoregeometry
@@ -231,130 +204,90 @@ Domeinanalyse        & 3 \\
 \hline
 Iteratie 0           & 3 \\
 Iteratie 1           & 3 \\
-Iteratie 2           & 3 \\
-Iteratie 3           & 3 \\
-Iteratie 4           & 3 \\
-Iteratie 5           & 3 \\
+Stap 1				& 11 \\
+Stap 2				& 8 \\
+Stap 3				& 6 \\
 \hline
-Onderzoekscontext     &	2 \\
-Afronding	     & 1.5 \\
+Onderzoekscontext     &	 \\
+Afronding	     & 3 \\
 \hline
-Totaal               & 27 \\
+Totaal               & 40 \\
 \end{tabular}
 \caption{Studielast taken}
 \end{figure}
 
 \begin{figure}[h]
-\begin{tabular}{llp{7cm}}\hline
-{\bf Week}    & {\bf Taak}  & {\bf Toelichting}\\\hline
-38-42         & Planning    \\
-42-45         & Domeinanalyse & 4 weken ingepland i.v.m. vakanties Stefan \& Jeroen \\
-46-48         & Iteratie 0    \\
-49-51         & Iteratie 1    \\
-52-1          &               & vakantieperiode, mogelijk
+\begin{tabular}{lllp{7cm}}\hline
+{} & {\bf Week}    & {\bf Taak}  & {\bf Toelichting}\\\hline
+2014 & 38-42         & Planning    \\
+2014 & 42-45         & Domeinanalyse & 4 weken ingepland i.v.m. vakanties Stefan \& Jeroen \\
+2014 & 46-48         & Iteratie 0    \\
+2014 & 49-51         & Iteratie 1    \\
+2014 & 52-1          &               & vakantieperiode, mogelijk
 				individueel (bijvoorbeeld onderzoekscontext) \\
-2-4           & Iteratie 2    \\
-5-7           & Iteratie 3    \\
-8-10          & Iteratie 4    \\
-11-13         & Iteratie 5    \\
+2015 & 2-10           & Stap 1    \\
+2015 & 11-17           & Stap 2    \\
+2015 & 18-22          & Stap 3    \\
 
-5-14          & Onderzoekcontext & Uitvoering parallel aan de iteraties \\
-15-16         & Afronding     \\
+2015 & 11-22          & Onderzoekcontext & Uitvoering parallel aan de iteraties \\
+2015 & 23-25         & Afronding     \\
 
-22            & Mijlpaal einde project
+2015 & 26            & Mijlpaal einde project (presentatie)
 \end{tabular}
 \caption{Planning taken}
 \end{figure}
 
 \begin{itemize}
- \item looptijd project: tot eind mei (36 weken)
+ \item looptijd project: tot begin juli (40 weken)
  \begin{itemize}
-  \item 27 weken effectief voor het project  (27 weken * 15 uur/week = 405 uur)
+  \item 40 weken effectief voor het project  (40 weken * 15 uur/week = 600 uur)
   \item 3 weken vakantie
-  \item 6 weken speling
+  \item geen speling
  \end{itemize}
- \item De detailplanning van een fase wordt telkens in de voorafgaande fase uitgewerkt.
 \end{itemize}
-
-\paragraph{Planning iteraties}
-
- \begin{center}
-    \begin{figure}[ht]
-	\begin{ganttchart}[
-	    hgrid,vgrid,
-	    y unit chart=.9cm,
-	    inline,
-	    group/.append style={draw=black,fill=blue!90},
-	    bar/.append style={draw=black,fill=green!50}
-	]{0}{22}
-	\gantttitle{Planning iteraties}{21} \\
-	\gantttitlelist{,1,...,21}{1} \\
-	\ganttbar[name=start,inline=false,bar label font=\color{blue}]{Overleg start iteratie}{1}{1} \\
-	\ganttbar[name=overleg,inline=false,bar label font=\color{blue}]{Overleg voortgang}{12}{12} \\
-	\ganttbar[name=demo,inline=false,bar label font=\color{blue}]{Demonstratie software en release}{19}{19}
-	\ganttnewline[thick,blue]
-	\ganttbar[name=req]{Requirements}{1}{7} \\
-	\ganttbar[name=dev]{Ontwikkeling}{3}{17} \\
-	\ganttbar[name=doc]{Documentatie}{10}{18}
-	\ganttlinkedmilestone[name=rel]{Release}{21}
-	\ganttnewline[thick,blue]
-	\ganttbar[name=scriptie]{Scriptie}{19}{21} \\
-	\ganttbar[name=onderzoekscontext]{Context}{19}{21}
-
-	\ganttlink[link type=ur]{dev}{demo}
-	\ganttlink{doc}{rel}
-	\end{ganttchart}
-    \caption{Globale planning iteraties}
-    \end{figure}
- \end{center}
-
-
-Elke iteratie omvat een vaste periode van 3 weken.
-De exacte verdeling van de beschikbare tijd over de taken verschilt per iteratie.
-In de eerste iteraties zal bijvoorbeeld relatief meer tijd worden besteed aan requirements.
-Aan het einde van een iteratie wordt een voorlopige release van de software aan de
-opdrachtgever verstrekt. De laatste twee dagen zijn gereserveerd voor het werken
-aan het scriptieverslag en de onderzoekscontext. In deze periode vindt
-ook een evaluatie plaats van de afgelopen iteratie. \\
-Voor het vaststellen van de requirements zal regelmatig overleg met Bernard plaats
-moeten vinden. Hiervoor is het belangrijk dat in de detailplanning van een iteratie
-rekening wordt gehouden met de beschikbaarheid van Bernard.
 
 \pagebreak
 
 \paragraph{Capaciteitsplanning}
 
-\begin{itemize}
- \item Beschikbare tijd
- \begin{itemize}
-  \item $\sim$15 uur per week per teamlid
-  \item $\sim$30 uur gedurende het hele project voor Freek en $\sim$20 uur voor Bernard
-        gereserveerd vanuit het ABI. Freek en Bernard hebben echter aangegeven dat zij graag
-        intensief betrokken worden tijdens het project. Zij zullen dus meer tijd willen
-        en kunnen vrijmaken. Afgesproken is dat wij op elk moment contact op kunnen nemen.
-        Zodra wij te veel van hun tijd in beslag nemen zullen zij dat aangeven.
- \end{itemize}
+\begin{aanpassing1}
+	\begin{itemize}
+	 \item Beschikbare tijd
+	 \begin{itemize}
+	  \item $\sim$15 uur per week per teamlid
+	  \item {\gray $\sim$30 uur gedurende het hele project voor Freek en $\sim$20 uur voor Bernard
+	        gereserveerd vanuit het ABI. Freek en Bernard hebben echter aangegeven dat zij graag
+	        intensief betrokken worden tijdens het project. Zij zullen dus meer tijd willen
+	        en kunnen vrijmaken. Afgesproken is dat wij op elk moment contact op kunnen nemen.
+	        Zodra wij te veel van hun tijd in beslag nemen zullen zij dat aangeven.
+	        }% gray
+	  \item Bernard heeft weinig tijd door zijn nieuwe verantwoordelijkheden. Freek is voor
+	  		3 maanden naar Amerika. We limiteren het contact met Freek tot incidenteel email 
+	  		en met Bernard tot email en geplande skype sessies. 
+	 \end{itemize}
 
 
- \item Vakanties / niet beschikbaar voor project
- \begin{itemize}
+	 \item Vakanties / niet beschikbaar voor project
+	 \begin{itemize}
 
-  \item Stefan
-  \begin{itemize}
-   \item 25-10-2014 t/m 31-01-2014 (week 44)
-   \item 24-12-2014 t/m 02-01-2015 (week 52-01)
-  \end{itemize}
+	  \item Stefan
+	  \begin{itemize}
+	   \item {\gray 25-10-2014 t/m 31-01-2014 (week 44)}
+	   \item {\gray 24-12-2014 t/m 02-01-2015 (week 52-01)}
+	  \end{itemize}
 
-  \item Jeroen
-  \begin{itemize}
-   \item 21-10-2014 t/m 25-10-2014 (week 43)
-  \end{itemize}
+	  \item Jeroen
+	  \begin{itemize}
+	   \item {\gray 21-10-2014 t/m 25-10-2014 (week 43)}
+	  \end{itemize}
 
-  \item Bernard
-   \begin{itemize}
-    \item 04-10-2014 t/m 14-10-2014 (week 41-42)
-    \item 20-10-2014 t/m 27-10-2014 (week 43-44)
-   \end{itemize}
+	  \item Bernard
+	   \begin{itemize}
+	    \item {\gray 04-10-2014 t/m 14-10-2014 (week 41-42)}
+	    \item {\gray 20-10-2014 t/m 27-10-2014 (week 43-44)}
+	    \item 09-01-2015 t/m 19-01-2015 (week 2-3)
+	   \end{itemize}
 
- \end{itemize}
-\end{itemize}
+	 \end{itemize}
+	\end{itemize}
+\end{aanpassing1}
