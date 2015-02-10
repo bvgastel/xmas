@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt,final,xcolor=dvipsnames]{article}
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
@@ -28,6 +28,7 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 \usepackage[framemethod=tikz]{mdframed}
+\usepackage{xcolor}
 
 \bibliographystyle{alpha}
 
@@ -36,7 +37,7 @@
 \hyphenation{re-quire-ments re-quire-ment}
 
 \author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
-\date{21/10/2014}
+\date{21/10/2014 \\ \fcolorbox{black}{green!40}{Wijziging 10 februari 2015}}
 
 \title{Plan van aanpak voor \xmas\ ontwerptool}
 
@@ -68,6 +69,9 @@
 		frametitlerule=true,%
 		frametitlebackgroundcolor=blue!20!green,%
 		frametitle=Aanpassing febr 2015]{aanpassing1}%
+
+\def\aanp1#1{\colorbox{green!40}{#1}}		
+%\newcommand{\aanp1}[1]{\fcolorbox{black}{green!40}{#1}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,10 +111,11 @@
  \begin{aanpassing1}
  Naar aanleiding van nieuwe omstandigheden binnen de \ou en de daarmee gepaard 
  gaande vermindering van communicatie sinds december 2014, hebben we het plan
- aangepast aan de nieuwe omstandigheden en de huidige inzichten. 
+ aangepast aan de nieuwe omstandigheden en de huidige inzichten. Met name het de 
+ sectie over risico's is aangepast. Wijzigingen staan in groene kaders.
  
- De meeste toevoegingen staan in groene kaders (zoals deze), zaken die
- niet geldig meer zijn, staan in licht grijs en zijn aangevuld met de vervanging.
+ De planning blijft ongewijzigd.
+ 
  \end{aanpassing1}
 
 \end{abstract}

@@ -133,6 +133,16 @@ Hieronder een lijst van uitdagingen (challenges). Tijdens de voorbereidingsfasen
  \item[functie] Het ontwerptool ondersteunt de primitieven en hun samenwerking zoals gespecificeerd in het \xmas\ paper \cite{chatterjee-kishinevsky:xmas}.
 		Het  huidige ontwerp tool: WickedXMas geeft de richting aan implementatie van de functionaliteit en de interface, maar is
 		niet beperkend of maatgevend daarvoor.
+ \item[Verminderde communicatie] 
+  \begin{aanpassing1}
+ Sinds december 2014 is de communicatie drastisch verminderd. Eind januari 2015 licht Bernard toe waarom: 
+ organisatie wijzigingen. Het gevolg is dat Bernard 50\% van zijn tijd les gaat 
+ geven en de lessen op korte termijn van vervroegd gepensioneerde docenten overneemt. 
+ Freek gaat 3 maanden naar Amerika. Dit heeft gevolgen voor de intensiviteit van 
+ communicatie. Met name in een agile omgeving kan dit consequenties hebben. 
+ E\'{e}n gevolg hebben we al gemerkt: in december moesten we aannames doen over 
+ het datamodel, dat we eind januari weer konden terugdraaien na overleg met Bernard.
+ \end{aanpassing1}
 \end{description}
 
 
@@ -163,7 +173,15 @@ Het project is mislukt als het ontwerp tool geen succes is.
 De onderkende risico's zijn vooral projectrisico's. De meeste projectrisico's komen voort uit de
 geografische spreiding van het team (i.e. de studenten) en opdrachtgever
 en begeleider. Diverse maatregelen zijn dan ook gericht op het verminderen
-van de risico's die de spreiding veroorzaakt.
+van de risico's die de spreiding veroorzaakt. 
+
+\begin{aanpassing1}
+Sinds december 2014 komen daar de risico's als gevolg van communicatie 
+vermindering bij: zie sectie \ref{sec: challenges goals}. E\'{e}n van de 
+gevolgen kan zijn onvoldoende of trage feedback met als gevolg een eindproduct 
+dat minder goed op de wensen is afgestemd binnen de gestelde planning. Een ander 
+gevolg kan zijn dat we deels werk opnieuw moeten doen omdat we uitgaan van aannames. 
+\end{aanpassing1}
 
 Het gaat om herstructureren dan wel herbouwen van bestaande programmatuur. Daarom zijn er weinig systeemrisico's.
 De inhoudelijke kennis is bij de opdrachtgever en de begeleider aanwezig. Het grootste systeemrisico is het kiezen
@@ -188,8 +206,8 @@ Voor de productie van chip ontwerpen begint het werkelijke ontwerpproces in grot
     \begin{supertabular}{|c|p{23em}|p{13em}|}
 	1	& \multicolumn{2}{c|}{\sf\emph{\large vertraging in het project of de oplevering}}
 		\\\hline
-		& Stakeholders niet beschikbaar wanneer dat gewenst is
-		& skype(1),email(2),contact momenten(1a)
+		& Stakeholders niet beschikbaar wanneer dat gewenst is \aanp1{(gerealiseerd risico)}.
+		& skype(1),email(2),contact momenten(1a), \aanp1{aannames doen}
 		\\\hline
 		& Agile methode is nieuw voor teamleden.
 		& DAD(8), tools(6a, 6b, 6c)
@@ -231,6 +249,12 @@ Voor de productie van chip ontwerpen begint het werkelijke ontwerpproces in grot
 		  in productie name van chips\footnote{Zie open vragen}.
 		& testen en feedback users, eventueel beta versie
 		\\\hline
+		& \begin{aanpassing1}Onvoldoende of trage feedback 
+		met als gevolg dat het eindproduct niet volledig 
+		naar de wensen van de opdrachtgever is.\end{aanpassing1}
+		& \begin{aanpassing1}Minstens 1 skype contactmoment per iteratie.
+		\end{aanpassing1}
+		\\\hline
         \end{supertabular}
 \end{center}
 
@@ -246,7 +270,8 @@ Voor de productie van chip ontwerpen begint het werkelijke ontwerpproces in grot
     \begin{supertabular}{|r|p{17em}|p{20em}|}
     \hline
 	{\bf id} & {\bf Maatregel} & {\bf Toelichting} \\\hline
-	1 & Gepland overleg via skype & Dit verzekert een minimaal contact met opdrachtgever en begeleider \\\hline
+	1 & \begin{aanpassing1}Gepland overleg via skype, minstens 1x per iteratie\end{aanpassing1}
+	 & Dit verzekert een minimaal contact met opdrachtgever en begeleider \\\hline
 	1a & vaste communicatiemomenten afspreken & Dit vermindert het effect van risioco 1 (stakeholder beschikbaarheid)\\\hline
 	2 & Tussentijds contact via email & Dit vult de communicatietijd aan tot wat nodig is. Nadeel is
 					een kans op vertraging.\\\hline
@@ -273,5 +298,10 @@ Voor de productie van chip ontwerpen begint het werkelijke ontwerpproces in grot
 			    architectuur. Dit beperkt het gevaar van te vroeg implementeren\\\hline
 	12 & Architectuur & Vergroot de kans dat de structuur a priori geschikt is voor de applicatie en
 			    voor de nieuwe features.\\\hline
+	
+	13 & \begin{aanpassing1}Aannames doen\end{aanpassing1} & \begin{aanpassing1}Voor kleinere zaken gaan we aannames doen. Alleen voor de duidelijk
+	grotere zaken vragen we expliciet toestemming. Dit bevordert de voortgang. Oorzaak van deze 
+	maatregel is het ontbreken van onmiddelijke feedback (normaliter onderdeel van de agile aanpak).
+	\end{aanpassing1}\\\hline
     \end{supertabular}
 \end{center}
