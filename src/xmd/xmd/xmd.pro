@@ -60,16 +60,9 @@ RESOURCES += \
 
 FORMS +=
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
-#else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/debug/ -lbitpowder
+else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/ -lbitpowder
 
-#INCLUDEPATH += $$PWD/../bitpowder
-#DEPENDPATH += $$PWD/../bitpowder
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
-#else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
-
-#INCLUDEPATH += $$PWD/../datamodel
-#DEPENDPATH += $$PWD/../datamodel
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder

@@ -39,6 +39,7 @@
 #include <QtQml>
 
 #include "controller.h"
+#include "simplestring.h"
 //#include "common.h"
 
 Controller::Controller(QObject* parent)

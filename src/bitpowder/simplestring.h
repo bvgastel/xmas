@@ -26,9 +26,9 @@ extern "C" {
 #include <strings.h>
 #include <limits.h>
 
-#ifdef __MINGW32__
-int strncasecmp (const char *sz1, const char *sz2, size_t sizeMaxCompare);
-#endif
+//#ifdef __MINGW32__
+//int strncasecmp (const char *sz1, const char *sz2, size_t sizeMaxCompare);
+//#endif
 }
 
 #include <cctype>
