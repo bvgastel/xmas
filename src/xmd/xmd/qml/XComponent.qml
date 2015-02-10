@@ -49,11 +49,26 @@ Item {
     orientation: Xmas.North
     property bool selected: false
     scale: 1.00
-    //transformOrigin: Item.TopLeft
+    property bool withDialog: false
 
     signal update()
     signal showDialog()
     signal boundReached(var dx, var dy)
+
+    //name tag
+    TextInput {
+        text: name
+        rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
+        color: "blue"
+        wrapMode: TextInput.NoWrap
+        anchors.bottomMargin: 2
+        font.pointSize : 12
+        anchors.left: parent.left
+        anchors.bottom: parent.top
+        onEditingFinished: {name = text; focus = false}
+        onFocusChanged: if(focus)selectAll()
+    }
+
 
     MouseArea {
         anchors.fill: component
@@ -84,6 +99,7 @@ Item {
         onWheel: {
             if (wheel.modifiers & Qt.ControlModifier) {
                 component.rotation -= wheel.angleDelta.y /120 * 90;
+                component.rotation %= 360.0
                 if (Math.abs(component.rotation) < 45)
                     component.rotation = 0;
                 if (Math.abs(component.rotation) > 315)
@@ -115,20 +131,6 @@ Item {
         opacity: 0.5
         z:-1
     }
-
-
-    TextInput {
-        text: name
-        rotation: -parent.rotation
-        color: "blue"
-        wrapMode: TextInput.NoWrap
-        font.pointSize : 12
-        anchors.left: parent.left
-        anchors.top: parent.top
-        onEditingFinished: {name = text; focus = false}
-        onFocusChanged: if(focus)selectAll()
-    }
-
 
     Connections {
         target: parent
@@ -181,10 +183,11 @@ Item {
     Menu {
         id: contextMenu
         MenuItem {
+            visible: withDialog
             text: "Properties"
             onTriggered: component.showDialog()
         }
-        MenuSeparator{}
+        MenuSeparator{visible: withDialog}
         MenuItem {
             text: "Delete"
             onTriggered: Ctrl.destroy(component)
