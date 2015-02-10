@@ -44,4 +44,4 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-bitpowder-Desk
 else:unix: LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../build-bitpowder-Desktop-Debug
+DEPENDPATH += $$PWD/../bitpowder
