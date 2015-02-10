@@ -9,88 +9,21 @@
  %% dit onderdeel moet vermoedelijk in het schedule plan
 
 %\pagebreak
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% Aanpassing1 febr 2015 %%%%%%%%%%%%%%%%%%%%%%%%
-
-\newgeometry{top=5mm,left=10mm,bottom=5mm,right=-90mm}
-
-\ganttset{%
-	calendar week text={%
-		%\pgfcalendarmonthshortname{\startmonth}~\startday, \startyear%
-		\calendarweek{\startday}{\startmonth}{\startyear}%
-	}%
-}
-
-\begin{ganttchart}[
-	today={2015-02-07}, today rule/.style={draw=blue, dashed, ultra thick},
-	progress=today,
-	%hgrid,
-	%vgrid,
-	x unit=0.9mm,
-	y unit chart=9mm,
-	inline,
- 	group/.append style={draw=black,fill=blue!90},
-	bar/.append style={draw=black,fill=green!50},
-	milestone/.append style={draw=black, shape=circle, fill=gray, rounded corners=3mm},
-	milestone complete /.style={draw=black, shape=circle, fill=green, rounded corners=3mm},
-	milestone incomplete /.style={draw=black, shape=circle, fill=gray, rounded corners=3mm},
-%	milestone progress label text={},
-	time slot format=isodate
-]{2014-09-15}{2015-07-12}
-	\gantttitlecalendar{year, month=name, week} \\
-	\ganttgroup{Inceptie}{2014-09-15}{2014-11-16} \\
-
-	\ganttbar[name=planning]{Planning}{2014-09-15}{2014-10-19} \\
-	\ganttmilestone[name=m_planning,progress label text={}]{Stakeholder consensus}{2014-10-19} \\
-
-	\ganttbar[name=domein]{Domein}{2014-10-20}{2014-11-16} \\
-	\ganttmilestone[name=m_da,progress label text={}]{Domeinanalyse}{2014-11-16} \\
-
-	\ganttgroup{Constructie}{2014-11-17}{2015-06-14} \\
-	\ganttgroup[name=onderzoekscontext]{Onderz context}{2015-03-09}{2015-06-14} \\
-
-	\ganttbar[name=it0]{Iter 0}{2014-11-17}{2014-12-01} \\
-	\ganttmilestone[name=m_architecture,progress label text={}]{Proven Architecture}{2014-12-02} \\
-	\ganttbar[name=it1]{Iter 1}{2014-12-02}{2014-12-23} \\
-	\ganttbar[name=step1]{Step 1}{2014-12-23}{2015-03-08} \\
-	\ganttbar[name=step2]{Step 2}{2015-03-09}{2015-05-24} \\
-	\ganttbar[name=step3]{Step 3}{2015-05-25}{2015-06-14} \\
-	\ganttgroup{Transitie}{2015-06-15}{2015-07-05} \\
-	\ganttbar[name=afronding]{Afronding}{2015-06-15}{2015-07-05} \\
-	\ganttmilestone{presentation,progress label text={}}{2015-07-05}
-	
-	\ganttlink[link type=dr]{planning}{m_planning}
-	\ganttlink[link type=dr]{m_planning}{domein}
-	\ganttlink[link type=dr]{domein}{m_da}
-	\ganttlink[link type=dr]{it0}{m_architecture}
-	\ganttlink[link type=dr]{m_architecture}{it1}
-	\ganttlink[link type=dr]{it1}{step1}
-	\ganttlink[link type=dr]{step1}{step2}
-	\ganttlink[link type=dr]{step2}{step3}
-	\ganttlink[link type=dr]{step3}{afronding}
-%	\ganttlink[link type=dr]{onderzoekscontext}{afronding} // % No link for onderzoekscontext 
-\end{ganttchart}
-
-%%%%%%%%%%%%%%%%%%%%%% Einde Aanpassing1 febr 2015 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \newgeometry{top=0.5cm,left=0.5cm,bottom=0.5cm,right=-5cm}
+
 \setganttlinklabel{f-s}{}
 
 \begin{figure}[hp]
-{\gray \begin{ganttchart}[hgrid,vgrid,y unit chart=.9cm,
+\begin{ganttchart}[hgrid,vgrid,y unit chart=.9cm,
 	%today=4,
 	inline,
 	group/.append style={draw=black,fill=blue!90},
 	bar/.append style={draw=black,fill=green!50}
-	]{0}{42}
+	]{0}{37}
  \gantttitle{2014}{15}
- \gantttitle{2015}{28} \\
+ \gantttitle{2015}{22} \\
  \gantttitlelist{38,...,52}{1}
- \gantttitlelist{1,...,28}{1} \\
+ \gantttitlelist{1,...,22}{1} \\
 
  \ganttgroup{Inceptie}{1}{8} \\
 
@@ -106,15 +39,16 @@
  \ganttmilestone[name=m_architecture]{Proven Architecture}{11} \\
  \ganttbar[name=it1]{Iter 1}{12}{14} \\
  \ganttbar[name=it2]{iter 2}{17}{19} \\
-	 	\ganttbar[name=it3]{Iter 3}{20}{22} \\
- 		\ganttbar[name=it4]{Iter 4}{23}{25} \\
- 		\ganttbar[name=it5]{Iter 5}{26}{28} \\
+ \ganttbar[name=it3]{Iter 3}{20}{22} \\
+ \ganttbar[name=it4]{Iter 4}{23}{25} \\
+ \ganttbar[name=it5]{Iter 5}{26}{28} \\
 
  \ganttmilestone[name=m_suff_func]{Sufficient functionality}{28} \\
 
  \ganttgroup{Transitie}{29}{31} \\
  \ganttbar[name=afronding]{Afronding}{30}{32}\\
  \ganttbar[name=onderzoekscontext]{Onderzoekscontext}{20}{29} \\
+ %\ganttbar[bar/.style={fill=gray}]{}{32}{37} \\
  \ganttbar[bar/.style={}]{}{32}{37} \\
  \ganttmilestone{Delighted stakeholders}{37}
 
@@ -123,15 +57,14 @@
     \ganttlink[link type=dr]{domein}{m_da}
     \ganttlink[link type=dr]{it0}{m_architecture}
     \ganttlink[link type=dr]{m_architecture}{it1}
-    \ganttlink[link type=dr]{it1}{it2}	
+    \ganttlink[link type=dr]{it1}{it2}
     \ganttlink[link type=dr]{it2}{it3}
-    \ganttlink[link type=dr]{it3}{it4}								
-    \ganttlink[link type=dr]{it4}{it5} 							
-    
-    \ganttlink[link type=dr]{it5}{m_suff_func}						
+    \ganttlink[link type=dr]{it3}{it4}
+    \ganttlink[link type=dr]{it4}{it5}
+    \ganttlink[link type=dr]{it5}{m_suff_func}
     \ganttlink[link type=dr]{it2}{onderzoekscontext}
+
 \end{ganttchart}
-} % gray
 \caption{Globale planning met hoofdfasen en belangrijkste mijlpalen}
 \end{figure}
 

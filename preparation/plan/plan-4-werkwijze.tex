@@ -87,15 +87,10 @@ Mijlpalen :
 \end{itemize}
 
 \subsubsection{Contact momenten met opdrachtgever}
-Het ontwerp tool is voor de research naar chip ontwerpen van belang in verband 
-met correctheid en toetsen van chip ontwerpen op globaal niveau, voordat de 
-daadwerkelijke detail ontwerp en productie van chips begint. Voor de 
-opdrachtgever is het ontwerp tool {\gray dermate} belangrijk genoeg dat hij graag op de 
-hoogte is van {\gray zowel} wat we bouwen {\gray als hoe we het bouwen}.
-
-\begin{quote}
-{\gray\tiny In overleg met de opdrachtgever kiezen we daarom voor een relatief intens schema van 
-contact. De opdrachtgever blijft zo goed in contact met wat we oplossen en
+Het ontwerp tool is voor de research naar chip ontwerpen van belang in verband met correctheid en toetsen van chip ontwerpen op
+globaal niveau, voordat de daadwerkelijke detail ontwerp en productie van chips begint. Voor de opdrachtgever is het ontwerp tool dermate belangrijk dat
+hij graag op de hoogte is van zowel wat we bouwen als hoe we het bouwen.
+In overleg met de opdrachtgever kiezen we daarom voor een relatief intens schema van contact. De opdrachtgever blijft zo goed in contact met wat we oplossen en
 hoe we het oplossen. Deze keuze stemt overeen met het karakter van agile ontwikkelen.
 \begin{description}
     \item[Start iteratie] Aan het begin van de iteratie zit een fase van requirements ordenen, prioriteiten geven en selecteren voor implementatie.
@@ -104,26 +99,3 @@ hoe we het oplossen. Deze keuze stemt overeen met het karakter van agile ontwikk
     \item[Demo en evaluatie] Aan het einde van de iteratie tonen de teamleden het gebouwde onderdeel en evalueren het resultaat samen met de opdrachtgever.
     \item[Ad hoc] Bij tussentijdse vragen of behoefte aan bevestiging kunnen de teamleden contact opnemen met de opdrachtgever.
 \end{description}
-}
-\end{quote}
-
-\begin{aanpassing1}
-De communicatie met de opdrachtgever vermindert drastisch. Zie \ref{aanp1: toelichting} voor de beschrijving van de oorzaak en onze invulling.
-
-We werken het vervolg in 3 stappen af. Het eindresultaat is een designer waar je netwerken kan definieren inclusief composites, exclusief 
-geparametriseerde objecten. Op de achtergrond draaien we automatisch en periodiek de simpele checks en 
-laten het resultaat verbaal dan wel visueel zien (kleurtjes en dergelijke). Dat betekent
-
-\paragraph{Stap 1. inititiele integratie} 
-
-We integreren het datamodel van Bernard met onze huidige designer. Hierbij doen we alleen wijzigingen als dat nodig is.
-
-\paragraph{Stap 2. composite toevoegen}
-
-We breiden de implementatie uit met composites. Dat betekent dat we het datamodel van Bernard, uitbreiden met composites en dat opslaan in bestanden (json). Dat houdt ook in, dat we het datamodel moeten platslaan voordat een VT ermee aan de slag kan. Dat is een complicatie dat we in het architectuurplaatje voorzien hebben.
-
-\paragraph{Stap 3. Achtergrond VT}
-
-We breiden de designer uit met een control programma dat de syntax checker en combinatorische checker op de achtergrond uitvoert en melding via een textscherm doorgeeft. Daarnaast de optie om op verzoek andere VTs te kunnen draaien (dus niet on the fly). De kleurtjes is een extratje.
-
-\end{aanpassing1}
