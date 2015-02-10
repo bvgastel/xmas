@@ -17,15 +17,21 @@
     linkcolor = blue
 }
 \usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{tikz}
 \usepackage{pgfgantt}
+\usepackage{pgfcalendar}
 \usepackage{pdflscape}
+\usepackage{xspace}
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
 \usepackage{boxedminipage}
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
+\usepackage[framemethod=tikz]{mdframed}
 
 \bibliographystyle{alpha}
+
+\input{calendarweek}
 
 \hyphenation{re-quire-ments re-quire-ment}
 
@@ -45,10 +51,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\xmas}{x\textsc{mas}}%
 \newcommand{\ok}{$\checkmark$}
-
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
+\newcommand{\ou}{\textsc{OU}\xspace}
+\newcommand{\een}{\'{e}\'{e}n\xspace}
 
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Definitie aanpassing1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\global\mdfdefinestyle{aanpassing}{%
+	roundcorner=5pt%
+}%
+\newmdenv[backgroundcolor=green!40,%
+		linewidth=2pt,%
+		style=aanpassing,%
+		frametitlerule=true,%
+		frametitlebackgroundcolor=blue!20!green,%
+		frametitle=Aanpassing febr 2015]{aanpassing1}%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\secformat[1]{%
@@ -83,6 +103,15 @@
 
  Het resultaat van het project is een gedocumenteerd ontwerptool, dat voor
  3 platformen gebouwd is en goed integreert met de bestaande tools voor verificatie.
+
+ \begin{aanpassing1}
+ Naar aanleiding van nieuwe omstandigheden binnen de \ou en de daarmee gepaard 
+ gaande vermindering van communicatie sinds december 2014, hebben we het plan
+ aangepast aan de nieuwe omstandigheden en de huidige inzichten. 
+ 
+ De meeste toevoegingen staan in groene kaders (zoals deze), zaken die
+ niet geldig meer zijn, staan in licht grijs en zijn aangevuld met de vervanging.
+ \end{aanpassing1}
 
 \end{abstract}
 
