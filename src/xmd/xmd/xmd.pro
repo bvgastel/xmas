@@ -61,9 +61,9 @@ RESOURCES += \
 
 FORMS +=
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/debug/ -lbitpowder
-else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop_Qt_5_4_0_MinGW_32bit-Debug/ -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
+else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
 
 INCLUDEPATH += $$PWD/../../bitpowder
 DEPENDPATH += $$PWD/../../bitpowder
