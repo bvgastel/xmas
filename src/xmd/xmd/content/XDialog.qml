@@ -36,6 +36,7 @@ import XMAS 1.0
 
 //TODO : Replace with a custom frameless dialog
 Dialog {
+    id:dialog
     visible: false
     modality: Qt.WindowModal
     standardButtons: StandardButton.Cancel | StandardButton.Ok

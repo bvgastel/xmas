@@ -53,7 +53,8 @@ DISTFILES += qml/fork.qml \
     content/Selection.qml \
     content/XDialog.qml \
     content/XDialogItem.qml \
-    content/OutputLog.qml
+    content/OutputLog.qml \
+    content/XTag.qml
 
 RESOURCES += \
     xmd.qrc

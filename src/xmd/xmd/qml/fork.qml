@@ -11,8 +11,6 @@ XComponent {
     XPort {x: 90; y:75; name: "i"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
-        //antialiasing: false
-        //smooth: false
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
@@ -38,6 +36,7 @@ XComponent {
         }
     }
 
+    withDialog: true
     onShowDialog: dialog.visible = true
     XDialog {
         id: dialog

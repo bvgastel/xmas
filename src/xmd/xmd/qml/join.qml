@@ -56,13 +56,13 @@ XComponent {
         }
     }
 
-    //TODO : replace doubleclick with property dialog. Steals mouse events from XComponent
-    MouseArea {
-        anchors.fill: parent
-        onDoubleClicked:{
+
+
+        onShowDialog:{
             ++token
             if(token > 1)token=0
             canvas.requestPaint()
         }
-    }
+
 }
+
