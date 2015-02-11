@@ -101,6 +101,14 @@ TEST_F(JsonPrinterTest, NestedObjects) {
     EXPECT_EQ(R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})", stream.str());
 }
 
+TEST_F(JsonPrinterTest, StreamingNestedObjects) {
+    pr << json_startobj << jsonprop("test-a", 12) << jsonprop("foo", json_startobj) <<
+          jsonprop("bar", "nested object!") << json_endobj << json_endprop <<
+          jsonprop("test-b", -23) << json_endobj;
+
+    EXPECT_EQ(R"({"test-a":12,"foo":{"bar":"nested object!"},"test-b":-23})", stream.str());
+}
+
 
 TEST_F(JsonPrinterTest, EmptyArray) {
     pr.startArray();
@@ -152,6 +160,19 @@ TEST_F(JsonPrinterTest, ArrayInObject) {
     EXPECT_EQ(R"({"array":[null,true,1.00e+12,{},[]]})", stream.str());
 }
 
+TEST_F(JsonPrinterTest, StreamingArrayInObject) {
+    stream.precision(2);
+    stream << std::scientific;
+
+    pr << json_startobj << jsonprop("array", json_startarray) <<
+          jsonnull << true << 1e12 << json_startobj << json_endobj <<
+          json_startarray << json_endarray << json_endarray <<
+          json_endprop << json_endobj;
+
+
+    EXPECT_EQ(R"({"array":[null,true,1.00e+12,{},[]]})", stream.str());
+}
+
 TEST_F(JsonPrinterTest, ArrayOfObjects) {
     pr.startArray();
     pr.startObject();
@@ -185,17 +206,26 @@ TEST_F(JsonPrinterTest, StringEncoding) {
 }
 
 TEST_F(JsonPrinterTest, StreamingObject) {
-    pr.startObject();
-    pr << jsonprop("num", -5.55) << jsonprop("str", "<< streaming operator <<") << jsonprop("test", true) << jsonprop("nil", jsonnull);
-    pr.endObject();
+    pr << json_startobj << jsonprop("num", -5.55) << jsonprop("str", "<< streaming operator <<") <<
+          jsonprop("test", true) << jsonprop("nil", jsonnull) << json_endobj;
 
     EXPECT_EQ(R"({"num":-5.55,"str":"<< streaming operator <<","test":true,"nil":null})", stream.str());
 }
 
 TEST_F(JsonPrinterTest, StreamingArray) {
-    pr.startArray();
-    pr << -5.55 << "<< streaming operator <<" << true << jsonnull;
-    pr.endArray();
+    pr << json_startarray << -5.55 << "<< streaming operator <<" << true << jsonnull << json_endarray;
 
     EXPECT_EQ(R"([-5.55,"<< streaming operator <<",true,null])", stream.str());
+}
+
+TEST_F(JsonPrinterTest, StreamingPlainValueInObject) {
+    ASSERT_THROW({
+        pr << json_startobj << 100 << json_endobj;
+    }, JsonPrinter::InvalidStateException);
+}
+
+TEST_F(JsonPrinterTest, StreamingPropertyInArray) {
+    ASSERT_THROW({
+        pr << json_startarray << jsonprop("bad-property", 100) << json_endarray;
+    }, JsonPrinter::InvalidStateException);
 }
