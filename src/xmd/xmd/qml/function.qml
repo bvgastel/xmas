@@ -4,20 +4,20 @@ import XMAS 1.0
 
 XComponent {
     width: 100
-    height: 100
+    height: 50
     type: "function"
-    XPort {x: 0; y: 45; name: "t"; type:Xmas.Target}
-    XPort {x: 90; y:45; name: "i"; type:Xmas.Initiator}
+    XPort {x: 0; y: 20; name: "t"; type:Xmas.Target}
+    XPort {x: 90; y:20; name: "i"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 3.0
-            ctx.moveTo(10 ,50)
-            ctx.lineTo(90,50)
-            ctx.moveTo(30 ,30)
-            ctx.lineTo(70,70)
+            ctx.moveTo(10 ,25)
+            ctx.lineTo(90,25)
+            ctx.moveTo(30 ,5)
+            ctx.lineTo(70,45)
             ctx.stroke()
         }
     }

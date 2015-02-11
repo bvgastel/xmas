@@ -50,6 +50,7 @@ Item {
     property bool selected: false
     scale: 1.00
     property bool withDialog: false
+    property bool topLabel: true
 
     signal update()
     signal showDialog()
@@ -57,17 +58,23 @@ Item {
 
     //name tag
     TextInput {
+        id:label
         text: name
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
         color: "blue"
         wrapMode: TextInput.NoWrap
         anchors.bottomMargin: 2
         font.pointSize : 12
-        anchors.left: parent.left
-        anchors.bottom: parent.top
+        anchors {
+            left: parent.left
+            bottom: topLabel ? parent.top : undefined
+            top: topLabel ? undefined : parent.bottom
+        }
+        //anchors.bottom: parent.top
         onEditingFinished: {name = text; focus = false}
         onFocusChanged: if(focus)selectAll()
     }
+
 
 
     MouseArea {
@@ -115,7 +122,7 @@ Item {
         }
     }
 
-    onRotationChanged: component.update()
+    onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
     onSelectedChanged: focus = selected
 

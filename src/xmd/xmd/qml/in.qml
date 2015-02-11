@@ -14,8 +14,8 @@ XComponent {
             ctx.lineWidth = 3.0
             ctx.moveTo(40,15)
             ctx.lineTo(20,15)
-            ctx.lineTo(0,5)
-            ctx.lineTo(0,25)
+            ctx.lineTo(5,5)
+            ctx.lineTo(5,25)
             ctx.lineTo(20,15)
             ctx.fill()
             ctx.stroke()

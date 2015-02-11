@@ -2,24 +2,25 @@ import QtQuick 2.4
 import XMAS 1.0
 
 XComponent {
-    width: 100
-    height: 100
+    width: 50
+    height: 50
     type: "sink"
-    XPort {x:45; y:20; name: "t"; type:Xmas.Target}
+    XPort {x:20; y:0; name: "t"; type:Xmas.Target}
+    topLabel: false
     Canvas {
         anchors.fill: parent
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 3.0
-            ctx.moveTo(50,30)
-            ctx.lineTo(50,60)
-            ctx.moveTo(30,60)
-            ctx.lineTo(70,60)
-            ctx.moveTo(35,65)
-            ctx.lineTo(65,65)
-            ctx.moveTo(40,70)
-            ctx.lineTo(60,70)
+            ctx.moveTo(25,10)
+            ctx.lineTo(25,35)
+            ctx.moveTo(5,35)
+            ctx.lineTo(45,35)
+            ctx.moveTo(10,40)
+            ctx.lineTo(40,40)
+            ctx.moveTo(15,45)
+            ctx.lineTo(35,45)
             ctx.stroke()
         }
     }
