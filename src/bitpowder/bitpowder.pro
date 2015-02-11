@@ -3,6 +3,27 @@
 # Project created by QtCreator 2015-01-27T15:32:47
 #
 #-------------------------------------------------
+#
+# Instructions for use:
+#
+# 1. When building, the output goes solely to the
+#    build directory. This is usually something
+#    like build-libraryname-platform-compiler
+#    where libraryname, platform and compiler vary.
+# 2. When cleaning, only the build directory is cleaned.
+#
+# 3. When deploying, the library files (both dll/so and
+#    .a) and the header files are copied to the lib and
+#    include directory right below the git-root. This is
+#    the most vulnerable piece of code.
+#    REMARK: when cleaning, this does not get touched.
+# 3a. The include directory has a subdir for this project's
+#     header files.
+#
+# IMPORTANT: Be sure to have qtcreator execute a make install
+#            as one step in the local deployment.
+#
+
 
 QT      -= qt
 QT       -= core gui
@@ -58,7 +79,29 @@ HEADERS += \
     type_hash.h \
     zip.h \
 
-unix {
-    target.path = /usr/lib
+win32 {
+    target.path = $$PWD/../../lib
     INSTALLS += target
+
+    headerfiles.path=$$PWD/../../include/bitpowder
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
+
 }
+
+unix {
+    target.path = $$PWD/../../lib
+    INSTALLS += target
+
+    headerfiles.path=$$PWD/../../include/bitpowder
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
+
+}
+
+# Copying header files to include directory
+
+#for (file, HEADERS) {
+#    QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$IN_PWD) $$quote($$PWD/../../../include/) $$escape_expand(\\n\\t)
+#}
+

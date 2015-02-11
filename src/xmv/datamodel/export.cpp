@@ -203,11 +203,7 @@ public:
     }
 };
 
-void Export(std::set<XMASComponent *> allComponents, const JSONData& globals)
-{
-    std::ostream& out = std::cout;
-    Export(std::cout, allComponents, globals);
-}
+
 
 void Export(std::ostream &out, std::set<XMASComponent *> allComponents, const JSONData& globals) {
     MemoryPool mp;
@@ -230,3 +226,10 @@ void Export(std::ostream &out, std::set<XMASComponent *> allComponents, const JS
     out << root;
     std::flush(out);
 }
+
+void Export(std::set<XMASComponent *> allComponents, const JSONData& globals)
+{
+    //std::ostream& out = std::cout;
+    Export(std::cout, allComponents, globals);
+}
+

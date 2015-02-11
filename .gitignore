@@ -5,6 +5,8 @@ build*
 src/build*
 src/checker-build*
 modules/xmas-vt
+include*
+lib*
 *~
 
 # Compiled Object files
