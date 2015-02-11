@@ -38,8 +38,8 @@ import "images"
 ColumnLayout{
     spacing:0
     id:output
-    height: headerHeight
-    property bool open: false
+    height: lastHeight
+    property bool open: true
     property string status: "Ready"
     property int lastHeight: 150
     property int headerHeight:25
