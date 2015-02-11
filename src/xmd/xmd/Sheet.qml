@@ -69,7 +69,7 @@ Rectangle {
     focus: true
     z: -10
 
-    property bool selecting: false
+    property bool selectionMode: false
     property int gridsize: 10
     property int margin: 25
 
@@ -84,6 +84,10 @@ Rectangle {
     Keys.onRightPressed: moveSelected(gridsize,0)
     Keys.onDownPressed: moveSelected(0,gridsize)
     Keys.onUpPressed: moveSelected(0,-gridsize)
+
+//    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) selectionMode = true }
+//    Keys.onReleased: { if(event.modifiers=== Qt.ControlModifier) selectionMode = false }
+
 
 
 
@@ -165,7 +169,7 @@ Rectangle {
     MouseArea {
         id: area
         anchors.fill: sheet
-        hoverEnabled: wire.connecting || sheet.selecting
+        hoverEnabled: wire.connecting
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.RightButton)
@@ -183,24 +187,39 @@ Rectangle {
                     contextMenu.popup()
                 }
             }
+            if (mouse.button == Qt.LeftButton){
+
+                if(sheet.selectionMode){
+                    sheet.clearSelection()
+                    selection.from = Qt.point(mouse.x,mouse.y)
+                    selection.to = Qt.point(mouse.x,mouse.y)
+                    selection.visible = true
+                    focus = true
+                }
+            }
         }
+        onReleased: {
+            if (mouse.button == Qt.LeftButton){
+                if(sheet.selectionMode){
+                    sheet.groupSelected(selection)
+                    selection.from = Qt.point(0,0)
+                    selection.to = Qt.point(0,0)
+                    selection.visible = false
+                }
+            }
+        }
+
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                sheet.selecting = !sheet.selecting
-                sheet.selecting ? sheet.clearSelection() : sheet.groupSelected(selection)
-                selection.from = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
-                selection.to = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
-                selection.visible = sheet.selecting
-                focus = true
+                if(!sheet.selectionMode) sheet.clearSelection()
             }
             if (mouse.button == Qt.RightButton) {
-                sheet.selecting = false
-                selection.visible = false
+
             }
         }
 
         onPositionChanged: {
-            selection.to = sheet.selecting ? Qt.point(mouse.x,mouse.y) : Qt.point(0,0)
+            if(sheet.selectionMode) selection.to = Qt.point(mouse.x,mouse.y)
             wire.mouseX = mouse.x
             wire.mouseY = mouse.y
             wire.requestPaint()

@@ -57,6 +57,7 @@ ApplicationWindow {
 
     title: "XMAS Model Designer 2015"
 
+
     MessageDialog {
         id: aboutBox
         title: "About XMD"
@@ -143,6 +144,16 @@ ApplicationWindow {
         onTriggered: sheet.zoomFit()
     }
 
+    Action {
+        id: selectionCursorAction
+        text: "Selection Mode"
+        shortcut: ""
+        iconSource: "qrc:/content/images/select.png"
+        iconName: "select"
+        checkable: true
+        onToggled: sheet.selectionMode = checked
+    }
+
     FileDialog {
         id: fileDialog
         nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
@@ -209,6 +220,10 @@ ApplicationWindow {
 
             ToolBarSeparator {}
 
+            ToolButton {action: selectionCursorAction}
+
+            ToolBarSeparator {}
+
             Item { Layout.fillWidth: true }
         }
     }
@@ -227,9 +242,6 @@ ApplicationWindow {
             Layout.fillHeight: true
             Flickable {
                 id: view
-                //anchors.fill: { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
-                // anchors.fill: { top: xmasToolbar.bottom ; bottom: logItem.top; left: parent.left; right: parent.right}
-
                 //center the scene by default
                 anchors.fill: parent
                 contentX: (1 - sheet.scale) * sheet.width * 0.5
@@ -237,6 +249,8 @@ ApplicationWindow {
                 contentWidth: sheet.width * sheet.scale
                 contentHeight: sheet.height * sheet.scale
                 pixelAligned: true
+                interactive: !sheet.selectionMode
+
 
                 //        onFlickEnded: {
                 //            console.log("x : " + view.visibleArea.xPosition

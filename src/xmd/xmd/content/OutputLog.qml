@@ -119,8 +119,8 @@ ColumnLayout{
 
     transitions:
         Transition {
-        PropertyAnimation { target: arrow; properties: "rotation"; duration: 500 }
-        PropertyAnimation { target: output; properties: "height"; duration: 250 }
+        PropertyAnimation { target: arrow; properties: "rotation"; duration: 250 }
+        PropertyAnimation { target: output; properties: "height"; duration: 100 }
     }
 }
 

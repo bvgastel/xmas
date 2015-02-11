@@ -52,5 +52,6 @@
         <file>content/OutputLog.qml</file>
         <file>content/images/arrow.png</file>
         <file>content/images/arrowLit.png</file>
+        <file>content/images/select.png</file>
     </qresource>
 </RCC>
