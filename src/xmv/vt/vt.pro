@@ -28,7 +28,8 @@
 #QT       -= core gui
 QT -= gui
 
-CONFIG   += C++11
+CONFIG += C++11
+CONFIG += staticlib
 
 TARGET = vt
 TEMPLATE = lib
@@ -80,8 +81,8 @@ DISTFILES += \
     build-convert.sh
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug -ldatamodel
 else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
 
 INCLUDEPATH += $$PWD/../datamodel

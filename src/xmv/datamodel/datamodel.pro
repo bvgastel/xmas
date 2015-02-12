@@ -32,6 +32,7 @@ TARGET = datamodel
 TEMPLATE = lib
 
 CONFIG += C++11
+CONFIG += staticlib
 
 DEFINES += DATAMODEL_LIBRARY
 
