@@ -32,6 +32,8 @@ TARGET = bitpowder
 TEMPLATE = lib
 
 CONFIG += C++11
+CONFIG += create_prl
+CONFIG += static
 
 DEFINES += BITPOWDER_LIBRARY
 
@@ -80,7 +82,7 @@ HEADERS += \
     zip.h \
 
 win32 {
-    target.path = $$PWD/../../lib
+    target.path = $$PWD/../../lib/bitpowder
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../include/bitpowder
@@ -90,7 +92,7 @@ win32 {
 }
 
 unix {
-    target.path = $$PWD/../../lib
+    target.path = $$PWD/../../lib/bitpowder
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../include/bitpowder

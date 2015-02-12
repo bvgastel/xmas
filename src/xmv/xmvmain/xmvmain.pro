@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 CONFIG += C++11
+CONFIG += link_prl
 
 SOURCES += main.cpp
 
@@ -36,10 +37,9 @@ DEPENDPATH += $$PWD/../vt
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:unix: LIBS += -L$$PWD/../../build-bitpowder-Desktop-Debug/ -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+else:unix: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
-

@@ -5,7 +5,6 @@ CONFIG -= qt
 
 HEADERS +=
 
-
 SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
@@ -13,6 +12,7 @@ SOURCES += \
 
 
 CONFIG += C++11
+CONFIG += link_prl
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -22,12 +22,27 @@ DISTFILES += \
     readme.md
 
 
-# All external libraries from $$PWD/../lib, no distinction win32/unix necessary
+win32 {
+ target.path=$$PWD/../../bin
+ INSTALLS += target
+}
+
+unix {
+ target.path=$$PWD/../../bin
+ INSTALLS += target
+}
+
+
+# All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #
-# Remark: always using gtest and gtest_main contrary to gtestd and gtest_maind for debug.
+# Remark: 1. always using gtest and gtest_main contrary to gtestd and gtest_maind for debug.
+#         2. always use gtest or gtest_main from a version compilated for your machine
 #
 
-unix|win32: LIBS += -L$$PWD/../../lib -ldatamodel -lvt -lbitpowder -lgtest
+unix|win32: LIBS += -L$$PWD/../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../lib/vt -lvt
+unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../lib -lgtest
 
 
 INCLUDEPATH += $$PWD/../../include/datamodel

@@ -32,7 +32,8 @@ TARGET = datamodel
 TEMPLATE = lib
 
 CONFIG += C++11
-CONFIG += staticlib
+CONFIG += create_prl
+CONFIG += static
 
 DEFINES += DATAMODEL_LIBRARY
 
@@ -72,7 +73,7 @@ HEADERS += datamodel.h\
 
 
 win32 {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/datamodel
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/datamodel
@@ -82,7 +83,7 @@ win32 {
 }
 
 unix {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/datamodel
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/datamodel
@@ -93,9 +94,9 @@ unix {
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
 
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder

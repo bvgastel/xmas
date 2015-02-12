@@ -25,10 +25,13 @@
 #
 
 
+WARNINGS += -Wall
 
-! include( ../common.pri ) {
-        error( Could not find the common.pri file)
-}
+TEMPLATE = lib
+
+CONFIG += C++11
+CONFIG += create_prl
+CONFIG += static
 
 include (defines.pri)
 
@@ -41,7 +44,7 @@ SOURCES       = \
     controller.cpp
     
 unix {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/xmd
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/xmd
@@ -50,7 +53,7 @@ unix {
 }
 
 win32 {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/xmd
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/xmd
@@ -61,6 +64,9 @@ win32 {
 INCLUDEPATH += content qml
 
 TEMPLATE = lib
+CONFIG += C++11
+CONFIG += create_prl
+CONFIG += static
 
 DISTFILES += qml/fork.qml \
     qml/function.qml \
@@ -97,7 +103,8 @@ RESOURCES += \
 
 FORMS +=
 
-unix|win32: LIBS += -L$$PWD/../../../lib -lbitpowder -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder

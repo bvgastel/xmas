@@ -29,7 +29,8 @@
 QT -= gui
 
 CONFIG += C++11
-CONFIG += staticlib
+CONFIG += create_prl
+CONFIG += static
 
 TARGET = vt
 TEMPLATE = lib
@@ -48,7 +49,7 @@ HEADERS += vt.h\
     deadlock.h
 
 win32 {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/vt
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/vt
@@ -58,7 +59,7 @@ win32 {
 }
 
 unix {
-    target.path = $$PWD/../../../lib
+    target.path = $$PWD/../../../lib/vt
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/vt
@@ -70,8 +71,8 @@ unix {
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
