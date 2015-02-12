@@ -664,13 +664,15 @@ int main(int argc, char* argv[]) {
         std::cout << *p << std::endl;
     return 1;
     */
+    bool showall = true;
+    bool showsinks = true;
     try {
         if (argc >= 3 && strcmp("-json", argv[1]) == 0) {
-            TestFile(argv[2], false);
+            TestFile(argv[2], showall);
         } else if (argc >= 3 && strcmp("-mesh", argv[1]) == 0) {
-            MeshTest(atoi(argv[2]), false, false);
+            MeshTest(atoi(argv[2]), showsinks, showall);
         } else if (argc >= 3 && strcmp("-spidergon", argv[1]) == 0) {
-            SpidergonTest(atoi(argv[2]), false, false);
+            SpidergonTest(atoi(argv[2]), showsinks, showall);
         } else {
             std::cerr << "Usage:" << std::endl;
             std::cerr << "- " << argv[0] << " -json [json-file]" << std::endl;
