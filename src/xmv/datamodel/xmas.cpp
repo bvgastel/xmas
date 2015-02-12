@@ -94,11 +94,11 @@ XMASComponent::PortIterators<Port **> XMASComponent::ports(PortType type) {
 }
 
 XMASComponent::PortIterators<Input **> XMASComponent::inputPorts() {
-    return {(Input**)beginPort(PortType::INPUT), (Input**)endPort(PortType::INPUT)};
+    return {(Input**)beginPort(PortType::INPUT_PORT), (Input**)endPort(PortType::INPUT_PORT)};
 }
 
 XMASComponent::PortIterators<Output **> XMASComponent::outputPorts() {
-    return {(Output**)beginPort(PortType::OUTPUT), (Output**)endPort(PortType::OUTPUT)};
+    return {(Output**)beginPort(PortType::OUTPUT_PORT), (Output**)endPort(PortType::OUTPUT_PORT)};
 }
 
 void Port::clearExtensions() {

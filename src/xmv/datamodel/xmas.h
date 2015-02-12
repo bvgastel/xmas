@@ -10,8 +10,11 @@
 enum SignalType {IRDY, TRDY, DATA};
 /**
  * @brief The PortType enum selector to state which ports you are interested in
+ *
+ * REMARK: renamed INPUT to INPUT_PORT and OUTPUT to OUTPUT_PORT due to
+ *         error for redefining typedef INPUT from windows header winuser.h
  */
-enum PortType {ALL, INPUT, OUTPUT};
+enum PortType {ALL, INPUT_PORT, OUTPUT_PORT};
 
 class XMASComponent;
 
@@ -526,7 +529,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? nullptr : &p[0];
+        return type == PortType::OUTPUT_PORT ? nullptr : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -537,7 +540,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::OUTPUT ? nullptr : &p[1];
+        return type == PortType::OUTPUT_PORT ? nullptr : &p[1];
     }
 };
 
@@ -573,7 +576,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::INPUT ? nullptr : &p[0];
+        return type == PortType::INPUT_PORT ? nullptr : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -584,7 +587,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? nullptr : &p[1];
+        return type == PortType::INPUT_PORT ? nullptr : &p[1];
     }
 };
 
@@ -628,7 +631,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[1] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[1] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -639,7 +642,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[1] : &p[2];
+        return type == PortType::INPUT_PORT ? &p[1] : &p[2];
     }
 };
 
@@ -678,7 +681,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[1] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[1] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -689,7 +692,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[1] : &p[2];
+        return type == PortType::INPUT_PORT ? &p[1] : &p[2];
     }
 };
 
@@ -731,7 +734,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[1] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[1] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -742,7 +745,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[1] : &p[3];
+        return type == PortType::INPUT_PORT ? &p[1] : &p[3];
     }
 };
 
@@ -783,7 +786,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[1] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[1] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -794,7 +797,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[1] : &p[3];
+        return type == PortType::INPUT_PORT ? &p[1] : &p[3];
     }
 };
 
@@ -839,7 +842,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[2] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[2] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -850,7 +853,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[2] : &p[3];
+        return type == PortType::INPUT_PORT ? &p[2] : &p[3];
     }
 };
 
@@ -892,7 +895,7 @@ public:
      */
     Port** beginPort(PortType type)
     {
-        return type == PortType::OUTPUT ? &p[2] : &p[0];
+        return type == PortType::OUTPUT_PORT ? &p[2] : &p[0];
     }
     /**
      * @brief endPort pointer to one past the last port of type requested
@@ -903,7 +906,7 @@ public:
      */
     Port** endPort(PortType type)
     {
-        return type == PortType::INPUT ? &p[2] : &p[3];
+        return type == PortType::INPUT_PORT ? &p[2] : &p[3];
     }
 };
 

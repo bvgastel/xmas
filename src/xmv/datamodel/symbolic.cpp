@@ -413,7 +413,7 @@ void SymbolicTypes(std::set<XMASComponent *> allComponents) {
 #endif
 
     for (XMASComponent *c : allComponents) {
-        for (Port *input : c->ports(PortType::INPUT)) {
+        for (Port *input : c->ports(PortType::INPUT_PORT)) {
             SymbolicTypesExtension *ext = input->getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
             std::ostringstream o;
             o << *input;

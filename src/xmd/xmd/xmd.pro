@@ -1,3 +1,31 @@
+#
+# Instructions for use:
+#
+# 1. When building, the output goes solely to the
+#    build directory. This is usually something
+#    like build-libraryname-platform-compiler
+#    where libraryname, platform and compiler vary.
+# 2. When cleaning, only the build directory is cleaned.
+#
+# 3. When deploying, the library files (both dll/so and
+#    .a) and the header files are copied to the lib and
+#    include directory right below the git-root. This is
+#    the most vulnerable piece of code.
+#    REMARK: when cleaning, this does not get touched.
+# 3a. The include directory has a subdir for this project's
+#     header files.
+#
+# IMPORTANT: Be sure to have qtcreator execute a make install
+#            as one step in the local deployment.
+#            As long as this step is not added to qtcreator
+#            (which writes the deploy step in .user.pro file)
+#            the header files and xmd lib will not occur in
+#            the directories lib or include under the root.
+#
+#
+
+
+
 ! include( ../common.pri ) {
         error( Could not find the common.pri file)
 }
@@ -13,13 +41,21 @@ SOURCES       = \
     controller.cpp
     
 unix {
-    target.path = /usr/lib
+    target.path = $$PWD/../../../lib
     INSTALLS += target
+
+    headerfiles.path=$$PWD/../../../include/xmd
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
 }
 
 win32 {
-    target.path = xmd
+    target.path = $$PWD/../../../lib
     INSTALLS += target
+
+    headerfiles.path=$$PWD/../../../include/xmd
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
 }
 
 INCLUDEPATH += content qml
@@ -61,9 +97,10 @@ RESOURCES += \
 
 FORMS +=
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib -lbitpowder
-else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib -lbitpowder -ldatamodel
 
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
+
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel

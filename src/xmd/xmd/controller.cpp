@@ -40,6 +40,7 @@
 
 #include "controller.h"
 #include "simplestring.h"
+#include "xmas.h"
 //#include "common.h"
 
 Controller::Controller(QObject* parent)
