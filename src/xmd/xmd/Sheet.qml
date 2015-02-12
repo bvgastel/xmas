@@ -212,6 +212,7 @@ Rectangle {
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
                 if(!sheet.selectionMode) sheet.clearSelection()
+                focus = true
             }
             if (mouse.button == Qt.RightButton) {
 
