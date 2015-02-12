@@ -26,21 +26,31 @@ XComponent {
     }
 
 
-
-    TextInput {
-        text: size
+    //size input label & validator
+    Rectangle{
+        id:functionPlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
-        color: size == 0 ? "red" : "blue"
-        inputMethodHints: Qt.ImhDigitsOnly
-        validator: IntValidator{bottom: 0}
-        wrapMode: TextInput.NoWrap
-        font.pointSize : 12
-        anchors.left: parent.left
         anchors.top: parent.bottom
-        onEditingFinished: {queue.size = text; focus = false}
-        onFocusChanged: if(focus)selectAll()
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: fx.contentHeight
+        width: Math.max(parent.width,fx.contentWidth)
+        color: fx.acceptableInput ? "transparent" : "red"
+        border.width: 0
+        TextInput {
+            id:fx
+            text: size
+            color: acceptableInput ? "green" : "white"
+            inputMethodHints: Qt.ImhDigitsOnly
+            validator: IntValidator{bottom: 1}
+            wrapMode: TextInput.NoWrap
+            font.pointSize : 12
+            font.bold: true
+            anchors.fill: parent
+            horizontalAlignment: Qt.AlignRight
+            verticalAlignment: Qt.AlignVCenter
+            onEditingFinished: {queue.size = text; focus = false}
+            onFocusChanged: if(focus)selectAll()
+        }
     }
-
-
 
 }
