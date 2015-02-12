@@ -10,7 +10,15 @@ SOURCES += main.cpp
 include(deployment.pri)
 qtcAddDeployment()
 
+win32 {
+ target.path=$$PWD/../../../bin
+ INSTALLS += target
+}
 
+unix {
+ target.path=$$PWD/../../../bin
+ INSTALLS += target
+}
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
