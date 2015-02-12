@@ -57,25 +57,29 @@ Item {
     signal boundReached(var dx, var dy)
 
     //name tag
-    TextInput {
-        id:label
-        text: name
+    Item{
+        id:labelPlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
-        color: "blue"
-        wrapMode: TextInput.NoWrap
-        anchors.bottomMargin: 2
-        font.pointSize : 12
         anchors {
-            left: parent.left
             bottom: topLabel ? parent.top : undefined
             top: topLabel ? undefined : parent.bottom
         }
-        //anchors.bottom: parent.top
-        onEditingFinished: {name = text; focus = false}
-        onFocusChanged: if(focus)selectAll()
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: label.contentHeight
+        width: Math.max(parent.width,label.contentWidth)
+        TextInput {
+            id:label
+            text: name
+            anchors.fill: parent
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            color: "blue"
+            wrapMode: TextInput.NoWrap
+            font.pointSize : 12
+            onEditingFinished: {name = text; focus = false}
+            onFocusChanged: if(focus)selectAll()
+        }
     }
-
-
 
     MouseArea {
         anchors.fill: component
