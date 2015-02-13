@@ -28,12 +28,13 @@
 #QT       -= core gui
 QT -= gui
 
-CONFIG += C++11
-CONFIG += create_prl
-CONFIG += static
-
 TARGET = vt
 TEMPLATE = lib
+
+CONFIG += C++11
+CONFIG += create_prl
+CONFIG += link_prl
+CONFIG += static dll
 
 DEFINES += VT_LIBRARY
 
@@ -71,9 +72,7 @@ unix {
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder

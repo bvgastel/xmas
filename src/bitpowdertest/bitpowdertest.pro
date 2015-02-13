@@ -8,10 +8,10 @@ HEADERS +=
 
 SOURCES += \
     main.cpp \
-	parser.test.cpp \
-	parser_json.test.cpp \
-	simplestring.test.cpp \
-	stringparse.test.cpp 
+    parser.test.cpp \
+    parser_json.test.cpp \
+    simplestring.test.cpp \
+    stringparse.test.cpp
 
 
 CONFIG += C++11
@@ -24,9 +24,12 @@ unix|win32: LIBS += -lgtest_main -lgtest
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/debug/ -lbitpowder
-else:unix: LIBS += -L$$PWD/../build-bitpowder-Desktop-Debug/ -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
 
-INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../bitpowder
+INCLUDEPATH += $$PWD/../../include/bitpowder
+DEPENDPATH += $$PWD/../../include/bitpowder
+
+unix|win32 {
+    target.path = $$PWD/../../bin
+    INSTALLS += target
+}

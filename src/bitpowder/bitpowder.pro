@@ -33,7 +33,8 @@ TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
-CONFIG += static
+CONFIG += link_prt
+CONFIG += static dll
 
 DEFINES += BITPOWDER_LIBRARY
 
@@ -80,8 +81,11 @@ HEADERS += \
     thread.h \
     type_hash.h \
     zip.h \
+################################################
+# INSTALL instructions
+################################################
 
-win32 {
+unix|win32 {
     target.path = $$PWD/../../lib/bitpowder
     INSTALLS += target
 
@@ -91,19 +95,4 @@ win32 {
 
 }
 
-unix {
-    target.path = $$PWD/../../lib/bitpowder
-    INSTALLS += target
-
-    headerfiles.path=$$PWD/../../include/bitpowder
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
-
-}
-
-# Copying header files to include directory
-
-#for (file, HEADERS) {
-#    QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$IN_PWD) $$quote($$PWD/../../../include/) $$escape_expand(\\n\\t)
-#}
 

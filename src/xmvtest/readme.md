@@ -17,7 +17,19 @@ Environment
 You need Google test installed in order to compile and run
 xmvtest.
 
-Ofcourse xmv should be installed.
+bitpowder and xmv must be compiled and deployed.
+
+Build procedure from qt-creator
+-------------------------------
+
+- run clean all if necessary
+- run qmake
+- run build all
+- run deplay all
+
+you should be able to run now.
+Be sure to add the deploy step with make
+and parameter install.
 
 
 

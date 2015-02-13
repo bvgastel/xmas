@@ -22,12 +22,7 @@ DISTFILES += \
     readme.md
 
 
-win32 {
- target.path=$$PWD/../../bin
- INSTALLS += target
-}
-
-unix {
+unix|win32 {
  target.path=$$PWD/../../bin
  INSTALLS += target
 }
@@ -56,4 +51,3 @@ DEPENDPATH += $$PWD/../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../include
 DEPENDPATH += $$PWD/../../include
-

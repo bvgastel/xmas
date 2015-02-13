@@ -33,7 +33,8 @@ TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
-CONFIG += static
+CONFIG += link_prl
+CONFIG += static dll
 
 DEFINES += DATAMODEL_LIBRARY
 
@@ -65,24 +66,7 @@ HEADERS += datamodel.h\
  #   symbolic-range-field.h \
     parse.h \
 
-
-# doesn't appear to work: should distribute header files with debug or release
-#    header_files.files = $$HEADERS
-#    header_files.path = $$PWD
-#    QMAKE_EXTRA_TARGETS += header_files
-
-
-win32 {
-    target.path = $$PWD/../../../lib/datamodel
-    INSTALLS += target
-
-    headerfiles.path=$$PWD/../../../include/datamodel
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
-
-}
-
-unix {
+unix|win32 {
     target.path = $$PWD/../../../lib/datamodel
     INSTALLS += target
 
@@ -93,10 +77,7 @@ unix {
 }
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:unix: LIBS += -L$$PWD/../../../lib -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder

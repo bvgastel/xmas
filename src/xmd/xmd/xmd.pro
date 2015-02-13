@@ -31,7 +31,7 @@ TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
-CONFIG += static
+CONFIG += static dll
 
 include (defines.pri)
 
@@ -43,16 +43,7 @@ HEADERS       = \
 SOURCES       = \ 
     controller.cpp
     
-unix {
-    target.path = $$PWD/../../../lib/xmd
-    INSTALLS += target
-
-    headerfiles.path=$$PWD/../../../include/xmd
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
-}
-
-win32 {
+unix|win32 {
     target.path = $$PWD/../../../lib/xmd
     INSTALLS += target
 
@@ -62,11 +53,6 @@ win32 {
 }
 
 INCLUDEPATH += content qml
-
-TEMPLATE = lib
-CONFIG += C++11
-CONFIG += create_prl
-CONFIG += static
 
 DISTFILES += qml/fork.qml \
     qml/function.qml \

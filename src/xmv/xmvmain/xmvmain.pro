@@ -3,20 +3,15 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
+include(deployment.pri)
+qtcAddDeployment()
+
 CONFIG += C++11
 CONFIG += link_prl
 
 SOURCES += main.cpp
 
-include(deployment.pri)
-qtcAddDeployment()
-
-win32 {
- target.path=$$PWD/../../../bin
- INSTALLS += target
-}
-
-unix {
+unix|win32 {
  target.path=$$PWD/../../../bin
  INSTALLS += target
 }
@@ -37,9 +32,7 @@ DEPENDPATH += $$PWD/../vt
 
 # Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-else:unix: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder

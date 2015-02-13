@@ -1,6 +1,8 @@
 # xmdmain.pro
 # Contains the main program for xmd
 
+# Be sure to add deploy step with make (parameter install)
+
 CONFIG += C++11
 
 QT += widgets svg declarative quick qml quickwidgets
@@ -13,19 +15,13 @@ HEADERS       = \
 SOURCES += \
     main.cpp
 
-win32 {
- target.path=$$PWD/../../bin
+unix|win32 {
+ target.path=$$PWD/../../../bin
  INSTALLS += target
 }
 
-unix {
- target.path=$$PWD/../../bin
- INSTALLS += target
-}
-
-
-unix|win32: LIBS += -L$$PWD/../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
@@ -35,4 +31,3 @@ INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
 
 RESOURCES +=
-
