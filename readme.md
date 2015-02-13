@@ -4,8 +4,6 @@ XMAS DESIGN TOOL
 This project is a design tool for NoC system (Network on Chip).
 It uses the language Intel detailed in papers concerning xmas 
 
-TODO: add details of these papers.
-
 To generate the PDF version of this document use the command:
 
 pandoc -f markdown -o readme.pdf readme.md
@@ -18,6 +16,7 @@ Directories (Contents)
 - preparation	 	Files used during preparation plus plan
 - xmas-info			Information on xmas (pdf)
 - design			The directory containing design documents
+- src               The source tree containing all sub projects.
 
 License
 =======
@@ -38,6 +37,12 @@ other licenses with GPL version 3 is represented
 in the image below.
 
 ![GPL dependencies in short](quick-guide-gplv3-compatibility.png)
+
+Use of development environment
+==============================
+
+We currently use QtCreator because of its ease of project management (qmake).
+QtCreator also uses cmake if instructed to.
 
 Use of Git
 ==========
@@ -88,6 +93,14 @@ We use git for communication with the following use cases
 
 	If you cannot, then you could fork the repo and do a pull 
 	request.
+
+Remark: We work with git flow, which is a specific approach to
+        branching. The following description does not presume
+		git flow. If you want to know how git flow works
+		google "git flow". You should find at least
+		the article of Vincent Driessen at http://nvie.com/posts/a-successful-git-branching-model/
+		A fine intro to git flow is: http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
+		A cheat sheet is: http://danielkummer.github.io/git-flow-cheatsheet/
 
 2. Creating a new branch.
 	You create a new branch "plan" with the command
