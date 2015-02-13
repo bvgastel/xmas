@@ -34,7 +34,8 @@ TEMPLATE = lib
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
-CONFIG += static dll
+win32: CONFIG += static
+unix: CONFIG += static dll
 
 DEFINES += VT_LIBRARY
 

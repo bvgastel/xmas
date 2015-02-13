@@ -117,7 +117,7 @@ TEST(String, ToNumber) {
     EXPECT_EQ(1012, "1012"_S.toNumber<int>());
     EXPECT_EQ(-1012, "-1012"_S.toNumber<int>());
 
-    // JK: MinGW warns that hex literal is unsigned. This should be a long int signed (std C++)
+    // WARNING: JK: MinGW warns that hex literal is unsigned. This should be a long int signed (std C++)
     EXPECT_EQ(-0x80000000L, "-80000000"_S.hexToNumber<int>());      // GBO: made hex literal Long
     EXPECT_EQ(0x7FFFFFFF, "7fffffff"_S.hexToNumber<int>());
     EXPECT_EQ(0x7FFFFFFF, "7FFFFFFF"_S.hexToNumber<int>());
