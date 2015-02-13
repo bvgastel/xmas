@@ -8,7 +8,8 @@ HEADERS +=
 SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
-    testdatamodel.cpp
+    testdatamodel.cpp \
+    jsonprinter.test.cpp
 
 
 CONFIG += C++11

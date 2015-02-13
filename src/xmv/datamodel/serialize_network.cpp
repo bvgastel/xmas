@@ -1,4 +1,5 @@
 #include "serialize_network.h"
+#include "jsonprinter.h"
 #include "xmas.h"
 
 class NameComponentVisitor : public XMASComponentVisitor
@@ -18,25 +19,13 @@ public:
 
 void serialize_network(std::ostream& os, std::set<XMASComponent*>& network) {
     JsonPrinter pr {os};
-    pr.startObject();
 
-    pr.startProperty("VARS");
-    pr.startArray();
-    pr.endArray();
-    pr.endProperty();
+    pr << json_startobj <<
+          jsonprop("VARS", json_startarray) << json_endarray << json_endprop <<
+          jsonprop("PACKET_TYPE", json_startobj) << json_endobj << json_endprop <<
+          jsonprop("COMPOSITE_OBJECTS", json_startarray) << json_endarray << json_endprop <<
+          jsonprop("NETWORK", json_startarray);
 
-    pr.startProperty("PACKET_TYPE");
-    pr.startObject();
-    pr.endObject();
-    pr.endProperty();
-
-    pr.startProperty("COMPOSITE_OBJECTS");
-    pr.startArray();
-    pr.endArray();
-    pr.endProperty();
-
-    pr.startProperty("NETWORK");
-    pr.startArray();
 
     for (auto c : network) {
         pr.startObject();
@@ -44,121 +33,34 @@ void serialize_network(std::ostream& os, std::set<XMASComponent*>& network) {
         NameComponentVisitor ncv;
         c->accept(ncv);
 
-        pr.writeStringProperty("id", c->getName().stl());
-        pr.writeStringProperty("type", ncv.result);
+        pr << jsonprop("id", c->getName().stl().c_str()) <<
+              jsonprop("type", ncv.result);
 
         auto outs = c->outputPorts();
         if (outs.begin() != outs.end()) {
-            pr.startProperty("outs");
-            pr.startArray();
+            pr << jsonprop("outs", json_startarray);
 
             for (auto out : outs) {
                 auto target = out->getTarget();
 
-                pr.startObject();
-                pr.writeStringProperty("id", target->getName().stl());
+                pr << json_startobj << jsonprop("id", target->getName().stl().c_str());
 
                 int i = 0;
                 for (auto in : target->inputPorts()) {
                     if (in == out->getTargetPort())
-                        pr.writeNumberProperty("in_port", std::to_string(i));
+                        pr << jsonprop("in_port", i);
+
                     i++;
                 }
 
-                pr.endObject();
+                pr << json_endobj;
             }
 
-            pr.endArray();
-            pr.endProperty();
+            pr << json_endarray << json_endprop;
         }
 
-        pr.endObject();
+        pr << json_endobj;
     }
 
-    pr.endArray();
-    pr.endProperty();
-    pr.endObject();
-}
-
-
-JsonPrinter::JsonPrinter(std::ostream& stream)
-  : stream(&stream), ownStream(false)
-{
-}
-
-JsonPrinter::JsonPrinter(std::ostream* stream)
-  : stream(stream), ownStream(true)
-{
-}
-
-JsonPrinter::~JsonPrinter()
-{
-    if (ownStream)
-        delete(stream);
-}
-
-void JsonPrinter::startObject()  {
-    if (!firstItem)
-        *stream << ',' << std::endl << do_indent();
-    *stream << '{';
-    depth++;
-    firstItem = true;
-}
-
-void JsonPrinter::endObject() {
-    depth--;
-
-    if (firstItem) {
-        *stream << '}';
-    } else {
-        *stream << std::endl << do_indent() << '}';
-    }
-
-    firstItem = false;
-}
-
-void JsonPrinter::startArray() {
-    if (!firstItem)
-        *stream << ',';
-    *stream << '[';
-    depth++;
-    firstItem = true;
-}
-
-void JsonPrinter::endArray() {
-    depth--;
-    *stream << ']';
-    firstItem = false;
-}
-
-void JsonPrinter::startProperty(const std::string &name) {
-    if (!firstItem)
-        *stream << ',';
-    *stream << std::endl << do_indent() <<  '"' << name << "\": ";
-
-    firstItem = true;
-}
-
-void JsonPrinter::endProperty() {
-    firstItem = false;
-}
-
-void JsonPrinter::writeNumber(const std::string& value) {
-    *stream << value;
-}
-
-void JsonPrinter::writeString(const std::string& value) {
-    *stream << '"' << value << '"';
-}
-
-void JsonPrinter::writeNumberProperty(const std::string& name, const std::string& value) {
-    startProperty(name);
-    writeNumber(value);
-    endProperty();
-}
-
-void JsonPrinter::writeStringProperty(const std::string& name, const std::string& value) {
-    startProperty(name);
-    writeString(value);
-    endProperty();
+    pr << json_endarray << json_endprop << json_endobj;
 }
