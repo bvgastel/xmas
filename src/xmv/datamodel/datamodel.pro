@@ -51,6 +51,7 @@ SOURCES += datamodel.cpp \
 #    symbolic-range-field.cpp \
     parse.cpp \
     jsonprinter.cpp \
+    serialize_network.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -65,6 +66,7 @@ HEADERS += datamodel.h\
  #   symbolic-range-field.h \
     parse.h \
     jsonprinter.h \
+    serialize_network.h
 
 unix|win32 {
     target.path = $$PWD/../../../lib/datamodel
