@@ -16,7 +16,7 @@
  * is completed, the property itself is also complete. Remove it and the InProperty state.
  *
  * Currently, only complete strings can be serialized. Maybe provide start/end string
- * functions just like object and array (and add an InString state).
+ * functions just like object and array (and add an InString state). (DONE!)
  *
  * Provide both a 'function call'-style API and the streaming API?
  *
@@ -40,6 +40,9 @@ public:
 
     void startProperty(const std::string& name);
     void endProperty();
+
+    void startString();
+    void endString();
 
     template<typename T>
     typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value>::type
@@ -71,6 +74,7 @@ private:
         Init,
         InObject,
         InProperty,
+        InString,
         InArray
     };
     std::stack<State>       states;
@@ -114,6 +118,8 @@ struct JsonEndObject {};
 struct JsonStartArray {};
 struct JsonEndArray {};
 struct JsonEndProperty {};
+struct JsonStartString {};
+struct JsonEndString {};
 
 constexpr JsonNull jsonnull;
 constexpr JsonStartObject json_startobj;
@@ -121,6 +127,8 @@ constexpr JsonEndObject json_endobj;
 constexpr JsonStartArray json_startarray;
 constexpr JsonEndArray json_endarray;
 constexpr JsonEndProperty json_endprop;
+constexpr JsonStartString json_startstr;
+constexpr JsonEndString json_endstr;
 
 template<typename T>
 inline constexpr JsonProperty<T> jsonprop(const std::string& name, T value) {
@@ -169,6 +177,13 @@ inline JsonPrinter& operator <<(JsonPrinter& pr, JsonProperty<JsonStartObject> p
     return pr;
 }
 
+// make sure chars are treated as a string instead of a number
+inline JsonPrinter& operator <<(JsonPrinter& pr, char value) {
+    char str[2] {value, 0};
+    pr.writeString(str);
+    return pr;
+}
+
 template<typename T>
 inline typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value, JsonPrinter&>::type
 operator <<(JsonPrinter& pr, T value) {
@@ -213,6 +228,16 @@ inline JsonPrinter& operator <<(JsonPrinter& pr, JsonEndArray) {
 
 inline JsonPrinter& operator <<(JsonPrinter& pr, JsonEndProperty) {
     pr.endProperty();
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonStartString) {
+    pr.startString();
+    return pr;
+}
+
+inline JsonPrinter& operator <<(JsonPrinter& pr, JsonEndString) {
+    pr.endString();
     return pr;
 }
 

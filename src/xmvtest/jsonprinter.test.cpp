@@ -213,9 +213,9 @@ TEST_F(JsonPrinterTest, StreamingObject) {
 }
 
 TEST_F(JsonPrinterTest, StreamingArray) {
-    pr << json_startarray << -5.55 << "<< streaming operator <<" << true << jsonnull << json_endarray;
+    pr << json_startarray << -5.55 << "<< streaming operator <<" << true << "" << 'x' << jsonnull << json_endarray;
 
-    EXPECT_EQ(R"([-5.55,"<< streaming operator <<",true,null])", stream.str());
+    EXPECT_EQ(R"([-5.55,"<< streaming operator <<",true,"","x",null])", stream.str());
 }
 
 TEST_F(JsonPrinterTest, StreamingPlainValueInObject) {
@@ -228,4 +228,20 @@ TEST_F(JsonPrinterTest, StreamingPropertyInArray) {
     ASSERT_THROW({
         pr << json_startarray << jsonprop("bad-property", 100) << json_endarray;
     }, JsonPrinter::InvalidStateException);
+}
+
+TEST_F(JsonPrinterTest, PartialString) {
+    pr << json_startarray << json_startstr;
+    pr << "This" <<  " string is streamed in " << "using multiple parts";
+    pr << json_endstr << json_endarray;
+
+    EXPECT_EQ(R"(["This string is streamed in using multiple parts"])", stream.str());
+}
+
+TEST_F(JsonPrinterTest, PartialStringEncode) {
+    pr << json_startarray << json_startstr;
+    pr << "This" << '\n' <<  "string is \"encoded\" and\nstreamed in " << "using multiple parts";
+    pr << json_endstr << json_endarray;
+
+    EXPECT_EQ(R"(["This\nstring is \"encoded\" and\nstreamed in using multiple parts"])", stream.str());
 }
