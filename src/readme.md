@@ -4,113 +4,37 @@ The source inspiration for this structure is an answer to
 
 <http://stackoverflow.com/questions/1417776/how-to-use-qmakes-subdirs-template> 
 
-The proposed structure adjusted to our needs. 
+However, we no longer use the source provided there, because qmake-qt has
+developed further. We can now use standard qmake instructions to develop
+the source on windows and linux.
 
-~~~~~~~~~~~~~~~~~~~~~~
-xmas/
--xmas.pro
--common.pri
--xmas/
-----xmas.pro
-----some logic files fro xmas
-----leads to libxmas.a (on linux)
--xmd/
-----xmd.pro
-----xmd files
-----leads to libxmd.a (on linux)
--xmasmain/
-----xmasmain.pro
-----main.cpp
-----leads to xmd (executable on linux)
--testmain/
-----testmain.pro
-----main.cpp
-----leads to test (executable on linux)
-~~~~~~~~~~~~~~~~~~~~~~
+We adjusted the source structure to our needs. The top directory (this one) contains
+only projects, no .pro file. Each project has its own main .pro file. 
 
-xmas.pro:
+The main .pro file either contains further subprojects, in which case it uses template 'subdirs',
+or it is independent, in which case it uses template 'app' or 'lib'. The subprojects 
+always use 'app' or 'lib' for template.
 
-~~~~~~~~~~~~~~~~~~~~~~
-TEMPLATE = subdirs
-SUBDIRS = xmaslib \
-          xmd
+For Windows we use static linking and for Linux we use dynamic linking. Do not ask.
+We found that using dynamic libraries under Windows gives "undefined" link errors, while
+using static under Linux seems not to work at all: it still needs the .so files.
+We all hate it when things do not work properly. We would love to have this solved
+and use static on both platforms. There is no need to use dynamic as the libraries
+are all tied to this project.
 
-# xmasmain must be last:
+The current project structure is:
 
-CONFIG += ordered
-SUBDIRS += xmasmain
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./bitpowder			Library 			A supporting lib
+./bitpowdertest		Main: gtest 		test cases for bitpowder
+./xmd				SUBDIRS				the xmas designer
+./xmd/xmd			Library, Qml2		The actual qml code
+./xmd/xmdmain		Main, Qt			The Qt code to start qml
+./xmv 				SUBDIRS 			A supporting set of libs
+./xmv/datamodel		Library 			The datamodel of xmas
+./xmv/vt 			Library 			The verification tools of xmas
+./xmv/xmvmain 		Main 		
+./xmvtest 			Main: gtest 		test cases for xmv
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-common.pri:
-
-~~~~~~~~~~~~~~~~~~~~~~
-#Includes common configuration for all subdirectory .pro files.
-INCLUDEPATH += . ..
-WARNINGS += -Wall
-
-TEMPLATE = lib
-
-# The following keeps the generated files at least somewhat separate 
-# from the source files.
-UI_DIR = uics
-MOC_DIR = mocs
-OBJECTS_DIR = objs
-~~~~~~~~~~~~~~~~~~~~~~
-
-xmas/xmas.pro:
-
-~~~~~~~~~~~~~~~~~~~~~~
-! include( ../common.pri ) {
-    error( Could not find the common.pri file! )
-}
-
-HEADERS += xmas.h
-SOURCES += xmas.cpp
-
-# By default, TARGET is the same as the directory, so it will make 
-# libxmas.a (in linux).  Uncomment to override.
-# TARGET = target
-~~~~~~~~~~~~~~~~~~~~~~
-
-xmd/xmd.pro:
-
-~~~~~~~~~~~~~~~~~~~~~~
-! include( ../common.pri ) {
-    error( Could not find the common.pri file! )
-}
-
-FORMS += xmd.ui
-HEADERS += xmd.h
-SOURCES += xmd.cpp
-
-# By default, TARGET is the same as the directory, so it will make 
-# libxmd.a (in linux).  Uncomment to override.
-# TARGET = target
-~~~~~~~~~~~~~~~~~~~~~~
-
-xmasmain/xmasmain.pro:
-
-~~~~~~~~~~~~~~~~~~~~~~
-TEMPLATE = app
-
-SOURCES += main.cpp
-
-LIBS += -L../xmas -L../xmd -lxmas -lxmd
-
-# Will build the final executable in the build directory.
-TARGET = xmd
-~~~~~~~~~~~~~~~~~~~~~~
-
-testmain/testmain.pro:
-
-~~~~~~~~~~~~~~~~~~~~~~
-TEMPLATE = app
-
-SOURCES += main.cpp
-
-LIBS += -L../xmas -L../xmd -L../test -lxmas -lxmd -ltest
-
-# Will build the final executable in the build directory.
-TARGET = test
-~~~~~~~~~~~~~~~~~~~~~~
 
