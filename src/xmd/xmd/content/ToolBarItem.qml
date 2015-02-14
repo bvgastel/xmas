@@ -51,11 +51,15 @@ Image {
     Layout.preferredWidth: parent.height
 
     source: image
+    opacity: 0.6
 
     MouseArea {
         anchors.fill: parent
         onPressed: Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag(mouse);
+        hoverEnabled: true
+        onEntered: toolbarItem.opacity = 1.0
+        onExited: toolbarItem.opacity = 0.6
     }
 }

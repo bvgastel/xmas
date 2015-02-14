@@ -4,37 +4,47 @@ import XMAS 1.0
 
 XComponent {
     width: 100
-    height: 100
+    height: 90
     type: "composite"
-    XPort {x: 0; y: 30; name: "t0"; type:Xmas.Target}
-    XPort {x: 0; y: 50; name: "t1"; type:Xmas.Target}
-    XPort {x: 0; y: 70; name: "t2"; type:Xmas.Target}
-    XPort {x: 90; y: 30; name: "i0"; type:Xmas.Initiator}
-    XPort {x: 90; y: 50; name: "i1"; type:Xmas.Initiator}
+    XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
+    XPort {x: 0; y: 35; name: "t1"; type:Xmas.Target}
+    XPort {x: 0; y: 55; name: "t2"; type:Xmas.Target}
+    XPort {x: 90; y: 15; name: "i0"; type:Xmas.Initiator}
+    XPort {x: 90; y: 35; name: "i1"; type:Xmas.Initiator}
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        y:5
+        width: 60
+        height: 80
+        border.color: black
+        border.width: 3
+        radius: 10
+        color: "white"
+        Text {
+            anchors.centerIn: parent
+            font.pixelSize: 48
+            font.bold: true
+            text:"C"
+        }
+    }
     Canvas {
         anchors.fill: parent
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 3.0
-            ctx.rect(20,20,60,80-ctx.lineWidth)
             //left ports
-            ctx.moveTo(10,35)
-            ctx.lineTo(20,35)
-            ctx.moveTo(10,55)
-            ctx.lineTo(20,55)
-            ctx.moveTo(10,75)
-            ctx.lineTo(20,75)
+            ctx.moveTo(10,20)
+            ctx.lineTo(20,20)
+            ctx.moveTo(10,40)
+            ctx.lineTo(20,40)
+            ctx.moveTo(10,60)
+            ctx.lineTo(20,60)
             //right ports
-            ctx.moveTo(80,35)
-            ctx.lineTo(90,35)
-            ctx.moveTo(80,55)
-            ctx.lineTo(90,55)
-            //C
-            ctx.font = "32pt impact, sans serif"
-            ctx.textAlign = "center"
-            ctx.fillStyle = "black"
-            ctx.fillText("C",50,70)
+            ctx.moveTo(80,20)
+            ctx.lineTo(90,20)
+            ctx.moveTo(80,40)
+            ctx.lineTo(90,40)
             ctx.stroke()
         }
     }

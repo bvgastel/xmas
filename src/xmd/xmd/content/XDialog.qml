@@ -32,16 +32,40 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
-import XMAS 1.0
+import QtQuick.Window 2.1
+//import XMAS 1.0
 
 //TODO : Replace with a custom frameless dialog
-Dialog {
+Window {
     id:dialog
     visible: false
     modality: Qt.WindowModal
-    standardButtons: StandardButton.Cancel | StandardButton.Ok
-    onDiscard: visible = false
-    onAccepted: null
+    flags: Qt.Tool
+    //standardButtons: StandardButton.Cancel | StandardButton.Ok
+    //onDiscard: visible = false
+    //onAccepted: null
+    Item{
+        id:content
+        Rectangle {
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "black" }
+                GradientStop { position: 0.4; color: "grey" }
+                GradientStop { position: 1.0; color: "black" }
+            }
+            //color: "lightskyblue"
+            width: 400
+            height: 100
+            Text {
+                text: "Test"
+                color: "navy"
+                anchors.centerIn: parent
+            }
+        }
+    }
+    MouseArea {
+        anchors.fill: content
+        drag.target: content
 
+    }
 }
 

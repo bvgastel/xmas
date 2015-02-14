@@ -12,16 +12,6 @@
         <file>qml/spidergon.qml</file>
         <file>qml/switch.qml</file>
         <file>content/ScrollBar.qml</file>
-        <file>content/images/svgs/composite.svg</file>
-        <file>content/images/svgs/function.svg</file>
-        <file>content/images/svgs/in.svg</file>
-        <file>content/images/svgs/join.svg</file>
-        <file>content/images/svgs/merge.svg</file>
-        <file>content/images/svgs/out.svg</file>
-        <file>content/images/svgs/queue.svg</file>
-        <file>content/images/svgs/sink.svg</file>
-        <file>content/images/svgs/source.svg</file>
-        <file>content/images/svgs/switch.svg</file>
         <file>mainWindow.qml</file>
         <file>content/images/redo.png</file>
         <file>content/images/undo.png</file>
@@ -53,5 +43,15 @@
         <file>content/images/arrow.png</file>
         <file>content/images/arrowLit.png</file>
         <file>content/images/select.png</file>
+        <file>content/images/queue.png</file>
+        <file>content/images/in.png</file>
+        <file>content/images/join.png</file>
+        <file>content/images/merge.png</file>
+        <file>content/images/out.png</file>
+        <file>content/images/sink.png</file>
+        <file>content/images/source.png</file>
+        <file>content/images/switch.png</file>
+        <file>content/images/function.png</file>
+        <file>content/images/composite.png</file>
     </qresource>
 </RCC>

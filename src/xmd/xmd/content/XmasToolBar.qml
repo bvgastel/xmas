@@ -5,9 +5,9 @@ Rectangle {
     id:toolbox
     z:1
     gradient: Gradient {
-        GradientStop { position: 0.0; color: "lightgrey" }
-        GradientStop { position: 0.4; color: "white" }
-        GradientStop { position: 1.0; color: "lightgrey" }
+        GradientStop { position: 0.0; color: "black" }
+        GradientStop { position: 0.4; color: "grey" }
+        GradientStop { position: 1.0; color: "black" }
     }
 
     RowLayout {
@@ -17,11 +17,11 @@ Rectangle {
         spacing: 10
         ToolBarItem {
             componentFile: "../qml/queue.qml"
-            image: "images/svgs/queue.svg"
+            image: "images/queue.png"
         }
         ToolBarItem {
             componentFile: "../qml/function.qml"
-            image: "images/svgs/function.svg"
+            image: "images/function.png"
         }
         ToolBarItem {
             componentFile: "../qml/fork.qml"
@@ -29,35 +29,35 @@ Rectangle {
         }
         ToolBarItem {
             componentFile: "../qml/join.qml"
-            image: "images/svgs/join.svg"
+            image: "images/join.png"
         }
         ToolBarItem {
             componentFile: "../qml/switch.qml"
-            image: "images/svgs/switch.svg"
+            image: "images/switch.png"
         }
         ToolBarItem {
             componentFile: "../qml/merge.qml"
-            image: "images/svgs/merge.svg"
+            image: "images/merge.png"
         }
         ToolBarItem {
             componentFile: "../qml/sink.qml"
-            image: "images/svgs/sink.svg"
+            image: "images/sink.png"
         }
         ToolBarItem {
             componentFile: "../qml/source.qml"
-            image: "images/svgs/source.svg"
+            image: "images/source.png"
         }
         ToolBarItem {
             componentFile: "../qml/in.qml"
-            image: "images/svgs/in.svg"
+            image: "images/in.png"
         }
         ToolBarItem {
             componentFile: "../qml/out.qml"
-            image: "images/svgs/out.svg"
+            image: "images/out.png"
         }
         ToolBarItem {
             componentFile: "../qml/spidergon.qml"
-            image: "images/svgs/composite.svg"
+            image: "images/composite.png"
         }
 
     }
