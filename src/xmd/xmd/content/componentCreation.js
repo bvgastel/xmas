@@ -56,10 +56,40 @@ function endDrag(mouse)
         draggedItem.destroy();
         draggedItem = null;
     } else {
-        //TODO generate a unique name or id for each component
-        draggedItem.name = draggedItem.type +  "_???"
+        draggedItem.uid = generateId()
+        draggedItem.index = generateTagIndex(draggedItem)
+        draggedItem.name = draggedItem.prefix + draggedItem.index
         controller.componentCreated(draggedItem)
         log("component created!")
+
         draggedItem = null;
     }
 }
+
+
+function generateId()
+{
+    var max = -1
+    for(var child in sheet.children){
+        if(sheet.children[child].objectName==="component"){
+            max = Math.max(sheet.children[child].cid,max)
+        }
+    }
+    return (++max)
+}
+
+function generateTagIndex(item)
+{
+    var max = -1
+    for(var child in sheet.children){
+        if(sheet.children[child].objectName==="component"){
+            if(item.type === sheet.children[child].type) {
+                max = Math.max(sheet.children[child].index,max)
+            }
+        }
+    }
+    //idList.sort(function(a, b){return a-b})
+    return (++max)
+}
+
+

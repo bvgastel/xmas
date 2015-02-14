@@ -6,6 +6,7 @@ XComponent {
     width: 100
     height: 90
     type: "composite"
+    prefix: "c"
     XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
     XPort {x: 0; y: 35; name: "t1"; type:Xmas.Target}
     XPort {x: 0; y: 55; name: "t2"; type:Xmas.Target}

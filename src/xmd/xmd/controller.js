@@ -68,4 +68,9 @@ function destroy(component){
     log("Component deleted.","black")
 }
 
+function destroyAll(){
+    sheet.children = ""
+    log("Sheet cleared.","black")
+}
+
 

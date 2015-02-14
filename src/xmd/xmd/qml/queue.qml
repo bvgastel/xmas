@@ -6,6 +6,7 @@ XComponent {
     width: 100
     height: 50
     type: "queue"
+    prefix: "q"
     property int size: 0
     XPort {x:0; y:20; name: "t"; type:Xmas.Target}
     XPort {x:90; y:20; name: "i"; type:Xmas.Initiator}

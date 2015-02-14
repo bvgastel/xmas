@@ -6,6 +6,7 @@ XComponent {
     width: 50
     height: 50
     type: "source"
+    prefix: "src"
     XPort {x:20; y:40; name: "i"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
