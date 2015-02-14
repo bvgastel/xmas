@@ -25,11 +25,18 @@ Build procedure from qt-creator
 - run clean all if necessary
 - run qmake
 - run build all
-- run deplay all
+- run deploy all
 
 you should be able to run now.
-Be sure to add the deploy step with make
-and parameter install.
+
+If you are continuously testing, but do not need
+to publish, you can disable or remove
+the make install deployment step from your
+run configuration.
+
+Don't forget to add it, when you do want to publish.
+
+When running, by default you also deploy.
 
 
 
