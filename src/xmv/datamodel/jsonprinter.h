@@ -8,22 +8,19 @@
 /**
  * @brief The JsonPrinter class
  *
- *
- *
- *
  * Issues:
- * start/endproperty is annoying and unnecessary, when a property value
+ * TODO: start/endproperty is annoying and unnecessary, when a property value
  * is completed, the property itself is also complete. Remove it and the InProperty state.
  *
- * Currently, only complete strings can be serialized. Maybe provide start/end string
+ * TODO: Currently, only complete strings can be serialized. Maybe provide start/end string
  * functions just like object and array (and add an InString state). (DONE!)
  *
- * Provide both a 'function call'-style API and the streaming API?
+ * TODO: Provide both a 'function call'-style API and the streaming API?
  *
- * Use different names for all json types (writeNumber, writeString, etc.) or use a single
+ * TODO: Use different names for all json types (writeNumber, writeString, etc.) or use a single
  * overloaded write function?
  *
- * Use std::string or const char* for property names and string values?
+ * TODO: Use std::string or const char* for property names and string values?
  */
 class JsonPrinter
 {
