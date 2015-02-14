@@ -39,10 +39,12 @@ include (defines.pri)
 QT += widgets svg quick qml quickwidgets
 
 HEADERS       = \ 
-    controller.h
+    controller.h \
+    xcomponent.h
 				
 SOURCES       = \ 
-    controller.cpp
+    controller.cpp \
+    xcomponent.cpp
     
 unix|win32 {
     target.path = $$PWD/../../../lib/xmd

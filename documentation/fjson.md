@@ -1,7 +1,13 @@
 FJSON file format
 =================
 
-This document (partially) describes the flat JSON file format currently used by checker. This description is meant as a specification that states how the xMAS design tool should serialize a network to disk. As such, not all data in currently availabe fjson files will be explained here. Only data required by the design tool will be listed. In order to graphically place components on a canvas, additional data fields have been added to the specification. These fields will not be used by the verification tools.
+This document (partially) describes the flat JSON file format currently used by
+checker. This description is meant as a specification that states how the xMAS
+design tool should serialize a network to disk. As such, not all data in
+currently availabe fjson files will be explained here. Only data required by
+the design tool will be listed. In order to graphically place components on a
+canvas, additional data fields have been added to the specification. These
+fields will not be used by the verification tools.
 
 
 Root JSON object

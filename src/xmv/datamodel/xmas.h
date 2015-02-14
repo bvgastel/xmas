@@ -325,6 +325,7 @@ public:
     virtual void visit(XMASMerge *) = 0;
     virtual void visit(XMASJoin *) = 0;
 };
+/************************ XMASComponent *******************************************/
 
 /**
  * @brief The XMASComponent class

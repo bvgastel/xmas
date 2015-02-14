@@ -35,14 +35,17 @@
 #include <QColor>
 #include <QDebug>
 
+#include "xmas.h"
+
 class Controller : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Orientation)
     Q_ENUMS(PortType)
+    Q_ENUMS(CompType)
 
 signals: //to view
-    void createComponent(QVariant object);
+    void createComponent(CompType type, QVariant object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);
@@ -55,9 +58,8 @@ public slots:  //from view
     bool channelDestroyed(QVariant object);
     bool channelChanged(QVariant object);
 
-    bool xmv2xmd(); //connected to the paste button on the toolbar
+    bool networkFromJson(QString filename); //connected to the paste button on the toolbar
 public:
-    explicit Controller(QObject* parent = 0);
     enum Orientation {
         North = 0,
         East = 90,
@@ -69,13 +71,16 @@ public:
         SouthEast = 135
     };
     enum PortType {Target , Initiator};
+    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
 
+    explicit Controller(QObject* parent = 0);
     ~Controller();
 
 private:
     bool scratch();
-    void output(QString message,QColor color);
-
+    void output(const std::string message,QColor color);
+    void output(const QString message,QColor color);
+    void emitComponent(XMASComponent *comp);
 };
 
 #endif // CONTROLLER_H

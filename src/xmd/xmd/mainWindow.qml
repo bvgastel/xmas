@@ -70,7 +70,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/open.png"
         iconName: "model-open"
         text: "Open"
-        onTriggered: fileDialog.open()
+        onTriggered: controller.xmv2xmd() // fileDialog.open()
     }
 
     Action {

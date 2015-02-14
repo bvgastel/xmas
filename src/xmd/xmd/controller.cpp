@@ -41,46 +41,110 @@
 
 #include "controller.h"
 #include "simplestring.h"
-#include "xmas.h"
+#include "memorypool.h"
+#include "parse.h"
 //#include "common.h"
 
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
-    output("Hello Controller",Qt::black);
 }
 
 Controller::~Controller() {
 
 }
 
-//TODO : to be implemented (empty at the moment)
-bool Controller::xmv2xmd()
+bool Controller::networkFromJson(QString filename)
 {
+    bitpowder::lib::MemoryPool mp;
 
-    //@Guus : ik weet niet of het makkelijk is om
-    // QVariant om te zetten maar onderstaande
-    // voorbeeld kan ook. (kende je reeds dacht ik)
-    // alleen dat er een probleem was met de qml
-    // files , deze werkt met resource qrc
-    // Het kan ook zonder emit door object
-    // als parent sheet te geven.
-    // sheet kun je vinden in de rootObjects
-    // via de main engine
-    QQmlEngine engine;
-    QQmlComponent component(&engine,
-            QUrl(QStringLiteral("qrc:///qml/fork.qml")));
-    QObject *object = component.create();
-    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
-    object->setProperty("y",200);
-    object->setProperty("name","fork000");
-    qDebug() << "Object " << object->property("name").toString()
-             << " of type " << object->property("type").toString()
-             << " has been created." ;
-    //emit createComponent(QVariant(object));
-    delete object;
+    filename = QString("../../testfiles/2_queues.fjson");
+    output("Opening file "+filename.toStdString(), Qt::black);
+    auto parse  = Parse(filename.toStdString(), mp);
+    auto componentMap = parse.first;
+    if (componentMap.empty()) {
+        output("Opening file "+filename + " is empty.", Qt::black);
+    }
+    for(auto compMapEntry : componentMap) {
+        emitComponent(compMapEntry.second);
+
+//        std::string name = compMapEntry.first.stl();
+//        output("name = "+ name, Qt::black);
+//        if (typeid(component) == typeid(XMASSink)) {
+//            QObject *object = new Object();
+//            XMASSink *comp = compMapEntry.second;
+//            std::string name = comp->getName();
+//            object->setProperty("name", name);
+//            emit createComponent(CompType::Sink, QVariant(object));
+//        }
+//        if (typeid(component) == typeid(XMASQueue)) {
+//            QObject *object = new Object();
+//            XMASQueue *queue = compMapEntry.second;
+//            std::string name = queue.getName();
+//            int qlen = queue.c;
+//            object->setProperty("name", name);
+//            object->setProperty("size", qlen);
+//            emit createComponent(CompType::Queue, QVariant(object));
+//        }
+    }
+
     return true;
 }
+
+std::pair<Controller::CompType, std::shared_ptr<std::list>> convertComp2Object(XMASComponent *comp) {
+    std::shared_ptr<std::list> paramList;
+    std::pair<std::string, std::string> param;
+    std::pair<Controller::CompType, std::shared_ptr<std::list>> result;
+    param = std::make_pair("name", comp->getName);
+    paramList->push_back(param);
+    param = std::make_pair("x", "100");
+    paramList->push_back(param);
+    param = std::make_pair("y", "100");
+    if (typeid(comp) == typeid(XMASSource)) {
+        result = std::make_pair(Controller::CompType::Source, paramList);
+        return result;
+    } else if (typeid(*comp) == typeid(XMASSink)) {
+        result = std::make_pair(Controller::CompType::Sink, paramList);
+        return result;
+    } else if (typeid(*comp) == typeid(XMASFunction)) {
+        result = std::make_pair(Controller::CompType::Function, paramList);
+        return result;
+    } else if (typeid(*comp) == typeid(XMASQueue)) {
+        XMASQueue *q = std::dynamic_pointer_cast<XMASQueue>(comp);
+        paramList->push_back("size", q->c);
+        result = std::make_pair(Controller::CompType::Queue, paramList);
+        return result;
+    } else if (typeid(*comp) == typeid(XMASJoin)) {
+        result = std::make_pair(Controller::CompType::Join, paramList);
+        return result;
+    } else if (typeif(*comp) == typeid(XMASMerge)) {
+        result = std::make_pair(Controller::CompType::Merge, paramList);
+        return result;
+    } else if (typeif(*comp) == typeid(XMASSwitch)) {
+        result = std::make_pair(Controller::CompType::Switch, paramList);
+        return result;
+    } else if (typeif(*comp) == typeid(XMASFork)) {
+        result = std::make_pair(Controller::CompType::Fork, paramList);
+        return result;
+    }
+    throw new Exception("Unknown type of XMASComponent");
+
+}
+
+void Controller::emitComponent(XMASComponent *comp) {
+    output("name = "+ comp->getName(), Qt::black);
+    std::pair<CompType, std::shared_ptr<std::list>> result = convertComp2Object(comp);
+    CompType type = result.first;
+    std::shared_ptr<std::list> paramList = result.second;
+    QObject object;
+    object.setProperty("type", type);
+    for (auto prop : paramList) {
+        object.setProperty(prop.first, prop.second);
+    }
+    emit createComponent(type, QVariant(object));
+}
+
+
 
 // TODO: to be implemented toward xmv.
 /**
@@ -184,7 +248,15 @@ bool Controller::channelChanged(QVariant qvariant)
  * @param message
  * @param color
  */
-void Controller::output(QString message, QColor color){
-    emit log(message,color);
+void Controller::output(const std::string message, QColor color){
+    emit log(QString::fromUtf8(message.c_str()),color);
 }
 
+/**
+ * @brief Controller::output
+ * @param message
+ * @param color
+ */
+void Controller::output(const QString message, QColor color){
+    emit log(message,color);
+}
