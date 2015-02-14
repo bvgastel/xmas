@@ -37,6 +37,7 @@
 #include <QMetaObject>
 #include <QQmlEngine>
 #include <QtQml>
+//#include <QColor>
 
 #include "controller.h"
 #include "simplestring.h"
@@ -46,7 +47,7 @@
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
-
+    output("Hello Controller",Qt::black);
 }
 
 Controller::~Controller() {
@@ -76,7 +77,7 @@ bool Controller::xmv2xmd()
     qDebug() << "Object " << object->property("name").toString()
              << " of type " << object->property("type").toString()
              << " has been created." ;
-    //emit componentCreate(QVariant(object));
+    //emit createComponent(QVariant(object));
     delete object;
     return true;
 }
@@ -101,6 +102,7 @@ bool Controller::componentCreated(QVariant qvariant)
             qDebug() << " port: " << pname;
         }
     }
+    output("Hello from Controller to qml",Qt::black);
     return true;
 }
 
@@ -177,6 +179,12 @@ bool Controller::channelChanged(QVariant qvariant)
     return true;
 }
 
-
-
+/**
+ * @brief Controller::output
+ * @param message
+ * @param color
+ */
+void Controller::output(QString message, QColor color){
+    emit log(message,color);
+}
 

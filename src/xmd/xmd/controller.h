@@ -32,6 +32,7 @@
 #define CONTROLLER_H
 
 #include <QVariant>
+#include <QColor>
 #include <QDebug>
 
 class Controller : public QObject
@@ -41,9 +42,10 @@ class Controller : public QObject
     Q_ENUMS(PortType)
 
 signals: //to view
-    void componentCreate(QVariant object);
+    void createComponent(QVariant object);
     bool createChannel(QVariant object);
     bool clearNetwork();
+    void log(QString message,QColor color);
 
 public slots:  //from view
     bool componentCreated(QVariant object);
@@ -72,6 +74,7 @@ public:
 
 private:
     bool scratch();
+    void output(QString message,QColor color);
 
 };
 
