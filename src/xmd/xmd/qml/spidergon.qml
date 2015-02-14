@@ -16,7 +16,7 @@ XComponent {
         y:5
         width: 60
         height: 80
-        border.color: black
+        border.color: "black"
         border.width: 3
         radius: 10
         color: "white"

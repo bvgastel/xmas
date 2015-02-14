@@ -42,7 +42,7 @@ class Controller : public QObject
     Q_ENUMS(PortType)
 
 signals: //to view
-    void createComponent(QVariant object);
+    void createComponent(QString type,QVariant object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);

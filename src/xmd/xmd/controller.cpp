@@ -47,7 +47,6 @@
 Controller::Controller(QObject* parent)
     : QObject(parent)
 {
-    output("Hello Controller",Qt::black);
 }
 
 Controller::~Controller() {
@@ -102,7 +101,7 @@ bool Controller::componentCreated(QVariant qvariant)
             qDebug() << " port: " << pname;
         }
     }
-    output("Hello from Controller to qml",Qt::black);
+    output("Hello from Controller to qml",Qt::red);
     return true;
 }
 

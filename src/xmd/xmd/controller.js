@@ -1,6 +1,6 @@
 
 
-function loadComponent(type) {
+function loadComponent(type,object) {
     var qml = ""
     var component = null;
     switch(type) {
