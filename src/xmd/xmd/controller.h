@@ -45,7 +45,7 @@ class Controller : public QObject
     Q_ENUMS(CompType)
 
 signals: //to view
-    void createComponent(CompType type, QVariant object);
+    void createComponent(QString type,QVariant object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);

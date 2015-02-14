@@ -1,6 +1,6 @@
 
 
-function loadComponent(type) {
+function loadComponent(type,object) {
     var qml = ""
     var component = null;
     switch(type) {
@@ -66,6 +66,11 @@ function destroy(component){
     component.destroy()
     controller.componentDestroyed(component)
     log("Component deleted.","black")
+}
+
+function destroyAll(){
+    sheet.children = ""
+    log("Sheet cleared.","black")
 }
 
 

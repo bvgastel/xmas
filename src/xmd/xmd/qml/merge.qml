@@ -5,6 +5,7 @@ XComponent {
     width: 100
     height: 100
     type: "merge"
+    prefix: "m"
     XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
     XPort {x: 0; y:75; name: "t1"; type:Xmas.Target}
     XPort {x: 90; y:45; name: "i"; type:Xmas.Initiator}

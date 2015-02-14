@@ -166,7 +166,7 @@ bool Controller::componentCreated(QVariant qvariant)
             qDebug() << " port: " << pname;
         }
     }
-    output("Hello from Controller to qml",Qt::black);
+    output("Hello from Controller to qml",Qt::red);
     return true;
 }
 

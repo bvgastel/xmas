@@ -5,6 +5,7 @@ XComponent {
     width: 100
     height: 100
     type: "switch"
+    prefix: "s"
     XPort {x:0; y:45; name: "t0"; type:Xmas.Target}
     XPort {x:90; y:15; name: "t1"; type:Xmas.Initiator}
     XPort {x:90; y:75; name: "i"; type:Xmas.Initiator}
