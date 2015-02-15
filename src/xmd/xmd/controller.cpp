@@ -62,32 +62,17 @@ bool Controller::fileOpen(QUrl fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
 
-<<<<<<< HEAD
-    if (fileUrl == "") {
-        fileUrl = QString("../../testfiles/2_queues.fjson");
-        controllerLog("fileUrl was empty. using default input file: "+fileUrl.toStdString());
-    }
-    controllerLog("Opening file "+fileUrl.toStdString());
-    std::string fileName = QUrl(fileUrl).toLocalFile().toStdString();
-    auto parsePair  = Parse(fileName, mp);
-    auto &componentMap = parsePair.first;
-    auto &globals = parsePair.second;
-
-    if (componentMap.empty()) {
-        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+fileUrl + " is empty. Oops ..... ");
-=======
     std::string filename = fileUrl.toLocalFile().toStdString();
     if (filename == "") {
         filename = "../../testfiles/2_queues.fjson";
-        log("Ivalid filename!! Using default input file: " + filename, Qt::red);
+        controllerLog("Ivalid filename!! Using default input file: " + filename, Qt::red);
     }
-    log("Opening file " + filename);
+    controllerLog("Opening file " + filename);
     auto parse  = Parse(filename, mp);
     auto componentMap = parse.first;
     if (componentMap.empty()) {
-        log("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. Oops ..... ",Qt::red);
+        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. Oops ..... ",Qt::red);
         return false;
->>>>>>> 2beab07c95ceca3c6277fd9d68413301cc91fe40
     }
     std::set<XMASComponent *> allComponents;
     for(auto &it : componentMap) {
@@ -218,11 +203,6 @@ bool Controller::channelChanged(QVariant qvariant)
     return true;
 }
 
-void Controller::controllerLog(const QString message){
-    controllerLog(message, Qt::black);
-}
-
-<<<<<<< HEAD
 void Controller::controllerLog(const bitpowder::lib::String message) {
     controllerLog(message, Qt::black);
 }
@@ -230,8 +210,6 @@ void Controller::controllerLog(const bitpowder::lib::String message) {
 void Controller::controllerLog(const std::string message){
     controllerLog(message, Qt::black);
 }
-=======
->>>>>>> 2beab07c95ceca3c6277fd9d68413301cc91fe40
 
 /**
  * @brief Controller::output
