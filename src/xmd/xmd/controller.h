@@ -37,6 +37,7 @@
 #include <QColor>
 #include <QDebug>
 #include <QMap>
+#include <QUrl>
 
 #include "xmas.h"
 
@@ -60,7 +61,7 @@ public slots:  //from view
     bool channelCreated(QVariant object);
     bool channelDestroyed(QVariant object);
     bool channelChanged(QVariant object);
-    bool fileOpen(QString fileUrl);
+    bool fileOpen(QUrl fileUrl);
 
 public:
     enum Orientation {
@@ -92,6 +93,10 @@ private:
 
     void controllerLog(const bitpowder::lib::String message, QColor color);
     void controllerLog(const bitpowder::lib::String message);
+
+    void log(const QString message);
+    void log(const std::string message, QColor color = Qt::black);
+    void log(const bitpowder::lib::String message, QColor color = Qt::black);
 
     void emitComponent(XMASComponent *comp);
 

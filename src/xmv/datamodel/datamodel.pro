@@ -66,7 +66,8 @@ HEADERS += datamodel.h\
  #   symbolic-range-field.h \
     parse.h \
     jsonprinter.h \
-    serialize_network.h
+    serialize_network.h \
+    canvascomponentextension.h
 
 unix|win32 {
     target.path = $$PWD/../../../lib/datamodel
