@@ -54,8 +54,8 @@ public slots:  //from view
     bool channelCreated(QVariant object);
     bool channelDestroyed(QVariant object);
     bool channelChanged(QVariant object);
+    bool fileOpen(QString fileUrl);
 
-    bool xmv2xmd(); //connected to the paste button on the toolbar
 public:
     explicit Controller(QObject* parent = 0);
     enum Orientation {

@@ -57,7 +57,6 @@ ApplicationWindow {
 
     title: "XMAS Model Designer 2015"
 
-
     MessageDialog {
         id: aboutBox
         title: "About XMD"
@@ -156,8 +155,12 @@ ApplicationWindow {
 
     FileDialog {
         id: fileDialog
-        nameFilters: ["Model files (*.xmdm)", "Composite files (*.xmdc)", "Project files (*.xmdp)"]
-        //onAccepted: document.fileUrl = fileUrl
+        nameFilters: [
+            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+        onAccepted: controller.fileOpen(fileUrl)
     }
 
 
