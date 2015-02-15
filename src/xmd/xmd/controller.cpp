@@ -58,24 +58,25 @@ Controller::~Controller()  {
  * @param fileUrl
  * @return
  */
-bool Controller::fileOpen(QString fileUrl)
+bool Controller::fileOpen(QUrl fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
 
-    if (fileUrl == "") {
-        fileUrl = QString("../../testfiles/2_queues.fjson");
-        log("fileUrl was empty. using default input file: "+fileUrl.toStdString());
+    std::string filename = fileUrl.toLocalFile().toStdString();
+    if (filename == "") {
+        filename = "../../testfiles/2_queues.fjson";
+        log("Ivalid filename!! Using default input file: " + filename, Qt::red);
     }
-    log("Opening file "+fileUrl.toStdString());
-    auto parse  = Parse(fileUrl.toStdString(), mp);
+    log("Opening file " + filename);
+    auto parse  = Parse(filename, mp);
     auto componentMap = parse.first;
     if (componentMap.empty()) {
-        log("[Component.cpp/fileOpen(fileUrl)] File "+fileUrl + " is empty. Oops ..... ");
+        log("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. Oops ..... ",Qt::red);
+        return false;
     }
     for(auto compMapEntry : componentMap) {
         emitComponent(compMapEntry.second);
     }
-    qDebug() << fileUrl;
     return true;
 }
 
