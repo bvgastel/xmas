@@ -3,6 +3,8 @@
 function loadComponent(type,object) {
     var qml = ""
     var component = null;
+    console.log("type --> " + type + "object --> " + object)
+
     switch(type) {
     case "queue":
         qml =  "../qml/queue.qml"

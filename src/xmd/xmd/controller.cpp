@@ -63,19 +63,27 @@ bool Controller::fileOpen(QString fileUrl)
 
     qDebug() << fileUrl;
 
-//    QQmlEngine engine;
-//    QQmlComponent component(&engine,
-//            QUrl(QStringLiteral("qrc:///qml/fork.qml")));
-//    QObject *object = component.create();
-//    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
-//    object->setProperty("y",200);
-//    object->setProperty("name","fork000");
-//    qDebug() << "Object " << object->property("name").toString()
-//             << " of type " << object->property("type").toString()
-//             << " has been created." ;
-//    emit createComponent(QVariant(object));
-//    delete object;
-    return true;
+    //    QQmlEngine engine;
+    //    QQmlComponent component(&engine,
+    //            QUrl(QStringLiteral("qrc:///qml/fork.qml")));
+    //    QObject *object = component.create();
+    //    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
+    //    object->setProperty("y",200);
+    //    object->setProperty("name","fork000");
+    //    qDebug() << "Object " << object->property("name").toString()
+    //             << " of type " << object->property("type").toString()
+    //             << " has been created." ;
+    //    emit createComponent(QVariant(object));
+    //    delete object;
+
+    QObject object;
+    object.setProperty("name","test123");
+    object.setProperty("x",100.0);
+    object.setProperty("y",200.0);
+    emit createComponent("queue",QVariant("object"));
+
+
+            return true;
 }
 
 // TODO: to be implemented toward xmv.
@@ -119,9 +127,9 @@ bool Controller::scratch() {
     //         simply called from the view test button. But it shows how c++ can request
     //         a fork on the sheet. To send also properties I'm working on it :)
 
-//    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
-//    QObject *fork = component.create();
-//    bitpowder::lib::unused(fork);
+    //    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
+    //    QObject *fork = component.create();
+    //    bitpowder::lib::unused(fork);
     return true;
 }
 
@@ -163,8 +171,8 @@ bool Controller::channelCreated(QVariant qvariant)
 bool Controller::channelDestroyed(QVariant qvariant)
 {
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
-     QString name = QQmlProperty::read(qobject, "name").toString();
-     qDebug() << "Channel " + name + " destroyed by designer";
+    QString name = QQmlProperty::read(qobject, "name").toString();
+    qDebug() << "Channel " + name + " destroyed by designer";
     return true;
 }
 
