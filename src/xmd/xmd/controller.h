@@ -60,6 +60,7 @@ public slots:  //from view
     bool channelCreated(QVariant object);
     bool channelDestroyed(QVariant object);
     bool channelChanged(QVariant object);
+    bool fileOpen(QString fileUrl);
 
     bool networkFromJson(QString filename); //connected to the paste button on the toolbar
 public:
