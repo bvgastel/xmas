@@ -62,7 +62,6 @@ public slots:  //from view
     bool channelChanged(QVariant object);
     bool fileOpen(QString fileUrl);
 
-    bool networkFromJson(QString filename); //connected to the paste button on the toolbar
 public:
     enum Orientation {
         North = 0,
@@ -98,7 +97,7 @@ private:
 
 
     std::map<QString, QString> m_type_map = {
-        {"XMASSource", "source" },
+        {typeid(XMASSource).name(), "source" },
         {"XMASSink", "sink" },
         {"XMASFunction", "function" },
         {"XMASQueue", "queue"},

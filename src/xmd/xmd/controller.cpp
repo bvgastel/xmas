@@ -53,8 +53,6 @@ Controller::~Controller()  {
 
 }
 
-bool Controller::networkFromJson(QString filename)
-
 /**
  * @brief Controller::fileOpen
  * @param fileUrl
@@ -64,47 +62,26 @@ bool Controller::fileOpen(QString fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
 
-    if (filename == "") {
-        filename = QString("../../testfiles/2_queues.fjson");
+    if (fileUrl == "") {
+        fileUrl = QString("../../testfiles/2_queues.fjson");
+        log("fileUrl was empty. using default input file: "+fileUrl.toStdString());
     }
-    output("Opening file "+filename.toStdString());
-    auto parse  = Parse(filename.toStdString(), mp);
+    log("Opening file "+fileUrl.toStdString());
+    auto parse  = Parse(fileUrl.toStdString(), mp);
     auto componentMap = parse.first;
     if (componentMap.empty()) {
-        output("Opening file "+filename + " is empty.");
+        log("[Component.cpp/fileOpen(fileUrl)] File "+fileUrl + " is empty. Oops ..... ");
     }
     for(auto compMapEntry : componentMap) {
         emitComponent(compMapEntry.second);
     }
-    return true;
     qDebug() << fileUrl;
-
-    //    QQmlEngine engine;
-    //    QQmlComponent component(&engine,
-    //            QUrl(QStringLiteral("qrc:///qml/fork.qml")));
-    //    QObject *object = component.create();
-    //    object->setProperty("x",200); //de 200 is nu fixed maar komt normaal van het xmv argument
-    //    object->setProperty("y",200);
-    //    object->setProperty("name","fork000");
-    //    qDebug() << "Object " << object->property("name").toString()
-    //             << " of type " << object->property("type").toString()
-    //             << " has been created." ;
-    //    emit createComponent(QVariant(object));
-    //    delete object;
-
-    QObject object;
-    object.setProperty("name","test123");
-    object.setProperty("x",100.0);
-    object.setProperty("y",200.0);
-    emit createComponent("queue",QVariant("object"));
-
-
-            return true;
+    return true;
 }
 
 void Controller::emitComponent(XMASComponent *comp) {
     std::string name = comp->getName().stl();
-    output("name = "+ name, Qt::black);
+    log("name = "+ name, Qt::black);
 
     QString typeName = typeid(comp).name();
     QString type = m_type_map[typeName];
@@ -144,7 +121,7 @@ bool Controller::componentCreated(QVariant qvariant)
             qDebug() << " port: " << pname;
         }
     }
-    output(QString("Hello from Controller to qml"),Qt::red);
+    log(QString("Hello from Controller to qml"),Qt::red);
     return true;
 }
 
@@ -221,16 +198,16 @@ bool Controller::channelChanged(QVariant qvariant)
     return true;
 }
 
-void Controller::output(const QString message){
-    output(message, Qt::black);
+void Controller::log(const QString message){
+    log(message, Qt::black);
 }
 
-void Controller::output(const bitpowder::lib::String message) {
-    output(message, Qt::black);
+void Controller::log(const bitpowder::lib::String message) {
+    log(message, Qt::black);
 }
 
-void Controller::output(const std::string message){
-    output(message, Qt::black);
+void Controller::log(const std::string message){
+    log(message, Qt::black);
 }
 
 /**
@@ -238,11 +215,11 @@ void Controller::output(const std::string message){
  * @param message
  * @param color
  */
-void Controller::output(const std::string message, QColor color){
+void Controller::log(const std::string message, QColor color){
     emit log(QString::fromUtf8(message.c_str()),color);
 }
 
-void Controller::output(const bitpowder::lib::String message, QColor color) {
+void Controller::log(const bitpowder::lib::String message, QColor color) {
     emit log(QString::fromUtf8(message.stl().c_str()),color);
 }
 
@@ -251,6 +228,6 @@ void Controller::output(const bitpowder::lib::String message, QColor color) {
  * @param message
  * @param color
  */
-void Controller::output(const QString message, QColor color){
+void Controller::log(const QString message, QColor color){
     emit log(message,color);
 }
