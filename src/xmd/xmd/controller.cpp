@@ -202,13 +202,6 @@ void Controller::log(const QString message){
     log(message, Qt::black);
 }
 
-void Controller::log(const bitpowder::lib::String message) {
-    log(message, Qt::black);
-}
-
-void Controller::log(const std::string message){
-    log(message, Qt::black);
-}
 
 /**
  * @brief Controller::output
@@ -228,6 +221,6 @@ void Controller::log(const bitpowder::lib::String message, QColor color) {
  * @param message
  * @param color
  */
-void Controller::log(const QString message, QColor color){
-    emit log(message,color);
-}
+//void Controller::log(const QString message, QColor color){
+//    emit log(message,color);
+//}

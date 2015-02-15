@@ -5,7 +5,7 @@
 
 CONFIG += C++11
 
-QT += widgets svg declarative quick qml quickwidgets
+QT += widgets svg quick qml quickwidgets
 
 TEMPLATE = app
 CONFIG += link_prl

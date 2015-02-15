@@ -93,6 +93,10 @@ private:
     void output(const bitpowder::lib::String message, QColor color);
     void output(const bitpowder::lib::String message);
 
+    void log(const QString message);
+    void log(const std::string message, QColor color = Qt::black);
+    void log(const bitpowder::lib::String message, QColor color = Qt::black);
+
     void emitComponent(XMASComponent *comp);
 
 
