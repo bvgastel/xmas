@@ -229,7 +229,6 @@ void Export(std::ostream &out, std::set<XMASComponent *> allComponents, const JS
 
 void Export(std::set<XMASComponent *> allComponents, const JSONData& globals)
 {
-    //std::ostream& out = std::cout;
     Export(std::cout, allComponents, globals);
 }
 

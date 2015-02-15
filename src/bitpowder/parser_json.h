@@ -172,7 +172,7 @@ public:
         return asNumber();
     }
 
-    virtual void print(std::ostream& out) const;
+    virtual void print(std::ostream& out, unsigned int lvl=0) const;
 
     JSONData& operator[](const String &lookup) {
         return asObject()[lookup];
@@ -238,7 +238,7 @@ JSONParseResult ParseJSON(const String &str, MemoryPool &mp);
 namespace std {
 inline std::ostream& operator<< (std::ostream& out, const bitpowder::lib::JSONData &json)
 {
-    json.print(out);
+    json.print(out, 0);
     return out;
 }
 std::ostream& operator<< (std::ostream& out, bitpowder::lib::JSONParseResult &parseResult);

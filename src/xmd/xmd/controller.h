@@ -84,14 +84,14 @@ private:
 
     QVariant createPropObject(XMASComponent *comp);
 
-    void output(const std::string message,QColor color);
-    void output(const std::string message);
+    void controllerLog(const std::string message,QColor color);
+    void controllerLog(const std::string message);
 
-    void output(const QString message,QColor color);
-    void output(const QString message);
+    void controllerLog(const QString message, QColor color);
+    void controllerLog(const QString message);
 
-    void output(const bitpowder::lib::String message, QColor color);
-    void output(const bitpowder::lib::String message);
+    void controllerLog(const bitpowder::lib::String message, QColor color);
+    void controllerLog(const bitpowder::lib::String message);
 
     void emitComponent(XMASComponent *comp);
 

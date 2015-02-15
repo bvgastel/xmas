@@ -64,16 +64,23 @@ bool Controller::fileOpen(QString fileUrl)
 
     if (fileUrl == "") {
         fileUrl = QString("../../testfiles/2_queues.fjson");
-        log("fileUrl was empty. using default input file: "+fileUrl.toStdString());
+        controllerLog("fileUrl was empty. using default input file: "+fileUrl.toStdString());
     }
-    log("Opening file "+fileUrl.toStdString());
-    auto parse  = Parse(fileUrl.toStdString(), mp);
-    auto componentMap = parse.first;
+    controllerLog("Opening file "+fileUrl.toStdString());
+    std::string fileName = QUrl(fileUrl).toLocalFile().toStdString();
+    auto parsePair  = Parse(fileName, mp);
+    auto &componentMap = parsePair.first;
+    auto &globals = parsePair.second;
+
     if (componentMap.empty()) {
-        log("[Component.cpp/fileOpen(fileUrl)] File "+fileUrl + " is empty. Oops ..... ");
+        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+fileUrl + " is empty. Oops ..... ");
     }
-    for(auto compMapEntry : componentMap) {
-        emitComponent(compMapEntry.second);
+    std::set<XMASComponent *> allComponents;
+    for(auto &it : componentMap) {
+        if (it.second) {
+            allComponents.insert(it.second);
+            emitComponent(it.second);
+        }
     }
     qDebug() << fileUrl;
     return true;
@@ -81,7 +88,7 @@ bool Controller::fileOpen(QString fileUrl)
 
 void Controller::emitComponent(XMASComponent *comp) {
     std::string name = comp->getName().stl();
-    log("name = "+ name, Qt::black);
+    controllerLog("name = "+ name, Qt::black);
 
     QString typeName = typeid(comp).name();
     QString type = m_type_map[typeName];
@@ -121,7 +128,7 @@ bool Controller::componentCreated(QVariant qvariant)
             qDebug() << " port: " << pname;
         }
     }
-    log(QString("Hello from Controller to qml"),Qt::red);
+    controllerLog(QString("Hello from Controller to qml"),Qt::red);
     return true;
 }
 
@@ -198,29 +205,16 @@ bool Controller::channelChanged(QVariant qvariant)
     return true;
 }
 
-void Controller::log(const QString message){
-    log(message, Qt::black);
+void Controller::controllerLog(const QString message){
+    controllerLog(message, Qt::black);
 }
 
-void Controller::log(const bitpowder::lib::String message) {
-    log(message, Qt::black);
+void Controller::controllerLog(const bitpowder::lib::String message) {
+    controllerLog(message, Qt::black);
 }
 
-void Controller::log(const std::string message){
-    log(message, Qt::black);
-}
-
-/**
- * @brief Controller::output
- * @param message
- * @param color
- */
-void Controller::log(const std::string message, QColor color){
-    emit log(QString::fromUtf8(message.c_str()),color);
-}
-
-void Controller::log(const bitpowder::lib::String message, QColor color) {
-    emit log(QString::fromUtf8(message.stl().c_str()),color);
+void Controller::controllerLog(const std::string message){
+    controllerLog(message, Qt::black);
 }
 
 /**
@@ -228,6 +222,19 @@ void Controller::log(const bitpowder::lib::String message, QColor color) {
  * @param message
  * @param color
  */
-void Controller::log(const QString message, QColor color){
+void Controller::controllerLog(const std::string message, QColor color){
+    emit controllerLog(QString::fromUtf8(message.c_str()),color);
+}
+
+void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
+    emit controllerLog(QString::fromUtf8(message.stl().c_str()),color);
+}
+
+/**
+ * @brief Controller::output
+ * @param message
+ * @param color
+ */
+void Controller::controllerLog(const QString message, QColor color){
     emit log(message,color);
 }

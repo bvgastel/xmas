@@ -45,7 +45,7 @@ SOURCES += datamodel.cpp \
     symbolic-visitor.cpp \
     symbolic-enum-field.cpp \
     messagespec.cpp \
-#    export.cpp \
+    export.cpp \
     symbolic-function.cpp \
     symbolic-interval-field.cpp \
 #    symbolic-range-field.cpp \

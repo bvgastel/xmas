@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <sstream>
+
 #include "parser_json.h"
 
 namespace bitpowder {
@@ -320,8 +322,17 @@ JSONData::JSONData(JSONData &&b) noexcept : type(b.type) {
     }
 }
 
-void JSONData::print(std::ostream &out) const {
+std::string calcPrefix(unsigned int lvl) {
+    std::ostringstream os;
+    for (unsigned int i = 0; i < lvl; i++) {
+        os << "\t";
+    }
+    return os.str();
+}
+
+void JSONData::print(std::ostream &out, unsigned int lvl) const {
     //out << "(json " << type << std::endl;
+    std::string prefix = calcPrefix(lvl);   // gbo: prefix
     if (type == JSONNull)
         out << "null";
     if (type == JSONNumber)
@@ -329,27 +340,29 @@ void JSONData::print(std::ostream &out) const {
     if (type == JSONString)
         out << '"' << str << '"';
     if (type == JSONArray) {
-        out << "[";
+        out << "[\n" << prefix; // gbo: added \n and prefix
         bool first = true;
         for (auto &it : *array) {
             if (!first)
-                out << ",";
-            it.print(out);
+                out << ",\n" << prefix; // gbo: added \n and prefix
+            it.print(out, lvl+1);
             first = false;
         }
-        out << "]";
+        out << "]\n" << prefix;  // gbo: added \n and prefix
     }
     if (type == JSONObject) {
         out << "{";
         bool first = true;
         for (auto &it : *object) {
             if (!first)
-                out << ",";
-            out << "\"" << it.first << "\":";
-            it.second.print(out);
+                out << ",\n"; // gbo: added \n
+            else
+                out << "\n";   // gbo: added \n
+            out << prefix << "\"" << it.first << "\":"; // gbo: prefix
+            it.second.print(out, lvl+1);
             first = false;
         }
-        out << "}";
+        out << "}\n" << prefix; // gbo: added \n and prefix
     }
     //out << ")";
 }
