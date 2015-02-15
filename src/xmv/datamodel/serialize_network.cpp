@@ -1,6 +1,7 @@
 #include "serialize_network.h"
 #include "jsonprinter.h"
 #include "xmas.h"
+#include "canvascomponentextension.h"
 
 class NameComponentVisitor : public XMASComponentVisitor
 {
@@ -57,6 +58,17 @@ void serialize_network(std::ostream& os, std::set<XMASComponent*>& network) {
             }
 
             pr << json_endarray << json_endprop;
+        }
+
+        // write canvas data
+        CanvasComponentExtension* cce = c->getComponentExtension<CanvasComponentExtension>(false);
+        if (cce) {
+            pr << jsonprop("pos", json_startobj) <<
+                  jsonprop("x", cce->x()) <<
+                  jsonprop("y", cce->y()) <<
+                  jsonprop("orientation", cce->orientation()) <<
+                  jsonprop("scale", static_cast<int>(cce->scale() * 100.0f)) <<      // TODO: Parser only supports integral numbers, use ints for now and convert from float
+                  json_endobj << json_endprop;
         }
 
         pr << json_endobj;

@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "simplestring.h"
+#include "canvascomponentextension.h"
 
 using namespace bitpowder::lib;
 
@@ -1285,6 +1286,23 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> Parse(cons
             outs.erase(outs.begin());
         }
 
+        // read canvas data
+        JSONData posData = jsonComponent["pos"];
+        if (!posData.isNull()) {
+            try {
+                CanvasComponentExtension* cce = new CanvasComponentExtension {
+                    posData["x"].asNumber(),
+                    posData["y"].asNumber(),
+                    posData["orientation"].asNumber(),
+                    posData["scale"].asNumber() * 0.01f      // TODO: Parser only supports integral numbers, use ints for now and convert to float
+                };
+                component->addExtension(cce);
+            } catch (Exception e) {
+                std::cerr << "Invalid canvas data:" << std::endl << jsonComponent << std::endl;
+                std::cerr << e << std::endl;
+                exit(-1);
+            }
+        }
 
         XMASSource *src = dynamic_cast<XMASSource*>(component);
         if (src) {

@@ -14,6 +14,12 @@
           "in_port": 0
         }
       ],
+      "pos": {
+        "x": 10,
+        "y": 10,
+        "orientation": 0,
+        "scale": 100
+      },
       "fields": [
 	{
           "init_types": "value < 65384"
@@ -29,6 +35,12 @@
           "in_port": 0
         }
       ],
+      "pos": {
+        "x": 110,
+        "y": 110,
+        "orientation": 90,
+        "scale": 200
+      },
       "fields": [
         {
           "size": 2
@@ -44,6 +56,12 @@
           "in_port": 0
         }
       ],
+      "pos": {
+        "x": 210,
+        "y": 210,
+        "orientation": 0,
+        "scale": 100
+      },
       "fields": [
         {
           "size": 2
@@ -52,7 +70,13 @@
     },
     {
       "id": "sink3",
-      "type": "sink"
+      "type": "sink",
+      "pos": {
+        "x": 310,
+        "y": 310,
+        "orientation": 0,
+        "scale": 100
+      }
     }
   ]
 }
