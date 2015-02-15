@@ -31,9 +31,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <unordered_map>
+
 #include <QVariant>
 #include <QColor>
 #include <QDebug>
+#include <QMap>
 
 #include "xmas.h"
 
@@ -45,7 +48,7 @@ class Controller : public QObject
     Q_ENUMS(CompType)
 
 signals: //to view
-    void createComponent(QString type,QVariant object);
+    void createComponent(QString type, QObject &object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);
@@ -78,18 +81,33 @@ public:
 
 private:
     bool scratch();
+
+    QVariant createPropObject(XMASComponent *comp);
+
     void output(const std::string message,QColor color);
+    void output(const std::string message);
+
     void output(const QString message,QColor color);
+    void output(const QString message);
+
+    void output(const bitpowder::lib::String message, QColor color);
+    void output(const bitpowder::lib::String message);
+
     void emitComponent(XMASComponent *comp);
+
+
+    std::map<QString, QString> m_type_map = {
+        {"XMASSource", "source" },
+        {"XMASSink", "sink" },
+        {"XMASFunction", "function" },
+        {"XMASQueue", "queue"},
+        {"XMASJoin", "join"},
+        {"XMASMerge", "merge"},
+        {"XMASFork", "fork"},
+        {"XMASSwitch", "switch"},
+    };
+
+
 };
 
 #endif // CONTROLLER_H
-
-
-
-
-
-
-
-
-

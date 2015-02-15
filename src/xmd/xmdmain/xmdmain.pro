@@ -23,6 +23,10 @@ unix|win32 {
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 
+
+INCLUDEPATH += $$PWD/../../../include/datamodel
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
 else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
