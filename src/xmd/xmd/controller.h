@@ -32,6 +32,7 @@
 #define CONTROLLER_H
 
 #include <unordered_map>
+#include <typeindex>
 
 #include <QVariant>
 #include <QColor>
@@ -49,7 +50,7 @@ class Controller : public QObject
     Q_ENUMS(CompType)
 
 signals: //to view
-    void createComponent(QString type, QObject &object);
+    void createComponent(QString type, QObject *object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);
@@ -101,15 +102,15 @@ private:
     void emitComponent(XMASComponent *comp);
 
 
-    std::map<QString, QString> m_type_map = {
-        {typeid(XMASSource).name(), "source" },
-        {"XMASSink", "sink" },
-        {"XMASFunction", "function" },
-        {"XMASQueue", "queue"},
-        {"XMASJoin", "join"},
-        {"XMASMerge", "merge"},
-        {"XMASFork", "fork"},
-        {"XMASSwitch", "switch"},
+    std::map<std::type_index, QString> m_type_map = {
+        {std::type_index(typeid(XMASSource)),   "source" },
+        {std::type_index(typeid(XMASSink)),     "sink" },
+        {std::type_index(typeid(XMASFunction)), "function" },
+        {std::type_index(typeid(XMASQueue)),    "queue"},
+        {std::type_index(typeid(XMASJoin)),     "join"},
+        {std::type_index(typeid(XMASMerge)),    "merge"},
+        {std::type_index(typeid(XMASFork)),     "fork"},
+        {std::type_index(typeid(XMASSwitch)),   "switch"},
     };
 
 

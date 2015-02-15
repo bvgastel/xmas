@@ -88,15 +88,16 @@ void Controller::emitComponent(XMASComponent *comp) {
     std::string name = comp->getName().stl();
     controllerLog("name = "+ name, Qt::black);
 
-    QString typeName = typeid(comp).name();
-    QString type = m_type_map[typeName];
+    std::type_index typeIndex = std::type_index(typeid(*comp));
+    QString type = m_type_map[typeIndex];
     QObject object;
     object.setProperty("type", type);
     QString qname = QString::fromStdString(name);
     object.setProperty("name", qname);
     //QVariant qvariant = QVariant(object);
     // FIXME: object vervangen door qml object
-    emit createComponent(type, object);
+
+    emit createComponent(type, &object);
 }
 
 //QVariant createPropObject(XMASComponent *comp) {
