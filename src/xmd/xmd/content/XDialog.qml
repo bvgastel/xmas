@@ -30,10 +30,8 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
-import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
-import QtGraphicalEffects 1.0
 
 Window {
     id:dialog
@@ -54,7 +52,6 @@ Window {
     width:500
     height: 260
     minimumHeight: 200
-
 
     ColumnLayout {
         id: column
