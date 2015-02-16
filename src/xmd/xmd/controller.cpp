@@ -30,6 +30,7 @@
  **************************************************************************/
 
 #include <QQuickView>
+#include <QQuickItem>
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
@@ -134,10 +135,9 @@ void Controller::emitDuplicate(XMASComponent *comp) {
  * @param comp
  * @return
  */
-bool Controller::componentCreated(QVariant qvariant)
+bool Controller::componentCreated(const QVariant &qvariant)
 {
     qDebug() << "Component created by designer";
-    qDebug() << "Onzin";
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -163,7 +163,7 @@ bool Controller::componentCreated(QVariant qvariant)
  * @param object
  * @return
  */
-bool Controller::componentDestroyed(QVariant qvariant)
+bool Controller::componentDestroyed(const QVariant &qvariant)
 {
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -177,7 +177,7 @@ bool Controller::componentDestroyed(QVariant qvariant)
  * @param object
  * @return
  */
-bool Controller::componentChanged(QVariant qvariant)
+bool Controller::componentChanged(const QVariant &qvariant)
 {
     Q_UNUSED(qvariant)
     qDebug() << "Component changed by designer";
@@ -185,7 +185,7 @@ bool Controller::componentChanged(QVariant qvariant)
 }
 
 
-bool Controller::channelCreated(QVariant qvariant)
+bool Controller::channelCreated(const QVariant &qvariant)
 {
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -193,7 +193,7 @@ bool Controller::channelCreated(QVariant qvariant)
     return true;
 }
 
-bool Controller::channelDestroyed(QVariant qvariant)
+bool Controller::channelDestroyed(const QVariant &qvariant)
 {
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -201,7 +201,7 @@ bool Controller::channelDestroyed(QVariant qvariant)
     return true;
 }
 
-bool Controller::channelChanged(QVariant qvariant)
+bool Controller::channelChanged(const QVariant &qvariant)
 {
     Q_UNUSED(qvariant)
     qDebug() << "Channel changed by designer";

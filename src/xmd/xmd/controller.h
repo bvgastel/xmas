@@ -54,17 +54,17 @@ class Controller : public QObject
 signals: //to view
     //void createComponent(QString type, QObject *object);
     void createComponent(const QVariantMap &object);
-    bool createChannel(QVariant object);
+    bool createChannel(const QVariantMap &object);
     bool clearNetwork();
     void log(QString message,QColor color);
 
 public slots:  //from view
-    bool componentCreated(QVariant object);
-    bool componentDestroyed(QVariant object);
-    bool componentChanged(QVariant object);
-    bool channelCreated(QVariant object);
-    bool channelDestroyed(QVariant object);
-    bool channelChanged(QVariant object);
+    bool componentCreated(const QVariant &object);
+    bool componentDestroyed(const QVariant &object);
+    bool componentChanged(const QVariant &object);
+    bool channelCreated(const QVariant &object);
+    bool channelDestroyed(const QVariant &object);
+    bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
 
 public:
