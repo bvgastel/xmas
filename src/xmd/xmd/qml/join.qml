@@ -57,13 +57,23 @@ XComponent {
         }
     }
 
-
-
-        onShowDialog:{
+      onShowDialog:{
             ++token
             if(token > 1)token=0
             canvas.requestPaint()
         }
+
+//      withDialog: true
+//      onShowDialog: dialog.visible = true
+//      XDialog {
+//          id: dialog
+//          title: name + " properties"
+//          help:"Type 0 or 1, indicating which in-port of the join is used for tokens."
+
+//      }
+
+
+
 
 }
 

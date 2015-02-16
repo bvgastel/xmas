@@ -27,6 +27,9 @@ XComponent {
     XDialog {
         id: dialog
         title: name + " properties"
-
+        help:"Insert types of packets injected at this source.\n"
+//             (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p_X < 5 && p_Y > 2}" :
+//                                                                                 "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p < 100}");
     }
+
 }

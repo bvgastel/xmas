@@ -35,7 +35,6 @@ function loadComponent(object) {
 }
 
 
-
 function getXQml(type) {
     switch(type) {
     case "queue":

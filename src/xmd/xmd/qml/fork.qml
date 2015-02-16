@@ -36,14 +36,10 @@ XComponent {
             ctx.stroke()
         }
     }
-
-    withDialog: true
-    onShowDialog: dialog.visible = true
-    XDialog {
-        id: dialog
-        title: name + " properties"
-
-    }
 }
+
+
+
+
 
 

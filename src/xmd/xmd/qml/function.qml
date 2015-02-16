@@ -28,6 +28,9 @@ XComponent {
     XDialog {
         id: dialog
         title: name + " properties"
+        help:"Insert function.\nThe language is a subset of C with math operators +,-,*,/,%, logical operators &&,||,! and equality operators ==,<=,>=,<,>\nE.g.:\n\t"
+        // +  (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
 
     }
+
 }

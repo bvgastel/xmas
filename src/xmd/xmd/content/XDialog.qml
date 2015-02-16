@@ -33,39 +33,98 @@ import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
-//import XMAS 1.0
+import QtGraphicalEffects 1.0
 
-//TODO : Replace with a custom frameless dialog
 Window {
     id:dialog
     visible: false
     modality: Qt.WindowModal
-    flags: Qt.Tool
-    //standardButtons: StandardButton.Cancel | StandardButton.Ok
-    //onDiscard: visible = false
-    //onAccepted: null
-    Item{
-        id:content
-        Rectangle {
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "black" }
-                GradientStop { position: 0.4; color: "grey" }
-                GradientStop { position: 1.0; color: "black" }
-            }
-            //color: "lightskyblue"
-            width: 400
-            height: 100
-            Text {
-                text: "Test"
-                color: "navy"
-                anchors.centerIn: parent
+    flags: Qt.Tool || Qt.WindowCloseButtonHint || Qt.WindowOkButtonHint
+
+    //    standardButtons: StandardButton.Cancel | StandardButton.Ok
+    color: "grey"
+
+    property string help:""
+    property string fx:""
+
+    //    onDiscard: visible = false
+    //    onAccepted: null
+
+    width:500
+    height: 260
+    //x:200
+    //y:200
+    minimumHeight: 200
+
+    //    onHelp: {
+    //        //lastChosen.text = "No help available."
+    //        visible = true
+    //    }
+    //    onButtonClicked: {
+    //        //if (clickedButton === StandardButton.Ok && true)
+    //        //lastChosen.text = "ok"
+    //        //else
+    //        //lastChosen.text = "not ok"
+    //    }
+
+
+    ColumnLayout {
+        id: column
+        anchors.fill: parent
+        anchors.margins: 10
+        spacing:5
+        Rectangle{
+            Layout.fillWidth: true
+            //Layout.preferredWidth: 500
+            Layout.preferredHeight: 100
+            color: "darkgrey"
+            Label {
+                anchors.fill:parent
+                anchors.margins: 10
+                text: help
+                wrapMode: Text.WordWrap
+                color: "black"
             }
         }
-    }
-    MouseArea {
-        anchors.fill: content
-        drag.target: content
+        Rectangle{
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredHeight: 100
+            Layout.minimumHeight: 50
+            color: "white"
+            TextInput{
+                anchors.fill:parent
+                anchors.margins: 10
+                text: "text"
+                color: acceptableInput ? "green" : "red"
+                //inputMethodHints: Qt.ImhDigitsOnly
+                //validator: IntValidator{bottom: 1}
+                wrapMode: TextInput.WordWrap
+                font.pointSize : 10
+                //onEditingFinished: {queue.size = text; focus = false}
+                onFocusChanged: if(focus)selectAll()
+            }
+        }
+        RowLayout{
+            spacing:10
+            Layout.fillWidth: true
+            //Layout.preferredWidth: 500
+            Layout.preferredHeight: 30
+            Layout.alignment: Qt.AlignRight
+            Button{
+                text:"Cancel"
+                onClicked: dialog.close()
+            }
+            Button {
+                text: "Ok"
+                onClicked: dialog.close()
+            }
+        }
 
     }
 }
+
+
+
+
 
