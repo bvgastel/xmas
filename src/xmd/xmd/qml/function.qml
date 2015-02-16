@@ -7,6 +7,7 @@ XComponent {
     height: 50
     type: "function"
     prefix: "f"
+    property string fx:""
     XPort {x: 0; y: 20; name: "t"; type:Xmas.Target}
     XPort {x: 90; y:20; name: "i"; type:Xmas.Initiator}
     Canvas {
@@ -27,10 +28,15 @@ XComponent {
     onShowDialog: dialog.visible = true
     XDialog {
         id: dialog
-        title: name + " properties"
-        help:"Insert function.\nThe language is a subset of C with math operators +,-,*,/,%, logical operators &&,||,! and equality operators ==,<=,>=,<,>\nE.g.:\n\t"
+        title: "Enter expression for function " + name
+        help:"Insert function. The language is a subset of C with:\n"
+             + "\t-math operators +,-,*,/,%\n"
+             + "\t-logical operators &&,||,!\n"
+             + "\t-equality operators ==,<=,>=,<,>\n"
+             + "E.g.:\n\t"
+        //TODO : implement packet depend help
         // +  (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
+        onAccepted: fx = dialog.expression
 
     }
-
 }
