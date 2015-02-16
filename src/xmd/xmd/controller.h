@@ -35,6 +35,7 @@
 #include <typeindex>
 
 #include <QVariant>
+#include <QVariantMap>
 #include <QColor>
 #include <QDebug>
 #include <QMap>
@@ -50,7 +51,8 @@ class Controller : public QObject
     Q_ENUMS(CompType)
 
 signals: //to view
-    void createComponent(QString type, QObject *object);
+    //void createComponent(QString type, QObject *object);
+    void createComponent(const QVariantMap &object);
     bool createChannel(QVariant object);
     bool clearNetwork();
     void log(QString message,QColor color);
@@ -112,6 +114,19 @@ private:
         {std::type_index(typeid(XMASFork)),     "fork"},
         {std::type_index(typeid(XMASSwitch)),   "switch"},
     };
+
+
+    //TODO : enumeration in javascript.
+//    std::map<std::type_index, CompType> m_type_map = {
+//        {std::type_index(typeid(XMASSource)),   CompType::Source },
+//        {std::type_index(typeid(XMASSink)),     CompType::Sink },
+//        {std::type_index(typeid(XMASFunction)), CompType::Function },
+//        {std::type_index(typeid(XMASQueue)),    CompType::Queue},
+//        {std::type_index(typeid(XMASJoin)),     CompType::Join},
+//        {std::type_index(typeid(XMASMerge)),    CompType::Merge},
+//        {std::type_index(typeid(XMASFork)),     CompType::Fork},
+//        {std::type_index(typeid(XMASSwitch)),   CompType::Switch},
+//    };
 
 
 };
