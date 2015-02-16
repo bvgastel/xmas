@@ -64,7 +64,6 @@ Controller::~Controller()  {
 bool Controller::fileOpen(QUrl fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
-//    bitpowder::lib::MemoryPool mp1;
 
     std::string filename = fileUrl.toLocalFile().toStdString();
     if (filename == "") {
@@ -73,25 +72,17 @@ bool Controller::fileOpen(QUrl fileUrl)
     }
     controllerLog("Opening file " + filename);
 
-    decltype(Parse(filename, mp).first) componentMap;
-    std::tie(componentMap, std::ignore) = Parse(filename, mp);
+    std::tie(m_componentMap, std::ignore) = Parse(filename, mp);
 
-    if (componentMap.empty()) {
+    if (m_componentMap.empty()) {
         controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. ",Qt::red);
         return false;
     }
 
-    for(auto &it : componentMap) {
+    // it is a pair where first = name, second = XMASComponent
+    for(auto &it : m_componentMap) {
         if (it.second) {
-            bool inserted;
-            std::tie(std::ignore, inserted) = m_componentMap.insert({it.second->getStdName(), it.second});
-            if (inserted) {
-                m_allComponents.insert(it.second);
-                emitComponent(it.second);
-            } else {
-                emitDuplicate(it.second);
-                continue;       // don't stop at a duplicate
-            }
+            emitComponent(it.second);
         }
     }
     return true;
@@ -103,12 +94,7 @@ void Controller::emitComponent(XMASComponent *comp) {
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     QString type = m_type_map[typeIndex];
-    //QObject object;
-    //object.setProperty("type", type);
     QString qname = QString::fromStdString(name);
-    //object.setProperty("name", qname);
-    //QVariant qvariant = QVariant(object);
-    // FIXME: object vervangen door qml object
 
     QVariantMap map;
     map.insert("type", type);
@@ -119,7 +105,6 @@ void Controller::emitComponent(XMASComponent *comp) {
     map.insert("scale", 1.0);
     map.insert("fx", "");
 
-    //emit createComponent(type, &object);
     emit createComponent(map);
 }
 
@@ -141,6 +126,7 @@ bool Controller::componentCreated(const QVariant &qvariant)
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
+    qDebug() << "type = " << type << ", name = " << name << ".";
     auto it = this->m_componentMap.find(name.toStdString());
     if (it == m_componentMap.end()) {
         qDebug() << name << ", " << type << "added to network";

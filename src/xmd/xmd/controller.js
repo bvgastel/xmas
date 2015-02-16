@@ -92,7 +92,7 @@ function createComponent(parent,component,object) {
                                           "scale":scale,
                                           "name":name
                                       })
-        controller.componentCreated(component)
+        controller.componentCreated(item)
         log("Component created.","green")
     } else if (component.status === Component.Error) {
         log(component.errorString(),"red")

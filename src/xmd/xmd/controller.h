@@ -108,8 +108,7 @@ private:
      * @brief allComponents The internal structure containing the network
      *
      */
-    std::set<XMASComponent *> m_allComponents;
-    std::map<std::string, XMASComponent *> m_componentMap;
+    std::map<bitpowder::lib::String, XMASComponent *> m_componentMap;
 
     //TODO : enumeration in javascript.
     std::map<std::type_index, QString> m_type_map = {
