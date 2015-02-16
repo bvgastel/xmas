@@ -107,25 +107,21 @@ private:
     /**
      * @brief allComponents The internal structure containing the network
      *
-     *
      */
     std::set<XMASComponent *> m_allComponents;
     std::map<std::string, XMASComponent *> m_componentMap;
 
     //TODO : enumeration in javascript.
     std::map<std::type_index, QString> m_type_map = {
-        {std::type_index(typeid(XMASSource)),   "source" },
-        {std::type_index(typeid(XMASSink)),     "sink" },
+        {std::type_index(typeid(XMASSource)), "source" },
+        {std::type_index(typeid(XMASSink)), "sink" },
         {std::type_index(typeid(XMASFunction)), "function" },
-        {std::type_index(typeid(XMASQueue)),    "queue"},
-        {std::type_index(typeid(XMASJoin)),     "join"},
-        {std::type_index(typeid(XMASMerge)),    "merge"},
-        {std::type_index(typeid(XMASFork)),     "fork"},
-        {std::type_index(typeid(XMASSwitch)),   "switch"},
+        {std::type_index(typeid(XMASQueue)), "queue"},
+        {std::type_index(typeid(XMASJoin)), "join"},
+        {std::type_index(typeid(XMASMerge)), "merge"},
+        {std::type_index(typeid(XMASFork)), "fork"},
+        {std::type_index(typeid(XMASSwitch)), "switch"},
     };
-
-
-
 };
 
 #endif // CONTROLLER_H

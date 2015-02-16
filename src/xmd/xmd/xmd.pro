@@ -56,6 +56,7 @@ unix|win32 {
 }
 
 INCLUDEPATH += content qml
+DEPENDPATH += content qml
 
 DISTFILES += qml/fork.qml \
     qml/function.qml \
@@ -86,7 +87,8 @@ DISTFILES += qml/fork.qml \
     content/XDialogItem.qml \
     content/OutputLog.qml \
     content/XTag.qml \
-    qml/primitive.qml
+    qml/primitive.qml \
+    readme.md
 
 RESOURCES += \
     xmd.qrc

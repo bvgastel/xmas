@@ -1,4 +1,4 @@
-# xmas.pro
+# xmd.pro
 # Contains the overall project file for the xmas project
 
 TEMPLATE = subdirs

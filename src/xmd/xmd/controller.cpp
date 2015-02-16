@@ -118,7 +118,6 @@ void Controller::emitComponent(XMASComponent *comp) {
     map.insert("scale", 1.0);
     map.insert("fx", "");
 
-
     //emit createComponent(type, &object);
     emit createComponent(map);
 }
@@ -138,6 +137,7 @@ void Controller::emitDuplicate(XMASComponent *comp) {
 bool Controller::componentCreated(QVariant qvariant)
 {
     qDebug() << "Component created by designer";
+    qDebug() << "Onzin";
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
