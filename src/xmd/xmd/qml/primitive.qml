@@ -9,6 +9,5 @@ XComponent {
     y: 0
     func: ""
 
-
 }
 

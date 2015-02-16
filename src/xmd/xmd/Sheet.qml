@@ -229,7 +229,7 @@ Rectangle {
 
     Connections {
         target: controller
-        onCreateComponent: Ctrl.loadComponent(type,object) //console.log("component create request")
+        onCreateComponent: Ctrl.loadComponent(object)
     }
 
     Menu {
