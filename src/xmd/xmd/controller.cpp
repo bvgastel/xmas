@@ -57,10 +57,13 @@ Controller::~Controller()  {
  * @brief Controller::fileOpen
  * @param fileUrl
  * @return
+ *
+ * NOTE: adjust qml to catch signal duplicate
  */
 bool Controller::fileOpen(QUrl fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
+//    bitpowder::lib::MemoryPool mp1;
 
     std::string filename = fileUrl.toLocalFile().toStdString();
     if (filename == "") {
@@ -68,46 +71,52 @@ bool Controller::fileOpen(QUrl fileUrl)
         controllerLog("Ivalid filename!! Using default input file: " + filename, Qt::red);
     }
     controllerLog("Opening file " + filename);
-    auto parse  = Parse(filename, mp);
-    auto componentMap = parse.first;
+
+    decltype(Parse(filename, mp).first) componentMap;
+    std::tie(componentMap, std::ignore) = Parse(filename, mp);
+
     if (componentMap.empty()) {
-        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. Oops ..... ",Qt::red);
+        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. ",Qt::red);
         return false;
     }
-    std::set<XMASComponent *> allComponents;
+
     for(auto &it : componentMap) {
         if (it.second) {
-            allComponents.insert(it.second);
-            emitComponent(it.second);
+            bool inserted;
+            std::tie(std::ignore, inserted) = m_componentMap.insert({it.second->getStdName(), it.second});
+            if (inserted) {
+                m_allComponents.insert(it.second);
+                emitComponent(it.second);
+            } else {
+                emitDuplicate(it.second);
+                continue;       // don't stop at a duplicate
+            }
         }
     }
     return true;
 }
 
 void Controller::emitComponent(XMASComponent *comp) {
-    std::string name = comp->getName().stl();
-    controllerLog("name = "+ name, Qt::black);
+    std::string name = comp->getStdName();
+    controllerLog("name = "+ name + " slot for creation called", Qt::green);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     QString type = m_type_map[typeIndex];
-    QObject object;
-    object.setProperty("type", type);
+    QObject *object = new QObject();
+    object->setProperty("type", type);
     QString qname = QString::fromStdString(name);
-    object.setProperty("name", qname);
-    //QVariant qvariant = QVariant(object);
-    // FIXME: object vervangen door qml object
+    object->setProperty("name", qname);
 
-    emit createComponent(type, &object);
+    emit createComponent(type, object);
 }
 
-//QVariant createPropObject(XMASComponent *comp) {
-//    QObject object;
-//    object.setProperty("name", comp->getName().stl());
-//    return QVariant(object);
-//}
+void Controller::emitDuplicate(XMASComponent *comp) {
+    std::string name = comp->getStdName();
+    std::string msg = "name = "+ name + " was a duplicate";
+    controllerLog(msg, Qt::red);
+}
 
 
-// TODO: to be implemented toward xmv.
 /**
  * @brief Controller::componentCreated
  * @param comp
@@ -119,40 +128,22 @@ bool Controller::componentCreated(QVariant qvariant)
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
-    qDebug() << name << ", " << type << "TODO: connect to xmv";
-    for (QObject *child : qobject->children()) {
-        if (child->objectName() == "port") {
-            QVariant vpname = child->property("name");
-            QString pname = vpname.toString();
-            qDebug() << " port: " << pname;
+    auto it = this->m_componentMap.find(name.toStdString());
+    if (it == m_componentMap.end()) {
+        qDebug() << name << ", " << type << "added to network";
+        for (QObject *child : qobject->children()) {
+            if (child->objectName() == "port") {
+                QVariant vpname = child->property("name");
+                QString pname = vpname.toString();
+                qDebug() << " port: " << pname;
+            }
         }
+        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::red);
+        return true;
     }
-    controllerLog(QString("Hello from Controller to qml"),Qt::red);
-    return true;
+    return false;
 }
 
-
-/**
- * @brief Controller::scratch
- *
- * Scratch method to try out stuff, that we never execute, just a tryout.
- *
- * @return
- */
-bool Controller::scratch() {
-
-    // Creating a fork: what can we do with it? It's a QObject. To what can we cast it?
-    // @Guus : creation is easier when done at qml site on the right context (sheet)
-    //         here all we need is translating xmas component to QVariant(?) methode
-    //         argument. see the testClick methode. For now this one is
-    //         simply called from the view test button. But it shows how c++ can request
-    //         a fork on the sheet. To send also properties I'm working on it :)
-
-    //    QQmlComponent component(&engine, QUrl("qrc:/fork.qml"));
-    //    QObject *fork = component.create();
-    //    bitpowder::lib::unused(fork);
-    return true;
-}
 
 /**
  * @brief Controller::componentDestroyed

@@ -5,5 +5,4 @@
 #include "xmas.h"
 
 
-
 #endif // XCOMPONENT_H

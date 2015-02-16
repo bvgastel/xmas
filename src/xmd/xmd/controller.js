@@ -3,7 +3,7 @@
 function loadComponent(type,object) {
     var qml = ""
     var component = null;
-    console.log("type --> " + type + "object --> " + object)
+    console.log("type --> " + type + ". object.type = " + object.type + ". object.name = " + object.name )
 
     switch(type) {
     case "queue":
@@ -55,7 +55,8 @@ function createComponent(parent,component) {
     var item = null
     if (component.status === Component.Ready) {
         item = component.createObject(parent)
-        controller.componentCreated(component)
+        //controller.componentCreated(component)
+        controller.componentCreated(item)
         log("Component created.","green")
     } else if (component.status === Component.Error) {
         log(component.errorString(),"red")

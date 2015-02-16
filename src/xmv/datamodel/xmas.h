@@ -231,7 +231,10 @@ class Output : public Port
 {
     friend class Input;
     friend void connect(Output &o, Input &i);
-    // FIXME: why is this Input pointer named output ?
+    /**
+     * @brief output This is a pointer to the output port that is connected
+     *          to this input port.
+     */
     Input *output;
 public:
     Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr)
@@ -335,16 +338,36 @@ public:
  */
 class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension>
 {
+private:
     std::string name;
 public:
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASComponent(const std::string& name) : name(name)
+    {
+    }
+
     XMASComponent(const bitpowder::lib::String& name) : name(name.stl())
     {
     }
+
     virtual ~XMASComponent();
+
+    /**
+     * @brief name the name of the component
+     * @return a value initialized copy of name (std::string)
+     */
+    std::string getStdName() const {
+        return this->name;
+    }
+
     /**
      * @brief getName getter for name
      *
-     * FIXME: why is the internal name std::string, while it return bitpowder::lib::String?
+     * This getter is specifically for use in a memory sensitive environment.
+     * The bitpowder::lib::String class reuses memory among strings.
+     *
+     * NOTE: Check reason for returning bitpowder::lib::String with Bernard.
      *
      * @return a bitpowder::lib::String for name of the XMASComponent
      */
@@ -507,6 +530,17 @@ public:
 
     /**
      * @brief XMASSink Constructor
+     * @param name the name of the sink
+     */
+    // NOTE: refactor opportunity, constructors are copies
+    XMASSink(const std::string &name)
+        : XMASComponent(name), i(this, "i")
+    {
+        p[0] = &i;
+    }
+
+    /**
+     * @brief XMASSink Constructor
      *
      * @param name the name of the sink
      */
@@ -558,6 +592,12 @@ class XMASSource : public XMASComponent
 public:
     Output o;
     Port* p[1];
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASSource(const std::string &name) : XMASComponent(name), o(this, "o")
+    {
+        p[0] = &o;
+    }
 
     XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
     {
@@ -613,6 +653,19 @@ public:
      * @param name the name of the queue.
      * @param capacity the capacity of the queue.
      */
+    // NOTE: refactor opportunity, constructors are copies
+    XMASQueue(const std::string& name, size_t capacity = 1)
+        : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity)
+    {
+        p[0] = &i;
+        p[1] = &o;
+    }
+
+    /**
+     * @brief XMASQueue constructor with the correct ports defined
+     * @param name the name of the queue.
+     * @param capacity the capacity of the queue.
+     */
     XMASQueue(const bitpowder::lib::String& name, size_t capacity = 1)
         : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity)
     {
@@ -648,12 +701,13 @@ public:
 };
 
 /**
- * @brief The XMASQueue class
+ * @brief The XMASFunction class
  *
- * The class that represents the primitive definition of a queue.
+ * The class that represents the primitive definition of a function.
  * This class is a subclass of XMASComponent.
  *
- * It has one input port and one output port and a storage with specified capacity.
+ * It has one input port and one output port and a string specification of its
+ * function.
  */
 class XMASFunction : public XMASComponent
 {
@@ -661,6 +715,14 @@ public:
     Input i;
     Output o;
     Port* p[2];
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASFunction(const std::string &name)
+        : XMASComponent(name), i(this, "i"), o(this, "o")
+    {
+        p[0] = &i;
+        p[1] = &o;
+    }
 
     XMASFunction(const bitpowder::lib::String& name)
         : XMASComponent(name), i(this, "i"), o(this, "o")
@@ -705,7 +767,7 @@ public:
  *
  * It has one input port and two output ports and
  * logic to decide which output channel to chose for a package
- * Remark: the logic is not part of this class
+ * NOTE: the logic is not part of this class
  */
 class XMASSwitch : public XMASComponent
 {
@@ -714,6 +776,14 @@ public:
     Output a;
     Output b;
     Port* p[3];
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASSwitch(const std::string &name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b")
+    {
+        p[0] = &i;
+        p[1] = &a;
+        p[2] = &b;
+    }
 
     XMASSwitch(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b")
     {
@@ -767,6 +837,14 @@ public:
     Output a;
     Output b;
     Port* p[3];
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASFork(const std::string &name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b")
+    {
+        p[0] = &i;
+        p[1] = &a;
+        p[2] = &b;
+    }
 
     XMASFork(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b")
     {
@@ -824,6 +902,14 @@ public:
     Output o;
     Port* p[3];
 
+    // NOTE: refactor opportunity, constructors are copies
+    XMASMerge(const std::string &name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
+    {
+        p[0] = &a;
+        p[1] = &b;
+        p[2] = &o;
+    }
+
     XMASMerge(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
     {
         p[0] = &a;
@@ -876,6 +962,14 @@ public:
     Input b;
     Output o;
     Port* p[3];
+
+    // NOTE: refactor opportunity, constructors are copies
+    XMASJoin(const std::string &name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
+    {
+        p[0] = &a;
+        p[1] = &b;
+        p[2] = &o;
+    }
 
     XMASJoin(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
     {

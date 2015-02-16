@@ -31,7 +31,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <unordered_map>
+#include <map>
+#include <set>
 #include <typeindex>
 
 #include <QVariant>
@@ -82,8 +83,6 @@ public:
     ~Controller();
 
 private:
-    bool scratch();
-
     QVariant createPropObject(XMASComponent *comp);
 
     void controllerLog(const std::string message,QColor color);
@@ -100,7 +99,16 @@ private:
     void log(const bitpowder::lib::String message, QColor color = Qt::black);
 
     void emitComponent(XMASComponent *comp);
+    void emitDuplicate(XMASComponent *comp);
 
+private:
+    /**
+     * @brief allComponents The internal structure containing the network
+     *
+     *
+     */
+    std::set<XMASComponent *> m_allComponents;
+    std::map<std::string, XMASComponent *> m_componentMap;
 
     std::map<std::type_index, QString> m_type_map = {
         {std::type_index(typeid(XMASSource)),   "source" },
