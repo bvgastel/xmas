@@ -39,33 +39,21 @@ Window {
     id:dialog
     visible: false
     modality: Qt.WindowModal
-    flags: Qt.Tool || Qt.WindowCloseButtonHint || Qt.WindowOkButtonHint
-
-    //    standardButtons: StandardButton.Cancel | StandardButton.Ok
-    color: "grey"
+    flags: Qt.Tool
+    color: "darkgrey"
 
     property string help:""
-    property string fx:""
+    property string expression:""
 
-    //    onDiscard: visible = false
-    //    onAccepted: null
+    signal accepted()
+    signal canceled()
+
+    onAccepted:dialog.close()
+    onCanceled: dialog.close()
 
     width:500
     height: 260
-    //x:200
-    //y:200
     minimumHeight: 200
-
-    //    onHelp: {
-    //        //lastChosen.text = "No help available."
-    //        visible = true
-    //    }
-    //    onButtonClicked: {
-    //        //if (clickedButton === StandardButton.Ok && true)
-    //        //lastChosen.text = "ok"
-    //        //else
-    //        //lastChosen.text = "not ok"
-    //    }
 
 
     ColumnLayout {
@@ -93,31 +81,31 @@ Window {
             Layout.minimumHeight: 50
             color: "white"
             TextInput{
+                id:expr
                 anchors.fill:parent
                 anchors.margins: 10
-                text: "text"
+                text: expression
                 color: acceptableInput ? "green" : "red"
                 //inputMethodHints: Qt.ImhDigitsOnly
                 //validator: IntValidator{bottom: 1}
                 wrapMode: TextInput.WordWrap
                 font.pointSize : 10
-                //onEditingFinished: {queue.size = text; focus = false}
+                onEditingFinished: {dialog.expression = text; focus = false}
                 onFocusChanged: if(focus)selectAll()
             }
         }
         RowLayout{
             spacing:10
             Layout.fillWidth: true
-            //Layout.preferredWidth: 500
             Layout.preferredHeight: 30
             Layout.alignment: Qt.AlignRight
             Button{
                 text:"Cancel"
-                onClicked: dialog.close()
+                onClicked: canceled()
             }
             Button {
                 text: "Ok"
-                onClicked: dialog.close()
+                onClicked: accepted()
             }
         }
 
