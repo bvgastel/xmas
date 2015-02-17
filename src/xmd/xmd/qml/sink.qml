@@ -6,7 +6,7 @@ XComponent {
     height: 50
     type: "sink"
     prefix: "snk"
-    XPort {x:20; y:0; name: "t"; type:Xmas.Target}
+    XPort {x:20; y:0; name: "i"; type:Xmas.Target}
     topLabel: false
     Canvas {
         anchors.fill: parent

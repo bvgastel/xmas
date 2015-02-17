@@ -8,7 +8,7 @@ XComponent {
     type: "source"
     prefix: "src"
     property string fx:""
-    XPort {x:20; y:40; name: "i"; type:Xmas.Initiator}
+    XPort {x:20; y:40; name: "o"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         onPaint: {

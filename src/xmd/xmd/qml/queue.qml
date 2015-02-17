@@ -8,8 +8,8 @@ XComponent {
     type: "queue"
     prefix: "q"
     property int size: 0
-    XPort {x:0; y:20; name: "t"; type:Xmas.Target}
-    XPort {x:90; y:20; name: "i"; type:Xmas.Initiator}
+    XPort {x:0; y:20; name: "i"; type:Xmas.Target}
+    XPort {x:90; y:20; name: "o"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
         onPaint: {

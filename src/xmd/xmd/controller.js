@@ -1,4 +1,6 @@
 //.import XMAS 1.0 as Ctrl
+.import QtQuick 2.0 as Qjs
+.import "content/channelCreation.js" as Channel
 
 function createNetwork(object) {
     if(!object) {
@@ -15,9 +17,16 @@ function createNetwork(object) {
     // process list of connections and create connections
     var connlist = object["channellist"]
     for (var conn in connlist) {
-        log("I would have created a connection here: "+connlist[conn]+", but I don't know how!", "black")
-        log("initiator = " + connlist[conn]["initiator"]+ "." + connlist[conn]["initiatorport"], "black")
-        log("target = " + connlist[conn]["target"]+ "." + connlist[conn]["targetport"], "black")
+
+        var result = Channel.create(
+                    connlist[conn]["initiator"],
+                    connlist[conn]["initiatorport"],
+                    connlist[conn]["target"],
+                    connlist[conn]["targetport"]
+                    )
+//        log("I would have created a connection here: "+connlist[conn]+", but I don't know how!", "black")
+//        log("initiator = " + connlist[conn]["initiator"]+ "." + connlist[conn]["initiatorport"], "black")
+//        log("target = " + connlist[conn]["target"]+ "." + connlist[conn]["targetport"], "black")
     }
 
 }
@@ -38,20 +47,15 @@ function loadComponent(object) {
         return
     }
 
-//    for (var prop in object) {
-//        console.log("Object item:", prop, "=", object[prop])
-//    }
-
-    //log("queue=" + Ctrl.Xmas)
-
     if(qml==="") return
 
     component = Qt.createComponent(qml)
-    if (component.status === Component.Loading)
+
+    if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(sheet,component,object));
-    else if (component.status === Component.Ready)
+    else if (component.status === Qjs.Component.Ready)
         createComponent(sheet,component,object)
-    else if (component.status === Component.Error)
+    else if (component.status === Qjs.Component.Error)
         log(component.errorString(),"red")
 
 }
@@ -105,7 +109,7 @@ function createComponent(parent,component,object) {
     else console.log("name undefined")
     if(object.param !== undefined) param=object.param
 
-    if (component.status === Component.Ready) {
+    if (component.status === Qjs.Component.Ready) {
         item = component.createObject(parent,
                                       {
                                           "x":x,
@@ -116,7 +120,7 @@ function createComponent(parent,component,object) {
                                       })
         controller.componentCreated(item)
         log("Component created.","green")
-    } else if (component.status === Component.Error) {
+    } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }
 }
