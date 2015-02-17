@@ -43,6 +43,7 @@
 #include "simplestring.h"
 #include "memorypool.h"
 #include "parse.h"
+#include "canvascomponentextension.h"
 //#include "common.h"
 
 Controller::Controller(QObject* parent)
@@ -76,19 +77,62 @@ bool Controller::fileOpen(QUrl fileUrl)
         return false;
     }
 
-    // it is a pair where first = name, second = XMASComponent
-    // first add all components, after completion add connections. WARNING: Are the signals sequentially processed????
+    return emitNetwork();
+}
+
+bool Controller::emitNetwork() {
+    QVariantList compList;
     for(auto &it : m_componentMap) {
-        if (it.second) {
-            emitComponent(it.second);
+        XMASComponent *comp = it.second;
+        if (comp) {
+            // WARNING: Stefan: verdwijnt de map van de stack bij beeindigen van methode?
+            QVariantMap map;
+            convertToQml(map, comp);
+            compList.append(map);
         }
     }
-
-
+    QVariantList channelList;
+    for (auto &it : m_componentMap) {
+        XMASComponent *comp = it.second;
+        if (comp) {
+            QVariantList list;
+            connectInQml(list, comp);
+            channelList.append(list);
+        }
+    }
+    QVariantMap network;
+    network["complist"] = compList;
+    network["channellist"] = channelList;
+    emit createNetwork(network);
     return true;
 }
 
 void Controller::emitComponent(XMASComponent *comp) {
+    QVariantMap map;
+    convertToQml(map, comp);
+    emit createComponent(map);
+}
+
+void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
+    for (Output *out : comp->outputPorts()) {
+        if (out->isConnected()) {
+            QVariantMap map;
+            map.insert("initiator", QString(out->getInitiator()->getStdName().c_str()));
+            map.insert("initiatorport", QString(out->getName()));
+            map.insert("target", QString(out->getTarget()->getStdName().c_str()));
+            map.insert("targetport", QString(out->getTargetPort()->getName()));
+            controllerLog(
+             "connection created from " + out->getInitiator()->getStdName() +
+             " to " + out->getTarget()->getStdName());
+            list.append(map);
+        } else {
+            controllerLog("output port " + std::string(out->getName()) + " in comp "
+                      + out->getComponent()->getStdName() + " is not connected");
+        }
+    }
+}
+
+void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
     controllerLog("name = "+ name + " slot for creation called", Qt::green);
 
@@ -96,16 +140,18 @@ void Controller::emitComponent(XMASComponent *comp) {
     QString type = m_type_map[typeIndex];
     QString qname = QString::fromStdString(name);
 
-    QVariantMap map;
+    CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
+    if (ext) {
+        map.insert("x", ext->x());
+        map.insert("y", ext->y());
+        map.insert("orientation", ext->orientation());
+        map.insert("scale", ext->scale());
+    }
+
     map.insert("type", type);
     map.insert("name", qname);
-    map.insert("x", 200);
-    map.insert("y", 200);
-    map.insert("orientation", 0);
-    map.insert("scale", 1.0);
     map.insert("fx", "");
 
-    emit createComponent(map);
 }
 
 void Controller::emitDuplicate(XMASComponent *comp) {

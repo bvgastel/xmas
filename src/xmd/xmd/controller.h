@@ -55,6 +55,21 @@ signals: //to view
     //void createComponent(QString type, QObject *object);
     void createComponent(const QVariantMap &object);
     bool createChannel(const QVariantMap &object);
+    /**
+     * @brief createNetwork a signal with the network components and connections in a list
+     *
+     * The input for the processing slot is a QVariantList (alias for QList<QVariant>) containing
+     * two other QVariantList occurences:
+     *
+     * 1. A component list containing all components. These need processing before the channels.
+     *      The key for component list is "complist"
+     * 2. A channel list, connecting the previously listed components.
+     *      The key for channel list is "channellist"
+     *
+     * @param object The object is a list containing 2 lists: component lsit and channel list.
+     * @return true if successful
+     */
+    bool createNetwork(const QVariantMap &object);
     bool clearNetwork();
     void log(QString message,QColor color);
 
@@ -102,6 +117,10 @@ private:
 
     void emitComponent(XMASComponent *comp);
     void emitDuplicate(XMASComponent *comp);
+    bool emitNetwork();
+
+    void convertToQml(QVariantMap &map, XMASComponent *comp);
+    void connectInQml(QVariantList &list, XMASComponent *comp);
 
 private:
     /**

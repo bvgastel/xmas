@@ -1294,7 +1294,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> Parse(cons
                     posData["x"].asNumber(),
                     posData["y"].asNumber(),
                     posData["orientation"].asNumber(),
-                    posData["scale"].asNumber() * 0.01f      // TODO: Parser only supports integral numbers, use ints for now and convert to float
+                    posData["scale"].asNumber() * 0.01f      // NOTE: Parser only supports integral numbers, use ints for now and convert to float
                 };
                 component->addExtension(cce);
             } catch (Exception e) {
