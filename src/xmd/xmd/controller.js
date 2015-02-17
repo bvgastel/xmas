@@ -1,5 +1,25 @@
 //.import XMAS 1.0 as Ctrl
 
+function createNetwork(object) {
+    if(!object) {
+        log("Undefined network!","red")
+        return
+    }
+
+    // process list of components and create components
+    var complist = object["complist"]
+    for (var comp in complist) {
+        loadComponent(complist[comp])
+    }
+
+    // process list of connections and create connections
+    var connlist = object["connlist"]
+    for (var conn in connlist) {
+        log("I would have created a connection here: "+connlist[conn], "black")
+    }
+
+}
+
 function loadComponent(object) {
     var qml = ""
     var component = null

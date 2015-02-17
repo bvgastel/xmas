@@ -230,6 +230,7 @@ Rectangle {
     Connections {
         target: controller
         onCreateComponent: Ctrl.loadComponent(object)
+        onCreateNetwork: Ctrl.createNetwork(object)
     }
 
     Menu {
