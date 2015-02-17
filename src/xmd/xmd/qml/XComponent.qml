@@ -46,13 +46,14 @@ Item {
     property string prefix: ""
     property int index:-1
     property string name: "" //prefix + index
-    property alias size: component.scale
+    //property alias size: component.scale
     property alias orientation: component.rotation
     orientation: Xmas.North
     property bool selected: false
     scale: 1.00
     property bool withDialog: false
     property bool topLabel: true
+    property var param
 
     signal update()
     signal showDialog()

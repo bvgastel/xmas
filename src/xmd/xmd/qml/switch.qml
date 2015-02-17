@@ -7,7 +7,6 @@ XComponent {
     height: 100
     type: "switch"
     prefix: "s"
-    property string fx:""
     XPort {x:0; y:45; name: "t0"; type:Xmas.Target}
     XPort {x:90; y:15; name: "t1"; type:Xmas.Initiator}
     XPort {x:90; y:75; name: "i"; type:Xmas.Initiator}
@@ -48,6 +47,6 @@ XComponent {
                 + "E.g.:\n\treturn "
         //TODO : implement packet depend help
         //+ (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
-        onAccepted: fx = dialog.expression
+        onAccepted: param = dialog.expression
     }
 }

@@ -29,14 +29,6 @@
  *
  **************************************************************************/
 
-#include <QQuickView>
-#include <QQuickItem>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQmlComponent>
-#include <QQmlProperty>
-#include <QMetaObject>
-#include <QQmlEngine>
 #include <QtQml>
 
 #include "controller.h"

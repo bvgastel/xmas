@@ -7,7 +7,6 @@ XComponent {
     height: 50
     type: "source"
     prefix: "src"
-    property string fx:""
     XPort {x:20; y:40; name: "o"; type:Xmas.Initiator}
     Canvas {
         anchors.fill: parent
@@ -32,6 +31,6 @@ XComponent {
         //TODO : implement packet depend help
         //             (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p_X < 5 && p_Y > 2}" :
         //                                                                                 "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p < 100}");
-        onAccepted: fx = dialog.expression
+        onAccepted: param = dialog.expression
     }
 }

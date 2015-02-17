@@ -7,7 +7,7 @@ XComponent {
     height: 50
     type: "queue"
     prefix: "q"
-    property int size: 0
+    property int size: isNaN(param) ? 0 : param
     XPort {x:0; y:20; name: "i"; type:Xmas.Target}
     XPort {x:90; y:20; name: "o"; type:Xmas.Initiator}
     Canvas {
@@ -41,7 +41,7 @@ XComponent {
             id:fx
             text: size
             color: acceptableInput ? "green" : "white"
-            inputMethodHints: Qt.ImhDigitsOnly
+            inputMethodHints: Qt.ImhDigitsOnly || Qt.ImhMultiLine
             validator: IntValidator{bottom: 1}
             wrapMode: TextInput.NoWrap
             font.pointSize : 12
@@ -49,7 +49,7 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onEditingFinished: {queue.size = text; focus = false}
+            onAccepted: {queue.size = text; param = text; focus = false}
             onFocusChanged: if(focus)selectAll()
         }
     }
