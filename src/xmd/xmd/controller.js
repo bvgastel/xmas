@@ -1,4 +1,4 @@
-//.import XMAS 1.0 as Ctrl
+.import XMAS 1.0 as Ctrl
 .import QtQuick 2.0 as Qjs
 .import "content/channelCreation.js" as Channel
 
@@ -8,7 +8,8 @@ function createNetwork(object) {
         return
     }
 
-    clearNetwork();
+    //clear sheet
+    sheet.clear()
 
     // process list of components and create components
     var complist = object["complist"]
@@ -92,31 +93,18 @@ function getXQml(type) {
 
 function createComponent(parent,component,object) {
     var item = null
-    var x = 0
-    var y = 0
-    var orientation = 0
-    var scale = 1.0
-    var name = ""
-    var param = ""
-    if(object.x !== undefined) x=object.x
-    if(object.y !== undefined) y=object.y
-    if(object.orientation !== undefined) orientation=object.orientation
-    if(object.scale !== undefined) scale=object.scale
-    if(object.name !== undefined) name=object.name
-    else console.log("name undefined")
-    if(object.param !== undefined) param=object.param
-
+    //TODO check if name is unique
     if (component.status === Qjs.Component.Ready) {
         item = component.createObject(parent,
                                       {
-                                          "x":x,
-                                          "y":y,
-                                          "orientation":orientation,
-                                          "scale":scale,
-                                          "name":name
+                                          "x":object.x,
+                                          "y":object.y,
+                                          "orientation":object.orientation,
+                                          "scale":object.scale,
+                                          "name":object.name,
+                                          "param":object.param
                                       })
         controller.componentCreated(item)
-        log("Component created.","green")
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }
@@ -126,7 +114,6 @@ function createComponent(parent,component,object) {
 function destroy(component){
     component.destroy()
     controller.componentDestroyed(component)
-    log("Component deleted.","black")
 }
 
 function destroyAll(){

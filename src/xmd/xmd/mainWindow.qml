@@ -77,7 +77,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/save.png"
         iconName: "model-save"
         text: "Save"
-        //onTriggered: fileDialog.open()
+        onTriggered: fileDialog.open()
     }
 
 

@@ -7,7 +7,7 @@ XComponent {
     height: 100
     type: "join"
     prefix: "j"
-    property int token: 0
+    property int token: isNaN(param) ? 0 : param
     XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
     XPort {x: 0; y:75; name: "t1"; type:Xmas.Target}
     XPort {x: 90; y:45; name: "i"; type:Xmas.Initiator}
@@ -60,6 +60,7 @@ XComponent {
     onShowDialog:{
         ++token
         if(token > 1)token=0
+        param = token
         canvas.requestPaint()
     }
 

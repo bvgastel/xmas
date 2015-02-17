@@ -29,14 +29,6 @@
  *
  **************************************************************************/
 
-#include <QQuickView>
-#include <QQuickItem>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQmlComponent>
-#include <QQmlProperty>
-#include <QMetaObject>
-#include <QQmlEngine>
 #include <QtQml>
 
 #include "controller.h"
@@ -151,7 +143,8 @@ void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
 
     map.insert("type", type);
     map.insert("name", qname);
-    //map.insert("fx", "");
+    //@Guus of Jeroen : in qml is property "param" gelinked, dus voor queue is dit de capacity.
+    //map.insert("param", "");
 
 }
 

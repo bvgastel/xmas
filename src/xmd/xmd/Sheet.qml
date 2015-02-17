@@ -66,6 +66,11 @@ Rectangle {
         sheet.groupSelected(selection)
     }
 
+    function clear()
+    {
+        sheet.children=""
+    }
+
     focus: true
     z: -10
 
