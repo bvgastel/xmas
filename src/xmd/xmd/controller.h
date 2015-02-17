@@ -52,7 +52,6 @@ class Controller : public QObject
     Q_ENUMS(CompType)
 
 signals: //to view
-    //void createComponent(QString type, QObject *object);
     void createComponent(const QVariantMap &object);
     bool createChannel(const QVariantMap &object);
     /**
@@ -65,6 +64,8 @@ signals: //to view
      *      The key for component list is "complist"
      * 2. A channel list, connecting the previously listed components.
      *      The key for channel list is "channellist"
+     *
+     * Remark: this signal means to include an implicit, pre-executed clearNetwork();
      *
      * @param object The object is a list containing 2 lists: component lsit and channel list.
      * @return true if successful
@@ -123,6 +124,8 @@ private:
     void connectInQml(QVariantList &list, XMASComponent *comp);
 
 private:
+
+    std::shared_ptr<ComponentWalker> m_componentWalker;
     /**
      * @brief allComponents The internal structure containing the network
      *

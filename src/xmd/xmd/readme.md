@@ -1,4 +1,4 @@
-# readme.md
+# readme.md 2015
 
 Author  Date    Comment / reply
 ------  ----    -----------------------------------------
@@ -25,3 +25,5 @@ STEFAN  16/02   minimum mouse area size for small components
 STEFAN  16/02   view option - show component name or not
 STEFAN  16/02   view option - show port names or not
 STEFAN  16/02   cut/paste/copy
+gbo     17-02   duidelijke naamgeving: Channel.create
+gbo     17-02   functie voor clearNetwork() in js files

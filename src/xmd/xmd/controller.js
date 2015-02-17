@@ -8,6 +8,8 @@ function createNetwork(object) {
         return
     }
 
+    clearNetwork();
+
     // process list of components and create components
     var complist = object["complist"]
     for (var c in complist) {
@@ -17,18 +19,13 @@ function createNetwork(object) {
     // process list of connections and create connections
     var connlist = object["channellist"]
     for (var conn in connlist) {
-
         var result = Channel.create(
                     connlist[conn]["initiator"],
                     connlist[conn]["initiatorport"],
                     connlist[conn]["target"],
                     connlist[conn]["targetport"]
                     )
-//        log("I would have created a connection here: "+connlist[conn]+", but I don't know how!", "black")
-//        log("initiator = " + connlist[conn]["initiator"]+ "." + connlist[conn]["initiatorport"], "black")
-//        log("target = " + connlist[conn]["target"]+ "." + connlist[conn]["targetport"], "black")
     }
-
 }
 
 function loadComponent(object) {

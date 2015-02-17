@@ -19,8 +19,6 @@ function loadComponent(qml) {
 }
 
 function createComponent(parent,component) {
-    // TODO: this if sequence has uncatered for "else branch" at the end
-    // Needs closure w.r.t. if-statement branches
     if (component.status === Component.Ready && draggedItem == null) {
         draggedItem = component.createObject(parent)
         //draggedItem.boundReached.connect(test(0,0))
@@ -29,13 +27,7 @@ function createComponent(parent,component) {
         draggedItem = null
         log(component.errorString(),"red")
     }
-    // What happens if neither ready nor error? Or ready, but dragged? Is this possible?
 }
-
-//function  test(dx,dy){
-//    sheet.boundReached(0,0)
-//    return
-//}
 
 function continueDrag(mouse)
 {
@@ -91,5 +83,4 @@ function generateTagIndex(item)
     //idList.sort(function(a, b){return a-b})
     return (++max)
 }
-
 

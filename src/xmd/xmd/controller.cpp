@@ -47,7 +47,7 @@
 //#include "common.h"
 
 Controller::Controller(QObject* parent)
-    : QObject(parent)
+    : QObject(parent), m_componentWalker(nullptr)
 {
 }
 
@@ -60,10 +60,12 @@ Controller::~Controller()  {
  * @param fileUrl
  * @return
  *
- * NOTE: adjust qml to catch signal duplicate
  */
 bool Controller::fileOpen(QUrl fileUrl)
 {
+
+    auto save_componentWalker = m_componentWalker;
+
     bitpowder::lib::MemoryPool mp;
 
     std::string filename = fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString() : fileUrl.fileName().toStdString();
@@ -73,7 +75,7 @@ bool Controller::fileOpen(QUrl fileUrl)
     std::tie(m_componentMap, std::ignore) = Parse(filename, mp);
 
     if (m_componentMap.empty()) {
-        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " is empty. ",Qt::red);
+        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
         return false;
     }
 
@@ -85,8 +87,6 @@ bool Controller::emitNetwork() {
     for(auto &it : m_componentMap) {
         XMASComponent *comp = it.second;
         if (comp) {
-            // WARNING: Stefan: verdwijnt de map van de stack bij beeindigen van methode?
-            // Of doet Qt iets om deze classes van destruction te behoeden?
             QVariantMap map;
             convertToQml(map, comp);
             compList.append(map);

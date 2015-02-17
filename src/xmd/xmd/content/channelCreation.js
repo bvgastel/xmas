@@ -74,7 +74,3 @@ function abortConnecting(port) {
     channel = null
     component = null
 }
-
-
-
-
