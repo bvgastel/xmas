@@ -86,6 +86,7 @@ bool Controller::emitNetwork() {
         XMASComponent *comp = it.second;
         if (comp) {
             // WARNING: Stefan: verdwijnt de map van de stack bij beeindigen van methode?
+            // Of doet Qt iets om deze classes van destruction te behoeden?
             QVariantMap map;
             convertToQml(map, comp);
             compList.append(map);
@@ -150,7 +151,7 @@ void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
 
     map.insert("type", type);
     map.insert("name", qname);
-    map.insert("fx", "");
+    //map.insert("fx", "");
 
 }
 

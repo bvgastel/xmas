@@ -40,11 +40,13 @@ QT += widgets svg quick qml quickwidgets
 
 HEADERS       = \ 
     controller.h \
-    xcomponent.h
+    fieldwalker.h \
+    componentwalker.h
 				
 SOURCES       = \ 
     controller.cpp \
-    xcomponent.cpp
+    fieldwalker.cpp \
+    componentwalker.cpp
     
 unix|win32 {
     target.path = $$PWD/../../../lib/xmd

@@ -1,2 +1,0 @@
-#include "xcomponent.h"
-
