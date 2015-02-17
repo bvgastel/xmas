@@ -65,11 +65,8 @@ bool Controller::fileOpen(QUrl fileUrl)
 {
     bitpowder::lib::MemoryPool mp;
 
-    std::string filename = fileUrl.toLocalFile().toStdString();
-    if (filename == "") {
-        filename = "../../testfiles/2_queues.fjson";
-        controllerLog("Ivalid filename!! Using default input file: " + filename, Qt::red);
-    }
+    std::string filename = fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString() : fileUrl.fileName().toStdString();
+
     controllerLog("Opening file " + filename);
 
     std::tie(m_componentMap, std::ignore) = Parse(filename, mp);
@@ -80,11 +77,14 @@ bool Controller::fileOpen(QUrl fileUrl)
     }
 
     // it is a pair where first = name, second = XMASComponent
+    // first add all components, after completion add connections. WARNING: Are the signals sequentially processed????
     for(auto &it : m_componentMap) {
         if (it.second) {
             emitComponent(it.second);
         }
     }
+
+
     return true;
 }
 

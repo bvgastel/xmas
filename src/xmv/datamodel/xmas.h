@@ -66,6 +66,7 @@ public:
      *
      * FIXME: should this pointer be public? if so: write motivation
      * FIXME: why is this called self, while it points to containing component? --> m_owner
+     * NOTE: Changed self to m_owner
      */
     XMASComponent *m_owner;
     /**
