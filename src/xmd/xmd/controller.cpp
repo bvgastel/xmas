@@ -143,7 +143,8 @@ void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
 
     map.insert("type", type);
     map.insert("name", qname);
-    //map.insert("fx", "");
+    //@Guus of Jeroen : in qml is property "param" gelinked, dus voor queue is dit de capacity.
+    //map.insert("param", "");
 
 }
 

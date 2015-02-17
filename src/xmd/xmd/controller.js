@@ -8,6 +8,9 @@ function createNetwork(object) {
         return
     }
 
+    //clear sheet
+    sheet.clear()
+
     // process list of components and create components
     var complist = object["complist"]
     for (var c in complist) {
@@ -107,7 +110,6 @@ function createComponent(parent,component,object) {
                                           "param":object.param
                                       })
         controller.componentCreated(item)
-        log("Component created.","green")
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }
@@ -117,7 +119,6 @@ function createComponent(parent,component,object) {
 function destroy(component){
     component.destroy()
     controller.componentDestroyed(component)
-    log("Component deleted.","black")
 }
 
 function destroyAll(){
