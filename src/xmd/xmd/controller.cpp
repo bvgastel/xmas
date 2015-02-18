@@ -177,10 +177,10 @@ bool Controller::componentCreated(const QVariant &qvariant)
                 qDebug() << " port: " << pname;
             }
         }
-        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::red);
+        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::black);
         return true;
     }
-    controllerLog("component "+name+ " was not created.");
+    controllerLog("component "+name+ " was not created.",Qt::red);
     return false;
 }
 

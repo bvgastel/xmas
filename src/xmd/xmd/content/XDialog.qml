@@ -31,28 +31,29 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
-import QtQuick.Window 2.1
+import QtQuick.Window 2.2
 
 Window {
     id:dialog
     visible: false
     modality: Qt.WindowModal
-    flags: Qt.Tool
+    flags: Qt.Dialog
     color: "darkgrey"
 
     property string help:""
     property string expression:""
+    property alias validator: regex.regExp
 
     signal accepted()
-    signal canceled()
-
-    onAccepted:dialog.close()
-    onCanceled: dialog.close()
 
     width:500
     height: 260
     minimumHeight: 200
+    minimumWidth: 400
+    maximumHeight: 500
+    maximumWidth: 700
 
+    onVisibleChanged: expr.text = expression
     ColumnLayout {
         id: column
         anchors.fill: parent
@@ -60,7 +61,6 @@ Window {
         spacing:5
         Rectangle{
             Layout.fillWidth: true
-            //Layout.preferredWidth: 500
             Layout.preferredHeight: 100
             color: "darkgrey"
             Label {
@@ -82,13 +82,14 @@ Window {
                 anchors.fill:parent
                 anchors.margins: 10
                 text: expression
-                color: acceptableInput ? "green" : "red"
-                //inputMethodHints: Qt.ImhDigitsOnly
-                //validator: IntValidator{bottom: 1}
+                focus:true
+                selectByMouse:true
+                validator: RegExpValidator{id:regex ; regExp:/^(\S.*)$/}
                 wrapMode: TextInput.WordWrap
                 font.pointSize : 10
-                onEditingFinished: {dialog.expression = text; focus = false}
                 onFocusChanged: if(focus)selectAll()
+                onAccepted: okAction.trigger()
+                Keys.onEscapePressed:cancelAction.trigger()
             }
         }
         RowLayout{
@@ -97,17 +98,33 @@ Window {
             Layout.preferredHeight: 30
             Layout.alignment: Qt.AlignRight
             Button{
-                text:"Cancel"
-                onClicked: canceled()
+                action:cancelAction
             }
             Button {
-                text: "Ok"
-                onClicked: accepted()
+                isDefault: true
+                action: okAction
             }
         }
+    }
 
+    Action {
+        id:cancelAction
+        text: "Cancel"
+        onTriggered: {dialog.close()
+        }
+    }
+    Action {
+        id: okAction
+        text: "Ok"
+        enabled: expr.acceptableInput
+        onTriggered: {
+            dialog.expression = expr.text
+            dialog.accepted()
+            dialog.close()
+        }
     }
 }
+
 
 
 

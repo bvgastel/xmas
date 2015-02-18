@@ -30,3 +30,4 @@ gbo     17-02   functie voor clearNetwork() in js files
 gbo     18-02   clear: what happens to children?
 gbo     18-02   pick up object by connected port
 gbo     18-02   impossible to modify name label
+STEFAN  18-02   console log output displays component refused and not created while succesfully open a network
