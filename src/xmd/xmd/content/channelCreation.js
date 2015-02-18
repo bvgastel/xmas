@@ -33,6 +33,8 @@ function doConnect(port1,port2) {
 }
 
 
+//TODO : portnames are references and must match json!!!
+//TODO : avoid short naming
 function create(iComp,iPort,tComp,tPort) {
     channel = null
     var ic = getComponent(iComp)

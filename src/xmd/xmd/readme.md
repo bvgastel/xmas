@@ -32,8 +32,12 @@ gbo     18-02   pick up object by connected port
 gbo     18-02   impossible to modify name label
 STEFAN  18-02   console log output displays component refused and not created while succesfully open a network
 gbo     18-02   Need a way to subscribe to log without qml knowing it.
-gbo     18-02   Eliminate implicitate create on click of primitive. Create on drop.
+gbo     18-02   Eliminate implicit create on click of primitive. Create on drop.
 gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts)
 gbo     18-02   Spread components without coordinates accross sheet. (now at 0,0)
 gbo     18-02   File "switch-and-merge.fjson" = type-error in channelCreation.js: 44
 gbo     18-02   Full keyboard handling (low prio for now): creation, deletion, TAB, modification
+STEFAN  18-02   when a netwerk is opened deselect and group select doesn't work
+STEFAN  18-02   component name is uniek --> moet deze kunnen aangepast worden
+STEFAN  18-02   port name moet uniek zijn , kiezen we nummer of name
+

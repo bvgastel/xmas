@@ -69,6 +69,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/open.png"
         iconName: "model-open"
         text: "Open"
+        shortcut: "ctrl+o"
         onTriggered: fileDialog.open()
     }
 
@@ -77,6 +78,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/save.png"
         iconName: "model-save"
         text: "Save"
+        shortcut: "ctrl+s"
         onTriggered: fileDialog.open()
     }
 
