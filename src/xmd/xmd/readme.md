@@ -27,7 +27,13 @@ STEFAN  16/02   view option - show port names or not
 STEFAN  16/02   cut/paste/copy
 gbo     17-02   duidelijke naamgeving: Channel.create
 gbo     17-02   functie voor clearNetwork() in js files
-gbo     18-02   clear: what happens to children?
+gbo     18-02   sheet.clear(): what happens to children?
 gbo     18-02   pick up object by connected port
 gbo     18-02   impossible to modify name label
 STEFAN  18-02   console log output displays component refused and not created while succesfully open a network
+gbo     18-02   Need a way to subscribe to log without qml knowing it.
+gbo     18-02   Eliminate implicitate create on click of primitive. Create on drop.
+gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts)
+gbo     18-02   Spread components without coordinates accross sheet. (now at 0,0)
+gbo     18-02   File "switch-and-merge.fjson" = type-error in channelCreation.js: 44
+gbo     18-02   Full keyboard handling (low prio for now): creation, deletion, TAB, modification
