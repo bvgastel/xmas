@@ -26,8 +26,8 @@ STEFAN  16/02   view option - show component name or not
 STEFAN  16/02   view option - show port names or not
 STEFAN  16/02   cut/paste/copy
 gbo     17-02   duidelijke naamgeving: Channel.create
-gbo     17-02   functie voor clearNetwork() in js files
-gbo     18-02   sheet.clear(): what happens to children?
+gbo     17-02   functie voor clearNetwork() in js files // opgelost
+gbo     18-02   sheet.clear(): what happens to children? // qml ruimt op
 gbo     18-02   pick up object by connected port
 gbo     18-02   impossible to modify name label
 STEFAN  18-02   console log output displays component refused and not created while succesfully open a network
@@ -40,4 +40,3 @@ gbo     18-02   Full keyboard handling (low prio for now): creation, deletion, T
 STEFAN  18-02   when a netwerk is opened deselect and group select doesn't work
 STEFAN  18-02   component name is uniek --> moet deze kunnen aangepast worden
 STEFAN  18-02   port name moet uniek zijn , kiezen we nummer of name
-
