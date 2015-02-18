@@ -17,6 +17,8 @@ public:
     virtual void visit(XMASFork *);
     virtual void visit(XMASMerge *);
     virtual void visit(XMASJoin *);
+
+private:
 };
 
 #endif // COMPONENTWALKER_H

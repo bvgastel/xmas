@@ -2,6 +2,8 @@
 #define PARSE_H
 
 #include <map>
+#include <sstream>
+
 #include "memorypool.h"
 #include "parser_json.h"
 #include "xmas.h"
@@ -224,8 +226,54 @@ inline std::ostream& operator<< (std::ostream& out, const SymbolicPacketSet &n)
 }
 }
 
-// correct lifetime of strings in the structure is limited to the lifetime of the MemoryPool
+/**
+ * @brief Parse Reads a file from a specified filename and parses it using the json parser
+ *
+ * This function parses a file containing correct JSON for an xmas network
+ * and returns a map containing the xmas components (indexed by name) and the json data.
+ *
+ * Remark that the lifetime of strings in the structure is limited to the lifetime of
+ * the memory pool.
+ *
+ * @param filename the name of the file containing the json for the network.
+ *
+ * @param mp the memory pool
+ * @return the pair of a map to all xmas components and the json data.
+ */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
-Parse(const std::string &filename, bitpowder::lib::MemoryPool &mp);
+parse_xmas_from_file(const std::string &filename, bitpowder::lib::MemoryPool &mp);
+
+/**
+ * @brief parse_network_json Reads a string containing a json spec of a network and parses it using the json parser
+ *
+ * This function parses a string containing correct JSON for an xmas network
+ * and returns a map containing the xmas components (indexed by name) and the json data.
+ *
+ * Remark that the lifetime of strings in the structure is limited to the lifetime of
+ * the memory pool.
+ *
+ * @param sstr The stringstream contain the json for the network.
+ * @param mp the memory pool.
+ * @return the pair of a map to all xmas components and the json data.
+ */
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
+parse_xmas_from_json(const std::string &str, bitpowder::lib::MemoryPool &mp);
+
+/**
+ * @brief parse_json_buffer Uses the parsed JSON for a network to return the xmas components.
+ *
+ * This function uses the parsed JSON for an xmas network to return a map containing the
+ * xmas components indexed by name plus the json data.
+ *
+ * Remark that the lifetime of strings in the structure is limited to the lifetime of
+ * the memory pool.
+ *
+ * @param parseResult the parse result from ParseJSON.
+ *
+ * @param mp the memory pool.
+ * @return the pair of a map to all xmas components and the json data.
+ */
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
+generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult, bitpowder::lib::MemoryPool &mp);
 
 #endif // PARSE_H

@@ -64,7 +64,7 @@ bool Controller::fileOpen(QUrl fileUrl)
 
     controllerLog("Opening file " + filename);
 
-    std::tie(m_componentMap, std::ignore) = Parse(filename, mp);
+    std::tie(m_componentMap, std::ignore) = parse_xmas_from_file(filename, mp);
 
     if (m_componentMap.empty()) {
         controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);

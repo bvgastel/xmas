@@ -21,7 +21,8 @@ public:
       : m_x{b.m_x}, m_y{b.m_y}, m_orientation{b.m_orientation}, m_scale{b.m_scale}
     {}
 
-    operator =(CanvasComponentExtension& b)
+    // NOTE: gbo: added return type (void)
+    void operator =(CanvasComponentExtension& b)
     {
         m_x = b.m_x; m_y = b.m_y; m_orientation = b.m_orientation; m_scale = b.m_scale;
     }

@@ -9,7 +9,7 @@ using namespace bitpowder::lib;
 void ConvertFile(const std::string &filename) {
     MemoryPool mp;
 
-    auto parse = Parse(filename, mp);
+    auto parse = parse_xmas_from_file(filename, mp);
     auto& components = parse.first;
     auto& globals = parse.second;
 

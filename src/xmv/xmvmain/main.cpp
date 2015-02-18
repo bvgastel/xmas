@@ -605,7 +605,7 @@ void TestFile(const std::string &filename, bool showAll) {
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
-    auto parse = Parse(filename, mp);
+    auto parse = parse_xmas_from_file(filename, mp);
     auto& components = parse.first;
 
     auto current = std::chrono::high_resolution_clock::now();

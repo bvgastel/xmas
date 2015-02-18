@@ -343,11 +343,6 @@ private:
     std::string name;
 public:
 
-    // NOTE: refactor opportunity, constructors are copies
-    XMASComponent(const std::string& name) : name(name)
-    {
-    }
-
     XMASComponent(const bitpowder::lib::String& name) : name(name.stl())
     {
     }
@@ -529,16 +524,6 @@ public:
     Input i;
     Port* p[1];
 
-    /**
-     * @brief XMASSink Constructor
-     * @param name the name of the sink
-     */
-    // NOTE: refactor opportunity, constructors are copies
-    XMASSink(const std::string &name)
-        : XMASComponent(name), i(this, "i")
-    {
-        p[0] = &i;
-    }
 
     /**
      * @brief XMASSink Constructor
@@ -594,12 +579,6 @@ public:
     Output o;
     Port* p[1];
 
-    // NOTE: refactor opportunity, constructors are copies
-    XMASSource(const std::string &name) : XMASComponent(name), o(this, "o")
-    {
-        p[0] = &o;
-    }
-
     XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
     {
         p[0] = &o;
@@ -648,19 +627,6 @@ public:
     Output o;
     Port* p[2];
     size_t c; // capacity
-
-    /**
-     * @brief XMASQueue constructor with the correct ports defined
-     * @param name the name of the queue.
-     * @param capacity the capacity of the queue.
-     */
-    // NOTE: refactor opportunity, constructors are copies
-    XMASQueue(const std::string& name, size_t capacity = 1)
-        : XMASComponent(name), i(this,"i"), o(this,"o"), c(capacity)
-    {
-        p[0] = &i;
-        p[1] = &o;
-    }
 
     /**
      * @brief XMASQueue constructor with the correct ports defined
@@ -717,14 +683,6 @@ public:
     Output o;
     Port* p[2];
 
-    // NOTE: refactor opportunity, constructors are copies
-    XMASFunction(const std::string &name)
-        : XMASComponent(name), i(this, "i"), o(this, "o")
-    {
-        p[0] = &i;
-        p[1] = &o;
-    }
-
     XMASFunction(const bitpowder::lib::String& name)
         : XMASComponent(name), i(this, "i"), o(this, "o")
     {
@@ -778,14 +736,6 @@ public:
     Output b;
     Port* p[3];
 
-    // NOTE: refactor opportunity, constructors are copies
-    XMASSwitch(const std::string &name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b")
-    {
-        p[0] = &i;
-        p[1] = &a;
-        p[2] = &b;
-    }
-
     XMASSwitch(const bitpowder::lib::String& name) : XMASComponent(name), i(this, "i"), a(this,"a"), b(this,"b")
     {
         p[0] = &i;
@@ -838,14 +788,6 @@ public:
     Output a;
     Output b;
     Port* p[3];
-
-    // NOTE: refactor opportunity, constructors are copies
-    XMASFork(const std::string &name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b")
-    {
-        p[0] = &i;
-        p[1] = &a;
-        p[2] = &b;
-    }
 
     XMASFork(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), a(this,"a"), b(this,"b")
     {
@@ -903,14 +845,6 @@ public:
     Output o;
     Port* p[3];
 
-    // NOTE: refactor opportunity, constructors are copies
-    XMASMerge(const std::string &name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
-    {
-        p[0] = &a;
-        p[1] = &b;
-        p[2] = &o;
-    }
-
     XMASMerge(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
     {
         p[0] = &a;
@@ -963,14 +897,6 @@ public:
     Input b;
     Output o;
     Port* p[3];
-
-    // NOTE: refactor opportunity, constructors are copies
-    XMASJoin(const std::string &name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
-    {
-        p[0] = &a;
-        p[1] = &b;
-        p[2] = &o;
-    }
 
     XMASJoin(const bitpowder::lib::String& name) : XMASComponent(name), a(this,"a"), b(this,"b"), o(this,"o")
     {

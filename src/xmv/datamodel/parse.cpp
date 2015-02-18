@@ -1190,7 +1190,18 @@ T *insert(MemoryPool& mp, std::map<String, XMASComponent*>& allComponents, const
     return comp;
 }
 
-std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> Parse(const std::string &filename, MemoryPool &mp)
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_json(const std::string &str, MemoryPool &mp)
+{
+    String current(str);
+    auto parseResult = ParseJSON(current, mp);
+    if (!parseResult) {
+        std::cerr << "error in parsing json string stream : " << parseResult.error() << " at " << parseResult.position() << std::endl;
+        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+    }
+    return generate_xmas_from_parse_result(parseResult, mp);
+}
+
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_file(const std::string &filename, MemoryPool &mp)
 {
     struct stat st;
     if (stat(filename.c_str(), &st)) {
@@ -1215,12 +1226,16 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> Parse(cons
     close(fd);
 
     String current(buffer, size);
-
     auto parseResult = ParseJSON(current, mp);
     if (!parseResult) {
         std::cerr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
         return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
     }
+    return generate_xmas_from_parse_result(parseResult, mp);
+}
+
+
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(JSONParseResult &parseResult, MemoryPool &mp) {
     std::map<String, XMASComponent *> retval;
 
     //std::cout << retval.result() << std::endl;
