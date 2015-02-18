@@ -27,3 +27,4 @@ STEFAN  16/02   view option - show port names or not
 STEFAN  16/02   cut/paste/copy
 gbo     17-02   duidelijke naamgeving: Channel.create
 gbo     17-02   functie voor clearNetwork() in js files
+gbo     17-02   clear: what happens to children?

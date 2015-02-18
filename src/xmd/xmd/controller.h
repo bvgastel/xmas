@@ -43,6 +43,7 @@
 #include <QUrl>
 
 #include "xmas.h"
+#include "componentwalker.h"
 
 class Controller : public QObject
 {

@@ -180,6 +180,7 @@ bool Controller::componentCreated(const QVariant &qvariant)
         controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::red);
         return true;
     }
+    controllerLog("component "+name+ " was not created.");
     return false;
 }
 
@@ -242,6 +243,10 @@ void Controller::controllerLog(const std::string message){
     controllerLog(message, Qt::black);
 }
 
+void Controller::controllerLog(const QString message) {
+    emit log(message, Qt::black);
+}
+
 /**
  * @brief Controller::output
  * @param message
@@ -263,3 +268,4 @@ void Controller::controllerLog(const bitpowder::lib::String message, QColor colo
 void Controller::controllerLog(const QString message, QColor color){
     emit log(message,color);
 }
+

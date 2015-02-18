@@ -104,7 +104,9 @@ function createComponent(parent,component,object) {
                                           "name":object.name,
                                           "param":object.param
                                       })
-        controller.componentCreated(item)
+        if (!controller.componentCreated(item)) {
+            log("component was refused", "red")
+        }
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }
@@ -120,5 +122,3 @@ function destroyAll(){
     sheet.children = ""
     log("Sheet cleared.","black")
 }
-
-
