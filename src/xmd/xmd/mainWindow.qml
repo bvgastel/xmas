@@ -333,7 +333,7 @@ ApplicationWindow {
     }
     Connections {
         target: controller
-        onLog: log(message,color) //console.log("component create request")
+        onWriteLog: log(message,color) //console.log("component create request")
 
     }
 }

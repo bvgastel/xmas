@@ -235,20 +235,17 @@ bool Controller::channelChanged(const QVariant &qvariant)
     return true;
 }
 
-void Controller::controllerLog(const bitpowder::lib::String message) {
-    controllerLog(message, Qt::black);
-}
-
-void Controller::controllerLog(const std::string message){
-    controllerLog(message, Qt::black);
-}
-
-void Controller::controllerLog(const QString message) {
-    emit log(message, Qt::black);
+/**
+ * @brief Controller::controllerLog
+ * @param message
+ * @param color
+ */
+void Controller::controllerLog(const QString message, QColor color) {
+    emit writeLog(message, color);
 }
 
 /**
- * @brief Controller::output
+ * @brief Controller::controllerLog
  * @param message
  * @param color
  */
@@ -258,14 +255,5 @@ void Controller::controllerLog(const std::string message, QColor color){
 
 void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
     emit controllerLog(QString::fromUtf8(message.stl().c_str()),color);
-}
-
-/**
- * @brief Controller::output
- * @param message
- * @param color
- */
-void Controller::controllerLog(const QString message, QColor color){
-    emit log(message,color);
 }
 

@@ -1,18 +1,18 @@
+
 #include "network.h"
+#include "parse.h"
 #include "xmdexception.h"
 
-Network::Network(std::string filename) {
-    Network(QUrl(filename.c_str()));
-}
-
-Network::Network(QUrl fileUrl)
+Network::Network(Controller *controller, QUrl fileUrl) : m_controller(controller)
 {
     throw XmdException("File "+fileUrl.toDisplayString()+" not found.");
 }
 
-Network::Network(std::stringstream &sstr) {
+Network::Network(Controller *controller, std::stringstream &sstr) : m_controller(controller) {
 
-    throw XmdException("Stream is invalid: " + sstr.str());
+    bitpowder::lib::MemoryPool mp;
+    std::tie(m_componentMap, std::ignore) = parse_xmas_from_json(sstr.str(), mp);
+
 }
 
 Network::~Network()

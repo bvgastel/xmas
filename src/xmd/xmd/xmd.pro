@@ -43,14 +43,16 @@ HEADERS       = \
     fieldwalker.h \
     componentwalker.h \
     network.h \
-    xmdexception.h
+    xmdexception.h \
+    logoutput.h
 				
 SOURCES       = \ 
     controller.cpp \
     fieldwalker.cpp \
     componentwalker.cpp \
     network.cpp \
-    xmdexception.cpp
+    xmdexception.cpp \
+    logoutput.cpp
     
 unix|win32 {
     target.path = $$PWD/../../../lib/xmd

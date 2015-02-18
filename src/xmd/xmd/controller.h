@@ -73,7 +73,7 @@ signals: //to view
      */
     bool createNetwork(const QVariantMap &object);
     bool clearNetwork();
-    void log(QString message,QColor color);
+    void writeLog(QString message,QColor color=Qt::black);
 
 public slots:  //from view
     bool componentCreated(const QVariant &object);
@@ -101,21 +101,12 @@ public:
     explicit Controller(QObject* parent = 0);
     ~Controller();
 
+    void controllerLog(const std::string message,QColor color=QColor("black"));
+    void controllerLog(const QString message, QColor color=QColor("black"));
+    void controllerLog(const bitpowder::lib::String message, QColor color=QColor("black"));
+
 private:
     QVariant createPropObject(XMASComponent *comp);
-
-    void controllerLog(const std::string message,QColor color);
-    void controllerLog(const std::string message);
-
-    void controllerLog(const QString message, QColor color);
-    void controllerLog(const QString message);
-
-    void controllerLog(const bitpowder::lib::String message, QColor color);
-    void controllerLog(const bitpowder::lib::String message);
-
-    void log(const QString message);
-    void log(const std::string message, QColor color = Qt::black);
-    void log(const bitpowder::lib::String message, QColor color = Qt::black);
 
     void emitComponent(XMASComponent *comp);
     void emitDuplicate(XMASComponent *comp);

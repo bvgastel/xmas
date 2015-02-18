@@ -44,6 +44,7 @@ ColumnLayout{
     property int lastHeight: 150
     property int headerHeight:25
 
+    signal writeLog(string text, color clr)
 
     function log(text,color){
         //TODO : check for valid color (As QColor.isValidColor(x))
@@ -123,6 +124,4 @@ ColumnLayout{
         PropertyAnimation { target: output; properties: "height"; duration: 100 }
     }
 }
-
-
 
