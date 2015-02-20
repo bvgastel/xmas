@@ -3,6 +3,17 @@
 ## Modification history
 
 * 29-01-2015 Guus : creation
+* 20-02-2015 Guus : obsoleted discussion
+
+## Obsoleted discussion
+
+The discussion in this document is obsoleted since the decision to
+decouple the designer more from the VT subsystem using a different 
+approach. See the document vt_xmd_integration (tex or pdf) for more
+information. The document vt_xmd_integration reorganises the two subsystems
+in a way that minimizes overlap and renders the qml interaction with 
+C++ to an absolute minimum. Hence the current document and its discussion
+is obsoleted.
 
 ## Problem definition
 
