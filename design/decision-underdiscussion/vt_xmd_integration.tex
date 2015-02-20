@@ -1,7 +1,8 @@
-%% Dit is de domeinanalyse: Composite Objects %%
-%% Freek 26 september: Een derde domeinanalyse zou kunnen gaan over hoe om te
-%% gaan met Composite objects (bijv. hoe grafisch weer te geven, hoe op te
-%% slaan in de data structuur)
+%% This is a document discussing a decision to completely decouple the 
+%% graphical subsystem of the designer from the subsystem of the VT (verification tools).
+%%
+%% This document is the main document: compile with xelatex to get the complete pdf.
+%%
 
 \documentclass[a4paper,11pt,final]{article}
 
@@ -11,31 +12,141 @@
 \hypersetup{ colorlinks = true, citecolor = blue,linkcolor = blue }
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
-
+\usepackage{xspace}
 
 \bibliographystyle{alpha}
 
-		
+\author{ABI team 33\\(Stefan Versluys, Guus Bonnema, Jeroen Kleijn)}
+
+\date{20/02/2015}
+
+\title{\color{blue}VT - XMD integration}
+
+\newcommand{\w}[1]{\texttt{#1}\xspace}
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmd}{\textsc{xmd}\xspace}%
+\newcommand{\vt}{\textsc{vt}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\qml}{\textsc{Qt}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+
 
 \begin{document}
 \selectlanguage{english}
-\begin{titlepage}
-	\vspace*{\fill}
-	\begin{center}
-		\textsc{\large VT - XMD integration}\\[0.5cm]
-		\textsc{Stefan Versluys}\\ \textsc{\scriptsize 19/02/2015}\\[2.0cm]
-	\end{center}
-	\vspace*{\fill}
-\end{titlepage}
+
+\maketitle
+
+\begin{abstract}
+
+	* Why did we write this document? 
+	* What does it cover?
+	* How to read it? 
+	
+	This document explains why and in what manner the team decided 
+	to decouple the designer subsystem \xmd and the \vt subsystem.
+	The contents documents the background, the problem, the decison
+	and the motivation for the decision, and finally the detailed 
+	considerations that lead to the decision.
+	
+	The final structure of the subsystems (the diagram) will be part of 
+	the system documentation.
+\end{abstract}
+
+%% Modification history
+
+\begin{tabular}{|l|l|p{20em}|}
+\hline 
+\multicolumn{3}{|c|}{\bf Modification History}\\\hline
+Stefan Versluys & 17-02-2015 & Initial discussion formulation \\\hline 
+Guus Bonnema & 20-02-2015 & Transformation to decision document \\\hline 
+\end{tabular} 
 
 
 \tableofcontents
 
-\newpage
+\section{Problem background and description}
 
-\section{VT - XMD}
-\paragraph{}
-This paper concerns about the way verification tools (VT) can be integrated
+\paragraph{Background}
+During the planning phase of the project, the customer requested that
+the designer be integrated with the verification tools in a way that
+should be transparant to the user. Seamless integration should be the
+appearance, whether or not the technical integration would be seamless.
+
+For that reason the team experimented with different forms of integration
+and finally reached the stage where we could formulate the alternatives
+that we deem viable and decide.
+
+This document describes in summary which alternatives we compared, what
+we decided and what our motivation was. 
+
+\paragraph{Description and alternatives}
+Once we decided to switch to \qt as the user interface toolkit, we were
+confronted with 3 different technologies that \qt uses to
+implement a user interface: GraphicsView, \qtquick1 and \qtquick2. The 
+decision at the time was to use \qtquick2 and the related replacement
+for javascript \qml (referred to as \qml2). 
+
+Immediately after this decision we started studying the interface between 
+\qml and \cpp in order to interface the \xmd subsystem (the designer) with
+the \vt subsystem (verification tools). The experimentation that followed
+lead us to three alternative implementations that we partially implemented
+before reaching the conclusion formulated below.
+
+We considered the following alternatives:
+
+\begin{description}
+	\item[\cpp parser] In this alternative we communicate from
+	the designer to a mapper class that catches each signal for creation
+	of a component on the designer and translates it into the currently
+	existing structure (\w{xmas.h}). This implies complete and integral
+	coupling of the \xmd subsystem and the \vt subsystem through this
+	mapper class. Also, the flat json designed in previous activities were
+	to be amended for the new designer capabilities including graphical
+	data requirements.
+	
+	\item[Partial \cpp parser and javascript parser] This alternative
+	implies two structures that contain the network design: one for
+	the designer and one for the \vt subsystem which is the existing 
+	\w{fjson} structure. This implies translation of one datastructure 
+	to another from the mapper class but limits the exposure of graphical 
+	needs of the designer to the verification structure.
+	
+	\item[Full javascript parser] This alternatives implies two structures
+	as well, but uses the \w{fjson} text stream as interface between the
+	two subsystems. This implies that there is no other coupling between
+	the \xmd subsystem and the \vt subsystem and no modifications to the
+	\vt system are necessary other than those needed to run and compile on
+	all specified platforms. 
+\end{description}
+
+\begin{figure}[here]
+\includegraphics[width=1.0\textwidth]{xmd2vt}
+\caption{Diagram for \textit{Full javascript parser}}
+\label{fig:fulljavascriptparser}
+\end{figure}
+
+
+\section{Decision and motivation}
+
+Due to the massive advantages that the loose coupling of the alternative 
+\textit{Full javascript parser} offers, we decided in favour of this alternative. 
+
+\section{Implications for future changes}
+
+The decision implies that \vt development is relatively independant of 
+designer development. Any changes to the interface of the \w{fjson} structure
+impacts both subsystems, but all other changes are independent.
+
+Additionally we still need a mechanism to start and stop verification tools, track
+the error responses and we need to couple the verification tools executables into
+the designer without creating a development dependency. 
+
+
+\section{Details of the original discussion for VT - XMD integration}
+
+\paragraph{Subject for discussion}
+This discussion concerns the way verification tools (VT) can be integrated
 into or interact with the Xmas Model Designer (XMD). There are several
 options but not clear which is the best, because of conflicts in their
 requirements \& specifications, additional risks, increase of complexity
@@ -93,17 +204,17 @@ and fade of basic rules concerning separation.
 
 \paragraph{VT pure c++ parser only:}
 \begin{itemize}
-\item + only one file type for XMD and VT
+\item +/+ only one file type for XMD and VT
 \item +/- one parser and model : not an advantage see remarks (*)
-\item - flattening must be done at VT side in pure c++
-\item - XMD depends on the VT parser and complex VT structure for mapping.
-\item - increased exposure to change issues between VT and XMD.
-\item - VT structure mixed with GUI parameters (x,y,orientation,scale,..)
-\item - VT parser and structure modification = risk + out of scope
-\item - current fjson files not compatible anymore = loss of test references
-\item - composites need to be handled/flattened in VT parser
-\item - handling composite file locations, XMD vs. VT standalone on a pure platform
-\item - id references of components or ports can become inconsistent.
+\item -/- flattening must be done at VT side in pure c++
+\item -/- XMD depends on the VT parser and complex VT structure for mapping.
+\item -/- increased exposure to change issues between VT and XMD.
+\item -/- VT structure mixed with GUI parameters (x,y,orientation,scale,..)
+\item -/- VT parser and structure modification = risk + out of scope
+\item -/- current fjson files not compatible anymore = loss of test references
+\item -/- composites need to be handled/flattened in VT parser
+\item -/- handling composite file locations, XMD vs. VT standalone on a pure platform
+\item -/- id references of components or ports can become inconsistent.
 \end{itemize}
 
 (*)The advantage of having a parser already is not an issue because in
@@ -115,41 +226,34 @@ a VT parser modification if it’s just about a GUI parameter, flattening can sk
 
 \paragraph{XMD Javascript parser + VT dependent:}
 \begin{itemize}
-\item + XMD can have its own json structure with GUI specific parameters
-\item + flattening can be done outside VT, no need to use pure c++
-\item + fjson stays compatible
-\item + no need to modify VT to handle composites (parsing+flattening)
-\item + composite handling not necessary in VT for this project.
-\item - two file types , one hierarchical json and one fjson. Same as the current WickedXmas.
-\item - mapping for flattening is still done via VT parser/data, meaning complex VT data structures into flattener.
-\item - a designer must hand over flat files to a verifier using VT as stand alone. 
+\item +/+ XMD can have its own json structure with GUI specific parameters
+\item +/+ flattening can be done outside VT, no need to use pure c++
+\item +/+ fjson stays compatible
+\item +/+ no need to modify VT to handle composites (parsing+flattening)
+\item +/+ composite handling not necessary in VT for this project.
+\item -/- two file types , one hierarchical json and one fjson. Same as the current WickedXmas.
+\item -/- mapping for flattening is still done via VT parser/data, meaning complex VT data structures into flattener.
+\item -/- a designer must hand over flat files to a verifier using VT as stand alone. 
 \end{itemize}
 
 \paragraph{XMD Javascript parser + VT independent:}
 \begin{itemize}
 \item same advantages as previous
-\item + flattening done totally independant in e.g. Javascript , no need to know VT data structures.  No mapping
-\item + XMD and VT are completly independent, only the fjson structure is common.
+\item +/+ flattening done totally independant in e.g. Javascript , no need to know VT data structures.  No mapping
+\item +/+ XMD and VT are completly independent, only the fjson structure is common.
 \item +/- flat structure in XMD must match VT flat structure , but in javascript
 	very small modification. Much easier than adopt mapping to complex datastructures.
-\item + flattening in the design tool can be used to see if there are no cycles before these are send to de VT’s
-\item + very low risk, only the fjson structure must match
-\item + no need of complex mapping code in designer, pure compact, robust and easy javascript
-\item - two file types xmd + fjson
-\item - XMD needs and SaveAs or export function to fjson , so VT’s can run models as standalone
+\item +/+ flattening in the design tool can be used to see if there are no cycles before these are send to de VT’s
+\item +/+ very low risk, only the fjson structure must match
+\item +/+ no need of complex mapping code in designer, pure compact, robust and easy javascript
+\item -/- two file types xmd + fjson
+\item -/- XMD needs and SaveAs or export function to fjson , so VT’s can run models as standalone
 \end{itemize}
 
 
-\begin{figure}[here]
-\includegraphics[width=1.0\textwidth]{xmd2vt}
-\caption{vt to xmd interaction}
-\label{fig:xmd2vt}
-\end{figure}
-Figure~\ref{fig:xmd2vt} is a setup where VT and XMD are totally independent
+Figure~\ref{fig:fulljavascriptparser} is a setup where VT and XMD are totally independent
 but can interact with each other as if they are one thing. By this XMD can keep
 its maintainability and apart from minor changes VT stays untouched.
 Teh fjson structure is the only key they have in common.
-
-
 
 \end{document}
