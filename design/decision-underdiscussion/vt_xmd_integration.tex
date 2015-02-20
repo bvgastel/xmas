@@ -1,8 +1,3 @@
-%% Dit is de domeinanalyse: Composite Objects %%
-%% Freek 26 september: Een derde domeinanalyse zou kunnen gaan over hoe om te
-%% gaan met Composite objects (bijv. hoe grafisch weer te geven, hoe op te
-%% slaan in de data structuur)
-
 \documentclass[a4paper,11pt,final]{article}
 
 \usepackage[english]{babel}
@@ -19,124 +14,128 @@
 
 \begin{document}
 \selectlanguage{english}
-\begin{titlepage}
-	\vspace*{\fill}
-	\begin{center}
-		\textsc{\large VT - XMD integration}\\[0.5cm]
-		\textsc{Stefan Versluys}\\ \textsc{\scriptsize 19/02/2015}\\[2.0cm]
-	\end{center}
-	\vspace*{\fill}
-\end{titlepage}
+
+
+
+\title{\large vt - xmd integration}
+\date{19 february 2015}
+\author{Stefan Versluys}
+
+\maketitle
 
 
 \tableofcontents
 
 \newpage
 
-\section{VT - XMD}
+\section{vt - xmd}
 \paragraph{}
-This paper concerns about the way verification tools (VT) can be integrated
-into or interact with the Xmas Model Designer (XMD). There are several
+This paper concerns about the way verification tools (vt) can be integrated
+into or interact with the xmas model designer (xmd). There are several
 options but not clear which is the best, because of conflicts in their
 requirements \& specifications, additional risks, increase of complexity
 and fade of basic rules concerning separation. 
 
 
-\paragraph{VT requirements \& specification which affect integration decision:}
+\paragraph{vt requirements \& specification which affect integration decision:}
 \begin{itemize}
-\item The VT’s are written in pure c++ because they can run on platforms without any specific software tools.
-\item VT’s their mayor key is performance.
-\item The VT parser can handle a flat json structured file.
-\item The VT parser cannot handle composites.
-\item The VT parser feeds the VT model and has no GUI properties.
-\item The VT’s can be started and get their input via the command prompt. (standalone)
-\item The VT’s can be started and get their input via the designer tool.
-\item The VT’s structure is complex because its focus is performance and not maintainability.
-\item The VT’s give feedback via the standard output
+\item The vt'’s are written in pure c++ because they can run on platforms without any specific software tools.
+\item vt'’s their mayor key is performance.
+\item The vt parser can handle a flat json structured file.
+\item The vt parser cannot handle composites.
+\item The vt parser feeds the vt model and has no GUI properties.
+\item The vt'’s can be started and get their input via the command prompt. (standalone)
+\item The vt'’s can be started and get their input via the designer tool.
+\item The vt'’s structure is complex because it has to execute an algorithm and has to know
+	about the message details plus its focus is performance and not maintainability.
+\item The vt'’s give feedback via the standard output
 \end{itemize}
 
-\paragraph{XMD requirements \& specification which affect integration decision:}
+\paragraph{xmd requirements \& specification which affect integration decision:}
 \begin{itemize}
-\item XMD is written in qml/c++ with Qt classes which gains development speed, fancy GUI, easy scripting.
-\item XMD must handle composites.
-\item XMD its major key is maintainability
+\item xmd is written in qml/c++ with Qt classes which gains development speed, fancy GUI, easy scripting.
+\item xmd must handle composites.
+\item xmd its major key is maintainability
 \item Composites can be inside other composites and implies a hierarchical structure
-\item XMD needs a hierarchical json parser
-\item XMD needs GUI specific component properties like x,y,orientation
-\item XMD doesn’t need VT specific component model data structures.
-\item XMD must be pure GUI and doesn’t need to know about complex VT structures
-\item Ideally VT integration in XMD must be purely interaction,  as if they are one thing for the XMD user but technically totally separated.
-\item XMD must show the VT’s feedback in the console (normal text message)
-\item XMD can show the VT’s result in the model (structured text message)
+\item xmd needs a hierarchical json parser
+\item xmd needs GUI specific component properties like x,y,orientation
+\item xmd doesn'’t need vt specific component model data structures.
+\item xmd must be pure GUI and doesn'’t need to know about complex vt structures
+\item Ideally vt integration in xmd must be purely interaction,  as if they are one thing for the xmd user but technically totally separated.
+\item xmd must show the vt'’s feedback in the console (normal text message)
+\item xmd can show the vt'’s result in the model (structured text message)
 \end{itemize}
 
 \paragraph{Team:}
 \begin{itemize}
-\item VT’s are out of scope.
-\item Modifying VT’s parser and the structure to pass additional data is a risk:
+\item vt'’s are out of scope.
+\item Modifying vt'’s parser and the structure to pass additional data is a risk:
 	\begin{itemize}
 	\item planning : complexity gains time?
-	\item focus is XMD : loss of VT requirements/correctness?
+	\item focus is xmd : loss of vt requirements/correctness?
 	\item Because of OU changes, Bernard cannot be part of the team as developper.
-	\item XMD interaction is done through the whole structure and makes VT and XMD very dependent from each other.
-	\item Because of this dependence a change at the VT side can harm XMD and vice versa and breaks the maintainability rule.
-		The same holds if changing XMD 
+	\item xmd interaction is done through the whole structure and makes vt and xmd very dependent from each other.
+	\item Because of this dependence a change at the vt side can harm xmd and vice versa and breaks the maintainability rule.
+		The same holds if changing xmd which can decrease vt its performance. 
 	\end{itemize}
-\item	Using the VT parser and underlaying data structure extends the complexity into XMD which conflicts with its maintainability requirement.
+\item	Using the vt parser and underlaying data structure extends its complexity
+	into xmd which conflicts with xmd's maintainability requirement.
 \item Bernard: use only one data model, easier to maintain.
-\item Bernard: VT has a parser you can use it.
-\item Freeks concern of diving too deep into the VT’s because of too many risks and out of our scope. (see email)
+\item Bernard: vt has a parser you can use it.
+\item Freeks concern of diving too deep into the vt'’s because of too many risks and getting out of scope. (see email)
 \end{itemize}
 
 \section{Options}
 \paragraph{}
 
-\paragraph{VT pure c++ parser only:}
+\paragraph{vt pure c++ parser only:}
 \begin{itemize}
-\item + only one file type for XMD and VT
+\item + only one file type for xmd and vt
 \item +/- one parser and model : not an advantage see remarks (*)
-\item - flattening must be done at VT side in pure c++
-\item - XMD depends on the VT parser and complex VT structure for mapping.
-\item - increased exposure to change issues between VT and XMD.
-\item - VT structure mixed with GUI parameters (x,y,orientation,scale,..)
-\item - VT parser and structure modification = risk + out of scope
+\item - flattening must be done at vt side in pure c++
+\item - xmd depends on the vt parser and complex vt structure for mapping.
+\item - increased exposure to change issues between vt and xmd.
+\item - vt structure mixed with GUI parameters (x,y,orientation,scale,..)
+\item - vt parser and structure modification = risk + out of scope
 \item - current fjson files not compatible anymore = loss of test references
-\item - composites need to be handled/flattened in VT parser
-\item - handling composite file locations, XMD vs. VT standalone on a pure platform
+\item - composites need to be handled/flattened in vt parser
+\item - handling composite file locations, xmd vs. vt standalone on a pure platform
 \item - id references of components or ports can become inconsistent.
 \end{itemize}
 
 (*)The advantage of having a parser already is not an issue because in
 javascript a parser is one line of code.
-The disadvantage of having to modify two parsers /models isn’t an issue
-because in javascript, modifying is just adding a key/value and simple mapping.
-If VT and XMD are independent, a modification of the XMD parser doesn’t lead to
-a VT parser modification if it’s just about a GUI parameter, flattening can skip these.
+The disadvantage of having to modify two parsers /models isn'’t an issue
+because in javascript, modifying is just adding a JSON field.
+If vt and xmd are independent, a modification of the xmd parser doesn'’t lead to
+a vt parser modification if it'’s just about a GUI parameter. A flattener only pick
+items which are relevant for the vt'’s.
 
-\paragraph{XMD Javascript parser + VT dependent:}
+\paragraph{xmd Javascript parser + vt dependent:}
 \begin{itemize}
-\item + XMD can have its own json structure with GUI specific parameters
-\item + flattening can be done outside VT, no need to use pure c++
+\item + xmd can have its own json structure with GUI specific parameters
+\item + flattening can be done outside vt, no need to use pure c++
 \item + fjson stays compatible
-\item + no need to modify VT to handle composites (parsing+flattening)
-\item + composite handling not necessary in VT for this project.
+\item + no need to modify vt to handle composites (parsing+flattening)
+\item + composite handling not necessary in vt for this project.
 \item - two file types , one hierarchical json and one fjson. Same as the current WickedXmas.
-\item - mapping for flattening is still done via VT parser/data, meaning complex VT data structures into flattener.
-\item - a designer must hand over flat files to a verifier using VT as stand alone. 
+\item - mapping for flattening is still done via vt parser/data, meaning complex vt data structures into flattener.
+\item - a designer must hand over flat files to a verifier using vt as stand alone. 
 \end{itemize}
 
-\paragraph{XMD Javascript parser + VT independent:}
+\paragraph{xmd Javascript parser + vt independent:}
 \begin{itemize}
 \item same advantages as previous
-\item + flattening done totally independant in e.g. Javascript , no need to know VT data structures.  No mapping
-\item + XMD and VT are completly independent, only the fjson structure is common.
-\item +/- flat structure in XMD must match VT flat structure , but in javascript
+\item + flattening can be done in javascript , no need to know vt data structures.  No mapping at all.
+\item + xmd and vt are completly independent, only the fjson structure is common.
+\item +/- flat structure in xmd must match vt flat structure , but in javascript this is only a
 	very small modification. Much easier than adopt mapping to complex datastructures.
-\item + flattening in the design tool can be used to see if there are no cycles before these are send to de VT’s
+\item + flattening in the design tool can be used to see if there are no cycles before these are send to de vt'’s
 \item + very low risk, only the fjson structure must match
 \item + no need of complex mapping code in designer, pure compact, robust and easy javascript
 \item - two file types xmd + fjson
-\item - XMD needs and SaveAs or export function to fjson , so VT’s can run models as standalone
+\item - a designer must hand over flat files to a verifier using vt as stand alone.
+\item - xmd needs a SaveAs or export function to fjson , so vt'’s can run models as standalone
 \end{itemize}
 
 
@@ -145,10 +144,110 @@ a VT parser modification if it’s just about a GUI parameter, flattening can sk
 \caption{vt to xmd interaction}
 \label{fig:xmd2vt}
 \end{figure}
-Figure~\ref{fig:xmd2vt} is a setup where VT and XMD are totally independent
-but can interact with each other as if they are one thing. By this XMD can keep
-its maintainability and apart from minor changes VT stays untouched.
-Teh fjson structure is the only key they have in common.
+Figure~\ref{fig:xmd2vt} is a setup where vt and xmd are totally independent
+but can interact with each other as if they are one thing. By this, xmd can keep
+its maintainability and apart from minor changes vt stays untouched.
+The fjson structure is the only key they have in common.
+
+\paragraph{Example of JSON in javascript:}\
+
+\begin{figure}[here]
+\includegraphics[width=0.70\textwidth]{js_json}
+\caption{Javascript json example}
+\label{fig:js_json}
+\end{figure}
+Figure~\ref{fig:js_json} is a javascript function creating a json structure
+which is compatible with the current fjson.
+
+\paragraph{}
+\begin{figure}[here]
+\includegraphics[width=0.70\textwidth]{js_json_result}
+\caption{Javascript json console output}
+\label{fig:js_json_result}
+\end{figure}
+Figure~\ref{fig:js_json_result} result of executing previous javascript function.
+
+\newpage
+
+\section{Conclusion}
+The third option, meaning xmd completely independent, is the most
+appropriate choice. It has a low risk and maximum independancy,
+the latter is important to prevent fading their major keys into
+each other, certainly because these keys are conflicting.
+During the last meeting with our customer, about reusing
+the vt'’s parser and use one data model for the whole application,
+was a good advice at first sight. Following that way we're
+now at a point where we bump into several problems.
+Vt and xmd are based on totally different requirements and by mixing
+those two applications together we create a big risk. The risk
+that we have to adopt vt too much that we will run out of time, we
+have two iterations left.
+Vt its source is complex, we noticed that even adding a simple parameter 
+is not that easy and we still need to do a lot. Work like saving a file via
+the vt structures and parser, composites and the flattener in pure c++.
+
+\paragraph{}
+
+In option three, vt only need some small adjustments and xmd will become
+completely independent.
+The risk that during maintenance the customer has to modify two
+parsers doesn'’t exist. Parsing Json in Javascript is very easy compared
+to modification in complex mappings between xmd and vt.
+The same holds for the data model , there will be only one and that'’s the
+original vt data model because xmd doesn'’t need to know about it.
+Xmd only knows its graphical model as now in qml or Javascript.
+Having two application doing an other thing with the same kind of data
+without using the same libraries or whatever is a common thing.
+E.g. zip is such a common structure or something like Qt Creator
+which knows about the c++ syntax but only triggers an external
+compiler is very similar to this application.
+
+\paragraph{What has to be done at vt if option three is chosen?}
+\begin{itemize}
+\item A vt can be started with a fjson file argument.
+		E.g. deadlock -f:2queues.fjson
+\item A vt can be started with a fjson text argument
+		E.g. deadlock -t:{fjson text stream out of xmd flattener}
+\item A vt can be stopped
+\item A vt can send messages to the standard output redirected to xmd its log.
+\item A vt can send results to the xmd model as structured text
+		E.g. cout([result] q1:5,q3:6.........)
+\item A vt can send its status on request E.g. deadlock -status
+\end{itemize}
+
+\paragraph{What we don'’t have to do in vt if option three is chosen?}
+\begin{itemize}
+\item Writing a flattener in pure c++ which has to be integrated
+	in the vt parser because of the composites.
+\item Handling composites in vt. E.g. what about the composite 
+	file locations? For a xmd user it can be different than for
+	a vt user who's working standalone on a naked platform.
+\item facing the risk of getting out of scope.
+\item facing the risk of creating bugs in the vt software.
+\item facing the risk of degrading vt'’s performance.
+\item having the current fjson structure become incompatible,
+	meaning loss of test reference.
+\end{itemize}
+
+\paragraph{What have to be changed in xmd?}
+\begin{itemize}
+\item Writing a flattener in Javascript.
+\item Remove complex mapping with vt structures.
+\item Create a JSON object of the canvas (sheet).
+\item Write a process starter with text stream. (QProcess,stdin/out ? must be pure c++ compatible at the vt side)
+\item redirect vt its output to the log
+\end{itemize}
+
+
+By this we can focus on finalise and fine tune the project during our last two iterations
+and write documentation which e.g. describes how a customer can add a
+new kind of primitive in xmd javascript or how a user can change fjson
+structure with the JSON parser from javascript.
+
+Of course the choice of our customer has the highest priority but
+at least the customer must be aware of these consequences.
+
+
 
 
 

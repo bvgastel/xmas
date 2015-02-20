@@ -79,7 +79,7 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: "ctrl+s"
-        onTriggered: fileDialog.open()
+        onTriggered: jsonTest() //fileSaveDialog.open()
     }
 
 
@@ -164,11 +164,66 @@ ApplicationWindow {
             "All files (*)"]
         onAccepted: controller.fileOpen(fileUrl)
     }
+    FileDialog {
+        id: fileSaveDialog
+        selectMultiple: false
+        selectExisting: true
+        nameFilters: [
+            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+        //onAccepted: controller.fileOpen(fileUrl)
+    }
 
+
+    function jsonTest(){
+
+        var object = {
+            "VARS":[],
+            "PACKET_TYPE":{},
+            "COMPOSITE_OBJECTS":[],
+            "NETWORK":[],
+        }
+
+        object.NETWORK.push(
+                    {
+                        "id":"q1",
+                        "type":"queue",
+                        "x":100,
+                        "y":50,
+                        "orientation":90,
+                        "scale":0.5,
+                        "outs":[],
+                        "fields":[{"size":2}]
+                    }
+                    )
+
+        var jsonOrder = ["VARS","PACKET_TYPE","COMPOSITE_OBJECTS","NETWORK","id","type","x","y","orientation","scale","outs","fields","size"]
+
+        var jsonFileText = JSON.stringify(object,jsonOrder,1)
+
+        //throws exception if incorrect json
+        var objFromJsonFile = JSON.parse(jsonFileText);
+
+
+        console.log("======================================================================================")
+        console.log("= Json text created from object")
+        console.log("======================================================================================")
+        console.log(jsonFileText)
+        console.log("======================================================================================")
+        console.log("= Object created from JSON text")
+        console.log("======================================================================================")
+        console.log("id=" + objFromJsonFile.NETWORK[0].id
+                    + ", type=" + objFromJsonFile.NETWORK[0].type
+                    + ",(x,y)=(" + objFromJsonFile.NETWORK[0].x + "," + objFromJsonFile.NETWORK[0].y + ")"
+                    + ",fields.size=" + objFromJsonFile.NETWORK[0].fields[0].size
+                    + ",...")
+    }
 
     function log(text,color)
     {
-       outputLog.log(text,color)
+        outputLog.log(text,color)
     }
 
     menuBar: MenuBar {
