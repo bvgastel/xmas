@@ -69,7 +69,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/open.png"
         iconName: "model-open"
         text: "Open"
-        shortcut: "ctrl+o"
+        shortcut: "Ctrl+O"
         onTriggered: fileDialog.open()
     }
 
@@ -78,7 +78,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/save.png"
         iconName: "model-save"
         text: "Save"
-        shortcut: "ctrl+s"
+        shortcut: "Ctrl+S"
         onTriggered: test() // jsonTest() //fileSaveDialog.open()
     }
 
@@ -86,7 +86,7 @@ ApplicationWindow {
     Action {
         id: cutAction
         text: "Cut"
-        shortcut: "ctrl+x"
+        shortcut: "Ctrl+X"
         iconSource: "qrc:/content/images/cut.png"
         iconName: "edit-cut"
         onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
@@ -104,7 +104,7 @@ ApplicationWindow {
     Action {
         id: pasteAction
         text: "Paste"
-        shortcut: "ctrl+v"
+        shortcut: "Ctrl+V"
         iconSource: "qrc:/content/images/paste.png"
         iconName: "edit-paste"
         onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
@@ -121,7 +121,7 @@ ApplicationWindow {
     Action {
         id: zoomInAction
         text: "Zoom In"
-        shortcut: "+"
+        shortcut: "Ctrl+Plus"
         iconSource: "qrc:/content/images/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: sheet.zoomIn()
@@ -130,7 +130,7 @@ ApplicationWindow {
     Action {
         id: zoomOutAction
         text: "Zoom Out"
-        shortcut: "-"
+        shortcut: "Ctrl+Minus"
         iconSource: "qrc:/content/images/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: sheet.zoomOut()
@@ -153,6 +153,13 @@ ApplicationWindow {
         iconName: "select"
         checkable: true
         onToggled: sheet.selectionMode = checked
+    }
+
+    Action {
+        id: fileQuitAction
+        text: "Quit"
+        shortcut: "Ctrl+Q"
+        onTriggered: Qt.quit()
     }
 
     FileDialog {
@@ -235,7 +242,7 @@ ApplicationWindow {
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
             MenuSeparator{}
-            MenuItem { text: "Quit"; onTriggered: Qt.quit() }
+            MenuItem { action: fileQuitAction }
         }
         Menu {
             title: "&Edit"

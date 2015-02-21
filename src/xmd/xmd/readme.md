@@ -30,10 +30,10 @@ gbo     17-02   functie voor clearNetwork() in js files // opgelost
 gbo     18-02   sheet.clear(): what happens to children? // qml ruimt op
 gbo     18-02   pick up object by connected port
 gbo     18-02   impossible to modify name label //opgelost
-STEFAN  18-02   console log output displays component refused and not created while succesfully open a network
+STEFAN  18-02   console log output displays component refused and not created while succesfully open a network // tempory solved, see comment
 gbo     18-02   Need a way to subscribe to log without qml knowing it.
-gbo     18-02   Eliminate implicit create on click of primitive. Create on drop.
-gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts)
+gbo     18-02   Eliminate implicit create on click of primitive. Create on drop. // primitive is created on drag start to see its representation before drop so it can be aligned in the sheet
+gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts) // QKeySequence is a C++ class and not available in qml. In qml it's string or default keys
 gbo     18-02   Spread components without coordinates accross sheet. (now at 0,0)
 gbo     18-02   File "switch-and-merge.fjson" = type-error in channelCreation.js: 44
 gbo     18-02   Full keyboard handling (low prio for now): creation, deletion, TAB, modification
