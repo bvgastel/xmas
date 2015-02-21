@@ -121,7 +121,7 @@ ApplicationWindow {
     Action {
         id: zoomInAction
         text: "Zoom In"
-        shortcut: "Ctrl+Plus"
+        shortcut: "Ctrl++"
         iconSource: "qrc:/content/images/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: sheet.zoomIn()
@@ -130,7 +130,7 @@ ApplicationWindow {
     Action {
         id: zoomOutAction
         text: "Zoom Out"
-        shortcut: "Ctrl+Minus"
+        shortcut: "Ctrl+-"
         iconSource: "qrc:/content/images/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: sheet.zoomOut()
@@ -139,7 +139,7 @@ ApplicationWindow {
     Action {
         id: zoomFitAction
         text: "Zoom Fit"
-        shortcut: "1"
+        shortcut: "Ctrl+1"
         iconSource: "qrc:/content/images/zoom-fit.png"
         iconName: "zoom-fit"
         onTriggered: sheet.zoomFit()
