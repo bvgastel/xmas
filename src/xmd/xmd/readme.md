@@ -12,7 +12,7 @@ STEFAN  16/02   Different cursor shape when move can happen
 STEFAN  16/02   Save dialog
 STEFAN  16/02   Open dialog for composite
 STEFAN  16/02   Reconnect when clicking on a connected port
-STEFAN  16/02   Clear sheet when open file starts (xmd)
+STEFAN  16/02   Clear sheet when open file starts (xmd) // opgelost
 STEFAN  16/02   status bar is now just "ready" but is for VT progress + info
 STEFAN  16/02   double click switch gives also 2 single click events which select and deselect
 STEFAN  16/02   shortcuts

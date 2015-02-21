@@ -79,7 +79,7 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: "ctrl+s"
-        onTriggered: jsonTest() //fileSaveDialog.open()
+        onTriggered: test() // jsonTest() //fileSaveDialog.open()
     }
 
 
@@ -176,6 +176,9 @@ ApplicationWindow {
         //onAccepted: controller.fileOpen(fileUrl)
     }
 
+    function test(){
+        sheet.clear()
+    }
 
     function jsonTest(){
 
@@ -304,12 +307,13 @@ ApplicationWindow {
                 id: view
                 //center the scene by default
                 anchors.fill: parent
-                contentX: (1 - sheet.scale) * sheet.width * 0.5
-                contentY: (1 - sheet.scale) * sheet.height * 0.5
-                contentWidth: sheet.width * sheet.scale
-                contentHeight: sheet.height * sheet.scale
+                contentX: sheet ? (1 - sheet.scale) * sheet.width * 0.5 : 0
+                contentY: sheet ? (1 - sheet.scale) * sheet.height * 0.5 : 0
+                contentWidth: sheet ? sheet.width * sheet.scale : 0
+                contentHeight: sheet ? sheet.height * sheet.scale : 0
                 pixelAligned: true
-                interactive: !sheet.selectionMode
+                interactive: sheet ? !sheet.selectionMode : true
+
 
 
                 //        onFlickEnded: {

@@ -68,13 +68,13 @@ Rectangle {
 
     function clear()
     {
-        sheet.children=""
+        Ctrl.destroyAll(this)
     }
 
     focus: true
     z: -10
 
-    property bool selectionMode: false
+    property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
 
@@ -90,16 +90,13 @@ Rectangle {
     Keys.onDownPressed: moveSelected(0,gridsize)
     Keys.onUpPressed: moveSelected(0,-gridsize)
 
-//    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) selectionMode = true }
-//    Keys.onReleased: { if(event.modifiers=== Qt.ControlModifier) selectionMode = false }
-
-
+    //    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) selectionMode = true }
+    //    Keys.onReleased: { if(event.modifiers=== Qt.ControlModifier) selectionMode = false }
 
 
     //used to show the wiring path when adding a connection
     Canvas {
         id: wire
-        z:20
         anchors.fill: parent
         property real mouseX: 0
         property real mouseY: 0
@@ -158,7 +155,6 @@ Rectangle {
             wire.mouseY = port.y
             wire.connecting = true
         }
-
     }
 
 

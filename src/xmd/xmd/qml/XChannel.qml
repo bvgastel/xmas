@@ -55,7 +55,7 @@ Item {
         if(port1) port1.connected = false
         if(port2) port2.connected = false
         destroy(channel)
-        log("Channel deleted!","black")
+        //log("Channel deleted!","black")
         //TODO : channel is already null - send unique id or tempory copy?
         //controller.channelDestroyed(channel)
     }
