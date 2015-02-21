@@ -8,9 +8,9 @@ XComponent {
     type: "join"
     prefix: "j"
     property int token: isNaN(param) ? 0 : param
-    XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
-    XPort {x: 0; y:75; name: "t1"; type:Xmas.Target}
-    XPort {x: 90; y:45; name: "i"; type:Xmas.Initiator}
+    XPort {x: 0; y: 15; name: "a"; type:Xmas.Target}
+    XPort {x: 0; y:75; name: "b"; type:Xmas.Target}
+    XPort {x: 90; y:45; name: "o"; type:Xmas.Initiator}
     Canvas {
         id:canvas
         anchors.fill: parent
