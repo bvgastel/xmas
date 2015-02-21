@@ -71,6 +71,12 @@ Rectangle {
         Ctrl.destroyAll(this)
     }
 
+    function clearSelections()
+    {
+        //propagate to all children
+        clearSelection()
+    }
+
     focus: true
     z: -10
 

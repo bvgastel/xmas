@@ -2,7 +2,7 @@
 
 Author  Date    Comment / reply
 ------  ----    -----------------------------------------
-STEFAN  16/02   Selecting a component doesn't deselect other items
+STEFAN  16/02   Selecting a component doesn't deselect other items // opgelost
 STEFAN  16/02   A connection is a rectangular line not crossing components
 STEFAN  16/02   Sheet must have a grid with snap
 STEFAN  16/02   Group move + common sheet bounds
@@ -15,8 +15,8 @@ STEFAN  16/02   Reconnect when clicking on a connected port
 STEFAN  16/02   Clear sheet when open file starts (xmd) // opgelost
 STEFAN  16/02   status bar is now just "ready" but is for VT progress + info
 STEFAN  16/02   double click switch gives also 2 single click events which select and deselect
-STEFAN  16/02   shortcuts
-STEFAN  16/02   focus optimization , for default enter and escape key handling
+STEFAN  16/02   shortcuts // opgelost
+STEFAN  16/02   focus optimization , for default enter and escape key handling // opgelost (was voor dialogs)
 STEFAN  16/02   zoom fit must fit into window not 1on1 scale
 STEFAN  16/02   zoom under cursor instead of left/top
 STEFAN  16/02   cancel of expression dialog must reset input //opgelost

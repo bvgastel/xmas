@@ -140,6 +140,7 @@ function destroyAll(sheet){
     //log("Sheet cleared.","black")
 }
 
+
 // TODO : can be removed when xmd is finished
 // tempory test function
 function showXItems(sheet){

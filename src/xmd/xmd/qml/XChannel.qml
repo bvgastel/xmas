@@ -81,7 +81,11 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
                 if (mouse.button == Qt.LeftButton) {
-                    selected = !selected
+                    var tmp = selected
+                    if(mouse.modifiers != Qt.ControlModifier){
+                        channel.parent ? channel.parent.clearSelections(channel): null
+                    }
+                    selected = !tmp
                 }
                 if (mouse.button == Qt.RightButton){
                     contextMenu.popup()

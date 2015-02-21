@@ -115,7 +115,7 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
             map.insert("target", QString(out->getTarget()->getStdName().c_str()));
             map.insert("targetport", QString(out->getTargetPort()->getName()));
             controllerLog(
-             "connection created from " + out->getInitiator()->getStdName() +
+             "channel created from " + out->getInitiator()->getStdName() +
              " to " + out->getTarget()->getStdName());
             list.append(map);
         } else {
