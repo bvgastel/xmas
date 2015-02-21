@@ -55,6 +55,11 @@ Item {
     property bool topLabel: true
     property var param
 
+//    //TODO replace with vars in js
+//    property int oldX: x
+//    property int oldY: y
+
+
     signal update()
     signal showDialog()
     signal boundReached(var dx, var dy)
@@ -87,6 +92,7 @@ Item {
         }
     }
 
+
     MouseArea {
         id: mousearea
         anchors.fill: component
@@ -118,7 +124,9 @@ Item {
         onReleased: {cursorShape = Qt.OpenHandCursor}
         onDoubleClicked: component.showDialog()
 
-        onPositionChanged: component.update()
+        onPositionChanged: {
+            component.update()
+        }
         //onExited: selection.visible = false
 
         onWheel: {
@@ -134,8 +142,8 @@ Item {
                 component.scale -= wheel.angleDelta.x /120 * 0.25;
                 if (Math.abs(component.scale) < 0.25)
                     component.scale = 0.25;
-                if (Math.abs(component.scale) > 2.0)
-                    component.scale = 2.0;
+                if (Math.abs(component.scale) > 4.0)
+                    component.scale = 4.0;
             }
         }
     }
@@ -144,6 +152,20 @@ Item {
     onScaleChanged: doMove(0,0)
     onSelectedChanged: focus = selected
 
+//    onXChanged: {
+//        var dx = x-oldX
+//        oldX = x
+//        var dy = y-oldY
+//        oldY = y
+//        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
+//    }
+//    onYChanged: {
+//        var dx = x-oldX
+//        oldX = x
+//        var dy = y-oldY
+//        oldY = y
+//        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
+//    }
 
     Rectangle {
         id: selection
@@ -161,7 +183,7 @@ Item {
         onGroupSelected: component.selected = group.contains(component.x,component.y)
         onDeleteSelected: if (component.selected) Ctrl.destroy(component)
         onClearSelection: component.selected = false
-        onMoveSelected: if (component.selected) doMove(dx,dy)
+        onMoveSelected: if (component.selected && !mousearea.containsMouse) doMove(dx,dy)
     }
 
 

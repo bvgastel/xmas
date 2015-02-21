@@ -77,6 +77,11 @@ Rectangle {
         clearSelection()
     }
 
+    function moveSelection(dx,dy) {
+        //propagate to all children
+        moveSelected(dx,dy)
+    }
+
     focus: true
     z: -10
 

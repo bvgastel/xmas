@@ -338,6 +338,7 @@ ApplicationWindow {
                     color: "white"
                     width : 2970
                     height: 2100
+
                 }
 
                 // Only show the scrollbars when the view is moving.

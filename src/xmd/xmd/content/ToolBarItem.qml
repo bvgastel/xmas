@@ -57,7 +57,13 @@ Image {
         anchors.fill: parent
         onPressed: Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
-        onReleased:Code.endDrag(mouse);
+        onReleased:Code.endDrag();
+        onClicked: {
+            Code.loadComponent(componentFile)
+            Code.draggedItem.x = 25
+            Code.draggedItem.y = 25
+            Code.endDrag()
+        }
         hoverEnabled: true
         onEntered: toolbarItem.opacity = 1.0
         onExited: toolbarItem.opacity = 0.6
