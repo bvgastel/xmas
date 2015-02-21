@@ -55,7 +55,7 @@ Item {
         color: connected ? "black" : "red"
         anchors.fill: parent
         border.color: "black"
-        border.width: area.containsMouse ? 2 : 0
+        border.width: mousearea.containsMouse ? 2 : 0
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
@@ -68,17 +68,17 @@ Item {
      }
 
     MouseArea {
-        id: area
+        id: mousearea
         anchors.fill: parent
         anchors.margins: -5 // magic port :)
         hoverEnabled: !connected
-        preventStealing: true
+        preventStealing: !connected //true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
             if (mouse.button == Qt.LeftButton && !connected) {
                 connected = true
                 sheet.wiring(port)
-            }
+            } else {mouse.accepted=false}
         }
 
         onContainsMouseChanged: {

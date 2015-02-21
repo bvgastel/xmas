@@ -88,10 +88,10 @@ Item {
     }
 
     MouseArea {
+        id: mousearea
         anchors.fill: component
-        anchors.margins: 5
         preventStealing: true
-        hoverEnabled: false
+        hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
         drag.minimumX: leftBound()
@@ -112,6 +112,8 @@ Item {
                 contextMenu.popup()
             }
         }
+        onEntered: component.focus = true
+        onExited: component.focus = false
         onDoubleClicked: component.showDialog()
 
         onPositionChanged: component.update()
@@ -143,12 +145,11 @@ Item {
 
     Rectangle {
         id: selection
-        anchors.fill: component
-        anchors.margins: -2
+        anchors.fill: mousearea
         color: "lightsteelblue"
         border.color: "steelblue"
         border.width: 1
-        visible: selected
+        visible: selected || component.focus
         opacity: 0.5
         z:-1
     }

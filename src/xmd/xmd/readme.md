@@ -28,7 +28,7 @@ STEFAN  16/02   cut/paste/copy
 gbo     17-02   duidelijke naamgeving: Channel.create
 gbo     17-02   functie voor clearNetwork() in js files // opgelost
 gbo     18-02   sheet.clear(): what happens to children? // qml ruimt op
-gbo     18-02   pick up object by connected port
+gbo     18-02   pick up object by connected port // opgelost
 gbo     18-02   impossible to modify name label //opgelost
 STEFAN  18-02   console log output displays component refused and not created while succesfully open a network // tempory solved, see comment
 gbo     18-02   Need a way to subscribe to log without qml knowing it.
