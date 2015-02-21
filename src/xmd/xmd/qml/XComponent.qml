@@ -112,8 +112,10 @@ Item {
                 contextMenu.popup()
             }
         }
-        onEntered: component.focus = true
-        onExited: component.focus = false
+        onEntered: {component.focus = true; cursorShape = Qt.OpenHandCursor}
+        onExited: {component.focus = false; cursorShape = Qt.ArrowCursor}
+        onPressed: {if(mouse.button == Qt.LeftButton)cursorShape = Qt.ClosedHandCursor}
+        onReleased: {cursorShape = Qt.OpenHandCursor}
         onDoubleClicked: component.showDialog()
 
         onPositionChanged: component.update()
@@ -146,7 +148,7 @@ Item {
     Rectangle {
         id: selection
         anchors.fill: mousearea
-        color: "lightsteelblue"
+        color: selected ? "lightsteelblue" : "transparent"
         border.color: "steelblue"
         border.width: 1
         visible: selected || component.focus
