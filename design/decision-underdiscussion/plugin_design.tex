@@ -12,7 +12,8 @@
 \hypersetup{ colorlinks = true, citecolor = blue,linkcolor = blue }
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
-\usepackage{xspace}
+\usepackage{xspace}%
+\usepackage[obeyFinal]{todonotes}%
 
 \bibliographystyle{alpha}
 
@@ -30,7 +31,7 @@
 \newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
 \newcommand{\qml}{\textsc{Qt}\xspace}%
 \newcommand{\cpp}{\textsc{C++}\xspace}%
-\newcommand{\code}[1]{\textsc{#1}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
 
 \begin{document}
 \selectlanguage{english}
@@ -93,7 +94,7 @@ requirement.
 
 \end{description}
 
-\subsection{How to use the interfaces we define?}
+\subsection{How to define the interfaces?}
 
 Each interface is a class containing pure virtual methods. Each method is connected with
 the user interface through signals and slots. The initiative for issuing a message originates
@@ -116,9 +117,36 @@ The methods returning a \code{std::pair} concern a component or a
 channel and could lead to both textual and graphical output on the
 designer window.
 
+The concept of definig a type of message like \code{componentWarning()} 
+is easily extendable to different types of messages, like for instance
+\code{componentIncomplete()} or \code{FunctionMissing()}.
+
+An alternative to having all messages in one interface is to define
+different types of interfaces so one can have multiple plugins and only
+implement the interfaces one is interested in. For instance, one could
+distinguish between a \code{ComponentInterface} and a \code{SyntaxInterface}.
+Initially using just one interface \code{MessageInterface} seems the
+wise thing to do. In time we could extend.
+
+\subsection{Plugin definition}
+
+The plugin is a \qt program that implements one or more interfaces. The
+verification tool connects to the interface methods by calling them from the
+code. 
+\todo[inline]{How in heavens are we going to connect the plugin interface implementation to 
+the user interface? Using signal and slot? Can we do that accross thread boundaries?}
+\todo[inline]{Are the plugins running by thread or by processes? If so, how do we keep track
+of each? And can we restart plugins to run repeatedly during an editing session?}
+
 \subsection{Changes in the verification tool}
 
-The question is whether any changes to the current verification tools is necessary.
+The verification tools are classes that we can either extend through subclasses  or 
+use as-is. In both cases, the verification tools do not need any change to 
+redirect standard output or standard error to the plugin. They do need change 
+for component directed messages.
+
+\todo[inline]{Find out if using poco will solve the \qt dependancy and still give us some
+sort of ipc facility that is cross platform.}
 
 \section{Qt Plugin architecture}
 
