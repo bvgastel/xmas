@@ -38,7 +38,7 @@ Item {
     objectName: "port"
     width: 10; height:10
     x:-5; y:-5
-    z:1
+    z:5
     property int id: 0
     property bool connected: false
     property string name: "a"
@@ -51,10 +51,11 @@ Item {
     signal removed()
 
     Rectangle{
+        id:portShape
         color: connected ? "black" : "red"
         anchors.fill: parent
         border.color: "black"
-        border.width: mousearea.containsMouse ? 2 : 0
+        border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
         radius: port.type === Xmas.Target ? 0 : port.width * 0.5
     }
 
@@ -63,29 +64,28 @@ Item {
     Component.onDestruction: removed()
 
     Connections {
-     target: parent
-     onUpdate: update()
-     }
+        target: parent
+        onUpdate: update()
+    }
 
     MouseArea {
         id: mousearea
         anchors.fill: parent
-        anchors.margins: -5 // magic port :)
-        hoverEnabled: !connected
-        preventStealing: !connected //true
+        anchors.margins: -10 // magic port :)
+        hoverEnabled: !connected && sheet.isValidPort(port)
+        preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
-            if (mouse.button == Qt.LeftButton && !connected) {
+            if (mouse.button === Qt.LeftButton
+                    && !connected) {
                 connected = true
                 sheet.wiring(port)
             } else {mouse.accepted=false}
         }
-
         onContainsMouseChanged: {
             sheet.checkTarget(port)
         }
     }
-
 }
 
 

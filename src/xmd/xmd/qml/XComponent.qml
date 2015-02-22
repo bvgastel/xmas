@@ -55,9 +55,9 @@ Item {
     property bool topLabel: true
     property var param
 
-//    //TODO replace with vars in js
-//    property int oldX: x
-//    property int oldY: y
+    //    //TODO replace with vars in js
+    //    property int oldX: x
+    //    property int oldY: y
 
 
     signal update()
@@ -97,7 +97,7 @@ Item {
         id: mousearea
         anchors.fill: component
         preventStealing: true
-        hoverEnabled: true
+        hoverEnabled:  component.parent && component.parent.isConnecting() ? false : true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
         drag.minimumX: leftBound()
@@ -118,7 +118,12 @@ Item {
                 contextMenu.popup()
             }
         }
-        onEntered: {component.focus = true; cursorShape = Qt.OpenHandCursor}
+        onEntered: {
+            if(component.parent && !component.parent.isConnecting()){
+                component.focus = true
+                cursorShape = Qt.OpenHandCursor
+            }
+        }
         onExited: {component.focus = false; cursorShape = Qt.ArrowCursor}
         onPressed: {if(mouse.button == Qt.LeftButton)cursorShape = Qt.ClosedHandCursor}
         onReleased: {cursorShape = Qt.OpenHandCursor}
@@ -152,20 +157,20 @@ Item {
     onScaleChanged: doMove(0,0)
     onSelectedChanged: focus = selected
 
-//    onXChanged: {
-//        var dx = x-oldX
-//        oldX = x
-//        var dy = y-oldY
-//        oldY = y
-//        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
-//    }
-//    onYChanged: {
-//        var dx = x-oldX
-//        oldX = x
-//        var dy = y-oldY
-//        oldY = y
-//        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
-//    }
+    //    onXChanged: {
+    //        var dx = x-oldX
+    //        oldX = x
+    //        var dy = y-oldY
+    //        oldY = y
+    //        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
+    //    }
+    //    onYChanged: {
+    //        var dx = x-oldX
+    //        oldX = x
+    //        var dy = y-oldY
+    //        oldY = y
+    //        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
+    //    }
 
     Rectangle {
         id: selection

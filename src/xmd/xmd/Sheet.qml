@@ -152,9 +152,11 @@ Rectangle {
         if (wire.port1
                 && wire.port1 !== port
                 && wire.port2 !== port) {
-            wire.port2 = port
-            wire.mouseX = wire.mapFromItem(port,5,5).x
-            wire.mouseY = wire.mapFromItem(port,5,5).y
+            if (wire.port1.type !== port.type){
+                wire.port2 = port
+                wire.mouseX = wire.mapFromItem(port,5,5).x
+                wire.mouseY = wire.mapFromItem(port,5,5).y
+            }
             wire.requestPaint()
         } else {
             wire.port2 =  wire.connecting ? null : wire.port2
@@ -181,11 +183,21 @@ Rectangle {
         }
     }
 
-
+    function isConnecting() {
+        return wire.connecting
+    }
 
     function boundReached(dx,dy){
         console.log("boundReached")
     }
+
+    function isValidPort(port){
+        if(wire.port1){
+            return wire.port1.type !== port.type
+        }
+        return true
+    }
+
 
 
     Selection {id: selection}
