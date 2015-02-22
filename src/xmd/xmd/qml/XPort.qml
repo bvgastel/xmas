@@ -56,6 +56,7 @@ Item {
         anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse ? 2 : 0
+        radius: port.type === Xmas.Target ? 0 : port.width * 0.5
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
