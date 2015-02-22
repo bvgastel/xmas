@@ -14,6 +14,7 @@
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
 \usepackage{xspace}%
 \usepackage[obeyFinal]{todonotes}%
+\usepackage{listings}
 
 \bibliographystyle{alpha}
 
@@ -56,7 +57,7 @@ Guus Bonnema & 21-02-2015 & Initial proposal document \\\hline
 \subsection{Why do we need a plugin?}
 
 The \xmd subsystem was designed to be independent from the \vt subsystem. 
-Still they do have to cooperate in order to show \vt output during 
+Still these subsystems do have to cooperate in order to show \vt output during 
 graphical design of a network.
 
 In order to have a loose coupling between the two subsystems the idea
@@ -76,6 +77,52 @@ could be information about a group of components and channels.
 
 Implementation of the text warning and error interface is the minimum
 requirement. 
+
+\paragraph{Standard output and Standard error}
+In order to connect the standard output and standard error to
+a widget, one can use a subclass of \code{QProcess} and connect
+the output and error channels to the right widgets using signals and
+slots as follows:
+
+\begin{lstlisting}
+  QProcess process = new MyProcess();
+  process.setProcessChannelMode(QProcess::MergedChannels);
+  process.start("<processname>");
+\end{lstlisting}
+
+The subclass of \code{QProcess} could contain something like:
+
+\begin{lstlisting}
+class myProcess() : public QProcess
+{
+  Q_OBJECT
+  public:
+    myProcess() {
+      edit = new QTextEdit();
+      edit->resize(500,500);
+      edit->setWindowTitle("Standard output");
+      edit->show();
+      connect(this, SIGNAL(ReadyReadSignalOutput), 
+              this, SLOT(readStdOutput));
+      connect(this, SIGNAL(Error(QProcess::ProcessError)), 
+              this, SLOT(readError()));
+    };
+	
+      ~myProcess() {};
+  private slots:
+    void readStdOutput() {
+      edit->append(readAllStandardOutput());
+    }	
+    void readError() {
+      edit->append("An Error Occured! Error Code is: "
+                   +QString::number(error()));
+    };	
+}
+\end{lstlisting}
+
+
+with the method
+
 
 \section{VT plugin function interface}
 
@@ -103,30 +150,22 @@ from the verification tool. The user interface should show these messages in tex
 The proposal for an interface will be methods with the following signature:
 
 \begin{verbatim}
-	virtual QString message() = 0;
-	virtual QString info() = 0;
-	virtual QString warning() = 0;
-	virtual QString error() = 0;
-	virtual std::pair<QString, QString> componentInfo() = 0;
-	virtual std::pair<QString, QString> componentWarning() = 0;
-	virtual std::pair<QString, QString> componentError() = 0;
+  virtual bool run_json_string(QString jsonString) = 0;
+  virtual bool run_json_file(QString filename) = 0;
+  virtual bool run_json_xmas(std::map<std::string, <XMASComponent *>>);
 \end{verbatim}
 
-A plugin should at least implement message() and optionally the other methods.
-The methods returning a \code{std::pair} concern a component or a
-channel and could lead to both textual and graphical output on the
-designer window.
+A plugin should implement all three methods and return \code{true} if
+successful, \code{false} if the run was not successful. The executable
+should be run sequentially, not concurrently, as concurrency is catered for 
+in the verification tools.
 
-The concept of definig a type of message like \code{componentWarning()} 
-is easily extendable to different types of messages, like for instance
-\code{componentIncomplete()} or \code{FunctionMissing()}.
+The plugin should also connect the standard output and standard error to
+the graphical text window. 
 
-An alternative to having all messages in one interface is to define
-different types of interfaces so one can have multiple plugins and only
-implement the interfaces one is interested in. For instance, one could
-distinguish between a \code{ComponentInterface} and a \code{SyntaxInterface}.
-Initially using just one interface \code{MessageInterface} seems the
-wise thing to do. In time we could extend.
+\paragraph{Optional additions} If possible errors and warning should be printed
+in a different color. If possible, errors and warnings should be incorporated into
+the graphical view of the network.
 
 \subsection{Plugin definition}
 
@@ -147,6 +186,10 @@ for component directed messages.
 
 \todo[inline]{Find out if using poco will solve the \qt dependancy and still give us some
 sort of ipc facility that is cross platform.}
+
+\subsection{How to implement parameters?}
+
+The \vt must relay the parameter.
 
 \section{Qt Plugin architecture}
 
