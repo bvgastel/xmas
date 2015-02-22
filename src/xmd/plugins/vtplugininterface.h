@@ -1,0 +1,50 @@
+/*********************************************************************
+ *
+ * Copyright (C) Guus Bonnema, 2015
+ *
+ * This file is part of the xmas-design tool.
+ *
+ * The xmas-design tool is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * The xmas-design tool is distributed in the hope that it will be
+ * useful,  but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the xmas-design tool.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ *
+ **********************************************************************/
+
+#ifndef VTPLUGININTERFACE_H
+#define VTPLUGININTERFACE_H
+
+#include <map>
+
+#include "xmas.h"
+
+class VtPluginInterface
+{
+public:
+    virtual ~VtPluginInterface() {}
+
+    virtual bool run_json_string(QString jsonString) = 0;
+    virtual bool run_json_file(QString filename) = 0;
+    virtual bool run_json_xmas(std::map<std::string, XMASComponent * > ) = 0;
+};
+
+#define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
+
+
+QT_BEGIN_NAMESPACE
+
+Q_DECLARE_INTERFACE(VtPluginInterface, "nl.ou.xmd.VtPluginInterface/1.0")
+QT_END_NAMESPACE
+
+
+#endif // VTPLUGININTERFACE
+

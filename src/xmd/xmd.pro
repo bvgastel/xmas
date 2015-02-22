@@ -10,6 +10,7 @@ SUBDIRS += \
     xmd \
     xmdmain \
     #xmdtest
+    plugins
 
 
 # set the subdirectories for the libraries
