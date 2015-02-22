@@ -69,7 +69,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/open.png"
         iconName: "model-open"
         text: "Open"
-        shortcut: "ctrl+o"
+        shortcut: "Ctrl+O"
         onTriggered: fileDialog.open()
     }
 
@@ -78,15 +78,15 @@ ApplicationWindow {
         iconSource: "qrc:/content/images/save.png"
         iconName: "model-save"
         text: "Save"
-        shortcut: "ctrl+s"
-        onTriggered: jsonTest() //fileSaveDialog.open()
+        shortcut: "Ctrl+S"
+        onTriggered: test() // jsonTest() //fileSaveDialog.open()
     }
 
 
     Action {
         id: cutAction
         text: "Cut"
-        shortcut: "ctrl+x"
+        shortcut: "Ctrl+X"
         iconSource: "qrc:/content/images/cut.png"
         iconName: "edit-cut"
         onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
@@ -104,7 +104,7 @@ ApplicationWindow {
     Action {
         id: pasteAction
         text: "Paste"
-        shortcut: "ctrl+v"
+        shortcut: "Ctrl+V"
         iconSource: "qrc:/content/images/paste.png"
         iconName: "edit-paste"
         onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
@@ -121,7 +121,7 @@ ApplicationWindow {
     Action {
         id: zoomInAction
         text: "Zoom In"
-        shortcut: "+"
+        shortcut: "Ctrl++"
         iconSource: "qrc:/content/images/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: sheet.zoomIn()
@@ -130,7 +130,7 @@ ApplicationWindow {
     Action {
         id: zoomOutAction
         text: "Zoom Out"
-        shortcut: "-"
+        shortcut: "Ctrl+-"
         iconSource: "qrc:/content/images/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: sheet.zoomOut()
@@ -139,7 +139,7 @@ ApplicationWindow {
     Action {
         id: zoomFitAction
         text: "Zoom Fit"
-        shortcut: "1"
+        shortcut: "Ctrl+1"
         iconSource: "qrc:/content/images/zoom-fit.png"
         iconName: "zoom-fit"
         onTriggered: sheet.zoomFit()
@@ -153,6 +153,13 @@ ApplicationWindow {
         iconName: "select"
         checkable: true
         onToggled: sheet.selectionMode = checked
+    }
+
+    Action {
+        id: fileQuitAction
+        text: "Quit"
+        shortcut: "Ctrl+Q"
+        onTriggered: Qt.quit()
     }
 
     FileDialog {
@@ -176,6 +183,9 @@ ApplicationWindow {
         //onAccepted: controller.fileOpen(fileUrl)
     }
 
+    function test(){
+        sheet.clear()
+    }
 
     function jsonTest(){
 
@@ -232,7 +242,7 @@ ApplicationWindow {
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
             MenuSeparator{}
-            MenuItem { text: "Quit"; onTriggered: Qt.quit() }
+            MenuItem { action: fileQuitAction }
         }
         Menu {
             title: "&Edit"
@@ -304,12 +314,13 @@ ApplicationWindow {
                 id: view
                 //center the scene by default
                 anchors.fill: parent
-                contentX: (1 - sheet.scale) * sheet.width * 0.5
-                contentY: (1 - sheet.scale) * sheet.height * 0.5
-                contentWidth: sheet.width * sheet.scale
-                contentHeight: sheet.height * sheet.scale
+                contentX: sheet ? (1 - sheet.scale) * sheet.width * 0.5 : 0
+                contentY: sheet ? (1 - sheet.scale) * sheet.height * 0.5 : 0
+                contentWidth: sheet ? sheet.width * sheet.scale : 0
+                contentHeight: sheet ? sheet.height * sheet.scale : 0
                 pixelAligned: true
-                interactive: !sheet.selectionMode
+                interactive: sheet ? !sheet.selectionMode : true
+
 
 
                 //        onFlickEnded: {
@@ -327,6 +338,7 @@ ApplicationWindow {
                     color: "white"
                     width : 2970
                     height: 2100
+
                 }
 
                 // Only show the scrollbars when the view is moving.

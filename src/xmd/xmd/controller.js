@@ -104,22 +104,56 @@ function createComponent(parent,component,object) {
                                           "name":object.name,
                                           "param":object.param
                                       })
+        //TODO : if shared memory VT - XMD continues
+        // controller emits the whole network at once
+        // so check localy if everything goes well and
+        // at the and feedback result as "networkCreated()"
         // NOTE: distinguish between sources of input (screen or json)
-        if (!controller.componentCreated(item)) {
-            log("component was refused, because .... I don't know .... we need to do something ... drastic", "red")
-        }
+//        if (!controller.componentCreated(item)) {
+//            log("component was refused, because .... I don't know .... we need to do something ... drastic", "red")
+//        }
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }
 }
-
 
 function destroy(component){
     component.destroy()
     controller.componentDestroyed(component)
 }
 
-function destroyAll(){
-    sheet.children = ""
-    log("Sheet cleared.","black")
+
+function destroyAll(sheet){
+    //only delete xmas children who has
+    //sheet as parent
+    // destroy doesn't work on array items
+    //TODO destroy sheet and create new one
+    var temp = []
+
+    for (var child in sheet.children) {
+        if(sheet.children[child].objectName!=="component"
+                && sheet.children[child].objectName!=="channel") {
+            temp.push(sheet.children[child])
+            }
+    }
+    sheet.children = temp
+    //log("Sheet cleared.","black")
 }
+
+
+// TODO : can be removed when xmd is finished
+// tempory test function
+function showXItems(sheet){
+    var ccnt = 0
+    var cnt1 = 0
+    for (var child in sheet.children) {
+        if(sheet.children[child].objectName==="channel") {
+            ccnt++
+        }
+        if(sheet.children[child].objectName==="component") {
+            cnt1++
+        }
+    }
+    log("sheet has " + ccnt + " channels and " + cnt1 + " components","blue")
+}
+

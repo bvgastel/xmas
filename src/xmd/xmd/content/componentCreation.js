@@ -3,8 +3,8 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = toolbarItem.mapToItem(sheet);
-    loadComponent(toolbarItem.componentFile);
+    posnInWindow = toolbarItem.mapToItem(sheet,-50,-50)
+    loadComponent(toolbarItem.componentFile)
 }
 
 
@@ -20,7 +20,7 @@ function loadComponent(qml) {
 
 function createComponent(parent,component) {
     if (component.status === Component.Ready && draggedItem == null) {
-        draggedItem = component.createObject(parent)
+        draggedItem = component.createObject(parent,{"x": posnInWindow.x, "y": posnInWindow.y})
         //draggedItem.boundReached.connect(test(0,0))
         //controller.componentCreated(component)
     } else if (component.status === Component.Error) {
@@ -37,7 +37,7 @@ function continueDrag(mouse)
     draggedItem.y = mouse.y/sheet.scale + posnInWindow.y
 }
 
-function endDrag(mouse)
+function endDrag()
 {
     if (draggedItem == null)
         return;

@@ -115,7 +115,7 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
             map.insert("target", QString(out->getTarget()->getStdName().c_str()));
             map.insert("targetport", QString(out->getTargetPort()->getName()));
             controllerLog(
-             "connection created from " + out->getInitiator()->getStdName() +
+             "channel created from " + out->getInitiator()->getStdName() +
              " to " + out->getTarget()->getStdName());
             list.append(map);
         } else {
@@ -127,7 +127,7 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
 
 void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
-    controllerLog("name = "+ name + " slot for creation called", Qt::green);
+    controllerLog("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     QString type = m_type_map[typeIndex];

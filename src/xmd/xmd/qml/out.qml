@@ -6,7 +6,7 @@ XComponent {
     height: 30
     type: "out"
     prefix: "o"
-    XPort {x: 0; y: 10; name: "i"; type:Xmas.Target}
+    XPort {x: 0; y: 10; name: "o"; type:Xmas.Target}
     Canvas {
         anchors.fill: parent
         onPaint: {

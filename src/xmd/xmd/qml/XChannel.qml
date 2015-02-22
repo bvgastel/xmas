@@ -55,7 +55,7 @@ Item {
         if(port1) port1.connected = false
         if(port2) port2.connected = false
         destroy(channel)
-        log("Channel deleted!","black")
+        //log("Channel deleted!","black")
         //TODO : channel is already null - send unique id or tempory copy?
         //controller.channelDestroyed(channel)
     }
@@ -81,7 +81,11 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
                 if (mouse.button == Qt.LeftButton) {
-                    selected = !selected
+                    var tmp = selected
+                    if(mouse.modifiers != Qt.ControlModifier){
+                        channel.parent ? channel.parent.clearSelections(channel): null
+                    }
+                    selected = !tmp
                 }
                 if (mouse.button == Qt.RightButton){
                     contextMenu.popup()
