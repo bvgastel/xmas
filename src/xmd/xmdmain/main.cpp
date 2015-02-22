@@ -51,15 +51,16 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
 
+    //Important! First register than engine.load
+    // otherwise c++ types will not be seen by qml
+    qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
+
 
     QQmlApplicationEngine engine;
     Controller controller;
     QQmlContext* ctx = engine.rootContext();
     ctx->setContextProperty("controller", &controller);
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
-
-    qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
-
 
 
     return app.exec();

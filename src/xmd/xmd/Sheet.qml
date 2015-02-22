@@ -33,9 +33,11 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
+import XMAS 1.0
 import "content"
 import "content/channelCreation.js" as Code
 import "controller.js" as Ctrl
+
 
 Rectangle {
     id: sheet
@@ -129,8 +131,19 @@ Rectangle {
                 ctx.beginPath()
                 ctx.moveTo(x ,y)
                 ctx.lineTo(mouseX,mouseY)
-                ctx.rect(mouseX - port1.width/2,mouseY - port1.height/2,port1.width,port1.height)
                 ctx.stroke()
+                if(port1.type===Xmas.Target){
+                    ctx.moveTo(mouseX + port1.width/2 ,mouseY + port1.height/2)
+                    ctx.beginPath()
+                    ctx.arc(mouseX,mouseY, port1.width/2, 0, 2*Math.PI, false)
+                    ctx.stroke()
+                } else {
+                    ctx.beginPath()
+                    ctx.rect(mouseX - port1.width/2,mouseY - port1.height/2,port1.width,port1.height)
+                    ctx.stroke()
+                }
+                ctx.stroke()
+
             }
         }
     }

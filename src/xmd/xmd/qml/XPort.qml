@@ -45,7 +45,6 @@ Item {
     property int type: Xmas.Target
     property alias orientation: port.rotation
 
-
     orientation: (port.type == Xmas.Target) ? Xmas.West : Xmas.East
 
     signal update()
