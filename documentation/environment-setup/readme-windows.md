@@ -20,7 +20,7 @@ for C++ tools.
  - Unpack MinGw in c:\cpptools
 
 ### C++ Tools 
- - [FLTK](readme-fltk-windows.md)
+ - [Qt5] ()
  - [Boost](readme-boost-windows.md)
  - [Protocol Buffers](readme-pb-windows.md)
  - ...
@@ -28,3 +28,4 @@ for C++ tools.
 ### IDE
  - [CodeBlocks](readme-codeblocks-windows.md)
  - [VisualStudio]()
+ - [QtCreator] ()

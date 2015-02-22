@@ -6,17 +6,17 @@
         <file>images/open.png</file>
         <file>images/paste.png</file>
         <file>images/save.png</file>
-        <file>images/composite.png</file>
-        <file>images/fork.png</file>
-        <file>images/function.png</file>
-        <file>images/in.png</file>
-        <file>images/join.png</file>
-        <file>images/merge.png</file>
-        <file>images/out.png</file>
         <file>images/packet.png</file>
-        <file>images/queue.png</file>
-        <file>images/sink.png</file>
-        <file>images/source.png</file>
-        <file>images/switch.png</file>
+        <file>images/svgs/fork.svg</file>
+        <file>images/svgs/function.svg</file>
+        <file>images/svgs/join.svg</file>
+        <file>images/svgs/merge.svg</file>
+        <file>images/svgs/queue.svg</file>
+        <file>images/svgs/sink.svg</file>
+        <file>images/svgs/source.svg</file>
+        <file>images/svgs/switch.svg</file>
+        <file>images/svgs/in.svg</file>
+        <file>images/svgs/out.svg</file>
+        <file>images/svgs/composite.svg</file>
     </qresource>
 </RCC>

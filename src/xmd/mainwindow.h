@@ -1,6 +1,6 @@
 /************************************************************************
  *
- * Copyright Stefan van der Sluys, 2014
+ * Copyright Stefan Versluys, 2014
  *
  * This file is part of the xmas-design tool.
  *
@@ -32,21 +32,27 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include "canvas/complib.h"
 #include "setup.h"
 
+#include <QMainWindow>
+#include <QSignalMapper>
 
 QT_BEGIN_NAMESPACE
-class ModelWindow;
 class QAction;
-class QMenu;
+class QToolBox;
+class QComboBox;
+class QToolButton;
+class QAbstractButton;
 class QMdiArea;
 class QMdiSubWindow;
-class QSignalMapper;
-class QDockWidget;
 class QListWidget;
 class QTreeWidget;
+class QSignalMapper;
 QT_END_NAMESPACE
+
+class ModelWindow;
+
 
 class MainWindow : public QMainWindow
 {
@@ -70,8 +76,7 @@ private slots:
     void copy();
     void paste();
 #endif
-    void addPrimitive();
-    void addComposite();
+    void addComponent(int type);
     void setPackets();
     void about();
     void updateMenus();
@@ -94,6 +99,7 @@ private:
     QMdiSubWindow *findModel(const QString &fileName);
     QMdiArea *mdiArea;
     QSignalMapper *windowMapper;
+    QSignalMapper *signalMapper;
     QListWidget *outputList;
     QTreeWidget *projectTree;
     QMenu *fileMenu;

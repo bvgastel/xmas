@@ -6,18 +6,22 @@
 \usepackage{caption}
 \usepackage{xspace}% For a variable space after a macro.
 \usepackage{amsmath}
+\usepackage[round]{natbib}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{wrapfig}
-\usepackage[textsize=tiny]{todonotes}
+\usepackage[textsize=large]{todonotes}
 \usepackage{graphicx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
-
+\bibliographystyle{plainnat}
 
 \author{A.J. Bonnema}
 \title{Architecture document}
+
 \begin{document}
+
+\maketitle
 
 \newcommand{\w}[1]{\textsc{#1}}%
 \newcommand{\Noc}{\textsc{NoC}\xspace}% 
@@ -25,6 +29,10 @@
 \newcommand{\fltk}{\textsc{fltk}\xspace}%
 \newcommand{\boost}{\textsc{Boost}\xspace}%
 \newcommand{\opengl}{\textsc{OpenGL}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+%\newcommand{\code}[1]{\verb%#1%}%
+\newcommand{\code}[1]{\texttt{#1}}%
+\newcommand{\qobj}{\code{Q\_OBJECT}}%
 
 \include{arch-intro}
 \include{arch-overview}
@@ -32,4 +40,6 @@
 \include{arch-high-level-diagrams}
 \include{arch-language-guidelines}
 \include{arch-platform-constraints}
+\appendix
+\bibliography{references}
 \end{document}

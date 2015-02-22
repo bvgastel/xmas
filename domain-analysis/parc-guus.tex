@@ -1,4 +1,6 @@
-\section{DSL - Domain Specific Language}
+\section{Parc Guus}
+
+\subsection{DSL - Domain Specific Language}
 Could it be that what the customer needs is not what he asked for?
 All characteristics point toward a edit-compile-run sequence for each chip network.
 This suggests a language with a DSL.
@@ -8,3 +10,51 @@ Couold a DSL be an answer for our application?
 This would also solve several other problems, like offline tests, or automated tests analoguous
 to JUnit for Java. Any other verification could be part of the test process or of the compile process.
 
+\subsection{Domain analysis Jeroen: da cycle checker}
+
+\paragraph{Extention mechanism}
+
+Is the extention mechanism necessary for the functionality? Or does it show missing information
+in the basic model? The domain analysis indicates that the components do not show the type of
+data information. The question is: should this be in an extention? Or should it be basic information?
+
+\paragraph{Internal vs external Extention mechanism}
+
+The current code contains a self created container mechanism for the extentions with "internal storage".
+This contrasts the already available standard containers in both STL and Qt. The question is here
+whether the extra development is worth the effort and maintenance cost. It seems that the noted 
+advantage of type recognition and storage waste is limited to the extra pointer space for the 
+external storage of the standard containers and the strong typing.
+
+However, using standard containers eases maintenance a lot. Additionally, the
+standard containers in both STL and Qt provide generic containers, where the
+pointers also have a strong typing (after instantiation).
+
+The question remains: which is more important: maintenance or a small space preserve?
+
+\paragraph{Performance gain}
+
+The domain analysis argues for performance gain due to the current extention mechanism. The question
+is whether this is important (discussed in the meeting of 6th of December 2014 (work-001)
+as being the last to consider). Especially if performance gains are unspecified, the question is 
+whether performance should lead our choice for design. The minutes for work-001.pdf suggest otherwise!
+
+The one factor that is different here, is that the extentions are for the VTs and not for the 
+design tool. If performance really is a factor, we need to consider whether it is enough of 
+a factor to have more complex data structure.
+
+The last question is, whether the design using standard container really is simpeler than the current design.A
+
+\paragraph{Visitor pattern}
+
+The reference in da cycle checker claims on page 9 (bottom i.e. last paragraph) 
+
+\begin{quote}
+	Since the method [accept] is defined as part of the XMASMerge class, the *this pointer has type
+	XMASMerge. The compiler uses this knowledge  to infer  ....
+\end{quote}
+
+The point is that the type of ``*this'' does not depend on where ``accept'' is defined,
+only on the real type. For that reason, the [accept] method need not be defined abstract in
+XMASComponent and overridden in XMASMerge (or the other objects). It can be used directly from
+XMASComponent.
