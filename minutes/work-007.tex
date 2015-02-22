@@ -1,0 +1,147 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 007 Einde iteratie 3 }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\w}[1]{\textsc{#1}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmv}{\textsc{Xmv}\xspace}%
+\newcommand{\xmd}{\textsc{Xmd}\xspace}%
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}%
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}%
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}%
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}%
+\newcommand{\vt}{\textsc{Vt}\xspace}%
+\newcommand{\src}{\textsc{src}\xspace}%
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}%
+\newcommand{\een}{\'{e}\'{e}n\xspace}%
+\newcommand{\svn}{\textsc{svn}\xspace}%
+
+
+\begin{Minutes}{Work meeting 007}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn, Bernard van Gastel}
+\subtitle{Einde iteratie 3, demo Bernard}
+\minutetaker{Guus}
+\minutesdate{22 februari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Voortgang}
+
+\subtopic{Interfacing designer en VT datastructuur}
+
+Naar aanleiding van de mail van het team aan Bernard ontstaat hier
+een discussie over de koppeling tussen de user interface en
+de VT datastructuur. Bernard is niet direct overtuigd van de 
+ene of de andere alternatief en heeft tijd nodig. Daarnaast
+wil hij overleggen met Freek (momenteel in Amerika).
+Volgende week maandag 2 maart schuift Bernard weer aan bij de skype sessie
+om een uitspraak te doen.
+
+\paragraph{Voortschrijdend inzicht} Uit deze discussie komt naar voren,
+dat van origine het beperken van dubbele code een doel is 
+geweest. Dit komt bij ons project onder de primaire requirement
+van onderhoudbaarheid.
+
+\paragraph{Concurrency} Het is de bedoeling dat alle concurrency bij
+aanroepen van de VTs \textit{binnen} de VTs plaatsvindt. Het is dus niet
+de bedoeling dat de plugin concurrency regelt: dat start \een proces op.
+
+\subtopic{Demo user interface}
+
+\paragraph{Hierarchische structuur} De bedoeling is schaalbaarheid
+uit hierarchie te halen. Momenteel nog niet, maar dat komt er wel aan.
+Conclusie is de hierarchie in de data structuur achter de user interface
+te laten bestaan, maar platslaan op verzoek mogelijk te maken.
+
+\paragraph{IN/OUT poorten} Dit is niet iets van Intel of \xmas, maar iets
+wat de VT onderzoekers hebben verzonnen. De theorie rond \xmas heeft een focus
+op gesloten netwerken. Voor ons in de user interface kunnen we de \textsc{IN/OUT}
+poorten opnemen alsof het een primitief is.
+
+\paragraph{Join varianten} De join kent 2 vormen: restricted en unrestricted. De
+unrestricted join is de meest algemene. In deze join bepaalt een functie hoe
+de input packets naar de output port gaat. Een restricted join heeft \een control
+channel en \een data channel. Het is de bedoeling een standaard functie op te 
+nemen zoals : \code{take(1)} of \code{take(2)}. Voor deze join kan men dan 
+geen functie invoeren. Men moet in de userinterface kunnen aangeven of iets 
+restricted is en zo ja, welke poort de data packet bevat en welke de 
+\code{control} packet bevat: dat kan nu al. Nog geregeld moet: unrestricted en de standaard
+functie text voor restricted. 
+
+Het is specifiek de deadlock checker die gebruik maakt van de restricted join.
+
+\paragraph{Functie beschrijving} De beschrijvende tekst die in de huidige versie boven
+de functie van een primitive staat is oud. In de \svn repo staat de nieuwe tekst.
+Om de functietext te kunnen parsen heeft de \vt code de classes:
+
+\begin{itemize}
+	\item \code{ParseSourceExpression}
+	\item \code{ParseFunctionExpression}
+	\item \code{ParsePackageFunction}
+\end{itemize}
+
+Wij kunnen die vanuit onze interface gebruiken.
+
+
+\subtopic{Aanvullende communicatie afspraken op plan}
+De contactmomenten zijn tot nu toe beperkt tot einde iteratie. Dit is noodzakelijk
+maar voor onze discussies tijdens de iteratie onvoldoende. Bernard stelt voor om
+op het moment dat er vragen zijn ofwel een zeer korte mail te sturen die hij direct 
+kan beantwoorden ofwel een verzoek tot een skype sessie te doen. Omdat Bernard
+in de avonduren moeite heeft tijd te vinden, is zijn voorkeur om overdag een skype 
+sessie te regelen. Response tijd is afhankelijk van de lopende onderwijstaken van 
+Bernard.
+
+\topic{Actiepunten}
+
+In figuur \ref{fig:openpunten} de openstaande punten. Deze punten werken we elke sessie af, en zetten de 
+afgeronde akties in de lijst daaronder.
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|p{25em}|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+24-01-2015  & team      & Filmpje van een collega, Bernard geeft een seintje\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+\end{tabular}
+\caption{Aktielijst open punten}\label{fig:openpunten}
+\end{figure}
+
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|l|p{10em}|p{10em}|}
+\hline
+{\bf datum} & {\bf gereed} & {\bf wie} & {\bf Aktie}                                      & commentaar      \\\hline
+24-01-2015  & 22-02-2015   & team      & We moeten hernieuwde contactmomenten afspreken   & 22 febr 2015 afspraken gemaakt\\\hline
+07-02-2015  & 22-02-2015   & team      & Afspraak met Bernard voor 21 februari 2015       & 22 febr 2015 10:30\\\hline
+07-02-2015  & 13-02-2015   & team      & Werkwijze opnieuw bezien                         & vastgeled in plan\\\hline
+07-02-2015  & 13-02-2015   & team      & Vernieuwd plan uitbrengen.                       & Akkoord B. 19-02-2015\\\hline
+24-01-2015  & 07-02-2015   & Bernard   & Voert bugfix op xmas.h uit en geeft signaal      & uitgevoerd\\\hline
+24-01-2015  & 07-02-2015   & team      & splitsen header files afstemmen met Bernard      & n.v.t.\\\hline
+26-01-2015  & 07-02-2015   & team      & Kan de licentie van \w{bitpower lib} naar GPLv3? & uitgevoerd\\\hline
+\end{tabular}
+\caption{Aktielijst gesloten punten}
+\end{figure}
+
+\end{Minutes}
+
+\end{document}
