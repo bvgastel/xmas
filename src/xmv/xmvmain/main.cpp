@@ -664,7 +664,7 @@ int main(int argc, char* argv[]) {
         std::cout << *p << std::endl;
     return 1;
     */
-    bool showall = true;
+    bool showall = false;
     bool showsinks = true;
     try {
         if (argc >= 3 && strcmp("-json", argv[1]) == 0) {
