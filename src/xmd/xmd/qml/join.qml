@@ -14,6 +14,8 @@ XComponent {
     Canvas {
         id:canvas
         anchors.fill: parent
+        antialiasing: false
+        smooth:false
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
