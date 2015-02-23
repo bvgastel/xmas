@@ -13,6 +13,7 @@ QT       -= gui
 
 CONFIG += plugin
 CONFIG += C++11
+CONFIG += create_prl
 
 win32: CONFIG += static
 unix: CONFIG += static dll
@@ -30,10 +31,16 @@ HEADERS +=\
     validplugin.h \
     logger.h
 
-unix {
-    target.path = /usr/lib
+unix|win32 {
+    target.path = $$PWD/../../../lib/plugins
     INSTALLS += target
+
+    headerfiles.path=$$PWD/../../../include/plugins
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
 }
+
+
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel

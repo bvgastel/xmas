@@ -9,7 +9,7 @@ CONFIG += ordered
 SUBDIRS += \
     xmd \
     xmdmain \
-    #xmdtest
+    xmdtest \
     plugins
 
 

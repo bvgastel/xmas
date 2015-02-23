@@ -83,6 +83,7 @@ public slots:  //from view
     bool channelDestroyed(const QVariant &object);
     bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
+    bool loadPlugins();
 
 public:
     enum Orientation {
