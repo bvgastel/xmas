@@ -250,10 +250,10 @@ void Controller::controllerLog(const QString message, QColor color) {
  * @param color
  */
 void Controller::controllerLog(const std::string message, QColor color){
-    emit controllerLog(QString::fromUtf8(message.c_str()),color);
+    controllerLog(QString::fromUtf8(message.c_str()),color);
 }
 
 void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
-    emit controllerLog(QString::fromUtf8(message.stl().c_str()),color);
+    controllerLog(QString::fromUtf8(message.stl().c_str()),color);
 }
 

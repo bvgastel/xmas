@@ -25,25 +25,33 @@
 
 #include <map>
 
+#include <QtPlugin>
+#include <QColor>
+
 #include "xmas.h"
+#include "logger.h"
 
 class VtPluginInterface
 {
+
 public:
     virtual ~VtPluginInterface() {}
 
     virtual bool run_json_string(QString jsonString) = 0;
-    virtual bool run_json_file(QString filename) = 0;
+    virtual bool run_json_file(QUrl fileUrl) = 0;
     virtual bool run_json_xmas(std::map<std::string, XMASComponent * > ) = 0;
+
+    virtual Logger *logger() = 0;
+
 };
 
 #define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
 
 
-QT_BEGIN_NAMESPACE
+//QT_BEGIN_NAMESPACE
 
-Q_DECLARE_INTERFACE(VtPluginInterface, "nl.ou.xmd.VtPluginInterface/1.0")
-QT_END_NAMESPACE
+Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
+//QT_END_NAMESPACE
 
 
 #endif // VTPLUGININTERFACE

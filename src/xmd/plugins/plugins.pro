@@ -4,10 +4,11 @@
 #
 #-------------------------------------------------
 
+TEMPLATE = lib
+
 WARNINGS += -Wall
 
 QT       += widgets
-
 QT       -= gui
 
 CONFIG += plugin
@@ -17,16 +18,17 @@ win32: CONFIG += static
 unix: CONFIG += static dll
 
 TARGET = plugins
-TEMPLATE = lib
 
 DEFINES += PLUGINS_LIBRARY
 
-SOURCES += plugins.cpp
+SOURCES += \
+    validplugin.cpp \
+    logger.cpp
 
 HEADERS +=\
-        plugins_global.h \
     vtplugininterface.h \
-    validplugin.h
+    validplugin.h \
+    logger.h
 
 unix {
     target.path = /usr/lib
@@ -41,3 +43,6 @@ DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+DISTFILES += \
+    vtplugin.json
