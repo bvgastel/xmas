@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument("file", "The file to open.");
     parser.process(app);
 
-    //Important! First register than engine.load
+    //Important! First register then engine.load
     // otherwise c++ types will not be seen by qml
     qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
 

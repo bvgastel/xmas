@@ -33,10 +33,14 @@ gbo     18-02   impossible to modify name label //opgelost
 STEFAN  18-02   console log output displays component refused and not created while succesfully open a network // tempory solved, see comment
 gbo     18-02   Need a way to subscribe to log without qml knowing it.
 gbo     18-02   Eliminate implicit create on click of primitive. Create on drop. // primitive is created on drag start to see its representation before drop so it can be aligned in the sheet
-gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts) // QKeySequence is a C++ class and not available in qml. In qml it's string or default keys
+gbo     18-02   Open file with ctrl-o.See: http://doc-snapshot.qt-project.org/qt5-5.4/qkeysequence.html (standard shortcuts)
+                reply: QKeySequence is a C++ class and not available in qml. In qml it's string or default keys
+                query: is QKeySequence available via a C++ signal?
 gbo     18-02   Spread components without coordinates accross sheet. (now at 0,0)
 gbo     18-02   File "switch-and-merge.fjson" = type-error in channelCreation.js: 44 // opgelost - portnames xmd/vt must match
 gbo     18-02   Full keyboard handling (low prio for now): creation, deletion, TAB, modification
 STEFAN  18-02   when a netwerk is opened deselect and group select doesn't work // opgelost
 STEFAN  18-02   component name is uniek --> moet deze kunnen aangepast worden
 STEFAN  18-02   port name moet uniek zijn , kiezen we nummer of name
+gbo     24-02   build alignment option: align to top, bottom, left, right.
+gbo     24-02   add scaling to toolbar, 100% default, 75%, 125% etc.
