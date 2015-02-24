@@ -3,6 +3,22 @@
 #include <QUrl>
 #include <QColor>
 
+QString ValidPlugin::name() {
+    return m_name;
+}
+
+void ValidPlugin::name(QString name) {
+    m_name = name;
+}
+
+QMap<QString, QString> ValidPlugin::parameters() {
+    return m_paramMap;
+}
+
+void ValidPlugin::parameters(QMap<QString, QString> paramMap) {
+    m_paramMap = paramMap;
+}
+
 bool ValidPlugin::run_json_string(QString jsonString) {
     size_t len = 10 < jsonString.length() ? 10 : jsonString.length();
     std::cout << "Started process validate network for json starting with '"

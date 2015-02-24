@@ -11,11 +11,11 @@ class Logger : public QObject
     Q_OBJECT
 
 signals:
-    void writeLog(QString message,QColor color=Qt::black);
+    void writeLog(QString message, QColor color=Qt::black);
 
 public:
     Logger(QString name): m_name(name) {
-
+        m_prefix = "[" + m_name + "] ";
     }
 
     ~Logger();
@@ -26,6 +26,7 @@ public:
 
 private:
     QString m_name;
+    QString m_prefix;
 };
 
 #endif // LOGGER_H

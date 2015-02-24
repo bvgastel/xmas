@@ -47,6 +47,7 @@ TEST_F(NetworkTest, creationTest) {
     EXPECT_THROW(n = new Network(m_controller, QUrl("dummy filename")), XmdException);
     EXPECT_THROW(n = new Network(m_controller, m_invalid_json), XmdException);
     EXPECT_EQ(m_network1->size(), 0);
+    bitpowder::lib::unused(n);
 }
 
 

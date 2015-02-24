@@ -27,6 +27,7 @@
 
 #include <QtPlugin>
 #include <QColor>
+#include <QMap>
 
 #include "xmas.h"
 #include "logger.h"
@@ -36,6 +37,12 @@ class VtPluginInterface
 
 public:
     virtual ~VtPluginInterface() {}
+
+    virtual QString name() = 0;
+    virtual void name(QString name) = 0;
+
+    virtual QMap<QString, QString> parameters() = 0;
+    virtual void parameters(QMap<QString, QString> paramMap) = 0;
 
     virtual bool run_json_string(QString jsonString) = 0;
     virtual bool run_json_file(QUrl fileUrl) = 0;

@@ -14,7 +14,7 @@ void Logger::log(const std::string message, const QColor color) {
 }
 
 void Logger::log(const QString message, const QColor color) {
-    emit writeLog(message ,color);
+    emit writeLog(m_prefix + message ,color);
 }
 
 void Logger::log(const bitpowder::lib::String message, const QColor color) {

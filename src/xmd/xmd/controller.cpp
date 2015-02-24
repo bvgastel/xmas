@@ -39,20 +39,21 @@
 #include "parse.h"
 #include "canvascomponentextension.h"
 
-#include "vtplugininterface.h"
-
 //#include "common.h"
 
 Controller::Controller(QObject* parent)
-    : QObject(parent), m_componentWalker(nullptr)
+    : QObject(parent), m_componentWalker(nullptr), m_logger("controller")
 {
+    // Connect the logger writeLog to our own signal
+    QObject::connect(&m_logger, &Logger::writeLog, this, &Controller::writeLog);
+    m_logger.log(QString("Controller created and starting."));
 }
 
 Controller::~Controller()  {
 
 }
 
-bool Controller::loadPlugins() {
+size_t Controller::loadPlugins() {
     QDir pluginsDir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
     if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
@@ -70,18 +71,62 @@ bool Controller::loadPlugins() {
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
             VtPluginInterface *vtPluginInterface = qobject_cast<VtPluginInterface *>(plugin);
-            if (vtPluginInterface)
-                return true;
+            if (vtPluginInterface) {
+                QString vtname = vtPluginInterface->name();
+                if (!m_vtMap.contains(vtname)) {
+                    m_vtMap[vtname] = vtPluginInterface;
+                }
+            }
         }
     }
 
+    return m_vtMap.size();
+}
+
+/**
+ * @brief Controller::pluginParams retrieves the parameters with current values
+ * @param name the name of the plugin
+ * @return a QVariantMap with the plugin parameters and values
+ */
+QVariantMap Controller::pluginParams(QString name) {
+    QVariantMap map;
+    if (m_vtMap.contains(name)) {
+        VtPluginInterface *vtPluginInterface = m_vtMap[name];
+        map.insert("name", vtPluginInterface->name());
+        QMap<QString, QString> paramMap = vtPluginInterface->parameters();
+        auto i = paramMap.constBegin();
+        while (i != paramMap.constEnd()) {
+            std::string propName = i.key().toStdString();
+            map.insert(propName.c_str(), i.value());
+        }
+    }
+    return map;
+}
+/**
+ * @brief Controller::interfaceParam Sets one param in the interface
+ * @param name the name of the interface
+ * @param key the key of the parameter
+ * @param value the value of the parameter
+ * @return true only if the plugin and the parameter exists
+ */
+bool Controller::pluginParam(QString name, QString key, QString value) {
+    const char *cname = name.toStdString().c_str();
+    const char *ckey = key.toStdString().c_str();
+    if (m_vtMap.contains(cname)) {
+        auto vtplugin = m_vtMap[cname];
+        auto paramMap = vtplugin->parameters();
+        if (paramMap.contains(ckey)) {
+            paramMap[ckey] = value;
+            return true;
+        }
+    }
     return false;
 }
 
 /**
  * @brief Controller::fileOpen
  * @param fileUrl
- * @return
+ * @return true if the file was succesfully opened.
  *
  */
 bool Controller::fileOpen(QUrl fileUrl)
@@ -93,12 +138,12 @@ bool Controller::fileOpen(QUrl fileUrl)
 
     std::string filename = fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString() : fileUrl.fileName().toStdString();
 
-    controllerLog("Opening file " + filename);
+    m_logger.log("Opening file " + filename);
 
     std::tie(m_componentMap, std::ignore) = parse_xmas_from_file(filename, mp);
 
     if (m_componentMap.empty()) {
-        controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
+        m_logger.log("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
         return false;
     }
 
@@ -145,12 +190,12 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
             map.insert("initiatorport", QString(out->getName()));
             map.insert("target", QString(out->getTarget()->getStdName().c_str()));
             map.insert("targetport", QString(out->getTargetPort()->getName()));
-            controllerLog(
+            m_logger.log(
              "channel created from " + out->getInitiator()->getStdName() +
              " to " + out->getTarget()->getStdName());
             list.append(map);
         } else {
-            controllerLog("output port " + std::string(out->getName()) + " in comp "
+            m_logger.log("output port " + std::string(out->getName()) + " in comp "
                       + out->getComponent()->getStdName() + " is not connected");
         }
     }
@@ -158,7 +203,7 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
 
 void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
-    controllerLog("name = "+ name + " slot for creation called", Qt::darkGreen);
+    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     QString type = m_type_map[typeIndex];
@@ -182,7 +227,7 @@ void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
 void Controller::emitDuplicate(XMASComponent *comp) {
     std::string name = comp->getStdName();
     std::string msg = "name = "+ name + " was a duplicate";
-    controllerLog(msg, Qt::red);
+    m_logger.log(msg, Qt::red);
 }
 
 
@@ -208,10 +253,10 @@ bool Controller::componentCreated(const QVariant &qvariant)
                 qDebug() << " port: " << pname;
             }
         }
-        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::black);
+        m_logger.log(QString("Created component name = \"")+name+QString("\""),Qt::black);
         return true;
     }
-    controllerLog("component "+name+ " was not created.",Qt::red);
+    m_logger.log("component "+name+ " was not created.",Qt::red);
     return false;
 }
 
@@ -266,25 +311,25 @@ bool Controller::channelChanged(const QVariant &qvariant)
     return true;
 }
 
-/**
- * @brief Controller::controllerLog
- * @param message
- * @param color
- */
-void Controller::controllerLog(const QString message, QColor color) {
-    emit writeLog(message, color);
-}
+///**
+// * @brief Controller::controllerLog
+// * @param message
+// * @param color
+// */
+//void Controller::controllerLog(const QString message, QColor color) {
+//    emit writeLog(message, color);
+//}
 
-/**
- * @brief Controller::controllerLog
- * @param message
- * @param color
- */
-void Controller::controllerLog(const std::string message, QColor color){
-    controllerLog(QString::fromUtf8(message.c_str()),color);
-}
+///**
+// * @brief Controller::controllerLog
+// * @param message
+// * @param color
+// */
+//void Controller::controllerLog(const std::string message, QColor color){
+//    controllerLog(QString::fromUtf8(message.c_str()),color);
+//}
 
-void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
-    controllerLog(QString::fromUtf8(message.stl().c_str()),color);
-}
+//void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
+//    controllerLog(QString::fromUtf8(message.stl().c_str()),color);
+//}
 
