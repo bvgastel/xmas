@@ -46,11 +46,18 @@ Controller::Controller(QObject* parent)
 {
     // Connect the logger writeLog to our own signal
     QObject::connect(&m_logger, &Logger::writeLog, this, &Controller::writeLog);
-    m_logger.log(QString("Controller created and starting."));
 }
 
 Controller::~Controller()  {
 
+}
+
+void Controller::startMsg() {
+    m_logger.log(QString("Controller created and starting."));
+}
+
+void Controller::endMsg() {
+    m_logger.log(QString("Controller ending."));
 }
 
 size_t Controller::loadPlugins() {
