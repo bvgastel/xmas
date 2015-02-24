@@ -38,7 +38,6 @@ Item {
     objectName: "port"
     width: 10; height:10
     x:-5; y:-5
-    z:5
     property int id: 0
     property bool connected: false
     property string name: "a"

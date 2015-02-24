@@ -59,6 +59,9 @@ Rectangle {
             componentFile: "../xobjects/spidergon.qml"
             image: "../content/composite.png"
         }
+        Item { Layout.fillWidth: true } // empty space
+
+        //add right aligned items here
 
     }
 

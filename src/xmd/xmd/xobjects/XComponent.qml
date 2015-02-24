@@ -41,6 +41,7 @@ Item {
     width: 100
     height: 100
     focus: true
+    z:1 //on top of channels
     property int uid:-1
     property string type: "unknown"
     property string prefix: ""
@@ -179,9 +180,9 @@ Item {
         border.color: "steelblue"
         border.width: 1
         visible: selected || component.focus
-        opacity: 0.5
+        opacity: 0.75
         z:-1
-    }
+     }
 
     Connections {
         target: parent

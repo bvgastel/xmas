@@ -66,7 +66,8 @@ Item {
 
     onSelectedChanged: {
         focus = selected
-        wire.color = selected ? "lightsteelblue" : "darkblue"
+        wire.color = selected ? "steelblue" : "darkblue"
+        wire.size = selected ? 4 : 2
     }
 
     //TODO replace straight canvas wire with pathfinder logic (horizontal/vertical)

@@ -85,7 +85,6 @@ Rectangle {
     }
 
     focus: true
-    z: -10
 
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10

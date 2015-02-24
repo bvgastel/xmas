@@ -10,12 +10,11 @@ Rectangle {
 
     property alias size: l.height
 
-
     color: "black"
     height: 2
-    //smooth: true
 
     transformOrigin: Item.Left
+    transform: Translate { y:-size/2 }
 
     width: getWidth(x1,y1,x2,y2);
     rotation: getSlope(x1,y1,x2,y2);

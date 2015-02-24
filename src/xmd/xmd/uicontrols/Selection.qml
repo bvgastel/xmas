@@ -44,9 +44,8 @@ Item {
         width: Math.abs(from.x - to.x)
         height: Math.abs(from.y - to.y)
         color: "lightsteelblue"
-        border.color: "darkblue"
+        border.color: "steelblue"
         border.width: 1
-        opacity: 0.2
     }
 
 }
