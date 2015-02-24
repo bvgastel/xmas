@@ -34,6 +34,10 @@
 #include <map>
 #include <set>
 #include <typeindex>
+#include <iostream>
+#include <iomanip>
+#include <chrono>
+#include <ctime>
 
 #include <QVariant>
 #include <QVariantMap>

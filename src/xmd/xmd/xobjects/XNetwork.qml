@@ -34,16 +34,16 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import XMAS 1.0
-import "content"
-import "content/channelCreation.js" as Code
-import "controller.js" as Ctrl
+import "../uicontrols"
+import "xchannel.js" as Code
+import "../xmapper/controller.js" as Ctrl
 
 
 Rectangle {
     id: sheet
     scale: 1.0
-    width: 2970
-    height: 2100
+    width: 5940 //2970
+    height: 4200 //2100
     color: "white"
 
     function zoomFit()

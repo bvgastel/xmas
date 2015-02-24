@@ -43,12 +43,12 @@ Item {
 
 
     function doUpdate1() {
-        line.x1 = mapFromItem(port1,5,5).x
-        line.y1 = mapFromItem(port1,5,5).y
+        wire.x1 = mapFromItem(port1,5,5).x
+        wire.y1 = mapFromItem(port1,5,5).y
     }
     function doUpdate2() {
-        line.x2 = mapFromItem(port2,5,5).x
-        line.y2 = mapFromItem(port2,5,5).y
+        wire.x2 = mapFromItem(port2,5,5).x
+        wire.y2 = mapFromItem(port2,5,5).y
     }
 
     function remove() {
@@ -66,12 +66,12 @@ Item {
 
     onSelectedChanged: {
         focus = selected
-        line.color = selected ? "lightsteelblue" : "darkblue"
+        wire.color = selected ? "lightsteelblue" : "darkblue"
     }
 
-    //TODO replace straight canvas line with pathfinder logic (horizontal/vertical)
-    Line {
-        id: line
+    //TODO replace straight canvas wire with pathfinder logic (horizontal/vertical)
+    XWire {
+        id: wire
         color: "darkblue"
         size: 2
 
@@ -115,7 +115,7 @@ Item {
 
     Connections {
         target: parent
-        onGroupSelected: channel.selected = group.contains(line.x1,line.y1) || group.contains(line.x2,line.y2)
+        onGroupSelected: channel.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
         onDeleteSelected: if (channel.selected) channel.remove()
         onClearSelection: channel.selected = false
     }

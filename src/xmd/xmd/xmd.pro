@@ -25,7 +25,7 @@
 #
 
 
-WARNINGS += -Wall
+#WARNINGS += -Wall
 
 TEMPLATE = lib
 
@@ -36,23 +36,23 @@ unix: CONFIG += static dll
 
 include (defines.pri)
 
-QT += widgets svg quick qml quickwidgets
+QT += widgets quick qml quickwidgets
 
 HEADERS       = \ 
-    controller.h \
-    fieldwalker.h \
-    componentwalker.h \
-    network.h \
     xmdexception.h \
-    logoutput.h
+    xmapper/componentwalker.h \
+    xmapper/controller.h \
+    xmapper/fieldwalker.h \
+    xmapper/logoutput.h \
+    xmapper/network.h
 				
 SOURCES       = \ 
-    controller.cpp \
-    fieldwalker.cpp \
-    componentwalker.cpp \
-    network.cpp \
     xmdexception.cpp \
-    logoutput.cpp
+    xmapper/componentwalker.cpp \
+    xmapper/controller.cpp \
+    xmapper/fieldwalker.cpp \
+    xmapper/logoutput.cpp
+    xmapper/network.cpp \
     
 unix|win32 {
     target.path = $$PWD/../../../lib/xmd
@@ -63,39 +63,37 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
-INCLUDEPATH += content qml
-DEPENDPATH += content qml
+INCLUDEPATH += uicontrols xobjects xmapper vplugin content
+DEPENDPATH += uicontrols xobjects xmapper vplugin content
 
-DISTFILES += qml/fork.qml \
-    qml/function.qml \
-    qml/in.qml \
-    qml/join.qml \
-    qml/merge.qml \
-    qml/out.qml \
-    qml/queue.qml \
-    qml/sink.qml \
-    qml/source.qml \
-    qml/spidergon.qml \
-    qml/switch.qml \
-	mainWindow.qml \
-    content/ScrollBar.qml \
-    content/MenuBar.qml \
-    content/XmasToolBar.qml \
-    content/ToolBarItem.qml \
-    Sheet.qml \
-    qml/XComponent.qml \
-    qml/Line.qml \
-	controller.js \
-    qml/XChannel.qml \
-    qml/XPort.qml \
-    content/channelCreation.js \
-    content/componentCreation.js \
-    content/Selection.qml \
-    content/XDialog.qml \
-    content/OutputLog.qml \
-    content/XTag.qml \
-    qml/primitive.qml \
-    readme.md
+DISTFILES += mainWindow.qml \
+    xobjects/fork.qml \
+    xobjects/function.qml \
+    xobjects/in.qml \
+    xobjects/join.qml \
+    xobjects/merge.qml \
+    xobjects/out.qml \
+    xobjects/queue.qml \
+    xobjects/sink.qml \
+    xobjects/source.qml \
+    xobjects/spidergon.qml \
+    xobjects/switch.qml \
+    xobjects/primitive.qml \
+    xobjects/XComponent.qml \
+    xobjects/XWire.qml \
+    xobjects/XChannel.qml \
+    xobjects/XPort.qml \
+    xobjects/XNetwork.qml \
+    xmapper/controller.js \
+    uicontrols/ScrollBar.qml \
+    uicontrols/XToolBar.qml \
+    uicontrols/XToolBarItem.qml \
+    uicontrols/XDialog.qml \
+    uicontrols/Selection.qml \
+    uicontrols/OutputLog.qml \
+    readme.md \
+    xobjects/xchannel.js \
+    xobjects/xcomponent.js
 
 RESOURCES += \
     xmd.qrc

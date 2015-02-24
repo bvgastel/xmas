@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import "../content"
+import "../uicontrols"
 import XMAS 1.0
 
 XComponent {

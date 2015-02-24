@@ -30,7 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import XMAS 1.0
-import "../content/channelCreation.js" as Code
+import "xchannel.js" as Code
 
 
 Item {

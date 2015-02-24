@@ -1,12 +1,18 @@
 .import XMAS 1.0 as Ctrl
 .import QtQuick 2.0 as Qjs
-.import "content/channelCreation.js" as Channel
+.import "../xobjects/xchannel.js" as Channel
+
+var start
+var end
+var time
 
 function createNetwork(object) {
+
     if(!object) {
         log("Undefined network!","red")
         return
     }
+
 
     //clear sheet
     sheet.clear()
@@ -27,6 +33,7 @@ function createNetwork(object) {
                     connlist[conn]["targetport"]
                     )
     }
+
 }
 
 function loadComponent(object) {
@@ -47,10 +54,13 @@ function loadComponent(object) {
 
     if(qml==="") return
 
+//    start = new Date().getTime()
     component = Qt.createComponent(qml)
+//    end = new Date().getTime()
+//    log("Execution time: " + (end - start) + "ms","red")
 
     if (component.status === Qjs.Component.Loading)
-        component.statusChanged.connect(createComponent(sheet,component,object));
+        component.statusChanged.connect(createComponent(sheet,component,object))
     else if (component.status === Qjs.Component.Ready)
         createComponent(sheet,component,object)
     else if (component.status === Qjs.Component.Error)
@@ -62,27 +72,27 @@ function loadComponent(object) {
 function getXQml(type) {
     switch(type) {
     case "queue":
-        return "../qml/queue.qml"
+        return "../xobjects/queue.qml"
     case "function":
-        return "../qml/function.qml"
+        return "../xobjects/function.qml"
     case "fork":
-        return "../qml/fork.qml"
+        return "../xobjects/fork.qml"
     case "join":
-        return "../qml/join.qml"
+        return "../xobjects/join.qml"
     case "switch":
-        return "../qml/switch.qml"
+        return "../xobjects/switch.qml"
     case "merge":
-        return "../qml/merge.qml"
+        return "../xobjects/merge.qml"
     case "sink":
-        return "../qml/sink.qml"
+        return "../xobjects/sink.qml"
     case "source":
-        return "../qml/source.qml"
+        return "../xobjects/source.qml"
     case "in":
-        return "../qml/in.qml"
+        return "../xobjects/in.qml"
     case "out":
-        return "../qml/out.qml"
+        return "../xobjects/out.qml"
     case "composite":
-        return "../qml/spidergon.qml" //test
+        return "../xobjects/spidergon.qml" //test
     default:
         //log("Unknown xmas type! (" + type + ")","red")
         return ""
@@ -104,6 +114,7 @@ function createComponent(parent,component,object) {
                                           "name":object.name,
                                           "param":object.param
                                       })
+
         //TODO : if shared memory VT - XMD continues
         // controller emits the whole network at once
         // so check localy if everything goes well and

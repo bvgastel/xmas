@@ -33,7 +33,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS 1.0
-import "../controller.js" as Ctrl
+import "../xmapper/controller.js" as Ctrl
 
 Item {
     id: component

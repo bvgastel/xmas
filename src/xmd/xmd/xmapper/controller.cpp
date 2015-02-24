@@ -70,11 +70,11 @@ bool Controller::fileOpen(QUrl fileUrl)
         controllerLog("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
         return false;
     }
-
     return emitNetwork();
 }
 
 bool Controller::emitNetwork() {
+    std::clock_t c_start = std::clock();
     QVariantList compList;
     for(auto &it : m_componentMap) {
         XMASComponent *comp = it.second;
@@ -96,7 +96,12 @@ bool Controller::emitNetwork() {
     QVariantMap network;
     network["complist"] = compList;
     network["channellist"] = channelList;
+
     emit createNetwork(network);
+    std::clock_t c_end = std::clock();
+        qDebug() << "CPU time used: " << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n"
+                       << " for " << compList.length() << " components and " << channelList.length() << " channels";
+
     return true;
 }
 
@@ -114,9 +119,9 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
             map.insert("initiatorport", QString(out->getName()));
             map.insert("target", QString(out->getTarget()->getStdName().c_str()));
             map.insert("targetport", QString(out->getTargetPort()->getName()));
-            controllerLog(
-             "channel created from " + out->getInitiator()->getStdName() +
-             " to " + out->getTarget()->getStdName());
+//            controllerLog(
+//             "channel created from " + out->getInitiator()->getStdName() +
+//             " to " + out->getTarget()->getStdName());
             list.append(map);
         } else {
             controllerLog("output port " + std::string(out->getName()) + " in comp "
@@ -127,7 +132,7 @@ void Controller::connectInQml(QVariantList &list, XMASComponent *comp) {
 
 void Controller::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
-    controllerLog("name = "+ name + " slot for creation called", Qt::darkGreen);
+//    controllerLog("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     QString type = m_type_map[typeIndex];
@@ -177,7 +182,7 @@ bool Controller::componentCreated(const QVariant &qvariant)
                 qDebug() << " port: " << pname;
             }
         }
-        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::black);
+//        controllerLog(QString("Created component name = \"")+name+QString("\""),Qt::black);
         return true;
     }
     controllerLog("component "+name+ " was not created.",Qt::red);

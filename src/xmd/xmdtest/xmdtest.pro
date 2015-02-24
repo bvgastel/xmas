@@ -32,8 +32,8 @@ win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
 else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 
-INCLUDEPATH += $$PWD/../xmd
-DEPENDPATH += $$PWD/../xmd
+INCLUDEPATH += $$PWD/../xmd $$PWD/../xmd/xmapper $$PWD/../xmd/vplugin
+DEPENDPATH += $$PWD/../xmd $$PWD/../xmd/xmapper $$PWD/../xmd/vplugin
 
 # All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #

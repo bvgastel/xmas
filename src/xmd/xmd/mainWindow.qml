@@ -44,7 +44,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
-import "content"
+import "xobjects"
+import "uicontrols"
 
 ApplicationWindow {
     id: mainwindow
@@ -66,7 +67,7 @@ ApplicationWindow {
 
     Action {
         id: fileOpenAction
-        iconSource: "qrc:/content/images/open.png"
+        iconSource: "qrc:/content/open.png"
         iconName: "model-open"
         text: "Open"
         shortcut: "Ctrl+O"
@@ -75,7 +76,7 @@ ApplicationWindow {
 
     Action {
         id: fileSaveAction
-        iconSource: "qrc:/content/images/save.png"
+        iconSource: "qrc:/content/save.png"
         iconName: "model-save"
         text: "Save"
         shortcut: "Ctrl+S"
@@ -87,7 +88,7 @@ ApplicationWindow {
         id: cutAction
         text: "Cut"
         shortcut: "Ctrl+X"
-        iconSource: "qrc:/content/images/cut.png"
+        iconSource: "qrc:/content/cut.png"
         iconName: "edit-cut"
         onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
     }
@@ -96,7 +97,7 @@ ApplicationWindow {
         id: copyAction
         text: "Copy"
         shortcut: "Ctrl+C"
-        iconSource: "qrc:/content/images/copy.png"
+        iconSource: "qrc:/content/copy.png"
         iconName: "edit-copy"
         onTriggered: log("Copy Action Clicked.","blue") //textArea.copy()
     }
@@ -105,7 +106,7 @@ ApplicationWindow {
         id: pasteAction
         text: "Paste"
         shortcut: "Ctrl+V"
-        iconSource: "qrc:/content/images/paste.png"
+        iconSource: "qrc:/content/paste.png"
         iconName: "edit-paste"
         onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
     }
@@ -122,7 +123,7 @@ ApplicationWindow {
         id: zoomInAction
         text: "Zoom In"
         shortcut: "Ctrl++"
-        iconSource: "qrc:/content/images/zoom-in.png"
+        iconSource: "qrc:/content/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: sheet.zoomIn()
     }
@@ -131,7 +132,7 @@ ApplicationWindow {
         id: zoomOutAction
         text: "Zoom Out"
         shortcut: "Ctrl+-"
-        iconSource: "qrc:/content/images/zoom-out.png"
+        iconSource: "qrc:/content/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: sheet.zoomOut()
     }
@@ -140,7 +141,7 @@ ApplicationWindow {
         id: zoomFitAction
         text: "Zoom Fit"
         shortcut: "Ctrl+1"
-        iconSource: "qrc:/content/images/zoom-fit.png"
+        iconSource: "qrc:/content/zoom-fit.png"
         iconName: "zoom-fit"
         onTriggered: sheet.zoomFit()
     }
@@ -149,7 +150,7 @@ ApplicationWindow {
         id: selectionCursorAction
         text: "Selection Mode"
         shortcut: ""
-        iconSource: "qrc:/content/images/select.png"
+        iconSource: "qrc:/content/select.png"
         iconName: "select"
         checkable: true
         onToggled: sheet.selectionMode = checked
@@ -251,7 +252,7 @@ ApplicationWindow {
     }
 
 
-    XmasToolBar{
+    XToolBar{
         id: xmasToolbar
         height:48
         anchors {right: parent.right;  left: parent.left}
@@ -284,12 +285,12 @@ ApplicationWindow {
 
 
 
-                Sheet{
+                XNetwork{
                     id:sheet
                     transformOrigin: Item.TopLeft
                     color: "white"
-                    width : 2970
-                    height: 2100
+                    width : 5940
+                    height: 4200
 
                 }
 

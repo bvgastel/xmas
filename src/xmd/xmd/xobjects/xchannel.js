@@ -8,7 +8,7 @@ function loadcomponent(port1,port2) {
         createComponent(port1,port2)
         return
     }
-    component = Qt.createComponent("qrc:///qml/XChannel.qml")
+    component = Qt.createComponent("qrc:///xobjects/XChannel.qml")
     // Still loading qml? Call createObject on status changed
     if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(port1,port2));
@@ -49,10 +49,12 @@ function create(iComp,iPort,tComp,tPort) {
 }
 
 function getComponent(name){
-    for (var child in sheet.children) {
-        if(sheet.children[child].objectName==="component"
-                && sheet.children[child].name === name ) {
-            return sheet.children[child]
+    var childs = sheet.children
+    for (var child in childs) {
+        var chld = childs[child]
+        if(chld.objectName==="component"
+                && chld.name === name ) {
+            return chld
         }
     }
     return null

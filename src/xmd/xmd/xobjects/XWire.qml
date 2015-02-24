@@ -9,11 +9,13 @@ Rectangle {
     property real y2: l.y
 
     property alias size: l.height
+
+
     color: "black"
     height: 2
     //smooth: true
 
-    transformOrigin: Item.TopLeft;
+    transformOrigin: Item.Left
 
     width: getWidth(x1,y1,x2,y2);
     rotation: getSlope(x1,y1,x2,y2);
