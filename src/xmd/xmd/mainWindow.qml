@@ -70,7 +70,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/open.png"
         iconName: "model-open"
         text: "Open"
-        shortcut: "Ctrl+O"
+        shortcut: StandardKey.Open
         onTriggered: fileDialog.open()
     }
 
@@ -79,7 +79,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/save.png"
         iconName: "model-save"
         text: "Save"
-        shortcut: "Ctrl+S"
+        shortcut: StandardKey.Save
         //onTriggered: fileSaveDialog.open()
     }
 
@@ -87,7 +87,7 @@ ApplicationWindow {
     Action {
         id: cutAction
         text: "Cut"
-        shortcut: "Ctrl+X"
+        shortcut: StandardKey.Cut
         iconSource: "qrc:/content/cut.png"
         iconName: "edit-cut"
         onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
@@ -96,7 +96,7 @@ ApplicationWindow {
     Action {
         id: copyAction
         text: "Copy"
-        shortcut: "Ctrl+C"
+        shortcut: StandardKey.Copy
         iconSource: "qrc:/content/copy.png"
         iconName: "edit-copy"
         onTriggered: log("Copy Action Clicked.","blue") //textArea.copy()
@@ -105,7 +105,7 @@ ApplicationWindow {
     Action {
         id: pasteAction
         text: "Paste"
-        shortcut: "Ctrl+V"
+        shortcut: StandardKey.Paste
         iconSource: "qrc:/content/paste.png"
         iconName: "edit-paste"
         onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
@@ -114,7 +114,7 @@ ApplicationWindow {
     Action {
         id: selectAllAction
         text: "Select All"
-        shortcut: "Ctrl+A"
+        shortcut: StandardKey.SelectAll
         onTriggered: sheet.selectAll()
         tooltip: "Select All items on the sheet"
     }
@@ -122,7 +122,7 @@ ApplicationWindow {
     Action {
         id: zoomInAction
         text: "Zoom In"
-        shortcut: "Ctrl++"
+        shortcut: StandardKey.ZoomIn
         iconSource: "qrc:/content/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: sheet.zoomIn()
@@ -131,7 +131,7 @@ ApplicationWindow {
     Action {
         id: zoomOutAction
         text: "Zoom Out"
-        shortcut: "Ctrl+-"
+        shortcut: StandardKey.ZoomOut
         iconSource: "qrc:/content/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: sheet.zoomOut()
@@ -149,7 +149,7 @@ ApplicationWindow {
     Action {
         id: selectionCursorAction
         text: "Selection Mode"
-        shortcut: ""
+        shortcut:""
         iconSource: "qrc:/content/select.png"
         iconName: "select"
         checkable: true
@@ -159,7 +159,7 @@ ApplicationWindow {
     Action {
         id: fileQuitAction
         text: "Quit"
-        shortcut: "Ctrl+Q"
+        shortcut: StandardKey.Quit
         onTriggered: Qt.quit()
     }
 
