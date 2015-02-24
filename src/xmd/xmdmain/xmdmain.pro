@@ -58,3 +58,6 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/
 
 
 RESOURCES +=
+
+DISTFILES += \
+    readme.md
