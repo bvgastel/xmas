@@ -25,7 +25,7 @@
 #
 
 
-#WARNINGS += -Wall
+WARNINGS += -Wall
 
 TEMPLATE = lib
 
