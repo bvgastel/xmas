@@ -48,6 +48,9 @@
 
 #include "xmas.h"
 #include "componentwalker.h"
+#include "vtplugininterface.h"
+#include "logger.h"
+
 
 class Controller : public QObject
 {
@@ -59,6 +62,8 @@ class Controller : public QObject
 signals: //to view
     void createComponent(const QVariantMap &object);
     bool createChannel(const QVariantMap &object);
+    bool clearNetwork();
+    void writeLog(QString message,QColor color=Qt::black);
     /**
      * @brief createNetwork a signal with the network components and connections in a list
      *
@@ -72,12 +77,10 @@ signals: //to view
      *
      * Remark: this signal means to include an implicit, pre-executed clearNetwork();
      *
-     * @param object The object is a list containing 2 lists: component lsit and channel list.
+     * @param object The object is a list containing 2 lists: component list and channel list.
      * @return true if successful
      */
     bool createNetwork(const QVariantMap &object);
-    bool clearNetwork();
-    void writeLog(QString message,QColor color=Qt::black);
 
 public slots:  //from view
     bool componentCreated(const QVariant &object);
@@ -87,6 +90,7 @@ public slots:  //from view
     bool channelDestroyed(const QVariant &object);
     bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
+    size_t loadPlugins();
 
 public:
     enum Orientation {
@@ -105,9 +109,12 @@ public:
     explicit Controller(QObject* parent = 0);
     ~Controller();
 
-    void controllerLog(const std::string message,QColor color=QColor("black"));
-    void controllerLog(const QString message, QColor color=QColor("black"));
-    void controllerLog(const bitpowder::lib::String message, QColor color=QColor("black"));
+    QVariantMap pluginParams(QString name);
+    bool pluginParam(QString name, QString key, QString value);
+
+//    void controllerLog(const std::string message,QColor color=QColor("black"));
+//    void controllerLog(const QString message, QColor color=QColor("black"));
+//    void controllerLog(const bitpowder::lib::String message, QColor color=QColor("black"));
 
 private:
     QVariant createPropObject(XMASComponent *comp);
@@ -139,6 +146,9 @@ private:
         {std::type_index(typeid(XMASFork)), "fork"},
         {std::type_index(typeid(XMASSwitch)), "switch"},
     };
+
+    QMap<QString, VtPluginInterface *> m_vtMap;
+    Logger m_logger;
 };
 
 #endif // CONTROLLER_H

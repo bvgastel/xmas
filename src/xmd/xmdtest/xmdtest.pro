@@ -35,6 +35,13 @@ else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 INCLUDEPATH += $$PWD/../xmd $$PWD/../xmd/xmapper $$PWD/../xmd/vplugin
 DEPENDPATH += $$PWD/../xmd $$PWD/../xmd/xmapper $$PWD/../xmd/vplugin
 
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
+else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
+
+INCLUDEPATH += $$PWD/../plugins
+DEPENDPATH += $$PWD/../plugins
+
 # All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #
 # Remark: 1. always using gtest and gtest_main contrary to gtestd and gtest_maind for debug.

@@ -48,6 +48,7 @@ TEST_F(NetworkTest, creationTest) {
     EXPECT_THROW(n = new Network(m_controller, QUrl("dummy filename")), XmdException);
     EXPECT_THROW(n = new Network(m_controller, m_invalid_json), XmdException);
     EXPECT_EQ(m_network1->size(), size_t(0)); // avoid signed vs unsigned warning in gtest --> size_t(0) used
+    bitpowder::lib::unused(n);
 }
 
 

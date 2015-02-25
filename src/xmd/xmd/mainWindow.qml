@@ -66,6 +66,15 @@ ApplicationWindow {
     }
 
     Action {
+        id: loadPlugins
+        iconSource: "qrc:/content/images/plugin.png"
+        iconName: "plugins"
+        text: "VT"
+        shortcut: "Alt+P"
+        //onTriggered:
+    }
+
+    Action {
         id: fileOpenAction
         iconSource: "qrc:/content/open.png"
         iconName: "model-open"
@@ -172,6 +181,7 @@ ApplicationWindow {
             "All files (*)"]
         onAccepted: controller.fileOpen(fileUrl)
     }
+
     FileDialog {
         id: fileSaveDialog
         selectMultiple: false

@@ -120,9 +120,6 @@ function createComponent(parent,component,object) {
         // so check localy if everything goes well and
         // at the and feedback result as "networkCreated()"
         // NOTE: distinguish between sources of input (screen or json)
-//        if (!controller.componentCreated(item)) {
-//            log("component was refused, because .... I don't know .... we need to do something ... drastic", "red")
-//        }
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }

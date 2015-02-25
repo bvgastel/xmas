@@ -63,8 +63,8 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
-INCLUDEPATH += uicontrols xobjects xmapper vplugin content
-DEPENDPATH += uicontrols xobjects xmapper vplugin content
+INCLUDEPATH += uicontrols xobjects xmapper vplugin content ../plugins
+DEPENDPATH += uicontrols xobjects xmapper vplugin content ../plugins
 
 DISTFILES += mainWindow.qml \
     xobjects/fork.qml \
@@ -99,6 +99,13 @@ RESOURCES += \
     xmd.qrc
 
 FORMS +=
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
+else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
+
+INCLUDEPATH += $$PWD/../plugins
+DEPENDPATH += $$PWD/../plugins
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
