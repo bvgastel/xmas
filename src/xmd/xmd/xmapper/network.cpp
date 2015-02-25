@@ -3,7 +3,7 @@
 #include "parse.h"
 #include "xmdexception.h"
 
-Network::Network(Controller *controller, QUrl fileUrl) : m_controller(controller)
+Network::Network(Controller *controller, QUrl &fileUrl) : m_controller(controller)
 {
     throw XmdException("File "+fileUrl.toDisplayString()+" not found.");
 }
@@ -15,10 +15,6 @@ Network::Network(Controller *controller, std::stringstream &sstr) : m_controller
 
 }
 
-Network::~Network()
-{
-
-}
 
 size_t Network::size() {
     return 0;

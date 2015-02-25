@@ -63,8 +63,8 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
-INCLUDEPATH += uicontrols xobjects xmapper vplugin content ../plugins
-DEPENDPATH += uicontrols xobjects xmapper vplugin content ../plugins
+INCLUDEPATH += uicontrols xobjects xmapper content ../plugins
+DEPENDPATH += uicontrols xobjects xmapper content ../plugins
 
 DISTFILES += mainWindow.qml \
     xobjects/fork.qml \

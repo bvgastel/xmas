@@ -13,9 +13,9 @@
 class Network
 {
 public:
-    explicit Network(Controller *controller, QUrl fileUrl);
+    explicit Network(Controller *controller, QUrl &fileUrl);
     explicit Network(Controller *controller, std::stringstream &sstr);
-    ~Network();
+    ~Network() {}
 
     size_t size();
 private:
