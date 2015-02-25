@@ -16,6 +16,10 @@ Network::Network(Controller *controller, std::stringstream &sstr) : m_controller
 }
 
 
+Network::~Network() {
+
+}
+
 size_t Network::size() {
     return 0;
 }

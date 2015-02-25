@@ -25,7 +25,7 @@ protected:
         m_valid_json_invalid_network << "\"invalid\" { }";
 
         m_valid_network << "{ \"VARS\" :[], \"NETWORK\" : [] }";
-        //m_network1 = new Network(m_controller, m_valid_network);
+        m_network1 = new Network(m_controller, m_valid_network);
     }
 
     virtual void TearDown() {
@@ -45,9 +45,10 @@ public:
 TEST_F(NetworkTest, creationTest) {
     Network *n;
     Q_UNUSED(n) //to avoid warning n not used. n is not seen by compiler in EXPECT_THROW
-    //EXPECT_THROW(n = new Network(m_controller, QUrl("dummy filename")), XmdException);
-    //EXPECT_THROW(n = new Network(m_controller, m_invalid_json), XmdException);
-    //EXPECT_EQ(m_network1->size(), size_t(0)); // avoid signed vs unsigned warning in gtest --> size_t(0) used
+    QUrl dummyUrl = QUrl("dummy filename");
+    EXPECT_THROW(n = new Network(m_controller, dummyUrl), XmdException);
+    EXPECT_THROW(n = new Network(m_controller, m_invalid_json), XmdException);
+    EXPECT_EQ(m_network1->size(), size_t(0)); // avoid signed vs unsigned warning in gtest --> size_t(0) used
     bitpowder::lib::unused(n);
 }
 

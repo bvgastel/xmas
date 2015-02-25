@@ -44,14 +44,14 @@ HEADERS       = \
     xmapper/controller.h \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
-    xmapper/network.h
+    xmapper/network.h \
 				
 SOURCES       = \ 
     xmdexception.cpp \
     xmapper/componentwalker.cpp \
     xmapper/controller.cpp \
     xmapper/fieldwalker.cpp \
-    xmapper/logoutput.cpp
+    xmapper/logoutput.cpp \
     xmapper/network.cpp \
     
 unix|win32 {
