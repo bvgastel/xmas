@@ -115,10 +115,6 @@ public:
     void startMsg();
     void endMsg();
 
-//    void controllerLog(const std::string message,QColor color=QColor("black"));
-//    void controllerLog(const QString message, QColor color=QColor("black"));
-//    void controllerLog(const bitpowder::lib::String message, QColor color=QColor("black"));
-
 private:
     QVariant createPropObject(XMASComponent *comp);
 

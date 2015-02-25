@@ -322,26 +322,3 @@ bool Controller::channelChanged(const QVariant &qvariant)
     qDebug() << "Channel changed by designer";
     return true;
 }
-
-///**
-// * @brief Controller::controllerLog
-// * @param message
-// * @param color
-// */
-//void Controller::controllerLog(const QString message, QColor color) {
-//    emit writeLog(message, color);
-//}
-
-///**
-// * @brief Controller::controllerLog
-// * @param message
-// * @param color
-// */
-//void Controller::controllerLog(const std::string message, QColor color){
-//    controllerLog(QString::fromUtf8(message.c_str()),color);
-//}
-
-//void Controller::controllerLog(const bitpowder::lib::String message, QColor color) {
-//    controllerLog(QString::fromUtf8(message.stl().c_str()),color);
-//}
-
