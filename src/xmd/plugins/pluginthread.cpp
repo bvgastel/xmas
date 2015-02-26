@@ -19,52 +19,52 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#include "validplugin.h"
+#include "pluginthread.h"
 
 #include <QUrl>
 #include <QColor>
 
-QString ValidPlugin::name() {
+QString PluginThread::name() {
     return m_name;
 }
 
-void ValidPlugin::name(QString name) {
+void PluginThread::name(QString name) {
     m_name = name;
 }
 
-QMap<QString, QString> ValidPlugin::parameters() {
+QMap<QString, QString> PluginThread::parameters() {
     return m_paramMap;
 }
 
-void ValidPlugin::parameters(QMap<QString, QString> paramMap) {
+void PluginThread::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-bool ValidPlugin::run_json_string(QString jsonString) {
-    size_t len = 10 < jsonString.length() ? 10 : jsonString.length();
-    std::cout << "Started process validate network for json starting with '"
-              << jsonString.toStdString().substr(0, len)
-              << "'" << std::endl;
-    return true;
+bool PluginThread::run_json_string(QString jsonString) {
+    return false;
 }
 
-bool ValidPlugin::run_json_file(QUrl fileUrl) {
+bool PluginThread::run_json_file(QUrl fileUrl) {
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();
 
     m_logger->log("Opening file " + filename, QColor("black"));
 
-    std::cout << "Started process validate network for file '"
-              << filename
-              << std::endl;
+    m_logger->log("Started process validate network for file '"
+                  + filename);
+
+    // Start the thread
+    // Set up tracking and parameters
+    // Execute the thread
+    // Track the thread
+    // Wait for thread to finish
 
     return true;
 }
 
-bool ValidPlugin::run_json_xmas(std::map<std::string, XMASComponent * > ) {
+bool PluginThread::run_json_xmas(std::map<std::string, XMASComponent * > ) {
     std::cout << "Started process validate network for components." << std::endl;
     return true;
 }
-
 

@@ -143,7 +143,9 @@ bool Controller::fileOpen(QUrl fileUrl)
 
     bitpowder::lib::MemoryPool mp;
 
-    std::string filename = fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString() : fileUrl.fileName().toStdString();
+    std::string filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+                                  : fileUrl.fileName().toStdString();
 
     m_logger.log("Opening file " + filename);
 

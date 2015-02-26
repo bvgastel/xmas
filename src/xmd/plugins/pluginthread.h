@@ -19,26 +19,26 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#ifndef PLUGINS_H
-#define PLUGINS_H
+#ifndef PLUGINTHREAD_H
+#define PLUGINTHREAD_H
 
 #include <QString>
 #include <QMap>
 
 #include "logger.h"
-#include "vtplugininterface.h"
 
-class ValidPlugin : public QObject, public VtPluginInterface
+
+class PluginThread : public QObject, public VtPluginInterface
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID VtPluginInterface_iid FILE "vtplugin.json")
-    Q_INTERFACES(VtPluginInterface)
-
 public:
-    ValidPlugin() :
+    PluginThread():
         m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
-        m_logger(new Logger("ValidPlugin"))
-    {
+        m_logger(new Logger("PluginThread")) {
+
+    }
+
+    ~PluginThread() {
+
     }
 
     virtual QString name();
@@ -75,5 +75,4 @@ private:
     Logger *m_logger;
 };
 
-
-#endif // PLUGINS_H
+#endif // PLUGINTHREAD_H

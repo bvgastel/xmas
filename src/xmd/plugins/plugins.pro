@@ -24,12 +24,14 @@ DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
     validplugin.cpp \
-    logger.cpp
+    logger.cpp \
+    pluginthread.cpp
 
 HEADERS +=\
     vtplugininterface.h \
     validplugin.h \
-    logger.h
+    logger.h \
+    pluginthread.h
 
 unix|win32 {
     target.path = $$PWD/../../../lib/plugins
