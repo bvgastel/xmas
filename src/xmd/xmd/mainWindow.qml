@@ -367,9 +367,11 @@ ApplicationWindow {
         target: controller
         onWriteLog: log(message,color) //console.log("component create request")
         onPluginsLoaded: {
+            log("Printing plugin names: [", "red")
             for (var i in object) {
-                log(object[i].name,"red")
+                log("plugin1 = "+object[i].name,"red")
             }
+            log("]", "red")
         }
 
     }
