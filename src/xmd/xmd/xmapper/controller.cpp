@@ -94,7 +94,7 @@ bool Controller::loadPlugins() {
 
 bool Controller::startPlugin(QString vtname) {
     auto plugin = m_vtMap[vtname];
-    plugin->run_json_string("");
+    plugin->run("");
     return false;
 }
 

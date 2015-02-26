@@ -23,13 +23,11 @@ TARGET = plugins
 DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
-    validplugin.cpp \
     logger.cpp \
     pluginthread.cpp
 
 HEADERS +=\
     vtplugininterface.h \
-    validplugin.h \
     logger.h \
     pluginthread.h
 
