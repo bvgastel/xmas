@@ -81,7 +81,7 @@ signals: //to view
      * @return true if successful
      */
     bool createNetwork(const QVariantMap &object);
-    bool pluginsLoaded(const QVariantMap &object);
+    bool pluginsLoaded(const QVariantList &list);
 
 public slots:  //from view
     bool componentCreated(const QVariant &object);

@@ -73,7 +73,7 @@ bool Controller::loadPlugins() {
     }
 #endif
     pluginsDir.cd("plugins");
-    QVariantMap vmap;
+    QVariantList vtNameList;
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
@@ -83,12 +83,12 @@ bool Controller::loadPlugins() {
                 QString vtname = vtPluginInterface->name();
                 if (!m_vtMap.contains(vtname)) {
                     m_vtMap[vtname] = vtPluginInterface;
-                    //vmap.insert(vtname,vtPluginInterface);
+                    vtNameList.append(vtname);
                 }
             }
         }
     }
-    emit pluginsLoaded(vmap);
+    emit pluginsLoaded(vtNameList);
     return m_vtMap.size()>0;
 }
 
