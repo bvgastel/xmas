@@ -1,0 +1,132 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {
+    "type": 2
+  },
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "src0",
+      "type": "source",
+      "outs": [
+        {
+          "id": "qsrc",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "init_types": "type < 2"
+        }
+      ]
+    },
+    {
+      "id": "fork1",
+      "type": "xfork",
+      "outs": [
+        {
+          "id": "q0",
+          "in_port": 0
+        },
+        {
+          "id": "q2",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "join6",
+          "in_port": 1
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "q0",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "q1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "q1",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "join6",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    },
+    {
+      "id": "join6",
+      "type": "join",
+      "outs": [
+        {
+          "id": "qsnk",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "function": "0"
+        }
+      ]
+    },
+    {
+      "id": "qsnk",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "sink8",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 10
+        }
+      ]
+    },
+    {
+      "id": "sink8",
+      "type": "sink"
+    },
+    {
+      "id": "qsrc",
+      "type": "queue",
+      "outs": [
+        {
+          "id": "fork1",
+          "in_port": 0
+        }
+      ],
+      "fields": [
+        {
+          "size": 2
+        }
+      ]
+    }
+  ]
+}

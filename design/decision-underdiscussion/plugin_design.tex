@@ -1,0 +1,264 @@
+%% This is a document discussing a proposed design for the VT plugin
+%% that we need to execute and track VT's during design.
+%%
+%% This document is the main document: compile with xelatex to get the complete pdf.
+%%
+
+\documentclass[a4paper,11pt,final]{article}
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{ colorlinks = true, citecolor = blue,linkcolor = blue }
+\usepackage[a4paper]{geometry}
+\usepackage{titlesec}% added to change section headers, see newcommand definition.
+\usepackage{xspace}%
+\usepackage[obeyFinal]{todonotes}%
+\usepackage{listings}
+
+\bibliographystyle{alpha}
+
+\author{ABI team 33\\(Stefan Versluys, Guus Bonnema, Jeroen Kleijn)}
+
+\date{21/02/2015}
+
+\title{\color{blue}VT plugin design proposal}
+
+\newcommand{\w}[1]{\texttt{#1}\xspace}
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmd}{\textsc{xmd}\xspace}%
+\newcommand{\vt}{\textsc{vt}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\qml}{\textsc{Qt}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+
+\begin{document}
+\selectlanguage{english}
+
+\maketitle
+
+%% Modification history
+
+\begin{tabular}{|l|l|p{20em}|}
+\hline 
+\multicolumn{3}{|c|}{\bf Modification History}\\\hline
+Guus Bonnema & 21-02-2015 & Initial proposal document \\\hline
+\end{tabular} 
+
+
+\maketitle
+
+\tableofcontents
+
+\section{Problem background and description}
+
+\subsection{Why do we need a plugin?}
+
+The \xmd subsystem was designed to be independent from the \vt subsystem. 
+Still these subsystems do have to cooperate in order to show \vt output during 
+graphical design of a network.
+
+In order to have a loose coupling between the two subsystems the idea
+is to have a plugin structure where the \vt tool designer is able to 
+integrate a verification tool in a dynamic manner. 
+
+\subsection{What should the plugin do?}
+
+The plugin should run one or more of the verification tools and
+redirect standard output to the graphical designer, that will
+display the information in a console like fashion.
+
+The plugin should also be able to return specific information
+of any level (info, warning or error) to the graphical tool. This
+could be information about one specific component, a channel, or it
+could be information about a group of components and channels.
+
+Implementation of the text warning and error interface is the minimum
+requirement. 
+
+\paragraph{Standard output and Standard error}
+In order to connect the standard output and standard error to
+a widget, one can use a subclass of \code{QProcess} and connect
+the output and error channels to the right widgets using signals and
+slots as follows:
+
+\begin{lstlisting}
+  QProcess process = new MyProcess();
+  process.setProcessChannelMode(QProcess::MergedChannels);
+  process.start("<processname>");
+\end{lstlisting}
+
+The subclass of \code{QProcess} could contain something like:
+
+\begin{lstlisting}
+class myProcess() : public QProcess
+{
+  Q_OBJECT
+  public:
+    myProcess() {
+      edit = new QTextEdit();
+      edit->resize(500,500);
+      edit->setWindowTitle("Standard output");
+      edit->show();
+      connect(this, SIGNAL(ReadyReadSignalOutput), 
+              this, SLOT(readStdOutput));
+      connect(this, SIGNAL(Error(QProcess::ProcessError)), 
+              this, SLOT(readError()));
+    };
+	
+      ~myProcess() {};
+  private slots:
+    void readStdOutput() {
+      edit->append(readAllStandardOutput());
+    }	
+    void readError() {
+      edit->append("An Error Occured! Error Code is: "
+                   +QString::number(error()));
+    };	
+}
+\end{lstlisting}
+
+
+with the method
+
+
+\section{VT plugin function interface}
+
+\subsection{What interfaces do we need?}
+
+\begin{description}
+	\item[text information]	Lines of information in a default color. This is the
+	minimum interface requirement for tracking the running verification tool.
+
+	\item[Info, warning, error]	Lines of information with a specified label. This is an
+	extra and optional requirement for tracking the running verification tool.
+
+	\item[Component or Channel] Lines of information concerning a component. The effect could
+	translate into a color of the object on screen plus a line a text. This is a nice to have
+	requirement for tracking the running verification tool.
+
+\end{description}
+
+\subsection{How to define the interfaces?}
+
+Each interface is a class containing pure virtual methods. Each method is connected with
+the user interface through signals and slots. The initiative for issuing a message originates
+from the verification tool. The user interface should show these messages in text or in graphics.
+
+The proposal for an interface will be methods with the following signature:
+
+\begin{verbatim}
+  virtual bool run_json_string(QString jsonString) = 0;
+  virtual bool run_json_file(QString filename) = 0;
+  virtual bool run_json_xmas(std::map<std::string, <XMASComponent *>>);
+\end{verbatim}
+
+A plugin should implement all three methods and return \code{true} if
+successful, \code{false} if the run was not successful. The executable
+should be run sequentially, not concurrently, as concurrency is catered for 
+in the verification tools.
+
+The plugin should also connect the standard output and standard error to
+the graphical text window. 
+
+\paragraph{Optional additions} If possible errors and warning should be printed
+in a different color. If possible, errors and warnings should be incorporated into
+the graphical view of the network.
+
+\subsection{Plugin definition}
+
+The plugin is a \qt program that implements one or more interfaces. The
+verification tool connects to the interface methods by calling them from the
+code. 
+\todo[inline]{How in heavens are we going to connect the plugin interface implementation to 
+the user interface? Using signal and slot? Can we do that accross thread boundaries?}
+\todo[inline]{Are the plugins running by thread or by processes? If so, how do we keep track
+of each? And can we restart plugins to run repeatedly during an editing session?}
+
+\subsection{Changes in the verification tool}
+
+The verification tools are classes that we can either extend through subclasses  or 
+use as-is. In both cases, the verification tools do not need any change to 
+redirect standard output or standard error to the plugin. They do need change 
+for component directed messages.
+
+\todo[inline]{Find out if using poco will solve the \qt dependancy and still give us some
+sort of ipc facility that is cross platform.}
+
+\subsection{How to implement parameters?}
+
+The \vt must relay the parameter.
+
+\section{Qt Plugin architecture}
+
+\subsection{General description}
+
+The \qt system supports two forms of plugin, one that supports a \qt extension through plugin, and
+the other that supports general extension of an application through a plugin. It is the second form
+that we are discussing in this document. 
+
+\subsection{Plugin structure}
+
+An application plugin using \qt is based on defining an interface and a registration with the \qt
+system using a \code{QObject} derived class. After registration the \qt system provides a class
+\code{} that will load a program and determine whether it is a plugin, and if so, determine
+whether it is the plugin we are looking for.
+
+The class implementing the plugin has the following structure:
+
+\begin{verbatim}
+	class <type>Plugin : public QObject, <type>Interface
+	{
+	    Q_OBJECT
+	    Q_PLUGIN_METADATA(IID "unique.prefix.<type>Interface" FILE "<type>plugin.json")
+	    Q_INTERFACES(<type>Interface)
+	
+	public:
+	    QString <method>(const QString &message) Q_DECL_OVERRIDE;
+	};
+\end{verbatim}
+
+In this code one can replace \verb=<type>= by the type of interface we are creating. The 
+example this code is started from is an echo server where the interface was called 
+\code{EchoInterface}. The \verb=<method>= should be defined as pure virtual in the interface.
+The interface should contain a virtual destructor and only pure virtual methods or the
+moc-compiler will complain.
+
+Following this structure one can implement a plugin loader. For example the following code was 
+copied from the example of an echo plugin in the \code{QtCreator}:
+
+\begin{verbatim}
+	bool EchoWindow::loadPlugin()
+	{
+	    QDir pluginsDir(qApp->applicationDirPath());
+	#if defined(Q_OS_WIN)
+	    if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
+	        pluginsDir.cdUp();
+	#elif defined(Q_OS_MAC)
+	    if (pluginsDir.dirName() == "MacOS") {
+	        pluginsDir.cdUp();
+	        pluginsDir.cdUp();
+	        pluginsDir.cdUp();
+	    }
+	#endif
+	    pluginsDir.cd("plugins");
+	    foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+	        QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
+	        QObject *plugin = pluginLoader.instance();
+	        if (plugin) {
+	            echoInterface = qobject_cast<EchoInterface *>(plugin);
+	            if (echoInterface)
+	                return true;
+	        }
+	    }
+	
+	    return false;
+	}
+\end{verbatim}
+
+It first determines for a file whether it is a plugin and subsequently which interface
+it implements.
+
+\end{document}

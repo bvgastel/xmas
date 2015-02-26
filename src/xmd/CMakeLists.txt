@@ -1,36 +1,13 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(xmd CXX)
-
-add_subdirectory(checker)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-find_package(Qt5Widgets)
-find_package(Qt5Svg)
-
-include_directories(${Qt5Widgets_INCLUDE_DIRS} ${Qt5Svg_INCLUDE_DIRS})
+add_subdirectory(xmas)
+add_subdirectory(xmd)
+add_subdirectory(test)
+add_subdirectory(testmain)
+add_subdirectory(xmasmain)
 
 
-set(XMAS_SRC_FILES complib.cpp
-                   component.cpp
-                   connector.cpp
-                   designercontroller.cpp
-                   main.cpp
-                   mainwindow.cpp
-                   modelwindow.cpp
-                   network.cpp
-                   checker/xmas.cpp)
+include(CTest)
 
-qt5_add_resources(XMAS_QRC_FILES xmd.qrc)
-
-
-add_library(xmd ${XMAS_SRC_FILES} ${XMAS_QRC_FILES})
-
-set_property(TARGET xmd PROPERTY CXX_STANDARD 11)
-set_property(TARGET xmd PROPERTY CXX_STANDARD_REQUIRED ON)
-
-target_link_libraries(xmd Qt5::Widgets Qt5::Svg)
-
-
+add_test(checker-test ${xMAS-checker_BINARY_DIR}/xMAS-checker-test)
+add_test(xmas-test ${testmain_BINARY_DIR}/testmain) 

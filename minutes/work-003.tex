@@ -1,0 +1,80 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 003 voortgang user interface en model }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}
+
+\begin{Minutes}{Work meeting 003 Architecture and build Team 33}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
+\subtitle{User Interface en qml model}
+\minutetaker{Guus}
+\minutesdate{19 januari 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\newcommand{\w}[1]{\textsc{#1}\xspace}
+\newcommand{\qml}{\textsc{QML}\xspace}
+\newcommand{\qt}{\textsc{Qt}\xspace}
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}
+\newcommand{\tv}{\textsc{TeamViewer}\xspace}
+\newcommand{\cpp}{\textsc{C++}\xspace}
+
+\topic{User Interface} 
+
+\subtopic{Voortgang}
+
+\paragraph{Stefan} Heeft de GUI en de primitives in eigen qml elementen
+opgebouwd. Er is nog geen connectie met het qml model van Guus. Dat komt er
+wel, maar pas als het qml model ver genoeg is. Tot die tijd is er nog veel te
+doen op grafisch gebied.
+
+Stefan geeft een demo vanuit zijn machine (met \tv). De primitieven kunnen nu
+overal neergezet, gedraaid, en je kunt uitzoomen en inzoomen.  Alle \cpp
+programmatuur is nu uit de user interface: er is nog alleen \qml. Connecties
+maken is de volgende stap.
+
+Besproken requirements voor GUI:
+
+\begin{description}
+
+	\item[grid] Guus vraagt om een grid, zodat elke component op een vaste
+		lokatie komt met logische co\"{o}rdinaten.
+
+	\item[poorten] De plaatsen van de poorten zijn nodig in de tekening: waar
+		komt een poort?  Het lijkt Guus wel onderdeel van het qml model te
+		kunnen worden.  We bekijken dit in het definitief model nader.
+
+\end{description}
+
+\paragraph{Jeroen} Heeft gisteren een review van het qml model gedaan (nog
+oppervlakkig). De komende week voortzetting van papers lezen om het model
+straks goed te kunnen implementeren. Zodra de basis compleet is, kan Jeroen 
+code voor zowel de user interface als de plugin aanleveren. Jeroen heeft 
+er voor gekozen om aan beide onderdelen te willen werken. 
+
+\paragraph{Guus} Heeft gisteren het qml model gemaakt en is daar vandaag meer 
+verder gegaan. Een probleem met de code samen met Stefan en Jeroen opgelost!
+Naar verwachting morgen een compleet model en in de dagen daarna de bibliotheek
+met primitieven.
+
+\paragraph{Bernard} Het is vandaag 19 januari, dus Bernard is weer terug. Guus
+maakt een afspraak voor komende zaterdag. Het is niet zeker hoe ver de 
+design tool dan is, maar we hebben elkaar al meer dan een maand niet gesproken,
+dus het is wel nuttig om diverse zaken af te stemmen, zoals de wijzigingen in
+\qt en \qml.
+
+\end{Minutes}
+\end{document}

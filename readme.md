@@ -4,8 +4,6 @@ XMAS DESIGN TOOL
 This project is a design tool for NoC system (Network on Chip).
 It uses the language Intel detailed in papers concerning xmas 
 
-TODO: add details of these papers.
-
 To generate the PDF version of this document use the command:
 
 pandoc -f markdown -o readme.pdf readme.md
@@ -18,6 +16,7 @@ Directories (Contents)
 - preparation	 	Files used during preparation plus plan
 - xmas-info			Information on xmas (pdf)
 - design			The directory containing design documents
+- src               The source tree containing all sub projects.
 
 License
 =======
@@ -39,6 +38,12 @@ in the image below.
 
 ![GPL dependencies in short](quick-guide-gplv3-compatibility.png)
 
+Use of development environment
+==============================
+
+We currently use QtCreator because of its ease of project management (qmake).
+QtCreator also uses cmake if instructed to.
+
 Use of Git
 ==========
 
@@ -46,7 +51,8 @@ Configuring Git
 
 We are developing in a heterogeneous environment with both Unix and Windows
 machines. Therefore it is imperative to have all files in the repository in the
-canonical LF-only format. Therefore, Windows users must run
+canonical LF-only format. Therefore, Windows users must configure their editor to 
+create the unix LF-only files in their sources. Also, Windows users should run:
 
 ~~~~~~~~~~~~~~~~~~
 $ git config --global core.autocrlf true
@@ -87,6 +93,14 @@ We use git for communication with the following use cases
 
 	If you cannot, then you could fork the repo and do a pull 
 	request.
+
+Remark: We work with git flow, which is a specific approach to
+        branching. The following description does not presume
+		git flow. If you want to know how git flow works
+		google "git flow". You should find at least
+		the article of Vincent Driessen at http://nvie.com/posts/a-successful-git-branching-model/
+		A fine intro to git flow is: http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/
+		A cheat sheet is: http://danielkummer.github.io/git-flow-cheatsheet/
 
 2. Creating a new branch.
 	You create a new branch "plan" with the command
@@ -162,7 +176,6 @@ agile management tool to visualise our work and to keep track of the progress.
 Compile and install
 ===================
 
-- README-FLTK-WINDOWS.md	The instructions to develop from the windows platform
 - README-LINUX.md			The instructions to develop from one of the linux platforms
 
 Dependencies
@@ -170,10 +183,10 @@ Dependencies
 
 This project depends on the following libraries:
 
-fltk-1.3.3
+Qt5.4		We specifically use Qml 2
 
-We will update this whenever this changes. The following change will probably be the
-boost library.
+Remark that we use as much from the Qt libraries as is possible.
+
 
 Tips
 ====
@@ -188,7 +201,7 @@ Tips
 
 - Use the tool configuration option (Tools ... Configure Tools ...). It starts
   a dialog where you can add any tool you have on your system and use standard
-  macro's to denote directory name, filename etcetera. As an example we use
+  macros to denote directory name, filename etcetera. As an example we use
   "git diff HEAD ${ACTIVE\_EDITOR\_FILENAME}" with the standard option "Launch
   tool in a new console windows and wait for a keypress when done".
 

@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt,final,xcolor=dvipsnames]{article}
 
 \usepackage{subfig}
 \usepackage{wrapfig}% product wrapfigure and wraptable
@@ -17,20 +17,27 @@
     linkcolor = blue
 }
 \usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{tikz}
 \usepackage{pgfgantt}
+\usepackage{pgfcalendar}
 \usepackage{pdflscape}
+\usepackage{xspace}
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
 \usepackage{boxedminipage}
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{xcolor}
 
 \bibliographystyle{alpha}
+
+\input{calendarweek}
 
 \hyphenation{re-quire-ments re-quire-ment}
 
 \author{Guus Bonnema, Stefan Versluys, Jeroen Kleijn}
-\date{21/10/2014}
+\date{21/10/2014 \\ \fcolorbox{black}{green!40}{Wijziging 10 februari 2015}}
 
 \title{Plan van aanpak voor \xmas\ ontwerptool}
 
@@ -45,10 +52,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\xmas}{x\textsc{mas}}%
 \newcommand{\ok}{$\checkmark$}
-
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
+\newcommand{\ou}{\textsc{OU}\xspace}
+\newcommand{\een}{\'{e}\'{e}n\xspace}
 
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Definitie aanpassing1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\global\mdfdefinestyle{aanpassing}{%
+	roundcorner=5pt%
+}%
+\newmdenv[backgroundcolor=green!40,%
+		linewidth=2pt,%
+		style=aanpassing,%
+		frametitlerule=true,%
+		frametitlebackgroundcolor=blue!20!green,%
+		frametitle=Aanpassing febr 2015]{aanpassing1}%
+
+\def\aanp1#1{\colorbox{green!40}{#1}}		
+%\newcommand{\aanp1}[1]{\fcolorbox{black}{green!40}{#1}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% afwijkend section formaat start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand\secformat[1]{%
@@ -83,6 +107,16 @@
 
  Het resultaat van het project is een gedocumenteerd ontwerptool, dat voor
  3 platformen gebouwd is en goed integreert met de bestaande tools voor verificatie.
+
+ \begin{aanpassing1}
+ Naar aanleiding van nieuwe omstandigheden binnen de \ou en de daarmee gepaard 
+ gaande vermindering van communicatie sinds december 2014, hebben we het plan
+ aangepast aan de nieuwe omstandigheden en de huidige inzichten. Met name het de 
+ sectie over risico's is aangepast. Wijzigingen staan in groene kaders.
+ 
+ De planning blijft ongewijzigd.
+ 
+ \end{aanpassing1}
 
 \end{abstract}
 
