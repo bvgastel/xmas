@@ -91,9 +91,9 @@ DISTFILES += mainWindow.qml \
     uicontrols/XDialog.qml \
     uicontrols/Selection.qml \
     uicontrols/OutputLog.qml \
-    readme.md \
     xobjects/xchannel.js \
-    xobjects/xcomponent.js
+    xobjects/xcomponent.js \
+    uiqueries-readme.md
 
 RESOURCES += \
     xmd.qrc
