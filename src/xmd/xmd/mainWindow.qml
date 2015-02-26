@@ -89,7 +89,7 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        //onTriggered: fileSaveDialog.open()
+        onTriggered: sheet.test()//fileSaveDialog.open()
     }
 
 
@@ -366,6 +366,14 @@ ApplicationWindow {
     Connections {
         target: controller
         onWriteLog: log(message,color) //console.log("component create request")
+        onPluginsLoaded: {
+            for (var i in object) {
+                log(object[i].name,"red")
+            }
+        }
 
+    }
+    Component.onCompleted: {
+        controller.loadPlugins()
     }
 }

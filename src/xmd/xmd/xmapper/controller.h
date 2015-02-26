@@ -81,6 +81,7 @@ signals: //to view
      * @return true if successful
      */
     bool createNetwork(const QVariantMap &object);
+    bool pluginsLoaded(const QVariantMap &object);
 
 public slots:  //from view
     bool componentCreated(const QVariant &object);
@@ -90,7 +91,7 @@ public slots:  //from view
     bool channelDestroyed(const QVariant &object);
     bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
-    QVariantMap loadPlugins();
+    bool loadPlugins();
 
 public:
     enum Orientation {

@@ -9,7 +9,7 @@ CONFIG += ordered
 SUBDIRS += \
     plugins \
     xmd \
-    xmdtest \
+#    xmdtest \
     xmdmain
 
 # set the subdirectories for the libraries
