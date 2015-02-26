@@ -60,7 +60,7 @@ void Controller::endMsg() {
     m_logger.log(QString("Controller ending."));
 }
 
-size_t Controller::loadPlugins() {
+QVariantMap Controller::loadPlugins() {
     QDir pluginsDir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
     if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
@@ -73,6 +73,7 @@ size_t Controller::loadPlugins() {
     }
 #endif
     pluginsDir.cd("plugins");
+    QVariantMap *vmap = new QVariantMap();
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
@@ -82,12 +83,13 @@ size_t Controller::loadPlugins() {
                 QString vtname = vtPluginInterface->name();
                 if (!m_vtMap.contains(vtname)) {
                     m_vtMap[vtname] = vtPluginInterface;
+                    vmap->insert(vtname);
                 }
             }
         }
     }
 
-    return m_vtMap.size();
+    return vmap;
 }
 
 bool Controller::startPlugin(QString vtname) {

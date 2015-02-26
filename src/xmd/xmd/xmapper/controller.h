@@ -90,7 +90,7 @@ public slots:  //from view
     bool channelDestroyed(const QVariant &object);
     bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
-    size_t loadPlugins();
+    QVariantMap loadPlugins();
 
 public:
     enum Orientation {
