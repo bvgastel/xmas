@@ -7,11 +7,10 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 SUBDIRS += \
+    plugins \
     xmd \
-    xmdmain \
     xmdtest \
-    plugins
-
+    xmdmain
 
 # set the subdirectories for the libraries
 
