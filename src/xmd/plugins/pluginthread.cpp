@@ -19,12 +19,12 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#include "pluginthread.h"
 
 #include <QUrl>
 #include <QColor>
 
 #include "xmapper/parseflatjsonfile.h"
+#include "pluginthread.h"
 
 QString PluginThread::name() {
     return m_name;
@@ -42,21 +42,6 @@ void PluginThread::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-bool PluginThread::parse_json_file(QUrl fileUrl) {
-
-    auto parseSuccessful = ParseFlatJsonFile::parseJsonFile(fileUrl, m_componentMap, m_mp);
-
-    if (parseSuccessful) {
-    // Start the thread
-    // Set up tracking and parameters
-    // Execute the thread
-    // Track the thread
-    // Wait for thread to finish
-    }
-
-    return true;
-}
-
 bool PluginThread::run(QUrl &fileUrl) {
 
     std::cout << "Started process validate network for components." << std::endl;
@@ -70,8 +55,8 @@ bool PluginThread::run(QUrl &fileUrl) {
     return parseSuccesful;
 }
 
-bool checkPorts(std::map<bitpowder::lib::String, XMASComponent *> &componentMap, mp) {
-
+bool checkPorts(std::map<bitpowder::lib::String, XMASComponent *> &componentMap, bitpowder::lib::MemoryPool mp) {
+    bitpowder::lib::unused(componentMap, mp);
     return false;
 }
 

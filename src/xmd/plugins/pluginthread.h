@@ -27,10 +27,14 @@
 
 #include "xmas.h"
 #include "logger.h"
-
+#include "vtplugininterface.h"
 
 class PluginThread : public QObject, public VtPluginInterface
 {
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID VtPluginInterface_iid FILE "vtplugin.json")
+    Q_INTERFACES(VtPluginInterface)
+
 public:
     PluginThread():
         m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),

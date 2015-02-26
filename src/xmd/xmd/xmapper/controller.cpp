@@ -90,6 +90,12 @@ size_t Controller::loadPlugins() {
     return m_vtMap.size();
 }
 
+bool Controller::startPlugin(QString vtname) {
+    auto plugin = m_vtMap[vtname];
+    plugin->run_json_string("");
+    return false;
+}
+
 /**
  * @brief Controller::pluginParams retrieves the parameters with current values
  * @param name the name of the plugin

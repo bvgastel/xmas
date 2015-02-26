@@ -4,6 +4,7 @@
 #include <QUrl>
 
 #include "memorypool.h"
+#include "xmas.h"
 #include "logger.h"
 
 class ParseFlatJsonFile
