@@ -16,8 +16,8 @@ ParseFlatJsonFile::~ParseFlatJsonFile()
 
 }
 
-bool ParseFlatJsonFile::parseJsonFile (QUrl &fileUrl, std::map<bitpowder::lib::String,
-                                       XMASComponent *> &componentMap,
+bool ParseFlatJsonFile::parseJsonFile (const QUrl &fileUrl,
+                                       std::map<bitpowder::lib::String, XMASComponent *> &componentMap,
                                        bitpowder::lib::MemoryPool &mp) {
 
     Logger *m_logger = new Logger("parse flat json");

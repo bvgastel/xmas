@@ -42,7 +42,11 @@ void PluginThread::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-bool PluginThread::run(QUrl &fileUrl) {
+bool PluginThread::run(const QString &) {
+    return false;
+}
+
+bool PluginThread::run(const QUrl &fileUrl) {
 
     std::cout << "Started process validate network for components." << std::endl;
     bitpowder::lib::MemoryPool mp;
@@ -55,7 +59,7 @@ bool PluginThread::run(QUrl &fileUrl) {
     return parseSuccesful;
 }
 
-bool checkPorts(std::map<bitpowder::lib::String, XMASComponent *> &componentMap, bitpowder::lib::MemoryPool mp) {
+bool checkPorts(std::map<bitpowder::lib::String, XMASComponent *> &componentMap, bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::unused(componentMap, mp);
     return false;
 }

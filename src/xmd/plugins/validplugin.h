@@ -47,8 +47,8 @@ public:
     virtual QMap<QString, QString> parameters();
     virtual void parameters(QMap<QString, QString> paramMap);
 
-    virtual bool run_json_string(QString jsonString);
-    virtual bool run_json_file(QUrl fileUrl);
+    virtual bool run(const QString &jsonString);
+    virtual bool run(const QUrl &fileUrl);
     virtual bool run_json_xmas(std::map<std::string, XMASComponent * > );
 
     virtual Logger *logger() {

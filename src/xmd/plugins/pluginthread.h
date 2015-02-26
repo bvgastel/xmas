@@ -52,7 +52,8 @@ public:
     virtual QMap<QString, QString> parameters();
     virtual void parameters(QMap<QString, QString> paramMap);
 
-    virtual bool run(QUrl &fileUrl);
+    virtual bool run(const QUrl &fileUrl) override;
+    virtual bool run(const QString &json) override;
 
     virtual Logger *logger() {
         return m_logger;

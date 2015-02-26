@@ -44,9 +44,8 @@ public:
     virtual QMap<QString, QString> parameters() = 0;
     virtual void parameters(QMap<QString, QString> paramMap) = 0;
 
-    virtual bool run_json_string(QString jsonString) = 0;
-    virtual bool run_json_file(QUrl fileUrl) = 0;
-    virtual bool run_json_xmas(std::map<std::string, XMASComponent * > ) = 0;
+    virtual bool run(const QString &jsonString) = 0;
+    virtual bool run(const QUrl &fileUrl) = 0;
 
     virtual Logger *logger() = 0;
 
@@ -54,11 +53,7 @@ public:
 
 #define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
 
-
-//QT_BEGIN_NAMESPACE
-
 Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
-//QT_END_NAMESPACE
 
 
 #endif // VTPLUGININTERFACE

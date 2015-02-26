@@ -40,7 +40,7 @@ void ValidPlugin::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-bool ValidPlugin::run_json_string(QString jsonString) {
+bool ValidPlugin::run(const QString &jsonString) {
     size_t len = 10 < jsonString.length() ? 10 : jsonString.length();
     std::cout << "Started process validate network for json starting with '"
               << jsonString.toStdString().substr(0, len)
@@ -48,7 +48,7 @@ bool ValidPlugin::run_json_string(QString jsonString) {
     return true;
 }
 
-bool ValidPlugin::run_json_file(QUrl fileUrl) {
+bool ValidPlugin::run(const QUrl &fileUrl) {
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();

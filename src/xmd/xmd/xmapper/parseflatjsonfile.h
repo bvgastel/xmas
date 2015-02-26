@@ -13,8 +13,8 @@ public:
     ParseFlatJsonFile();
     ~ParseFlatJsonFile();
 
-    static bool parseJsonFile(QUrl &fileUrl, std::map<bitpowder::lib::String,
-                              XMASComponent *> &componentMap,
+    static bool parseJsonFile(const QUrl &fileUrl,
+                              std::map<bitpowder::lib::String, XMASComponent *> &componentMap,
                               bitpowder::lib::MemoryPool &mp
                               );
 
