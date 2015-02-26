@@ -45,6 +45,7 @@ HEADERS       = \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
     xmapper/network.h \
+    xmapper/parseflatjsonfile.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -53,6 +54,7 @@ SOURCES       = \
     xmapper/fieldwalker.cpp \
     xmapper/logoutput.cpp \
     xmapper/network.cpp \
+    xmapper/parseflatjsonfile.cpp
     
 unix|win32 {
     target.path = $$PWD/../../../lib/xmd

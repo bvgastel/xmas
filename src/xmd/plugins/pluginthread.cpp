@@ -24,6 +24,8 @@
 #include <QUrl>
 #include <QColor>
 
+#include "xmapper/parseflatjsonfile.h"
+
 QString PluginThread::name() {
     return m_name;
 }
@@ -40,31 +42,36 @@ void PluginThread::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-bool PluginThread::run_json_string(QString jsonString) {
-    return false;
-}
+bool PluginThread::parse_json_file(QUrl fileUrl) {
 
-bool PluginThread::run_json_file(QUrl fileUrl) {
-    std::string filename =
-            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
-                                  : fileUrl.fileName().toStdString();
+    auto parseSuccessful = ParseFlatJsonFile::parseJsonFile(fileUrl, m_componentMap, m_mp);
 
-    m_logger->log("Opening file " + filename, QColor("black"));
-
-    m_logger->log("Started process validate network for file '"
-                  + filename);
-
+    if (parseSuccessful) {
     // Start the thread
     // Set up tracking and parameters
     // Execute the thread
     // Track the thread
     // Wait for thread to finish
+    }
 
     return true;
 }
 
-bool PluginThread::run_json_xmas(std::map<std::string, XMASComponent * > ) {
+bool PluginThread::run(QUrl &fileUrl) {
+
     std::cout << "Started process validate network for components." << std::endl;
-    return true;
+    bitpowder::lib::MemoryPool mp;
+    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
+    bool parseSuccesful = ParseFlatJsonFile::parseJsonFile(fileUrl, componentMap, mp);
+    if (parseSuccesful) {
+
+    }
+
+    return parseSuccesful;
+}
+
+bool checkPorts(std::map<bitpowder::lib::String, XMASComponent *> &componentMap, mp) {
+
+    return false;
 }
 

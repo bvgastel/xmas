@@ -42,7 +42,12 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
+else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 
+INCLUDEPATH += $$PWD/../xmd
+DEPENDPATH += $$PWD/../xmd
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
@@ -55,3 +60,4 @@ DEPENDPATH += $$PWD/../../../include/datamodel
 
 DISTFILES += \
     vtplugin.json
+

@@ -25,6 +25,7 @@
 #include <QString>
 #include <QMap>
 
+#include "xmas.h"
 #include "logger.h"
 
 
@@ -47,9 +48,7 @@ public:
     virtual QMap<QString, QString> parameters();
     virtual void parameters(QMap<QString, QString> paramMap);
 
-    virtual bool run_json_string(QString jsonString);
-    virtual bool run_json_file(QUrl fileUrl);
-    virtual bool run_json_xmas(std::map<std::string, XMASComponent * > );
+    virtual bool run(QUrl &fileUrl);
 
     virtual Logger *logger() {
         return m_logger;
@@ -65,10 +64,6 @@ private:
      * @brief m_paramMap the parameters for the verification tool in a QMap.
      */
     QMap<QString, QString> m_paramMap;
-    /**
-     * @brief m_mp memory pool
-     */
-    bitpowder::lib::MemoryPool m_mp;
     /**
      * @brief m_logger A specific logger for this verification tool.
      */
