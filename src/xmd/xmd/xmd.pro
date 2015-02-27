@@ -116,18 +116,16 @@ RESOURCES += \
 
 FORMS +=
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
-else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
-
-INCLUDEPATH += $$PWD/../plugins
-DEPENDPATH += $$PWD/../plugins
-
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/plugins -lplugins
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+INCLUDEPATH += $$PWD/../../../include/plugins
+DEPENDPATH += $$PWD/../../../include/plugins
+
