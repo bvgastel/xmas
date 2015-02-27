@@ -63,7 +63,6 @@ void Controller::endMsg() {
 
 bool Controller::loadPlugins() {
     QDir pluginsDir(qApp->applicationDirPath());
-    m_logger.log("application dir path = " + qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
     if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
         pluginsDir.cdUp();
@@ -86,10 +85,9 @@ bool Controller::loadPlugins() {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
-            m_logger.log("Success! Loader found plugin in " + fileName);
             VtPluginInterface *vtPluginInterface = qobject_cast<VtPluginInterface *>(plugin);
             if (vtPluginInterface) {
-                m_logger.log("Success!! Loader found vtPlugin in " + fileName);
+                m_logger.log("Success!! Plugin found is vtPlugin in " + fileName);
                 QString vtname = vtPluginInterface->name();
                 if (m_vtMap.contains(vtname)) {
                     m_logger.log("Duplicate plugin found: " + vtname);

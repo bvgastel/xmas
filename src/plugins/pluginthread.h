@@ -37,25 +37,26 @@ class PluginThread : public QObject, public VtPluginInterface
 
 public:
     PluginThread():
+        m_name("plugin in thread"),
         m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
         m_logger(new Logger("PluginThread")) {
-
+        m_name = "vt in thread";
     }
 
     ~PluginThread() {
 
     }
 
-    virtual QString name();
-    virtual void name(QString name);
+    virtual QString name() override;
+    virtual void name(QString name) override;
 
-    virtual QMap<QString, QString> parameters();
-    virtual void parameters(QMap<QString, QString> paramMap);
+    virtual QMap<QString, QString> parameters() override;
+    virtual void parameters(QMap<QString, QString> paramMap) override;
 
     virtual bool run(const QUrl &fileUrl) override;
     virtual bool run(const QString &json) override;
 
-    virtual Logger *logger() {
+    virtual Logger *logger() override {
         return m_logger;
     }
 
