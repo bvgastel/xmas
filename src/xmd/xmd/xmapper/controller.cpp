@@ -29,6 +29,7 @@
  *
  **************************************************************************/
 
+#include <iostream>
 #include <QtQml>
 #include <QDir>
 #include <QPluginLoader>
@@ -62,6 +63,7 @@ void Controller::endMsg() {
 
 bool Controller::loadPlugins() {
     QDir pluginsDir(qApp->applicationDirPath());
+    m_logger.log("application dir path = " + qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
     if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
         pluginsDir.cdUp();
@@ -72,20 +74,35 @@ bool Controller::loadPlugins() {
         pluginsDir.cdUp();
     }
 #endif
+    pluginsDir.cdUp(); // to build dir
+    pluginsDir.cdUp(); // to src
+    pluginsDir.cdUp(); // to xmas
+    pluginsDir.cd("lib");
     pluginsDir.cd("plugins");
+    m_logger.log("Plugin directory = "+pluginsDir.absolutePath());
     QVariantList vtNameList;
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+        m_logger.log("Found " + fileName + " in " + pluginsDir.absolutePath());
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
+            m_logger.log("Success! Loader found plugin in " + fileName);
             VtPluginInterface *vtPluginInterface = qobject_cast<VtPluginInterface *>(plugin);
             if (vtPluginInterface) {
+                m_logger.log("Success!! Loader found vtPlugin in " + fileName);
                 QString vtname = vtPluginInterface->name();
-                if (!m_vtMap.contains(vtname)) {
+                if (m_vtMap.contains(vtname)) {
+                    m_logger.log("Duplicate plugin found: " + vtname);
+                    m_logger.log(QString("Second occurrence ignored."));
+                } else {
                     m_vtMap[vtname] = vtPluginInterface;
                     vtNameList.append(vtname);
                 }
+            } else {
+                m_logger.log("Fail!! Loader found no vtPlugin in " + fileName);
             }
+        } else {
+            m_logger.log("Fail! Loader found no plugin in "+ fileName);
         }
     }
     emit pluginsLoaded(vtNameList);
