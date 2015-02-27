@@ -39,7 +39,7 @@ public:
         m_prefix = "[" + m_name + "] ";
     }
 
-    ~Logger();
+    virtual ~Logger();
 
     virtual void log(const std::string message, const QColor color=QColor("black"));
     virtual void log(const QString message, const QColor color=QColor("black"));
