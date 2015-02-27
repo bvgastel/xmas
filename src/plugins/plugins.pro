@@ -26,7 +26,6 @@ SOURCES += \
     pluginthread.cpp
 
 HEADERS +=\
-    vtplugininterface.h \
     pluginthread.h
 
 unix|win32 {

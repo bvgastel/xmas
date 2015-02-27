@@ -38,15 +38,20 @@ include (defines.pri)
 
 QT += widgets quick qml quickwidgets
 
-HEADERS       = \ 
-    xmdexception.h \
-    logger.h \
+XMAPPER_HEADERS = \
     xmapper/componentwalker.h \
     xmapper/controller.h \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
     xmapper/network.h \
-    xmapper/parseflatjsonfile.h
+    xmapper/parseflatjsonfile.h \
+    xmapper/vtplugininterface.h
+
+
+HEADERS       = \ 
+    xmdexception.h \
+    logger.h \
+    $$XMAPPER_HEADERS
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -63,8 +68,15 @@ unix|win32 {
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/xmd
-    headerfiles.files = $$PWD/*.h
+    headerfiles.files = $$HEADERS
+    headerfiles.files -= $$XMAPPER_HEADERS
+    message(header files are $$headerfiles.files)
     INSTALLS += headerfiles
+
+    headerfiles_xmapper.path = $$PWD/../../../include/xmd/xmapper
+    headerfiles_xmapper.files = $$XMAPPER_HEADERS
+    message(header files for xmapper are $$headerfiles_xmapper.files)
+    INSTALLS += headerfiles_xmapper
 }
 
 INCLUDEPATH += uicontrols xobjects xmapper content ../plugins
