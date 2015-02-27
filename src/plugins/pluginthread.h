@@ -26,7 +26,7 @@
 #include <QMap>
 
 #include "xmas.h"
-#include "logger.h"
+#include "xmapper/logger.h"
 #include "vtplugininterface.h"
 
 class PluginThread : public QObject, public VtPluginInterface
