@@ -14,4 +14,4 @@ SUBDIRS += \
 
 # set the subdirectories for the libraries
 
-libxmd.subdir = xmd
+# libxmd.subdir = xmd
