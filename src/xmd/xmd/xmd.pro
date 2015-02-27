@@ -40,6 +40,7 @@ QT += widgets quick qml quickwidgets
 
 HEADERS       = \ 
     xmdexception.h \
+    logger.h \
     xmapper/componentwalker.h \
     xmapper/controller.h \
     xmapper/fieldwalker.h \
@@ -49,6 +50,7 @@ HEADERS       = \
 				
 SOURCES       = \ 
     xmdexception.cpp \
+    logger.cpp \
     xmapper/componentwalker.cpp \
     xmapper/controller.cpp \
     xmapper/fieldwalker.cpp \
