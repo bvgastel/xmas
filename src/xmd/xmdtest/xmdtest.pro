@@ -35,12 +35,12 @@ else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
-else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
+#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
+#else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
 
-INCLUDEPATH += $$PWD/../plugins
-DEPENDPATH += $$PWD/../plugins
+#INCLUDEPATH += $$PWD/../plugins
+#DEPENDPATH += $$PWD/../plugins
 
 # All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #

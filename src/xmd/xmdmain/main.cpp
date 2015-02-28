@@ -36,7 +36,7 @@
 
 #include <QQmlContext>
 #include <QtQml>
-#include "controller.h"
+#include "../xmd/xmapper/controller.h"
 
 int main(int argc, char *argv[])
 {

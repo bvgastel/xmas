@@ -49,7 +49,7 @@
 #include "xmas.h"
 #include "componentwalker.h"
 #include "vtplugininterface.h"
-#include "logger.h"
+#include "../logger.h"
 
 
 class Controller : public QObject

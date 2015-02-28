@@ -30,7 +30,7 @@
 #include <QMap>
 
 #include "xmas.h"
-#include "logger.h"
+#include "../logger.h"
 
 class VtPluginInterface
 {

@@ -118,7 +118,7 @@ FORMS +=
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../../lib/plugins -lplugins
+#unix|win32: LIBS += -L$$PWD/../../../lib/plugins -lplugins
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
