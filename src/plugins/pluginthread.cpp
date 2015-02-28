@@ -42,6 +42,15 @@ void PluginThread::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
+Logger *PluginThread::logger() {
+    return m_logger;
+}
+
+void PluginThread::xstart(const QString &json) override {
+    bitpowder::lib::unused(json);
+    // no action yet
+}
+
 bool PluginThread::run(const QString &) {
     return false;
 }
@@ -53,7 +62,9 @@ bool PluginThread::run(const QUrl &fileUrl) {
     std::map<bitpowder::lib::String, XMASComponent *> componentMap;
     bool parseSuccesful = ParseFlatJsonFile::parseJsonFile(fileUrl, componentMap, mp);
     if (parseSuccesful) {
-
+        std::cout << "Started parsing file " << fileUrl.fileName().toStdString() << std::endl;
+        std::cout << std::string("Not implemented yet") << std::endl;
+        std::cout << "Finished parsing file " << fileUrl.fileName().toStdString() << std::endl;
     }
 
     return parseSuccesful;

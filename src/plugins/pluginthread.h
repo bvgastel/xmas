@@ -40,7 +40,7 @@ public:
         m_name("plugin in thread"),
         m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
         m_logger(new Logger("PluginThread")) {
-        m_name = "vt in thread";
+        m_name = "simple checks in thread";
     }
 
     ~PluginThread() {
@@ -53,12 +53,13 @@ public:
     virtual QMap<QString, QString> parameters() override;
     virtual void parameters(QMap<QString, QString> paramMap) override;
 
+    // FIXME: why do I *not* get an error message for override of non-existing parent method?
+    virtual void xstart(const QString &json) override;
+
     virtual bool run(const QUrl &fileUrl) override;
     virtual bool run(const QString &json) override;
 
-    virtual Logger *logger() override {
-        return m_logger;
-    }
+    virtual Logger *logger() override;
 
 private:
 
