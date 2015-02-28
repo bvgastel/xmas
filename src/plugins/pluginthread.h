@@ -22,11 +22,15 @@
 #ifndef PLUGINTHREAD_H
 #define PLUGINTHREAD_H
 
+#include <chrono>
+
 #include <QString>
 #include <QMap>
+#include <QThread>
 
 #include "xmas.h"
 #include "logger.h"
+#include "result.h"
 #include "vtplugininterface.h"
 
 class PluginThread : public QObject, public VtPluginInterface
@@ -36,16 +40,9 @@ class PluginThread : public QObject, public VtPluginInterface
     Q_INTERFACES(VtPluginInterface)
 
 public:
-    PluginThread():
-        m_name("plugin in thread"),
-        m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
-        m_logger(new Logger("PluginThread")) {
-        m_name = "simple checks in thread";
-    }
+    PluginThread(QObject *parent = 0);
 
-    virtual ~PluginThread() {
-
-    }
+    virtual ~PluginThread();
 
     virtual QString name() override;
     virtual void name(QString name) override;
@@ -55,14 +52,15 @@ public:
 
     virtual void start(const QString &json) override;
 
-    // WARNING: why do I *not* get an error message for override of non-existing parent method?
-    // WARNING: A non-existent parent method causes the pluginloader to refuse this plugin, but no compiler warning
-    // virtual void nonexistantinparentmethod() override;
-
-    virtual bool run(const QUrl &fileUrl) override;
-    virtual bool run(const QString &json) override;
-
     virtual Logger *logger() override;
+
+    std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
+    checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap);
+
+public slots:
+    void handleResults(const Result &result);
+signals:
+    void operate(const QString &json);
 
 private:
 
@@ -78,6 +76,35 @@ private:
      * @brief m_logger A specific logger for this verification tool.
      */
     Logger *m_logger;
+    /**
+     * @brief m_workerThread The thread that will run the verification tool
+     */
+    QThread m_workerThread;
 };
+
+class SyntaxCheckWorker : public QObject
+{
+    Q_OBJECT
+public:
+    SyntaxCheckWorker(QObject *parent = 0) : QObject(parent) {
+
+    }
+
+    virtual ~SyntaxCheckWorker() {
+
+    }
+
+private:
+    std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
+    checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
+                Result &result);
+
+public slots:
+    void doWork(const QString &json);
+
+signals:
+    void resultReady(const Result &result);
+};
+
 
 #endif // PLUGINTHREAD_H

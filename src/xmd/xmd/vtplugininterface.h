@@ -46,9 +46,6 @@ public:
 
     virtual void start(const QString &json) = 0;
 
-    virtual bool run(const QString &jsonString) = 0;
-    virtual bool run(const QUrl &fileUrl) = 0;
-
     virtual Logger *logger() = 0;
 
 };

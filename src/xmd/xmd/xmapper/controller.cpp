@@ -107,9 +107,9 @@ bool Controller::loadPlugins() {
     return m_vtMap.size()>0;
 }
 
-bool Controller::startPlugin(QString vtname) {
+bool Controller::startPlugin(const QString &vtname, const QString &json) {
     auto plugin = m_vtMap[vtname];
-    plugin->run("");
+    plugin->start(json);
     return false;
 }
 

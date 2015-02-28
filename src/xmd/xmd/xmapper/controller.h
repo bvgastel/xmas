@@ -113,7 +113,7 @@ public:
     QVariantMap pluginParams(QString name);
     bool pluginParam(QString name, QString key, QString value);
 
-    bool startPlugin(QString vtname);
+    bool startPlugin(const QString &vtname, const QString &json);
 
     void startMsg();
     void endMsg();
