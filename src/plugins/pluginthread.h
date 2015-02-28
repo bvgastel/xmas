@@ -27,7 +27,7 @@
 
 #include "xmas.h"
 #include "logger.h"
-#include "xmapper/vtplugininterface.h"
+#include "vtplugininterface.h"
 
 class PluginThread : public QObject, public VtPluginInterface
 {
@@ -43,7 +43,7 @@ public:
         m_name = "simple checks in thread";
     }
 
-    ~PluginThread() {
+    virtual ~PluginThread() {
 
     }
 
@@ -53,8 +53,11 @@ public:
     virtual QMap<QString, QString> parameters() override;
     virtual void parameters(QMap<QString, QString> paramMap) override;
 
-    // FIXME: why do I *not* get an error message for override of non-existing parent method?
-    virtual void xstart(const QString &json) override;
+    virtual void start(const QString &json) override;
+
+    // WARNING: why do I *not* get an error message for override of non-existing parent method?
+    // WARNING: A non-existent parent method causes the pluginloader to refuse this plugin, but no compiler warning
+    // virtual void nonexistantinparentmethod() override;
 
     virtual bool run(const QUrl &fileUrl) override;
     virtual bool run(const QString &json) override;

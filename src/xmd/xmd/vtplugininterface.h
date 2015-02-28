@@ -30,7 +30,7 @@
 #include <QMap>
 
 #include "xmas.h"
-#include "../logger.h"
+#include "logger.h"
 
 class VtPluginInterface
 {
@@ -43,6 +43,8 @@ public:
 
     virtual QMap<QString, QString> parameters() = 0;
     virtual void parameters(QMap<QString, QString> paramMap) = 0;
+
+    virtual void start(const QString &json) = 0;
 
     virtual bool run(const QString &jsonString) = 0;
     virtual bool run(const QUrl &fileUrl) = 0;

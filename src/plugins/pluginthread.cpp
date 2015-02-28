@@ -46,7 +46,7 @@ Logger *PluginThread::logger() {
     return m_logger;
 }
 
-void PluginThread::xstart(const QString &json) override {
+void PluginThread::start(const QString &json) override {
     bitpowder::lib::unused(json);
     // no action yet
 }

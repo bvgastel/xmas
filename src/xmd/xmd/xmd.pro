@@ -45,12 +45,12 @@ XMAPPER_HEADERS = \
     xmapper/logoutput.h \
     xmapper/network.h \
     xmapper/parseflatjsonfile.h \
-    xmapper/vtplugininterface.h
 
 
 HEADERS       = \ 
     xmdexception.h \
     logger.h \
+    vtplugininterface.h \
     $$XMAPPER_HEADERS
 				
 SOURCES       = \ 

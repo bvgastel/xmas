@@ -48,7 +48,7 @@
 
 #include "xmas.h"
 #include "componentwalker.h"
-#include "vtplugininterface.h"
+#include "../vtplugininterface.h"
 #include "../logger.h"
 
 
