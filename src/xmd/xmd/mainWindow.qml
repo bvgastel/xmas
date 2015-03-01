@@ -266,6 +266,7 @@ ApplicationWindow {
         id: xmasToolbar
         height:48
         anchors {right: parent.right;  left: parent.left}
+        //onRun: controller.start(jsonfilesomewheresomehow); // must be json file in a string
     }
 
     SplitView {
