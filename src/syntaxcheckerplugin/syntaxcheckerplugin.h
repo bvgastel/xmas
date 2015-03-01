@@ -54,9 +54,6 @@ public:
 
     virtual Logger *logger() override;
 
-    std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
-    checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap);
-
 public slots:
     void handleResults(const Result &result);
 signals:
