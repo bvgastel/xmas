@@ -27,7 +27,6 @@
 
 #include "xmapper/parseflatjsonfile.h"
 #include "parse.h"
-#include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
 
 QString SyntaxCheckerPlugin::name() {
@@ -39,11 +38,11 @@ SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
     m_logger(new Logger("PluginThread"))
 {
-    SyntaxCheckWorker *worker = new SyntaxCheckWorker;
-    worker->moveToThread(&m_workerThread);
-    connect(&m_workerThread, &QThread::finished, worker, &QObject::deleteLater);
-    connect(this, &SyntaxCheckerPlugin::operate, worker, &SyntaxCheckWorker::doWork);
-    connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
+    m_worker = new SyntaxCheckWorker;
+    m_worker->moveToThread(&m_workerThread);
+    connect(&m_workerThread, &QThread::finished, m_worker, &QObject::deleteLater);
+    connect(this, &SyntaxCheckerPlugin::operate, m_worker, &SyntaxCheckWorker::doWork);
+    connect(m_worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
     m_workerThread.start();
 }
 
@@ -52,19 +51,18 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.wait();
 }
 
-void SyntaxCheckerPlugin::handleResults(const Result &result) {
-    // Don't know what to do yet, with the results. Show them I guess
-    auto list = result.errorList();
-    for (ErrorObject err : list) {
-        if (err.error) {
-            m_logger->log(err.errorMessage);
-            m_logger->log(err.errorObjectName);
-        } else {
-            m_logger->log(result.description());
-        }
-
-    }
-}
+//void SyntaxCheckerPlugin::handleResults(const Result &result) {
+//    // Don't know what to do yet, with the results. Show them I guess
+//    auto list = result.errorList();
+//    for (ErrorObject err : list) {
+//        if (err.error) {
+//            m_logger->log(err.errorMessage);
+//            m_logger->log(err.errorObjectName);
+//        } else {
+//            m_logger->log(result.description());
+//        }
+//    }
+//}
 
 void SyntaxCheckerPlugin::name(QString name) {
     m_name = name;

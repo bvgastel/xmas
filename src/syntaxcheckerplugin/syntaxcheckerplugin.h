@@ -31,6 +31,7 @@
 #include "xmas.h"
 #include "logger.h"
 #include "result.h"
+#include "syntaxcheckworker.h"
 #include "vtplugininterface.h"
 
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
@@ -54,9 +55,10 @@ public:
 
     virtual Logger *logger() override;
 
-public slots:
-    void handleResults(const Result &result);
+//public slots:
+//    virtual void handleResults(const Result &result);
 signals:
+    void handleResults(const Result &result);
     void operate(const QString &json);
 
 private:
@@ -77,6 +79,10 @@ private:
      * @brief m_workerThread The thread that will run the verification tool
      */
     QThread m_workerThread;
+    /**
+     * @brief m_worker The syntax checker
+     */
+    SyntaxCheckWorker *m_worker;
 };
 
 

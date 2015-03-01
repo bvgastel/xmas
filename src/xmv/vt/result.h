@@ -19,44 +19,45 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
+#ifndef RESULT_H
+#define RESULT_H
 
-#ifndef VTPLUGININTERFACE_H
-#define VTPLUGININTERFACE_H
+#include <QObject>
 
-#include <map>
-
-#include <QtPlugin>
-#include <QColor>
-#include <QMap>
-
-#include "result.h"
-#include "xmas.h"
-#include "logger.h"
-
-class VtPluginInterface : public QObject
-{
-
-public:
-    virtual ~VtPluginInterface() {}
-
-    virtual QString name() = 0;
-    virtual void name(QString name) = 0;
-
-    virtual QMap<QString, QString> parameters() = 0;
-    virtual void parameters(QMap<QString, QString> paramMap) = 0;
-
-    virtual void start(const QString &json) = 0;
-
-    virtual Logger *logger() = 0;
-
-signals:
-    void handleResults(const Result &result);
+struct ErrorObject {
+    bool error;
+    QString errorMessage;
+    QString errorObjectName;
 };
 
-#define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
+class Result : public QObject
+{
+    Q_OBJECT
+    friend class SyntaxCheckWorker;
 
-Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
+public:
+    Result(QObject *parent = 0);
+    ~Result();
 
+    const QList<ErrorObject> &errorList() const {
+        return m_errorList;
+    }
 
-#endif // VTPLUGININTERFACE
+    const QString description() const {
+        return m_description;
+    }
 
+private:
+    void addErrorList(ErrorObject errorObject) {
+        m_errorList.append(errorObject);
+    }
+
+    void add2ResultString(QString partialResult) {
+        m_description += partialResult;
+    }
+
+    QList<ErrorObject> m_errorList;
+    QString m_description;
+};
+
+#endif // RESULT_H

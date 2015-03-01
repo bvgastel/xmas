@@ -119,9 +119,14 @@ FORMS +=
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/vt -lvt
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+INCLUDEPATH += $$PWD/../../../include/vt
+DEPENDPATH += $$PWD/../../../include/vt
+
