@@ -27,13 +27,13 @@
 
 #include "xmapper/parseflatjsonfile.h"
 #include "parse.h"
-#include "pluginthread.h"
+#include "syntaxcheckerplugin.h"
 
-QString PluginThread::name() {
+QString SyntaxCheckerPlugin::name() {
     return m_name;
 }
 
-PluginThread::PluginThread(QObject *parent) : QObject(parent),
+SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
     m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
     m_logger(new Logger("PluginThread"))
@@ -41,17 +41,17 @@ PluginThread::PluginThread(QObject *parent) : QObject(parent),
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
     worker->moveToThread(&m_workerThread);
     connect(&m_workerThread, &QThread::finished, worker, &QObject::deleteLater);
-    connect(this, &PluginThread::operate, worker, &SyntaxCheckWorker::doWork);
-    connect(worker, &SyntaxCheckWorker::resultReady, this, &PluginThread::handleResults);
+    connect(this, &SyntaxCheckerPlugin::operate, worker, &SyntaxCheckWorker::doWork);
+    connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
     m_workerThread.start();
 }
 
-PluginThread::~PluginThread() {
+SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.quit();
     m_workerThread.wait();
 }
 
-void PluginThread::handleResults(const Result &result) {
+void SyntaxCheckerPlugin::handleResults(const Result &result) {
     // Don't know what to do yet, with the results. Show them I guess
     auto list = result.errorList();
     for (ErrorObject err : list) {
@@ -65,19 +65,19 @@ void PluginThread::handleResults(const Result &result) {
     }
 }
 
-void PluginThread::name(QString name) {
+void SyntaxCheckerPlugin::name(QString name) {
     m_name = name;
 }
 
-QMap<QString, QString> PluginThread::parameters() {
+QMap<QString, QString> SyntaxCheckerPlugin::parameters() {
     return m_paramMap;
 }
 
-void PluginThread::parameters(QMap<QString, QString> paramMap) {
+void SyntaxCheckerPlugin::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-Logger *PluginThread::logger() {
+Logger *SyntaxCheckerPlugin::logger() {
     return m_logger;
 }
 
@@ -89,7 +89,7 @@ Logger *PluginThread::logger() {
  *
  * @param json the string containing the network in a flat json format
  */
-void PluginThread::start(const QString &json) override {
+void SyntaxCheckerPlugin::start(const QString &json) override {
     emit operate(json);
 }
 

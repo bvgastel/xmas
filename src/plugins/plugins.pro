@@ -23,12 +23,12 @@ TARGET = plugins
 DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
-    pluginthread.cpp \
-    result.cpp
+    result.cpp \
+    syntaxcheckerplugin.cpp
 
 HEADERS +=\
-    pluginthread.h \
-    result.h
+    result.h \
+    syntaxcheckerplugin.h
 
 unix|win32 {
     target.path = $$PWD/../../lib/plugins

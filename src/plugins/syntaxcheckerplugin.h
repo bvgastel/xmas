@@ -33,16 +33,16 @@
 #include "result.h"
 #include "vtplugininterface.h"
 
-class PluginThread : public QObject, public VtPluginInterface
+class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID VtPluginInterface_iid FILE "vtplugin.json")
     Q_INTERFACES(VtPluginInterface)
 
 public:
-    PluginThread(QObject *parent = 0);
+    SyntaxCheckerPlugin(QObject *parent = 0);
 
-    virtual ~PluginThread();
+    virtual ~SyntaxCheckerPlugin();
 
     virtual QString name() override;
     virtual void name(QString name) override;
