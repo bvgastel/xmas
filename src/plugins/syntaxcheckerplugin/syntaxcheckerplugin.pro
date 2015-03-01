@@ -40,18 +40,18 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
-unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../lib/xmd -lxmd
+unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/xmd -lxmd
 
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
 
-INCLUDEPATH += $$PWD/../../include/datamodel
-DEPENDPATH += $$PWD/../../include/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel
 
-INCLUDEPATH += $$PWD/../../include/xmd
-DEPENDPATH += $$PWD/../../include/xmd
+INCLUDEPATH += $$PWD/../../../include/xmd
+DEPENDPATH += $$PWD/../../../include/xmd
 
 DISTFILES += \
     vtplugin.json

@@ -1,4 +1,4 @@
-#include "result.h"
+#include "../result.h"
 
 Result::Result(QObject *parent) : QObject(parent)
 {

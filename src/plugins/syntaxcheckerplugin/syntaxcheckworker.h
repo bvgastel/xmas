@@ -27,7 +27,7 @@
 
 #include "xmas.h"
 #include "simplestring.h"
-#include "result.h"
+#include "../result.h"
 
 
 class SyntaxCheckWorker : public QObject
