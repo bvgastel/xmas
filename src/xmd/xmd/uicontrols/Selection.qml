@@ -30,10 +30,13 @@ Rectangle{
 
     function contains(item)
     {
+
+        console.log("item(x,y,s)=(" + item.x + "," + item.y + "," + item.scale + ")")
+        console.log("selection(x,y,w,h)=(" + selection.x + "," + selection.y + "," + selection.width + "," + selection.height + ")")
         return (item.x >= selection.x
-                && item.x <= selection.x + selection.width
+                && item.x + (item.width * item.scale) <= selection.x + selection.width
                 && item.y >= selection.y
-                && item.y <= selection.y + selection.height)
+                && item.y + (item.height * item.scale) <= selection.y + selection.height)
     }
 
 
@@ -60,9 +63,9 @@ Rectangle{
         var xmin=1000000,xmax=-1,ymin=1000000,ymax=-1
         for (var item in list){
             xmin= Math.min(xmin, list[item].x - margin)
-            xmax= Math.max(xmax, list[item].x + list[item].width + margin)
+            xmax= Math.max(xmax, list[item].x + (list[item].width * list[item].scale ) + margin)
             ymin= Math.min(ymin, list[item].y - margin)
-            ymax= Math.max(ymax, list[item].y + list[item].height + margin)
+            ymax= Math.max(ymax, list[item].y + (list[item].height * list[item].scale) + margin)
         }
         if(ymax<0) return Qt.rect(0,0,0,0)
         return Qt.rect(xmin,ymin,xmax-xmin,ymax-ymin)
@@ -99,8 +102,8 @@ Rectangle{
         drag.target: parent
         drag.minimumX: -margin
         drag.minimumY: -margin
-        drag.maximumX: selection.parent.width - selection.width + margin
-        drag.maximumY: selection.parent.height - selection.height + margin
+        drag.maximumX: sheet.width - selection.width + margin
+        drag.maximumY: sheet.height - selection.height + margin
         onPressed: {
             if (mouse.button == Qt.RightButton)
                 showContextMenu()

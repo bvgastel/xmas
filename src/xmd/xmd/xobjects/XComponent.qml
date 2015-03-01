@@ -42,6 +42,7 @@ Item {
     width: 100
     height: 100
     focus: true
+
     z:1 //on top of channels
     property int uid:-1
     property string type: "unknown"
@@ -60,6 +61,8 @@ Item {
     signal update()
     signal showDialog()
     signal boundReached(var dx, var dy)
+
+    transformOrigin: Item.TopLeft
 
     //name tag
     Item{
@@ -151,7 +154,7 @@ Item {
     }
 
     onRotationChanged:component.update()
-    onScaleChanged: doMove(0,0)
+    //onScaleChanged: doMove(0,0)
     onSelectedChanged: {focus = selected}
 
     Rectangle {
@@ -170,6 +173,32 @@ Item {
         onClearSelection: component.selected = false
         onMoveSelected:  component.update()
     }
+
+    function doMove(dx,dy){
+         x = x + dx
+         y = y + dy
+         if (x < leftBound())
+         {
+             boundReached(leftBound()-x,0)
+             x = leftBound()
+         }
+         if (y < topBound())
+         {
+             boundReached(0,topBound()-y)
+             y = topBound()
+         }
+         if (x > rightBound())
+         {
+             boundReached(x-rightBound(),0)
+             x = rightBound()
+         }
+         if (y > bottomBound())
+         {
+             boundReached(0,y-bottomBound())
+             y = bottomBound()
+         }
+         component.update()
+     }
 
     function leftBound(){
         return sheet.margin + width/2 * (scale-1)
