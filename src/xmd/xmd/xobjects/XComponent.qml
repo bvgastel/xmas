@@ -33,6 +33,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS 1.0
+import "../uicontrols"
 import "../xmapper/controller.js" as Ctrl
 
 Item {
@@ -55,11 +56,6 @@ Item {
     property bool withDialog: false
     property bool topLabel: true
     property var param
-
-    //    //TODO replace with vars in js
-    //    property int oldX: x
-    //    property int oldY: y
-
 
     signal update()
     signal showDialog()
@@ -98,7 +94,7 @@ Item {
         id: mousearea
         anchors.fill: component
         preventStealing: true
-        hoverEnabled:  component.parent && component.parent.isConnecting() ? false : true
+        hoverEnabled:  sheet.isConnecting() ? false : true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
         drag.minimumX: leftBound()
@@ -111,7 +107,7 @@ Item {
             if (mouse.button == Qt.LeftButton) {
                 var tmp = selected
                 if(mouse.modifiers != Qt.ControlModifier){
-                    component.parent ? component.parent.clearSelections(component): null
+                    sheet.clearSelections(component)
                 }
                 selected = !tmp
             }
@@ -120,7 +116,7 @@ Item {
             }
         }
         onEntered: {
-            if(component.parent && !component.parent.isConnecting()){
+            if(sheet.isConnecting()){
                 component.focus = true
                 cursorShape = Qt.OpenHandCursor
             }
@@ -156,67 +152,23 @@ Item {
 
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
-    onSelectedChanged: focus = selected
-
-    //    onXChanged: {
-    //        var dx = x-oldX
-    //        oldX = x
-    //        var dy = y-oldY
-    //        oldY = y
-    //        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
-    //    }
-    //    onYChanged: {
-    //        var dx = x-oldX
-    //        oldX = x
-    //        var dy = y-oldY
-    //        oldY = y
-    //        component.parent && mousearea.containsMouse ? component.parent.moveSelection(dx,dy): null
-    //    }
+    onSelectedChanged: {focus = selected}
 
     Rectangle {
-        id: selection
+        id: highLite
         anchors.fill: mousearea
-        color: selected ? "lightsteelblue" : "transparent"
         border.color: "steelblue"
-        border.width: 1
+        border.width: selected ? 1 : 0
         visible: selected || component.focus
-        opacity: 0.75
-        z:-1
+        //opacity: 0.75
+        z:-1 // under parent = component
      }
 
     Connections {
-        target: parent
-        onGroupSelected: component.selected = group.contains(component.x,component.y)
+        target: sheet
         onDeleteSelected: if (component.selected) Ctrl.destroy(component)
         onClearSelection: component.selected = false
-        onMoveSelected: if (component.selected && !mousearea.containsMouse) doMove(dx,dy)
-    }
-
-
-    function doMove(dx,dy){
-        x = x + dx
-        y = y + dy
-        if (x < leftBound())
-        {
-            boundReached(leftBound()-x,0)
-            x = leftBound()
-        }
-        if (y < topBound())
-        {
-            boundReached(0,topBound()-y)
-            y = topBound()
-        }
-        if (x > rightBound())
-        {
-            boundReached(x-rightBound(),0)
-            x = rightBound()
-        }
-        if (y > bottomBound())
-        {
-            boundReached(0,y-bottomBound())
-            y = bottomBound()
-        }
-        component.update()
+        onMoveSelected:  component.update()
     }
 
     function leftBound(){
@@ -245,4 +197,5 @@ Item {
             onTriggered: Ctrl.destroy(component)
         }
     }
+
 }

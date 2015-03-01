@@ -89,7 +89,7 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        onTriggered: sheet.test()//fileSaveDialog.open()
+        //onTriggered: fileSaveDialog.open()
     }
 
 

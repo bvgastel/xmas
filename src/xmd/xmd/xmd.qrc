@@ -52,5 +52,6 @@
         <file>content/switch.png</file>
         <file>content/function.png</file>
         <file>content/composite.png</file>
-		</qresource>
+        <file>uicontrols/SelectionHandle.qml</file>
+    </qresource>
 </RCC>

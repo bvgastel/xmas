@@ -109,7 +109,8 @@ DISTFILES += mainWindow.qml \
     uicontrols/OutputLog.qml \
     xobjects/xchannel.js \
     xobjects/xcomponent.js \
-    uiqueries_readme.md
+    uiqueries_readme.md \
+    uicontrols/SelectionHandle.qml
 
 RESOURCES += \
     xmd.qrc

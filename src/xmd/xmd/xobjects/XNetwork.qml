@@ -79,19 +79,16 @@ Rectangle {
         clearSelection()
     }
 
-    function moveSelection(dx,dy) {
-        //propagate to all children
-        moveSelected(dx,dy)
-    }
 
     focus: true
 
     property bool selectionMode: Qt.Unchecked
+    property bool selecting: false
     property int gridsize: 10
     property int margin: 25
 
     signal groupSelected(var group)
-    signal moveSelected(var dx,var dy)
+    signal moveSelected()
     signal deleteSelected()
     signal clearSelection()
 
@@ -197,10 +194,24 @@ Rectangle {
         return true
     }
 
+    function canvasItems(){
+        var children = sheet.children
+        var items = []
+        for (var child in children){
+            if(children[child].objectName==="component"
+                    || children[child].objectName==="channel")
+                items.push(children[child])
+         }
+        return items
+    }
 
-
-    Selection {id: selection}
-
+    Selection {
+        id: selection
+        z:100
+        onSizeChanged: selectItems(canvasItems())
+        onShowContextMenu:contextMenu.popup()
+        onPositionChanged: moveSelected()
+    }
 
     MouseArea {
         id: area
@@ -224,12 +235,10 @@ Rectangle {
                 }
             }
             if (mouse.button == Qt.LeftButton){
-
                 if(sheet.selectionMode){
                     sheet.clearSelection()
-                    selection.from = Qt.point(mouse.x,mouse.y)
-                    selection.to = Qt.point(mouse.x,mouse.y)
-                    selection.visible = true
+                    sheet.selecting = true
+                    selection.start(mouse)
                     focus = true
                 }
             }
@@ -237,17 +246,19 @@ Rectangle {
         onReleased: {
             if (mouse.button == Qt.LeftButton){
                 if(sheet.selectionMode){
-                    sheet.groupSelected(selection)
-                    selection.from = Qt.point(0,0)
-                    selection.to = Qt.point(0,0)
-                    selection.visible = false
+                    sheet.selecting = false
+                    selection.selectItems(canvasItems())
                 }
             }
         }
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                if(!sheet.selectionMode) sheet.clearSelection()
+                if(!sheet.selectionMode) {
+                    sheet.clearSelection()
+                    selection.selectItems()
+                }
+
                 focus = true
             }
             if (mouse.button == Qt.RightButton) {
@@ -256,7 +267,7 @@ Rectangle {
         }
 
         onPositionChanged: {
-            if(sheet.selectionMode) selection.to = Qt.point(mouse.x,mouse.y)
+            if(sheet.selectionMode) selection.updateInitialSize(mouse)
             wire.mouseX = mouse.x
             wire.mouseY = mouse.y
             wire.requestPaint()
