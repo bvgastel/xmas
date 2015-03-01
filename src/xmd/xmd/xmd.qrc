@@ -53,5 +53,11 @@
         <file>content/function.png</file>
         <file>content/composite.png</file>
         <file>uicontrols/SelectionHandle.qml</file>
+        <file>content/stop_glow.ico</file>
+        <file>content/stop_off.ico</file>
+        <file>content/stop_on.ico</file>
+        <file>content/run_glow.ico</file>
+        <file>content/run_off.ico</file>
+        <file>content/run_on.ico</file>
     </qresource>
 </RCC>
