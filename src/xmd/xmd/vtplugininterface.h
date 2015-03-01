@@ -47,6 +47,7 @@ public:
     virtual void start(const QString &json) = 0;
 
     virtual Logger *logger() = 0;
+
 };
 
 #define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
