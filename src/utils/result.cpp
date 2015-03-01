@@ -19,40 +19,17 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
+#include "result.h"
 
-#ifndef VTPLUGININTERFACE_H
-#define VTPLUGININTERFACE_H
+using namespace utils;
 
-#include <map>
-
-#include <QtPlugin>
-#include <QColor>
-#include <QMap>
-
-#include "xmas.h"
-#include "logger.h"
-
-class VtPluginInterface
+Result::Result(QObject *parent) : QObject(parent)
 {
 
-public:
-    virtual ~VtPluginInterface() {}
+}
 
-    virtual QString name() = 0;
-    virtual void name(QString name) = 0;
+Result::~Result()
+{
 
-    virtual QMap<QString, QString> parameters() = 0;
-    virtual void parameters(QMap<QString, QString> paramMap) = 0;
-
-    virtual void start(const QString &json) = 0;
-
-    virtual Logger *logger() = 0;
-};
-
-#define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
-
-Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
-
-
-#endif // VTPLUGININTERFACE
+}
 

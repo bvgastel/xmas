@@ -29,6 +29,8 @@ WARNINGS += -Wall
 
 TEMPLATE = lib
 
+DEFINES += QT_DEBUG_PLUGINS
+
 CONFIG += C++11
 CONFIG += create_prl
 win32: CONFIG += static

@@ -29,14 +29,10 @@
 #include "parse.h"
 #include "syntaxcheckerplugin.h"
 
-QString SyntaxCheckerPlugin::name() {
-    return m_name;
-}
-
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
     m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
-    m_logger(new Logger("PluginThread"))
+    m_logger(new Logger("Syntax checker plugin"))
 {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
     worker->moveToThread(&m_workerThread);
@@ -51,10 +47,10 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.wait();
 }
 
-void SyntaxCheckerPlugin::handleResults(const Result &result) {
+void SyntaxCheckerPlugin::handleResults(const utils::Result &result) {
     // Don't know what to do yet, with the results. Show them I guess
     auto list = result.errorList();
-    for (ErrorObject err : list) {
+    for (utils::ErrorObject err : list) {
         if (err.error) {
             m_logger->log(err.errorMessage);
             m_logger->log(err.errorObjectName);
@@ -63,6 +59,10 @@ void SyntaxCheckerPlugin::handleResults(const Result &result) {
         }
 
     }
+}
+
+QString SyntaxCheckerPlugin::name() {
+    return m_name;
 }
 
 void SyntaxCheckerPlugin::name(QString name) {
@@ -94,7 +94,7 @@ void SyntaxCheckerPlugin::start(const QString &json) override {
 }
 
 void SyntaxCheckWorker::doWork(const QString &json) {
-    Result result;
+    utils::Result result;
 
     // STEP 0: parse the json string toward a component map
     bitpowder::lib::MemoryPool mp;
@@ -114,7 +114,7 @@ void SyntaxCheckWorker::doWork(const QString &json) {
 
 std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
 SyntaxCheckWorker::checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
-                               Result &result) {
+                               utils::Result &result) {
     auto start = std::chrono::high_resolution_clock::now();
 
     // check that each pointer is reflexive

@@ -97,7 +97,7 @@ bool Controller::loadPlugins() {
                     vtNameList.append(vtname);
                 }
             } else {
-                m_logger.log("Fail!! Loader found no vtPlugin in " + fileName);
+                m_logger.log("Fail!! Loader found plugin, but it is no vtPlugin in " + fileName);
             }
         } else {
             m_logger.log("Fail! Loader found no plugin in "+ fileName);

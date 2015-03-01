@@ -19,8 +19,8 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#ifndef PLUGINTHREAD_H
-#define PLUGINTHREAD_H
+#ifndef SYNTAXCHECERKPLUGIN_H
+#define SYNTAXCHECKERPLUGIN_H
 
 #include <chrono>
 
@@ -36,7 +36,7 @@
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID VtPluginInterface_iid FILE "vtplugin.json")
+    Q_PLUGIN_METADATA(IID VtPluginInterface_iid FILE "syntaxcheckerplugin.json")
     Q_INTERFACES(VtPluginInterface)
 
 public:
@@ -58,7 +58,7 @@ public:
     checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap);
 
 public slots:
-    void handleResults(const Result &result);
+    void handleResults(const utils::Result &result);
 signals:
     void operate(const QString &json);
 
@@ -97,14 +97,14 @@ public:
 private:
     std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
     checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
-                Result &result);
+                utils::Result &result);
 
 public slots:
     void doWork(const QString &json);
 
 signals:
-    void resultReady(const Result &result);
+    void resultReady(const utils::Result &result);
 };
 
 
-#endif // PLUGINTHREAD_H
+#endif // SYNTAXCHECKERPLUGIN_H

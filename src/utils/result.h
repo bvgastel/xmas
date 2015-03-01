@@ -19,40 +19,48 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
+#ifndef RESULT_H
+#define RESULT_H
 
-#ifndef VTPLUGININTERFACE_H
-#define VTPLUGININTERFACE_H
+#include <QObject>
 
-#include <map>
+namespace utils {
 
-#include <QtPlugin>
-#include <QColor>
-#include <QMap>
-
-#include "xmas.h"
-#include "logger.h"
-
-class VtPluginInterface
-{
-
-public:
-    virtual ~VtPluginInterface() {}
-
-    virtual QString name() = 0;
-    virtual void name(QString name) = 0;
-
-    virtual QMap<QString, QString> parameters() = 0;
-    virtual void parameters(QMap<QString, QString> paramMap) = 0;
-
-    virtual void start(const QString &json) = 0;
-
-    virtual Logger *logger() = 0;
+struct ErrorObject {
+    bool error;
+    QString errorMessage;
+    QString errorObjectName;
 };
 
-#define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
+class Result : public QObject
+{
+    Q_OBJECT
 
-Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
+public:
+    Result(QObject *parent = 0);
+    ~Result();
 
+    const QList<ErrorObject> &errorList() const {
+        return m_errorList;
+    }
 
-#endif // VTPLUGININTERFACE
+    const QString description() const {
+        return m_description;
+    }
 
+    void addErrorList(ErrorObject errorObject) {
+        m_errorList.append(errorObject);
+    }
+
+    void add2ResultString(QString partialResult) {
+        m_description += partialResult;
+    }
+
+private:
+    QList<ErrorObject> m_errorList;
+    QString m_description;
+};
+
+} // namespace utils
+
+#endif // RESULT_H

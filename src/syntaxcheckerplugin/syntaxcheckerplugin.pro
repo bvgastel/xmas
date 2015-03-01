@@ -22,11 +22,9 @@ TARGET = syntaxcheckerplugin
 DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
-    result.cpp \
     syntaxcheckerplugin.cpp
 
 HEADERS +=\
-    result.h \
     syntaxcheckerplugin.h
 
 unix|win32 {
@@ -41,6 +39,7 @@ unix|win32 {
 unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../lib/datamodel -ldatamodel
 unix|win32: LIBS += -L$$PWD/../../lib/xmd -lxmd
+unix|win32: LIBS += -L$$PWD/../../lib/utils -lutils
 
 INCLUDEPATH += $$PWD/../../include/bitpowder
 DEPENDPATH += $$PWD/../../include/bitpowder
@@ -51,6 +50,9 @@ DEPENDPATH += $$PWD/../../include/datamodel
 INCLUDEPATH += $$PWD/../../include/xmd
 DEPENDPATH += $$PWD/../../include/xmd
 
+INCLUDEPATH += $$PWD/../../include/utils
+DEPENDPATH += $$PWD/../../include/utils
+
 DISTFILES += \
-    vtplugin.json
+    syntaxcheckerplugin.json
 
