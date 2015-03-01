@@ -27,6 +27,7 @@
 
 #include "xmapper/parseflatjsonfile.h"
 #include "parse.h"
+#include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
 
 QString SyntaxCheckerPlugin::name() {
@@ -91,50 +92,6 @@ Logger *SyntaxCheckerPlugin::logger() {
  */
 void SyntaxCheckerPlugin::start(const QString &json) override {
     emit operate(json);
-}
-
-void SyntaxCheckWorker::doWork(const QString &json) {
-    Result result;
-
-    // STEP 0: parse the json string toward a component map
-    bitpowder::lib::MemoryPool mp;
-    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
-
-    // STEP 1: check if the topology is well formed
-    std::chrono::high_resolution_clock::time_point start, end;
-    std::tie(start, end) = checkSyntax(componentMap, result);
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
-    QString msg = QString("syntactic check in \t")+duration+" ms";
-    result.add2ResultString(msg+"\n");
-    std::cout << msg.toStdString() << std::endl;
-
-    emit resultReady(result);
-}
-
-std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
-SyntaxCheckWorker::checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
-                               Result &result) {
-    auto start = std::chrono::high_resolution_clock::now();
-
-    // check that each pointer is reflexive
-    auto cbegin = componentMap.cbegin();
-    auto cend = componentMap.cend();
-    auto it = cbegin;
-
-    bool valid = true;
-    while(it != cend) {
-        it++;
-        XMASComponent *c = it->second;
-        valid = valid & c->valid();
-    }
-    QString msg = valid ? "Syntax ok" : "Syntax not ok";
-    result.add2ResultString(msg+"\n");
-    std::cout << msg.toStdString() << std::endl;
-
-    auto end = std::chrono::high_resolution_clock::now();
-
-    return make_pair(start, end);
 }
 
 

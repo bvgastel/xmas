@@ -79,29 +79,5 @@ private:
     QThread m_workerThread;
 };
 
-class SyntaxCheckWorker : public QObject
-{
-    Q_OBJECT
-public:
-    SyntaxCheckWorker(QObject *parent = 0) : QObject(parent) {
-
-    }
-
-    virtual ~SyntaxCheckWorker() {
-
-    }
-
-private:
-    std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
-    checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
-                Result &result);
-
-public slots:
-    void doWork(const QString &json);
-
-signals:
-    void resultReady(const Result &result);
-};
-
 
 #endif // PLUGINTHREAD_H

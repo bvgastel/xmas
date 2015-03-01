@@ -23,11 +23,13 @@ DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
     result.cpp \
-    syntaxcheckerplugin.cpp
+    syntaxcheckerplugin.cpp \
+    syntaxcheckworker.cpp
 
 HEADERS +=\
     result.h \
-    syntaxcheckerplugin.h
+    syntaxcheckerplugin.h \
+    syntaxcheckworker.h
 
 unix|win32 {
     target.path = $$PWD/../../lib/plugins
