@@ -365,7 +365,7 @@ ApplicationWindow {
     }
     Connections {
         target: controller
-        onWriteLog: log(message,color) //console.log("component create request")
+        onWriteLog: log(message,color)
         onPluginsLoaded: {
             var line = " Plugin names: [ ";
             var glue = "";
@@ -374,7 +374,7 @@ ApplicationWindow {
                 glue = ", ";
             }
             line += " ]";
-            log(line, "red");  // never reaches this line
+            log(line, "red");
         }
 
     }
