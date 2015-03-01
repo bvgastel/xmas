@@ -42,15 +42,13 @@ DEFINES += VT_LIBRARY
 SOURCES += vt.cpp \
     cycle.cpp \
 #   constraints.cpp \       # does not compile. Used nowhere.
-    deadlock.cpp \
-    result.cpp
+    deadlock.cpp
 
 HEADERS += vt.h\
         vt_global.h \
     cycle.h \
 #   constraints.h \         # does not compile. Only used in constraints.cpp
-    deadlock.h \
-    result.h
+    deadlock.h
 
 win32 {
     target.path = $$PWD/../../../lib/vt

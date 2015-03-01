@@ -29,11 +29,10 @@
 #include <QColor>
 #include <QMap>
 
-#include "result.h"
 #include "xmas.h"
 #include "logger.h"
 
-class VtPluginInterface : public QObject
+class VtPluginInterface
 {
 
 public:
@@ -49,8 +48,6 @@ public:
 
     virtual Logger *logger() = 0;
 
-signals:
-    void handleResults(const Result &result);
 };
 
 #define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
