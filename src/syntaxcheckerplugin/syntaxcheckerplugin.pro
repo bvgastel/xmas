@@ -15,10 +15,9 @@ CONFIG += plugin
 CONFIG += C++11
 CONFIG += create_prl
 
-win32: CONFIG += dll
-unix: CONFIG += static dll
+CONFIG += dll
 
-TARGET = plugins
+TARGET = syntaxcheckerplugin
 
 DEFINES += PLUGINS_LIBRARY
 
