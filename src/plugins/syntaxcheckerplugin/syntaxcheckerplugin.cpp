@@ -37,7 +37,7 @@ QString SyntaxCheckerPlugin::name() {
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
     m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
-    m_logger(new Logger("PluginThread"))
+    m_logger(new Logger("SyntaxChecker"))
 {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
     worker->moveToThread(&m_workerThread);
@@ -93,5 +93,3 @@ Logger *SyntaxCheckerPlugin::logger() {
 void SyntaxCheckerPlugin::start(const QString &json) override {
     emit operate(json);
 }
-
-

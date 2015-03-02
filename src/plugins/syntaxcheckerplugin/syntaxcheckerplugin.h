@@ -30,7 +30,7 @@
 
 #include "xmas.h"
 #include "logger.h"
-#include "../interfaces/result.h"
+#include "result.h"
 #include "vtplugininterface.h"
 
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
@@ -55,7 +55,7 @@ public:
     virtual Logger *logger() override;
 
 public slots:
-    void handleResults(const Result &result);
+    virtual void handleResults(const Result &result);
 signals:
     void operate(const QString &json);
 
