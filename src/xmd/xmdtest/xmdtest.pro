@@ -55,19 +55,19 @@ macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
     -L$$PWD/../../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../../lib/plugins/interfaces -linterfaces_debug
+    -L$$PWD/../../../lib/interfaces -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
     -L$$PWD/../../../lib/vt/ -lvtd \
-    -L$$PWD/../../../lib/plugins/interfaces -linterfacesd
+    -L$$PWD/../../../lib/interfaces -linterfacesd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
     -L$$PWD/../../../lib/vt/ -lvt \
-    -L$$PWD/../../../lib/plugins/interfaces -linterfaces
+    -L$$PWD/../../../lib/interfaces -linterfaces
 
 # All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #
@@ -77,17 +77,17 @@ else:unix|CONFIG(release, debug|release): LIBS += \
 
 unix|win32|macx: LIBS += -L$$PWD/../../../lib -lgtest
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel
 
-INCLUDEPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces
-DEPENDPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces
+INCLUDEPATH += $$PWD/../../../include/interfaces
+DEPENDPATH += $$PWD/../../../include/interfaces
 
-INCLUDEPATH += $$PWD/../../../include/vt $$PWD/../../xmv/vt
-DEPENDPATH += $$PWD/../../../include/vt $$PWD/../../xmv/vt
+INCLUDEPATH += $$PWD/../../../include/vt
+DEPENDPATH += $$PWD/../../../include/vt
 
 INCLUDEPATH += $$PWD/../../../include
 DEPENDPATH += $$PWD/../../../include

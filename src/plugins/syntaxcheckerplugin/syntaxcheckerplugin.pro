@@ -49,25 +49,25 @@ DISTFILES += \
 ################################################
 # Internal dependencies
 ################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../interfaces/ -linterfaces_debug
-else:macx:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../interfaces/ -linterfaces
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../interfaces/debug/ -linterfacesd
-else:win32:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../interfaces/release/ -linterfaces
-else:unix: LIBS += \
-    -L$$OUT_PWD/../interfaces/ -linterfaces
+#macx:CONFIG(debug, debug|release): LIBS += \
+#    -L$$OUT_PWD/../interfaces/ -linterfaces_debug
+#else:macx:CONFIG(release, debug|release): LIBS += \
+#    -L$$OUT_PWD/../interfaces/ -linterfaces
+#else:win32:CONFIG(debug, debug|release): LIBS += \
+#    -L$$OUT_PWD/../interfaces/debug/ -linterfacesd
+#else:win32:CONFIG(release, debug|release): LIBS += \
+#    -L$$OUT_PWD/../interfaces/release/ -linterfaces
+#else:unix: LIBS += \
+#    -L$$OUT_PWD/../interfaces/ -linterfaces
 
-INCLUDEPATH += $$PWD/../interfaces
-DEPENDPATH += $$PWD/../interfaces
+#INCLUDEPATH += $$PWD/../interfaces
+#DEPENDPATH += $$PWD/../interfaces
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/libinterfaces.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/libinterfacesd.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/interfaces.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/interfacesd.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../interfaces/libinterfaces.a
+#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/libinterfaces.a
+#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/libinterfacesd.a
+#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/interfaces.lib
+#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/interfacesd.lib
+#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../interfaces/libinterfaces.a
 
 ################################################
 # External dependencies
@@ -81,12 +81,14 @@ macx:CONFIG(debug, debug|release): LIBS += \
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/xmd/ -lxmdd
+    -L$$PWD/../../../lib/xmd/ -lxmdd \
+    -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/xmd/ -lxmd
+    -L$$PWD/../../../lib/xmd/ -lxmd \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
@@ -98,3 +100,4 @@ INCLUDEPATH +=$$PWD/../../../include/xmd
 DEPENDPATH += $$PWD/../../../include/xmd
 
 INCLUDEPATH += $$PWD/../../../include/interfaces
+DEPENDPATH += $$PWD/../../../include/interfaces

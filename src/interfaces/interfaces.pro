@@ -30,10 +30,10 @@ HEADERS +=\
 # INSTALL instructions
 ################################################
 unix|win32|macx {
-    target.path = $$PWD/../../../lib/plugins/interfaces
+    target.path = $$PWD/../../lib/interfaces
     INSTALLS += target
 
-    headerfiles.path=$$PWD/../../../include/plugins/interfaces
+    headerfiles.path=$$PWD/../../include/interfaces
     headerfiles.files = $$PWD/*.h
     INSTALLS += headerfiles
 }
@@ -49,20 +49,20 @@ DISTFILES += \
 # External dependencies
 ################################################
 macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug
+    -L$$PWD/../../lib/bitpowder/ -lbitpowder_debug \
+    -L$$PWD/../../lib/datamodel/ -ldatamodel_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodeld
+    -L$$PWD/../../lib/bitpowder/ -lbitpowderd \
+    -L$$PWD/../../lib/datamodel/ -ldatamodeld
 
 else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel
+    -L$$PWD/../../lib/bitpowder/ -lbitpowder \
+    -L$$PWD/../../lib/datamodel/ -ldatamodel
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../include/bitpowder $$PWD/../../bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+INCLUDEPATH += $$PWD/../../include/datamodel $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../include/datamodel $$PWD/../../xmv/datamodel
 
