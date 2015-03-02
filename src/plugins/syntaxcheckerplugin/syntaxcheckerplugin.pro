@@ -40,10 +40,7 @@ unix|win32|macx {
     target.path = $$PWD/../../../lib/plugins
     INSTALLS += target
 
-#    Plugin implementation should never need to export header files.
-#    headerfiles.path=$$PWD/../../include/plugins/syntaxcheckerplugin
-#    headerfiles.files = $$PWD/*.h
-#    INSTALLS += headerfiles
+    # Plugin should never need to export header files
 }
 
 DISTFILES += \
@@ -78,7 +75,8 @@ else:unix: PRE_TARGETDEPS += $$OUT_PWD/../interfaces/libinterfaces.a
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/xmd/ -lxmd_debug
+    -L$$PWD/../../../lib/xmd/ -lxmd_debug \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
@@ -90,11 +88,13 @@ else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
     -L$$PWD/../../../lib/xmd/ -lxmd
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel
 
-INCLUDEPATH +=$$PWD/../../../include/xmd $$PWD/../../xmd/xmd
-DEPENDPATH += $$PWD/../../../include/xmd $$PWD/../../xmd/xmd
+INCLUDEPATH +=$$PWD/../../../include/xmd
+DEPENDPATH += $$PWD/../../../include/xmd
+
+INCLUDEPATH += $$PWD/../../../include/interfaces
