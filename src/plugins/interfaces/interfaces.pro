@@ -39,3 +39,6 @@ DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+DISTFILES += \
+    readme.md

@@ -47,6 +47,7 @@ Controller::Controller(QObject* parent)
 {
     // Connect the logger writeLog to our own signal
     QObject::connect(&m_logger, &Logger::writeLog, this, &Controller::writeLog);
+
 }
 
 Controller::~Controller()  {
