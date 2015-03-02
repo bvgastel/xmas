@@ -28,8 +28,6 @@ TEMPLATE = lib
 
 WARNINGS += -Wall
 
-#QT      -= qt
-#QT      -= core gui
 QT -= gui
 
 CONFIG += C++11
@@ -59,7 +57,8 @@ SOURCES += datamodel.cpp \
 #    symbolic-range-field.cpp \
     parse.cpp \
     jsonprinter.cpp \
-    serialize_network.cpp
+    serialize_network.cpp \
+    parseflatjsonfile.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -75,7 +74,8 @@ HEADERS += datamodel.h\
     parse.h \
     jsonprinter.h \
     serialize_network.h \
-    canvascomponentextension.h
+    canvascomponentextension.h \
+    parseflatjsonfile.h
 
 ################################################
 # INSTALL instructions
@@ -97,14 +97,20 @@ unix|win32|macx {
 # External dependencies
 ################################################
 macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
+    -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
+
+INCLUDEPATH += $$PWD/../../../include/interfaces
+DEPENDPATH += $$PWD/../../../include/interfaces
 

@@ -25,7 +25,7 @@
 #include <QColor>
 #include <QtConcurrent/QtConcurrent>
 
-#include "xmapper/parseflatjsonfile.h"
+#include "parseflatjsonfile.h"
 #include "parse.h"
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"

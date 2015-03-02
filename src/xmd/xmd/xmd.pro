@@ -54,7 +54,6 @@ XMAPPER_HEADERS = \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
     xmapper/network.h \
-    xmapper/parseflatjsonfile.h \
 
 
 HEADERS       = \ 
@@ -68,7 +67,6 @@ SOURCES       = \
     xmapper/fieldwalker.cpp \
     xmapper/logoutput.cpp \
     xmapper/network.cpp \
-    xmapper/parseflatjsonfile.cpp
     
 ################################################
 # INSTALL instructions

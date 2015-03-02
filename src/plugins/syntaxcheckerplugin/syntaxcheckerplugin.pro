@@ -75,19 +75,16 @@ DISTFILES += \
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/xmd/ -lxmd_debug \
     -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/xmd/ -lxmdd \
     -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
-else:unix|CONFIG(release, debug|release): LIBS += \
+else:unix|CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/xmd/ -lxmd \
     -L$$PWD/../../../lib/interfaces/ -linterfaces
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
@@ -95,9 +92,6 @@ DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
-
-INCLUDEPATH +=$$PWD/../../../include/xmd
-DEPENDPATH += $$PWD/../../../include/xmd
 
 INCLUDEPATH += $$PWD/../../../include/interfaces
 DEPENDPATH += $$PWD/../../../include/interfaces
