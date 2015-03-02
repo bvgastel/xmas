@@ -24,19 +24,29 @@
 #
 #
 
+TEMPLATE = lib
 
 WARNINGS += -Wall
 
-TEMPLATE = lib
+QT += widgets
+QT += quick
+QT += qml
+QT += quickwidgets
 
 CONFIG += C++11
 CONFIG += create_prl
 win32: CONFIG += static
 unix: CONFIG += static dll
+CONFIG += build_all
+
+TARGET = xmd
+CONFIG(debug, debug|release) {
+    macx: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 include (defines.pri)
 
-QT += widgets quick qml quickwidgets
 
 XMAPPER_HEADERS = \
     xmapper/componentwalker.h \
@@ -60,7 +70,10 @@ SOURCES       = \
     xmapper/network.cpp \
     xmapper/parseflatjsonfile.cpp
     
-unix|win32 {
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
     target.path = $$PWD/../../../lib/xmd
     INSTALLS += target
 
@@ -112,20 +125,33 @@ DISTFILES += mainWindow.qml \
 RESOURCES += \
     xmd.qrc
 
-FORMS +=
+################################################
+# Internal dependencies
+################################################
 
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../../lib/plugins/interfaces -linterfaces
+################################################
+# External dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfaces_debug
 
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfacesd
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+else:unix|CONFIG(release, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfaces
 
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
+INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/plugins/interfaces
-DEPENDPATH += $$PWD/../../../include/plugins/interfaces
+INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
 
-message (Include path is $$INCLUDEPATH)
+INCLUDEPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces
+DEPENDPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces

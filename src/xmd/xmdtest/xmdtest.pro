@@ -4,8 +4,13 @@
 #
 #-------------------------------------------------
 TEMPLATE = app
+
+WARNINGS += -Wall
+
 CONFIG += console
 CONFIG -= app_bundle
+CONFIG += C++11
+CONFIG += link_prl
 
 TARGET = xmdtest
 
@@ -15,32 +20,54 @@ SOURCES += \
     main.cpp \
     testnetwork.cpp
 
-
-CONFIG += C++11
-CONFIG += link_prl
-
-DISTFILES += \
-    readme.md
-
-
-unix|win32 {
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
  target.path=$$PWD/../../bin
  INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
-else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
+DISTFILES += \
+    readme.md
+
+################################################
+# Internal dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../xmd/ -lxmd_debug
+else:macx:CONFIG(release, debug|release): LIBS += \
+    -L$$OUT_PWD/../xmd/ -lxmd
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../xmd/debug/ -lxmdd
+else:win32:CONFIG(release, debug|release): LIBS += \
+    -L$$OUT_PWD/../xmd/release/ -lxmd
+else:unix: LIBS += \
+    -L$$OUT_PWD/../xmd/ -lxmd
 
 INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
 
-#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../plugins/release/ -lplugins
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../plugins/debug/ -lplugins
-#else:unix: LIBS += -L$$OUT_PWD/../plugins/ -lplugins
+################################################
+# External dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
+    -L$$PWD/../../../lib/vt/ -lvt_debug \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfaces_debug
 
-#INCLUDEPATH += $$PWD/../plugins
-#DEPENDPATH += $$PWD/../plugins
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
+    -L$$PWD/../../../lib/vt/ -lvtd \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfacesd
+
+else:unix|CONFIG(release, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
+    -L$$PWD/../../../lib/vt/ -lvt \
+    -L$$PWD/../../../lib/plugins/interfaces -linterfaces
 
 # All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
 #
@@ -48,23 +75,19 @@ DEPENDPATH += $$PWD/../xmd
 #         2. always use gtest or gtest_main from a version compilated for your machine
 #
 
-unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../../lib/vt -lvt
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../../lib/plugins/interfaces -linterfaces
-unix|win32: LIBS += -L$$PWD/../../../lib -lgtest
+unix|win32|macx: LIBS += -L$$PWD/../../../lib -lgtest
 
-INCLUDEPATH += $$PWD/../../../include/plugins/interfaces
-DEPENDPATH += $$PWD/../../../include/plugins/interfaces
+INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
 
-INCLUDEPATH += $$PWD/../../../include/vt
-DEPENDPATH += $$PWD/../../../include/vt
+INCLUDEPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces
+DEPENDPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../plugins/interfaces
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+INCLUDEPATH += $$PWD/../../../include/vt $$PWD/../../xmv/vt
+DEPENDPATH += $$PWD/../../../include/vt $$PWD/../../xmv/vt
 
 INCLUDEPATH += $$PWD/../../../include
 DEPENDPATH += $$PWD/../../../include

@@ -23,18 +23,24 @@
 # IMPORTANT: Be sure to have qtcreator execute a make install
 #            as one step in the local deployment.
 #
+TEMPLATE = lib
 
+WARNINGS += -Wall
 
 QT      -= qt
 QT       -= core gui
-
-TARGET = bitpowder
-TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prt
 CONFIG += static dll
+CONFIG += build_all
+
+TARGET = bitpowder
+CONFIG(debug, debug|release) {
+    macx: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 DEFINES += BITPOWDER_LIBRARY
 
@@ -81,18 +87,27 @@ HEADERS += \
     thread.h \
     type_hash.h \
     zip.h \
+
 ################################################
 # INSTALL instructions
 ################################################
-
-unix|win32 {
+unix|win32|macx {
     target.path = $$PWD/../../lib/bitpowder
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../include/bitpowder
     headerfiles.files = $$PWD/*.h
     INSTALLS += headerfiles
-
 }
+
+################################################
+# Internal dependencies
+################################################
+
+
+################################################
+# External dependencies
+################################################
+
 
 

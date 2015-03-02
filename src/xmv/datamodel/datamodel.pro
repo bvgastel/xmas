@@ -24,18 +24,26 @@
 #            as one step in the local deployment.
 #
 
+TEMPLATE = lib
+
+WARNINGS += -Wall
+
 #QT      -= qt
 #QT      -= core gui
 QT -= gui
-
-TARGET = datamodel
-TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
 unix: CONFIG += static dll
+CONFIG += build_all
+
+TARGET = datamodel
+CONFIG(debug, debug|release) {
+    mac: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 DEFINES += DATAMODEL_LIBRARY
 
@@ -69,18 +77,34 @@ HEADERS += datamodel.h\
     serialize_network.h \
     canvascomponentextension.h
 
-unix|win32 {
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
     target.path = $$PWD/../../../lib/datamodel
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/datamodel
     headerfiles.files = $$PWD/*.h
     INSTALLS += headerfiles
-
 }
 
-# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+################################################
+# Internal dependencies
+################################################
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+################################################
+# External dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
+
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
+
+else:unix|CONFIG(release, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+

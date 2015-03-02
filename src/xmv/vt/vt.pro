@@ -24,18 +24,26 @@
 #            as one step in the local deployment.
 #
 
+TEMPLATE = lib
+
+WARNINGS += -Wall
+
 #QT       -= qt
 #QT       -= core gui
 QT -= gui
-
-TARGET = vt
-TEMPLATE = lib
 
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
 unix: CONFIG += static dll
+CONFIG += build_all
+
+TARGET = vt
+CONFIG(debug, debug|release) {
+    mac: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 DEFINES += VT_LIBRARY
 
@@ -50,41 +58,49 @@ HEADERS += vt.h\
 #   constraints.h \         # does not compile. Only used in constraints.cpp
     deadlock.h
 
-win32 {
-    target.path = $$PWD/../../../lib/vt
-    INSTALLS += target
-
-    headerfiles.path=$$PWD/../../../include/vt
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
-
-}
-
-unix {
-    target.path = $$PWD/../../../lib/vt
-    INSTALLS += target
-
-    headerfiles.path=$$PWD/../../../include/vt
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
-
-}
-############################################
-
-# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
-
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
-
 DISTFILES += \
     build-convert.sh
 
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
+    target.path = $$PWD/../../../lib/vt
+    INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
+    headerfiles.path=$$PWD/../../../include/vt
+    headerfiles.files = $$PWD/*.h
+    INSTALLS += headerfiles
+}
+
+################################################
+# Internal dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../datamodel/ -ldatamodel_debug
+else:macx:CONFIG(release, debug|release): LIBS += \
+    -L$$OUT_PWD/../datamodel/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../datamodel/debug/ -ldatamodeld
+else:win32:CONFIG(release, debug|release): LIBS += \
+    -L$$OUT_PWD/../datamodel/release/ -ldatamodel
+else:unix: LIBS += \
+    -L$$OUT_PWD/../datamodel/ -ldatamodel
 
 INCLUDEPATH += $$PWD/../datamodel
 DEPENDPATH += $$PWD/../datamodel
+
+################################################
+# External dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
+
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
+
+else:unix|CONFIG(release, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder
+
+INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder

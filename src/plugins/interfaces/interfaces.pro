@@ -7,10 +7,16 @@ QT       -= gui
 
 CONFIG += C++11
 CONFIG += create_prl
-
 CONFIG += static
+CONFIG += build_all
 
 TARGET = interfaces
+CONFIG(debug, debug|release) {
+    mac: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
+
+DEFINES += INTERFACES_LIBRARY
 
 SOURCES += \
     logger.cpp
@@ -20,9 +26,10 @@ HEADERS +=\
     result.h \
     logger.h
 
-
-
-unix|win32 {
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
     target.path = $$PWD/../../../lib/plugins/interfaces
     INSTALLS += target
 
@@ -31,14 +38,31 @@ unix|win32 {
     INSTALLS += headerfiles
 }
 
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
-
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
-
 DISTFILES += \
     readme.md
+
+################################################
+# Internal dependencies
+################################################
+
+################################################
+# External dependencies
+################################################
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug
+
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodeld
+
+else:unix|CONFIG(release, debug|release): LIBS += \
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel
+
+INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+
+INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+
