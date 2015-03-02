@@ -30,7 +30,7 @@
 
 #include "xmas.h"
 #include "logger.h"
-#include "../result.h"
+#include "../interfaces/result.h"
 #include "vtplugininterface.h"
 
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
