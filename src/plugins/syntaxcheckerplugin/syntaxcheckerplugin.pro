@@ -22,7 +22,6 @@ TARGET = syntaxcheckerplugin
 DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
-    result.cpp \
     syntaxcheckerplugin.cpp \
     syntaxcheckworker.cpp
 
