@@ -51,8 +51,11 @@ DEPENDPATH += $$PWD/../xmd
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
 unix|win32: LIBS += -L$$PWD/../../../lib/vt -lvt
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
+unix|win32: LIBS += -L$$PWD/../../../lib/plugins/interfaces -linterfaces
 unix|win32: LIBS += -L$$PWD/../../../lib -lgtest
 
+INCLUDEPATH += $$PWD/../../../include/plugins/interfaces
+DEPENDPATH += $$PWD/../../../include/plugins/interfaces
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel

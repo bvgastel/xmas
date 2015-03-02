@@ -49,13 +49,10 @@ XMAPPER_HEADERS = \
 
 HEADERS       = \ 
     xmdexception.h \
-    logger.h \
-    vtplugininterface.h \
     $$XMAPPER_HEADERS
 				
 SOURCES       = \ 
     xmdexception.cpp \
-    logger.cpp \
     xmapper/componentwalker.cpp \
     xmapper/controller.cpp \
     xmapper/fieldwalker.cpp \
@@ -119,9 +116,16 @@ FORMS +=
 
 unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
 unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+unix|win32: LIBS += -L$$PWD/../../../lib/plugins/interfaces -linterfaces
+
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+INCLUDEPATH += $$PWD/../../../include/plugins/interfaces
+DEPENDPATH += $$PWD/../../../include/plugins/interfaces
+
+message (Include path is $$INCLUDEPATH)
