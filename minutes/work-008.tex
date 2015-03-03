@@ -1,0 +1,198 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+
+\title{Resultaten work meeting 008 Update iteratie 4 }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\w}[1]{\textsc{#1}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmv}{\textsc{Xmv}\xspace}%
+\newcommand{\xmd}{\textsc{Xmd}\xspace}%
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}%
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}%
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}%
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}%
+\newcommand{\vt}{\textsc{Vt}\xspace}%
+\newcommand{\src}{\textsc{src}\xspace}%
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}%
+\newcommand{\een}{\'{e}\'{e}n\xspace}%
+\newcommand{\svn}{\textsc{svn}\xspace}%
+\newcommand{\git}{\textsc{git}\xspace}%
+\newcommand{\github}{\textsc{Github}\xspace}%
+\newcommand{\subversion}{\textsc{subversion}\xspace}%
+\newcommand{\radboud}{\textsc{Radboud}\xspace}%
+
+
+\begin{Minutes}{Work meeting 008}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn, Bernard van Gastel}
+\subtitle{Update iteratie 4 met Bernard}
+\minutetaker{Guus}
+\minutesdate{2 maart 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Midterm bijeenkomst 25 maart 2015 in Utrecht}
+
+Freek heeft zich afgemeld bij Harrie Passier. Bernard kan die dag helaas niet
+aanwezig zijn vanwege priv\'{e} verplichtingen. Van ons team gaan Jeroen en Guus en 
+indien mogelijk ook Stefan. 
+
+\topic{Testen op de Mac}
+
+Wij hebben geen beschikking over een Mac. Wel heeft Stefan een gehackte virtuele machine met
+iets dat lijkt op de Mac. Bernard laat weten dat de Mac buiten scope is. Als we via de virtuele machine
+incidenteel ons programma kunnen compileren en draaien dan zou dat mooi zijn, maar het is
+geen onderdeel van onze opdracht.
+
+\topic{Open punten vorige meeting}
+
+Bernard geeft aan deze uit het oog te zijn verloren en gaat hier naar kijken.
+
+\topic{Data model}
+
+\subtopic{Interne datamodel in het geheugen}
+
+Intern zijn er altijd twee data modellen: het \cpp model en het \qml model, dat is inherent aan
+het karakter van \qml. In de oplossing die wij het vorige overleg hadden voorgesteld zou
+interfacing plaatsvinden vanuit \qml met json, gegenereerd vanuit de \qml. 
+
+Bernard wil geen tweede parser in \qml en wil het datamodel in de vorm van het \cpp model 
+in het geheugen hebben op basis van de code in \code{xmas.h}.
+Onderhoud beperkt zich dan tot het xmas model en er is maar \een parser. Ook is het dan gemakkelijker 
+om in de main thread eenvoudige controles te doen zonder te hoeven serialiseren.
+
+\subtopic{File typen}
+
+Bernard streeft naar \een filetype.
+Hij benadrukt nog een keer dat zowel Freek als hijzelf duplicatie van code willen vermijden.
+Hij is beducht voor het onderhoud als er twee parsers zijn. Bernard accepteert de toename in 
+complexiteit die te verwachten is als gevolg van koppelen met de \cpp structuur. Hij geeft aan
+ook voordelen te zien (zie verderop bij uitvoering plugins).
+
+\subtopic{Koppelen \qml en \cpp}
+
+We zien een mogelijkheid om \qml en \cpp met \qml \w{properties} te verbinden. 
+We hebben dan geen aparte signalen en slots nodig (die genereert het systeem intern).
+Waarschijnlijk heeft het wel impact op de performance, maar hoe veel dat weten we nog niet.  
+We implementeren volgens deze strategie (ijs en weder dienende).
+
+\subtopic{Json file formaat}
+
+We mogen in plaats van de flat json een hierarchische json opslaan. Het platslaan vindt
+dan in core plaats.
+
+Scheiding van netwerk en composite zoals Guus en Jeroen bespraken, is niet nodig. 
+De hierarchische modellen mogen direct verwijzen naar andere netwerken als composite.
+
+\subtopic{Serialiseren van datamodel}
+
+Voor communicatie naar processen of threads is het beter textstreams of strings te gebruiken, 
+dan de \cpp structuur uit \code{xmas.h}. Bernard is het hier mee eens.
+We parsen dan twee keer: 1. (main thread) Om van \cpp structuur naar json text te komen. 2. (Process thread) 
+Om van json text weer naar de \cpp structuur te komen (in het \vt process). Dit kan voor grote structuren de 
+user interface kort bevriezen: dat is geen probleem. Als we binnen de main thread blijven, 
+dan kunnen we de structuur gebruiken zonder naar json om te zetten.
+
+Bernard merkt op, dat de huidige structuur de basis is en verbetering en uitbreiding kan gaan 
+krijgen. Zoals de mogelijkheid om een XMASComponent te kopi\"{e}ren.
+
+\topic{Plugins}
+
+\subtopic{plugin werking}
+
+Bij het runnen van plugins is het zaak de verhoudingen in de gaten te blijven houden. Zo kost
+het draaien van een syntax check voor een spidergon 1024 op dit moment ongeveer 5 ms. Een 
+spidergon 1024 heeft ca 18000 objecten. Dit netwerk is een json file van ca 5.5 MB en het parsen kost
+ongeveer 500 ms. Dus 2x parsen zoals in ons geval kost vele malen meer dan het uitvoeren 
+van een syntax check. Ook de cycle checker kost ongeveer 50 ms voor hetzelfde netwerk. 
+Het lijkt verstandig beide controles in de main thread uit te voeren.
+
+We mogen de standaard output van de verificatie tools aanpassen als dit nuttig is voor 
+``parsing'' door de designer.
+
+P.S. Een syntax check houdt in channel validiteit, functie definitie en source definitie. Onze huidige
+versie controleert alleen de channels. Dit gaan we aanpassen.
+
+\subtopic{Main plugin}
+
+Voor het uitvoeren van de main plugin, waar we alle \vt's uitvoeren, hebben we voor een process gekozen.
+Bernard is het hier mee eens in verband met de hoeveelheid tijd die een complete run kost. Hij wijst ons
+er op, dat we in de main uit moeten gaan van de \code{-json} optie, en niet van de \code{-mesh} of 
+\code{-spidergon} optie. Die main is geschreven onder tijdsdruk van de deadline voor papers en staat 
+geen model voor hoe het moet worden.
+
+\topic{Designer issues}
+
+\subtopic{Real time online controles}
+
+In de designer hebben we een dialoog voor het invoeren van text zoals expressies. Bernard
+geeft aan, dat we vrij eenvoudig de correctheid van die expressies kunnen verifi\"{e}ren met
+kant en klare classes uit de verificatie tools. Het gaat om de classes \code{ParseSourceExpression}
+en \code{ParsePacketFunction}\footnote{redactie: Dit stond ook in vorige notulen.}. Het zou mooi
+zijn om vrijwel direct commentaar te krijgen als iets met de expressies niet in orde is. We gaan 
+hier naar kijken.
+
+\topic{Source repository}
+
+We bespreken de verschillende repo's die we nu gebruiken: \git op \github en \subversion aan de \radboud. 
+Het probleem is dat de sources van de \vt's nu al uit elkaar zijn gaan lopen. Het lijkt verstandig 
+vanuit 1 repo te gaan werken. Bernard komt hier op terug. 
+
+We beloven Bernard het verschil als een patch te sturen en Bernard gaat nadenken over de repo waar hij in wil werken. 
+De structuur zal niet overeenkomen, omdat wij de programmatuur uit elkaar hebben getrokken: test bij test, main apart 
+van library classes. De wijzigingen zijn functioneel beperkt, maar zijn er wel veel, met name om warnings te voorkomen
+en in het platform onafhankelijk maken.
+
+\topic{Actiepunten}
+
+In figuur \ref{fig:openpunten} de openstaande punten. Deze punten werken we elke sessie af, en zetten de 
+afgeronde akties in de lijst daaronder.
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|p{25em}|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+02-03-2015  & team      & Sturen Bernard een patch van de \vt verschillen\\\hline
+02-03-2015  & Bernard   & Bernard komt terug op repo: git of svn?\\\hline
+24-01-2015  & Bernard   & Filmpje van een collega, Bernard geeft een seintje\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+\end{tabular}
+\caption{Aktielijst open punten}\label{fig:openpunten}
+\end{figure}
+
+
+\begin{figure}
+\begin{tabular}[!h]{|l|l|l|p{10em}|p{10em}|}
+\hline
+{\bf datum} & {\bf gereed} & {\bf wie} & {\bf Aktie}                                      & commentaar      \\\hline
+24-01-2015  & 22-02-2015   & team      & We moeten hernieuwde contactmomenten afspreken   & 22 febr 2015 afspraken gemaakt\\\hline
+07-02-2015  & 22-02-2015   & team      & Afspraak met Bernard voor 21 februari 2015       & 22 febr 2015 10:30\\\hline
+07-02-2015  & 13-02-2015   & team      & Werkwijze opnieuw bezien                         & vastgeled in plan\\\hline
+07-02-2015  & 13-02-2015   & team      & Vernieuwd plan uitbrengen.                       & Akkoord B. 19-02-2015\\\hline
+24-01-2015  & 07-02-2015   & Bernard   & Voert bugfix op xmas.h uit en geeft signaal      & uitgevoerd\\\hline
+24-01-2015  & 07-02-2015   & team      & splitsen header files afstemmen met Bernard      & n.v.t.\\\hline
+26-01-2015  & 07-02-2015   & team      & Kan de licentie van \w{bitpower lib} naar GPLv3? & uitgevoerd\\\hline
+\end{tabular}
+\caption{Aktielijst gesloten punten}
+\end{figure}
+
+\end{Minutes}
+
+\end{document}
