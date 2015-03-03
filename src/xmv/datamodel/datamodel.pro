@@ -39,7 +39,7 @@ CONFIG += build_all
 
 TARGET = datamodel
 CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
+    macx: TARGET = $$join(TARGET,,,_debug)
     win32: TARGET = $$join(TARGET,,,d)
 }
 
@@ -85,7 +85,7 @@ unix|win32|macx {
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/datamodel
-    headerfiles.files = $$PWD/*.h
+    headerfiles.files = $$HEADERS
     INSTALLS += headerfiles
 }
 

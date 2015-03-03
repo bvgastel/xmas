@@ -73,11 +73,11 @@ else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
     -L$$PWD/../../../lib/interfaces -linterfaces
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel
 
 INCLUDEPATH += $$PWD/../../../include/interfaces
 DEPENDPATH += $$PWD/../../../include/interfaces

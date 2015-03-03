@@ -28,8 +28,6 @@ TEMPLATE = lib
 
 WARNINGS += -Wall
 
-#QT       -= qt
-#QT       -= core gui
 QT -= gui
 
 CONFIG += C++11
@@ -41,7 +39,7 @@ CONFIG += build_all
 
 TARGET = vt
 CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
+    macx: TARGET = $$join(TARGET,,,_debug)
     win32: TARGET = $$join(TARGET,,,d)
 }
 
@@ -49,13 +47,11 @@ DEFINES += VT_LIBRARY
 
 SOURCES += vt.cpp \
     cycle.cpp \
-#   constraints.cpp \       # does not compile. Used nowhere.
     deadlock.cpp
 
 HEADERS += vt.h\
         vt_global.h \
     cycle.h \
-#   constraints.h \         # does not compile. Only used in constraints.cpp
     deadlock.h
 
 DISTFILES += \
@@ -69,7 +65,7 @@ unix|win32|macx {
     INSTALLS += target
 
     headerfiles.path=$$PWD/../../../include/vt
-    headerfiles.files = $$PWD/*.h
+    headerfiles.files = $$HEADERS
     INSTALLS += headerfiles
 }
 
@@ -102,5 +98,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder

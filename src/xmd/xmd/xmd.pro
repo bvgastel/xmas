@@ -45,20 +45,15 @@ CONFIG(debug, debug|release) {
     win32: TARGET = $$join(TARGET,,,d)
 }
 
-include (defines.pri)
+DEFINES += XMD_LIBRARY
 
-
-XMAPPER_HEADERS = \
+HEADERS       = \ 
+    xmdexception.h \
     xmapper/componentwalker.h \
     xmapper/controller.h \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
-    xmapper/network.h \
-
-
-HEADERS       = \ 
-    xmdexception.h \
-    $$XMAPPER_HEADERS
+    xmapper/network.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -66,7 +61,7 @@ SOURCES       = \
     xmapper/controller.cpp \
     xmapper/fieldwalker.cpp \
     xmapper/logoutput.cpp \
-    xmapper/network.cpp \
+    xmapper/network.cpp
     
 ################################################
 # INSTALL instructions
@@ -77,14 +72,7 @@ unix|win32|macx {
 
     headerfiles.path=$$PWD/../../../include/xmd
     headerfiles.files = $$HEADERS
-    headerfiles.files -= $$XMAPPER_HEADERS
-    message(header files are $$headerfiles.files)
     INSTALLS += headerfiles
-
-    headerfiles_xmapper.path = $$PWD/../../../include/xmd/xmapper
-    headerfiles_xmapper.files = $$XMAPPER_HEADERS
-    message(header files for xmapper are $$headerfiles_xmapper.files)
-    INSTALLS += headerfiles_xmapper
 }
 
 INCLUDEPATH += uicontrols xobjects xmapper content
@@ -133,23 +121,23 @@ RESOURCES += \
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/interfaces -linterfaces_debug
+    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/interfaces -linterfacesd
+    -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/interfaces -linterfaces
+    -L$$PWD/../../../lib/interfaces/ -linterfaces
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder $$PWD/../../bitpowder
+INCLUDEPATH += $$PWD/../../../include/bitpowder
+DEPENDPATH += $$PWD/../../../include/bitpowder
 
-INCLUDEPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel $$PWD/../../xmv/datamodel
+INCLUDEPATH += $$PWD/../../../include/datamodel
+DEPENDPATH += $$PWD/../../../include/datamodel
 
-INCLUDEPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../interfaces
-DEPENDPATH += $$PWD/../../../include/plugins/interfaces  $$PWD/../../interfaces
+INCLUDEPATH += $$PWD/../../../include/interfaces
+DEPENDPATH += $$PWD/../../../include/interfaces

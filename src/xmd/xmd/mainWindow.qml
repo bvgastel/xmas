@@ -40,6 +40,7 @@
 
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
@@ -172,6 +173,24 @@ ApplicationWindow {
         onTriggered: Qt.quit()
     }
 
+    Action {
+        id: runVtAction
+        text: "Run"
+        shortcut: "Ctrl+R"
+        iconSource: "qrc:/content/run.ico"
+        iconName: "select"
+        //onTriggered: controller.run()
+    }
+
+    Action {
+        id: stopVtAction
+        text: "Stop"
+        shortcut: ""
+        iconSource: "qrc:/content/stop.ico"
+        iconName: "select"
+        //onTriggered: controller.stop()
+    }
+
     FileDialog {
         id: fileDialog
         nameFilters: [
@@ -224,6 +243,12 @@ ApplicationWindow {
         }
 
         Menu {
+            title: "&Tools"
+            MenuItem { action: runVtAction }
+            MenuItem { action: stopVtAction }
+        }
+
+        Menu {
             title: "&Help"
             MenuItem { text: "About..." ; onTriggered: aboutBox.open() }
         }
@@ -232,10 +257,27 @@ ApplicationWindow {
     toolBar: ToolBar {
         id: mainToolBar
         width: parent.width
+        style: ToolBarStyle {
+               padding {
+                   left: 5
+                   right: 5
+                   top: 2
+                   bottom: 2
+               }
+               background: Rectangle {
+                   implicitWidth: 100
+                   implicitHeight: 40
+                   border.color: "gray"
+                   color: "lightgray"
+//                   gradient: Gradient {
+//                       GradientStop { position: 0 ; color: "lightgray" }
+//                       GradientStop { position: 1 ; color: "gray" }
+//                   }
+               }
+           }
         RowLayout {
-
             anchors.fill: parent
-            spacing: 0
+            spacing: 5
             ToolButton { action: fileOpenAction }
             ToolButton { action: fileSaveAction }
             ToolBarSeparator {}
@@ -256,6 +298,68 @@ ApplicationWindow {
             ToolButton {action: selectionCursorAction}
 
             ToolBarSeparator {}
+
+            ToolButton {action: runVtAction}
+            ToolButton {action: stopVtAction}
+
+            ComboBox {
+                width: 200
+                //TODO replace with plugin list
+                model: [ "SyntaxChecker"]
+                implicitWidth: 200
+                implicitHeight: 20
+            }
+
+            //TODO replace with plugin progress value
+            ProgressBar {
+                id:progressbar
+                    value: 50
+                    indeterminate: false
+                    minimumValue: 0
+                    maximumValue: 100
+
+                    style: ProgressBarStyle {
+                            background: Rectangle {
+                                radius: 5
+                                color: "darkgray"
+                                border.color: "darkgray"
+                                border.width: 0
+                                implicitWidth: 200
+                                implicitHeight: 18
+                            }
+                            progress: Rectangle {
+                                border.width:1
+                                border.color:"steelblue"
+                                radius: 4
+                                gradient: Gradient {
+                                    GradientStop { position: 0.0; color: "steelblue" }
+                                    GradientStop { position: 0.4; color: "lightsteelblue" }
+                                    GradientStop { position: 1.0; color: "steelblue" }
+                                }
+                                Item {
+                                    anchors.fill: parent
+                                    anchors.margins: 1
+                                    visible: progressbar.indeterminate
+                                    clip: true
+                                    Row {
+                                        Repeater {
+                                            Rectangle {
+                                                color: index % 2 ? "steelblue" : "lightsteelblue"
+                                                width: 20 ; height: progressbar.height
+                                            }
+                                            model: progressbar.width / 20 + 2
+                                        }
+                                        XAnimator on x {
+                                            from: 0 ; to: -40
+                                            loops: Animation.Infinite
+                                            running: progressbar.indeterminate
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                }
+            //TODO replace with plugin progress value
 
             Item { Layout.fillWidth: true }
         }
