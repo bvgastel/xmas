@@ -1,14 +1,10 @@
 #ifndef RESULT_H
 #define RESULT_H
 
+#include <QList>
 #include <QObject>
 
-struct ErrorObject {
-    bool error;
-    QString errorMessage;
-    QString errorObjectName;
-};
-
+#include "resultinterface.h"
 
 /**
  * @brief The Result class
@@ -18,33 +14,17 @@ struct ErrorObject {
  * and add features as necessary.
  *
  */
-class Result : public QObject
+class Result : public ResultInterface
 {
-    Q_OBJECT
 
 public:
-    Result(QObject *parent = 0) : QObject(parent) {
+    Result(QObject *parent = 0);
+    virtual ~Result();
 
-    }
-    virtual ~Result() {
-
-    }
-
-    virtual const QList<ErrorObject> &errorList() const {
-        return m_errorList;
-    }
-
-    virtual const QString description() const {
-        return m_description;
-    }
-
-    virtual void addErrorList(ErrorObject errorObject) {
-        m_errorList.append(errorObject);
-    }
-
-    virtual void add2ResultString(QString partialResult) {
-        m_description += partialResult;
-    }
+    virtual const QList<ErrorObject> &errorList() const;
+    virtual const QString description() const;
+    virtual void addErrorList(ErrorObject errorObject);
+    virtual void add2ResultString(QString partialResult);
 
 private:
     QList<ErrorObject> m_errorList;

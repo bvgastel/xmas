@@ -26,8 +26,9 @@
 #include <QColor>
 
 #include "simplestring.h"
+#include "loggerinterface.h"
 
-class Logger : public QObject
+class Logger : public LoggerInterface
 {
     Q_OBJECT
 

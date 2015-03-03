@@ -30,7 +30,7 @@
 
 #include "xmas.h"
 #include "logger.h"
-#include "result.h"
+#include "resultinterface.h"
 #include "vtplugininterface.h"
 
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
@@ -52,10 +52,10 @@ public:
 
     virtual void start(const QString &json) override;
 
-    virtual Logger *logger() override;
+    virtual LoggerInterface *logger() override;
 
 public slots:
-    virtual void handleResults(const Result &result);
+    virtual void handleResults(const ResultInterface &result);
 signals:
     void operate(const QString &json);
 
@@ -72,7 +72,7 @@ private:
     /**
      * @brief m_logger A specific logger for this verification tool.
      */
-    Logger *m_logger;
+    LoggerInterface *m_logger;
     /**
      * @brief m_workerThread The thread that will run the verification tool
      */

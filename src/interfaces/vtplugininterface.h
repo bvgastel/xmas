@@ -46,7 +46,7 @@ public:
 
     virtual void start(const QString &json) = 0;
 
-    virtual Logger *logger() = 0;
+    virtual LoggerInterface *logger() = 0;
 
 };
 

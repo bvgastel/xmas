@@ -52,7 +52,7 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.wait();
 }
 
-void SyntaxCheckerPlugin::handleResults(const Result &result) {
+void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
     // Don't know what to do yet, with the results. Show them I guess
     auto list = result.errorList();
     for (ErrorObject err : list) {
@@ -78,7 +78,7 @@ void SyntaxCheckerPlugin::parameters(QMap<QString, QString> paramMap) {
     m_paramMap = paramMap;
 }
 
-Logger *SyntaxCheckerPlugin::logger() {
+LoggerInterface *SyntaxCheckerPlugin::logger() {
     return m_logger;
 }
 

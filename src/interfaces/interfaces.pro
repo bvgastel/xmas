@@ -19,12 +19,15 @@ CONFIG(debug, debug|release) {
 DEFINES += INTERFACES_LIBRARY
 
 SOURCES += \
-    logger.cpp
+    logger.cpp \
+    result.cpp
 
 HEADERS +=\
     vtplugininterface.h \
     result.h \
-    logger.h
+    logger.h \
+    loggerinterface.h \
+    resultinterface.h
 
 ################################################
 # INSTALL instructions

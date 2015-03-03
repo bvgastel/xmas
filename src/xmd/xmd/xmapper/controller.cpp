@@ -97,8 +97,8 @@ bool Controller::loadPlugins() {
                     m_vtMap[vtname] = vtPluginInterface;
                     vtNameList.append(vtname);
                     // Connect the logger writeLog to our own signal
-                    Logger *logger = vtPluginInterface->logger();
-                    QObject::connect(logger, &Logger::writeLog, this, &Controller::writeLog);
+                    LoggerInterface *logger = vtPluginInterface->logger();
+                    QObject::connect(logger, &LoggerInterface::writeLog, this, &Controller::writeLog);
                 }
             } else {
                 m_logger.log("Fail!! Loader found no vtPlugin in " + fileName);
