@@ -62,7 +62,7 @@ Item {
     signal showDialog()
     signal boundReached(var dx, var dy)
 
-    transformOrigin: Item.TopLeft
+    transformOrigin: Item.Center
 
     //name tag
     Item{
@@ -154,7 +154,7 @@ Item {
     }
 
     onRotationChanged:component.update()
-    //onScaleChanged: doMove(0,0)
+    onScaleChanged: doMove(0,0)
     onSelectedChanged: {focus = selected}
 
     Rectangle {

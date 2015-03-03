@@ -30,13 +30,10 @@ Rectangle{
 
     function contains(item)
     {
-
-        console.log("item(x,y,s)=(" + item.x + "," + item.y + "," + item.scale + ")")
-        console.log("selection(x,y,w,h)=(" + selection.x + "," + selection.y + "," + selection.width + "," + selection.height + ")")
-        return (item.x >= selection.x
-                && item.x + (item.width * item.scale) <= selection.x + selection.width
-                && item.y >= selection.y
-                && item.y + (item.height * item.scale) <= selection.y + selection.height)
+        return (item.x + item.width * 0.5 * ( 1 - item.scale) >= selection.x
+                && item.x + item.width * 0.5 * ( 1 + item.scale) <= selection.x + selection.width
+                && item.y + item.height * 0.5 * ( 1 - item.scale) >= selection.y
+                && item.y + item.height * 0.5 * ( 1 + item.scale) <= selection.y + selection.height)
     }
 
 
@@ -62,11 +59,15 @@ Rectangle{
         var list = selectedItems
         var xmin=1000000,xmax=-1,ymin=1000000,ymax=-1
         for (var item in list){
-            xmin= Math.min(xmin, list[item].x - margin)
-            xmax= Math.max(xmax, list[item].x + (list[item].width * list[item].scale ) + margin)
-            ymin= Math.min(ymin, list[item].y - margin)
-            ymax= Math.max(ymax, list[item].y + (list[item].height * list[item].scale) + margin)
+            xmin= Math.min(xmin, list[item].x + list[item].width * 0.5 * ( 1 - list[item].scale) - margin)
+            xmax= Math.max(xmax, list[item].x + list[item].width * 0.5 * ( 1 + list[item].scale) + margin)
+            ymin= Math.min(ymin, list[item].y + list[item].height * 0.5 * ( 1 - list[item].scale) - margin)
+            ymax= Math.max(ymax, list[item].y + list[item].height * 0.5 * ( 1 + list[item].scale) + margin)
         }
+
+
+ //         list[item].width * 0.5 * (1 - list[item].scale) - margin
+
         if(ymax<0) return Qt.rect(0,0,0,0)
         return Qt.rect(xmin,ymin,xmax-xmin,ymax-ymin)
     }
