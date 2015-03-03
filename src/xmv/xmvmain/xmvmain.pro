@@ -8,8 +8,8 @@ CONFIG -= qt
 CONFIG += C++11
 CONFIG += link_prl
 
-include(deployment.pri)
-qtcAddDeployment()
+#include(deployment.pri)
+#qtcAddDeployment()
 
 SOURCES += main.cpp
 

@@ -97,20 +97,14 @@ unix|win32|macx {
 # External dependencies
 ################################################
 macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/interfaces/ -linterfacesd
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces
+    -L$$PWD/../../../lib/bitpowder/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../../include/interfaces
-DEPENDPATH += $$PWD/../../../include/interfaces
 
