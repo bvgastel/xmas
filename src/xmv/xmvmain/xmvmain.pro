@@ -13,6 +13,11 @@ CONFIG += link_prl
 
 SOURCES += main.cpp
 
+CONFIG(debug, debug|release) {
+    macx: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
+
 ################################################
 # INSTALL instructions
 ################################################

@@ -35,8 +35,9 @@ QT += quickwidgets
 
 CONFIG += C++11
 CONFIG += create_prl
+CONFIG += link_prl
 win32: CONFIG += static
-unix: CONFIG += static dll
+unix: CONFIG += static
 #CONFIG += build_all
 
 TARGET = xmd
@@ -121,16 +122,19 @@ RESOURCES += \
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
+    -L$$PWD/../../../lib/vt/ -lvt_debug \
     -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
+    -L$$PWD/../../../lib/vt/ -lvtd \
     -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
+    -L$$PWD/../../../lib/vt/ -lvt \
     -L$$PWD/../../../lib/interfaces/ -linterfaces
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
@@ -139,5 +143,9 @@ DEPENDPATH += $$PWD/../../../include/bitpowder
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
 
+INCLUDEPATH += $$PWD/../../../include/vt
+DEPENDPATH += $$PWD/../../../include/vt
+
 INCLUDEPATH += $$PWD/../../../include/interfaces
 DEPENDPATH += $$PWD/../../../include/interfaces
+

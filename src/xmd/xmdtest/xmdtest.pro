@@ -13,6 +13,10 @@ CONFIG += C++11
 CONFIG += link_prl
 
 TARGET = xmdtest
+CONFIG(debug, debug|release) {
+    macx: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 HEADERS +=
 
