@@ -36,6 +36,9 @@ signals:
     void writeLog(QString message, QColor color=Qt::black);
 
 public:
+    LoggerInterface(QObject *parent) : QObject(parent) {
+
+    }
 
     virtual ~LoggerInterface() {}
 

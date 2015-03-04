@@ -27,11 +27,13 @@ DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
     syntaxcheckerplugin.cpp \
-    syntaxcheckworker.cpp
+    syntaxcheckworker.cpp \
+    loggerfactory.cpp
 
 HEADERS +=\
     syntaxcheckerplugin.h \
-    syntaxcheckworker.h
+    syntaxcheckworker.h \
+    loggerfactory.h
 
 ################################################
 # INSTALL instructions

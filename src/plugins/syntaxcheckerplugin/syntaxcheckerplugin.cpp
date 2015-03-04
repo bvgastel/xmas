@@ -29,6 +29,7 @@
 #include "parse.h"
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
+#include "loggerfactory.h"
 
 QString SyntaxCheckerPlugin::name() {
     return m_name;
@@ -37,7 +38,7 @@ QString SyntaxCheckerPlugin::name() {
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
     m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
-    m_logger(new Logger("SyntaxChecker"))
+    m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
 {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
     worker->moveToThread(&m_workerThread);
