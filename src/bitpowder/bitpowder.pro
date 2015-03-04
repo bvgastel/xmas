@@ -33,7 +33,7 @@ QT       -= core gui
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prt
-CONFIG += static
+CONFIG += static dll
 #CONFIG += build_all
 
 TARGET = bitpowder

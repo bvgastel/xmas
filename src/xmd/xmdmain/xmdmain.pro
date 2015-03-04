@@ -12,6 +12,7 @@ QT += qml
 QT += quickwidgets
 
 CONFIG += link_prl
+CONFIG += static
 CONFIG += C++11
 
 TARGET = xmdmain
