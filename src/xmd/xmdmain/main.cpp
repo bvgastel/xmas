@@ -44,22 +44,28 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
-    QCommandLineParser parser;
-    parser.setApplicationDescription("XMAS Model Designer");
-    parser.addHelpOption();
-    parser.addVersionOption();
-    parser.addPositionalArgument("file", "The file to open.");
-    parser.process(app);
+    // TODO: Is the commandline parsing necessary? Why not ignore?
+//    QCommandLineParser parser;
+//    parser.setApplicationDescription("XMAS Model Designer");
+//    parser.addHelpOption();
+//    parser.addVersionOption();
+//    parser.addPositionalArgument("file", "The file to open.");
+//    parser.process(app);
 
     //Important! First register then engine.load
     // otherwise c++ types will not be seen by qml
     qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
+    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Xmas");
 
 
     QQmlApplicationEngine engine;
     Controller controller;
+    PluginControl pluginControl;
+
     QQmlContext* ctx = engine.rootContext();
     ctx->setContextProperty("controller", &controller);
+    ctx->setContextProperty("plugincontrol", &pluginControl);
+
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
 

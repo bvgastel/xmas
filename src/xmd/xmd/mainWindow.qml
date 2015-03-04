@@ -563,22 +563,29 @@ ApplicationWindow {
         }
 
     }
+
     Connections {
-        target: controller
+        target: plugincontrol
         onWriteLog: log(message,color)
         onPluginsLoaded: {
-            var line = " Plugin names: [ ";
+            var line = " Yeeh ! Plugin names: [ ";
             var glue = "";
-            for (var i in list) {
-                line += glue + list[i];
+            for (var i in vtNameList) {
+                line += glue + vtNameList[i];
                 glue = ", ";
             }
             line += " ]";
             log(line, "red");
         }
-
     }
+
+    Connections {
+        target: controller
+        onWriteLog: log(message,color)
+    }
+
     Component.onCompleted: {
-        controller.loadPlugins()
+        //controller.loadPlugins()
+        plugincontrol.loadPlugins()
     }
 }

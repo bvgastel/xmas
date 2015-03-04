@@ -50,7 +50,7 @@
 #include "componentwalker.h"
 #include "vtplugininterface.h"
 #include "logger.h"
-
+#include "../plugincontrol.h"
 
 class Controller : public QObject
 {
@@ -81,7 +81,6 @@ signals: //to view
      * @return true if successful
      */
     bool createNetwork(const QVariantMap &object);
-    bool pluginsLoaded(const QVariantList &list);
 
 public slots:  //from view
     bool componentCreated(const QVariant &object);
@@ -91,7 +90,6 @@ public slots:  //from view
     bool channelDestroyed(const QVariant &object);
     bool channelChanged(const QVariant &object);
     bool fileOpen(QUrl fileUrl);
-    bool loadPlugins();
 
 public:
     enum Orientation {
@@ -109,11 +107,6 @@ public:
 
     explicit Controller(QObject* parent = 0);
     ~Controller();
-
-    QVariantMap pluginParams(QString name);
-    bool pluginParam(QString name, QString key, QString value);
-
-    bool startPlugin(const QString &vtname, const QString &json);
 
     void startMsg();
     void endMsg();
@@ -149,7 +142,6 @@ private:
         {std::type_index(typeid(XMASSwitch)), "switch"},
     };
 
-    QMap<QString, VtPluginInterface *> m_vtMap;
     Logger m_logger;
 };
 
