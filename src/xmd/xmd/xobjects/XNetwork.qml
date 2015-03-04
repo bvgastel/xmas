@@ -80,6 +80,7 @@ Rectangle {
     }
 
 
+
     focus: true
 
     property bool selectionMode: Qt.Unchecked
@@ -88,7 +89,7 @@ Rectangle {
     property int margin: 25
 
     signal groupSelected(var group)
-    signal moveSelected()
+    signal moveSelected(var group)
     signal deleteSelected()
     signal clearSelection()
 
@@ -210,7 +211,7 @@ Rectangle {
         z:100
         onSizeChanged: selectItems(canvasItems())
         onShowContextMenu:contextMenu.popup()
-        onPositionChanged: moveSelected()
+        onPositionChanged: moveSelected(selection)
     }
 
     MouseArea {

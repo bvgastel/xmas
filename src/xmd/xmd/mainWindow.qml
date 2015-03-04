@@ -389,6 +389,7 @@ ApplicationWindow {
                 pixelAligned: true
                 interactive: sheet ? !sheet.selectionMode : true
 
+                //contentWidth: contentItem.childrenRect.width; contentHeight: contentItem.childrenRect.height
 
 
                 //        onFlickEnded: {
@@ -398,8 +399,6 @@ ApplicationWindow {
                 //                        + " hr : " + view.visibleArea.heightRatio)
                 //        }
 
-
-
                 XNetwork{
                     id:sheet
                     transformOrigin: Item.TopLeft
@@ -407,20 +406,39 @@ ApplicationWindow {
                     width : 5940
                     height: 4200
 
+                    onMoveSelected: {
+                       if(group.x < view.contentX)
+                           scrollLeft.start()
+                       else
+                           scrollLeft.stop()
+                       if(group.x + group.width - 50 > view.contentX + view.width)
+                           scrollRight.start()
+                       else
+                           scrollRight.stop()
+                       if(group.y < view.contentY)
+                           scrollUp.start()
+                       else
+                           scrollUp.stop()
+                       if(group.y + group.height - 50 > view.contentY + view.height)
+                          scrollDown.start()
+                       else
+                           scrollDown.stop()
+                    }
                 }
 
                 // Only show the scrollbars when the view is moving.
-                states: State {
-                    name: "ShowBars"
-                    when: view.movingVertically || view.movingHorizontally
-                    PropertyChanges { target: verticalScrollBar; opacity: 1 }
-                    PropertyChanges { target: horizontalScrollBar; opacity: 1 }
-                }
-
+                states:
+                    State {
+                        name: "ShowBars"
+                        when: view.movingVertically || view.movingHorizontally
+                            || scrollLeft.running || scrollRight.running
+                            || scrollUp.running || scrollDown.running
+                        PropertyChanges { target: verticalScrollBar; opacity: 1 }
+                        PropertyChanges { target: horizontalScrollBar; opacity: 1 }
+                    }
                 transitions: Transition {
                     NumberAnimation { properties: "opacity"; duration: 600 }
                 }
-
             }
 
             DropShadow {
@@ -455,8 +473,85 @@ ApplicationWindow {
                 position: view.visibleArea.xPosition
                 pageSize: view.visibleArea.widthRatio
             }
+
+            MouseArea {
+                id: scrollZoneLeft
+                width: 10
+                height: view.height
+                anchors.left: view.left
+                hoverEnabled: true
+                z: 100
+                onExited: view.returnToBounds()
+            }
+
+            MouseArea {
+                id: scrollZoneRight
+                width: 10
+                height: view.height
+                anchors.right: view.right
+                hoverEnabled: true
+                z: 100
+                onExited: view.returnToBounds()
+            }
+
+            MouseArea {
+                id: scrollZoneTop
+                width: view.width
+                height: 10
+                anchors.top: view.top
+                hoverEnabled: true
+                z: 100
+                onExited: view.returnToBounds()
+            }
+
+            MouseArea {
+                id: scrollZoneBottom
+                width: view.width
+                height: 10
+                anchors.bottom: view.bottom
+                hoverEnabled: true
+                z: 100
+                onExited: view.returnToBounds()
+            }
+
+            SmoothedAnimation {
+                id: scrollLeft
+                target: view
+                property: "contentX"
+                to:-50
+                velocity: 1000
+                //running: scrollZoneLeft.containsMouse
+            }
+
+            SmoothedAnimation {
+                id: scrollRight
+                target: view
+                property: "contentX"
+                to: view.contentWidth + 50
+                velocity: 1000
+                //running: scrollZoneRight.containsMouse
+            }
+
+            SmoothedAnimation {
+                id: scrollUp
+                target: view
+                property: "contentY"
+                to: -50
+                velocity: 1000
+                //running: scrollZoneTop.containsMouse
+            }
+
+            SmoothedAnimation {
+                id: scrollDown
+                target: view
+                property: "contentY"
+                to: view.contentHeight + 50
+                velocity: 1000
+                //running: scrollZoneBottom.containsMouse
+            }
         }
 
+        //remember the log height
         onResizingChanged: {
             outputLog.lastHeight = outputLog.height
             outputLog.open = outputLog.lastHeight > 0
