@@ -7,8 +7,9 @@ QT       -= gui
 
 CONFIG += C++11
 CONFIG += create_prl
+CONFIG += link_prl
 CONFIG += static
-CONFIG += build_all
+#CONFIG += build_all
 
 TARGET = interfaces
 CONFIG(debug, debug|release) {

@@ -13,8 +13,8 @@ public:
     LoggerFactory() {}
     virtual ~LoggerFactory() {}
 
-    static LoggerInterface MakeLogger(QString name) {
-        return new Logger(name);
+    static LoggerInterface *MakeLogger(QString name) {
+        return new Logger(name, nullptr);
     }
 
 };

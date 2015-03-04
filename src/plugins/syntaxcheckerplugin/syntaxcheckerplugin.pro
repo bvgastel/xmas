@@ -15,7 +15,7 @@ CONFIG += plugin
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += dll
-CONFIG += build_all
+#CONFIG += build_all
 
 TARGET = syntaxcheckerplugin
 CONFIG(debug, debug|release) {
@@ -27,8 +27,7 @@ DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
     syntaxcheckerplugin.cpp \
-    syntaxcheckworker.cpp \
-    loggerfactory.cpp
+    syntaxcheckworker.cpp
 
 HEADERS +=\
     syntaxcheckerplugin.h \
@@ -51,25 +50,6 @@ DISTFILES += \
 ################################################
 # Internal dependencies
 ################################################
-#macx:CONFIG(debug, debug|release): LIBS += \
-#    -L$$OUT_PWD/../interfaces/ -linterfaces_debug
-#else:macx:CONFIG(release, debug|release): LIBS += \
-#    -L$$OUT_PWD/../interfaces/ -linterfaces
-#else:win32:CONFIG(debug, debug|release): LIBS += \
-#    -L$$OUT_PWD/../interfaces/debug/ -linterfacesd
-#else:win32:CONFIG(release, debug|release): LIBS += \
-#    -L$$OUT_PWD/../interfaces/release/ -linterfaces
-#else:unix: LIBS += \
-#    -L$$OUT_PWD/../interfaces/ -linterfaces
-
-#INCLUDEPATH += $$PWD/../interfaces
-#DEPENDPATH += $$PWD/../interfaces
-
-#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/libinterfaces.a
-#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/libinterfacesd.a
-#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/release/interfaces.lib
-#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../interfaces/debug/interfacesd.lib
-#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../interfaces/libinterfaces.a
 
 ################################################
 # External dependencies
