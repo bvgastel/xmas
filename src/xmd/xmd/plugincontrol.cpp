@@ -99,14 +99,7 @@ QVariantMap PluginControl::pluginParams(QString vtname) {
     QVariantMap map;
     if (m_vtMap.contains(vtname)) {
         VtPluginInterface *vtPluginInterface = m_vtMap[vtname];
-        map.insert("name", vtPluginInterface->name());
-        QMap<QString, QString> paramMap = vtPluginInterface->parameters();
-        auto i = paramMap.constBegin();
-        while (i != paramMap.constEnd()) {
-            QString propName = i.key();
-            map.insert(propName, i.value());
-            i++;
-        }
+        map = vtPluginInterface->paramMap();
     }
     return map;
 }
@@ -116,7 +109,7 @@ bool PluginControl::pluginParam(QString name, QString key, QString value) {
     const char *ckey = key.toStdString().c_str();
     if (m_vtMap.contains(cname)) {
         auto vtplugin = m_vtMap[cname];
-        auto paramMap = vtplugin->parameters();
+        auto paramMap = vtplugin->paramMap();
         if (paramMap.contains(ckey)) {
             paramMap[ckey] = value;
             return true;

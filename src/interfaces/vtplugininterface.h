@@ -28,6 +28,7 @@
 #include <QtPlugin>
 #include <QColor>
 #include <QMap>
+#include <QVariant>
 
 #include "xmas.h"
 #include "logger.h"
@@ -41,8 +42,8 @@ public:
     virtual QString name() = 0;
     virtual void name(QString name) = 0;
 
-    virtual QMap<QString, QString> parameters() = 0;
-    virtual void parameters(QMap<QString, QString> paramMap) = 0;
+    virtual QVariantMap paramMap() = 0;
+    virtual void parameters(QVariantMap paramMap) = 0;
 
     virtual void start(const QString &json) = 0;
 

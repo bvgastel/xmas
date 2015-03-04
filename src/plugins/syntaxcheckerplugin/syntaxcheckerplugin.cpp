@@ -37,7 +37,7 @@ QString SyntaxCheckerPlugin::name() {
 
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
-    m_paramMap({{"parameter1", ""}, {"parameter2", ""}}),
+    m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}}),
     m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
 {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
@@ -71,11 +71,12 @@ void SyntaxCheckerPlugin::name(QString name) {
     m_name = name;
 }
 
-QMap<QString, QString> SyntaxCheckerPlugin::parameters() {
-    return m_paramMap;
+QVariantMap SyntaxCheckerPlugin::paramMap() {
+    QVariantMap map(m_paramMap);
+    return map;
 }
 
-void SyntaxCheckerPlugin::parameters(QMap<QString, QString> paramMap) {
+void SyntaxCheckerPlugin::parameters(QVariantMap paramMap) {
     m_paramMap = paramMap;
 }
 

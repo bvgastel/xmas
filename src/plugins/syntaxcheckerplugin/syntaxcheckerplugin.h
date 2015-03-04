@@ -25,6 +25,7 @@
 #include <chrono>
 
 #include <QString>
+#include <QVariant>
 #include <QMap>
 #include <QThread>
 
@@ -47,8 +48,8 @@ public:
     virtual QString name() override;
     virtual void name(QString name) override;
 
-    virtual QMap<QString, QString> parameters() override;
-    virtual void parameters(QMap<QString, QString> paramMap) override;
+    virtual void parameters(QVariantMap paramMap) override;
+    virtual QVariantMap paramMap() override;
 
     virtual void start(const QString &json) override;
 
@@ -68,7 +69,7 @@ private:
     /**
      * @brief m_paramMap the parameters for the verification tool in a QMap.
      */
-    QMap<QString, QString> m_paramMap;
+    QMap<QString, QVariant> m_paramMap;
     /**
      * @brief m_logger A specific logger for this verification tool.
      */
