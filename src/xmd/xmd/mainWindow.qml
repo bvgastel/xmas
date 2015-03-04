@@ -59,6 +59,8 @@ ApplicationWindow {
 
     title: "XMAS Model Designer 2015"
 
+    property var vtNameList
+
     MessageDialog {
         id: aboutBox
         title: "About XMD"
@@ -180,6 +182,13 @@ ApplicationWindow {
         iconSource: "qrc:/content/run.ico"
         iconName: "select"
         //onTriggered: controller.run()
+        onTriggered: {
+            for (var i in mainwindow.vtNameList) {
+                var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
+                log ("params = [" + params +"]", "blue");
+            }
+        }
+
     }
 
     Action {
@@ -567,8 +576,10 @@ ApplicationWindow {
     Connections {
         target: plugincontrol
         onWriteLog: log(message,color)
+        // TODO: Can we save vtNameList somewhere so we can access it in other parts of the mainWindow?
         onPluginsLoaded: {
-            var line = " Yeeh ! Plugin names: [ ";
+            mainwindow.vtNameList = vtNameList
+            var line = " Loaded plugins: [ ";
             var glue = "";
             for (var i in vtNameList) {
                 line += glue + vtNameList[i];

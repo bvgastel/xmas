@@ -103,8 +103,9 @@ QVariantMap PluginControl::pluginParams(QString vtname) {
         QMap<QString, QString> paramMap = vtPluginInterface->parameters();
         auto i = paramMap.constBegin();
         while (i != paramMap.constEnd()) {
-            std::string propName = i.key().toStdString();
-            map.insert(propName.c_str(), i.value());
+            QString propName = i.key();
+            map.insert(propName, i.value());
+            i++;
         }
     }
     return map;
