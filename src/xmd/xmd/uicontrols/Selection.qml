@@ -17,6 +17,8 @@ Rectangle{
     property bool initialSizing: false
     property var selectedItems: []
 
+    property rect rubberBandRectangle: Qt.rect(0,0,0,0)
+
     signal sizeChanged
     signal positionChanged
     signal showContextMenu
@@ -30,12 +32,12 @@ Rectangle{
 
     function contains(item)
     {
-        return (item.x + item.width * 0.5 * ( 1 - item.scale) >= selection.x
-                && item.x + item.width * 0.5 * ( 1 + item.scale) <= selection.x + selection.width
-                && item.y + item.height * 0.5 * ( 1 - item.scale) >= selection.y
-                && item.y + item.height * 0.5 * ( 1 + item.scale) <= selection.y + selection.height)
+        var r = itemRect(item)
+        return (r.left >= selection.x
+                && r.right <= selection.x + selection.width
+                && r.top >= selection.y
+                && r.bottom <= selection.y + selection.height)
     }
-
 
     function selectItems(items){
         selectedItems = []
@@ -56,20 +58,29 @@ Rectangle{
         state = from===to ? "UNSELECT":"SELECT"
     }
 
+    function itemRect(item)
+    {
+        var arcsin = Math.abs(Math.sin(item.rotation * Math.PI / 180))
+        var arccos = Math.abs(Math.cos(item.rotation * Math.PI / 180))
+        var x0 = item.x + item.width * 0.5
+        var y0 = item.y + item.height * 0.5
+        var x1 = (item.width * arccos + item.height * arcsin) * item.scale * 0.5
+        var y1 = (item.height * arccos + item.width * arcsin) * item.scale * 0.5
+        return {left:x0 - x1,top:y0 - y1,right:x0 + x1,bottom:y0 + y1}
+    }
+
     function itemsRect() {
         //Qml Item.childrenRect not working properly
         // in combination with anchors --> bug in Qt.5.4.0?!
         var list = selectedItems
         var xmin=1000000,xmax=-1,ymin=1000000,ymax=-1
         for (var item in list){
-            xmin= Math.min(xmin, list[item].x + list[item].width * 0.5 * ( 1 - list[item].scale) - margin)
-            xmax= Math.max(xmax, list[item].x + list[item].width * 0.5 * ( 1 + list[item].scale) + margin)
-            ymin= Math.min(ymin, list[item].y + list[item].height * 0.5 * ( 1 - list[item].scale) - margin)
-            ymax= Math.max(ymax, list[item].y + list[item].height * 0.5 * ( 1 + list[item].scale) + margin)
+            var r = itemRect(list[item])
+            xmin= Math.min(xmin, r.left - margin)
+            xmax= Math.max(xmax, r.right + margin)
+            ymin= Math.min(ymin, r.top - margin)
+            ymax= Math.max(ymax, r.bottom + margin)
         }
-
-
- //         list[item].width * 0.5 * (1 - list[item].scale) - margin
 
         if(ymax<0) return Qt.rect(0,0,0,0)
         return Qt.rect(xmin,ymin,xmax-xmin,ymax-ymin)

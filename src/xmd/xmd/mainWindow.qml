@@ -124,14 +124,9 @@ ApplicationWindow {
 
     Action {
         id: showComponentNamesAction
-        text: "Component names"
+        text: "Show Component names"
         checkable: true
         checked: true
-    }
-    Action {
-        id: showPortNamesAction
-        text: "Port names"
-        checkable: true
     }
 
     Action {
@@ -266,7 +261,6 @@ ApplicationWindow {
             MenuItem { action: zoomFitAction }
             MenuSeparator{}
             MenuItem { action: showComponentNamesAction }
-            MenuItem { action: showPortNamesAction }
         }
 
         Menu {

@@ -63,10 +63,10 @@ Rectangle {
 
     function selectAll()
     {
-        console.log("select all")
         clearSelections()
         selection.from = Qt.point(sheet.x,sheet.y)
         selection.to = Qt.point(sheet.width,sheet.height)
+        selection.selectItems(canvasItems())
         sheet.groupSelected(selection)
     }
 
@@ -88,7 +88,6 @@ Rectangle {
         selection.selectItems()
     }
 
-
     focus: true
 
     property bool selectionMode: Qt.Unchecked
@@ -101,8 +100,6 @@ Rectangle {
     signal deleteSelected()
     signal clearSelection()
     signal showComponentNames(var checked)
-    signal showPortNames(var checked)
-
 
     Keys.onDeletePressed: deleteSelections()
     Keys.onEscapePressed: clearSelections()
@@ -303,10 +300,6 @@ Rectangle {
             action: showComponentNamesAction
             onToggled: showComponentNames(checked)
          }
-        MenuItem {
-            action: showPortNamesAction
-            onToggled: showPortNames(checked)
-        }
     }
 }
 
