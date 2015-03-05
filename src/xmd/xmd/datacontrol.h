@@ -24,6 +24,7 @@
 #define DATACONTROL_H
 
 #include <typeindex>
+#include <map>
 
 #include <QObject>
 #include <QColor>
@@ -33,6 +34,9 @@
 #include "xmas.h"
 #include "logger.h"
 #include "parse.h"
+
+typedef std::map<bitpowder::lib::String, XMASComponent *> XCompMap;
+typedef bitpowder::lib::MemoryPool XMP;
 
 /**
  * @brief The DataControl class
@@ -108,7 +112,6 @@ private:
      * Data members
      ************************************************************/
 public:
-    thread_local static bitpowder::lib::MemoryPool m_mp();
 
     enum Orientation {
         North = 0,
@@ -125,11 +128,12 @@ public:
 
 private:
 
+    XMP m_mp;
     /**
      * @brief allComponents The internal structure containing the network
      *
      */
-    std::map<bitpowder::lib::String, XMASComponent *> m_componentMap;
+    XCompMap m_componentMap;
     Logger m_logger;
 
     /************************************************************

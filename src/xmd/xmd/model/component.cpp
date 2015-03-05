@@ -37,19 +37,19 @@ QString model::Component::name() {
     return QString(m_component->getName().stl().c_str());
 }
 
-int x() {
+int model::Component::x() {
     return 0;
 }
 
-void x(int x) {
+void model::Component::x(int x) {
 
 }
 
-int y() {
+int model::Component::y() {
     return 0;
 }
 
-void y(int y) {
+void model::Component::y(int y) {
 
 }
 

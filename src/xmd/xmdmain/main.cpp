@@ -40,6 +40,7 @@
 #include "plugincontrol.h"
 #include "datacontrol.h"
 
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(xmd);
@@ -47,15 +48,13 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
 
-    //Important! First register then engine.load
-    // otherwise c++ types will not be seen by qml
-    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data");
-    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin");
-
     PluginControl pluginControl;
 
     DataControl dataControl;
+
     dataControl.registerTypes(); // Before engine.load
+    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
+    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
 
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
@@ -63,8 +62,6 @@ int main(int argc, char *argv[])
     ctx->setContextProperty("datacontrol", &dataControl);
 
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
-
-
     return app.exec();
 
 }

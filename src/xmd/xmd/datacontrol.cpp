@@ -54,15 +54,13 @@ void DataControl::registerTypes() {
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {
-    bitpowder::lib::MemoryPool mp;
-
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();
 
     m_logger.log("Opening file " + filename);
 
-    std::tie(m_componentMap, std::ignore) = parse_xmas_from_file(filename, mp);
+    std::tie(m_componentMap, std::ignore) = parse_xmas_from_file(filename, m_mp);
 
     if (m_componentMap.empty()) {
         m_logger.log("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
