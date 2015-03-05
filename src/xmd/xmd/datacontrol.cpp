@@ -48,9 +48,9 @@ DataControl::~DataControl()
 }
 
 void DataControl::registerTypes() {
-    qmlRegisterType<model::Component>(m_modelName, m_modelMajor, m_modelMinor, "component");
-    qmlRegisterType<model::Channel>(m_modelName, m_modelMajor, m_modelMinor, "connection");
-    qmlRegisterType<model::Port>(m_modelName, m_modelMajor, m_modelMinor, "port");
+    qmlRegisterType<model::Component>(m_modelName, m_modelMajor, m_modelMinor, "xcomponent");
+    qmlRegisterType<model::Channel>(m_modelName, m_modelMajor, m_modelMinor, "xconnection");
+    qmlRegisterType<model::Port>(m_modelName, m_modelMajor, m_modelMinor, "xport");
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {
