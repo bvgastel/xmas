@@ -42,7 +42,7 @@ PluginControl::~PluginControl()
 std::shared_ptr<QDir> PluginControl::pluginDir() {
     std::shared_ptr<QDir> pluginDir = std::make_shared<QDir>(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
-    if (pluginDir->dirName().toLower() == "debug" || pluginsDir->dirName().toLower() == "release")
+    if (pluginDir->dirName().toLower() == "debug" || pluginDir->dirName().toLower() == "release")
         pluginDir->cdUp();
 #elif defined(Q_OS_MAC)
     if (pluginDir->dirName() == "MacOS") {
