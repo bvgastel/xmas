@@ -38,7 +38,6 @@
 #include <QtQml>
 #include "plugincontrol.h"
 #include "datacontrol.h"
-#include "xmapper/controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,18 +48,15 @@ int main(int argc, char *argv[])
 
     //Important! First register then engine.load
     // otherwise c++ types will not be seen by qml
-    qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Xmas");
     qmlRegisterType<DataControl>("XMAS", 1, 0, "Xmas");
 
 
     QQmlApplicationEngine engine;
-    //Controller controller;
     PluginControl pluginControl;
     DataControl dataControl;
 
     QQmlContext* ctx = engine.rootContext();
-    //ctx->setContextProperty("controller", &controller);
     ctx->setContextProperty("plugincontrol", &pluginControl);
     ctx->setContextProperty("datacontrol", &dataControl);
 

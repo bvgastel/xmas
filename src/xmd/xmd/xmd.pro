@@ -50,21 +50,11 @@ DEFINES += XMD_LIBRARY
 
 HEADERS       = \ 
     xmdexception.h \
-    xmapper/componentwalker.h \
-    xmapper/controller.h \
-    xmapper/fieldwalker.h \
-    xmapper/logoutput.h \
-    xmapper/network.h \
     plugincontrol.h \
     datacontrol.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
-    xmapper/componentwalker.cpp \
-    xmapper/controller.cpp \
-    xmapper/fieldwalker.cpp \
-    xmapper/logoutput.cpp \
-    xmapper/network.cpp \
     plugincontrol.cpp \
     datacontrol.cpp
     
