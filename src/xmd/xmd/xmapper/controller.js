@@ -116,7 +116,7 @@ function createComponent(parent,component,object) {
                                       })
 
         //TODO : if shared memory VT - XMD continues
-        // controller emits the whole network at once
+        // datacontrol emits the whole network at once
         // so check localy if everything goes well and
         // at the and feedback result as "networkCreated()"
         // NOTE: distinguish between sources of input (screen or json)
@@ -127,7 +127,7 @@ function createComponent(parent,component,object) {
 
 function destroy(component){
     component.destroy()
-    controller.componentDestroyed(component)
+    datacontrol.componentDestroyed(component)
 }
 
 

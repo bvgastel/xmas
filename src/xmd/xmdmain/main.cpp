@@ -36,7 +36,9 @@
 
 #include <QQmlContext>
 #include <QtQml>
-#include "../xmd/xmapper/controller.h"
+#include "plugincontrol.h"
+#include "datacontrol.h"
+#include "xmapper/controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -44,27 +46,23 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
-    // TODO: Is the commandline parsing necessary? Why not ignore?
-//    QCommandLineParser parser;
-//    parser.setApplicationDescription("XMAS Model Designer");
-//    parser.addHelpOption();
-//    parser.addVersionOption();
-//    parser.addPositionalArgument("file", "The file to open.");
-//    parser.process(app);
 
     //Important! First register then engine.load
     // otherwise c++ types will not be seen by qml
     qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Xmas");
+    qmlRegisterType<DataControl>("XMAS", 1, 0, "Xmas");
 
 
     QQmlApplicationEngine engine;
-    Controller controller;
+    //Controller controller;
     PluginControl pluginControl;
+    DataControl dataControl;
 
     QQmlContext* ctx = engine.rootContext();
-    ctx->setContextProperty("controller", &controller);
+    //ctx->setContextProperty("controller", &controller);
     ctx->setContextProperty("plugincontrol", &pluginControl);
+    ctx->setContextProperty("datacontrol", &dataControl);
 
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 

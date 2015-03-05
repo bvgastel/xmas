@@ -44,4 +44,5 @@ STEFAN  18-02   ok  component name is uniek --> moet deze kunnen aangepast worde
 STEFAN  18-02       port name moet uniek zijn , kiezen we nummer of name
 gbo     24-02       build alignment option: align to top, bottom, left, right.
 gbo     24-02       add scaling to toolbar, 100% default, 75%, 125% etc.
-gbo     04-03       Kunnen we de vtNameList uit onPluginsLoaded ergens bewaren?
+gbo     04-03  ok   Kunnen we de vtNameList uit onPluginsLoaded ergens bewaren?
+gbo     04-03       Add filename to header (or unnamed) or anywhere else (status bar?)

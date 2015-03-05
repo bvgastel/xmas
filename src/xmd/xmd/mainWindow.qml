@@ -194,11 +194,11 @@ ApplicationWindow {
         shortcut: "Ctrl+R"
         iconSource: "qrc:/content/run.ico"
         iconName: "select"
-        //onTriggered: controller.run()
         onTriggered: {
             for (var i in mainwindow.vtNameList) {
                 var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
-                log ("params = [" + params +"]", "blue");
+                log ("params = [" + params +"] Running to be implemented", "green");
+
             }
         }
 
@@ -220,7 +220,7 @@ ApplicationWindow {
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
-        onAccepted: controller.fileOpen(fileUrl)
+        onAccepted: datacontrol.fileOpen(fileUrl)
     }
 
     FileDialog {
@@ -592,10 +592,28 @@ ApplicationWindow {
 
     }
 
+//    Connections {
+//        target: controller
+//        onWriteLog: log(message,color)
+//    }
+
+
+
+    /************************************************
+     * Data Control
+     ************************************************/
+    Connections {
+        target: datacontrol
+        onWriteLog: log(message,color)
+
+    }
+
+    /************************************************
+     * Plugin Control
+     ************************************************/
     Connections {
         target: plugincontrol
         onWriteLog: log(message,color)
-        // TODO: Can we save vtNameList somewhere so we can access it in other parts of the mainWindow?
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
             var line = " Loaded plugins: [ ";
@@ -609,13 +627,7 @@ ApplicationWindow {
         }
     }
 
-    Connections {
-        target: controller
-        onWriteLog: log(message,color)
-    }
-
     Component.onCompleted: {
-        //controller.loadPlugins()
         plugincontrol.loadPlugins()
     }
 }
