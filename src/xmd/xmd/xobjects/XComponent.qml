@@ -73,7 +73,7 @@ Item {
             component.scale = 4.0;
     }
     function adjustRotation(dAngle){
-        component.rotation += dAngle
+        component.rotation += (dAngle + 360.0)   // -90 --> 270°
         component.rotation %= 360.0
         if (Math.abs(component.rotation) < 45)
             component.rotation = 0;
@@ -125,6 +125,7 @@ Item {
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
+                console.log("x,y,w,h,=" + parent.x + "," + parent.y + "," + parent.width + "," + parent.height)
                 var tmp = component.selected
                 if(mouse.modifiers != Qt.ControlModifier){
                     sheet.clearSelections(component)
@@ -185,7 +186,6 @@ Item {
         onClearSelection: component.selected = false
         onMoveSelected:  component.update()
         onShowComponentNames: namePlaceholder.visible = checked
-       //onShowPortNames: namePlaceholder.visible = checked
     }
 
     function doMove(dx,dy){
@@ -243,16 +243,10 @@ Item {
         }
         MenuSeparator{}
         MenuItem {
-            text: "Show ComponentName"
+            text: "Component name"
             checkable: true
             checked: namePlaceholder.visible
             onToggled: namePlaceholder.visible = checked
-        }
-        MenuItem {
-            text: "Show Portnames"
-            checkable: false
-//            checked: component.selected
-//            onToggled: namePlaceholder.visible = checked
         }
         MenuSeparator{}
         MenuItem {
