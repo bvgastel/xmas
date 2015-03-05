@@ -64,6 +64,22 @@ Item {
 
     transformOrigin: Item.Center
 
+    function adjustScale(dScale){
+        component.scale += dScale
+        if (Math.abs(component.scale) < 0.25)
+            component.scale = 0.25;
+        if (Math.abs(component.scale) > 4.0)
+            component.scale = 4.0;
+    }
+    function adjustRotation(dAngle){
+        component.rotation += dAngle
+        component.rotation %= 360.0
+        if (Math.abs(component.rotation) < 45)
+            component.rotation = 0;
+        if (Math.abs(component.rotation) > 315)
+            component.rotation = 0;
+    }
+
     //name tag
     Item{
         id:namePlaceholder
@@ -135,20 +151,14 @@ Item {
         //onExited: selection.visible = false
 
         onWheel: {
+            var delta
             if (wheel.modifiers & Qt.ControlModifier) {
-                component.rotation -= wheel.angleDelta.y /120 * 90;
-                component.rotation %= 360.0
-                if (Math.abs(component.rotation) < 45)
-                    component.rotation = 0;
-                if (Math.abs(component.rotation) > 315)
-                    component.rotation = 0;
+               delta = wheel.angleDelta.y /120 * 90
+               adjustRotation(-delta)
             }
             if (wheel.modifiers & Qt.AltModifier) {
-                component.scale -= wheel.angleDelta.x /120 * 0.25;
-                if (Math.abs(component.scale) < 0.25)
-                    component.scale = 0.25;
-                if (Math.abs(component.scale) > 4.0)
-                    component.scale = 4.0;
+                delta = wheel.angleDelta.x /120 * 0.25;
+                adjustScale(-delta)
             }
         }
     }
@@ -174,7 +184,7 @@ Item {
         onClearSelection: component.selected = false
         onMoveSelected:  component.update()
         onShowComponentNames: namePlaceholder.visible = checked
-        //onShowPortNames: namePlaceholder.visible = checked
+       //onShowPortNames: namePlaceholder.visible = checked
     }
 
     function doMove(dx,dy){
@@ -216,6 +226,8 @@ Item {
         return sheet.height - height * scale  - sheet.margin + height/2 * (scale-1)
     }
 
+
+
     Menu {
         id: contextMenu
         MenuItem {
@@ -232,7 +244,7 @@ Item {
         MenuItem {
             text: "Show ComponentName"
             checkable: true
-            checked: component.selected
+            checked: namePlaceholder.visible
             onToggled: namePlaceholder.visible = checked
         }
         MenuItem {
@@ -246,14 +258,25 @@ Item {
             text: "Rotate Right (90°)"
             iconSource: "qrc:/content/rotate_right.png"
             iconName: "RotateRight"
-            onTriggered: component.rotation +=90
+            onTriggered: adjustRotation(90)
         }
         MenuItem {
             text: "Rotate Left (90°)"
-            shortcut: "Ctrl+Shift+L"
             iconSource: "qrc:/content/rotate_left.png"
             iconName: "RotateLeft"
-            onTriggered: component.rotation -=90
+            onTriggered: adjustRotation(-90)
+        }
+        MenuItem {
+            text: "Increase Size"
+            iconSource: "qrc:/content/bigger.ico"
+            iconName: "Bigger"
+            onTriggered: adjustScale(0.25)
+        }
+        MenuItem {
+            text: "Decrease Size"
+            iconSource: "qrc:/content/smaller.ico"
+            iconName: "Smaller"
+            onTriggered: adjustScale(-0.25)
         }
 
     }

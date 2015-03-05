@@ -58,5 +58,7 @@
         <file>content/rotate_left.png</file>
         <file>content/rotate_right.png</file>
         <file>content/select_all.png</file>
+        <file>content/bigger.ico</file>
+        <file>content/smaller.ico</file>
     </qresource>
 </RCC>

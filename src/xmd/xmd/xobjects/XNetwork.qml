@@ -63,6 +63,8 @@ Rectangle {
 
     function selectAll()
     {
+        console.log("select all")
+        clearSelections()
         selection.from = Qt.point(sheet.x,sheet.y)
         selection.to = Qt.point(sheet.width,sheet.height)
         sheet.groupSelected(selection)
@@ -100,6 +102,7 @@ Rectangle {
     signal clearSelection()
     signal showComponentNames(var checked)
     signal showPortNames(var checked)
+
 
     Keys.onDeletePressed: deleteSelections()
     Keys.onEscapePressed: clearSelections()
