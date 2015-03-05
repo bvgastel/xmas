@@ -153,7 +153,6 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
 bool DataControl::componentCreated(const QVariant &qvariant)
 {
     QString msg("created ");
-    qDebug() << "Component created by designer (C++)";
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -163,17 +162,19 @@ bool DataControl::componentCreated(const QVariant &qvariant)
     QString scale = QQmlProperty::read(qobject, "scale").toString();
     msg += type + "(" + name + ") at [" + x + "," + y + "]"
             + " oriented " + orientation + " with scale " + scale;
-    qDebug() << "type = " << type << ", name = " << name << ".";
     auto it = this->m_componentMap.find(name.toStdString());
     if (it == m_componentMap.end()) {
-        qDebug() << name << ", " << type << "added to network";
+        msg += " with ports {";
+        QString glue = "";
         for (QObject *child : qobject->children()) {
             if (child->objectName() == "port") {
                 QVariant vpname = child->property("name");
                 QString pname = vpname.toString();
-                qDebug() << " port: " << pname;
+                msg += glue + pname;
+                glue = ", ";
             }
         }
+        msg += "}";
         m_logger.log(msg,Qt::black);
         return true;
     }

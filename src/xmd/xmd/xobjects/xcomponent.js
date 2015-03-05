@@ -52,7 +52,7 @@ function endDrag()
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
         datacontrol.componentCreated(draggedItem)
-        log("component created!")
+        //log("component created!")
 
         draggedItem = null;
     }
