@@ -1,4 +1,4 @@
-.import XMAS 1.0 as Ctrl
+//.import XMAS 1.0 as Ctrl
 .import QtQuick 2.0 as Qjs
 .import "../xobjects/xchannel.js" as Channel
 

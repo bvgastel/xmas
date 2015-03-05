@@ -1,12 +1,12 @@
 import QtQuick 2.4
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 
 XComponent {
     width: 50
     height: 50
     type: "sink"
     prefix: "snk"
-    XPort {x:20; y:0; name: "i"; type:Xmas.Target}
+    XPort {x:20; y:0; name: "i"; type:XMAS.Data.Target}
     topLabel: false
     Canvas {
         anchors.fill: parent

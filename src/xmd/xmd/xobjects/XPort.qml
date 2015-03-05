@@ -29,7 +29,7 @@
  *
  **************************************************************************/
 import QtQuick 2.4
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 import "xchannel.js" as Code
 
 
@@ -41,10 +41,10 @@ Item {
     property int id: 0
     property bool connected: false
     property string name: "a"
-    property int type: Xmas.Target
+    property int type: XMAS.Data.Target
     property alias orientation: port.rotation
 
-    orientation: (port.type == Xmas.Target) ? Xmas.West : Xmas.East
+    orientation: (port.type === XMAS.Data.Target) ? XMAS.Data.West : XMAS.Data.East
 
     signal update()
     signal removed()
@@ -55,7 +55,7 @@ Item {
         anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
-        radius: port.type === Xmas.Target ? 0 : port.width * 0.5
+        radius: port.type === XMAS.Data.Target ? 0 : port.width * 0.5
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)

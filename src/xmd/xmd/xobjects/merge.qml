@@ -1,14 +1,14 @@
 import QtQuick 2.4
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 
 XComponent {
     width: 100
     height: 100
     type: "merge"
     prefix: "m"
-    XPort {x: 0; y: 15; name: "a"; type:Xmas.Target}
-    XPort {x: 0; y:75; name: "b"; type:Xmas.Target}
-    XPort {x: 90; y:45; name: "o"; type:Xmas.Initiator}
+    XPort {x: 0; y: 15; name: "a"; type:XMAS.Data.Target}
+    XPort {x: 0; y:75; name: "b"; type:XMAS.Data.Target}
+    XPort {x: 90; y:45; name: "o"; type:XMAS.Data.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false

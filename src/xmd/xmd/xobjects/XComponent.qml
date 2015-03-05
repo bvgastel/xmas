@@ -32,7 +32,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 import "../uicontrols"
 import "../xmapper/controller.js" as Ctrl
 
@@ -51,7 +51,7 @@ Item {
     property string name: "" //prefix + index
     //property alias size: component.scale
     property alias orientation: component.rotation
-    orientation: Xmas.North
+    orientation: XMAS.Data.North
     property bool selected: false
     scale: 1.00
     property bool withDialog: false

@@ -33,7 +33,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 import "../uicontrols"
 import "xchannel.js" as Code
 import "../xmapper/controller.js" as Ctrl
@@ -140,7 +140,7 @@ Rectangle {
                 ctx.moveTo(x ,y)
                 ctx.lineTo(mouseX,mouseY)
                 ctx.stroke()
-                if(port1.type===Xmas.Target){
+                if(port1.type===XMAS.Data.Target){
                     ctx.moveTo(mouseX + port1.width/2 ,mouseY + port1.height/2)
                     ctx.beginPath()
                     ctx.arc(mouseX,mouseY, port1.width/2, 0, 2*Math.PI, false)

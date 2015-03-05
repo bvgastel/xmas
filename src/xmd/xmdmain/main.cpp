@@ -48,8 +48,13 @@ int main(int argc, char *argv[])
 
     //Important! First register then engine.load
     // otherwise c++ types will not be seen by qml
-    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Xmas");
-    qmlRegisterType<DataControl>("XMAS", 1, 0, "Xmas");
+    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data");
+
+    //andere voorbeelden voor extentie classes
+//    qmlRegisterType<DataControl>("XMAS", 1, 0, "Component");
+//    qmlRegisterType<DataControl>("XMAS", 1, 0, "Channel");
+//    qmlRegisterType<DataControl>("XMAS", 1, 0, "Port");
+    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin");
 
 
     QQmlApplicationEngine engine;

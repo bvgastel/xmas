@@ -1,14 +1,14 @@
 import QtQuick 2.4
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 
 XComponent {
     width: 100
     height: 100
     type: "fork"
     prefix: "frk"
-    XPort {x: 0; y: 45; name: "a"; type:Xmas.Target}
-    XPort {x: 90; y:15; name: "b"; type:Xmas.Initiator}
-    XPort {x: 90; y:75; name: "i"; type:Xmas.Initiator}
+    XPort {x: 0; y: 45; name: "a"; type:XMAS.Data.Target}
+    XPort {x: 90; y:15; name: "b"; type:XMAS.Data.Initiator}
+    XPort {x: 90; y:75; name: "i"; type:XMAS.Data.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false

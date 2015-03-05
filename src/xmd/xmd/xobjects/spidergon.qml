@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import XMAS 1.0
+import XMAS 1.0 as XMAS
 //this is a test composite
 
 XComponent {
@@ -7,11 +7,11 @@ XComponent {
     height: 90
     type: "composite"
     prefix: "c"
-    XPort {x: 0; y: 15; name: "t0"; type:Xmas.Target}
-    XPort {x: 0; y: 35; name: "t1"; type:Xmas.Target}
-    XPort {x: 0; y: 55; name: "t2"; type:Xmas.Target}
-    XPort {x: 90; y: 15; name: "i0"; type:Xmas.Initiator}
-    XPort {x: 90; y: 35; name: "i1"; type:Xmas.Initiator}
+    XPort {x: 0; y: 15; name: "t0"; type:XMAS.Data.Target}
+    XPort {x: 0; y: 35; name: "t1"; type:XMAS.Data.Target}
+    XPort {x: 0; y: 55; name: "t2"; type:XMAS.Data.Target}
+    XPort {x: 90; y: 15; name: "i0"; type:XMAS.Data.Initiator}
+    XPort {x: 90; y: 35; name: "i1"; type:XMAS.Data.Initiator}
     Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         y:5
