@@ -55,5 +55,8 @@
         <file>uicontrols/SelectionHandle.qml</file>
         <file>content/stop.ico</file>
         <file>content/run.ico</file>
+        <file>content/rotate_left.png</file>
+        <file>content/rotate_right.png</file>
+        <file>content/select_all.png</file>
     </qresource>
 </RCC>

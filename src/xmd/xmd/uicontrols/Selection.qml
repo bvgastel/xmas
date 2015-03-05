@@ -41,7 +41,10 @@ Rectangle{
         selectedItems = []
         for (var item in items){
             if(contains(items[item]))
+            {
+                if(items[item].selected !== undefined)items[item].selected = true
                 selectedItems.push(items[item])
+            }
         }
         rubberBand()
     }

@@ -95,7 +95,6 @@ ApplicationWindow {
         //onTriggered: fileSaveDialog.open()
     }
 
-
     Action {
         id: cutAction
         text: "Cut"
@@ -124,11 +123,15 @@ ApplicationWindow {
     }
 
     Action {
-        id: selectAllAction
-        text: "Select All"
-        shortcut: StandardKey.SelectAll
-        onTriggered: sheet.selectAll()
-        tooltip: "Select All items on the sheet"
+        id: showComponentNamesAction
+        text: "Component names"
+        checkable: true
+        checked: true
+    }
+    Action {
+        id: showPortNamesAction
+        text: "Port names"
+        checkable: true
     }
 
     Action {
@@ -159,13 +162,23 @@ ApplicationWindow {
     }
 
     Action {
-        id: selectionCursorAction
+        id: selectAreaAction
         text: "Selection Mode"
         shortcut:""
         iconSource: "qrc:/content/select.png"
         iconName: "select"
         checkable: true
         onToggled: sheet.selectionMode = checked
+    }
+
+    Action {
+        id: selectAllAction
+        text: "Select All"
+        shortcut: StandardKey.SelectAll
+        iconSource: "qrc:/content/select_all.png"
+        iconName: "selectAll"
+        onTriggered: sheet.selectAll()
+        tooltip: "Select All items on the sheet"
     }
 
     Action {
@@ -241,14 +254,19 @@ ApplicationWindow {
             MenuItem { action: cutAction }
             MenuItem { action: pasteAction }
             MenuSeparator{}
+            MenuItem {action: selectAreaAction}
             MenuItem {action: selectAllAction}
         }
 
         Menu {
             title: "&View"
+
             MenuItem { action: zoomInAction }
             MenuItem { action: zoomOutAction }
             MenuItem { action: zoomFitAction }
+            MenuSeparator{}
+            MenuItem { action: showComponentNamesAction }
+            MenuItem { action: showPortNamesAction }
         }
 
         Menu {
@@ -304,7 +322,8 @@ ApplicationWindow {
 
             ToolBarSeparator {}
 
-            ToolButton {action: selectionCursorAction}
+            ToolButton {action: selectAreaAction}
+            ToolButton {action: selectAllAction}
 
             ToolBarSeparator {}
 

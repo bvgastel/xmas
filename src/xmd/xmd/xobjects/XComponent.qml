@@ -66,7 +66,7 @@ Item {
 
     //name tag
     Item{
-        id:labelPlaceholder
+        id:namePlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
         anchors {
             bottom: topLabel ? parent.top : undefined
@@ -108,11 +108,11 @@ Item {
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                var tmp = selected
+                var tmp = component.selected
                 if(mouse.modifiers != Qt.ControlModifier){
                     sheet.clearSelections(component)
                 }
-                selected = !tmp
+                component.selected = !tmp
             }
             if (mouse.button == Qt.RightButton){
                 contextMenu.popup()
@@ -160,8 +160,9 @@ Item {
     Rectangle {
         id: highLite
         anchors.fill: mousearea
+        color:"lightsteelblue"
         border.color: "steelblue"
-        border.width: selected ? 1 : 0
+        border.width: component.selected || component.focus ? 1 : 0
         visible: selected || component.focus
         //opacity: 0.75
         z:-1 // under parent = component
@@ -169,9 +170,11 @@ Item {
 
     Connections {
         target: sheet
-        onDeleteSelected: if (component.selected) Ctrl.destroy(component)
+        onDeleteSelected: if (component.selected)Ctrl.destroy(component)
         onClearSelection: component.selected = false
         onMoveSelected:  component.update()
+        onShowComponentNames: namePlaceholder.visible = checked
+        //onShowPortNames: namePlaceholder.visible = checked
     }
 
     function doMove(dx,dy){
@@ -225,6 +228,35 @@ Item {
             text: "Delete"
             onTriggered: Ctrl.destroy(component)
         }
+        MenuSeparator{}
+        MenuItem {
+            text: "Show ComponentName"
+            checkable: true
+            checked: component.selected
+            onToggled: namePlaceholder.visible = checked
+        }
+        MenuItem {
+            text: "Show Portnames"
+            checkable: false
+//            checked: component.selected
+//            onToggled: namePlaceholder.visible = checked
+        }
+        MenuSeparator{}
+        MenuItem {
+            text: "Rotate Right (90°)"
+            iconSource: "qrc:/content/rotate_right.png"
+            iconName: "RotateRight"
+            onTriggered: component.rotation +=90
+        }
+        MenuItem {
+            text: "Rotate Left (90°)"
+            shortcut: "Ctrl+Shift+L"
+            iconSource: "qrc:/content/rotate_left.png"
+            iconName: "RotateLeft"
+            onTriggered: component.rotation -=90
+        }
+
     }
+
 
 }

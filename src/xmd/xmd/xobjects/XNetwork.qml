@@ -77,8 +77,14 @@ Rectangle {
     {
         //propagate to all children
         clearSelection()
+        selection.selectItems()
     }
-
+    function deleteSelections()
+    {
+        //propagate to all children
+        deleteSelected()
+        selection.selectItems()
+    }
 
 
     focus: true
@@ -92,13 +98,15 @@ Rectangle {
     signal moveSelected(var group)
     signal deleteSelected()
     signal clearSelection()
+    signal showComponentNames(var checked)
+    signal showPortNames(var checked)
 
-    Keys.onDeletePressed: deleteSelected()
-    Keys.onEscapePressed: clearSelection()
-    Keys.onLeftPressed: moveSelected(-gridsize,0)
-    Keys.onRightPressed: moveSelected(gridsize,0)
-    Keys.onDownPressed: moveSelected(0,gridsize)
-    Keys.onUpPressed: moveSelected(0,-gridsize)
+    Keys.onDeletePressed: deleteSelections()
+    Keys.onEscapePressed: clearSelections()
+//    Keys.onLeftPressed: moveSelected(Qt.rect(-gridsize,0,0,0))
+//    Keys.onRightPressed: moveSelected(Qt.rect(gridsize,0,0,0))
+//    Keys.onDownPressed: moveSelected(Qt.rect(0,gridsize,0,0))
+//    Keys.onUpPressed: moveSelected(Qt.rect(0,-gridsize,0,0))
 
     //    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) selectionMode = true }
     //    Keys.onReleased: { if(event.modifiers=== Qt.ControlModifier) selectionMode = false }
@@ -256,8 +264,8 @@ Rectangle {
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
                 if(!sheet.selectionMode) {
-                    sheet.clearSelection()
-                    selection.selectItems()
+                    sheet.clearSelections()
+
                 }
 
                 focus = true
@@ -285,7 +293,16 @@ Rectangle {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: deleteSelected()
+            onTriggered: deleteSelections()
+        }
+        MenuSeparator{}
+        MenuItem {
+            action: showComponentNamesAction
+            onToggled: showComponentNames(checked)
+         }
+        MenuItem {
+            action: showPortNamesAction
+            onToggled: showPortNames(checked)
         }
     }
 }
