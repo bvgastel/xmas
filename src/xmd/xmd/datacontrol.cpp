@@ -40,6 +40,7 @@
 
 DataControl::DataControl(QObject *parent) : QObject(parent), m_logger("datacontrol")
 {
+    QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
 }
 
 DataControl::~DataControl()
@@ -151,18 +152,17 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
  */
 bool DataControl::componentCreated(const QVariant &qvariant)
 {
-    m_logger.log(QString("Creating component (C++)"));
     QString msg("created ");
     qDebug() << "Component created by designer (C++)";
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
-    int x = QQmlProperty::read(qobject, "x").toInt();
-    int y = QQmlProperty::read(qobject, "x").toInt();
-    int orientation = QQmlProperty::read(qobject, "orientation").toInt();
-    int scale = QQmlProperty::read(qobject, "scale").toInt();
+    QString x = QQmlProperty::read(qobject, "x").toString();
+    QString y = QQmlProperty::read(qobject, "y").toString();
+    QString orientation = QQmlProperty::read(qobject, "orientation").toString();
+    QString scale = QQmlProperty::read(qobject, "scale").toString();
     msg += type + "(" + name + ") at [" + x + "," + y + "]"
-            + "looking at " + orientation + " scaled " + scale;
+            + " oriented " + orientation + " with scale " + scale;
     qDebug() << "type = " << type << ", name = " << name << ".";
     auto it = this->m_componentMap.find(name.toStdString());
     if (it == m_componentMap.end()) {

@@ -592,7 +592,6 @@ ApplicationWindow {
     Connections {
         target: datacontrol
         onWriteLog: log(message,color)
-
     }
 
     /************************************************

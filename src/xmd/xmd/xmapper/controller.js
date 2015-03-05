@@ -98,8 +98,6 @@ function getXQml(type) {
     }
 }
 
-
-
 function createComponent(parent,component,object) {
     var item = null
     //TODO check if name is unique
