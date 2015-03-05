@@ -51,12 +51,20 @@ DEFINES += XMD_LIBRARY
 HEADERS       = \ 
     xmdexception.h \
     plugincontrol.h \
-    datacontrol.h
+    datacontrol.h \
+    model/util.h \
+    model/component.h \
+    model/channel.h \
+    model/port.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
     plugincontrol.cpp \
-    datacontrol.cpp
+    datacontrol.cpp \
+    model/util.cpp \
+    model/component.cpp \
+    model/channel.cpp \
+    model/port.cpp
     
 ################################################
 # INSTALL instructions
@@ -125,7 +133,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/vt/ -lvtd \
     -L$$PWD/../../../lib/interfaces/ -linterfacesd
 
-else:unix|CONFIG(release, debug|release): LIBS += \
+else:unix|CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
     -L$$PWD/../../../lib/vt/ -lvt \

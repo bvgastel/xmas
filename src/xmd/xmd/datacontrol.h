@@ -55,6 +55,8 @@ public:
     explicit DataControl(QObject *parent = 0);
     ~DataControl();
 
+    void registerTypes();
+
 
     /************************************************************
      * Signals
@@ -106,6 +108,8 @@ private:
      * Data members
      ************************************************************/
 public:
+    thread_local static bitpowder::lib::MemoryPool m_mp();
+
     enum Orientation {
         North = 0,
         East = 90,
@@ -120,6 +124,7 @@ public:
     enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
 
 private:
+
     /**
      * @brief allComponents The internal structure containing the network
      *
@@ -127,6 +132,9 @@ private:
     std::map<bitpowder::lib::String, XMASComponent *> m_componentMap;
     Logger m_logger;
 
+    /************************************************************
+     * enums and constant data members
+     ************************************************************/
     //TODO : enumeration in javascript.
     std::map<std::type_index, QString> m_type_map = {
         {std::type_index(typeid(XMASSource)), "source" },
@@ -138,6 +146,9 @@ private:
         {std::type_index(typeid(XMASFork)), "fork"},
         {std::type_index(typeid(XMASSwitch)), "switch"},
     };
+    const char *m_modelName = "XMAS.model";
+    const int m_modelMajor = 1;
+    const int m_modelMinor = 0;
 
 };
 

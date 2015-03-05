@@ -28,20 +28,29 @@
 #include <chrono>
 #include <ctime>
 
+#include <QQmlContext>
 #include <QDebug>
 #include <QtQml>
 #include <QVariant>
 #include "canvascomponentextension.h"
+#include "model/component.h"
+#include "model/port.h"
+#include "model/channel.h"
 #include "datacontrol.h"
 
 DataControl::DataControl(QObject *parent) : QObject(parent), m_logger("datacontrol")
 {
-
 }
 
 DataControl::~DataControl()
 {
 
+}
+
+void DataControl::registerTypes() {
+    qmlRegisterType<model::Component>(m_modelName, m_modelMajor, m_modelMinor, "component");
+    qmlRegisterType<model::Channel>(m_modelName, m_modelMajor, m_modelMinor, "connection");
+    qmlRegisterType<model::Port>(m_modelName, m_modelMajor, m_modelMinor, "port");
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {
