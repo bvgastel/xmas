@@ -55,7 +55,8 @@ HEADERS       = \
     xmapper/fieldwalker.h \
     xmapper/logoutput.h \
     xmapper/network.h \
-    plugincontrol.h
+    plugincontrol.h \
+    datacontrol.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -64,7 +65,8 @@ SOURCES       = \
     xmapper/fieldwalker.cpp \
     xmapper/logoutput.cpp \
     xmapper/network.cpp \
-    plugincontrol.cpp
+    plugincontrol.cpp \
+    datacontrol.cpp
     
 ################################################
 # INSTALL instructions
