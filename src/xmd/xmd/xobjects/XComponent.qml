@@ -35,6 +35,7 @@ import QtQuick.Window 2.2
 import XMAS 1.0 as XMAS
 import "../uicontrols"
 import "../xmapper/controller.js" as Ctrl
+//import XMAS.model 1.0
 
 Item {
     id: component

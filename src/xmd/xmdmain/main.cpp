@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     DataControl dataControl;
 
     dataControl.registerTypes(); // Before engine.load
+
     qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
 

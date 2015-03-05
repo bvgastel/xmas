@@ -95,7 +95,7 @@ bool DataControl::emitNetwork() {
 
     emit createNetwork(network);
     std::clock_t c_end = std::clock();
-        qDebug() << "CPU time used: " << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms\n"
+        qDebug() << "CPU time used: " << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms"
                        << " for " << compList.length() << " components and " << channelList.length() << " channels";
 
     return true;
@@ -151,10 +151,18 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
  */
 bool DataControl::componentCreated(const QVariant &qvariant)
 {
-    qDebug() << "Component created by designer";
+    m_logger.log(QString("Creating component (C++)"));
+    QString msg("created ");
+    qDebug() << "Component created by designer (C++)";
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
+    int x = QQmlProperty::read(qobject, "x").toInt();
+    int y = QQmlProperty::read(qobject, "x").toInt();
+    int orientation = QQmlProperty::read(qobject, "orientation").toInt();
+    int scale = QQmlProperty::read(qobject, "scale").toInt();
+    msg += type + "(" + name + ") at [" + x + "," + y + "]"
+            + "looking at " + orientation + " scaled " + scale;
     qDebug() << "type = " << type << ", name = " << name << ".";
     auto it = this->m_componentMap.find(name.toStdString());
     if (it == m_componentMap.end()) {
@@ -166,7 +174,7 @@ bool DataControl::componentCreated(const QVariant &qvariant)
                 qDebug() << " port: " << pname;
             }
         }
-//        m_logger.log(QString("Created component name = \"")+name+QString("\""),Qt::black);
+        m_logger.log(msg,Qt::black);
         return true;
     }
     m_logger.log("component "+name+ " was not created.",Qt::red);

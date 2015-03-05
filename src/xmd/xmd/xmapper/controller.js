@@ -1,4 +1,4 @@
-//.import XMAS 1.0 as Ctrl
+//.import XMAS 1.0 as xmas
 .import QtQuick 2.0 as Qjs
 .import "../xobjects/xchannel.js" as Channel
 
@@ -12,7 +12,6 @@ function createNetwork(object) {
         log("Undefined network!","red")
         return
     }
-
 
     //clear sheet
     sheet.clear()
@@ -113,13 +112,14 @@ function createComponent(parent,component,object) {
                                           "scale":object.scale,
                                           "name":object.name,
                                           "param":object.param
-                                      })
+                                      });
 
         //TODO : if shared memory VT - XMD continues
         // datacontrol emits the whole network at once
         // so check localy if everything goes well and
         // at the and feedback result as "networkCreated()"
         // NOTE: distinguish between sources of input (screen or json)
+        datacontrol.componentCreated(component)
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }

@@ -592,13 +592,6 @@ ApplicationWindow {
 
     }
 
-//    Connections {
-//        target: controller
-//        onWriteLog: log(message,color)
-//    }
-
-
-
     /************************************************
      * Data Control
      ************************************************/
