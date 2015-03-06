@@ -126,7 +126,8 @@ private:
     bool emitNetwork();
     void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
-
+    bool connectPorts(XMASComponent *comp, QObject *qobject);
+    bool createCanvasData(XMASComponent *comp, QObject *qobject);
     /************************************************************
      * Data members
      ************************************************************/

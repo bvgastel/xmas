@@ -176,6 +176,7 @@ bool DataControl::componentCreated(const QVariant &qvariant)
             return false;
         }
         // comp was created successfully, now change data members
+        connectPorts(comp, qobject);
         CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
         if (ext) {
             // TODO: find out how to create extensions, if necessary from parse.h, parse.cpp
@@ -196,6 +197,28 @@ bool DataControl::componentCreated(const QVariant &qvariant)
     }
     m_logger.log("component "+name+ " was not created.",Qt::red);
     return false;
+}
+
+bool DataControl::connectPorts(XMASComponent *comp, QObject *qobject) {
+    std::vector<Output *> outs;
+    auto its = comp->outputPorts();
+    outs.insert(outs.begin(), its.begin(), its.end());
+    // Now: to find the connections!
+    // TODO: [qml] Add connections to qobject
+    // pseudo code: (source is parse.cpp / generate_xmas_from_parse_result
+    // for each port in comp find connection comp inputcomp
+    // use: Input *input = inputcomp->input port
+    // use: connect(*output, *input); // from xmas.cpp
+    return true;
+}
+
+bool DataControl::createCanvasData(XMASComponent *comp, QObject *qobject) {
+    QString x = QQmlProperty::read(qobject, "x").toString();
+    QString y = QQmlProperty::read(qobject, "y").toString();
+    QString orientation = QQmlProperty::read(qobject, "orientation").toString();
+    QString scale = QQmlProperty::read(qobject, "scale").toString();
+
+
 }
 
 /**
