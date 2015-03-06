@@ -204,6 +204,7 @@ Item {
     Connections {
         target: sheet
         onShowComponentNames: namePlaceholder.visible = checked
+        onMoveSelected: if(component.selected) component.update()
     }
 
     // Context menu
