@@ -49,16 +49,18 @@ Model.XComponent {
     transformOrigin: Item.Center
     z:1 //on top of channels
     property int uid:-1
+    name: "" //prefix + index
     property string type: "unknown"
     property string prefix: ""
     property int index:-1
-    property string name: "" //prefix + index
+
+    // TODO: (gbo) orientation or rotation? Which to use?
     property alias orientation: component.rotation
     orientation: XMAS.Data.North
     property bool selected: false
     property bool withDialog: false
     property bool topLabel: true
-    property var param
+
 
 
     // Signals
@@ -117,6 +119,7 @@ Model.XComponent {
     // Event handling
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
+    onWriteLog: console.log(message,color)
 
     // Name
     Item{

@@ -46,6 +46,7 @@ import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import "xobjects"
 import "uicontrols"
+import XMAS.model 1.0
 
 ApplicationWindow {
     id: mainwindow

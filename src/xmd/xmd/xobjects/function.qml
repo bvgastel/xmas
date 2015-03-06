@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import "../uicontrols"
 import XMAS 1.0 as XMAS
+//import XMAS.model 1.0 as Model
 
 XComponent {
     width: 100

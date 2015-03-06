@@ -33,5 +33,19 @@ model::Component::~Component()
 
 }
 
+void model::Component::onXChanged() {
+    emit writeLog(QString("x=")+x());
+}
+
+void model::Component::onYChanged() {
+    emit writeLog(QString("y=")+y());
+}
+void model::Component::onScaleChanged() {
+    emit writeLog(QString("scale changed: ")+scale());
+}
+void model::Component::onRotationChanged() {
+
+    emit writeLog(QString("orientation = ")+rotation());
+}
 
 

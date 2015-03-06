@@ -25,7 +25,6 @@
 
 #include <QQuickItem>
 
-#include "memorypool.h"
 #include "xmas.h"
 
 
@@ -37,21 +36,26 @@
  */
 
 namespace model {
+
+enum Orientation {
+    North = 0,
+    East = 90,
+    South = 180,
+    West = 270,
+    NorthWest = 45,
+    SouthWest = 225,
+    NorthEast = 315,
+    SouthEast = 135
+};
+enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
+
 class Component : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-//    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
-//    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
-
-//    scale: 1.00
-//    property string type: "unknown" // ---> CompType enum
-//    property string name: "" //prefix + index
-//    property orientation: Orientation.North
-//    property string param // functie string
-
+    Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -59,58 +63,40 @@ public:
 
 signals:
     void nameChanged();
-//    void xChanged();
-//    void yChanged();
+    void paramChanged();
+    void changeName(QString old_name, QString name);
+    void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
+    void onTypeChanged();
+    void onXChanged();
+    void onYChanged();
+    void onScaleChanged();
+    void onRotationChanged();
 
 public:
     QString name() {
-        return m_name;
+        std::string name = m_component->getStdName();
+        return QString(name.c_str());
     }
 
     void name(QString name) {
-        // TODO: make sure to modify xmascomponent and map
-        m_name = name;
+        QString old_name = QString(m_component->getStdName().c_str());
+        emit changeName(old_name, name); // TODO: have network catch this and change the names
     }
 
-//    virtual int x() {
-//        return m_x;
-//    }
-
-//    virtual void x(int x) {
-//        // TODO: make sure to modify xmascomponent and map
-//        m_x = x;
-//    }
-
-//    virtual int y() {
-//        return m_y;
-//    }
-
-//    virtual void y(int y) {
-//        // TODO: make sure to modify xmascomponent and map
-//        m_y = y;
-//    }
+    // TODO: find out how to store specifications
+    QVariant param() {
+        return m_param;
+    }
+    void param(QVariant param) {
+        m_param = param;
+    }
 
 public:
-    enum Orientation {
-        North = 0,
-        East = 90,
-        South = 180,
-        West = 270,
-        NorthWest = 45,
-        SouthWest = 225,
-        NorthEast = 315,
-        SouthEast = 135
-    };
-    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
-
 private:
-    QString m_name;
-//    int m_x;
-//    int m_y;
-    Orientation orientation;
-    double scale;
+    QVariant m_param;
+
     XMASComponent *m_component;
 };
 
