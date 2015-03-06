@@ -46,3 +46,4 @@ gbo     24-02       build alignment option: align to top, bottom, left, right.
 gbo     24-02       add scaling to toolbar, 100% default, 75%, 125% etc.
 gbo     04-03  ok   Kunnen we de vtNameList uit onPluginsLoaded ergens bewaren?
 gbo     04-03       Add filename to header (or unnamed) or anywhere else (status bar?)
+gbo     06-03       Open file, create queue (2x): results in duplicate name (xmas refuses creation)

@@ -34,9 +34,23 @@
 #include "xmas.h"
 #include "logger.h"
 #include "parse.h"
+#include "memorypool.h"
+#include "exception.h"
+#include "common.h" // for destroy template
 
 typedef std::map<bitpowder::lib::String, XMASComponent *> XCompMap;
 typedef bitpowder::lib::MemoryPool XMP;
+
+const QString xsource = "source";
+const QString xsink = "sink";
+const QString xfunction = "function";
+const QString xqueue = "queue";
+const QString xjoin = "join";
+const QString xmerge = "merge";
+const QString xfork = "fork";
+const QString xswitch = "switch";
+const QString xin = "in";
+const QString xout = "out";
 
 /**
  * @brief The DataControl class
@@ -101,6 +115,11 @@ public slots:
     bool channelChanged(const QVariant &object);
 
     /************************************************************
+     * Public methods
+     ************************************************************/
+public:
+    virtual XMASComponent *createXmasComponent(QString name, QString type);
+    /************************************************************
      * Private methods
      ************************************************************/
 private:
@@ -140,20 +159,45 @@ private:
      * enums and constant data members
      ************************************************************/
     //TODO : enumeration in javascript.
-    std::map<std::type_index, QString> m_type_map = {
-        {std::type_index(typeid(XMASSource)), "source" },
-        {std::type_index(typeid(XMASSink)), "sink" },
-        {std::type_index(typeid(XMASFunction)), "function" },
-        {std::type_index(typeid(XMASQueue)), "queue"},
-        {std::type_index(typeid(XMASJoin)), "join"},
-        {std::type_index(typeid(XMASMerge)), "merge"},
-        {std::type_index(typeid(XMASFork)), "fork"},
-        {std::type_index(typeid(XMASSwitch)), "switch"},
+    std::map<std::type_index, QString> m_type_index_map = {
+        {std::type_index(typeid(XMASSource)), xsource},
+        {std::type_index(typeid(XMASSink)), xsink},
+        {std::type_index(typeid(XMASFunction)), xfunction},
+        {std::type_index(typeid(XMASQueue)), xqueue},
+        {std::type_index(typeid(XMASJoin)), xjoin},
+        {std::type_index(typeid(XMASMerge)), xmerge},
+        {std::type_index(typeid(XMASFork)), xfork},
+        {std::type_index(typeid(XMASSwitch)), xswitch},
+    };
+    // TODO: What to do with IN and OUT????
+    std::map<QString, std::type_index> m_type_map = {
+        {xsource , std::type_index(typeid(XMASSource)) },
+        {xsink, std::type_index(typeid(XMASSink)) },
+        {xfunction, std::type_index(typeid(XMASFunction)) },
+        {xqueue, std::type_index(typeid(XMASQueue)) },
+        {xjoin, std::type_index(typeid(XMASJoin)) },
+        {xmerge, std::type_index(typeid(XMASMerge)) },
+        {xfork, std::type_index(typeid(XMASFork)) },
+        {xswitch, std::type_index(typeid(XMASSwitch)) },
     };
     const char *m_modelName = "XMAS.model";
     const int m_modelMajor = 1;
     const int m_modelMinor = 0;
 
 };
+
+// Remark; copied from parse.cpp
+template <class T>
+T *insert(bitpowder::lib::MemoryPool& mp,
+          std::map<bitpowder::lib::String, XMASComponent*>& allComponents,
+          const bitpowder::lib::String& name) {
+    //std::cout << name << std::endl;
+    if (allComponents.find(name) != allComponents.end())
+        throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
+    T *comp = new(mp, &bitpowder::lib::destroy<XMASComponent>) T(name);
+    allComponents.insert(std::make_pair(comp->getName(), comp));
+    return comp;
+}
+
 
 #endif // DATACONTROL_H

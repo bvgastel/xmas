@@ -41,7 +41,7 @@ class Component : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Orientation)
-    Q_PROPERTY(QString name READ name NOTIFY nameChanged)
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
 
@@ -57,11 +57,32 @@ signals:
 public slots:
 
 public:
-    QString name();
-    virtual int x();
-    virtual void x(int x);
-    virtual int y();
-    virtual void y(int y);
+    QString name() {
+        return m_name;
+    }
+
+    void name(QString name) {
+        // TODO: make sure to modify xmascomponent and map
+        m_name = name;
+    }
+
+    virtual int x() {
+        return m_x;
+    }
+
+    virtual void x(int x) {
+        // TODO: make sure to modify xmascomponent and map
+        m_x = x;
+    }
+
+    virtual int y() {
+        return m_y;
+    }
+
+    virtual void y(int y) {
+        // TODO: make sure to modify xmascomponent and map
+        m_y = y;
+    }
 
 public:
     enum Orientation {
@@ -76,6 +97,11 @@ public:
     };
 
 private:
+    QString m_name;
+    int m_x;
+    int m_y;
+    Orientation orientation;
+    double scale;
     XMASComponent *m_component;
 };
 

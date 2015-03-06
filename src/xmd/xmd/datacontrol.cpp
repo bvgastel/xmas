@@ -36,6 +36,7 @@
 #include "model/component.h"
 #include "model/port.h"
 #include "model/channel.h"
+#include "parse.h"
 #include "datacontrol.h"
 
 DataControl::DataControl(QObject *parent) : QObject(parent), m_logger("datacontrol")
@@ -127,7 +128,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
 //    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
-    QString type = m_type_map[typeIndex];
+    QString type = m_type_index_map[typeIndex];
     QString qname = QString::fromStdString(name);
 
     CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
@@ -150,9 +151,9 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
  * @param comp
  * @return
  */
+// TODO: componentCreated needs to create xmas structure
 bool DataControl::componentCreated(const QVariant &qvariant)
 {
-    QString msg("created ");
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString type = QQmlProperty::read(qobject, "type").toString();
     QString name = QQmlProperty::read(qobject, "name").toString();
@@ -160,10 +161,25 @@ bool DataControl::componentCreated(const QVariant &qvariant)
     QString y = QQmlProperty::read(qobject, "y").toString();
     QString orientation = QQmlProperty::read(qobject, "orientation").toString();
     QString scale = QQmlProperty::read(qobject, "scale").toString();
+    int ax = x.trimmed().toInt();
+    int ay = y.trimmed().toInt();
+    m_logger.log(QString("ax = ")+ax + ", ay = " +ay);
+    QString msg("created ");
     msg += type + "(" + name + ") at [" + x + "," + y + "]"
             + " oriented " + orientation + " with scale " + scale;
     auto it = this->m_componentMap.find(name.toStdString());
     if (it == m_componentMap.end()) {
+        auto comp = createXmasComponent(name, type);
+        if (!comp) {
+            msg += "\nXMAS creation failed: check type";
+            m_logger.log(msg, Qt::red);
+            return false;
+        }
+        // comp was created successfully, now change data members
+        CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
+        if (ext) {
+            // TODO: find out how to create extensions, if necessary from parse.h, parse.cpp
+        }
         msg += " with ports {";
         QString glue = "";
         for (QObject *child : qobject->children()) {
@@ -175,7 +191,7 @@ bool DataControl::componentCreated(const QVariant &qvariant)
             }
         }
         msg += "}";
-        m_logger.log(msg,Qt::black);
+        m_logger.log(msg,Qt::blue);
         return true;
     }
     m_logger.log("component "+name+ " was not created.",Qt::red);
@@ -191,7 +207,11 @@ bool DataControl::componentDestroyed(const QVariant &qvariant)
 {
     QObject *qobject = qvariant_cast<QObject *>(qvariant);
     QString name = QQmlProperty::read(qobject, "name").toString();
-    qDebug() << "Component " + name + " destroyed by designer";
+    auto it = this->m_componentMap.find(name.toStdString());
+    if (it != m_componentMap.end()) {
+        QString msg = "[Fake] Destroy component "+name;
+        m_logger.log(msg, Qt::green);
+    }
 
     return true;
 }
@@ -203,8 +223,13 @@ bool DataControl::componentDestroyed(const QVariant &qvariant)
  */
 bool DataControl::componentChanged(const QVariant &qvariant)
 {
-    Q_UNUSED(qvariant)
-    qDebug() << "Component changed by designer";
+    QObject *qobject = qvariant_cast<QObject *>(qvariant);
+    QString name = QQmlProperty::read(qobject, "name").toString();
+    auto it = this->m_componentMap.find(name.toStdString());
+    if (it != m_componentMap.end()) {
+        QString msg = "[Fake] Change component "+name;
+        m_logger.log(msg, Qt::green);
+    }
     return true;
 }
 
@@ -230,4 +255,48 @@ bool DataControl::channelChanged(const QVariant &qvariant)
     Q_UNUSED(qvariant)
     qDebug() << "Channel changed by designer";
     return true;
+}
+
+XMASComponent *DataControl::createXmasComponent(QString name, QString type) {
+    if (type == xsource) {
+        auto component = insert<XMASSource>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xsink) {
+        auto component = insert<XMASSink>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xfunction) {
+        auto component = insert<XMASFunction>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xqueue) {
+        auto component = insert<XMASQueue>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xjoin) {
+        auto component = insert<XMASJoin>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xmerge) {
+        auto component = insert<XMASMerge>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xfork) {
+        auto component = insert<XMASFork>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xswitch) {
+        auto component = insert<XMASSwitch>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
+        return component;
+    }
+    if (type == xin) {
+        // :( Don't know what to do
+        return nullptr;
+    }
+    if (type == xin) {
+        // :( Don't know what to do
+        return nullptr;
+    }
+    return nullptr;
 }

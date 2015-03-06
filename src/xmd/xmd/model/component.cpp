@@ -20,12 +20,12 @@
   *
   **********************************************************************/
 
-#include "datacontrol.h"
 #include "component.h"
 
 model::Component::Component(QObject *parent) : QObject(parent)
 {
-
+    // get datacontrol object from qml ---> Impossible
+    //m_component = createXmasComponent(QString("source"), QString("test comp"));
 }
 
 model::Component::~Component()
@@ -33,24 +33,5 @@ model::Component::~Component()
 
 }
 
-QString model::Component::name() {
-    return QString(m_component->getName().stl().c_str());
-}
-
-int model::Component::x() {
-    return 0;
-}
-
-void model::Component::x(int x) {
-
-}
-
-int model::Component::y() {
-    return 0;
-}
-
-void model::Component::y(int y) {
-
-}
 
 
