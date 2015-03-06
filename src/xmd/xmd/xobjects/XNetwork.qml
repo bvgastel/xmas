@@ -73,6 +73,17 @@ Rectangle {
         selection.select([item])
    }
 
+    // Select all items
+    function selectAll() {
+        selection.select(canvasItems())
+    }
+
+    // Clear sheet
+    function clear(){
+        selectAll()
+        selection.deleteSelected()
+    }
+
     //used to show the wiring path when adding a connection
     Canvas {
         id: wire
@@ -247,7 +258,7 @@ Rectangle {
         onZoomIn: doScale(0.1)
         onZoomOut: doScale(-0.1)
         onZoomFit: doScale()
-        onSelectAll: selection.select(canvasItems())
+        onSelectAll: selectAll()
         onSelectionMode: selectionMode = checked
         onShowComponentNames: showComponentNames(checked)
     }
