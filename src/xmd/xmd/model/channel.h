@@ -23,15 +23,21 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
-#include <QObject>
+#include <QQuickItem>
 
 namespace model {
 
-class Channel : public QObject
+class Channel : public QQuickItem
 {
     Q_OBJECT
+
+//    property int id: 0
+//    property var port1: null
+//    property var port2: null
+
+
 public:
-    explicit Channel(QObject *parent = 0);
+    explicit Channel(QQuickItem *parent = 0);
     ~Channel();
 
 signals:

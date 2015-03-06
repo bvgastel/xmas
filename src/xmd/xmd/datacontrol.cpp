@@ -39,7 +39,7 @@
 #include "parse.h"
 #include "datacontrol.h"
 
-DataControl::DataControl(QObject *parent) : QObject(parent), m_logger("datacontrol")
+DataControl::DataControl(QObject *parent) : QObject(parent),m_logger("datacontrol")
 {
     QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
 }
@@ -49,10 +49,10 @@ DataControl::~DataControl()
 
 }
 
-void DataControl::registerTypes() {
-    qmlRegisterType<model::Component>(m_modelName, m_modelMajor, m_modelMinor, "xcomponent");
-    qmlRegisterType<model::Channel>(m_modelName, m_modelMajor, m_modelMinor, "xconnection");
-    qmlRegisterType<model::Port>(m_modelName, m_modelMajor, m_modelMinor, "xport");
+void const DataControl::registerTypes() {
+    qmlRegisterType<model::Component>("XMAS.model", 1, 0, "XComponent");
+    qmlRegisterType<model::Channel>("XMAS.model", 1, 0, "XChannel");
+    qmlRegisterType<model::Port>("XMAS.model", 1, 0, "XPort");
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {

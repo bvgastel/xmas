@@ -23,7 +23,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <QObject>
+#include <QQuickItem>
 
 #include "memorypool.h"
 #include "xmas.h"
@@ -37,22 +37,30 @@
  */
 
 namespace model {
-class Component : public QObject
+class Component : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(Orientation)
+    Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
-    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
+//    Q_PROPERTY(int x READ x WRITE x NOTIFY xChanged)
+//    Q_PROPERTY(int y READ y WRITE y NOTIFY yChanged)
+
+//    scale: 1.00
+//    property string type: "unknown" // ---> CompType enum
+//    property string name: "" //prefix + index
+//    property orientation: Orientation.North
+//    property string param // functie string
+
 
 public:
-    explicit Component(QObject *parent = 0);
+    explicit Component(QQuickItem *parent = 0);
     ~Component();
 
 signals:
     void nameChanged();
-    void xChanged();
-    void yChanged();
+//    void xChanged();
+//    void yChanged();
 
 public slots:
 
@@ -66,23 +74,23 @@ public:
         m_name = name;
     }
 
-    virtual int x() {
-        return m_x;
-    }
+//    virtual int x() {
+//        return m_x;
+//    }
 
-    virtual void x(int x) {
-        // TODO: make sure to modify xmascomponent and map
-        m_x = x;
-    }
+//    virtual void x(int x) {
+//        // TODO: make sure to modify xmascomponent and map
+//        m_x = x;
+//    }
 
-    virtual int y() {
-        return m_y;
-    }
+//    virtual int y() {
+//        return m_y;
+//    }
 
-    virtual void y(int y) {
-        // TODO: make sure to modify xmascomponent and map
-        m_y = y;
-    }
+//    virtual void y(int y) {
+//        // TODO: make sure to modify xmascomponent and map
+//        m_y = y;
+//    }
 
 public:
     enum Orientation {
@@ -95,11 +103,12 @@ public:
         NorthEast = 315,
         SouthEast = 135
     };
+    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
 
 private:
     QString m_name;
-    int m_x;
-    int m_y;
+//    int m_x;
+//    int m_y;
     Orientation orientation;
     double scale;
     XMASComponent *m_component;

@@ -31,9 +31,9 @@
 import QtQuick 2.4
 import XMAS 1.0 as XMAS
 import "xchannel.js" as Code
+import XMAS.model 1.0 as Model
 
-
-Item {
+Model.XPort {
     id:port
     objectName: "port"
     width: 10; height:10

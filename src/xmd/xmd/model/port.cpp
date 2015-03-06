@@ -22,7 +22,7 @@
 
 #include "port.h"
 
-model::Port::Port(QObject *parent) : QObject(parent)
+model::Port::Port(QQuickItem *parent) : QQuickItem(parent)
 {
 
 }

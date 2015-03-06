@@ -69,11 +69,12 @@ class DataControl : public QObject
     Q_ENUMS(PortType)
     Q_ENUMS(CompType)
 
+
 public:
     explicit DataControl(QObject *parent = 0);
     ~DataControl();
 
-    void registerTypes();
+    void const registerTypes();
 
 
     /************************************************************

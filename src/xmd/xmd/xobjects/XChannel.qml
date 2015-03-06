@@ -30,8 +30,9 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import XMAS.model 1.0 as Model
 
-Item {
+Model.XChannel {
     id: channel
     objectName: "channel"
     focus: true

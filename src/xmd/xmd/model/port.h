@@ -23,16 +23,25 @@
 #ifndef PORT_H
 #define PORT_H
 
-#include <QObject>
+#include <QQuickItem>
 
 namespace model {
 
-class Port : public QObject
+class Port : public QQuickItem
 {
     Q_OBJECT
+    Q_ENUMS(PortType)
+
+
+//    property int id: 0 (komt van toepassing in composites , uniek volgnummer ipv naam)
+//    property bool connected: false
+//    property string name: "a"
+//    property int type: XMAS.Data.Target
+
 public:
-    explicit Port(QObject *parent = 0);
+    explicit Port(QQuickItem *parent = 0);
     ~Port();
+    enum PortType {Target , Initiator};
 
 signals:
 

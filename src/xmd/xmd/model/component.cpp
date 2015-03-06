@@ -22,7 +22,7 @@
 
 #include "component.h"
 
-model::Component::Component(QObject *parent) : QObject(parent)
+model::Component::Component(QQuickItem *parent) : QQuickItem(parent)
 {
     // get datacontrol object from qml ---> Impossible
     //m_component = createXmasComponent(QString("source"), QString("test comp"));

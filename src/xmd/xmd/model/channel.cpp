@@ -22,7 +22,7 @@
 
 #include "channel.h"
 
-model::Channel::Channel(QObject *parent) : QObject(parent)
+model::Channel::Channel(QQuickItem *parent) : QQuickItem(parent)
 {
 
 }
