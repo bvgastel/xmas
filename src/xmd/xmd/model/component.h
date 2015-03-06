@@ -73,6 +73,11 @@ public slots:
     void onYChanged();
     void onScaleChanged();
     void onRotationChanged();
+// @Guus een slot "Xchanged" moet je zelf maken , dit is ook logisch anders krijg je voor elke
+    //muis beweging een event in deze class.
+    // best is in qml signalen maken indien nodig bvb "positionHasChanged"
+    // QuickItem heeft een standaard signal "ItemChanged" en dit eventueel afvangen in c++
+    // om xmascomponent een te passen
 
 public:
     QString name() {

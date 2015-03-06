@@ -74,7 +74,7 @@ public:
     explicit DataControl(QObject *parent = 0);
     ~DataControl();
 
-    void const registerTypes();
+    void registerTypes() const;
 
 
     /************************************************************

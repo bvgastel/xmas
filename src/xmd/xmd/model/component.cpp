@@ -49,3 +49,4 @@ void model::Component::onRotationChanged() {
 }
 
 
+
