@@ -84,7 +84,7 @@ Item {
                 if (mouse.button == Qt.LeftButton) {
                     var tmp = selected
                     if(mouse.modifiers != Qt.ControlModifier){
-                        channel.parent ? channel.parent.clearSelections(channel): null
+                        //channel.parent ? channel.parent.clearSelections(channel): null
                     }
                     selected = !tmp
                 }
@@ -116,9 +116,9 @@ Item {
 
     Connections {
         target: parent
-        onGroupSelected: channel.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-        onDeleteSelected: if (channel.selected) channel.remove()
-        onClearSelection: channel.selected = false
+//        onGroupSelected: channel.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
+//        onDeleteSelected: if (channel.selected) channel.remove()
+//        onClearSelection: channel.selected = false
     }
 
 

@@ -41,76 +41,37 @@ import "../xmapper/controller.js" as Ctrl
 
 Rectangle {
     id: sheet
+    // Properties
     scale: 1.0
     width: 5940 //2970
     height: 4200 //2100
     color: "white"
-
-    function zoomFit()
-    {
-        scale = 1.0;
-    }
-    function zoomIn()
-    {
-        scale = scale + 0.1;
-        if (scale > 2) scale = 2
-    }
-    function zoomOut()
-    {
-        scale = scale - 0.1;
-        if (scale < 0.2) scale = 0.2
-    }
-
-    function selectAll()
-    {
-        clearSelections()
-        selection.from = Qt.point(sheet.x,sheet.y)
-        selection.to = Qt.point(sheet.width,sheet.height)
-        selection.selectItems(canvasItems())
-        sheet.groupSelected(selection)
-    }
-
-    function clear()
-    {
-        Ctrl.destroyAll(this)
-    }
-
-    function clearSelections()
-    {
-        //propagate to all children
-        clearSelection()
-        selection.selectItems()
-    }
-    function deleteSelections()
-    {
-        //propagate to all children
-        deleteSelected()
-        selection.selectItems()
-    }
-
-    focus: true
-
     property bool selectionMode: Qt.Unchecked
-    property bool selecting: false
     property int gridsize: 10
     property int margin: 25
 
-    signal groupSelected(var group)
+    // Signals
     signal moveSelected(var group)
-    signal deleteSelected()
-    signal clearSelection()
     signal showComponentNames(var checked)
 
-    Keys.onDeletePressed: deleteSelections()
-    Keys.onEscapePressed: clearSelections()
-//    Keys.onLeftPressed: moveSelected(Qt.rect(-gridsize,0,0,0))
-//    Keys.onRightPressed: moveSelected(Qt.rect(gridsize,0,0,0))
-//    Keys.onDownPressed: moveSelected(Qt.rect(0,gridsize,0,0))
-//    Keys.onUpPressed: moveSelected(Qt.rect(0,-gridsize,0,0))
+    // Event handling
 
-    //    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) selectionMode = true }
-    //    Keys.onReleased: { if(event.modifiers=== Qt.ControlModifier) selectionMode = false }
+    // JavaScripts
 
+    // Scale
+    function doScale(dScale){
+        if(dScale===undefined)
+            scale = 1.0
+        else
+            scale += dScale
+        if (scale > 2) scale = 2
+        if (scale < 0.2) scale = 0.2
+    }
+
+    // Select item
+    function select(item){
+        selection.select([item])
+   }
 
     //used to show the wiring path when adding a connection
     Canvas {
@@ -208,16 +169,15 @@ Rectangle {
         var items = []
         for (var child in children){
             if(children[child].objectName==="component")
-                    //|| children[child].objectName==="channel")
+               // || children[child].objectName==="channel")
                 items.push(children[child])
-         }
+        }
         return items
     }
 
     Selection {
         id: selection
-        z:100
-        onSizeChanged: selectItems(canvasItems())
+        onSizeChanged: selection.find(canvasItems())
         onShowContextMenu:contextMenu.popup()
         onPositionChanged: moveSelected(selection)
     }
@@ -245,18 +205,14 @@ Rectangle {
             }
             if (mouse.button == Qt.LeftButton){
                 if(sheet.selectionMode){
-                    sheet.clearSelection()
-                    sheet.selecting = true
                     selection.start(mouse)
-                    focus = true
-                }
+                 }
             }
         }
         onReleased: {
             if (mouse.button == Qt.LeftButton){
                 if(sheet.selectionMode){
-                    sheet.selecting = false
-                    selection.selectItems(canvasItems())
+                    selection.find(canvasItems())
                 }
             }
         }
@@ -264,11 +220,8 @@ Rectangle {
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
                 if(!sheet.selectionMode) {
-                    sheet.clearSelections()
-
+                    selection.clear()
                 }
-
-                focus = true
             }
             if (mouse.button == Qt.RightButton) {
 
@@ -289,17 +242,27 @@ Rectangle {
         onCreateNetwork: Ctrl.createNetwork(object)
     }
 
+    Connections {
+        target: mainwindow
+        onZoomIn: doScale(0.1)
+        onZoomOut: doScale(-0.1)
+        onZoomFit: doScale()
+        onSelectAll: selection.select(canvasItems())
+        onSelectionMode: selectionMode = checked
+        onShowComponentNames: showComponentNames(checked)
+    }
+
     Menu {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: deleteSelections()
+            onTriggered: selection.deleteSelected()
         }
         MenuSeparator{}
         MenuItem {
             action: showComponentNamesAction
             onToggled: showComponentNames(checked)
-         }
+        }
     }
 }
 

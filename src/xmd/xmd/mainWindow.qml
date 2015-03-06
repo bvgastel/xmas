@@ -50,16 +50,26 @@ import "uicontrols"
 
 ApplicationWindow {
     id: mainwindow
+    // Properties
     visible: true
     width: 1000
     height: 800
     minimumWidth: 400
     minimumHeight: 300
     color: "darkgrey"
-
     title: "XMAS Model Designer 2015"
-
     property var vtNameList
+
+    // Signals
+    signal cut
+    signal copy
+    signal paste
+    signal zoomIn
+    signal zoomOut
+    signal zoomFit
+    signal selectAll
+    signal selectionMode(var checked)
+    signal showComponentNames(var checked)
 
     MessageDialog {
         id: aboutBox
@@ -101,7 +111,7 @@ ApplicationWindow {
         shortcut: StandardKey.Cut
         iconSource: "qrc:/content/cut.png"
         iconName: "edit-cut"
-        onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
+        onTriggered: cut()
     }
 
     Action {
@@ -110,7 +120,7 @@ ApplicationWindow {
         shortcut: StandardKey.Copy
         iconSource: "qrc:/content/copy.png"
         iconName: "edit-copy"
-        onTriggered: log("Copy Action Clicked.","blue") //textArea.copy()
+        onTriggered: copy()
     }
 
     Action {
@@ -119,7 +129,7 @@ ApplicationWindow {
         shortcut: StandardKey.Paste
         iconSource: "qrc:/content/paste.png"
         iconName: "edit-paste"
-        onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
+        onTriggered: paste()
     }
 
     Action {
@@ -127,6 +137,7 @@ ApplicationWindow {
         text: "Show Component names"
         checkable: true
         checked: true
+        onTriggered: showComponentNames(checked)
     }
 
     Action {
@@ -135,7 +146,7 @@ ApplicationWindow {
         shortcut: StandardKey.ZoomIn
         iconSource: "qrc:/content/zoom-in.png"
         iconName: "zoom-in"
-        onTriggered: sheet.zoomIn()
+        onTriggered: zoomIn()
     }
 
     Action {
@@ -144,7 +155,7 @@ ApplicationWindow {
         shortcut: StandardKey.ZoomOut
         iconSource: "qrc:/content/zoom-out.png"
         iconName: "zoom-out"
-        onTriggered: sheet.zoomOut()
+        onTriggered: zoomOut()
     }
 
     Action {
@@ -153,17 +164,18 @@ ApplicationWindow {
         shortcut: "Ctrl+1"
         iconSource: "qrc:/content/zoom-fit.png"
         iconName: "zoom-fit"
-        onTriggered: sheet.zoomFit()
+        onTriggered: zoomFit()
     }
 
     Action {
         id: selectAreaAction
         text: "Selection Mode"
-        shortcut:""
+        shortcut:"Ctrl"
         iconSource: "qrc:/content/select.png"
         iconName: "select"
         checkable: true
-        onToggled: sheet.selectionMode = checked
+        checked: sheet.selectionMode
+        onToggled: selectionMode(checked) //sheet.selectionMode = checked
     }
 
     Action {
@@ -172,7 +184,7 @@ ApplicationWindow {
         shortcut: StandardKey.SelectAll
         iconSource: "qrc:/content/select_all.png"
         iconName: "selectAll"
-        onTriggered: sheet.selectAll()
+        onTriggered: selectAll()
         tooltip: "Select All items on the sheet"
     }
 
@@ -392,7 +404,6 @@ ApplicationWindow {
         id: xmasToolbar
         height:48
         anchors {right: parent.right;  left: parent.left}
-        //onRun: controller.start(jsonfilesomewheresomehow); // must be json file in a string
     }
 
     SplitView {
@@ -502,6 +513,7 @@ ApplicationWindow {
                 height: view.height
                 anchors.left: view.left
                 hoverEnabled: true
+                preventStealing: false
                 z: 100
                 onExited: view.returnToBounds()
             }
@@ -512,6 +524,7 @@ ApplicationWindow {
                 height: view.height
                 anchors.right: view.right
                 hoverEnabled: true
+                preventStealing: false
                 z: 100
                 onExited: view.returnToBounds()
             }
@@ -522,6 +535,7 @@ ApplicationWindow {
                 height: 10
                 anchors.top: view.top
                 hoverEnabled: true
+                preventStealing: false
                 z: 100
                 onExited: view.returnToBounds()
             }
@@ -532,6 +546,7 @@ ApplicationWindow {
                 height: 10
                 anchors.bottom: view.bottom
                 hoverEnabled: true
+                preventStealing: false
                 z: 100
                 onExited: view.returnToBounds()
             }
@@ -542,6 +557,7 @@ ApplicationWindow {
                 property: "contentX"
                 to:-50
                 velocity: 1000
+                onStopped: view.returnToBounds()
                 //running: scrollZoneLeft.containsMouse
             }
 
@@ -551,6 +567,7 @@ ApplicationWindow {
                 property: "contentX"
                 to: view.contentWidth + 50
                 velocity: 1000
+                onStopped: view.returnToBounds()
                 //running: scrollZoneRight.containsMouse
             }
 
@@ -560,6 +577,7 @@ ApplicationWindow {
                 property: "contentY"
                 to: -50
                 velocity: 1000
+                onStopped: view.returnToBounds()
                 //running: scrollZoneTop.containsMouse
             }
 
@@ -569,6 +587,7 @@ ApplicationWindow {
                 property: "contentY"
                 to: view.contentHeight + 50
                 velocity: 1000
+                onStopped: view.returnToBounds()
                 //running: scrollZoneBottom.containsMouse
             }
         }

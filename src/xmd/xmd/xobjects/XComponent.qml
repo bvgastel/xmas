@@ -39,40 +39,58 @@ import "../xmapper/controller.js" as Ctrl
 
 Item {
     id: component
+
+    // Properties
     objectName: "component"
     width: 100
     height: 100
+    scale: 1.00
     focus: true
-
+    transformOrigin: Item.Center
     z:1 //on top of channels
     property int uid:-1
     property string type: "unknown"
     property string prefix: ""
     property int index:-1
     property string name: "" //prefix + index
-    //property alias size: component.scale
     property alias orientation: component.rotation
     orientation: XMAS.Data.North
     property bool selected: false
-    scale: 1.00
     property bool withDialog: false
     property bool topLabel: true
     property var param
 
+    // Signals
     signal update()
     signal showDialog()
-    signal boundReached(var dx, var dy)
 
-    transformOrigin: Item.Center
+    // JavaScripts
 
-    function adjustScale(dScale){
+    // Move
+    function doMove(dX,dY){
+        component.x += dX
+        component.y += dY
+        if (component.x < leftBound())
+            component.x = leftBound()
+        if (component.y < topBound())
+            component.y = topBound()
+        if (component.x > rightBound())
+            component.x = rightBound()
+        if (component.y > bottomBound())
+            component.y = bottomBound()
+        component.update()
+    }
+
+    // Scale
+    function doScale(dScale){
         component.scale += dScale
         if (Math.abs(component.scale) < 0.25)
             component.scale = 0.25;
         if (Math.abs(component.scale) > 4.0)
             component.scale = 4.0;
     }
-    function adjustRotation(dAngle){
+
+    function doRotate(dAngle){
         component.rotation += (dAngle + 360.0)   // -90 --> 270°
         component.rotation %= 360.0
         if (Math.abs(component.rotation) < 45)
@@ -81,7 +99,25 @@ Item {
             component.rotation = 0;
     }
 
-    //name tag
+
+    function leftBound(){
+        return sheet.margin + width/2 * (scale-1)
+    }
+    function topBound(){
+        return sheet.margin + height/2 * (scale -1)
+    }
+    function rightBound(){
+        return sheet.width - width * scale  - sheet.margin + width/2 * (scale-1)
+    }
+    function bottomBound(){
+        return sheet.height - height * scale  - sheet.margin + height/2 * (scale-1)
+    }
+
+    // Event handling
+    onRotationChanged:component.update()
+    onScaleChanged: doMove(0,0)
+
+    // Name
     Item{
         id:namePlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
@@ -109,7 +145,7 @@ Item {
         }
     }
 
-
+    // Mouse area
     MouseArea {
         id: mousearea
         anchors.fill: component
@@ -119,18 +155,12 @@ Item {
         drag.target: component
         drag.minimumX: leftBound()
         drag.minimumY: topBound()
-        //TODO : replace with sheet bounds
         drag.maximumX: rightBound()
         drag.maximumY: bottomBound()
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                console.log("x,y,w,h,=" + parent.x + "," + parent.y + "," + parent.width + "," + parent.height)
-                var tmp = component.selected
-                if(mouse.modifiers != Qt.ControlModifier){
-                    sheet.clearSelections(component)
-                }
-                component.selected = !tmp
+                sheet.select(component)
             }
             if (mouse.button == Qt.RightButton){
                 contextMenu.popup()
@@ -150,85 +180,33 @@ Item {
         onPositionChanged: {
             component.update()
         }
-        //onExited: selection.visible = false
 
         onWheel: {
-            var delta
-            if (wheel.modifiers & Qt.ControlModifier) {
-               delta = wheel.angleDelta.y /120 * 90
-               adjustRotation(-delta)
-            }
-            if (wheel.modifiers & Qt.AltModifier) {
-                delta = wheel.angleDelta.x /120 * 0.25;
-                adjustScale(-delta)
-            }
+            if (wheel.modifiers & Qt.ControlModifier)
+                doRotate(-wheel.angleDelta.y /120 * 90)
+            if (wheel.modifiers & Qt.AltModifier)
+                doScale(-wheel.angleDelta.x /120 * 0.25)
         }
     }
 
-    onRotationChanged:component.update()
-    onScaleChanged: doMove(0,0)
-    onSelectedChanged: {focus = selected}
-
+    // Selection highlite
     Rectangle {
         id: highLite
         anchors.fill: mousearea
         color:"lightsteelblue"
         border.color: "steelblue"
-        border.width: component.selected || component.focus ? 1 : 0
-        visible: selected || component.focus
-        //opacity: 0.75
+        border.width: 1
+        visible: selected
         z:-1 // under parent = component
      }
 
+    // Connections
     Connections {
         target: sheet
-        onDeleteSelected: if (component.selected)Ctrl.destroy(component)
-        onClearSelection: component.selected = false
-        onMoveSelected:  component.update()
         onShowComponentNames: namePlaceholder.visible = checked
     }
 
-    function doMove(dx,dy){
-         x = x + dx
-         y = y + dy
-         if (x < leftBound())
-         {
-             boundReached(leftBound()-x,0)
-             x = leftBound()
-         }
-         if (y < topBound())
-         {
-             boundReached(0,topBound()-y)
-             y = topBound()
-         }
-         if (x > rightBound())
-         {
-             boundReached(x-rightBound(),0)
-             x = rightBound()
-         }
-         if (y > bottomBound())
-         {
-             boundReached(0,y-bottomBound())
-             y = bottomBound()
-         }
-         component.update()
-     }
-
-    function leftBound(){
-        return sheet.margin + width/2 * (scale-1)
-    }
-    function topBound(){
-        return sheet.margin + height/2 * (scale -1)
-    }
-    function rightBound(){
-        return sheet.width - width * scale  - sheet.margin + width/2 * (scale-1)
-    }
-    function bottomBound(){
-        return sheet.height - height * scale  - sheet.margin + height/2 * (scale-1)
-    }
-
-
-
+    // Context menu
     Menu {
         id: contextMenu
         MenuItem {
@@ -253,28 +231,25 @@ Item {
             text: "Rotate Right (90°)"
             iconSource: "qrc:/content/rotate_right.png"
             iconName: "RotateRight"
-            onTriggered: adjustRotation(90)
+            onTriggered: doRotate(90)
         }
         MenuItem {
             text: "Rotate Left (90°)"
             iconSource: "qrc:/content/rotate_left.png"
             iconName: "RotateLeft"
-            onTriggered: adjustRotation(-90)
+            onTriggered: doRotate(-90)
         }
         MenuItem {
             text: "Increase Size"
             iconSource: "qrc:/content/bigger.ico"
             iconName: "Bigger"
-            onTriggered: adjustScale(0.25)
+            onTriggered: doScale(0.25)
         }
         MenuItem {
             text: "Decrease Size"
             iconSource: "qrc:/content/smaller.ico"
             iconName: "Smaller"
-            onTriggered: adjustScale(-0.25)
+            onTriggered: doScale(-0.25)
         }
-
     }
-
-
 }
