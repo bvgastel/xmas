@@ -50,7 +50,8 @@ Model.XComponent {
     z:1 //on top of channels
     property int uid:-1
     name: "" //prefix + index
-    property string type: "unknown"
+    type: "unknown"
+    //property string type: "unknown"
     property string prefix: ""
     property int index:-1
 

@@ -55,6 +55,7 @@ class Component : public QQuickItem
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(CompType type READ type WRITE type NOTIFY typeChanged)
     Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
 
 public:
@@ -63,6 +64,7 @@ public:
 
 signals:
     void nameChanged();
+    void typeChanged();
     void paramChanged();
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
@@ -73,21 +75,41 @@ public slots:
     void onYChanged();
     void onScaleChanged();
     void onRotationChanged();
-// @Guus een slot "Xchanged" moet je zelf maken , dit is ook logisch anders krijg je voor elke
-    //muis beweging een event in deze class.
-    // best is in qml signalen maken indien nodig bvb "positionHasChanged"
-    // QuickItem heeft een standaard signal "ItemChanged" en dit eventueel afvangen in c++
-    // om xmascomponent een te passen
+    void onItemChanged();
 
 public:
     QString name() {
-        std::string name = m_component->getStdName();
-        return QString(name.c_str());
+        if (m_component) {
+            std::string name = m_component->getStdName();
+            return QString(name.c_str());
+        } else {
+            return m_name;
+        }
+
     }
 
     void name(QString name) {
-        QString old_name = QString(m_component->getStdName().c_str());
-        emit changeName(old_name, name); // TODO: have network catch this and change the names
+        if (name != m_name) {
+            m_name = name;
+            if (m_component) {
+                QString old_name = QString(m_component->getStdName().c_str());
+                emit changeName(old_name, name); // TODO: have network catch this and change the index name
+            }
+        }
+    }
+
+    CompType type() {
+        return m_type;
+    }
+
+    void type(CompType type) {
+        m_type = type;
+        if (m_component) {
+            emit writeLog("Error: component type changed.\n"
+                          "component not changed", Qt::red);
+        } else {
+            m_component = createComponent(m_type, m_name.toStdString());
+        }
     }
 
     // TODO: find out how to store specifications
@@ -98,8 +120,13 @@ public:
         m_param = param;
     }
 
+private:
+    XMASComponent *createComponent(CompType type, std::string name);
+
 public:
 private:
+    QString m_name;
+    CompType m_type;
     QVariant m_param;
 
     XMASComponent *m_component;

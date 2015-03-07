@@ -24,13 +24,44 @@
 
 model::Component::Component(QQuickItem *parent) : QQuickItem(parent)
 {
-    // get datacontrol object from qml ---> Impossible
-    //m_component = createXmasComponent(QString("source"), QString("test comp"));
 }
 
 model::Component::~Component()
 {
+    delete m_component;
+}
 
+XMASComponent *model::Component::createComponent(CompType type, std::string name) {
+    XMASComponent *component;
+    switch (type) {
+    case Source:
+        component = new XMASSource(name);
+        break;
+    case Sink:
+        component = new XMASSink(name);
+        break;
+    case Function:
+        component = new XMASSink(name);
+        break;
+    case Queue:
+        component = new XMASSink(name);
+        break;
+    case Join:
+        component = new XMASSink(name);
+        break;
+    case Merge:
+        component = new XMASSink(name);
+        break;
+    case Switch:
+        component = new XMASSink(name);
+        break;
+    case Fork:
+        component = new XMASSink(name);
+        break;
+    default:
+        break;
+    }
+    return component;
 }
 
 void model::Component::onXChanged() {
@@ -46,6 +77,15 @@ void model::Component::onScaleChanged() {
 void model::Component::onRotationChanged() {
 
     emit writeLog(QString("orientation = ")+rotation());
+}
+
+void model::Component::onTypeChanged() {
+    //emit writeLog(QString("type = "+type()));
+    emit writeLog(QString("type = ????"));
+}
+
+void model::Component::onItemChanged() {
+    emit writeLog(QString("onItemChanged received."));
 }
 
 
