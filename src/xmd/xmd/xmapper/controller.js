@@ -93,7 +93,7 @@ function getXQml(type) {
     case "composite":
         return "../xobjects/spidergon.qml" //test
     default:
-        //log("Unknown xmas type! (" + type + ")","red")
+        log("Unknown xmas type! (" + type + ")","red")
         return ""
     }
 }

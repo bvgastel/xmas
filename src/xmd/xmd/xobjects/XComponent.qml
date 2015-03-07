@@ -37,7 +37,7 @@ import "../uicontrols"
 import "../xmapper/controller.js" as Ctrl
 import XMAS.model 1.0 as Model
 
-Model.XComponent {
+Model.Comp {
     id: component
 
     // Properties
@@ -50,12 +50,14 @@ Model.XComponent {
     z:1 //on top of channels
     property int uid:-1
     name: "" //prefix + index
-    type: "unknown"
+    //type: "unknown"
+    type: "fork"
     //property string type: "unknown"
     property string prefix: ""
     property int index:-1
 
     // TODO: (gbo) orientation or rotation? Which to use?
+    // FIXME: (gbo) using rotation for now
     property alias orientation: component.rotation
     orientation: XMAS.Data.North
     property bool selected: false
