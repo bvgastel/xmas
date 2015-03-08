@@ -29,9 +29,9 @@
  *
  **************************************************************************/
 import QtQuick 2.4
-import XMAS 1.0 as XMAS
-import "xchannel.js" as Code
 import XMAS.model 1.0 as Model
+
+import "xchannel.js" as Code
 
 Model.XPort {
     id:port
@@ -41,10 +41,10 @@ Model.XPort {
     property int id: 0
     property bool connected: false
     property string name: "a"
-    property int type: XMAS.Data.Target
+    property int type: Model.XPort.Target
     property alias orientation: port.rotation
 
-    orientation: (port.type === XMAS.Data.Target) ? XMAS.Data.West : XMAS.Data.East
+    orientation: (port.type === Model.XPort.Target) ? Model.XComponent.West : Model.XComponent.East
 
     signal update()
     signal removed()
@@ -55,7 +55,7 @@ Model.XPort {
         anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
-        radius: port.type === XMAS.Data.Target ? 0 : port.width * 0.5
+        radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
     }
 
     onConnectedChanged: connected ? 0 : Code.abortConnecting(port)

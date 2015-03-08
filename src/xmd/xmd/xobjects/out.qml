@@ -1,12 +1,12 @@
 import QtQuick 2.4
-import XMAS 1.0 as XMAS
+import XMAS.model 1.0 as Model
 
 XComponent {
     width: 50
     height: 30
-    type: "out"
+    type: Model.XComponent.Out
     prefix: "o"
-    XPort {x: 0; y: 10; name: "o"; type:XMAS.Data.Target}
+    XPort {x: 0; y: 10; name: "o"; type:Model.XPort.Target}
     Canvas {
         anchors.fill: parent
         antialiasing: false

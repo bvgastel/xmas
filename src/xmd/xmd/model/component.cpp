@@ -41,22 +41,22 @@ XMASComponent *model::Component::createComponent(CompType type, std::string name
         component = new XMASSink(name);
         break;
     case Function:
-        component = new XMASSink(name);
+        component = new XMASFunction(name);
         break;
     case Queue:
-        component = new XMASSink(name);
+        component = new XMASQueue(name);
         break;
     case Join:
-        component = new XMASSink(name);
+        component = new XMASJoin(name);
         break;
     case Merge:
-        component = new XMASSink(name);
+        component = new XMASMerge(name);
         break;
     case Switch:
-        component = new XMASSink(name);
+        component = new XMASSwitch(name);
         break;
     case Fork:
-        component = new XMASSink(name);
+        component = new XMASFork(name);
         break;
     default:
         break;
@@ -64,29 +64,29 @@ XMASComponent *model::Component::createComponent(CompType type, std::string name
     return component;
 }
 
-void model::Component::onXChanged() {
-    emit writeLog(QString("x=")+x());
-}
+//void model::Component::onXChanged() {
+//    emit writeLog(QString("x=")+x());
+//}
 
-void model::Component::onYChanged() {
-    emit writeLog(QString("y=")+y());
-}
-void model::Component::onScaleChanged() {
-    emit writeLog(QString("scale changed: ")+scale());
-}
-void model::Component::onRotationChanged() {
+//void model::Component::onYChanged() {
+//    emit writeLog(QString("y=")+y());
+//}
+//void model::Component::onScaleChanged() {
+//    emit writeLog(QString("scale changed: ")+scale());
+//}
+//void model::Component::onRotationChanged() {
 
-    emit writeLog(QString("orientation = ")+rotation());
-}
+//    emit writeLog(QString("orientation = ")+rotation());
+//}
 
-void model::Component::onTypeChanged() {
-    //emit writeLog(QString("type = "+type()));
-    emit writeLog(QString("type = ????"));
-}
+//void model::Component::onTypeChanged() {
+//    //emit writeLog(QString("type = "+type()));
+//    emit writeLog(QString("type = ????"));
+//}
 
-void model::Component::onItemChanged() {
-    emit writeLog(QString("onItemChanged received."));
-}
+//void model::Component::onItemChanged() {
+//    emit writeLog(QString("onItemChanged received."));
+//}
 
 
 

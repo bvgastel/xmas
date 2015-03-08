@@ -1,4 +1,4 @@
-//.import XMAS 1.0 as xmas
+.import XMAS.model 1.0 as Model
 .import QtQuick 2.0 as Qjs
 .import "../xobjects/xchannel.js" as Channel
 
@@ -70,27 +70,27 @@ function loadComponent(object) {
 
 function getXQml(type) {
     switch(type) {
-    case "queue":
+    case Model.XComponent.Queue:
         return "../xobjects/queue.qml"
-    case "function":
+    case Model.XComponent.Function:
         return "../xobjects/function.qml"
-    case "fork":
+    case Model.XComponent.Fork:
         return "../xobjects/fork.qml"
-    case "join":
+    case Model.XComponent.Join:
         return "../xobjects/join.qml"
-    case "switch":
+    case Model.XComponent.Switch:
         return "../xobjects/switch.qml"
-    case "merge":
+    case Model.XComponent.Merge:
         return "../xobjects/merge.qml"
-    case "sink":
+    case Model.XComponent.Sink:
         return "../xobjects/sink.qml"
-    case "source":
+    case Model.XComponent.Source:
         return "../xobjects/source.qml"
-    case "in":
+    case Model.XComponent.In:
         return "../xobjects/in.qml"
-    case "out":
+    case Model.XComponent.Out:
         return "../xobjects/out.qml"
-    case "composite":
+    case Model.XComponent.Composite:
         return "../xobjects/spidergon.qml" //test
     default:
         log("Unknown xmas type! (" + type + ")","red")

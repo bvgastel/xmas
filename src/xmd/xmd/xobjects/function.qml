@@ -1,15 +1,14 @@
 import QtQuick 2.4
 import "../uicontrols"
-import XMAS 1.0 as XMAS
-//import XMAS.model 1.0 as Model
+import XMAS.model 1.0 as Model
 
 XComponent {
     width: 100
     height: 50
-    type: "function"
+    type: Model.XComponent.Function
     prefix: "f"
-    XPort {x: 0; y: 20; name: "i"; type:XMAS.Data.Target}
-    XPort {x: 90; y:20; name: "o"; type:XMAS.Data.Initiator}
+    XPort {x: 0; y: 20; name: "i"; type:Model.XPort.Target}
+    XPort {x: 90; y:20; name: "o"; type:Model.XPort.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false

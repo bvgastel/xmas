@@ -24,9 +24,7 @@
 #define COMPONENT_H
 
 #include <QQuickItem>
-
 #include "xmas.h"
-
 
 /**
  * @brief The Component class
@@ -36,19 +34,6 @@
  */
 
 namespace model {
-
-enum Orientation {
-    North = 0,
-    East = 90,
-    South = 180,
-    West = 270,
-    NorthWest = 45,
-    SouthWest = 225,
-    NorthEast = 315,
-    SouthEast = 135
-};
-enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
-
 class Component : public QQuickItem
 {
     Q_OBJECT
@@ -61,6 +46,18 @@ class Component : public QQuickItem
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
+    enum Orientation {
+        North = 0,
+        East = 90,
+        South = 180,
+        West = 270,
+        NorthWest = 45,
+        SouthWest = 225,
+        NorthEast = 315,
+        SouthEast = 135
+    };
+    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
+
 
 signals:
     void nameChanged();
@@ -70,12 +67,12 @@ signals:
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
-    void onTypeChanged();
-    void onXChanged();
-    void onYChanged();
-    void onScaleChanged();
-    void onRotationChanged();
-    void onItemChanged();
+//    void onTypeChanged();
+//    void onXChanged();
+//    void onYChanged();
+//    void onScaleChanged();
+//    void onRotationChanged();
+//    void onItemChanged();
 
 public:
     QString name() {
@@ -85,7 +82,6 @@ public:
         } else {
             return m_name;
         }
-
     }
 
     void name(QString name) {
@@ -104,12 +100,12 @@ public:
 
     void type(CompType type) {
         m_type = type;
-        if (m_component) {
-            emit writeLog("Error: component type changed.\n"
-                          "component not changed", Qt::red);
-        } else {
-            m_component = createComponent(m_type, m_name.toStdString());
-        }
+//        if (m_component) {
+//            emit writeLog("Error: component type changed.\n"
+//                          "component not changed", Qt::red);
+//        } else {
+//            m_component = createComponent(m_type, m_name.toStdString());
+//        }
     }
 
     // TODO: find out how to store specifications

@@ -32,12 +32,11 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
-import XMAS 1.0 as XMAS
+import XMAS.model 1.0 as Model
 import "../uicontrols"
 import "../xmapper/controller.js" as Ctrl
-import XMAS.model 1.0 as Model
 
-Model.Comp {
+Model.XComponent {
     id: component
 
     // Properties
@@ -51,7 +50,6 @@ Model.Comp {
     property int uid:-1
     name: "" //prefix + index
     //type: "unknown"
-    type: "fork"
     //property string type: "unknown"
     property string prefix: ""
     property int index:-1
@@ -59,7 +57,7 @@ Model.Comp {
     // TODO: (gbo) orientation or rotation? Which to use?
     // FIXME: (gbo) using rotation for now
     property alias orientation: component.rotation
-    orientation: XMAS.Data.North
+    orientation: Model.XComponent.North
     property bool selected: false
     property bool withDialog: false
     property bool topLabel: true

@@ -1,15 +1,15 @@
 import QtQuick 2.4
-import XMAS 1.0 as XMAS
+import XMAS.model 1.0 as Model
 
 XComponent {
     width: 100
     height: 100
-    type: "join"
+    type: Model.XComponent.Join
     prefix: "j"
     property int token: isNaN(param) ? 0 : param
-    XPort {x: 0; y: 15; name: "a"; type:XMAS.Data.Target}
-    XPort {x: 0; y:75; name: "b"; type:XMAS.Data.Target}
-    XPort {x: 90; y:45; name: "o"; type:XMAS.Data.Initiator}
+    XPort {x: 0; y: 15; name: "a"; type:Model.XPort.Target}
+    XPort {x: 0; y:75; name: "b"; type:Model.XPort.Target}
+    XPort {x: 90; y:45; name: "o"; type:Model.XPort.Initiator}
     Canvas {
         id:canvas
         anchors.fill: parent
