@@ -24,7 +24,6 @@
 
 model::Component::Component(QQuickItem *parent) : QQuickItem(parent)
 {
-    qDebug() << "component created with x = " << this->x();
 
 }
 
