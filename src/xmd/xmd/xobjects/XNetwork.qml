@@ -249,7 +249,7 @@ Rectangle {
 
     Connections {
         target: datacontrol
-        onCreateComponent: Ctrl.loadComponent(object)
+        //onCreateComponent: Ctrl.loadComponent(object)
         onCreateNetwork: Ctrl.createNetwork(object)
     }
 

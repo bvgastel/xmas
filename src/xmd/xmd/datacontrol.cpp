@@ -57,7 +57,7 @@ void DataControl::registerTypes() const{
 
 bool DataControl::fileOpen(QUrl fileUrl) {
 
-    bitpowder::lib::MemoryPool mp;
+    XMP mp;
 
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
@@ -146,53 +146,18 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
         map.insert("scale", ext->scale());
     }
 
+    if (type == CompType::Queue) {
+        map.insert("param", 5);
+    } else if (type == CompType::Function) {
+        map.insert("param", "some function spec");
+    } else if (type == CompType::Source) {
+        map.insert("param", "some source specification");
+    }
+
+
     map.insert("type", type);
     map.insert("name", qname);
     //@Guus of Jeroen : in qml is property "param" gelinked, dus voor queue is dit de capacity.
     //map.insert("param", "");
 
-}
-
-XMASComponent *DataControl::createXmasComponent(QString name, QString type) {
-    if (type == xsource) {
-        auto component = insert<XMASSource>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xsink) {
-        auto component = insert<XMASSink>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xfunction) {
-        auto component = insert<XMASFunction>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xqueue) {
-        auto component = insert<XMASQueue>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xjoin) {
-        auto component = insert<XMASJoin>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xmerge) {
-        auto component = insert<XMASMerge>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xfork) {
-        auto component = insert<XMASFork>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xswitch) {
-        auto component = insert<XMASSwitch>(m_mp, m_componentMap, name.toStdString()); // zit in parse.cpp, niet parse.h : gecopieerd
-        return component;
-    }
-    if (type == xin) {
-        // :( Don't know what to do
-        return nullptr;
-    }
-    if (type == xin) {
-        // :( Don't know what to do
-        return nullptr;
-    }
-    return nullptr;
 }

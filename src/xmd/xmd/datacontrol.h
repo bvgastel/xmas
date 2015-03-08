@@ -98,9 +98,6 @@ signals:
      * @return true if successful
      */
     bool createNetwork(const QVariantMap &object);
-    void createComponent(const QVariantMap &object);
-    bool createChannel(const QVariantMap &object);
-    bool clearNetwork();
     void writeLog(QString message,QColor color=Qt::black);
 
     /************************************************************
@@ -113,7 +110,6 @@ public slots:
      * Public methods
      ************************************************************/
 public:
-    virtual XMASComponent *createXmasComponent(QString name, QString type);
     /************************************************************
      * Private methods
      ************************************************************/
@@ -141,12 +137,6 @@ public:
 
 private:
 
-    XMP m_mp;
-    /**
-     * @brief allComponents The internal structure containing the network
-     *
-     */
-    XCompMap m_componentMap;
     Logger m_logger;
 
     /************************************************************
