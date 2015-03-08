@@ -1,6 +1,8 @@
 #ifndef XMAS_H
 #define XMAS_H
 
+#include <map>
+
 #include "extension.h"
 #include "simplestring.h"
 
@@ -78,6 +80,8 @@ public:
     Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner)
     {
     }
+
+    Port(Port&&) = default;
 
     virtual ~Port();
 
@@ -241,6 +245,9 @@ public:
     Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr)
     {
     }
+
+    Output(Output&&) = default;
+
     Input *getTargetPort();
     Output *getInitiatorPort();
     bool isConnected();
@@ -263,6 +270,9 @@ public:
     Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr)
     {
     }
+
+    Input(Input&&) = default;
+
     Output *getInitiatorPort();
     Input *getTargetPort();
     bool isConnected();
@@ -930,6 +940,114 @@ public:
     {
         return type == PortType::INPUT_PORT ? &p[2] : &p[3];
     }
+};
+
+class XMASInGate : public XMASComponent
+{
+public:
+    Output o;
+    Port* p[1];
+
+    XMASInGate(const bitpowder::lib::String& name) : XMASComponent(name), o(this,"o")
+    {
+        p[0] = &o;
+    }
+
+    Port** beginPort(PortType type) override
+    {
+        return type == PortType::INPUT_PORT ? nullptr : &p[0];
+    }
+
+    Port** endPort(PortType type) override
+    {
+        return type == PortType::INPUT_PORT ? nullptr : &p[1];
+    }
+};
+
+class XMASOutGate : public XMASComponent
+{
+public:
+    Input i;
+    Port* p[1];
+
+    XMASOutGate(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i")
+    {
+        p[0] = &i;
+    }
+
+    Port** beginPort(PortType type) override
+    {
+        return type == PortType::OUTPUT_PORT ? nullptr : &p[0];
+    }
+
+    Port** endPort(PortType type) override
+    {
+        return type == PortType::OUTPUT_PORT ? nullptr : &p[1];
+    }
+};
+
+
+class XMASNetwork
+{
+public:
+    XMASNetwork()
+    {
+    }
+
+    template<typename T>
+    int numComponentsOfType() const
+    {
+        int result = 0;
+        for (auto c : components)
+            if (typeid(c) == typeid(T))
+                ++result;
+        return result;
+    }
+
+private:
+    std::map<const bitpowder::lib::String, XMASComponent*> components;
+};
+
+class XMASComposite : public XMASComponent
+{
+public:
+
+    XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
+    {
+        // get number of in & out gates from network
+        int numInGates = network.numComponentsOfType<XMASInGate>();
+        int numOutGates = network.numComponentsOfType<XMASOutGate>();
+
+        inputs.reserve(numInGates);
+        outputs.reserve(numOutGates);
+
+        // TODO: for all in gates, create an input port
+        // TODO: for all out gates, create an output port
+
+        // fill p
+        p.reserve(numInGates + numOutGates);
+
+        for (auto& i : inputs)
+            p.push_back(&i);
+        for (auto& o : outputs)
+            p.push_back(&o);
+    }
+
+    Port** beginPort(PortType type) override
+    {
+        return type == PortType::OUTPUT_PORT ? &p[inputs.size()] : &p[0];
+    }
+
+    Port** endPort(PortType type) override
+    {
+        return type == PortType::INPUT_PORT ? &p[inputs.size()] : &p[p.size()];
+    }
+
+private:
+    XMASNetwork& network;           // keep reference to the network after construction?
+    std::vector<Input>  inputs;
+    std::vector<Output> outputs;
+    std::vector<Port*> p;
 };
 
 #endif // XMAS_H
