@@ -25,13 +25,16 @@
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    qDebug() << "component created with rotation = " << this->rotation();
+
+    //Todo : type must filled in from qml during construction
+    //Todo : unique name should be created from xmas , but for now maybe the autoname out of qml ?
+    m_component = createComponent(CompType::Queue, "x");
 
 }
 
 model::Component::~Component()
 {
-    //delete m_component;
+    delete m_component;
 }
 
 XMASComponent *model::Component::createComponent(CompType type, std::string name) {
