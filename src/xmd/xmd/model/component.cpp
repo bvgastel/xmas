@@ -26,6 +26,41 @@ model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent)
 {
 
+    int m_type = this->property("comptype").toInt();
+
+    if(m_type){
+    switch (m_type) {
+    case Source:
+        qDebug() << "Source created";
+        //component = new XMASSource(name);
+        break;
+    case Sink:
+        qDebug() << "Sink created";
+        //component = new XMASSink(name);
+        break;
+    case Function:
+        //component = new XMASFunction(name);
+        break;
+    case Queue:
+        //component = new XMASQueue(name);
+        break;
+    case Join:
+        //component = new XMASJoin(name);
+        break;
+    case Merge:
+        //component = new XMASMerge(name);
+        break;
+    case Switch:
+        //component = new XMASSwitch(name);
+        break;
+    case Fork:
+        //component = new XMASFork(name);
+        break;
+    default:
+        qDebug() << "Unknown c++ type : " << m_type;
+        break;
+    }
+    }
     //Todo : type must filled in from qml during construction
     //Todo : unique name should be created from xmas , but for now maybe the autoname out of qml ?
     m_component = createComponent(CompType::Queue, "x");

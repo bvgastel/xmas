@@ -5,7 +5,7 @@ XComponent {
     id:queue
     width: 100
     height: 50
-    type: Model.XComponent.Queue
+    comptype: Model.XComponent.Queue
     prefix: "q"
     property int size: isNaN(param) ? 0 : param
     XPort {x:0; y:20; name: "i"; type:Model.XPort.Target}
