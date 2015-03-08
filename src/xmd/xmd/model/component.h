@@ -34,8 +34,13 @@
  */
 
 namespace model {
+
+
 class Component : public QQuickItem
 {
+public:
+    enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
+private:
     Q_OBJECT
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
@@ -45,6 +50,7 @@ class Component : public QQuickItem
 
 public:
     explicit Component(QQuickItem *parent = 0);
+    explicit Component(QQuickItem *parent, Component::CompType type);
     ~Component();
     enum Orientation {
         North = 0,
@@ -56,7 +62,7 @@ public:
         NorthEast = 315,
         SouthEast = 135
     };
-    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
+
 
 
 signals:
@@ -67,17 +73,11 @@ signals:
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
-//    void onTypeChanged();
-//    void onXChanged();
-//    void onYChanged();
-//    void onScaleChanged();
-//    void onRotationChanged();
-//    void onItemChanged();
 
 public:
     QString name() {
         if (m_component) {
-            std::string name = "test" ; //m_component->getStdName();
+            std::string name = m_component->getStdName();
             return QString(name.c_str());
         } else {
             return m_name;
@@ -88,8 +88,9 @@ public:
         if (name != m_name) {
             m_name = name;
             if (m_component) {
-//                QString old_name = QString(m_component->getStdName().c_str());
-//                emit changeName(old_name, name); // TODO: have network catch this and change the index name
+                QString old_name = QString(m_component->getStdName().c_str());
+                emit changeName(old_name, name); // TODO: have network catch this and change the index name
+
             }
         }
     }
@@ -100,12 +101,12 @@ public:
 
     void type(CompType type) {
         m_type = type;
-//        if (m_component) {
-//            emit writeLog("Error: component type changed.\n"
-//                          "component not changed", Qt::red);
-//        } else {
-//            m_component = createComponent(m_type, m_name.toStdString());
-//        }
+        if (m_component) {
+            emit writeLog("Error: component type changed.\n"
+                          "component not changed", Qt::red);
+        } else {
+            m_component = createComponent(m_type, m_name.toStdString());
+        }
     }
 
     // TODO: find out how to store specifications

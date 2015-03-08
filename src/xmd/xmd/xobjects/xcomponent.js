@@ -20,7 +20,7 @@ function loadComponent(qml) {
 
 function createComponent(parent,component) {
     if (component.status === Component.Ready && draggedItem == null) {
-        draggedItem = component.createObject(parent,{"x":posnInWindow.x, "y": posnInWindow.y})
+        draggedItem = component.createObject(parent,{"type": component.type, "x":posnInWindow.x, "y": posnInWindow.y})
      } else if (component.status === Component.Error) {
         draggedItem = null
         log(component.errorString(),"red")
