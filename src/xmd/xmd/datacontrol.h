@@ -124,7 +124,7 @@ public:
      * Private methods
      ************************************************************/
 private:
-    bool emitNetwork();
+    bool emitNetwork(XCompMap &componentMap);
     void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
     bool connectPorts(XMASComponent *comp, QObject *qobject);
@@ -161,15 +161,15 @@ private:
      * enums and constant data members
      ************************************************************/
     //TODO : enumeration in javascript.
-    std::map<std::type_index, QString> m_type_index_map = {
-        {std::type_index(typeid(XMASSource)), xsource},
-        {std::type_index(typeid(XMASSink)), xsink},
-        {std::type_index(typeid(XMASFunction)), xfunction},
-        {std::type_index(typeid(XMASQueue)), xqueue},
-        {std::type_index(typeid(XMASJoin)), xjoin},
-        {std::type_index(typeid(XMASMerge)), xmerge},
-        {std::type_index(typeid(XMASFork)), xfork},
-        {std::type_index(typeid(XMASSwitch)), xswitch},
+    std::map<std::type_index, CompType> m_type_index_map = {
+        {std::type_index(typeid(XMASSource)), Source},
+        {std::type_index(typeid(XMASSink)), Sink},
+        {std::type_index(typeid(XMASFunction)), Function},
+        {std::type_index(typeid(XMASQueue)), Queue},
+        {std::type_index(typeid(XMASJoin)), Join},
+        {std::type_index(typeid(XMASMerge)), Merge},
+        {std::type_index(typeid(XMASFork)), Fork},
+        {std::type_index(typeid(XMASSwitch)), Switch},
     };
     // TODO: What to do with IN and OUT????
     std::map<QString, std::type_index> m_type_map = {

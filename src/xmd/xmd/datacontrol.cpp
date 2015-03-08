@@ -73,13 +73,15 @@ bool DataControl::fileOpen(QUrl fileUrl) {
         return false;
     }
     // Remark: mp will move out of scope and thus self destruct, like componentMap and all of the components
-    return emitNetwork();
+    auto result = emitNetwork(componentMap);
+    return result;
 }
 
-bool DataControl::emitNetwork() {
+bool DataControl::emitNetwork(XCompMap &componentMap) {
+    // Works with (local) the parameter componentMap,  not the datamember m_componentMap.
     std::clock_t c_start = std::clock();
     QVariantList compList;
-    for(auto &it : m_componentMap) {
+    for(auto &it : componentMap) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantMap map;
@@ -88,7 +90,7 @@ bool DataControl::emitNetwork() {
         }
     }
     QVariantList channelList;
-    for (auto &it : m_componentMap) {
+    for (auto &it : componentMap) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantList list;
@@ -133,7 +135,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
 //    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
-    QString type = m_type_index_map[typeIndex];
+    CompType type = m_type_index_map[typeIndex];
     QString qname = QString::fromStdString(name);
 
     CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
@@ -176,7 +178,7 @@ bool DataControl::componentCreated(const QVariant &qvariant)
     if (it == m_componentMap.end()) {
         auto comp = createXmasComponent(name, type);
         if (!comp) {
-            msg += "\nXMAS creation failed: check type";
+            msg += "\nXMAS creation failed: check type: "+type;
             m_logger.log(msg, Qt::red);
             return false;
         }
