@@ -44,25 +44,16 @@ Model.XComponent {
     width: 100
     height: 100
     scale: 1.00
+    rotation: 0
     focus: true
     transformOrigin: Item.Center
     z:1 //on top of channels
     property int uid:-1
-    name: "" //prefix + index
-    //type: "unknown"
-    //property string type: "unknown"
     property string prefix: ""
     property int index:-1
-
-    // TODO: (gbo) orientation or rotation? Which to use?
-    // FIXME: (gbo) using rotation for now
-    property alias orientation: component.rotation
-    orientation: Model.XComponent.North
     property bool selected: false
     property bool withDialog: false
     property bool topLabel: true
-
-
 
     // Signals
     signal update()

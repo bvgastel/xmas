@@ -42,9 +42,7 @@ Model.XPort {
     property bool connected: false
     property string name: "a"
     property int type: Model.XPort.Target
-    property alias orientation: port.rotation
-
-    orientation: (port.type === Model.XPort.Target) ? Model.XComponent.West : Model.XComponent.East
+    rotation: (port.type === Model.XPort.Target) ? Model.XComponent.West : Model.XComponent.East
 
     signal update()
     signal removed()

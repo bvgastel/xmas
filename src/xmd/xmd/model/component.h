@@ -77,7 +77,7 @@ public slots:
 public:
     QString name() {
         if (m_component) {
-            std::string name = m_component->getStdName();
+            std::string name = "test" ; //m_component->getStdName();
             return QString(name.c_str());
         } else {
             return m_name;
@@ -88,8 +88,8 @@ public:
         if (name != m_name) {
             m_name = name;
             if (m_component) {
-                QString old_name = QString(m_component->getStdName().c_str());
-                emit changeName(old_name, name); // TODO: have network catch this and change the index name
+//                QString old_name = QString(m_component->getStdName().c_str());
+//                emit changeName(old_name, name); // TODO: have network catch this and change the index name
             }
         }
     }
