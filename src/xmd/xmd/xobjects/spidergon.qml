@@ -5,7 +5,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 100
     height: 90
-    comptype: Model.XComponent.Composite
+    comptype: "composite"
     prefix: "c"
     XPort {x: 0; y: 15; name: "t0"; type:Model.XPort.Target}
     XPort {x: 0; y: 35; name: "t1"; type:Model.XPort.Target}

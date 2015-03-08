@@ -4,7 +4,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 100
     height: 100
-    comptype: Model.XComponent.Merge
+    comptype: "merge"
     prefix: "m"
     XPort {x: 0; y: 15; name: "a"; type:Model.XPort.Target}
     XPort {x: 0; y:75; name: "b"; type:Model.XPort.Target}

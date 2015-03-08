@@ -74,7 +74,7 @@ XMASComponent::~XMASComponent()
 }
 
 bitpowder::lib::String XMASComponent::getName() const {
-    return name;
+    return m_name;
 }
 
 Port::~Port() {

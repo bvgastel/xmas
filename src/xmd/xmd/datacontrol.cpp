@@ -135,7 +135,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
 //    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
-    CompType type = m_type_index_map[typeIndex];
+    QString type = m_type_index_map[typeIndex];
     QString qname = QString::fromStdString(name);
 
     CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
@@ -146,11 +146,11 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
         map.insert("scale", ext->scale());
     }
 
-    if (type == CompType::Queue) {
+    if (type == xqueue) {
         map.insert("param", 5);
-    } else if (type == CompType::Function) {
+    } else if (type == xfunction) {
         map.insert("param", "some function spec");
-    } else if (type == CompType::Source) {
+    } else if (type == xsource) {
         map.insert("param", "some source specification");
     }
 

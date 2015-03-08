@@ -4,7 +4,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 50
     height: 50
-    comptype: Model.XComponent.Sink
+    comptype: "sink"
     prefix: "snk"
     XPort {x:20; y:0; name: "i"; type:Model.XPort.Target}
     topLabel: false

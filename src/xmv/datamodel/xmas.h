@@ -4,6 +4,12 @@
 #include "extension.h"
 #include "simplestring.h"
 
+/*
+ * GBO: added setter for name to XMASComponent: necessary for designer or we have no way to
+ *      initialize and change name. The first name would be final, no way to change.
+ *
+ */
+
 /**
  * @brief The SignalType enum type of wires/signals
  */
@@ -340,10 +346,10 @@ public:
 class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension>
 {
 private:
-    std::string name;
+    std::string m_name;
 public:
 
-    XMASComponent(const bitpowder::lib::String& name) : name(name.stl())
+    XMASComponent(const bitpowder::lib::String& name) : m_name(name.stl())
     {
     }
 
@@ -354,7 +360,7 @@ public:
      * @return a value initialized copy of name (std::string)
      */
     std::string getStdName() const {
-        return this->name;
+        return this->m_name;
     }
 
     /**
@@ -368,6 +374,11 @@ public:
      * @return a bitpowder::lib::String for name of the XMASComponent
      */
     bitpowder::lib::String getName() const;
+
+    void name(std::string name) {
+        this->m_name = name;
+    }
+
     /**
      * @brief valid
      * @return true if the XMASComponent is valid

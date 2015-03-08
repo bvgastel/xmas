@@ -5,7 +5,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 100
     height: 50
-    comptype: Model.XComponent.Function
+    comptype: "function"
     prefix: "f"
     XPort {x: 0; y: 20; name: "i"; type:Model.XPort.Target}
     XPort {x: 90; y:20; name: "o"; type:Model.XPort.Initiator}

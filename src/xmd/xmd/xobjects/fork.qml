@@ -4,7 +4,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 100
     height: 100
-    comptype: Model.XComponent.Fork
+    comptype: "fork"
     prefix: "frk"
     XPort {x: 0; y: 45; name: "a"; type:Model.XPort.Target}
     XPort {x: 90; y:15; name: "b"; type:Model.XPort.Initiator}

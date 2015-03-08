@@ -65,9 +65,9 @@ const QString xout = "out";
 class DataControl : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Orientation)
-    Q_ENUMS(PortType)
-    Q_ENUMS(CompType)
+    //Q_ENUMS(Orientation)
+    //Q_ENUMS(PortType)
+    //Q_ENUMS(CompType)
 
 
 public:
@@ -133,7 +133,7 @@ public:
         SouthEast = 135
     };
     enum PortType {Target , Initiator};
-    enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
+    //enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
 
 private:
 
@@ -143,26 +143,15 @@ private:
      * enums and constant data members
      ************************************************************/
     //TODO : enumeration in javascript.
-    std::map<std::type_index, CompType> m_type_index_map = {
-        {std::type_index(typeid(XMASSource)), Source},
-        {std::type_index(typeid(XMASSink)), Sink},
-        {std::type_index(typeid(XMASFunction)), Function},
-        {std::type_index(typeid(XMASQueue)), Queue},
-        {std::type_index(typeid(XMASJoin)), Join},
-        {std::type_index(typeid(XMASMerge)), Merge},
-        {std::type_index(typeid(XMASFork)), Fork},
-        {std::type_index(typeid(XMASSwitch)), Switch},
-    };
-    // TODO: What to do with IN and OUT????
-    std::map<QString, std::type_index> m_type_map = {
-        {xsource , std::type_index(typeid(XMASSource)) },
-        {xsink, std::type_index(typeid(XMASSink)) },
-        {xfunction, std::type_index(typeid(XMASFunction)) },
-        {xqueue, std::type_index(typeid(XMASQueue)) },
-        {xjoin, std::type_index(typeid(XMASJoin)) },
-        {xmerge, std::type_index(typeid(XMASMerge)) },
-        {xfork, std::type_index(typeid(XMASFork)) },
-        {xswitch, std::type_index(typeid(XMASSwitch)) },
+    std::map<std::type_index, QString> m_type_index_map = {
+        {std::type_index(typeid(XMASSource)), xsource},
+        {std::type_index(typeid(XMASSink)), xsink},
+        {std::type_index(typeid(XMASFunction)), xfunction},
+        {std::type_index(typeid(XMASQueue)), xqueue},
+        {std::type_index(typeid(XMASJoin)), xjoin},
+        {std::type_index(typeid(XMASMerge)), xmerge},
+        {std::type_index(typeid(XMASFork)), xfork},
+        {std::type_index(typeid(XMASSwitch)), xswitch},
     };
     const char *m_modelName = "XMAS.model";
     const int m_modelMajor = 1;

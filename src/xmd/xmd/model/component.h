@@ -24,6 +24,8 @@
 #define COMPONENT_H
 
 #include <QQuickItem>
+#include <QQmlParserStatus>
+
 #include "xmas.h"
 
 /**
@@ -35,28 +37,21 @@
 
 namespace model {
 
+const QString xsource = "source";
+const QString xsink = "sink";
+const QString xfunction = "function";
+const QString xqueue = "queue";
+const QString xjoin = "join";
+const QString xmerge = "merge";
+const QString xfork = "fork";
+const QString xswitch = "switch";
+const QString xin = "in";
+const QString xout = "out";
+const QString xcomposite = "composite";
 
-class Component : public QQuickItem
+class Component : public QQuickItem //, public QQmlParserStatus
 {
 public:
-    enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
-private:
-    Q_OBJECT
-    Q_ENUMS(Orientation)
-    Q_ENUMS(CompType)
-    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(CompType comptype READ compType WRITE compType NOTIFY compTypeChanged)
-    Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
-
-public:
-    enum { Type = QVariant::UserType + 0 };
-        int type() const Q_DECL_OVERRIDE { return Type; }
-
-       CompType compType() const {return m_type;}
-       void compType(CompType type) {m_type = type;}
-
-    explicit Component(QQuickItem *parent = 0);
-    ~Component();
     enum Orientation {
         North = 0,
         East = 90,
@@ -67,6 +62,19 @@ public:
         NorthEast = 315,
         SouthEast = 135
     };
+private:
+    Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
+    Q_ENUMS(Orientation)
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QString comptype READ compType WRITE compType NOTIFY compTypeChanged)
+    Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
+
+public:
+    explicit Component(QQuickItem *parent = 0);
+    ~Component();
+
+    //enum { Type = QVariant::UserType + 0 };
 
 signals:
     void nameChanged();
@@ -78,22 +86,26 @@ signals:
 public slots:
 
 public:
+
+    virtual void classBegin();
+    virtual void componentComplete();
+
+    QString compType() const {return m_compType;}
+    void compType(QString compType) {
+        m_compType = compType;
+    }
+
+    //int type() const Q_DECL_OVERRIDE { return Type; }
+
     QString name() {
-        if (m_component) {
-            std::string name = m_component->getStdName();
-            return QString(name.c_str());
-        } else {
-            return m_name;
-        }
+        return m_name;
     }
 
     void name(QString name) {
         if (name != m_name) {
             m_name = name;
             if (m_component) {
-                QString old_name = QString(m_component->getStdName().c_str());
-                emit changeName(old_name, name); // TODO: have network catch this and change the index name
-
+                m_component->name(name.toStdString());
             }
         }
     }
@@ -102,17 +114,18 @@ public:
     QVariant param() {
         return m_param;
     }
+
     void param(QVariant param) {
         m_param = param;
     }
 
 private:
-    XMASComponent *createComponent(CompType type, std::string name);
+    XMASComponent *createComponent(QString type, QString name);
 
 public:
 private:
     QString m_name;
-    CompType m_type;
+    QString m_compType;
     QVariant m_param;
 
     XMASComponent *m_component;
