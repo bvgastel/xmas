@@ -117,7 +117,7 @@ function createComponent(parent,component,object) {
         // so check localy if everything goes well and
         // at the and feedback result as "networkCreated()"
         // NOTE: distinguish between sources of input (screen or json)
-        datacontrol.componentCreated(component)
+        //datacontrol.componentCreated(component) --> disabled, no longer necessary in new direct data model
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }

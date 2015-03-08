@@ -108,12 +108,6 @@ signals:
      ************************************************************/
 public slots:
     bool fileOpen(QUrl fileUrl);
-    bool componentCreated(const QVariant &object);
-    bool componentDestroyed(const QVariant &object);
-    bool componentChanged(const QVariant &object);
-    bool channelCreated(const QVariant &object);
-    bool channelDestroyed(const QVariant &object);
-    bool channelChanged(const QVariant &object);
 
     /************************************************************
      * Public methods
@@ -127,8 +121,6 @@ private:
     bool emitNetwork(XCompMap &componentMap);
     void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
-    bool connectPorts(XMASComponent *comp, QObject *qobject);
-    bool createCanvasData(XMASComponent *comp, QObject *qobject);
     /************************************************************
      * Data members
      ************************************************************/
