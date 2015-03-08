@@ -33,7 +33,6 @@ model::Component::Component(QQuickItem *parent, model::Component::CompType type)
     : QQuickItem(parent),
       m_type(type)
 {
-    qDebug() << "component created with x = " << this->x();
 
 }
 

@@ -24,7 +24,6 @@
 
 model::Port::Port(QQuickItem *parent) : QQuickItem(parent)
 {
-    qDebug() << "port created";
 }
 
 model::Port::~Port()
