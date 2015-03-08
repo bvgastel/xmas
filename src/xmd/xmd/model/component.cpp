@@ -25,20 +25,13 @@
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    qDebug() << "component created with x = " << this->x();
-
-}
-
-model::Component::Component(QQuickItem *parent, model::Component::CompType type)
-    : QQuickItem(parent),
-      m_type(type)
-{
+    qDebug() << "component created with rotation = " << this->rotation();
 
 }
 
 model::Component::~Component()
 {
-    delete m_component;
+    //delete m_component;
 }
 
 XMASComponent *model::Component::createComponent(CompType type, std::string name) {

@@ -125,7 +125,6 @@ function createComponent(parent,component,object) {
 
 function destroy(component){
     component.destroy()
-    datacontrol.componentDestroyed(component)
 }
 
 

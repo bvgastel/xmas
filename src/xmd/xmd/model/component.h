@@ -50,7 +50,6 @@ private:
 
 public:
     explicit Component(QQuickItem *parent = 0);
-    explicit Component(QQuickItem *parent, Component::CompType type);
     ~Component();
     enum Orientation {
         North = 0,
