@@ -29,37 +29,47 @@ model::Component::Component(QQuickItem *parent)
     int m_type = this->property("comptype").toInt();
 
     if(m_type){
-    switch (m_type) {
-    case Source:
-        qDebug() << "Source created";
-        //component = new XMASSource(name);
-        break;
-    case Sink:
-        qDebug() << "Sink created";
-        //component = new XMASSink(name);
-        break;
-    case Function:
-        //component = new XMASFunction(name);
-        break;
-    case Queue:
-        //component = new XMASQueue(name);
-        break;
-    case Join:
-        //component = new XMASJoin(name);
-        break;
-    case Merge:
-        //component = new XMASMerge(name);
-        break;
-    case Switch:
-        //component = new XMASSwitch(name);
-        break;
-    case Fork:
-        //component = new XMASFork(name);
-        break;
-    default:
-        qDebug() << "Unknown c++ type : " << m_type;
-        break;
-    }
+        switch (m_type) {
+        case Source:
+            qDebug() << "Source created";
+            //component = new XMASSource(name);
+            qDebug() << " c++ type : " << "source";
+            break;
+        case Sink:
+            qDebug() << "Sink created";
+            //component = new XMASSink(name);
+            qDebug() << " c++ type : " << "sink";
+            break;
+        case Function:
+            //component = new XMASFunction(name);
+            qDebug() << " c++ type : " << "function";
+            break;
+        case Queue:
+            //component = new XMASQueue(name);
+            qDebug() << " c++ type : " << "queue";
+            break;
+        case Join:
+            //component = new XMASJoin(name);
+            qDebug() << " c++ type : " << "join";
+            break;
+        case Merge:
+            //component = new XMASMerge(name);
+            qDebug() << " c++ type : " << "merge";
+            break;
+        case Switch:
+            //component = new XMASSwitch(name);
+            qDebug() << " c++ type : " << "switch";
+            break;
+        case Fork:
+            //component = new XMASFork(name);
+            qDebug() << " c++ type : " << "fork";
+            break;
+        default:
+            qDebug() << "Unknown c++ type : " << m_type;
+            break;
+        }
+    } else {
+        qDebug() << "c++ type is not defined";
     }
     //Todo : type must filled in from qml during construction
     //Todo : unique name should be created from xmas , but for now maybe the autoname out of qml ?
@@ -104,30 +114,6 @@ XMASComponent *model::Component::createComponent(CompType type, std::string name
     }
     return component;
 }
-
-//void model::Component::onXChanged() {
-//    emit writeLog(QString("x=")+x());
-//}
-
-//void model::Component::onYChanged() {
-//    emit writeLog(QString("y=")+y());
-//}
-//void model::Component::onScaleChanged() {
-//    emit writeLog(QString("scale changed: ")+scale());
-//}
-//void model::Component::onRotationChanged() {
-
-//    emit writeLog(QString("orientation = ")+rotation());
-//}
-
-//void model::Component::onTypeChanged() {
-//    //emit writeLog(QString("type = "+type()));
-//    emit writeLog(QString("type = ????"));
-//}
-
-//void model::Component::onItemChanged() {
-//    emit writeLog(QString("onItemChanged received."));
-//}
 
 
 

@@ -45,7 +45,7 @@ private:
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(CompType comptype READ compType WRITE compType NOTIFY typeChanged)
+    Q_PROPERTY(CompType comptype READ compType WRITE compType NOTIFY compTypeChanged)
     Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
 
 public:
@@ -68,11 +68,9 @@ public:
         SouthEast = 135
     };
 
-
-
 signals:
     void nameChanged();
-    void typeChanged();
+    void compTypeChanged();
     void paramChanged();
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
@@ -99,20 +97,6 @@ public:
             }
         }
     }
-
-//    CompType type() {
-//        return m_type;
-//    }
-
-//    void type(CompType type) {
-//        m_type = type;
-//        if (m_component) {
-//            emit writeLog("Error: component type changed.\n"
-//                          "component not changed", Qt::red);
-//        } else {
-//            m_component = createComponent(m_type, m_name.toStdString());
-//        }
-//    }
 
     // TODO: find out how to store specifications
     QVariant param() {
