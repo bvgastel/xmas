@@ -60,7 +60,8 @@ HEADERS       = \
     model/sink.h \
     model/function.h \
     model/queue.h \
-    model/join.h
+    model/join.h \
+    model/merge.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -74,7 +75,8 @@ SOURCES       = \
     model/sink.cpp \
     model/function.cpp \
     model/queue.cpp \
-    model/join.cpp
+    model/join.cpp \
+    model/merge.cpp
     
 ################################################
 # INSTALL instructions
