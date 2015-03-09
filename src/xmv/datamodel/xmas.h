@@ -375,6 +375,15 @@ public:
      */
     bitpowder::lib::String getName() const;
 
+    /**
+     * @brief name A function to (re)set the name of the component.
+     *
+     * This is function was primarily created to support direct updates
+     * from qml using getters and setters. Also, the human designer uses
+     * the designer to change the name, if appropriate.
+     *
+     * @param name The new name of the component.
+     */
     void name(std::string name) {
         this->m_name = name;
     }
