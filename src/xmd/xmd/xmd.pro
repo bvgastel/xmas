@@ -61,7 +61,8 @@ HEADERS       = \
     model/function.h \
     model/queue.h \
     model/join.h \
-    model/merge.h
+    model/merge.h \
+    model/fork.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -76,7 +77,8 @@ SOURCES       = \
     model/function.cpp \
     model/queue.cpp \
     model/join.cpp \
-    model/merge.cpp
+    model/merge.cpp \
+    model/fork.cpp
     
 ################################################
 # INSTALL instructions
