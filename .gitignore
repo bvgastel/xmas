@@ -9,6 +9,7 @@ include*
 lib*
 bin*
 *~
+LICENSE-TEMPLATE-*
 
 # Compiled Object files
 *.slo
