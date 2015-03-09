@@ -25,6 +25,8 @@
 
 #include "component.h"
 
+namespace model {
+
 class Sink : public Component
 {
     Q_OBJECT
@@ -33,5 +35,7 @@ public:
     Sink(QQuickItem *parent = 0);
     ~Sink();
 };
+
+} // namespace model
 
 #endif // SINK_H

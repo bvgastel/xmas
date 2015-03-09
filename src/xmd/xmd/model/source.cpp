@@ -22,13 +22,13 @@
 
 #include "source.h"
 
-Source::Source(QQuickItem *parent)
+model::Source::Source(QQuickItem *parent)
     : Component(parent)
 {
 
 }
 
-Source::~Source()
+model::Source::~Source()
 {
 
 }

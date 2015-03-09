@@ -22,12 +22,12 @@
 
 #include "sink.h"
 
-Sink::Sink(QQuickItem *parent) : Component(parent)
+model::Sink::Sink(QQuickItem *parent) : Component(parent)
 {
 
 }
 
-Sink::~Sink()
+model::Sink::~Sink()
 {
 
 }

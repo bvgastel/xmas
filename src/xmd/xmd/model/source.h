@@ -25,6 +25,8 @@
 
 #include "component.h"
 
+namespace model {
+
 class Source : public Component
 {
     Q_OBJECT
@@ -50,5 +52,7 @@ public:
 private:
     QString m_specification;
 };
+
+} // namespace model
 
 #endif // SOURCE_H
