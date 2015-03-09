@@ -33,7 +33,7 @@ class Queue : public Component
     Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
 
 public:
-    Queue(QQuickItem *parent);
+    Queue(QQuickItem *parent=0);
     ~Queue();
 
 signals:

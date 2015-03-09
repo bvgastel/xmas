@@ -34,6 +34,12 @@
 #include <QVariant>
 #include "canvascomponentextension.h"
 #include "model/component.h"
+#include "model/function.h"
+#include "model/queue.h"
+#include "model/join.h"
+#include "model/merge.h"
+#include "model/fork.h"
+#include "model/switch.h"
 #include "model/port.h"
 #include "model/channel.h"
 #include "parse.h"
@@ -50,9 +56,15 @@ DataControl::~DataControl()
 }
 
 void DataControl::registerTypes() const{
-    qmlRegisterType<model::Component>("XMAS.model", 1, 0, "XComponent");
+    qmlRegisterUncreatableType<model::Component>("XMAS.model", 1, 0, "XComponent", "Component should not be constructed.");
     qmlRegisterType<model::Channel>("XMAS.model", 1, 0, "XChannel");
     qmlRegisterType<model::Port>("XMAS.model", 1, 0, "XPort");
+    qmlRegisterType<model::Function>("XMAS.model", 1, 0, "XFunction");
+    qmlRegisterType<model::Queue>("XMAS.model", 1, 0, "XQueue");
+    qmlRegisterType<model::Join>("XMAS.model", 1, 0, "XJoin");
+    qmlRegisterType<model::Merge>("XMAS.model", 1, 0, "XMerge");
+    qmlRegisterType<model::Fork>("XMAS.model", 1, 0, "XFork");
+    qmlRegisterType<model::Switch>("XMAS.model", 1, 0, "XSwitch");
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {

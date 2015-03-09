@@ -32,7 +32,7 @@ class Function : public Component
     Q_OBJECT
     Q_PROPERTY(QVariantList specList READ specList WRITE specList NOTIFY specListChanged)
 public:
-    Function(QQuickItem *parent);
+    Function(QQuickItem *parent=0);
     ~Function();
 
 signals:
