@@ -30,11 +30,15 @@ namespace model {
 class Queue : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
 
 public:
     Queue(QQuickItem *parent=0);
     ~Queue();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
     void sizeChanged();

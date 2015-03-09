@@ -32,3 +32,12 @@ model::Function::~Function()
 
 }
 
+void model::Function::classBegin() {
+    // No action necessary
+}
+
+void model::Function::componentComplete() {
+    QString name = this->name();
+    component(new XMASFunction(name.toStdString()));
+}
+

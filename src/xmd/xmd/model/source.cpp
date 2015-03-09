@@ -33,3 +33,12 @@ model::Source::~Source()
 
 }
 
+void model::Source::classBegin() {
+    // No action necessary
+}
+
+void model::Source::componentComplete() {
+    QString name = this->name();
+    component(new XMASSource(name.toStdString()));
+}
+

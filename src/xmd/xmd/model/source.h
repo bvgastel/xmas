@@ -30,11 +30,15 @@ namespace model {
 class Source : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QString specification READ specification WRITE specification NOTIFY specificationChanged)
 
 public:
     Source(QQuickItem *parent = 0);
     ~Source();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
     void specificationChanged();

@@ -30,10 +30,14 @@ namespace model {
 class Merge : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     Merge(QQuickItem *parent = 0);
     ~Merge();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
 

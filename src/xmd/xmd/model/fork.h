@@ -30,10 +30,14 @@ namespace model {
 class Fork : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     Fork(QQuickItem *parent = 0);
     ~Fork();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
 

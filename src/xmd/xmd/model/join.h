@@ -30,11 +30,14 @@ namespace model {
 class Join : public Component
 {
     Q_OBJECT
-
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     Join(QQuickItem *parent=0);
     ~Join();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
 

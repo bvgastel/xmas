@@ -32,3 +32,12 @@ model::Queue::~Queue()
 
 }
 
+void model::Queue::classBegin() {
+    // No action necessary
+}
+
+void model::Queue::componentComplete() {
+    QString name = this->name();
+    component(new XMASQueue(name.toStdString()));
+}
+

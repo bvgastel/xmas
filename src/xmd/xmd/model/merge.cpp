@@ -32,3 +32,12 @@ model::Merge::~Merge()
 
 }
 
+void model::Merge::classBegin() {
+    // No action necessary
+}
+
+void model::Merge::componentComplete() {
+    QString name = this->name();
+    component(new XMASMerge(name.toStdString()));
+}
+

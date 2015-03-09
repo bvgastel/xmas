@@ -32,3 +32,12 @@ model::Fork::~Fork()
 
 }
 
+void model::Fork::classBegin() {
+    // No action necessary
+}
+
+void model::Fork::componentComplete() {
+    QString name = this->name();
+    component(new XMASFork(name.toStdString()));
+}
+

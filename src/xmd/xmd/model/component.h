@@ -64,7 +64,6 @@ public:
     };
 private:
     Q_OBJECT
-    Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(QString comptype READ compType WRITE compType NOTIFY compTypeChanged)
@@ -87,15 +86,10 @@ public slots:
 
 public:
 
-    virtual void classBegin();
-    virtual void componentComplete();
-
     QString compType() const {return m_compType;}
     void compType(QString compType) {
         m_compType = compType;
     }
-
-    //int type() const Q_DECL_OVERRIDE { return Type; }
 
     QString name() {
         return m_name;
@@ -123,6 +117,16 @@ private:
     XMASComponent *createComponent(QString type, QString name);
 
 public:
+
+protected:
+    XMASComponent *component() {
+        return m_component;
+    }
+
+    void component(XMASComponent *component) {
+        m_component = component;
+    }
+
 private:
     QString m_name;
     QString m_compType;

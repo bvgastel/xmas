@@ -32,3 +32,14 @@ model::Sink::~Sink()
 
 }
 
+void model::Sink::classBegin() {
+    // No action necessary
+}
+
+void model::Sink::componentComplete() {
+    QString name = this->name();
+    component(new XMASSink(name.toStdString()));
+}
+
+
+

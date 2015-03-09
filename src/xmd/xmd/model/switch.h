@@ -30,9 +30,14 @@ namespace model {
 class Switch : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
+
 public:
     Switch(QQuickItem *parent = 0);
     ~Switch();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
 signals:
 

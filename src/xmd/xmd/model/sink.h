@@ -30,10 +30,14 @@ namespace model {
 class Sink : public Component
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     Sink(QQuickItem *parent = 0);
     ~Sink();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 };
 
 } // namespace model

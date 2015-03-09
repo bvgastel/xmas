@@ -32,3 +32,13 @@ model::Join::~Join()
 
 }
 
+void model::Join::classBegin() {
+    // No action necessary
+}
+
+void model::Join::componentComplete() {
+    QString name = this->name();
+    component(new XMASJoin(name.toStdString()));
+}
+
+

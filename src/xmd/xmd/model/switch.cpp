@@ -32,3 +32,13 @@ model::Switch::~Switch()
 
 }
 
+void model::Switch::classBegin() {
+    // No action necessary
+}
+
+void model::Switch::componentComplete() {
+    QString name = this->name();
+    component(new XMASSwitch(name.toStdString()));
+}
+
+
