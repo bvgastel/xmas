@@ -73,8 +73,6 @@ public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
 
-    //enum { Type = QVariant::UserType + 0 };
-
 signals:
     void nameChanged();
     void compTypeChanged();
