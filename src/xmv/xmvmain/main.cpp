@@ -315,7 +315,7 @@ void SpidergonTest(int size, bool showSinks, bool showAll) {
 
     start = std::chrono::high_resolution_clock::now();
 
-    CheckMessageSpec(allComponents);
+    ErrorInMessageSpec(allComponents);
 
     current = std::chrono::high_resolution_clock::now();
     std::cout << "message spec check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
@@ -584,7 +584,7 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 
     start = std::chrono::high_resolution_clock::now();
 
-    CheckMessageSpec(allComponents);
+    ErrorInMessageSpec(allComponents);
 
     current = std::chrono::high_resolution_clock::now();
     std::cout << "message spec check in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;

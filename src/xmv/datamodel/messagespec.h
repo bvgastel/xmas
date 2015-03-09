@@ -132,7 +132,7 @@ inline MessageSpec::Ref S(bitpowder::lib::String endpoint, const std::vector<Sym
 }
 
 // returns true on error
-bool CheckMessageSpec(std::set<XMASComponent *> allComponents);
+bool ErrorInMessageSpec(std::set<XMASComponent *> allComponents);
 void ClearMessageSpec(std::set<XMASComponent *> allComponents);
 
 class MessageSpecExtension : public PortExtension {

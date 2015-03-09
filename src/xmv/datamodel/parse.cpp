@@ -1234,7 +1234,16 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
     return generate_xmas_from_parse_result(parseResult, mp);
 }
 
-
+/**
+ * @brief generate_xmas_from_parse_result Generates a map with XMASComponent pointers from the component's name
+ *
+ * This function uses the parseResult from a previous parse function using ParseJSON to generate a map
+ * containing the XMASComponent instances indexed by name.
+ *
+ * @param parseResult The result of calling ParseJSON()
+ * @param mp A reference to the memory pool.
+ * @return The map of components indexed by name
+ */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(JSONParseResult &parseResult, MemoryPool &mp) {
     std::map<String, XMASComponent *> retval;
 
