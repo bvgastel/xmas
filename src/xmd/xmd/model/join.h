@@ -1,6 +1,6 @@
 /*********************************************************************
   *
-  * Copyright (C) <name>, <year>
+  * Copyright (C) Bonnema, 2015
   *
   * This file is part of the xmas-design tool.
   *
@@ -19,6 +19,7 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
+
 
 #ifndef JOIN_H
 #define JOIN_H

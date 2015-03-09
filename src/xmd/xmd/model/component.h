@@ -1,6 +1,6 @@
 /*********************************************************************
   *
-  * Copyright (C) <name>, <year>
+  * Copyright (C) Guus Bonnema, 2015
   *
   * This file is part of the xmas-design tool.
   *
