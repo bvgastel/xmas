@@ -4,7 +4,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 100
     height: 100
-    comptype: "join"
+    type: Model.XComponent.Join
     prefix: "j"
     property int token: isNaN(param) ? 0 : param
     XPort {x: 0; y: 15; name: "a"; type:Model.XPort.Target}

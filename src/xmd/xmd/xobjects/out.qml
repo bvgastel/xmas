@@ -4,7 +4,7 @@ import XMAS.model 1.0 as Model
 XComponent {
     width: 50
     height: 30
-    comptype: "out"
+    type: Model.XComponent.Out
     prefix: "o"
     XPort {x: 0; y: 10; name: "o"; type:Model.XPort.Target}
     Canvas {

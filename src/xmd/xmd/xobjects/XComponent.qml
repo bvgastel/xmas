@@ -46,7 +46,7 @@ Model.XComponent {
     scale: 1.00
     rotation: 0
     focus: true
-    comptype: "unknown"     // Qml thinks its an enum, and its not
+    type: Model.XComponent.Unknown
     transformOrigin: Item.Center
     z:1 //on top of channels
     property int uid:-1

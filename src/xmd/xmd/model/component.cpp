@@ -38,39 +38,51 @@ void model::Component::classBegin() {
 }
 
 void model::Component::componentComplete() {
-    QString m_compType = this->property("comptype").toString();
-
-    m_component = createComponent(m_compType, m_name);
+    m_type = (CompType)this->property("type").toInt();
+    m_component = createComponent(m_type, m_name);
 }
 
 // TODO: What to do with IN and OUT?
-XMASComponent *model::Component::createComponent(QString typeName, QString qname) {
+XMASComponent *model::Component::createComponent(CompType type, QString qname) {
     XMASComponent *component = nullptr;
     std::string name = qname.toStdString();
-    if (xsource == typeName) {
+    switch(type) {
+    case CompType::Source :
         component = new XMASSource(name);
-    } else if (xsink == typeName) {
+        break;
+    case CompType::Sink :
         component = new XMASSink(name);
-    } else if (xfunction == typeName) {
+        break;
+    case CompType::Function :
         component = new XMASFunction(name);
-    } else if (xqueue == typeName) {
+        break;
+    case CompType::Queue :
         component = new XMASQueue(name);
-    } else if (xjoin == typeName) {
+        break;
+    case CompType::Join :
         component = new XMASJoin(name);
-    } else if (xmerge == typeName) {
+        break;
+    case CompType::Merge :
         component = new XMASMerge(name);
-    } else if (xswitch == typeName) {
+        break;
+    case CompType::Switch :
         component = new XMASSwitch(name);
-    } else if (xfork == typeName) {
+        break;
+    case CompType::Fork :
         component = new XMASFork(name);
-    } else if (xin == typeName) {
+        break;
+    case CompType::In :
         emit writeLog(QString("type in is not implemented .... yet"), Qt::red);
-    } else if (xout == typeName) {
+        break;
+    case CompType::Out :
         emit writeLog(QString("type out is not implemented .... yet"), Qt::red);
-    } else if (xcomposite == typeName) {
+        break;
+    case CompType::Composite :
         emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
+        break;
+    default :
+        emit writeLog(QString("Unknown component type!"), Qt::red);
     }
-
     return component;
 }
 

@@ -5,7 +5,7 @@ import "../uicontrols"
 XComponent {
     width: 100
     height: 100
-    comptype: "switch"
+    type: Model.XComponent.Switch
     prefix: "s"
     XPort {x:0; y:45; name: "i"; type:Model.XPort.Target}
     XPort {x:90; y:15; name: "a"; type:Model.XPort.Initiator}

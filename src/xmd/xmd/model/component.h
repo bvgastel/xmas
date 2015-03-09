@@ -37,18 +37,6 @@
 
 namespace model {
 
-const QString xsource = "source";
-const QString xsink = "sink";
-const QString xfunction = "function";
-const QString xqueue = "queue";
-const QString xjoin = "join";
-const QString xmerge = "merge";
-const QString xfork = "fork";
-const QString xswitch = "switch";
-const QString xin = "in";
-const QString xout = "out";
-const QString xcomposite = "composite";
-
 class Component : public QQuickItem //, public QQmlParserStatus
 {
 public:
@@ -62,12 +50,15 @@ public:
         NorthEast = 315,
         SouthEast = 135
     };
+    enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
+
 private:
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
+    Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
-    Q_PROPERTY(QString comptype READ compType WRITE compType NOTIFY compTypeChanged)
+    Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
 
 public:
@@ -78,7 +69,7 @@ public:
 
 signals:
     void nameChanged();
-    void compTypeChanged();
+    void typeChanged();
     void paramChanged();
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
@@ -90,9 +81,9 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
-    QString compType() const {return m_compType;}
-    void compType(QString compType) {
-        m_compType = compType;
+    CompType getType() const {return m_type;}
+    void setType(CompType type) {
+        m_type = type;
     }
 
     //int type() const Q_DECL_OVERRIDE { return Type; }
@@ -120,13 +111,13 @@ public:
     }
 
 private:
-    XMASComponent *createComponent(QString type, QString name);
+    XMASComponent *createComponent(CompType type, QString name);
 
 public:
 private:
     QString m_name;
-    QString m_compType;
     QVariant m_param;
+    CompType m_type;
 
     XMASComponent *m_component;
 };
