@@ -55,7 +55,9 @@ HEADERS       = \
     model/util.h \
     model/component.h \
     model/channel.h \
-    model/port.h
+    model/port.h \
+    model/source.h \
+    model/sink.h
 				
 SOURCES       = \ 
     xmdexception.cpp \
@@ -64,7 +66,9 @@ SOURCES       = \
     model/util.cpp \
     model/component.cpp \
     model/channel.cpp \
-    model/port.cpp
+    model/port.cpp \
+    model/source.cpp \
+    model/sink.cpp
     
 ################################################
 # INSTALL instructions
