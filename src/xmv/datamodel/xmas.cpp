@@ -1,4 +1,5 @@
 #include "xmas.h"
+#include "canvascomponentextension.h"
 #include <string.h>
 #include <cstring>
 #include <strings.h>
@@ -111,4 +112,33 @@ void XMASComponent::clearExtensions() {
     auto extensions = ExtensionContainer<XMASComponentExtension>::clearExtensions();
     for (auto it = extensions.begin(); it != extensions.end(); )
         delete it.erase();
+}
+
+
+std::tuple<int, int, int, float> XMASComponent::canvasData() {
+    CanvasComponentExtension *ext = this->getExtension<CanvasComponentExtension *>();
+    if (ext) {
+        return ext->canvasData();
+    }
+    return std::make_tuple(0, 0, 0, 1.0f);
+}
+
+void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
+    CanvasComponentExtension *ext = this->getExtension<CanvasComponentExtension *>();
+    if (!ext) {
+        try {
+            CanvasComponentExtension* cce = new CanvasComponentExtension {x, y, orientation, scale};
+            this->addExtension(cce);
+        } catch (bitpowder::lib::Exception e) {
+            std::cerr << "Invalid canvas data: ["
+                      << x << ", " << y << ", " << orientation << ", " << scale << "]"
+                      << std::endl;
+            std::cerr << e << std::endl;
+            exit(-1);
+        }
+    }
+    if (ext) {
+        ext->canvasData(x, y, orientation, scale);
+    }
+
 }

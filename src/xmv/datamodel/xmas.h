@@ -388,6 +388,9 @@ public:
         this->m_name = name;
     }
 
+    std::tuple<int, int, int, float> canvasData();
+    void canvasData(int x, int y, int orientation, float scale);
+
     /**
      * @brief valid
      * @return true if the XMASComponent is valid

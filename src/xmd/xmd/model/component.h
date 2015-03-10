@@ -108,18 +108,24 @@ public:
 
     // TODO: Syntax check of expressions
     void param(QVariant param) {
-        if (type == Queue) {
+        QString typeName = QString(param.typeName());
+        writeLog(QString("param heeft type '")+typeName+"'");
+
+        if (getType() == Queue) {
+            if (param.typeName() == "int") {
+
+            }
             // queue
-        } else if (type == Source) {
+        } else if (getType() == Source) {
             // source
             // TODO: syntax check
-        } else if (type == Function) {
+        } else if (getType() == Function) {
             // function
             // TODO: syntax
-        } else if (type == Join) {
+        } else if (getType() == Join) {
             // join
             // TODO: expressies? waarschijnlijk / unrestricted
-        } else if (type == Switch) {
+        } else if (getType() == Switch) {
             // switch
             // TODO: expressie?
         }
