@@ -2,12 +2,12 @@ import QtQuick 2.4
 import XMAS.model 1.0 as Model
 
 XComponent {
-    id:queue
+    id:component
     width: 100
     height: 50
     type: Model.XComponent.Queue
     prefix: "q"
-    property int size: isNaN(param) ? 0 : param
+    property int size: isNaN(this.expression) ? 0 : this.expression
     XPort {x:0; y:20; name: "i"; type:Model.XPort.Target}
     XPort {x:90; y:20; name: "o"; type:Model.XPort.Initiator}
     Canvas {
@@ -51,7 +51,7 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onAccepted: {queue.size = text; param = text; focus = false}
+            onAccepted: {component.size = text; component.expression = text; focus = false}
             onFocusChanged: if(focus)selectAll()
         }
     }

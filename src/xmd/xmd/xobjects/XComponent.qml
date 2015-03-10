@@ -49,6 +49,7 @@ Model.XComponent {
     type: Model.XComponent.Unknown
     transformOrigin: Item.Center
     z:1 //on top of channels
+    valid: false
     property int uid:-1
     property string prefix: ""
     property int index:-1
@@ -122,6 +123,18 @@ Model.XComponent {
             bottom: topLabel ? parent.top : undefined
             top: topLabel ? undefined : parent.bottom
         }
+
+        Rectangle {
+            id: validmarker
+            visible: withDialog
+            width: 10
+            height: 10
+            radius: 10
+            color: component.valid ? "darkgreen" : "red"
+            anchors.verticalCenter: parent.Center
+            anchors.left: parent.left
+
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         height: label.contentHeight
         width: Math.max(parent.width,label.contentWidth)
@@ -141,6 +154,8 @@ Model.XComponent {
             readOnly: false
         }
     }
+
+
 
     // Mouse area
     MouseArea {
