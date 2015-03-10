@@ -106,7 +106,24 @@ public:
         return m_param;
     }
 
+    // TODO: Syntax check of expressions
     void param(QVariant param) {
+        if (type == Queue) {
+            // queue
+        } else if (type == Source) {
+            // source
+            // TODO: syntax check
+        } else if (type == Function) {
+            // function
+            // TODO: syntax
+        } else if (type == Join) {
+            // join
+            // TODO: expressies? waarschijnlijk / unrestricted
+        } else if (type == Switch) {
+            // switch
+            // TODO: expressie?
+        }
+
         m_param = param;
     }
 
