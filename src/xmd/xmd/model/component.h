@@ -84,9 +84,8 @@ public:
     CompType getType() const {return m_type;}
     void setType(CompType type) {
         m_type = type;
+        emit typeChanged();
     }
-
-    //int type() const Q_DECL_OVERRIDE { return Type; }
 
     QString name() {
         return m_name;
@@ -99,6 +98,7 @@ public:
                 m_component->name(name.toStdString());
             }
         }
+        emit nameChanged();
     }
 
     // TODO: find out how to store specifications
@@ -108,6 +108,7 @@ public:
 
     void param(QVariant param) {
         m_param = param;
+        emit paramChanged();
     }
 
 private:

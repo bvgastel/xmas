@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import "../uicontrols"
 import XMAS.model 1.0 as Model
 
 XComponent {
@@ -6,7 +7,6 @@ XComponent {
     height: 100
     type: Model.XComponent.Join
     prefix: "j"
-    property int token: isNaN(param) ? 0 : param
     XPort {x: 0; y: 15; name: "a"; type:Model.XPort.Target}
     XPort {x: 0; y:75; name: "b"; type:Model.XPort.Target}
     XPort {x: 90; y:45; name: "o"; type:Model.XPort.Initiator}
@@ -15,6 +15,7 @@ XComponent {
         anchors.fill: parent
         antialiasing: false
         smooth:false
+        property int token: 0
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
@@ -47,10 +48,10 @@ XComponent {
             //token
             ctx.moveTo(60 ,50)
             switch (token){
-            case 0:
+            case 1:
                 ctx.lineTo(40,20)
                 break
-            case 1:
+            case 2:
                 ctx.lineTo(40,80)
                 break
             }
@@ -58,11 +59,34 @@ XComponent {
         }
     }
 
-    onShowDialog:{
-        ++token
-        if(token > 1)token=0
-        param = token
-        canvas.requestPaint()
+    onParamChanged: {
+        var result = 0
+        if(!isNaN(param)){
+           result = parseInt(param)
+            // limit to two target ports
+           if(result < 1 || result > 2) result = 0
+        }
+         canvas.token = result
+         canvas.requestPaint()
+    }
+
+    withDialog: true
+    onShowDialog: dialog.visible = true
+    XDialog {
+        id: dialog
+        title: "Enter expression for join " + name
+        help:"Insert expression for an unrestrictive join as a subset of c with:\n"
+             + "\t-math operators +,-,*,/,%\n"
+             + "\t-logical operators &&,||,!\n"
+             + "\t-equality operators ==,<=,>=,<,>\n"
+             + "E.g.:\n\t"
+             + "Or enter a numeric value for a restrictive join\n"
+             + " with 0 for the first input, 1 for the second."
+        //TODO : implement packet depend help
+        // +  (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
+        validator: /^(\S.*)$/
+        onAccepted: param = dialog.expression
+
     }
 
 }
