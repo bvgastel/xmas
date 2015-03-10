@@ -112,6 +112,7 @@ public:
     void setExpression(QVariant expression) {
         m_expression = expression;
         //TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
+        setValid(true);
         emit expressionChanged();
     }
 
@@ -119,8 +120,8 @@ public:
         return m_valid;
     }
 
-    void setValid(bool value) {
-        m_valid = value;
+    void setValid(bool valid) {
+        m_valid = valid;
         //TODO : replace -1 with error position from parser
         emit validChanged(-1);
     }
