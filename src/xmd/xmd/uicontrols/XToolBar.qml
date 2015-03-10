@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 1.3
 
 Rectangle {
     id:toolbox
@@ -47,6 +48,7 @@ Rectangle {
             componentFile: "../xobjects/source.qml"
             image: "../content/source.png"
         }
+        ToolBarSeparator {}
         XToolBarItem {
             componentFile: "../xobjects/in.qml"
             image: "../content/in.png"
@@ -55,6 +57,7 @@ Rectangle {
             componentFile: "../xobjects/out.qml"
             image: "../content/out.png"
         }
+        ToolBarSeparator {}
         XToolBarItem {
             componentFile: "../xobjects/spidergon.qml"
             image: "../content/composite.png"

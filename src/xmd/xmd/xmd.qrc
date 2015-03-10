@@ -60,5 +60,7 @@
         <file>content/select_all.png</file>
         <file>content/bigger.ico</file>
         <file>content/smaller.ico</file>
+        <file>content/packet.png</file>
+        <file>uicontrols/XPacketDialog.qml</file>
     </qresource>
 </RCC>

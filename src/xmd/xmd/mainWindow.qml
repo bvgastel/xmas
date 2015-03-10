@@ -175,7 +175,7 @@ ApplicationWindow {
         iconName: "select"
         checkable: true
         checked: sheet.selectionMode
-        onToggled: selectionMode(checked) //sheet.selectionMode = checked
+        onToggled: selectionMode(checked)
     }
 
     Action {
@@ -193,6 +193,16 @@ ApplicationWindow {
         text: "Quit"
         shortcut: StandardKey.Quit
         onTriggered: Qt.quit()
+    }
+
+
+    Action {
+        id: packetAction
+        text: "Packet"
+        shortcut: ""
+        iconSource: "qrc:/content/packet.png"
+        iconName: "Packet"
+        onTriggered: packetDialog.show()
     }
 
     Action {
@@ -333,6 +343,10 @@ ApplicationWindow {
 
             ToolBarSeparator {}
 
+            ToolButton {action: packetAction}
+
+            ToolBarSeparator {}
+
             ToolButton {action: runVtAction}
             ToolButton {action: stopVtAction}
 
@@ -404,6 +418,10 @@ ApplicationWindow {
         id: xmasToolbar
         height:48
         anchors {right: parent.right;  left: parent.left}
+    }
+
+    XPacketDialog {
+        id: packetDialog
     }
 
     SplitView {
