@@ -113,16 +113,18 @@ public:
         m_expression = expression;
         //TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
         setValid(true);
+        //bool valid = checkExpression(expression);
+        //setValid(valid);
         emit expressionChanged();
     }
 
     // TODO: Syntax check of expressions
-    void param(QVariant param) {
-        QString typeName = QString(param.typeName());
+    bool checkExpression(QVariant expression) {
+        QString typeName = QString(expression.typeName());
         writeLog(QString("param heeft type '")+typeName+"'");
 
         if (getType() == Queue) {
-            if (param.typeName() == "int") {
+            if (expression.typeName() == "int") {
 
             }
             // queue
@@ -140,7 +142,7 @@ public:
             // TODO: expressie?
         }
 
-        m_param = param;
+        return true;
 	}
 
     bool getValid() {
