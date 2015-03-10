@@ -59,7 +59,9 @@ private:
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
-    Q_PROPERTY(QVariant param READ param WRITE param NOTIFY paramChanged)
+    Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
+    //@Guus valid true = expression ok , in de emit van validChanged kunnen we de positie van de fout meegeven
+    Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -70,7 +72,8 @@ public:
 signals:
     void nameChanged();
     void typeChanged();
-    void paramChanged();
+    void expressionChanged();
+    void validChanged(int errorPosition);
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -102,13 +105,24 @@ public:
     }
 
     // TODO: find out how to store specifications
-    QVariant param() {
-        return m_param;
+    QVariant getExpression() {
+        return m_expression;
     }
 
-    void param(QVariant param) {
-        m_param = param;
-        emit paramChanged();
+    void setExpression(QVariant expression) {
+        m_expression = expression;
+        //TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
+        emit expressionChanged();
+    }
+
+    bool getValid() {
+        return m_valid;
+    }
+
+    void setValid(bool value) {
+        m_valid = value;
+        //TODO : replace -1 with error position from parser
+        emit validChanged(-1);
     }
 
 private:
@@ -117,9 +131,9 @@ private:
 public:
 private:
     QString m_name;
-    QVariant m_param;
+    QVariant m_expression;
     CompType m_type;
-
+    bool m_valid;
     XMASComponent *m_component;
 };
 

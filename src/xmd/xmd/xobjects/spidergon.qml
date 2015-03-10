@@ -3,6 +3,7 @@ import XMAS.model 1.0 as Model
 //this is a test composite
 
 XComponent {
+    id:component
     width: 100
     height: 90
     type: Model.XComponent.Composite

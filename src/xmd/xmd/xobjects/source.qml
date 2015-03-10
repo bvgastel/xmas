@@ -3,6 +3,7 @@ import "../uicontrols"
 import XMAS.model 1.0 as Model
 
 XComponent {
+    id:component
     width: 50
     height: 50
     type: Model.XComponent.Source
@@ -34,7 +35,7 @@ XComponent {
         //             (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p_X < 5 && p_Y > 2}" :
         //                                                                                 "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p < 100}");
         validator: /^(\S.*)$/
-        onAccepted: param = dialog.expression
+        onAccepted: component.expression = dialog.expression
     }
 
 }
