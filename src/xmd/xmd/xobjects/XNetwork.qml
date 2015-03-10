@@ -33,7 +33,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
-import XMAS 1.0 as XMAS
+import XMAS.model 1.0 as XMAS
 import "../uicontrols"
 import "xchannel.js" as Code
 import "../xmapper/controller.js" as Ctrl
@@ -85,45 +85,58 @@ Rectangle {
     }
 
     //used to show the wiring path when adding a connection
-    Canvas {
-        id: wire
-        anchors.fill: parent
-        property real mouseX: 0
-        property real mouseY: 0
-        property bool connecting: false
-        property var port1: null
-        property var port2: null
+    XWire{
+      id: wire
+      property bool connecting: false
+      property var port1: null
+      property var port2: null
+      property int mx: 0
+      property int my: 0
+      visible: connecting
+      size: 4
+      color: "red"
 
-        visible: connecting
-        enabled: connecting
-        onPaint: {
-            var ctx = getContext('2d')
-            ctx.strokeStyle = "darkblue"
-            ctx.lineWidth = 2.0
-            ctx.clearRect(0, 0, wire.width, wire.height);
-            if (connecting)
-            {
-                var x = wire.mapFromItem(port1,5,5).x
-                var y = wire.mapFromItem(port1,5,5).y
-                ctx.beginPath()
-                ctx.moveTo(x ,y)
-                ctx.lineTo(mouseX,mouseY)
-                ctx.stroke()
-                if(port1.type===XMAS.Data.Target){
-                    ctx.moveTo(mouseX + port1.width/2 ,mouseY + port1.height/2)
-                    ctx.beginPath()
-                    ctx.arc(mouseX,mouseY, port1.width/2, 0, 2*Math.PI, false)
-                    ctx.stroke()
-                } else {
-                    ctx.beginPath()
-                    ctx.rect(mouseX - port1.width/2,mouseY - port1.height/2,port1.width,port1.height)
-                    ctx.stroke()
-                }
-                ctx.stroke()
+      onPort1Changed: {
+          if(port1) {
+              wire.x1 = port1.mapToItem(sheet,5,5).x
+              wire.y1 = port1.mapToItem(sheet,5,5).y
+              wire.x2 = wire.x1
+              wire.y2 = wire.y1
+          }
+      }
+      onPort2Changed: {
+          if(port2) {
+              wire.x2 = port2.mapToItem(sheet,5,5).x
+              wire.y2 = port2.mapToItem(sheet,5,5).y
+          }
+      }
+      onVisibleChanged: {
+          if(!visible){
+              wire.x1 = 0
+              wire.y1 = 0
+              wire.x2 = 0
+              wire.y2 = 0
+          }
+      }
 
-            }
-        }
+      Rectangle {
+          id: endcap
+          color: "white"
+          x: wire.mapToItem(sheet,wire.x,wire.y,wire.width,wire.height).x
+          y: wire.mapToItem(sheet,wire.x,wire.y,wire.width,wire.height).y
+          height: 10
+          width: 10
+          rotation: 0
+          radius: {
+              if(wire.port1) {
+                  wire.port1.type === XMAS.XPort.Target ? 10  : 0
+              } else 0
+          }
+          border.color: wire.color
+          border.width: 2
+      }
     }
+
 
     function checkTarget(port) {
         if (wire.port1
@@ -131,10 +144,7 @@ Rectangle {
                 && wire.port2 !== port) {
             if (wire.port1.type !== port.type){
                 wire.port2 = port
-                wire.mouseX = wire.mapFromItem(port,5,5).x
-                wire.mouseY = wire.mapFromItem(port,5,5).y
             }
-            wire.requestPaint()
         } else {
             wire.port2 =  wire.connecting ? null : wire.port2
         }
@@ -149,13 +159,10 @@ Rectangle {
                 wire.port1 = null
                 wire.port2 = null
                 wire.connecting = false
-
-                wire.requestPaint() }
+            }
             else { port.connected=false}
         } else {
             wire.port1 = port
-            wire.mouseX = port.x
-            wire.mouseY = port.y
             wire.connecting = true
         }
     }
@@ -207,7 +214,6 @@ Rectangle {
                     wire.port1.connected = false
                     wire.port1 = null
                     wire.port2 = null
-                    wire.requestPaint()
                 }
                 else
                 {
@@ -241,9 +247,8 @@ Rectangle {
 
         onPositionChanged: {
             if(sheet.selectionMode) selection.updateInitialSize(mouse)
-            wire.mouseX = mouse.x
-            wire.mouseY = mouse.y
-            wire.requestPaint()
+            wire.x2 = mouse.x
+            wire.y2 = mouse.y
         }
     }
 
