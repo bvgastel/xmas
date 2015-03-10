@@ -321,6 +321,10 @@ class XMASFork;
 class XMASMerge;
 class XMASJoin;
 
+class XMASInGate;
+class XMASOutGate;
+class XMASComposite;
+
 /**
  * @brief The XMASComponentVisitor class
  *
@@ -339,6 +343,15 @@ public:
     virtual void visit(XMASMerge *) = 0;
     virtual void visit(XMASJoin *) = 0;
 };
+
+class HierarchicalComponentVisitor : public XMASComponentVisitor
+{
+public:
+    virtual void visit(XMASInGate *) = 0;
+    virtual void visit(XMASOutGate *) = 0;
+    virtual void visit(XMASComposite *) = 0;
+};
+
 /************************ XMASComponent *******************************************/
 
 /**
@@ -953,6 +966,11 @@ public:
         p[0] = &o;
     }
 
+    void accept(HierarchicalComponentVisitor &v)
+    {
+        v.visit(this);
+    }
+
     Port** beginPort(PortType type) override
     {
         return type == PortType::INPUT_PORT ? nullptr : &p[0];
@@ -975,6 +993,11 @@ public:
         p[0] = &i;
     }
 
+    void accept(HierarchicalComponentVisitor &v)
+    {
+        v.visit(this);
+    }
+
     Port** beginPort(PortType type) override
     {
         return type == PortType::OUTPUT_PORT ? nullptr : &p[0];
@@ -990,8 +1013,18 @@ public:
 class XMASNetwork
 {
 public:
-    XMASNetwork()
+    XMASNetwork(std::string name) : name(name)
     {
+    }
+
+    XMASNetwork(XMASNetwork&&) = default;
+
+    const std::string getStdName() const {
+        return this->name;
+    }
+
+    const std::map<const bitpowder::lib::String, XMASComponent*>& getComponents() const {
+        return components;
     }
 
     template<typename T>
@@ -999,12 +1032,32 @@ public:
     {
         int result = 0;
         for (auto c : components)
-            if (typeid(c) == typeid(T))
+            if (typeid(c.second) == typeid(T))
                 ++result;
         return result;
     }
 
+    template<typename T>
+    const std::vector<T*> componentsOfType() const
+    {
+        std::vector<T*> result;
+        for (auto c : components)
+            if (typeid(c.second) == typeid(T))
+                result.push_back(static_cast<T*>(c.second));
+        return std::move(result);
+    }
+
+    template <class T>
+    T *insert(const bitpowder::lib::String& name) {
+        if (components.find(name) != components.end())
+            throw 42;
+        T *comp = new T(name);
+        components.insert(std::make_pair(comp->getName(), comp));
+        return comp;
+    }
+
 private:
+    std::string name;
     std::map<const bitpowder::lib::String, XMASComponent*> components;
 };
 
@@ -1012,25 +1065,11 @@ class XMASComposite : public XMASComponent
 {
 public:
 
-    XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
+    XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network);
+
+    void accept(HierarchicalComponentVisitor &v)
     {
-        // get number of in & out gates from network
-        int numInGates = network.numComponentsOfType<XMASInGate>();
-        int numOutGates = network.numComponentsOfType<XMASOutGate>();
-
-        inputs.reserve(numInGates);
-        outputs.reserve(numOutGates);
-
-        // TODO: for all in gates, create an input port
-        // TODO: for all out gates, create an output port
-
-        // fill p
-        p.reserve(numInGates + numOutGates);
-
-        for (auto& i : inputs)
-            p.push_back(&i);
-        for (auto& o : outputs)
-            p.push_back(&o);
+        v.visit(this);
     }
 
     Port** beginPort(PortType type) override

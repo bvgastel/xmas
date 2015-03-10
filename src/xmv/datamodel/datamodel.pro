@@ -58,7 +58,8 @@ SOURCES += datamodel.cpp \
     parse.cpp \
     jsonprinter.cpp \
     serialize_network.cpp \
-    parseflatjsonfile.cpp
+    parseflatjsonfile.cpp \
+    flatten.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \

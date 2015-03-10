@@ -112,3 +112,34 @@ void XMASComponent::clearExtensions() {
     for (auto it = extensions.begin(); it != extensions.end(); )
         delete it.erase();
 }
+
+
+
+XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
+{
+    // get in & out gates from network
+    auto inGates = network.componentsOfType<XMASInGate>();
+    auto outGates = network.componentsOfType<XMASOutGate>();
+
+    int numInGates = inGates.size();
+    int numOutGates = outGates.size();
+
+    inputs.reserve(numInGates);
+    outputs.reserve(numOutGates);
+
+    // for all in gates, create an input port
+    for (auto c : inGates)
+        inputs.push_back(Input {this, c->getStdName().c_str()} );
+
+    // for all out gates, create an output port
+    for (auto c : outGates)
+        outputs.push_back(Output {this, c->getStdName().c_str()} );
+
+    // fill p
+    p.reserve(numInGates + numOutGates);
+
+    for (auto& i : inputs)
+        p.push_back(&i);
+    for (auto& o : outputs)
+        p.push_back(&o);
+}
