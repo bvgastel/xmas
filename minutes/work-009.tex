@@ -1,0 +1,172 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{caption}
+
+\title{Resultaten work meeting 009 Update iteratie 4 }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\w}[1]{\textsc{#1}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmv}{\textsc{Xmv}\xspace}%
+\newcommand{\xmd}{\textsc{Xmd}\xspace}%
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}%
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}%
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}%
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}%
+\newcommand{\vt}{\textsc{Vt}\xspace}%
+\newcommand{\src}{\textsc{src}\xspace}%
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}%
+\newcommand{\een}{\'{e}\'{e}n\xspace}%
+\newcommand{\svn}{\textsc{svn}\xspace}%
+\newcommand{\git}{\textsc{git}\xspace}%
+\newcommand{\github}{\textsc{Github}\xspace}%
+\newcommand{\subversion}{\textsc{subversion}\xspace}%
+\newcommand{\radboud}{\textsc{Radboud}\xspace}%
+\newcommand{\uml}{\textsc{uml}\xspace}%
+
+
+\begin{Minutes}{Work meeting 009}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn, Bernard van Gastel}
+\subtitle{Update iteratie 4 met Bernard}
+\minutetaker{Guus}
+\minutesdate{9 maart 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Mededelingen}
+
+Komende woensdag (11 maart) is Guus afwezig door een priv\'{e} verplichting. Zie hierover 
+eerdere mededeling in mail.
+
+\topic{Midterm bijeenkomst 25 maart 2015 in Utrecht}
+
+Stefan kan niet komen. Alleen Guus en Jeroen gaan. Jeroen presenteert.
+
+\topic{Composite voortgang}
+
+Het team spreekt het \uml diagram voor de composite door en heeft met de 
+structuur geen problemen. Jeroen gaat werken aan \een of twee use cases
+en wat scenarios. Het doel van het ontwerpen is om de opzet vooraf te doordenken
+om zo het programmeren gemakkelijker te maken. Dat is belangrijker dan 
+mooie documentatie produceren, wat uiteindelijk ook moet gebeuren maar op dit 
+moment op de tweede plaats staat.
+
+De opstaande punten zijn:
+
+\begin{itemize}
+	\item Hoe maak je van een netwerk een composite in de praktijk en wat zijn
+			de gevolgen voor onze composites?
+	\item Hoe vind je de composites als netwerk ontwerper?
+\end{itemize}
+
+
+
+\topic{Vraag aan Bernard: IN en OUT}
+Vraag te stellen aan Bernard is het voorstel van Guus om IN en OUT poorten
+in composites te vervangen door Source en Sink met eventueel een optie om een 
+'echte' source of sink op te nemen. Voordeel is dat we niet zelf een primitief 
+hoeven te maken en toe te voegen aan \code{xmas.h}.
+
+\topic{Vraag aan Bernard: poorten in composite}
+Bij het tonen van de composites is de vraag hoeveel invoer- en uitvoerpoorten
+we kunnen verwachten maximaal en hoeveel hij wil dat we minimaal kunnen tekenen
+voor we een symbolische invoer poort tekenen.
+
+\topic{Tijdsproblemen plugin en qml}
+De \qml oplossing (directe oplossing) kost veel meer tijd dan gedacht en Guus
+geeft aan in problemen te komen met de voortgang als hij dit alleen moet doen.
+Hij vraagt Jeroen om \een van de twee over te nemen. Jeroen heeft er de voorkeur
+voor om eerst de composites verder uit te werken. Omdat de samenwerking \qml en
+\cpp moeilijker is dan gedacht, blijft nu de plugin liggen.
+
+\topic{Plugin code}
+Guus loopt op verzoek met Stefan en Jeroen de plugin code door met als doel 
+iets meer inzicht te verschaffen in hoe de code werkt.
+
+\topic{Algehele voortgang: project issue}
+Op 2 maart heeft Bernard de oplossing van een parser verworpen en wil \een data
+model: de \code{xmas.h} structuren voor de \vt's. Stefan heeft een duidelijk
+voorkeur voor de directe \qml verbinding, maar helaas kost de \qml-\cpp verbinding 
+meer tijd dan gedacht en kost experimenteren om het goed werkend te krijgen ook 
+meer tijd dan gehoopt. Stefan en Guus zijn de afgelopen week bezig geweest de 
+verbinding tussen \qml en \cpp tot stand te brengen en zijn nog niet klaar.
+
+Het experimenteren dat nodig is ziet Stefan als bedreiging van het opleveren van 
+een werkend product. Stefan wijst ons er op, dat eind mei voor hem echt einde 
+project is. Waarvan akte. 
+
+\paragraph{Opmerking notulist} We wisten dat eind mei de streef datum was van Stefan, 
+maar niet dat het na eind mei voor Stefan echt afgelopen moet zijn. Wat we begrepen 
+hadden was dat het voor de zomer vakantie afgelopen moest zijn (dat is 1 juli). Na
+de meeting realiseerde ik me pas hoeveel impact deze opmerking heeft.
+
+\paragraph{Voor volgend overleg}
+Als gevolg is het zaak te begrenzen wat we nog gaan doen en het verdere verloop goed 
+te monitoren. Ook moeten we koers houden op de huidige richting en niet meer van richting 
+veranderen. Komende zaterdag moeten we het vervolg in dit licht bespreken en vastleggen, 
+zodat we weten eind mei het product af te hebben. Dit plaatst ook het verzoek om hulp
+van Guus in een ander licht. Ook dit voor de volgende keer.
+
+\topic{Actiepunten}
+
+In figuur \ref{fig:openpunten} de openstaande punten. Deze punten werken we elke sessie af, en zetten de 
+afgeronde akties in de lijst daaronder.
+
+\vspace{2em}
+
+\begin{figure}[p]
+%\begingroup
+\begin{tabular}{|l|l|p{25em}|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+09-03-2015  & team      & Project issue voortgang consequenties bespreken.\\\hline
+09-03-2015  & team      & Bernard vragen over maximaal aantal poorten te tekenen\\\hline
+09-03-2015  & team      & Bernard vragen over IN/OUT vervangen door Source/Sink\\\hline
+02-03-2015  & team      & Sturen Bernard een patch van de \vt verschillen\\\hline
+02-03-2015  & Bernard   & Bernard komt terug op repo: git of svn?\\\hline
+24-01-2015  & Bernard   & Filmpje van een collega, Bernard geeft een seintje\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+\end{tabular}\label{fig:openpunten}
+\captionof{table}{Aktielijst open punten}
+\end{figure}
+%\endgroup
+
+\vspace{2em}
+
+\begin{figure}[p]
+%\begingroup
+\begin{tabular}{|l|l|l|p{10em}|p{10em}|}
+\hline
+{\bf datum} & {\bf gereed} & {\bf wie} & {\bf Aktie}                                      & commentaar      \\\hline
+24-01-2015  & 22-02-2015   & team      & We moeten hernieuwde contactmomenten afspreken   & 22 febr 2015 afspraken gemaakt\\\hline
+07-02-2015  & 22-02-2015   & team      & Afspraak met Bernard voor 21 februari 2015       & 22 febr 2015 10:30\\\hline
+07-02-2015  & 13-02-2015   & team      & Werkwijze opnieuw bezien                         & vastgeled in plan\\\hline
+07-02-2015  & 13-02-2015   & team      & Vernieuwd plan uitbrengen.                       & Akkoord B. 19-02-2015\\\hline
+24-01-2015  & 07-02-2015   & Bernard   & Voert bugfix op xmas.h uit en geeft signaal      & uitgevoerd\\\hline
+24-01-2015  & 07-02-2015   & team      & splitsen header files afstemmen met Bernard      & n.v.t.\\\hline
+26-01-2015  & 07-02-2015   & team      & Kan de licentie van \w{bitpower lib} naar GPLv3? & uitgevoerd\\\hline
+\end{tabular}
+\captionof{table}{Aktielijst gesloten punten}
+\end{figure}
+%\endgroup
+
+\end{Minutes}
+
+\end{document}
