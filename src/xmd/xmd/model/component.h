@@ -57,7 +57,7 @@ private:
     Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
-    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
     //@Guus valid true = expression ok , in de emit van validChanged kunnen we de positie van de fout meegeven
@@ -90,11 +90,11 @@ public:
         emit typeChanged();
     }
 
-    QString name() {
+    QString getName() {
         return m_name;
     }
 
-    void name(QString name) {
+    void setName(QString name) {
         if (name != m_name) {
             m_name = name;
             if (m_component) {
