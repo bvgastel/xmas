@@ -608,7 +608,10 @@ SourceExpressionParseResult ParseSourceExpression(const String &str, MemoryPool&
     PacketExpressionLexer lexer(str);
     auto p = ParserState<PacketExpressionLexer, 1>(lexer);
     SpecSet result;
-    int retval = Parser<PacketExpressionLexer, 1, SpecSet, PacketExpression<PacketExpressionLexer>::UserData>(&p, memoryPool).perform(PacketExpression<PacketExpressionLexer>::sourceExpr).end().retreive(result);
+    int retval = Parser<PacketExpressionLexer, 1, SpecSet, PacketExpression<PacketExpressionLexer>::UserData>(&p, memoryPool)
+            .perform(PacketExpression<PacketExpressionLexer>::sourceExpr)
+            .end()
+            .retreive(result);
     if (retval != 0) {
         TokenBase *token = p.getToken();
         std::cout << "token: " << token << std::endl;

@@ -1,6 +1,9 @@
 #include "xmas.h"
 #include "canvascomponentextension.h"
-#include <string.h>
+#include "simplestring.h"
+#include "parse.h"
+#include <string>
+#include <sstream>
 #include <cstring>
 #include <strings.h>
 
@@ -141,4 +144,48 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
         ext->canvasData(x, y, orientation, scale);
     }
 
+}
+
+
+bitpowder::lib::String XMASSource::getSourceExpression() {
+    //bitpowder::lib::String expr = "";
+    SymbolicTypesExtension *ext = this->o.getPortExtension<SymbolicTypesExtension>();
+    auto packets = ext->availablePackets;
+    std::ostringstream out;
+    for (SymbolicPacket p : packets) {
+        std::map<bitpowder::lib::String, int> enumMap;
+        p.printOldCSyntax(out,enumMap);
+    }
+    bitpowder::lib::String packetStr(out.str());
+    return std::move(packetStr);
+}
+bool XMASSource::setSourceExpression(const std::string &expr) {
+    bitpowder::lib::String b_expr = expr.c_str();
+    return setSourceExpression(b_expr);
+}
+
+bool XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
+
+    std::ostringstream errMsg;
+    errMsg << "[XMASSource::setSourceExpression] parsing expression '" << expr << "' not attached.";
+
+    Output *out = &this->o;
+
+    if (!out->valid()) {
+        std::cout << errMsg.str() << std::endl;
+        return false;
+    }
+
+    bitpowder::lib::MemoryPool mp;
+    auto result = ParseSourceExpression(expr, mp);
+    if (result) {
+        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        for (auto &packet : result.result().spec) {
+            attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
+        }
+        return true;
+    } else {
+        std::cout << errMsg.str() << std::endl;
+        return false;
+    }
 }

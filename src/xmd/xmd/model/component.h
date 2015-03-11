@@ -60,7 +60,7 @@ private:
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
-    //@Guus valid true = expression ok , in de emit van validChanged kunnen we de positie van de fout meegeven
+    Q_PROPERTY(bool validExpr MEMBER m_validExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
 public:
@@ -73,7 +73,8 @@ signals:
     void nameChanged();
     void typeChanged();
     void expressionChanged();
-    void validChanged(int errorPosition);
+    void validChanged();
+    void validExprChanged(int errorPosition);
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -110,40 +111,53 @@ public:
     }
 
     void setExpression(QVariant expression) {
-        m_expression = expression;
-        //TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
-        setValid(true);
-        //bool valid = checkExpression(expression);
-        //setValid(valid);
-        emit expressionChanged();
+        if (updateExpression(expression)) {
+            emit expressionChanged();
+        }
     }
 
-    // TODO: Syntax check of expressions
-    bool checkExpression(QVariant expression) {
+    // TODO: Update in XMASComponent
+    // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
+    bool updateExpression(QVariant expression) {
         QString typeName = QString(expression.typeName());
         writeLog(QString("param heeft type '")+typeName+"'");
 
         if (getType() == Queue) {
-            if (expression.typeName() == "int") {
-
+            if (typeName == "int") {
+                int size = expression.toInt();
+                XMASQueue *queue = dynamic_cast<XMASQueue *>(this);
+                queue->c = size;
+                m_expression = expression;
+                setValidExpr(true, -1);
+                return true;
             }
-            // queue
+            setValidExpr(false, 0);
+            return false;
         } else if (getType() == Source) {
             // source
             // TODO: syntax check
+            return true;
         } else if (getType() == Function) {
             // function
             // TODO: syntax
+            return true;
         } else if (getType() == Join) {
             // join
             // TODO: expressies? waarschijnlijk / unrestricted
+            return true;
         } else if (getType() == Switch) {
             // switch
             // TODO: expressie?
+            return true;
         }
 
-        return true;
+        return false;
 	}
+
+    void setValidExpr(bool validExpr, int pos) {
+        m_validExpr = validExpr;
+        emit validExprChanged(pos);
+    }
 
     bool getValid() {
         return m_valid;
@@ -151,8 +165,7 @@ public:
 
     void setValid(bool valid) {
         m_valid = valid;
-        //TODO : replace -1 with error position from parser
-        emit validChanged(-1);
+        emit validChanged();
 	}
 
 private:
@@ -164,6 +177,7 @@ private:
     QVariant m_expression;
     CompType m_type;
     bool m_valid;
+    bool m_validExpr;
     XMASComponent *m_component;
 };
 

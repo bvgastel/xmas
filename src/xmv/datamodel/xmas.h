@@ -388,7 +388,21 @@ public:
         this->m_name = name;
     }
 
+    /**
+     * @brief canvasData getter for the canvas properties
+     * @return a tuple containing the canvas related data.
+     */
     std::tuple<int, int, int, float> canvasData();
+
+    /**
+     * @brief canvasData setter for the canvas related data
+     * @param x the x coordinate of the component
+     * @param y the y coordinate of the component
+     * @param orientation the orientation of the component on the board
+     *        in degrees
+     * @param scale the scale of the component in relation to other components
+     *              the default scale = 1.0f
+     */
     void canvasData(int x, int y, int orientation, float scale);
 
     /**
@@ -606,6 +620,11 @@ public:
     {
         p[0] = &o;
     }
+
+    bitpowder::lib::String getSourceExpression();
+
+    bool setSourceExpression(const bitpowder::lib::String &expr);
+    bool setSourceExpression(const std::string &expr);
 
     void accept(XMASComponentVisitor &v)
     {

@@ -3,20 +3,26 @@
 #include "xmas.h"
 #include "symbolic.h"
 #include "symbolic-enum-field.h"
+#include "simplestring.h"
 #include "messagespec.h"
 
-namespace {
+namespace
+{
 
-class DataModelTest : public ::testing::Test {
+class TestDataModel : public ::testing::Test
+{
 protected:
-    DataModelTest() {
+    TestDataModel()
+    {
 
     }
-    virtual ~DataModelTest() {
+    virtual ~TestDataModel()
+    {
 
     }
 
-    virtual void SetUp() {
+    virtual void SetUp()
+    {
         m_source = new XMASSource("source");
         m_sink = new XMASSink("sink");
         m_fork = new XMASFork("fork");
@@ -26,7 +32,8 @@ protected:
         m_queue = new XMASQueue("queue");
     }
 
-    virtual void TearDown() {
+    virtual void TearDown()
+    {
         delete m_sink;
         delete m_source;
         delete m_fork;
@@ -46,7 +53,8 @@ protected:
 
 };
 
-TEST_F(DataModelTest, NameEqTest) {
+TEST_F(TestDataModel, NameEqTest)
+{
     EXPECT_EQ(m_sink->getName(), "sink");
     EXPECT_EQ(m_source->getName(), "source");
     EXPECT_EQ(m_fork->getName(), "fork");
@@ -56,7 +64,8 @@ TEST_F(DataModelTest, NameEqTest) {
     EXPECT_EQ(m_queue->getName(), "queue");
 }
 
-TEST_F(DataModelTest, NameNeTest) {
+TEST_F(TestDataModel, NameNeTest)
+{
     EXPECT_NE(m_sink->getName(), "sink1");
     EXPECT_NE(m_source->getName(), "source1");
     EXPECT_NE(m_fork->getName(), "fork1");
@@ -66,7 +75,8 @@ TEST_F(DataModelTest, NameNeTest) {
     EXPECT_NE(m_queue->getName(), "queue1");
 }
 
-TEST_F(DataModelTest, NotConnectedInValid) {
+TEST_F(TestDataModel, NotConnectedInValid)
+{
     EXPECT_FALSE(m_sink->valid());
     EXPECT_FALSE(m_source->valid());
     EXPECT_FALSE(m_fork->valid());
@@ -76,7 +86,8 @@ TEST_F(DataModelTest, NotConnectedInValid) {
     EXPECT_FALSE(m_queue->valid());
 }
 
-TEST_F(DataModelTest, ConnectedValid) {
+TEST_F(TestDataModel, ConnectedValid)
+{
     connect(m_source->o, m_function->i);
     connect(m_function->o, m_queue->i);
     connect(m_queue->o, m_sink->i);
@@ -85,7 +96,30 @@ TEST_F(DataModelTest, ConnectedValid) {
     EXPECT_TRUE(m_sink->valid());
 }
 
-TEST_F(DataModelTest, SimpleSymbolics) {
+TEST_F(TestDataModel, setSourceSpecInValid)
+{
+    m_source->setSourceExpression(std::string("abc == 20"));
+    EXPECT_EQ("", m_source->getSourceExpression());
+
+}
+
+TEST_F(TestDataModel, setSourceSpecValid)
+{
+    connect(m_source->o, m_sink->i);
+    ASSERT_TRUE(m_source->valid());
+    ASSERT_TRUE(m_sink->valid());
+
+    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("abc == 20")));
+
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_sink->valid());
+
+    bitpowder::lib::String result = m_source->getSourceExpression();
+    EXPECT_EQ("abc == 20", result.stl());
+}
+
+TEST_F(TestDataModel, SimpleSymbolics)
+{
     connect(m_source->o, m_sink->i);
     EXPECT_TRUE(m_source->valid());
     EXPECT_TRUE(m_sink->valid());
