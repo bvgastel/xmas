@@ -31,15 +31,14 @@ XComponent {
     XDialog {
         id: dialog
         title: "Enter expression for function " + name
-        help:"Insert function. The language is a subset of C with:\n"
-             + "\t-math operators +,-,*,/,%\n"
-             + "\t-logical operators &&,||,!\n"
-             + "\t-equality operators ==,<=,>=,<,>\n"
-             + "E.g.:\n\t"
-        //TODO : implement packet depend help
-        // +  (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
+        help:"Insert function.\n"
+             + "The integer operators +,-,*,/ can be used. "
+             + "For additional operators, see the syntax for modifying expressions.\n"
+             + "E.g.: assume incoming packets have fields dst, src and colour. The following expression:\n"
+             + "\t dst := src, colour := 1\n"
+             + "transforms an incoming packet by setting the destination to its original source,"
+             + " by setting its colour to 1, and by removing the src field."
         validator: /^(\S.*)$/
         onAccepted: component.expression = dialog.expression
-
     }
 }

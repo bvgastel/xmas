@@ -16,7 +16,7 @@ XComponent {
         anchors.fill: parent
         antialiasing: false
         smooth:false
-        property int token: 0
+        property int token: -1
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
@@ -49,10 +49,10 @@ XComponent {
             //token
             ctx.moveTo(60 ,50)
             switch (token){
-            case 1:
+            case 0:
                 ctx.lineTo(40,20)
                 break
-            case 2:
+            case 1:
                 ctx.lineTo(40,80)
                 break
             }
@@ -61,11 +61,11 @@ XComponent {
     }
 
     onExpressionChanged: {
-        var result = 0
+        var result = -1
         if(!isNaN(this.expression)){
            result = parseInt(this.expression)
             // limit to two target ports
-           if(result < 1 || result > 2) result = 0
+           if(result < 0 || result > 1) result = -1
         }
          canvas.token = result
          canvas.requestPaint()
@@ -76,15 +76,8 @@ XComponent {
     XDialog {
         id: dialog
         title: "Enter expression for join " + name
-        help:"Insert expression for an unrestrictive join as a subset of c with:\n"
-             + "\t-math operators +,-,*,/,%\n"
-             + "\t-logical operators &&,||,!\n"
-             + "\t-equality operators ==,<=,>=,<,>\n"
-             + "E.g.:\n\t"
-             + "Or enter a numeric value for a restrictive join\n"
-             + " with 0 for the first input, 1 for the second."
-        //TODO : implement packet depend help
-        // +  (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
+        help: "Type 0 or 1, indicating which in-port of the restrictive join is used for tokens,"
+             + "or insert an expression for an unrestrictive join.\n"
         validator: /^(\S.*)$/
         onAccepted: component.expression = dialog.expression
 
