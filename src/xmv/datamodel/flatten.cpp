@@ -1,8 +1,9 @@
 #include "xmas.h"
+#include "flatten.h"
 
 using bitpowder::lib::String;
 
-static void flattenInto(XMASNetwork& dst, const XMASNetwork& src, const String prefix);
+static void flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string prefix);
 
 class FlattenVisitor : public HierarchicalComponentVisitor
 {
@@ -22,7 +23,7 @@ public:
     void visit(XMASOutGate *) override      { network.insert<XMASOutGate>(name); }          // so they don't leave holes in the memory after collapsing?
     void visit(XMASComposite* c) override   {
         const XMASNetwork& subnetwork = c->getNetwork();
-        const String prefix { name.stl() + "::" };
+        const std::string prefix { name.stl() + "::" };
         flattenInto(network, subnetwork, prefix);
     }
 
@@ -35,23 +36,24 @@ XMASNetwork flatten(const XMASNetwork& src)
 {
     XMASNetwork result {src.getStdName() + "_flattened"};
 
-    flattenInto(result, src, "");
+    flattenInto(result, src, "::");
 
     return std::move(result);
 }
 
-void flattenInto(XMASNetwork& dst, const XMASNetwork& src, const String prefix)
+void flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string prefix)
 {
     // copy all components
     for (auto entry : src.getComponents()) {
         auto name = entry.first;
         auto c = entry.second;
 
-        const String qualifiedName  {prefix.stl() + name.stl()};
+        const std::string qualifiedName  {prefix + name.stl()};
         FlattenVisitor fv {dst, qualifiedName};
         c->accept(fv);
     }
 
+    // TODO: copy relevant extensions (e.g. messagespec, switching function) from src
     // TODO: connect channels
     // TODO: collapse gates/composite ports
 }

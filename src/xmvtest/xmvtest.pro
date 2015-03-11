@@ -12,7 +12,8 @@ SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
     testdatamodel.cpp \
-    jsonprinter.test.cpp
+    jsonprinter.test.cpp \
+    flatten.test.cpp
 
 
 CONFIG += C++11

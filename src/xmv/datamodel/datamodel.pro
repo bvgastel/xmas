@@ -76,7 +76,8 @@ HEADERS += datamodel.h\
     jsonprinter.h \
     serialize_network.h \
     canvascomponentextension.h \
-    parseflatjsonfile.h
+    parseflatjsonfile.h \
+    flatten.h
 
 ################################################
 # INSTALL instructions

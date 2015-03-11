@@ -482,6 +482,10 @@ public:
      */
     virtual void accept(XMASComponentVisitor &v) = 0;
 
+    virtual void accept(HierarchicalComponentVisitor &v) {
+        accept(static_cast<XMASComponentVisitor&>(v));
+    }
+
     /**
      * @brief getComponentExtension
      *
@@ -966,12 +970,12 @@ public:
         p[0] = &o;
     }
 
-    void accept(XMASComponentVisitor&)
+    void accept(XMASComponentVisitor&) override
     {
         throw bitpowder::lib::Exception("XMASInGate can only accept an hierarchical visitor!");
     }
 
-    void accept(HierarchicalComponentVisitor &v)
+    void accept(HierarchicalComponentVisitor &v) override
     {
         v.visit(this);
     }
@@ -998,12 +1002,12 @@ public:
         p[0] = &i;
     }
 
-    void accept(XMASComponentVisitor&)
+    void accept(XMASComponentVisitor&) override
     {
         throw bitpowder::lib::Exception("XMASOutGate can only accept an hierarchical visitor!");
     }
 
-    void accept(HierarchicalComponentVisitor &v)
+    void accept(HierarchicalComponentVisitor &v) override
     {
         v.visit(this);
     }
@@ -1038,30 +1042,20 @@ public:
     }
 
     template<typename T>
-    int numComponentsOfType() const
-    {
-        int result = 0;
-        for (auto c : components)
-            if (typeid(c.second) == typeid(T))
-                ++result;
-        return result;
-    }
-
-    template<typename T>
     const std::vector<T*> componentsOfType() const
     {
         std::vector<T*> result;
         for (auto c : components)
-            if (typeid(c.second) == typeid(T))
+            if (typeid(*c.second) == typeid(T))
                 result.push_back(static_cast<T*>(c.second));
         return std::move(result);
     }
 
-    template <class T>
-    T *insert(const bitpowder::lib::String& name) {
+    template <typename T, typename... Args>
+    T *insert(const bitpowder::lib::String& name, Args... args) {
         if (components.find(name) != components.end())
             throw 42;
-        T *comp = new T(name);
+        T *comp = new T(name, args...);
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
@@ -1081,12 +1075,21 @@ public:
         return network;
     }
 
-    void accept(XMASComponentVisitor&)
+    std::vector<Input>& getInputs() {
+        return inputs;
+    }
+
+    std::vector<Output>& getOutputs() {
+        return outputs;
+    }
+
+
+    void accept(XMASComponentVisitor&) override
     {
         throw bitpowder::lib::Exception("XMASComposite can only accept an hierarchical visitor!");
     }
 
-    void accept(HierarchicalComponentVisitor &v)
+    void accept(HierarchicalComponentVisitor &v) override
     {
         v.visit(this);
     }
