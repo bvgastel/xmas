@@ -58,9 +58,11 @@ Rectangle {
             image: "../content/out.png"
         }
         ToolBarSeparator {}
-        XToolBarItem {
-            componentFile: "../xobjects/spidergon.qml"
-            image: "../content/composite.png"
+        ToolButton {
+            iconSource: "qrc:/content/composite.png"
+            iconName: "Composite"
+            text: "Open Composite"
+            onClicked: mainwindow.openComposite()
         }
         Item { Layout.fillWidth: true } // empty space
 
