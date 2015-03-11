@@ -26,25 +26,23 @@ Rectangle {
     }
 
     function getSlope(sx1,sy1,sx2,sy2)
-    {
-        var a,m,d;
-        var b=sx2-sx1;
-        if (b===0)
-            return 0;
-        a=sy2-sy1;
-        m=a/b;
-        d=Math.atan(m)*180/Math.PI;
-
-        if (a<0 && b<0)
-            return d+180;
-        else if (a>=0 && b>=0)
-            return d;
-        else if (a<0 && b>=0)
-            return d;
-        else if (a>=0 && b<0)
-            return d+180;
-        else
-            return 0;
-    }
+     {
+         var a
+         var dx=sx2-sx1
+         var dy=sy2-sy1
+         if (dx===0)
+             return dy > 0 ? 90 : -90
+         a=Math.atan(dy/dx)*180/Math.PI
+         if (dy<0 && dx<0)
+             return a+180
+         else if (dy>=0 && dx>=0)
+             return a
+         else if (dy<0 && dx>=0)
+             return a
+         else if (dy>=0 && dx<0)
+             return a+180
+         else
+             return 0
+     }
 }
 
