@@ -49,7 +49,6 @@ Model.XComponent {
     type: Model.XComponent.Unknown
     transformOrigin: Item.Center
     z:1 //on top of channels
-    valid: false
     property int uid:-1
     property string prefix: ""
     property int index:-1
@@ -114,6 +113,7 @@ Model.XComponent {
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
     onWriteLog: console.log(message,color)
+    onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
 
     // Name
     Rectangle{
@@ -134,7 +134,7 @@ Model.XComponent {
             width: 15
             height: 15
             radius: 15
-            color: component.valid ? "darkgreen" : "red"
+            color: "red"
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
         }

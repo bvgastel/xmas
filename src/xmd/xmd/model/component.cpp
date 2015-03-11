@@ -86,5 +86,38 @@ XMASComponent *model::Component::createComponent(CompType type, QString qname) {
     return component;
 }
 
+//TODO Check if name is unique and not empty : return -1 if ok
+int model::Component::checkName(QString name) {
+    return -1;
+}
+
+
+//TODO Syntax check of expressions : return -1 if ok , or > -1 if not where int is position error
+int model::Component::checkExpression(QVariant expression) {
+    QString typeName = QString(expression.typeName());
+    writeLog(QString("Expression heeft type '")+typeName+"'");
+
+    if (getType() == Queue) {
+        if (expression.typeName() == "int") {
+
+        }
+        // queue
+    } else if (getType() == Source) {
+        // source
+        // TODO: syntax check
+    } else if (getType() == Function) {
+        // function
+        // TODO: syntax
+    } else if (getType() == Join) {
+        // join
+        // TODO: expressies? waarschijnlijk / unrestricted
+    } else if (getType() == Switch) {
+        // switch
+        // TODO: expressie?
+    }
+
+    //just ok for now
+    return -1;
+}
 
 

@@ -106,10 +106,10 @@ function createComponent(parent,component,object) {
                                       {
                                           "x":object.x,
                                           "y":object.y,
-                                          "orientation":object.orientation,
+                                          "rotation":object.rotation,
                                           "scale":object.scale,
                                           "name":object.name,
-                                          "param":object.param
+                                          "expression":object.expression
                                       });
 
         //TODO : if shared memory VT - XMD continues

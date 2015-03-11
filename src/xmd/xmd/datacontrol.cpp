@@ -142,22 +142,22 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
     if (ext) {
         map.insert("x", ext->x());
         map.insert("y", ext->y());
-        map.insert("orientation", ext->orientation());
+        map.insert("rotation", ext->orientation());
         map.insert("scale", ext->scale());
     }
 
     if (type == xqueue) {
-        map.insert("param", 5);
+        map.insert("expression", 5);
     } else if (type == xfunction) {
-        map.insert("param", "some function spec");
+        map.insert("expression", "some function spec");
     } else if (type == xsource) {
-        map.insert("param", "some source specification");
+        map.insert("expression", "some source specification");
     }
 
 
     map.insert("type", type);
     map.insert("name", qname);
-    //@Guus of Jeroen : in qml is property "param" gelinked, dus voor queue is dit de capacity.
-    //map.insert("param", "");
+    //@Guus of Jeroen : in qml is property "expression" gelinked, dus voor queue is dit de capacity.
+    //map.insert("expression", "");
 
 }

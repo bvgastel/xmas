@@ -60,20 +60,15 @@ private:
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
-    //@Guus valid true = expression ok , in de emit van validChanged kunnen we de positie van de fout meegeven
-    Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
 
-    //enum { Type = QVariant::UserType + 0 };
-
 signals:
-    void nameChanged();
+    void nameChanged(int result);
     void typeChanged();
-    void expressionChanged();
-    void validChanged(int errorPosition);
+    void expressionChanged(int result);
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -101,7 +96,8 @@ public:
                 m_component->name(name.toStdString());
             }
         }
-        emit nameChanged();
+        int result = checkName(name);
+        emit nameChanged(result);
     }
 
     // TODO: find out how to store specifications
@@ -111,59 +107,20 @@ public:
 
     void setExpression(QVariant expression) {
         m_expression = expression;
-        //TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
-        setValid(true);
-        //bool valid = checkExpression(expression);
-        //setValid(valid);
-        emit expressionChanged();
+        int result = checkExpression(expression);
+        emit expressionChanged(result);
     }
-
-    // TODO: Syntax check of expressions
-    bool checkExpression(QVariant expression) {
-        QString typeName = QString(expression.typeName());
-        writeLog(QString("param heeft type '")+typeName+"'");
-
-        if (getType() == Queue) {
-            if (expression.typeName() == "int") {
-
-            }
-            // queue
-        } else if (getType() == Source) {
-            // source
-            // TODO: syntax check
-        } else if (getType() == Function) {
-            // function
-            // TODO: syntax
-        } else if (getType() == Join) {
-            // join
-            // TODO: expressies? waarschijnlijk / unrestricted
-        } else if (getType() == Switch) {
-            // switch
-            // TODO: expressie?
-        }
-
-        return true;
-	}
-
-    bool getValid() {
-        return m_valid;
-    }
-
-    void setValid(bool valid) {
-        m_valid = valid;
-        //TODO : replace -1 with error position from parser
-        emit validChanged(-1);
-	}
 
 private:
     XMASComponent *createComponent(CompType type, QString name);
+    int checkName(QString name);
+    int checkExpression(QVariant expression);
 
 public:
 private:
     QString m_name;
     QVariant m_expression;
     CompType m_type;
-    bool m_valid;
     XMASComponent *m_component;
 };
 
