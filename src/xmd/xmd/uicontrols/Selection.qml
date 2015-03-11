@@ -75,7 +75,6 @@ Rectangle{
         rubberBand()
     }
 
-
     // Find items whitin selection bounds
     function find(items){
         selectedItems = []
@@ -84,6 +83,8 @@ Rectangle{
             {
                 if(items[item].selected !== undefined)items[item].selected = true
                 selectedItems.push(items[item])
+            } else {
+                if(items[item].selected !== undefined)items[item].selected = false
             }
         }
         rubberBand()
