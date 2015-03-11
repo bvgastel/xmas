@@ -966,6 +966,11 @@ public:
         p[0] = &o;
     }
 
+    void accept(XMASComponentVisitor&)
+    {
+        throw bitpowder::lib::Exception("XMASInGate can only accept an hierarchical visitor!");
+    }
+
     void accept(HierarchicalComponentVisitor &v)
     {
         v.visit(this);
@@ -991,6 +996,11 @@ public:
     XMASOutGate(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i")
     {
         p[0] = &i;
+    }
+
+    void accept(XMASComponentVisitor&)
+    {
+        throw bitpowder::lib::Exception("XMASOutGate can only accept an hierarchical visitor!");
     }
 
     void accept(HierarchicalComponentVisitor &v)
@@ -1067,6 +1077,15 @@ public:
 
     XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network);
 
+    const XMASNetwork& getNetwork() const {
+        return network;
+    }
+
+    void accept(XMASComponentVisitor&)
+    {
+        throw bitpowder::lib::Exception("XMASComposite can only accept an hierarchical visitor!");
+    }
+
     void accept(HierarchicalComponentVisitor &v)
     {
         v.visit(this);
@@ -1083,7 +1102,7 @@ public:
     }
 
 private:
-    XMASNetwork& network;           // keep reference to the network after construction?
+    XMASNetwork& network;
     std::vector<Input>  inputs;
     std::vector<Output> outputs;
     std::vector<Port*> p;
