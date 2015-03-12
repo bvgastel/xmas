@@ -184,6 +184,7 @@ ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &e
     // note: result has a bool() operator
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        // FIXME: Storing the values has a memory problem due to extensive use of MemoryPool (temporary memory).
         for (auto &packet : result.result().spec) {
             std::vector<SymbolicPacket> packetSet = std::get<0>(packet).values;
             MessageSpec::Ref msgRef = std::get<1>(packet);
