@@ -7,13 +7,15 @@
 #include <set>
 #include <map>
 #include <functional>
-#include "xmas.h"
 #include <iostream>
 #include <unordered_set>
 #include <memory>
 #include <atomic>
+
+#include "xmas.h"
 #include "simplestring.h"
 #include "type_hash.h"
+
 #ifdef CONCURRENCY
 #include "lock.h"
 #include "spinlock.h"

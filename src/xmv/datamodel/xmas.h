@@ -3,6 +3,7 @@
 
 #include "extension.h"
 #include "simplestring.h"
+//#include "parse-source-expression-parse-result.h"
 
 /*
  * GBO: added setter for name to XMASComponent: necessary for designer or we have no way to
@@ -621,10 +622,20 @@ public:
         p[0] = &o;
     }
 
+    struct ExpressionResult {
+        bool m_success;
+        int m_pos;
+        bitpowder::lib::String m_errMsg;
+
+        ExpressionResult() : m_success(false), m_pos(0), m_errMsg() {}
+        ExpressionResult(bool success, int pos, bitpowder::lib::String errMsg) :
+            m_success(success), m_pos(pos), m_errMsg(errMsg) {}
+    };
+
     bitpowder::lib::String getSourceExpression();
 
-    bool setSourceExpression(const bitpowder::lib::String &expr);
-    bool setSourceExpression(const std::string &expr);
+    ExpressionResult setSourceExpression(const bitpowder::lib::String &expr);
+    ExpressionResult setSourceExpression(const std::string &expr);
 
     void accept(XMASComponentVisitor &v)
     {

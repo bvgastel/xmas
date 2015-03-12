@@ -96,7 +96,7 @@ int model::Component::checkName(QString name) {
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    writeLog(QString("param heeft type '")+typeName+"'");
+    writeLog(QString("ontvangen expressie heeft type '")+typeName+"'");
 
     if (getType() == Queue) {
         if (typeName == "int") {
@@ -110,19 +110,15 @@ int model::Component::updateExpression(QVariant expression) {
         setValidExpr(false, 0);
         return 0;
     } else if (getType() == Source) {
-        if (typeName == "QString") {
-            QString qexpr = expression.toString();
-            XMASSource *source = dynamic_cast<XMASSource *>(this);
-            if (source->setSourceExpression(qexpr.toStdString())) {
-                m_expression = expression;
-                setValidExpr(true, -1);
-                return -1;
-            }
-            setValidExpr(false, 0);
+        if (typeName != "QString") {
+            return 0;
         }
-        // source
-        // TODO: syntax check
-        return true;
+        m_expression = expression;
+        QString qexpr = expression.toString();
+        XMASSource *source = dynamic_cast<XMASSource *>(this);
+        XMASSource::ExpressionResult result = source->setSourceExpression(qexpr.toStdString());
+        setValidExpr(result.m_success, result.m_pos);
+        return result.m_pos;
     } else if (getType() == Function) {
         // function
         // TODO: syntax

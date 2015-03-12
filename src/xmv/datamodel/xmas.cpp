@@ -1,11 +1,13 @@
-#include "xmas.h"
-#include "canvascomponentextension.h"
-#include "simplestring.h"
-#include "parse.h"
 #include <string>
 #include <sstream>
 #include <cstring>
 #include <strings.h>
+
+#include "xmas.h"
+#include "canvascomponentextension.h"
+#include "simplestring.h"
+#include "parse.h"
+#include "messagespec.h"
 
 XMASComponent *Port::getTarget() {
     Port *targetPort = getTargetPort();
@@ -148,7 +150,6 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 
 
 bitpowder::lib::String XMASSource::getSourceExpression() {
-    //bitpowder::lib::String expr = "";
     SymbolicTypesExtension *ext = this->o.getPortExtension<SymbolicTypesExtension>();
     auto packets = ext->availablePackets;
     std::ostringstream out;
@@ -159,33 +160,34 @@ bitpowder::lib::String XMASSource::getSourceExpression() {
     bitpowder::lib::String packetStr(out.str());
     return std::move(packetStr);
 }
-bool XMASSource::setSourceExpression(const std::string &expr) {
+XMASSource::ExpressionResult XMASSource::setSourceExpression(const std::string &expr) {
     bitpowder::lib::String b_expr = expr.c_str();
     return setSourceExpression(b_expr);
 }
 
-bool XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
+XMASSource::ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
 
     std::ostringstream errMsg;
-    errMsg << "[XMASSource::setSourceExpression] parsing expression '" << expr << "' not attached.";
 
     Output *out = &this->o;
 
     if (!out->valid()) {
         std::cout << errMsg.str() << std::endl;
-        return false;
+        errMsg << "[XMASSource::setSourceExpression] parsing expression '"
+               << expr
+               << "' not attached: port is not connected.";
+        return ExpressionResult(false, -1, errMsg.str());
     }
 
     bitpowder::lib::MemoryPool mp;
     auto result = ParseSourceExpression(expr, mp);
+    // note: result has a bool() operator
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         for (auto &packet : result.result().spec) {
             attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
         }
-        return true;
-    } else {
-        std::cout << errMsg.str() << std::endl;
-        return false;
     }
+    ExpressionResult eResult(result, result.position(), result.error());
+    return eResult;
 }

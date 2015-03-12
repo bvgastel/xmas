@@ -6,11 +6,12 @@
 #include <algorithm>
 #include <set>
 #include <functional>
-#include "xmas.h"
 #include <iostream>
 #include <memory>
-#include "symbolic.h"
 #include <tuple>
+
+#include "xmas.h"
+#include "symbolic.h"
 
 #include "shared_object.h"
 
