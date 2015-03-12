@@ -169,7 +169,7 @@ XMASSource::ExpressionResult XMASSource::setSourceExpression(const bitpowder::li
 
     std::ostringstream errMsg;
 
-    Output *out = &this->o;
+    Output *out = &o;
 
     if (!out->valid()) {
         std::cout << errMsg.str() << std::endl;

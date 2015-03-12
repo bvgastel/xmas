@@ -96,7 +96,7 @@ int model::Component::checkName(QString name) {
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    writeLog(QString("ontvangen expressie heeft type '")+typeName+"'");
+    writeLog(QString("ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
 
     if (getType() == Queue) {
         if (typeName == "int") {
@@ -104,10 +104,10 @@ int model::Component::updateExpression(QVariant expression) {
             XMASQueue *queue = dynamic_cast<XMASQueue *>(this);
             queue->c = size;
             m_expression = expression;
-            setValidExpr(true, -1);
+            setValidExpr(true, -1, QString(""));
             return -1;
         }
-        setValidExpr(false, 0);
+        setValidExpr(false, 0, QString("Received non integer size."));
         return 0;
     } else if (getType() == Source) {
         if (typeName != "QString") {
@@ -115,10 +115,21 @@ int model::Component::updateExpression(QVariant expression) {
         }
         m_expression = expression;
         QString qexpr = expression.toString();
-        XMASSource *source = dynamic_cast<XMASSource *>(this);
-        XMASSource::ExpressionResult result = source->setSourceExpression(qexpr.toStdString());
-        setValidExpr(result.m_success, result.m_pos);
-        return result.m_pos;
+        XMASSource *source = dynamic_cast<XMASSource *>(this->m_component);
+        if (source) {
+            std::string expr = qexpr.toStdString();
+            auto result = source->setSourceExpression(expr);
+            QString errMsg = QString(result.m_errMsg.stl().c_str());
+            writeLog("Source expression not accepted, error message: " + errMsg);
+            setValidExpr(result.m_success, result.m_pos, errMsg);
+            writeLog(QString("saving expression in XMASComponent ")
+                     + (result.m_success? "succeeded." : "failed."));
+            return result.m_pos;
+        } else {
+            writeLog(QString("Fatal error in Component: "
+                             "did not recognize m_component as source."));
+            throw bitpowder::lib::Exception("Fatal error in Component.");
+        }
     } else if (getType() == Function) {
         // function
         // TODO: syntax

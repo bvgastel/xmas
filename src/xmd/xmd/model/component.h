@@ -60,7 +60,8 @@ private:
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
-    Q_PROPERTY(bool validExpr MEMBER m_validExpr NOTIFY validExprChanged)
+    //Q_PROPERTY(bool validExpr MEMBER m_validExpr NOTIFY validExprChanged)
+    Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
 public:
@@ -72,7 +73,7 @@ signals:
     void typeChanged();
     void expressionChanged(int result);
     void validChanged();
-    void validExprChanged(int errorPosition);
+    void validExprChanged(int errorPosition, QString errMsg);
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -117,9 +118,18 @@ public:
 
     int updateExpression(QVariant expression);
 
-    void setValidExpr(bool validExpr, int pos) {
+    bool getValidExpr() {
+        return m_validExpr;
+    }
+
+    void setValidExpr(bool validExpr) {
         m_validExpr = validExpr;
-        emit validExprChanged(pos);
+        emit validExprChanged(-1, QString(""));
+    }
+
+    void setValidExpr(bool validExpr, int pos, QString errMsg) {
+        m_validExpr = validExpr;
+        emit validExprChanged(pos, errMsg);
     }
 
     bool getValid() {
