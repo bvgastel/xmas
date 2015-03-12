@@ -42,7 +42,6 @@ Window {
     title: "Packet Dialog"
 
     property string expression:""
-    property alias validator: regex.regExp
 
     signal accepted()
 
@@ -77,18 +76,16 @@ Window {
             Layout.preferredHeight: 200
             Layout.minimumHeight: 50
             color: "white"
-            TextInput{
+            TextEdit{
                 id:expr
                 anchors.fill:parent
                 anchors.margins: 10
                 text: expression
                 focus:true
                 selectByMouse:true
-                validator: RegExpValidator{id:regex ; regExp:/^(\S.*)$/}
-                wrapMode: TextInput.WordWrap
+                wrapMode: TextInput.NoWrap
                 font.pointSize : 10
                 onFocusChanged: if(focus)selectAll()
-                onAccepted: okAction.trigger()
                 Keys.onEscapePressed:cancelAction.trigger()
             }
         }
@@ -99,6 +96,7 @@ Window {
             Layout.alignment: Qt.AlignRight
             Button{
                 action:cancelAction
+
             }
             Button {
                 isDefault: true
@@ -110,18 +108,19 @@ Window {
     Action {
         id:cancelAction
         text: "Cancel"
-        onTriggered: {dialog.close()
-        }
+        onTriggered: dialog.close()
+        tooltip: ""
     }
     Action {
         id: okAction
         text: "Ok"
-        enabled: expr.acceptableInput
+        enabled: expr.text !== ""
         onTriggered: {
             dialog.expression = expr.text
             dialog.accepted()
             dialog.close()
         }
+        tooltip: ""
     }
 }
 
