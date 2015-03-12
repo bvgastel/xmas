@@ -110,14 +110,14 @@ public:
     }
 
     void setExpression(QVariant expression) {
-        if (updateExpression(expression)) {
-            emit expressionChanged();
-        }
+        int errorPosition = -1;
+        errorPosition = updateExpression(expression);
+        emit expressionChanged(errorPosition);
     }
 
     // TODO: Update in XMASComponent
     // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
-    bool updateExpression(QVariant expression) {
+    int updateExpression(QVariant expression) {
         QString typeName = QString(expression.typeName());
         writeLog(QString("param heeft type '")+typeName+"'");
 
@@ -128,11 +128,21 @@ public:
                 queue->c = size;
                 m_expression = expression;
                 setValidExpr(true, -1);
-                return true;
+                return -1;
             }
             setValidExpr(false, 0);
-            return false;
+            return 0;
         } else if (getType() == Source) {
+            if (typeName == "QString") {
+                QString qexpr = expression.toString();
+                XMASSource *source = dynamic_cast<XMASSource *>(this);
+                if (source->setSourceExpression(qexpr.toStdString())) {
+                    m_expression = expression;
+                    setValidExpr(true, -1);
+                    return -1;
+                }
+                setValidExpr(false, 0);
+            }
             // source
             // TODO: syntax check
             return true;
@@ -166,11 +176,6 @@ public:
         m_valid = valid;
         emit validChanged();
 	}
-
-//        m_expression = expression;
-//        int result = checkExpression(expression);
-//        emit expressionChanged(result);
-//    }
 
 private:
     XMASComponent *createComponent(CompType type, QString name);
