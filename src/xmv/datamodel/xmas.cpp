@@ -185,7 +185,9 @@ ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &e
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         for (auto &packet : result.result().spec) {
-            attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
+            std::vector<SymbolicPacket> packetSet = std::get<0>(packet).values;
+            MessageSpec::Ref msgRef = std::get<1>(packet);
+            attachMessageSpec(out, packetSet, msgRef);
         }
     }
 

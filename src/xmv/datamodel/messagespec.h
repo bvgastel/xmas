@@ -15,8 +15,6 @@
 
 #include "shared_object.h"
 
-//using namespace bitpowder::lib;
-
 #define USE_REFCOUNT
 
 class MessageSpec {
