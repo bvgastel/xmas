@@ -23,7 +23,7 @@
 #ifndef PARSESPECSET_H
 #define PARSESPECSET_H
 
-#include "parse-basic-structs.h"
+#include "symbolic-packet-set.h"
 #include "messagespec.h"
 
 struct SpecSet {

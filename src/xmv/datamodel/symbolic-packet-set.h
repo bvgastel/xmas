@@ -24,7 +24,6 @@
 #define PARSE_BASIC_STRUCTS_H
 
 #include "symbolic-interval-field.h"
-#include "symbolic-enum-field.h"
 
 struct SymbolicPacketSet {
     typedef SymbolicIntervalField::interval_type interval_type;

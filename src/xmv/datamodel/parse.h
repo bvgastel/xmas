@@ -7,7 +7,7 @@
 #include "memorypool.h"
 #include "parser_json.h"
 #include "symbolic-interval.h"
-#include "parse-basic-structs.h"
+#include "symbolic-packet-set.h"
 #include "parse-specset.h"
 #include "parse-packet-expression-parse-result.h"
 #include "parse-packet-function-parse-result.h"

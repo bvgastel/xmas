@@ -59,10 +59,10 @@ SOURCES += datamodel.cpp \
     jsonprinter.cpp \
     serialize_network.cpp \
     parseflatjsonfile.cpp \
-    parse_basic_structs.cpp \
     parse-specset.cpp \
     parse-parsed-xmas-expression-interface.cpp \
-    parsed-xmas-function.cpp
+    parsed-xmas-function.cpp \
+    symbolic-packet-set.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -81,14 +81,14 @@ HEADERS += datamodel.h\
     canvascomponentextension.h \
     parseflatjsonfile.h \
     parse-specset.h \
-    parse-basic-structs.h \
     parse-packet-expression-parse-result.h \
     parse-source-expression-parse-result.h \
     parse-parsed-xmas-expression-interface.h \
     parsed-xmas-function.h \
     parse-packet-function-parse-result.h \
     symbolic-interval.h \
-    symbolic-enum.h
+    symbolic-enum.h \
+    symbolic-packet-set.h
 
 ################################################
 # INSTALL instructions

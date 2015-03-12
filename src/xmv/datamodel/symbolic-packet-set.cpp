@@ -20,7 +20,7 @@
   *
   **********************************************************************/
 
-#include "parse_basic_structs.h"
+#include "symbolic-packet-set.h"
 
 SymbolicPacketSet::SymbolicPacketSet() : values() {
 }
