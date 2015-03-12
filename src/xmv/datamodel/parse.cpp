@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include "simplestring.h"
 #include "canvascomponentextension.h"
+#include "symbolic-enum.h"
 
 using namespace bitpowder::lib;
 
@@ -11,7 +12,7 @@ class PacketExpressionLexer {
     String original;
     String c;
     Token<String> variable;
-    Token<Interval> intervalToken;
+    Token<SymbolicInterval> intervalToken;
     Token<char> opToken;
     Token<SymbolicIntervalField::interval_type> constantToken;
     Token<Exception> exceptionToken;
@@ -149,7 +150,7 @@ struct PacketExpression {
     typedef MemoryPool& UserData;
     typedef SymbolicIntervalField::interval_type Constant;
     typedef Parser<Lexer, 1, Constant, UserData> & PInt;
-    typedef Parser<Lexer, 1, Interval, UserData> & PInterval;
+    typedef Parser<Lexer, 1, SymbolicInterval, UserData> & PInterval;
     typedef Parser<Lexer, 1, Enum, UserData> & PEnum;
     //typedef Parser<Lexer, 1, SymbolicPacketRestriction, UserData> & PRestriction;
     //typedef Parser<Lexer, 1, SymbolicPacket, UserData> & PPacketDefinition;
@@ -167,7 +168,7 @@ struct PacketExpression {
     static const int ERROR_IN_MIN = 26;
     static const int ERROR_IN_MOD = 24;
 
-    static int intervalInterval(Interval &retval, const Token<Interval> &t, UserData userData) {
+    static int intervalInterval(SymbolicInterval &retval, const Token<SymbolicInterval> &t, UserData userData) {
         bitpowder::lib::unused(userData);
         retval = t.value;
         return 0;
@@ -187,7 +188,7 @@ struct PacketExpression {
         return 0;
     }
 
-    static int constantToInterval(Interval &retval, const Token<Constant> &t, UserData userData) {
+    static int constantToInterval(SymbolicInterval &retval, const Token<Constant> &t, UserData userData) {
         //std::cout << "Interval: ";
         //t.value.print(std::cout);
         //std::cout << std::endl;
@@ -227,7 +228,7 @@ struct PacketExpression {
 
     static PPacketExpr equalToInterval(PPacketExpr cont, UserData userData) {
         bitpowder::lib::unused(userData);
-        return cont().process(interval, [](SymbolicPacketSet &retval, const Interval& b, UserData userData) {
+        return cont().process(interval, [](SymbolicPacketSet &retval, const SymbolicInterval& b, UserData userData) {
             bitpowder::lib::unused(userData);
             auto interval = std::make_shared<SymbolicIntervalField>(b.min, b.max);
             for (SymbolicPacket &packet : retval.values) {
@@ -628,7 +629,7 @@ class PacketFunctionLexer {
     String original;
     String c;
     Token<String> variable;
-    Token<Interval> intervalToken;
+    Token<SymbolicInterval> intervalToken;
     Token<char> opToken;
     Token<SymbolicIntervalField::interval_type> constantToken;
     Token<Exception> exceptionToken;

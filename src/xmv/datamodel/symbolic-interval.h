@@ -20,32 +20,29 @@
   *
   **********************************************************************/
 
-#ifndef PARSE_BASIC_STRUCTS_H
-#define PARSE_BASIC_STRUCTS_H
+#ifndef SYMBOLIC_INTERVAL_H
+#define SYMBOLIC_INTERVAL_H
+
+#include <sstream>
 
 #include "symbolic-interval-field.h"
-#include "symbolic-enum-field.h"
 
-struct SymbolicPacketSet {
+struct SymbolicInterval {
     typedef SymbolicIntervalField::interval_type interval_type;
-    std::vector<SymbolicPacket> values;
-    SymbolicPacketSet();
-
-    void greaterAs(interval_type b);
-    void greaterEqualAs(interval_type b);
-    void lessEqualAs(interval_type b);
-    void lessAs(interval_type b);
-    void negate();
-
-    bool operator==(const SymbolicPacketSet &rhs) const {
-        return values == rhs.values;
+    interval_type min;
+    interval_type max;
+    SymbolicInterval(interval_type min = 0, interval_type max = 0) : min(min), max(max) {
     }
-    void print(std::ostream& out) const;
-    void updateHash();
+
+    void print(std::ostream& out) const {
+        out << "[" << min << ".." << (max-1) << "]";
+    }
+    static SymbolicInterval all() {
+        return {std::numeric_limits<interval_type>::min(), std::numeric_limits<interval_type>::max()};
+    }
 };
 
 
 
-
-#endif // PARSE_BASIC_STRUCTS_H
+#endif // SYMBOLIC_INTERVAL_H
 

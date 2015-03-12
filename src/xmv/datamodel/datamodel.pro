@@ -86,7 +86,9 @@ HEADERS += datamodel.h\
     parse-source-expression-parse-result.h \
     parse-parsed-xmas-expression-interface.h \
     parsed-xmas-function.h \
-    parse-packet-function-parse-result.h
+    parse-packet-function-parse-result.h \
+    symbolic-interval.h \
+    symbolic-enum.h
 
 ################################################
 # INSTALL instructions

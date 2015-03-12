@@ -6,6 +6,7 @@
 
 #include "memorypool.h"
 #include "parser_json.h"
+#include "symbolic-interval.h"
 #include "parse-basic-structs.h"
 #include "parse-specset.h"
 #include "parse-packet-expression-parse-result.h"
@@ -42,7 +43,7 @@ PacketFunctionParseResult ParsePacketFunction(const bitpowder::lib::String &str,
                                               bitpowder::lib::MemoryPool &mp);
 
 namespace std {
-inline std::ostream& operator<< (std::ostream& out, const Interval &n)
+inline std::ostream& operator<< (std::ostream& out, const SymbolicInterval &n)
 {
     n.print(out);
     return out;
