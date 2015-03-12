@@ -6,59 +6,9 @@
 
 #include "memorypool.h"
 #include "parser_json.h"
+#include "parse_basic_structs.h"
 #include "xmas.h"
-#include "symbolic-interval-field.h"
-#include "symbolic-enum-field.h"
 #include "messagespec.h"
-
-struct Interval {
-    typedef SymbolicIntervalField::interval_type interval_type;
-    interval_type min;
-    interval_type max;
-    Interval(interval_type min = 0, interval_type max = 0) : min(min), max(max) {
-    }
-
-    void print(std::ostream& out) const {
-        out << "[" << min << ".." << (max-1) << "]";
-    }
-    static Interval all() {
-        return {std::numeric_limits<interval_type>::min(), std::numeric_limits<interval_type>::max()};
-    }
-};
-
-struct Enum {
-    std::vector<SymbolicEnumField::Type> values;
-    Enum() : values() {
-    }
-    bool operator==(const Enum &n) const {
-        return values == n.values;
-    }
-    void print(std::ostream& out) const {
-        out << "{";
-        for (auto &v : values) {
-            out << v << " ";
-        }
-        out << "}";
-    }
-};
-
-struct SymbolicPacketSet {
-    typedef SymbolicIntervalField::interval_type interval_type;
-    std::vector<SymbolicPacket> values;
-    SymbolicPacketSet();
-
-    void greaterAs(interval_type b);
-    void greaterEqualAs(interval_type b);
-    void lessEqualAs(interval_type b);
-    void lessAs(interval_type b);
-    void negate();
-
-    bool operator==(const SymbolicPacketSet &rhs) const {
-        return values == rhs.values;
-    }
-    void print(std::ostream& out) const;
-    void updateHash();
-};
 
 class PacketExpressionParseResult {
     bool success;

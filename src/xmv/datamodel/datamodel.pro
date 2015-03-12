@@ -58,7 +58,8 @@ SOURCES += datamodel.cpp \
     parse.cpp \
     jsonprinter.cpp \
     serialize_network.cpp \
-    parseflatjsonfile.cpp
+    parseflatjsonfile.cpp \
+    parse_basic_structs.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -75,7 +76,8 @@ HEADERS += datamodel.h\
     jsonprinter.h \
     serialize_network.h \
     canvascomponentextension.h \
-    parseflatjsonfile.h
+    parseflatjsonfile.h \
+    parse_basic_structs.h
 
 ################################################
 # INSTALL instructions
