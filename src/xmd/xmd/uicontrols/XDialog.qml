@@ -47,7 +47,7 @@ Window {
     signal accepted()
 
     width:500
-    height: 260
+    height: 300
     minimumHeight: 200
     minimumWidth: 400
     maximumHeight: 500
@@ -61,7 +61,7 @@ Window {
         spacing:5
         Rectangle{
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
+            Layout.preferredHeight: 150
             color: "darkgrey"
             Label {
                 anchors.fill:parent

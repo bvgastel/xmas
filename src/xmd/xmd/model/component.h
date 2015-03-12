@@ -67,12 +67,10 @@ public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
 
-    //enum { Type = QVariant::UserType + 0 };
-
 signals:
-    void nameChanged();
+    void nameChanged(int result);
     void typeChanged();
-    void expressionChanged();
+    void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition);
     void changeName(QString old_name, QString name);
@@ -102,7 +100,8 @@ public:
                 m_component->name(name.toStdString());
             }
         }
-        emit nameChanged();
+        int result = checkName(name);
+        emit nameChanged(result);
     }
 
     // TODO: find out how to store specifications
@@ -168,8 +167,15 @@ public:
         emit validChanged();
 	}
 
+//        m_expression = expression;
+//        int result = checkExpression(expression);
+//        emit expressionChanged(result);
+//    }
+
 private:
     XMASComponent *createComponent(CompType type, QString name);
+    int checkName(QString name);
+    int checkExpression(QVariant expression);
 
 public:
 private:

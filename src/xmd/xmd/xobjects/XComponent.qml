@@ -49,7 +49,6 @@ Model.XComponent {
     type: Model.XComponent.Unknown
     transformOrigin: Item.Center
     z:1 //on top of channels
-    valid: false
     property int uid:-1
     property string prefix: ""
     property int index:-1
@@ -114,34 +113,36 @@ Model.XComponent {
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
     onWriteLog: console.log(message,color)
+    onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
 
     // Name
-    Item{
-        id:namePlaceholder
+    Rectangle{
+        id:infoPlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
         anchors {
             bottom: topLabel ? parent.top : undefined
             top: topLabel ? undefined : parent.bottom
         }
-
+        border.color: name !== "" ? "transparent" : "red"
+        anchors.margins: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: label.contentHeight
+        width: Math.max(parent.width,label.contentWidth + validmarker.width + 5)
         Rectangle {
             id: validmarker
             visible: withDialog
-            width: 10
-            height: 10
-            radius: 10
-            color: component.valid ? "darkgreen" : "red"
-            anchors.verticalCenter: parent.Center
+            width: 15
+            height: 15
+            radius: 15
+            color: "red"
+            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-
         }
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: label.contentHeight
-        width: Math.max(parent.width,label.contentWidth)
         TextInput {
             id:label
             text: name
-            anchors.fill: parent
+            anchors {left: validmarker.right; right: parent.right; top: parent.top; bottom:parent.bottom}
+            anchors.leftMargin: 5
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
             color: "blue"
@@ -215,7 +216,7 @@ Model.XComponent {
     // Connections
     Connections {
         target: sheet
-        onShowComponentNames: namePlaceholder.visible = checked
+        onShowComponentNames: label.visible = checked
         onMoveSelected: if(component.selected) component.update()
     }
 
@@ -236,8 +237,8 @@ Model.XComponent {
         MenuItem {
             text: "Component name"
             checkable: true
-            checked: namePlaceholder.visible
-            onToggled: namePlaceholder.visible = checked
+            checked: label.visible
+            onToggled: label.visible = checked
         }
         MenuSeparator{}
         MenuItem {

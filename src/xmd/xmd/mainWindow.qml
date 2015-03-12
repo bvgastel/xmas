@@ -71,6 +71,12 @@ ApplicationWindow {
     signal selectionMode(var checked)
     signal showComponentNames(var checked)
 
+    // Functions
+    function openComposite(){
+        openCompositeDialog.open()
+    }
+
+
     MessageDialog {
         id: aboutBox
         title: "About XMD"
@@ -250,6 +256,16 @@ ApplicationWindow {
             "Project files (*.xmdp)",
             "All files (*)"]
         //onAccepted: controller.fileOpen(fileUrl)
+    }
+
+    FileDialog {
+        id: openCompositeDialog
+        nameFilters: [
+            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+        //onAccepted: datacontrol.fileOpen(fileUrl)
     }
 
     function log(text,color)

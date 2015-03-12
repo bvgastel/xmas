@@ -30,12 +30,12 @@ XComponent {
     XDialog {
         id: dialog
         title: "Enter expression for source " + name
-        help:"Insert types of packets injected at this source.\n"
-        //TODO : implement packet depend help
-        //             (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p_X < 5 && p_Y > 2}" :
-        //                                                                                 "The domain of all packets is available through PacketDomain.\nE.g.:\n\t{p in PacketDomain | p < 100}");
+        help: "Insert types of packets injected at this source.\n"
+            + "The integer operators +,-,*,/,%,^ logical operators &&,||,! and equality operators ==,<=,>=,<,>,!= can be used.\n"
+            + "For additional operators, see the syntax for matching expressions.\n"
+            + "E.g.: assume incoming packets have fields dst, src and colour. The following expression:\n"
+            + "(dst > 4 ? src <= 4 : colour == 0) && src % 2 == 0"
         validator: /^(\S.*)$/
         onAccepted: component.expression = dialog.expression
     }
-
 }

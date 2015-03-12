@@ -122,11 +122,11 @@ Rectangle {
       Rectangle {
           id: endcap
           color: "white"
-          x: wire.mapToItem(sheet,wire.x,wire.y,wire.width,wire.height).x
-          y: wire.mapToItem(sheet,wire.x,wire.y,wire.width,wire.height).y
+          x: wire.width - 5
+          y: -5 + wire.size / 2
           height: 10
           width: 10
-          rotation: 0
+          rotation: -parent.rotation
           radius: {
               if(wire.port1) {
                   wire.port1.type === XMAS.XPort.Target ? 10  : 0

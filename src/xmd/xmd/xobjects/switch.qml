@@ -43,13 +43,11 @@ XComponent {
     XDialog {
         id: dialog
         title: "Enter expression for switch " + name
-        help:   "Insert function. The language is a subset of C with:\n"
-                + "\t-math operators +,-,*,/,%\n"
-                + "\t-logical operators &&,||,!\n"
-                + "\t-equality operators ==,<=,>=,<,>\n"
-                + "E.g.:\n\treturn "
-        //TODO : implement packet depend help
-        //+ (GlobalVars.packetType != null && GlobalVars.packetType.Count > 0 ? "ret_X = 10; ret_Y = p_Y + 1;" : "ret = 0;");
+        help:   "Insert switching function\n"
+                + "The integer operators +,-,*,/,%,^ logical operators &&,||,! and equality operators ==,<=,>=,<,>,!= can be used.\n"
+                + "For additional operators, see the syntax for matching expressions.\n"
+                + "E.g.: assume incoming packets have fields dst, src and colour. The following expression:\n"
+                + "(dst > 4 ? src <= 4 : colour == 0) && src % 2 == 0"
         validator: /^(\S.*)$/
         onAccepted: component.expression = dialog.expression
     }
