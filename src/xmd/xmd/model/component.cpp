@@ -101,11 +101,18 @@ int model::Component::updateExpression(QVariant expression) {
     if (getType() == Queue) {
         if (typeName == "int") {
             int size = expression.toInt();
-            XMASQueue *queue = dynamic_cast<XMASQueue *>(this);
-            queue->c = size;
-            m_expression = expression;
-            setValidExpr(true, -1, QString(""));
-            return -1;
+            XMASQueue *queue = dynamic_cast<XMASQueue *>(this->m_component);
+            if (queue) {
+                queue->c = size;
+                m_expression = expression;
+                setValidExpr(true, -1, QString(""));
+                return -1;
+            } else {
+                writeLog(QString("Fatal error in Component: "
+                                 "did not recognize m_component as queue."));
+                throw bitpowder::lib::Exception("Fatal error in Component.");
+            }
+            return 0;
         }
         setValidExpr(false, 0, QString("Received non integer size."));
         return 0;
@@ -120,10 +127,12 @@ int model::Component::updateExpression(QVariant expression) {
             std::string expr = qexpr.toStdString();
             auto result = source->setSourceExpression(expr);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
-            writeLog("Source expression not accepted, error message: " + errMsg);
             setValidExpr(result.m_success, result.m_pos, errMsg);
             writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed."));
+                     + (result.m_success? "succeeded." : "failed. Error message is:"));
+            if (!result.m_success) {
+                writeLog(errMsg);
+            }
             return result.m_pos;
         } else {
             writeLog(QString("Fatal error in Component: "
@@ -131,8 +140,19 @@ int model::Component::updateExpression(QVariant expression) {
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
     } else if (getType() == Function) {
-        // function
-        // TODO: syntax
+        if (typeName != "QString") {
+            return 0;
+        }
+        m_expression = expression;
+        QString qexpr = expression.toString();
+        XMASFunction *func = dynamic_cast<XMASFunction *>(this->m_component);
+        if (func) {
+            // TODO: add setter for function to xmas
+        } else {
+            writeLog(QString("Fatal error in Component: "
+                             "did not recognize m_component as source."));
+            throw bitpowder::lib::Exception("Fatal error in Component.");
+        }
         return true;
     } else if (getType() == Join) {
         // join
