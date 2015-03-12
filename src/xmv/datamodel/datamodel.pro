@@ -78,9 +78,10 @@ HEADERS += datamodel.h\
     serialize_network.h \
     canvascomponentextension.h \
     parseflatjsonfile.h \
-    packet-expression-parse-result.h \
     parse-specset.h \
-    parse-basic-structs.h
+    parse-basic-structs.h \
+    parse-packet-expression-parse-result.h \
+    parse-source-expression-parse-result.h
 
 ################################################
 # INSTALL instructions

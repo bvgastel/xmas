@@ -8,35 +8,11 @@
 #include "parser_json.h"
 #include "parse-basic-structs.h"
 #include "parse-specset.h"
-#include "packet-expression-parse-result.h"
+#include "parse-packet-expression-parse-result.h"
+#include "parse-source-expression-parse-result.h"
 #include "xmas.h"
 #include "messagespec.h"
 
-class SourceExpressionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    SpecSet retval;
-public:
-    SourceExpressionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    SourceExpressionParseResult(SpecSet &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    SpecSet& result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
-    }
-};
 PacketExpressionParseResult ParsePacketExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
 SourceExpressionParseResult ParseSourceExpression(const bitpowder::lib::String &str,
