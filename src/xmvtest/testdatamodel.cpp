@@ -115,7 +115,7 @@ TEST_F(TestDataModel, setSourceSpecValid)
     EXPECT_TRUE(m_sink->valid());
 
     bitpowder::lib::String result = m_source->getSourceExpression();
-    EXPECT_EQ("abc == 20", result.stl());
+    EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
 }
 
 TEST_F(TestDataModel, SimpleSymbolics)

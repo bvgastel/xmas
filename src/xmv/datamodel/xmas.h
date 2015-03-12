@@ -338,6 +338,16 @@ public:
 };
 /************************ XMASComponent *******************************************/
 
+struct ExpressionResult {
+    bool m_success;
+    int m_pos;
+    bitpowder::lib::String m_errMsg;
+
+    ExpressionResult() : m_success(false), m_pos(0), m_errMsg() {}
+    ExpressionResult(bool success, int pos, bitpowder::lib::String errMsg) :
+        m_success(success), m_pos(pos), m_errMsg(errMsg) {}
+};
+
 /**
  * @brief The XMASComponent class
  *
@@ -622,16 +632,6 @@ public:
         p[0] = &o;
     }
 
-    struct ExpressionResult {
-        bool m_success;
-        int m_pos;
-        bitpowder::lib::String m_errMsg;
-
-        ExpressionResult() : m_success(false), m_pos(0), m_errMsg() {}
-        ExpressionResult(bool success, int pos, bitpowder::lib::String errMsg) :
-            m_success(success), m_pos(pos), m_errMsg(errMsg) {}
-    };
-
     bitpowder::lib::String getSourceExpression();
 
     ExpressionResult setSourceExpression(const bitpowder::lib::String &expr);
@@ -742,6 +742,13 @@ public:
         p[0] = &i;
         p[1] = &o;
     }
+
+
+    const bitpowder::lib::String getFunctionExpression();
+
+    ExpressionResult setFunctionExpression(const std::string &str_expr);
+    ExpressionResult setFunctionExpression(const bitpowder::lib::String &exprVec);
+
 
     void accept(XMASComponentVisitor &v)
     {

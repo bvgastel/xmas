@@ -160,12 +160,12 @@ bitpowder::lib::String XMASSource::getSourceExpression() {
     bitpowder::lib::String packetStr(out.str());
     return std::move(packetStr);
 }
-XMASSource::ExpressionResult XMASSource::setSourceExpression(const std::string &expr) {
+ExpressionResult XMASSource::setSourceExpression(const std::string &expr) {
     bitpowder::lib::String b_expr = expr.c_str();
     return setSourceExpression(b_expr);
 }
 
-XMASSource::ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
+ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
 
     std::ostringstream errMsg;
 
@@ -188,6 +188,43 @@ XMASSource::ExpressionResult XMASSource::setSourceExpression(const bitpowder::li
             attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
         }
     }
-    ExpressionResult eResult(result, result.position(), result.error());
-    return eResult;
+
+    return ExpressionResult(result, result.position(), result.error());
 }
+
+const bitpowder::lib::String XMASFunction::getFunctionExpression() {
+    bool createExtension = true;
+    ParsedXMASFunctionExtension *ext = this->getComponentExtension<ParsedXMASFunctionExtension>(!createExtension);
+    std::map<bitpowder::lib::String,int> enumMap;
+    std::ostringstream tmp;
+    ext->value->printOldCSyntax(tmp, enumMap);
+    bitpowder::lib::String function = bitpowder::lib::String(tmp.str());
+    return std::move(function);
+}
+
+ExpressionResult XMASFunction::setFunctionExpression(const std::string &str_expr) {
+    const bitpowder::lib::String expr(str_expr);
+    return setFunctionExpression(expr);
+}
+
+ExpressionResult XMASFunction::setFunctionExpression(const bitpowder::lib::String &expr) {
+
+    bitpowder::lib::MemoryPool mp;
+    auto result = ParsePacketFunction (expr, mp);
+    if (result) {
+        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        auto func = result.result();
+        this->addExtension(new ParsedXMASFunctionExtension(func));
+        attachFunction(this, [func](const std::vector<SymbolicPacket> &p) {
+            return (*func)(p);
+        });
+    } else {
+        std::cerr << "parsing " << expr << std::endl;
+        std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
+        //exit(-1);
+    }
+
+    return ExpressionResult(result, result.position(), result.error());
+
+}
+
