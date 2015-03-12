@@ -1528,13 +1528,6 @@ void ParsedXMASFunction::printOldCSyntax(std::ostream& out, std::map<String, int
 }
 
 
-void SpecSet::updateHash()
-{
-    for (auto &i : spec)
-        std::get<0>(i).updateHash();
-}
-
-
 std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c)
 {
     c.print(out);
