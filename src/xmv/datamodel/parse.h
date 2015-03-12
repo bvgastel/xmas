@@ -11,6 +11,7 @@
 #include "parse-packet-expression-parse-result.h"
 #include "parse-source-expression-parse-result.h"
 #include "parse-parsed-xmas-expression-interface.h"
+#include "parsed-xmas-function.h"
 #include "xmas.h"
 #include "messagespec.h"
 
@@ -19,22 +20,6 @@ PacketExpressionParseResult ParsePacketExpression(const bitpowder::lib::String &
 SourceExpressionParseResult ParseSourceExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
 
-class ParsedXMASFunction {
-public:
-    int refcount = 0;
-    virtual ~ParsedXMASFunction() {}
-
-    bool hasCondition = false;
-    std::vector<SymbolicPacket> conditions;
-    std::shared_ptr<ParsedXMASFunction> next; // if condition was not met
-
-    std::map<bitpowder::lib::String, std::shared_ptr<ParsedXMASExpression>> fields; // function to apply for each field
-
-    std::vector<SymbolicPacket> operator()(const std::vector<SymbolicPacket> &packet) const;
-
-    virtual void printOldCSyntax(std::ostream &out, std::map<bitpowder::lib::String,int>& enumMap) const;
-};
-
 struct ParsedXMASFunctionExtension : public XMASComponentExtension {
     std::shared_ptr<ParsedXMASFunction> value;
     ParsedXMASFunctionExtension() {
@@ -42,8 +27,6 @@ struct ParsedXMASFunctionExtension : public XMASComponentExtension {
     ParsedXMASFunctionExtension(const std::shared_ptr<ParsedXMASFunction>& value) : value(value) {
     }
 };
-
-std::ostream &operator <<(std::ostream &out, const ParsedXMASFunction &c);
 
 struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
     int function = 0;

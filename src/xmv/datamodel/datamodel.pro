@@ -61,7 +61,8 @@ SOURCES += datamodel.cpp \
     parseflatjsonfile.cpp \
     parse_basic_structs.cpp \
     parse-specset.cpp \
-    parse-parsed-xmas-expression-interface.cpp
+    parse-parsed-xmas-expression-interface.cpp \
+    parsed-xmas-function.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -83,7 +84,8 @@ HEADERS += datamodel.h\
     parse-basic-structs.h \
     parse-packet-expression-parse-result.h \
     parse-source-expression-parse-result.h \
-    parse-parsed-xmas-expression-interface.h
+    parse-parsed-xmas-expression-interface.h \
+    parsed-xmas-function.h
 
 ################################################
 # INSTALL instructions

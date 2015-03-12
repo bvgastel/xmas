@@ -20,10 +20,30 @@
   *
   **********************************************************************/
 
+#ifndef PARSEDXMASFUNCTION_H
+#define PARSEDXMASFUNCTION_H
+
+#include "simplestring.h"
+#include "symbolic.h"
 #include "parse-parsed-xmas-expression-interface.h"
 
-std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c)
-{
-    c.print(out);
-    return out;
-}
+class ParsedXMASFunction {
+public:
+    int refcount = 0;
+    virtual ~ParsedXMASFunction() {}
+
+    bool hasCondition = false;
+    std::vector<SymbolicPacket> conditions;
+    std::shared_ptr<ParsedXMASFunction> next; // if condition was not met
+
+    std::map<bitpowder::lib::String, std::shared_ptr<ParsedXMASExpression>> fields; // function to apply for each field
+
+    std::vector<SymbolicPacket> operator()(const std::vector<SymbolicPacket> &packet) const;
+
+    virtual void printOldCSyntax(std::ostream &out, std::map<bitpowder::lib::String,int>& enumMap) const;
+};
+
+std::ostream &operator<<(std::ostream &out, const ParsedXMASFunction &c);
+
+
+#endif // PARSEDXMASFUNCTION_H
