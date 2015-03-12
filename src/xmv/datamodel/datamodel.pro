@@ -85,7 +85,8 @@ HEADERS += datamodel.h\
     parse-packet-expression-parse-result.h \
     parse-source-expression-parse-result.h \
     parse-parsed-xmas-expression-interface.h \
-    parsed-xmas-function.h
+    parsed-xmas-function.h \
+    parse-packet-function-parse-result.h
 
 ################################################
 # INSTALL instructions

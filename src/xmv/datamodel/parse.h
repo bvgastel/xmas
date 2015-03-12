@@ -9,6 +9,7 @@
 #include "parse-basic-structs.h"
 #include "parse-specset.h"
 #include "parse-packet-expression-parse-result.h"
+#include "parse-packet-function-parse-result.h"
 #include "parse-source-expression-parse-result.h"
 #include "parse-parsed-xmas-expression-interface.h"
 #include "parsed-xmas-function.h"
@@ -36,32 +37,6 @@ struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
     }
 };
 
-
-class PacketFunctionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    std::shared_ptr<ParsedXMASFunction> retval;
-public:
-    PacketFunctionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    PacketFunctionParseResult(std::shared_ptr<ParsedXMASFunction> &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    std::shared_ptr<ParsedXMASFunction> result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
-    }
-};
 
 PacketFunctionParseResult ParsePacketFunction(const bitpowder::lib::String &str,
                                               bitpowder::lib::MemoryPool &mp);
