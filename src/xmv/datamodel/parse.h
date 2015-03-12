@@ -10,6 +10,7 @@
 #include "parse-specset.h"
 #include "parse-packet-expression-parse-result.h"
 #include "parse-source-expression-parse-result.h"
+#include "parse-parsed-xmas-expression-interface.h"
 #include "xmas.h"
 #include "messagespec.h"
 
@@ -17,16 +18,6 @@ PacketExpressionParseResult ParsePacketExpression(const bitpowder::lib::String &
                                                   bitpowder::lib::MemoryPool &memoryPool);
 SourceExpressionParseResult ParseSourceExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
-
-class ParsedXMASExpression {
-public:
-    virtual ~ParsedXMASExpression() {}
-    virtual std::vector<std::shared_ptr<SymbolicPacketField>> operator()(const SymbolicPacket &packet) const = 0;
-    virtual void print(std::ostream &out) const = 0;
-    virtual void printOldCSyntax(std::ostream &out, std::map<bitpowder::lib::String,int>& enumMap) const = 0;
-};
-
-std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c);
 
 class ParsedXMASFunction {
 public:

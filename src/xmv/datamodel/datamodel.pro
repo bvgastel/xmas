@@ -60,7 +60,8 @@ SOURCES += datamodel.cpp \
     serialize_network.cpp \
     parseflatjsonfile.cpp \
     parse_basic_structs.cpp \
-    parse-specset.cpp
+    parse-specset.cpp \
+    parse-parsed-xmas-expression-interface.cpp
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -81,7 +82,8 @@ HEADERS += datamodel.h\
     parse-specset.h \
     parse-basic-structs.h \
     parse-packet-expression-parse-result.h \
-    parse-source-expression-parse-result.h
+    parse-source-expression-parse-result.h \
+    parse-parsed-xmas-expression-interface.h
 
 ################################################
 # INSTALL instructions

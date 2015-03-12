@@ -1528,12 +1528,6 @@ void ParsedXMASFunction::printOldCSyntax(std::ostream& out, std::map<String, int
 }
 
 
-std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c)
-{
-    c.print(out);
-    return out;
-}
-
 
 std::ostream &operator <<(std::ostream &out, const ParsedXMASFunction &c)
 {
