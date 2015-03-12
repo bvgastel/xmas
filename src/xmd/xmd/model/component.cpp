@@ -88,36 +88,57 @@ XMASComponent *model::Component::createComponent(CompType type, QString qname) {
 
 //TODO Check if name is unique and not empty : return -1 if ok
 int model::Component::checkName(QString name) {
+    bitpowder::lib::unused(name);
     return -1;
 }
 
-
-//TODO Syntax check of expressions : return -1 if ok , or > -1 if not where int is position error
-int model::Component::checkExpression(QVariant expression) {
+// TODO: Update in XMASComponent
+// TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
+int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    writeLog(QString("Expression heeft type '")+typeName+"'");
+    writeLog(QString("param heeft type '")+typeName+"'");
 
     if (getType() == Queue) {
-        if (expression.typeName() == "int") {
-
+        if (typeName == "int") {
+            int size = expression.toInt();
+            XMASQueue *queue = dynamic_cast<XMASQueue *>(this);
+            queue->c = size;
+            m_expression = expression;
+            setValidExpr(true, -1);
+            return -1;
         }
-        // queue
+        setValidExpr(false, 0);
+        return 0;
     } else if (getType() == Source) {
+        if (typeName == "QString") {
+            QString qexpr = expression.toString();
+            XMASSource *source = dynamic_cast<XMASSource *>(this);
+            if (source->setSourceExpression(qexpr.toStdString())) {
+                m_expression = expression;
+                setValidExpr(true, -1);
+                return -1;
+            }
+            setValidExpr(false, 0);
+        }
         // source
         // TODO: syntax check
+        return true;
     } else if (getType() == Function) {
         // function
         // TODO: syntax
+        return true;
     } else if (getType() == Join) {
         // join
         // TODO: expressies? waarschijnlijk / unrestricted
+        return true;
     } else if (getType() == Switch) {
         // switch
         // TODO: expressie?
+        return true;
     }
 
-    //just ok for now
-    return -1;
+    return false;
 }
+
 
 

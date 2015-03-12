@@ -115,53 +115,7 @@ public:
         emit expressionChanged(errorPosition);
     }
 
-    // TODO: Update in XMASComponent
-    // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
-    int updateExpression(QVariant expression) {
-        QString typeName = QString(expression.typeName());
-        writeLog(QString("param heeft type '")+typeName+"'");
-
-        if (getType() == Queue) {
-            if (typeName == "int") {
-                int size = expression.toInt();
-                XMASQueue *queue = dynamic_cast<XMASQueue *>(this);
-                queue->c = size;
-                m_expression = expression;
-                setValidExpr(true, -1);
-                return -1;
-            }
-            setValidExpr(false, 0);
-            return 0;
-        } else if (getType() == Source) {
-            if (typeName == "QString") {
-                QString qexpr = expression.toString();
-                XMASSource *source = dynamic_cast<XMASSource *>(this);
-                if (source->setSourceExpression(qexpr.toStdString())) {
-                    m_expression = expression;
-                    setValidExpr(true, -1);
-                    return -1;
-                }
-                setValidExpr(false, 0);
-            }
-            // source
-            // TODO: syntax check
-            return true;
-        } else if (getType() == Function) {
-            // function
-            // TODO: syntax
-            return true;
-        } else if (getType() == Join) {
-            // join
-            // TODO: expressies? waarschijnlijk / unrestricted
-            return true;
-        } else if (getType() == Switch) {
-            // switch
-            // TODO: expressie?
-            return true;
-        }
-
-        return false;
-	}
+    int updateExpression(QVariant expression);
 
     void setValidExpr(bool validExpr, int pos) {
         m_validExpr = validExpr;
@@ -180,7 +134,6 @@ public:
 private:
     XMASComponent *createComponent(CompType type, QString name);
     int checkName(QString name);
-    int checkExpression(QVariant expression);
 
 public:
 private:
