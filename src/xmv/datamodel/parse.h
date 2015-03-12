@@ -6,57 +6,11 @@
 
 #include "memorypool.h"
 #include "parser_json.h"
-#include "parse_basic_structs.h"
+#include "parse-basic-structs.h"
+#include "parse-specset.h"
+#include "packet-expression-parse-result.h"
 #include "xmas.h"
 #include "messagespec.h"
-
-class PacketExpressionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    SymbolicPacketSet retval;
-public:
-    PacketExpressionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    PacketExpressionParseResult(SymbolicPacketSet &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    SymbolicPacketSet& result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
-    }
-};
-
-struct SpecSet {
-    std::vector<std::tuple<SymbolicPacketSet,MessageSpec::Ref>> spec;
-
-    void add(SymbolicPacketSet &&a) {
-        spec.push_back(std::tuple<SymbolicPacketSet, MessageSpec::Ref>(std::move(a), nullptr));
-    }
-
-    void add(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::move(b);
-    }
-
-    void addAnd(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::get<1>(spec.back()) & std::move(b);
-    }
-
-    void addOr(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::get<1>(spec.back()) | std::move(b);
-    }
-
-    void updateHash();
-};
 
 class SourceExpressionParseResult {
     bool success;
