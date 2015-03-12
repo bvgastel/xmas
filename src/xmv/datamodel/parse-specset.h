@@ -48,7 +48,24 @@ struct SpecSet {
     void updateHash();
 };
 
-
+namespace std {
+    /**
+     * @brief operator<< output operator for specSet
+     * @param out the output stream reference
+     * @param specSet The SpecSpec to be printed
+     * @return the output stream reference
+     */
+    inline std::ostream &operator<< (std::ostream &out, const SpecSet &specSet) {
+        SymbolicPacketSet packetSet;
+        MessageSpec::Ref specRef;
+        for (auto specLine : specSet.spec) {
+            std::tie(packetSet, specRef) = specLine;
+            packetSet.print(out);
+            out << specRef;
+        }
+        return out;
+    }
+} // namespace std
 
 #endif // PARSESPECSET_H
 

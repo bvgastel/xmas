@@ -15,7 +15,6 @@
 #include "parse-parsed-xmas-expression-interface.h"
 #include "parsed-xmas-function.h"
 #include "xmas.h"
-#include "messagespec.h"
 
 PacketExpressionParseResult ParsePacketExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
@@ -42,37 +41,6 @@ struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
 PacketFunctionParseResult ParsePacketFunction(const bitpowder::lib::String &str,
                                               bitpowder::lib::MemoryPool &mp);
 
-namespace std {
-inline std::ostream& operator<< (std::ostream& out, const SymbolicInterval &n)
-{
-    n.print(out);
-    return out;
-}
-
-inline std::ostream& operator<< (std::ostream& out, const SymbolicPacketSet &n)
-{
-    n.print(out);
-    return out;
-}
-
-/**
- * @brief operator<< output operator for specSet
- * @param out the output stream reference
- * @param specSet The SpecSpec to be printed
- * @return the output stream reference
- */
-inline std::ostream &operator<< (std::ostream &out, const SpecSet &specSet) {
-    SymbolicPacketSet packetSet;
-    MessageSpec::Ref specRef;
-    for (auto specLine : specSet.spec) {
-        std::tie(packetSet, specRef) = specLine;
-        packetSet.print(out);
-        out << specRef;
-    }
-    return out;
-}
-
-}
 
 /**
  * @brief Parse Reads a file from a specified filename and parses it using the json parser

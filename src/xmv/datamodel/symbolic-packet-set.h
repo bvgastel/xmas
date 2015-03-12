@@ -43,6 +43,15 @@ struct SymbolicPacketSet {
     void updateHash();
 };
 
+namespace std {
+inline std::ostream& operator<< (std::ostream& out, const SymbolicPacketSet &n)
+{
+    n.print(out);
+    return out;
+}
+
+} // namespace std
+
 
 
 

@@ -42,6 +42,14 @@ struct SymbolicInterval {
     }
 };
 
+namespace std {
+    inline std::ostream& operator<< (std::ostream& out, const SymbolicInterval &n)
+    {
+        n.print(out);
+        return out;
+    }
+} // namespace std
+
 
 
 #endif // SYMBOLIC_INTERVAL_H

@@ -1438,5 +1438,3 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
     globals["COMPOSITE_OBJECTS"] = json["COMPOSITE_OBJECTS"];
     return std::make_pair(retval, globals);
 }
-
-
