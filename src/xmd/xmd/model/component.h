@@ -153,6 +153,8 @@ private:
     bool m_valid;
     bool m_validExpr;
     XMASComponent *m_component;
+
+    bitpowder::lib::MemoryPool m_mp;
 };
 
 } // namespace model

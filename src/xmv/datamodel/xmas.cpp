@@ -193,7 +193,7 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         // FIXME: Storing the values has a memory problem due to extensive use of MemoryPool (temporary memory).
-        clearMessageSpec(out);
+        ClearMessageSpec(this);
         for (auto &packet : result.result().spec) {
             attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
         }
@@ -221,7 +221,7 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
 
     bitpowder::lib::MemoryPool mp;
 
-    // transfer possibly temp var to mp.
+    // The input variable may be a temp
     expr = expr(mp);
 
     auto result = ParsePacketFunction (expr, mp);

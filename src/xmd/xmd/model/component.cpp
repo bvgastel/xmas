@@ -125,7 +125,7 @@ int model::Component::updateExpression(QVariant expression) {
         XMASSource *source = dynamic_cast<XMASSource *>(this->m_component);
         if (source) {
             std::string expr = qexpr.toStdString();
-            auto result = source->setSourceExpression(expr);
+            auto result = source->setSourceExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             writeLog(QString("saving expression in XMASComponent ")

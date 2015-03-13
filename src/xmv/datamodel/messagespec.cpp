@@ -398,7 +398,7 @@ void ClearMessageSpec(std::set<XMASComponent *> allComponents)
 }
 void ClearMessageSpec(XMASComponent *c) {
     for (Output *p : c->outputPorts()) {
-        p->clearPortExtension<MessageSpecExtension>();
+        clearMessageSpec(p);
     }
     ClearSymbolicTypes(c);
 }
