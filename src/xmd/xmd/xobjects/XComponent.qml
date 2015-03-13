@@ -123,6 +123,7 @@ Model.XComponent {
             bottom: topLabel ? parent.top : undefined
             top: topLabel ? undefined : parent.bottom
         }
+        color:"transparent"
         border.color: name !== "" ? "transparent" : "red"
         anchors.margins: 2
         anchors.horizontalCenter: parent.horizontalCenter
