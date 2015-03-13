@@ -632,10 +632,12 @@ public:
         p[0] = &o;
     }
 
-    bitpowder::lib::String getSourceExpression();
+    std::string getSourceExpression();
 
-    ExpressionResult setSourceExpression(const bitpowder::lib::String &expr);
-    ExpressionResult setSourceExpression(const std::string &expr);
+    ExpressionResult setSourceExpression(const bitpowder::lib::String &expr,
+                                         bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setSourceExpression(const std::string &expr,
+                                         bitpowder::lib::MemoryPool &mp);
 
     void accept(XMASComponentVisitor &v)
     {

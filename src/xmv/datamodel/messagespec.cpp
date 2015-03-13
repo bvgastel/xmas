@@ -397,3 +397,8 @@ void ClearMessageSpec(std::set<XMASComponent *> allComponents)
             p->clearPortExtension<MessageSpecExtension>();
     }
 }
+
+void clearMessageSpec(Output *port) {
+    port->clearPortExtension<MessageSpecExtension>();
+}
+

@@ -1,3 +1,24 @@
+/*********************************************************************
+  *
+  * Copyright (C) Guus Bonnema, 2015
+  *
+  * This file is part of the xmas-design tool.
+  *
+  * The xmas-design tool is free software: you can redistribute it
+  * and/or modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3 of
+  * the License, or (at your option) any later version.
+  *
+  * The xmas-design tool is distributed in the hope that it will be
+  * useful,  but WITHOUT ANY WARRANTY; without even the implied warranty
+  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with the xmas-design tool.  If not, see
+  * <http://www.gnu.org/licenses/>.
+  *
+  **********************************************************************/
 #include <gtest/gtest.h>
 
 #include "xmas.h"
@@ -96,51 +117,6 @@ TEST_F(TestDataModel, ConnectedValid)
     EXPECT_TRUE(m_sink->valid());
 }
 
-TEST_F(TestDataModel, setSourceSpecInValid)
-{
-    m_source->setSourceExpression(std::string("abc == 20"));
-    EXPECT_EQ("", m_source->getSourceExpression());
-
-}
-
-TEST_F(TestDataModel, setSourceSpecValid)
-{
-    connect(m_source->o, m_sink->i);
-    ASSERT_TRUE(m_source->valid());
-    ASSERT_TRUE(m_sink->valid());
-
-    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("abc == 20")));
-
-    EXPECT_TRUE(m_source->valid());
-    EXPECT_TRUE(m_sink->valid());
-
-    bitpowder::lib::String result = m_source->getSourceExpression();
-    EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
-}
-
-TEST_F(TestDataModel, SimpleSymbolics)
-{
-    connect(m_source->o, m_sink->i);
-    EXPECT_TRUE(m_source->valid());
-    EXPECT_TRUE(m_sink->valid());
-
-    SymbolicPacket p = {NAMED_ENUM("first", "r","g"), NAMED_ENUM("second", "x")};
-
-    attach(&m_source->o, p);
-
-    EXPECT_TRUE(m_source->valid());
-    EXPECT_TRUE(m_sink->valid());
-
-    std::set<XMASComponent*> allComponents = {m_source, m_sink};
-
-    SymbolicTypes(allComponents);
-    SymbolicTypesExtension *ext = m_sink->i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1U);
-    EXPECT_EQ(ext->availablePackets[0], p);
-
-    ClearSymbolicTypes(allComponents);
-    ClearMessageSpec(allComponents);
-}
 
 } // namespace
 

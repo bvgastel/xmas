@@ -149,46 +149,50 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 }
 
 
-bitpowder::lib::String XMASSource::getSourceExpression() {
-    SymbolicTypesExtension *ext = this->o.getPortExtension<SymbolicTypesExtension>();
-    auto packets = ext->availablePackets;
-    std::ostringstream out;
-    for (SymbolicPacket p : packets) {
-        std::map<bitpowder::lib::String, int> enumMap;
-        p.printOldCSyntax(out,enumMap);
+std::string XMASSource::getSourceExpression() {
+    bool createExt = true;
+    SymbolicTypesExtension *ext = this->o.getPortExtension<SymbolicTypesExtension>(!createExt);
+    if (ext) {
+        auto packets = ext->availablePackets;
+        std::ostringstream out;
+        for (SymbolicPacket p : packets) {
+            std::map<bitpowder::lib::String, int> enumMap;
+            p.printOldCSyntax(out,enumMap);
+        }
+        return std::move(out.str());
     }
-    bitpowder::lib::String packetStr(out.str());
-    return std::move(packetStr);
+    return std::string();
 }
-ExpressionResult XMASSource::setSourceExpression(const std::string &expr) {
+ExpressionResult XMASSource::setSourceExpression(const std::string &expr,
+                                                 bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::String b_expr = expr.c_str();
-    return setSourceExpression(b_expr);
+    return setSourceExpression(b_expr, mp);
 }
 
-ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr) {
+ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr,
+                                                 bitpowder::lib::MemoryPool &mp) {
 
     std::ostringstream errMsg;
 
     Output *out = &o;
 
     if (!out->valid()) {
-        std::cout << errMsg.str() << std::endl;
         errMsg << "[XMASSource::setSourceExpression] parsing expression '"
                << expr
                << "' not attached: port is not connected.";
+        std::cout << errMsg.str() << std::endl;
         return ExpressionResult(false, -1, errMsg.str());
     }
 
-    bitpowder::lib::MemoryPool mp;
+
     auto result = ParseSourceExpression(expr, mp);
     // note: result has a bool() operator
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         // FIXME: Storing the values has a memory problem due to extensive use of MemoryPool (temporary memory).
+        clearMessageSpec(out);
         for (auto &packet : result.result().spec) {
-            std::vector<SymbolicPacket> packetSet = std::get<0>(packet).values;
-            MessageSpec::Ref msgRef = std::get<1>(packet);
-            attachMessageSpec(out, packetSet, msgRef);
+            attachMessageSpec(out, std::get<0>(packet).values, std::get<1>(packet));
         }
     }
 
