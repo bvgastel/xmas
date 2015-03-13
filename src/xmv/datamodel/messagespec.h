@@ -130,10 +130,6 @@ inline MessageSpec::Ref S(bitpowder::lib::String endpoint, const std::vector<Sym
     return new MessageSpecEndLookup(endpoint, content);
 }
 
-// returns true on error
-bool ErrorInMessageSpec(std::set<XMASComponent *> allComponents);
-void ClearMessageSpec(std::set<XMASComponent *> allComponents);
-
 class MessageSpecExtension : public PortExtension {
 public:
     std::vector<std::tuple<std::vector<SymbolicPacket>, MessageSpec::Ref>> specs;
@@ -145,7 +141,15 @@ public:
     }
 };
 
+// returns true on error
+bool ErrorInMessageSpec(std::set<XMASComponent *> allComponents);
+
 void attachMessageSpec(Output *port, const std::vector<SymbolicPacket> &a, MessageSpec::Ref spec);
+
+void ClearMessageSpec(std::set<XMASComponent *> allComponents);
+void ClearMessageSpec(XMASComponent *c);
 void clearMessageSpec(Output *port);
+
+void ClearSymbolicTypes(XMASComponent *c);
 
 #endif // MESSAGESPEC_H

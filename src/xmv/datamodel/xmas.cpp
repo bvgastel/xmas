@@ -163,14 +163,17 @@ std::string XMASSource::getSourceExpression() {
     }
     return std::string();
 }
-ExpressionResult XMASSource::setSourceExpression(const std::string &expr,
+ExpressionResult XMASSource::setSourceExpression(std::string &expr,
                                                  bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::String b_expr = expr.c_str();
     return setSourceExpression(b_expr, mp);
 }
 
-ExpressionResult XMASSource::setSourceExpression(const bitpowder::lib::String &expr,
+ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
                                                  bitpowder::lib::MemoryPool &mp) {
+
+    // To prevent local temporary variables from losing memory
+    expr = expr(mp);
 
     std::ostringstream errMsg;
 
@@ -209,14 +212,18 @@ const bitpowder::lib::String XMASFunction::getFunctionExpression() {
     return std::move(function);
 }
 
-ExpressionResult XMASFunction::setFunctionExpression(const std::string &str_expr) {
-    const bitpowder::lib::String expr(str_expr);
+ExpressionResult XMASFunction::setFunctionExpression(std::string &str_expr) {
+    bitpowder::lib::String expr(str_expr);
     return setFunctionExpression(expr);
 }
 
-ExpressionResult XMASFunction::setFunctionExpression(const bitpowder::lib::String &expr) {
+ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &expr) {
 
     bitpowder::lib::MemoryPool mp;
+
+    // transfer possibly temp var to mp.
+    expr = expr(mp);
+
     auto result = ParsePacketFunction (expr, mp);
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;

@@ -634,9 +634,9 @@ public:
 
     std::string getSourceExpression();
 
-    ExpressionResult setSourceExpression(const bitpowder::lib::String &expr,
+    ExpressionResult setSourceExpression(bitpowder::lib::String &expr,
                                          bitpowder::lib::MemoryPool &mp);
-    ExpressionResult setSourceExpression(const std::string &expr,
+    ExpressionResult setSourceExpression(std::string &expr,
                                          bitpowder::lib::MemoryPool &mp);
 
     void accept(XMASComponentVisitor &v)
@@ -748,8 +748,8 @@ public:
 
     const bitpowder::lib::String getFunctionExpression();
 
-    ExpressionResult setFunctionExpression(const std::string &str_expr);
-    ExpressionResult setFunctionExpression(const bitpowder::lib::String &exprVec);
+    ExpressionResult setFunctionExpression(std::string &str_expr);
+    ExpressionResult setFunctionExpression(bitpowder::lib::String &expr);
 
 
     void accept(XMASComponentVisitor &v)

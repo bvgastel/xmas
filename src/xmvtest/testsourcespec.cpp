@@ -78,7 +78,8 @@ protected:
 TEST_F(TestSourceSpec, inValid_not_connected)
 {
     bitpowder::lib::MemoryPool mp;
-    m_source->setSourceExpression(std::string("abc == 20"), mp);
+    std::string spec("abc == 20");
+    m_source->setSourceExpression(spec, mp);
     EXPECT_EQ("", m_source->getSourceExpression());
 
 }
@@ -92,12 +93,13 @@ TEST_F(TestSourceSpec, valid_connected)
     ASSERT_TRUE(m_sink->valid());
 
     /* Test the spec is retrievable as stored */
-    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("abc == 20"), mp));
+    std::string spec("abc == 20");
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
     bitpowder::lib::String result = m_source->getSourceExpression();
     EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
 }
 
-TEST_F(TestSourceSpec, replace_spec)
+TEST_F(TestSourceSpec, replace_longer)
 {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::String result;
@@ -108,17 +110,44 @@ TEST_F(TestSourceSpec, replace_spec)
     ASSERT_TRUE(m_sink->valid());
 
     /* set specification to one string */
-    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("abc == 20"), mp));
+    std::string spec("abc == 20");
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
     result = m_source->getSourceExpression();
     EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
 
     /* overwrite specification with a larger string */
-    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("abc == 20 && def == 40"), mp));
+    spec = "abc == 20 && def == 40";
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
     result = m_source->getSourceExpression();
     EXPECT_EQ("abc >= 20 && abc < 21 && def >= 40 && def < 41", result.stl());
 
     /* overwrite specification with a smaller string */
-    ASSERT_NO_THROW(m_source->setSourceExpression(std::string("def == 40"), mp));
+    spec = "def == 40";
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    result = m_source->getSourceExpression();
+    EXPECT_EQ("def >= 40 && def < 41", result.stl());
+
+}
+
+TEST_F(TestSourceSpec, replace_shorter)
+{
+    bitpowder::lib::MemoryPool mp;
+    bitpowder::lib::String result;
+
+    /* connect port for valid spec attachment */
+    connect(m_source->o, m_sink->i);
+    ASSERT_TRUE(m_source->valid());
+    ASSERT_TRUE(m_sink->valid());
+
+    /* set specification to a larger string */
+    std::string spec("abc == 20 && def == 40");
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    result = m_source->getSourceExpression();
+    EXPECT_EQ("abc >= 20 && abc < 21 && def >= 40 && def < 41", result.stl());
+
+    /* overwrite specification with a smaller string */
+    spec = "def == 40";
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
     result = m_source->getSourceExpression();
     EXPECT_EQ("def >= 40 && def < 41", result.stl());
 

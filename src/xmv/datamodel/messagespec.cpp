@@ -393,9 +393,21 @@ void attachMessageSpec(Output *port, const std::vector<SymbolicPacket> &a, Messa
 void ClearMessageSpec(std::set<XMASComponent *> allComponents)
 {
     for (XMASComponent *c : allComponents) {
-        for (Output *p : c->outputPorts())
-            p->clearPortExtension<MessageSpecExtension>();
+        ClearMessageSpec(c);
     }
+}
+void ClearMessageSpec(XMASComponent *c) {
+    for (Output *p : c->outputPorts()) {
+        p->clearPortExtension<MessageSpecExtension>();
+    }
+    ClearSymbolicTypes(c);
+}
+
+void ClearSymbolicTypes(XMASComponent *c) {
+    for (Port *p : c->ports()) {
+        p->clearPortExtension<SymbolicTypesExtension>();
+    }
+    c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
 }
 
 void clearMessageSpec(Output *port) {
