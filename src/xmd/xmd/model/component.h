@@ -25,8 +25,10 @@
 
 #include <QQuickItem>
 #include <QQmlParserStatus>
+#include <QQmlListProperty>
 
 #include "xmas.h"
+#include "port.h"
 
 /**
  * @brief The Component class
@@ -35,8 +37,8 @@
  * Qml using properties.
  */
 
-namespace model {
-
+namespace model
+{
 class Component : public QQuickItem //, public QQmlParserStatus
 {
 public:
@@ -64,6 +66,10 @@ private:
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
+    //###################################################################################################
+    //TODO : to be reviewed with Guus
+    Q_PROPERTY(QQmlListProperty<XPort> ports READ getPorts)
+    //###################################################################################################
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
@@ -141,9 +147,21 @@ public:
         emit validChanged();
 	}
 
+    //###################################################################################################
+    //TODO : to be reviewed with Guus
+    QQmlListProperty<XPort> getPorts();
+    //###################################################################################################
+
 private:
     XMASComponent *createComponent(CompType type, QString name);
     int checkName(QString name);
+
+    //###################################################################################################
+    //TODO : to be reviewed with Guus
+    static void append_port(QQmlListProperty<XPort> *list, XPort *port);
+    void extractPorts(void);
+
+    //###################################################################################################
 
 public:
 private:
@@ -153,6 +171,10 @@ private:
     bool m_valid;
     bool m_validExpr;
     XMASComponent *m_component;
+    //###################################################################################################
+    //TODO : to be reviewed with Guus
+    QList<XPort *> m_ports;
+    //###################################################################################################
 
     bitpowder::lib::MemoryPool m_mp;
 };

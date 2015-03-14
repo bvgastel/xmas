@@ -20,34 +20,66 @@
   *
   **********************************************************************/
 
-#ifndef PORT_H
-#define PORT_H
+#ifndef XPORT_H
+#define XPORT_H
 
 #include <QQuickItem>
 
 namespace model {
 
-class Port : public QQuickItem
+class XPort : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(PortType)
-
+    Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(bool connected READ getConnected WRITE setConnected NOTIFY connectedChanged)
 
 //    property int id: 0 (komt van toepassing in composites , uniek volgnummer ipv naam)
-//    property bool connected: false
-//    property string name: "a"
-//    property int type: XMAS.Data.Target
-
-public:
-    explicit Port(QQuickItem *parent = 0);
-    ~Port();
-    enum PortType {Target , Initiator};
 
 signals:
+    void nameChanged();
+    void typeChanged();
+    void connectedChanged();
 
 public slots:
+
+public:
+    explicit XPort(QQuickItem *parent = 0);
+    ~XPort();
+    enum PortType {Target , Initiator};
+
+
+    PortType getType() const {return m_type;}
+    void setType(PortType type) {
+        m_type = type;
+        emit typeChanged();
+    }
+
+    QString getName() {
+        return m_name;
+    }
+
+    void setName(QString name) {
+        if (name != m_name) {
+            m_name = name;
+        }
+        emit nameChanged();
+    }
+
+    bool getConnected() {return m_connected;}
+    void setConnected(bool value) {
+        m_connected = value;
+        emit connectedChanged();
+    }
+
+
+private:
+    QString m_name;
+    PortType m_type;
+    bool m_connected;
 };
 
 } // namespace model
 
-#endif // PORT_H
+#endif // XPORT_H
