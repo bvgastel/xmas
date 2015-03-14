@@ -239,7 +239,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialog
         nameFilters: [
-            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Model files (*.xmdm *.fjson *.json)",
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
@@ -251,7 +251,7 @@ ApplicationWindow {
         selectMultiple: false
         selectExisting: true
         nameFilters: [
-            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Model files (*.xmd *.fjson *.json)",
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
@@ -261,7 +261,7 @@ ApplicationWindow {
     FileDialog {
         id: openCompositeDialog
         nameFilters: [
-            "Model files (*.xmdm *.fjson *.wck *.json)",
+            "Model files (*.xmd *.fjson *.wck *.json)",
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]

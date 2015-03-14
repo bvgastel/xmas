@@ -22,11 +22,12 @@
 
 #include "port.h"
 
-model::Port::Port(QQuickItem *parent) : QQuickItem(parent)
+model::XPort::XPort(QQuickItem *parent)
+    : QQuickItem(parent)
 {
 }
 
-model::Port::~Port()
+model::XPort::~XPort()
 {
 
 }

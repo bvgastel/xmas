@@ -55,6 +55,7 @@ Model.XComponent {
     property bool withDialog: false
     property bool topLabel: true
 
+
     // Signals
     signal update()
     signal showDialog()

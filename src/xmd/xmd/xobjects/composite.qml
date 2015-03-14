@@ -11,30 +11,35 @@ XComponent {
     prefix: "test"
     property string symbol: "../content/cut.png"
 
-//    property list<XPort> lPorts: [
-//        XPort {name: "t0"; type:Model.XPort.Target},
-//        XPort {name: "t1"; type:Model.XPort.Target},
-//        XPort {name: "t2"; type:Model.XPort.Target}
-//    ]
-//    property list<XPort> rPorts: [
-//        XPort {name: "i0"; type:Model.XPort.Initiator},
-//        XPort {name: "i1"; type:Model.XPort.Initiator}
-//    ]
+    property list<XPort> lPorts: [
+        XPort {name: "t0"; type:Model.XPort.Target},
+        XPort {name: "t1"; type:Model.XPort.Target},
+        XPort {name: "t2"; type:Model.XPort.Target},
+        XPort {name: "t3"; type:Model.XPort.Target},
+        XPort {name: "t4"; type:Model.XPort.Target},
+        XPort {name: "t5"; type:Model.XPort.Target},
+        XPort {name: "t6"; type:Model.XPort.Target},
+        XPort {name: "t7"; type:Model.XPort.Target}
+    ]
+    property list<XPort> rPorts: [
+        XPort {name: "i0"; type:Model.XPort.Initiator},
+        XPort {name: "i1"; type:Model.XPort.Initiator}
+    ]
 
 
-    property var lPorts: [
-        {name: "t0", type:Model.XPort.Target},
-        {name: "t1", type:Model.XPort.Target},
-        {name: "t2", type:Model.XPort.Target},
-        {name: "t3", type:Model.XPort.Target},
-        {name: "t4", type:Model.XPort.Target},
-        {name: "t5", type:Model.XPort.Target},
-        {name: "t6", type:Model.XPort.Target}
-    ]
-    property var rPorts: [
-        {name: "i0", type:Model.XPort.Initiator},
-        {name: "i1", type:Model.XPort.Initiator}
-    ]
+//    property var lPorts: [
+//        {name: "t0", type:Model.XPort.Target},
+//        {name: "t1", type:Model.XPort.Target},
+//        {name: "t2", type:Model.XPort.Target},
+//        {name: "t3", type:Model.XPort.Target},
+//        {name: "t4", type:Model.XPort.Target},
+//        {name: "t5", type:Model.XPort.Target},
+//        {name: "t6", type:Model.XPort.Target}
+//    ]
+//    property var rPorts: [
+//        {name: "i0", type:Model.XPort.Initiator},
+//        {name: "i1", type:Model.XPort.Initiator}
+//    ]
 
     function calcHeight(){
         var cnt =  Math.max(rpLeft.count,rpRight.count)
@@ -53,6 +58,7 @@ XComponent {
                 name:modelData.name
                 type:modelData.type
                 Rectangle {
+                    id:wire
                     color:"black"
                     z:-1
                     border.width: 0
@@ -61,6 +67,12 @@ XComponent {
                     anchors.left: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                 }
+                Text {
+                    text:modelData.name
+                    anchors.left: wire.right
+                    anchors.leftMargin: 5
+                }
+
             }
         }
     }
