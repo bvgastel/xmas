@@ -47,9 +47,6 @@ public:
 
         // support for the visitor pattern
     virtual void accept(const bitpowder::lib::String& field, SymbolicFieldVisitor &t) = 0;
-    virtual void printOldCSyntax(std::ostream& out,
-                                 std::map<bitpowder::lib::String, int>& enumMap,
-                                 const bitpowder::lib::String& key) const = 0;
 };
 
 std::ostream &operator <<(std::ostream &out, const SymbolicPacketField &c);
@@ -114,7 +111,6 @@ public:
     }
     void updateHash();
     void accept(SymbolicFieldVisitor &visitor) const;
-    void printOldCSyntax(std::ostream& out, std::map<bitpowder::lib::String, int>& enumMap) const;
 };
 
 

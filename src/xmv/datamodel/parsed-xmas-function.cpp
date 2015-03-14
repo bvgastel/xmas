@@ -21,6 +21,8 @@
   **********************************************************************/
 
 #include "exception.h"
+#include "export.h"
+#include "memorypool.h"
 #include "parsed-xmas-function.h"
 
 std::vector<SymbolicPacket> ParsedXMASFunction::operator()(const std::vector<SymbolicPacket> &packets) const
@@ -89,7 +91,9 @@ void ParsedXMASFunction::printOldCSyntax(std::ostream& out, std::map<bitpowder::
             if (!first)
                 out << " || ";
             //out << condition;
-            condition.printOldCSyntax(out, enumMap);
+            //condition.printOldCSyntax(out, enumMap);
+            bitpowder::lib::StaticMemoryPool<128> mp;
+            out << ExportOldCStyleClause(condition, enumMap, mp);
             first = false;
         }
         out << ") {";

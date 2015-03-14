@@ -2,6 +2,7 @@
 
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #include "simplestring.h"
 #include "canvascomponentextension.h"
 #include "symbolic-enum.h"

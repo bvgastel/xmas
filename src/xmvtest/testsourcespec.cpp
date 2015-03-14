@@ -47,31 +47,29 @@ protected:
     {
         m_source = new XMASSource("source");
         m_sink = new XMASSink("sink");
-        m_fork = new XMASFork("fork");
-        m_function = new XMASFunction("function");
-        m_join = new XMASJoin("join");
-        m_merge = new XMASMerge("merge");
-        m_queue = new XMASQueue("queue");
     }
 
     virtual void TearDown()
     {
         delete m_sink;
         delete m_source;
-        delete m_fork;
-        delete m_function;
-        delete m_join;
-        delete m_merge;
-        delete m_queue;
     }
+
+    std::string spec_abc = "abc == 20";
+    std::string spec_def = "def == 20";
+    const std::string spec_open = "(";
+    const std::string spec_close = ")";
+    const std::string spec_and = " && ";
+    const std::string spec_or_in = " || ";
+    const std::string spec_or = " or ";
+    std::string spec_abc_def_in = spec_abc + spec_or_in + spec_def;
+    std::string spec_abc_def_out =
+            spec_open + spec_abc + spec_close
+            + spec_or
+            + spec_open + spec_def + spec_close;
 
     XMASSink *m_sink;
     XMASSource *m_source;
-    XMASFork *m_fork;
-    XMASFunction *m_function;
-    XMASJoin *m_join;
-    XMASMerge *m_merge;
-    XMASQueue *m_queue;
 
 };
 
@@ -93,10 +91,9 @@ TEST_F(TestSourceSpec, valid_connected)
     ASSERT_TRUE(m_sink->valid());
 
     /* Test the spec is retrievable as stored */
-    std::string spec("abc == 20");
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc, mp));
     bitpowder::lib::String result = m_source->getSourceExpression();
-    EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
+    EXPECT_EQ(spec_abc, result.stl());
 }
 
 TEST_F(TestSourceSpec, replace_longer)
@@ -110,22 +107,19 @@ TEST_F(TestSourceSpec, replace_longer)
     ASSERT_TRUE(m_sink->valid());
 
     /* set specification to one string */
-    std::string spec("abc == 20");
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc, mp));
     result = m_source->getSourceExpression();
-    EXPECT_EQ("abc >= 20 && abc < 21", result.stl());
+    EXPECT_EQ(spec_abc, result.stl());
 
     /* overwrite specification with a larger string */
-    spec = "abc == 20 && def == 40";
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc_def_in, mp));
     result = m_source->getSourceExpression();
-    EXPECT_EQ("abc >= 20 && abc < 21 && def >= 40 && def < 41", result.stl());
+    EXPECT_EQ(spec_abc_def_out, result.stl());
 
     /* overwrite specification with a smaller string */
-    spec = "def == 40";
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_def, mp));
     result = m_source->getSourceExpression();
-    EXPECT_EQ("def >= 40 && def < 41", result.stl());
+    EXPECT_EQ(spec_def, result.stl());
 
 }
 
@@ -140,16 +134,14 @@ TEST_F(TestSourceSpec, replace_shorter)
     ASSERT_TRUE(m_sink->valid());
 
     /* set specification to a larger string */
-    std::string spec("abc == 20 && def == 40");
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc_def_in, mp));
     result = m_source->getSourceExpression();
-    EXPECT_EQ("abc >= 20 && abc < 21 && def >= 40 && def < 41", result.stl());
+    EXPECT_EQ(spec_abc_def_out, result.stl());
 
     /* overwrite specification with a smaller string */
-    spec = "def == 40";
-    ASSERT_NO_THROW(m_source->setSourceExpression(spec, mp));
+    ASSERT_NO_THROW(m_source->setSourceExpression(spec_def, mp));
     result = m_source->getSourceExpression();
-    EXPECT_EQ("def >= 40 && def < 41", result.stl());
+    EXPECT_EQ(spec_def, result.stl());
 
 }
 

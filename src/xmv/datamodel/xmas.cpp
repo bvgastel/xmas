@@ -8,6 +8,8 @@
 #include "simplestring.h"
 #include "parse.h"
 #include "messagespec.h"
+#include "memorypool.h"
+#include "export.h"
 
 XMASComponent *Port::getTarget() {
     Port *targetPort = getTargetPort();
@@ -150,18 +152,8 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 
 
 std::string XMASSource::getSourceExpression() {
-    bool createExt = true;
-    SymbolicTypesExtension *ext = this->o.getPortExtension<SymbolicTypesExtension>(!createExt);
-    if (ext) {
-        auto packets = ext->availablePackets;
-        std::ostringstream out;
-        for (SymbolicPacket p : packets) {
-            std::map<bitpowder::lib::String, int> enumMap;
-            p.printOldCSyntax(out,enumMap);
-        }
-        return std::move(out.str());
-    }
-    return std::string();
+    bitpowder::lib::StaticMemoryPool<128> mp;
+    return Export(this, mp).stl();
 }
 ExpressionResult XMASSource::setSourceExpression(std::string &expr,
                                                  bitpowder::lib::MemoryPool &mp) {

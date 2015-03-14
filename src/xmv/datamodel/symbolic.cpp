@@ -663,18 +663,6 @@ void SymbolicPacket::accept(SymbolicFieldVisitor &visitor) const
     }
 }
 
-void SymbolicPacket::printOldCSyntax(std::ostream& out, std::map<bitpowder::lib::String, int>& enumMap) const
-{
-    bool first = true;
-    for (auto& field : fields) {
-        if (!first)
-            out << " && ";
-        field.second->printOldCSyntax(out, enumMap, field.first);
-        first = false;
-    }
-}
-
-
 void SymbolicTypesExtension::addSymbolicPacket(SymbolicPacket &&p) {
     if (workerItem) {
         //std::cout << "multithreaded addSymbolicPacket" << std::endl;
