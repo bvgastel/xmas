@@ -220,6 +220,8 @@ void printSymbolicTypeInfo(std::ostream &out, Port *port);
 
 void SymbolicTypes(std::set<XMASComponent *> allComponents);
 void ClearSymbolicTypes(std::set<XMASComponent *> allComponents);
+void ClearSymbolicTypes(XMASComponent *c);
+
 
 
 class SymbolicAnyField : public SymbolicPacketField {

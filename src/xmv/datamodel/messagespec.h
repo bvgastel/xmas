@@ -150,6 +150,4 @@ void ClearMessageSpec(std::set<XMASComponent *> allComponents);
 void ClearMessageSpec(XMASComponent *c);
 void clearMessageSpec(Output *port);
 
-void ClearSymbolicTypes(XMASComponent *c);
-
 #endif // MESSAGESPEC_H

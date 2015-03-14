@@ -32,6 +32,7 @@ public:
 
     virtual void visit(const bitpowder::lib::String& field, const SymbolicEnumField *f) {
         bool first = true;
+        out << "(";
         for (const bitpowder::lib::String& v : f->values) {
             if (!first)
                 out << " || ";
@@ -41,6 +42,10 @@ public:
             out << "p_" << field << " == " << it->second;
             first = false;
         }
+        if (first) {
+            out << "false";
+        }
+        out << ")";
     }
 
     virtual void visit(const bitpowder::lib::String& field, const SymbolicAnyField *f) {
