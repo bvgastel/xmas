@@ -47,7 +47,6 @@ Model.XComponent {
     rotation: 0
     focus: true
     type: Model.XComponent.Unknown
-    transformOrigin: Item.Center
     z:1 //on top of channels
     property int uid:-1
     property string prefix: ""
@@ -123,6 +122,7 @@ Model.XComponent {
             bottom: topLabel ? parent.top : undefined
             top: topLabel ? undefined : parent.bottom
         }
+        color:"transparent"
         border.color: name !== "" ? "transparent" : "red"
         anchors.margins: 2
         anchors.horizontalCenter: parent.horizontalCenter

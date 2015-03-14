@@ -17,7 +17,6 @@
         <file>xobjects/queue.qml</file>
         <file>xobjects/sink.qml</file>
         <file>xobjects/source.qml</file>
-        <file>xobjects/spidergon.qml</file>
         <file>xobjects/switch.qml</file>
         <file>xobjects/XNetwork.qml</file>
         <file>xobjects/XChannel.qml</file>
@@ -62,5 +61,6 @@
         <file>content/smaller.ico</file>
         <file>content/packet.png</file>
         <file>uicontrols/XPacketDialog.qml</file>
+        <file>xobjects/composite.qml</file>
     </qresource>
 </RCC>

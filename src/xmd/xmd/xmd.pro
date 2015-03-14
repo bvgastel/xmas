@@ -91,7 +91,6 @@ DISTFILES += mainWindow.qml \
     xobjects/queue.qml \
     xobjects/sink.qml \
     xobjects/source.qml \
-    xobjects/spidergon.qml \
     xobjects/switch.qml \
     xobjects/primitive.qml \
     xobjects/XComponent.qml \
@@ -110,7 +109,8 @@ DISTFILES += mainWindow.qml \
     xobjects/xcomponent.js \
     uiqueries_readme.md \
     uicontrols/SelectionHandle.qml \
-    uicontrols/XPacketDialog.qml
+    uicontrols/XPacketDialog.qml \
+    xobjects/composite.qml
 
 RESOURCES += \
     xmd.qrc

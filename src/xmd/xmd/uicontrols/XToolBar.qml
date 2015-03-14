@@ -58,6 +58,11 @@ Rectangle {
             image: "../content/out.png"
         }
         ToolBarSeparator {}
+        XToolBarItem {
+            //TODO : this is just a test "XToolBarItem" an can be removed later
+            componentFile: "../xobjects/composite.qml"
+            image: "../content/composite.png"
+        }
         ToolButton {
             iconSource: "qrc:/content/composite.png"
             iconName: "Composite"
