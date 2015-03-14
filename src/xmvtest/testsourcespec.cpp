@@ -78,7 +78,7 @@ TEST_F(TestSourceSpec, inValid_not_connected)
     bitpowder::lib::MemoryPool mp;
     std::string spec("abc == 20");
     m_source->setSourceExpression(spec, mp);
-    EXPECT_EQ("", m_source->getSourceExpression());
+    EXPECT_EQ("", m_source->getSourceExpression(mp));
 
 }
 
@@ -92,7 +92,7 @@ TEST_F(TestSourceSpec, valid_connected)
 
     /* Test the spec is retrievable as stored */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc, mp));
-    bitpowder::lib::String result = m_source->getSourceExpression();
+    bitpowder::lib::String result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_abc, result.stl());
 }
 
@@ -108,17 +108,17 @@ TEST_F(TestSourceSpec, replace_longer)
 
     /* set specification to one string */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc, mp));
-    result = m_source->getSourceExpression();
+    result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_abc, result.stl());
 
     /* overwrite specification with a larger string */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc_def_in, mp));
-    result = m_source->getSourceExpression();
+    result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_abc_def_out, result.stl());
 
     /* overwrite specification with a smaller string */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_def, mp));
-    result = m_source->getSourceExpression();
+    result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_def, result.stl());
 
 }
@@ -135,12 +135,12 @@ TEST_F(TestSourceSpec, replace_shorter)
 
     /* set specification to a larger string */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_abc_def_in, mp));
-    result = m_source->getSourceExpression();
+    result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_abc_def_out, result.stl());
 
     /* overwrite specification with a smaller string */
     ASSERT_NO_THROW(m_source->setSourceExpression(spec_def, mp));
-    result = m_source->getSourceExpression();
+    result = m_source->getSourceExpression(mp);
     EXPECT_EQ(spec_def, result.stl());
 
 }

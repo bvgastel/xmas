@@ -99,23 +99,21 @@ int model::Component::updateExpression(QVariant expression) {
     writeLog(QString("ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
 
     if (getType() == Queue) {
-        if (typeName == "int") {
-            int size = expression.toInt();
-            XMASQueue *queue = dynamic_cast<XMASQueue *>(this->m_component);
-            if (queue) {
-                queue->c = size;
-                m_expression = expression;
-                setValidExpr(true, -1, QString(""));
-                return -1;
-            } else {
-                writeLog(QString("Fatal error in Component: "
-                                 "did not recognize m_component as queue."));
-                throw bitpowder::lib::Exception("Fatal error in Component.");
-            }
+        if (typeName != "int") {
+            setValidExpr(false, 0, QString("Received non integer size."));
             return 0;
         }
-        setValidExpr(false, 0, QString("Received non integer size."));
-        return 0;
+        int size = expression.toInt();
+        XMASQueue *queue = dynamic_cast<XMASQueue *>(this->m_component);
+        if (!queue) {
+            writeLog(QString("Fatal error in Component: "
+                             "did not recognize m_component as queue."));
+            throw bitpowder::lib::Exception("Fatal error in Component.");
+        }
+        queue->c = size;
+        m_expression = expression;
+        setValidExpr(true, -1, QString(""));
+        return -1;
     } else if (getType() == Source) {
         if (typeName != "QString") {
             return 0;
@@ -147,7 +145,16 @@ int model::Component::updateExpression(QVariant expression) {
         QString qexpr = expression.toString();
         XMASFunction *func = dynamic_cast<XMASFunction *>(this->m_component);
         if (func) {
-            // TODO: add setter for function to xmas
+            std::string expr = qexpr.toStdString();
+            auto result =  func->setFunctionExpression(expr);
+            QString errMsg = QString(result.m_errMsg.stl().c_str());
+            setValidExpr(result.m_success, result.m_pos, errMsg);
+            writeLog(QString("saving expression in XMASComponent ")
+                     + (result.m_success? "succeeded." : "failed. Error message is:"));
+            if (!result.m_success) {
+                writeLog(errMsg);
+            }
+            return result.m_pos;
         } else {
             writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as source."));

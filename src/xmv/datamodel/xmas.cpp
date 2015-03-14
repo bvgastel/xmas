@@ -151,8 +151,8 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 }
 
 
-std::string XMASSource::getSourceExpression() {
-    bitpowder::lib::StaticMemoryPool<128> mp;
+std::string XMASSource::getSourceExpression(bitpowder::lib::MemoryPool &mp) {
+    //bitpowder::lib::StaticMemoryPool<128> mp;
     return Export(this, mp).stl();
 }
 ExpressionResult XMASSource::setSourceExpression(std::string &expr,
@@ -194,7 +194,8 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
     return ExpressionResult(result, result.position(), result.error());
 }
 
-const bitpowder::lib::String XMASFunction::getFunctionExpression() {
+const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::unused(mp);
     bool createExtension = true;
     ParsedXMASFunctionExtension *ext = this->getComponentExtension<ParsedXMASFunctionExtension>(!createExtension);
     std::map<bitpowder::lib::String,int> enumMap;
@@ -202,16 +203,15 @@ const bitpowder::lib::String XMASFunction::getFunctionExpression() {
     ext->value->printOldCSyntax(tmp, enumMap);
     bitpowder::lib::String function = bitpowder::lib::String(tmp.str());
     return std::move(function);
+    //return Export(this, mp).stl();
 }
 
-ExpressionResult XMASFunction::setFunctionExpression(std::string &str_expr) {
+ExpressionResult XMASFunction::setFunctionExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::String expr(str_expr);
-    return setFunctionExpression(expr);
+    return setFunctionExpression(expr, mp);
 }
 
-ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &expr) {
-
-    bitpowder::lib::MemoryPool mp;
+ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
 
     // The input variable may be a temp
     expr = expr(mp);
@@ -220,6 +220,7 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
     if (result) {
         std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         auto func = result.result();
+        removeExtensionOfBaseType<ParsedXMASFunctionExtension>();
         this->addExtension(new ParsedXMASFunctionExtension(func));
         attachFunction(this, [func](const std::vector<SymbolicPacket> &p) {
             return (*func)(p);

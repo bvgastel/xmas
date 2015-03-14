@@ -60,7 +60,6 @@ private:
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
-    //Q_PROPERTY(bool validExpr MEMBER m_validExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 

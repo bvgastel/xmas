@@ -13,7 +13,8 @@ SOURCES += \
     testcyclechecker.cpp \
     testdatamodel.cpp \
     jsonprinter.test.cpp \
-    testsourcespec.cpp
+    testsourcespec.cpp \
+    testfunctionspec.cpp
 
 
 CONFIG += C++11

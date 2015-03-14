@@ -1172,7 +1172,10 @@ PacketFunctionParseResult ParsePacketFunction(const String &str, MemoryPool &mp)
     PacketFunctionLexer lexer(str);
     auto p = ParserState<PacketFunctionLexer, 1>(lexer);
     PacketFunction<PacketFunctionLexer>::Func result;
-    int retval = Parser<PacketFunctionLexer, 1, PacketFunction<PacketFunctionLexer>::Func, MemoryPool&>(&p, mp).perform(PacketFunction<PacketFunctionLexer>::expr).end().retreive(result);
+    int retval = Parser<PacketFunctionLexer, 1, PacketFunction<PacketFunctionLexer>::Func, MemoryPool&>(&p, mp)
+                .perform(PacketFunction<PacketFunctionLexer>::expr)
+                .end()
+                .retreive(result);
     if (retval != 0) {
         TokenBase *token = p.getToken();
         std::cout << "token: " << token << std::endl;
