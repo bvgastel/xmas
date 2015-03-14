@@ -465,6 +465,10 @@ public:
      */
     PortIterators<Output**> outputPorts();
 
+    Port* findPort(const char* name, PortType type = PortType::ALL);
+    Input* findInputPort(const char* name);
+    Output* findOutputPort(const char* name);
+
     /**
      * @brief clearExtensions
      */
