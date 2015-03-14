@@ -20,7 +20,7 @@ XComponent {
         onPaint: {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
-            ctx.lineWidth = 3.0
+            ctx.lineWidth = 4.0
             ctx.clearRect(0, 0, 100, 100)
             ctx.beginPath()
             ctx.moveTo(40,0)
