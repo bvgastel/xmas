@@ -37,12 +37,11 @@ Model.XPort {
     id:port
     objectName: "port"
     width: 10; height:10
-    x:-5; y:-5
     property int id: 0
     property bool connected: false
     property string name: "a"
     property int type: Model.XPort.Target
-    rotation: (port.type === Model.XPort.Target) ? Model.XComponent.West : Model.XComponent.East
+    rotation: (port.type === Model.XPort.Target) ? 0 : 180
 
     signal update()
     signal removed()
@@ -61,7 +60,7 @@ Model.XPort {
     Component.onDestruction: removed()
 
     Connections {
-        target: parent
+        target: component
         onUpdate: update()
     }
 
