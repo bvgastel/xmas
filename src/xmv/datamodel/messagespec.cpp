@@ -403,14 +403,8 @@ void ClearMessageSpec(XMASComponent *c) {
     ClearSymbolicTypes(c);
 }
 
-void ClearSymbolicTypes(XMASComponent *c) {
-    for (Port *p : c->ports()) {
-        p->clearPortExtension<SymbolicTypesExtension>();
-    }
-    c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
-}
-
 void clearMessageSpec(Output *port) {
-    port->clearPortExtension<MessageSpecExtension>();
+    if (port)
+        port->clearPortExtension<MessageSpecExtension>();
 }
 

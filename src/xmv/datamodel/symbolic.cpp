@@ -424,10 +424,15 @@ void SymbolicTypes(std::set<XMASComponent *> allComponents) {
 
 void ClearSymbolicTypes(std::set<XMASComponent *> allComponents) {
     for (XMASComponent *c : allComponents) {
-        for (Port *p : c->ports())
-            p->clearPortExtension<SymbolicTypesExtension>();
-        c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
+        ClearSymbolicTypes(c);
     }
+}
+
+void ClearSymbolicTypes(XMASComponent *c) {
+    for (Port *p : c->ports()) {
+        p->clearPortExtension<SymbolicTypesExtension>();
+    }
+    c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
 }
 
 std::ostream &operator <<(std::ostream &out, const SymbolicPacket &c) {
