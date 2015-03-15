@@ -62,13 +62,13 @@ protected:
     const std::string spec_delim = "\r\n";
 
     std::string assgn1_in = "data := 1";
-    std::string assgn1_out = "";
+    std::string assgn1_out = "data := 1";
 
-    std::string assgn2_in = "return p_dx == 0 && p_dy == 0;";       // from 2x2_xy_mesh
-    std::string assgn2_out = "";
+    std::string assgn2_in = "msg := msg with {req : rsp, _: rsp}, n := src";
+    std::string assgn2_out = "msg := msg with {req : rsp, _: rsp}, n := src";
 
-    std::string assgn3_in = "value := value - 10";   // from func
-    std::string assgn3_out = "";
+    std::string assgn3_in = "msg := msg with {req : rsp, _: rsp}, n := src";
+    std::string assgn3_out = "n := src, msg := msg with {req: rsp, _: rsp}";
 
     XMASFunction *m_function;
 

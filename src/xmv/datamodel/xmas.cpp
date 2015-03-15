@@ -151,9 +151,9 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 }
 
 
-std::string XMASSource::getSourceExpression(bitpowder::lib::MemoryPool &mp) {
+bitpowder::lib::String XMASSource::getSourceExpression(bitpowder::lib::MemoryPool &mp) {
     //bitpowder::lib::StaticMemoryPool<128> mp;
-    return Export(this, mp).stl();
+    return Export(this, mp);
 }
 ExpressionResult XMASSource::setSourceExpression(std::string &expr,
                                                  bitpowder::lib::MemoryPool &mp) {
@@ -205,7 +205,7 @@ const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib:
     }
     std::map<bitpowder::lib::String,int> enumMap;
     std::ostringstream tmp;
-    ext->value->printOldCSyntax(tmp, enumMap);
+    tmp << *ext->value;
     function = bitpowder::lib::String(tmp.str());
     return std::move(function);
     //return Export(this, mp).stl();

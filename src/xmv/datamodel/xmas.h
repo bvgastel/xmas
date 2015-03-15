@@ -632,7 +632,7 @@ public:
         p[0] = &o;
     }
 
-    std::string getSourceExpression(bitpowder::lib::MemoryPool &mp);
+    bitpowder::lib::String getSourceExpression(bitpowder::lib::MemoryPool &mp);
 
     ExpressionResult setSourceExpression(bitpowder::lib::String &expr,
                                          bitpowder::lib::MemoryPool &mp);
