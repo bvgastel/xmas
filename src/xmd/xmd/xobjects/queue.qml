@@ -7,7 +7,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Queue
     prefix: "q"
-    property int size: isNaN(this.expression) ? 0 : this.expression
+    property int size: 0
     Canvas {
         anchors.fill: parent
         antialiasing: false
