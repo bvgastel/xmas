@@ -40,7 +40,12 @@ void model::Component::classBegin() {
 void model::Component::componentComplete() {
     m_type = (CompType)this->property("type").toInt();
     m_component = createComponent(m_type, m_name);
-    extractPorts();
+    //###################################################################################################
+    //TODO : to be reviewed with Guus
+    if(m_component) {
+        extractPorts();
+    }
+    //###################################################################################################
 }
 
 // TODO: What to do with IN and OUT?
@@ -184,25 +189,27 @@ QQmlListProperty<model::XPort> model::Component::getPorts()
     return QQmlListProperty<model::XPort>(this,m_ports);
 }
 
-/**
- * @brief model::Component::append_port
- * @param list
- * @param port
- */
-void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::XPort *port)
-{
-    Component *component = qobject_cast<Component *>(list->object);
-    if (port)
-        component->m_ports.append(port);
-}
+///**
+// * @brief model::Component::append_port
+// * @param list
+// * @param port
+// */
+//void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::XPort *port)
+//{
+//    Component *component = qobject_cast<Component *>(list->object);
+//    if (port)
+//        component->m_ports.append(port);
+//}
 // Port here must be the xmascomponent port type!!
 void model::Component::extractPorts(void)
 {
+    m_ports.clear();
     for (Port* p : m_component->inputPorts())
     {
         XPort *xport = new XPort();
         xport->setName(p->getName());
         xport->setType(XPort::PortType::Target);
+        xport->setConnected(p->isConnected());
         m_ports.append(xport);
         qDebug() << "inpoortnaam = " << xport->getName();
 
@@ -212,6 +219,7 @@ void model::Component::extractPorts(void)
         XPort *xport = new XPort();
         xport->setName(p->getName());
         xport->setType(XPort::PortType::Initiator);
+        xport->setConnected(p->isConnected());
         m_ports.append(xport);
         qDebug() << "outpoortnaam = " << xport->getName();
 

@@ -38,7 +38,7 @@ Model.XPort {
     objectName: "port"
     width: 10; height:10
     property int id: 0
-    //property bool connected: false
+    connected: false
     //property string name: "a"
     //property int type: Model.XPort.Target
     rotation: (port.type === Model.XPort.Target) ? 0 : 180
@@ -55,7 +55,7 @@ Model.XPort {
         radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
     }
 
-    onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
+    //onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
 
 
     Component.onDestruction: removed()

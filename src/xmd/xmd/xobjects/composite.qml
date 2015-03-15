@@ -69,8 +69,10 @@ XComponent {
                 }
                 Text {
                     text:modelData.name
-                    anchors.left: wire.right
-                    anchors.leftMargin: 5
+                    anchors.left: parent.right
+                    //anchors.bottom: parent.top
+                    anchors.leftMargin: 20
+                    rotation:-parent.rotation
                 }
 
             }
@@ -97,13 +99,20 @@ XComponent {
                     anchors.left: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                 }
-
+                Text {
+                    text:modelData.name
+                    anchors.left: parent.right
+                    //anchors.bottom: parent.top
+                    anchors.leftMargin: 20
+                    rotation:-parent.rotation
+                }
             }
         }
     }
 
     Rectangle {
         id:body
+        z:-1
         anchors {left:columnLeft.right; right:columnRight.left; top: parent.top; bottom:parent.bottom}
         anchors.leftMargin: 10
         anchors.rightMargin: 10
