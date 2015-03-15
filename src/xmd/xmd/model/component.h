@@ -112,6 +112,36 @@ public:
 
     // TODO: find out how to store specifications
     QVariant getExpression() {
+        // In case we are finshed constructing
+        if (!m_component) {
+            return QVariant();
+        }
+        // In case of queue return queue size
+        auto m_queue = dynamic_cast<XMASQueue *>(m_component);
+        if (m_queue) {
+            qulonglong expr = m_queue->c;
+            return expr;
+        }
+        // In case of function return function specification.
+        auto m_function = dynamic_cast<XMASFunction *>(m_component);
+        if (m_function) {
+            auto expr = m_function->getFunctionExpression(m_mp).stl();
+            if (expr != "") {
+                return QString(expr.c_str()); // Only return xmas string, if useful
+            } else {
+                return m_expression;
+            }
+        }
+        // In case of source return source specification.
+        auto m_source = dynamic_cast<XMASSource *>(m_component);
+        if (m_source) {
+            auto expr = m_source->getSourceExpression(m_mp);
+            if (expr != "") {
+                return QString(expr.c_str());  // Only return xmas string, if useful
+            } else {
+                return m_expression;
+            }
+        }
         return m_expression;
     }
 
@@ -142,6 +172,18 @@ public:
     }
 
     void setValid(bool valid) {
+        // Check for warning
+        if (!valid) {
+            if (!m_validExprWarningGiven) {
+               QString cname = QString(m_component->getStdName().c_str());
+                writeLog("Component " + cname + " has an invalid spec.");
+                m_validExprWarningGiven = true;
+            }
+        }
+        // Reset warning status if valid
+        if (valid) {
+            m_validExprWarningGiven = false;
+        }
         m_valid = valid;
         emit validChanged();
 	}
@@ -169,6 +211,7 @@ private:
     CompType m_type;
     bool m_valid;
     bool m_validExpr;
+    bool m_validExprWarningGiven; // an internal flag (non-qml)
     XMASComponent *m_component;
     //###################################################################################################
     //TODO : to be reviewed with Guus

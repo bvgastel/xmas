@@ -109,6 +109,10 @@ int model::Component::updateExpression(QVariant expression) {
             setValidExpr(false, 0, QString("Received non integer size."));
             return 0;
         }
+        m_expression = expression;
+        if (!m_component) { // if we are still constructing Component.
+            return 0;
+        }
         int size = expression.toInt();
         XMASQueue *queue = dynamic_cast<XMASQueue *>(this->m_component);
         if (!queue) {
@@ -117,7 +121,6 @@ int model::Component::updateExpression(QVariant expression) {
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
         queue->c = size;
-        m_expression = expression;
         setValidExpr(true, -1, QString(""));
         return -1;
     } else if (getType() == Source) {
@@ -133,9 +136,11 @@ int model::Component::updateExpression(QVariant expression) {
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed. Error message is:"));
-            if (!result.m_success) {
-                writeLog(errMsg);
+                     + (result.m_success? "succeeded."
+                                        : "failed. Error message is:" + errMsg));
+            if (result.m_success) {
+                QString xmas_expression = QString(source->getSourceExpression(m_mp).c_str());
+                writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
@@ -157,10 +162,14 @@ int model::Component::updateExpression(QVariant expression) {
             setValidExpr(result.m_success, result.m_pos, errMsg);
             writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
+            if (result.m_success) {
+                QString xmas_expression = QString(func->getFunctionExpression(m_mp).stl().c_str());
+                writeLog(QString("result = ") + xmas_expression );
+            }
             return result.m_pos;
         } else {
             writeLog(QString("Fatal error in Component: "
-                             "did not recognize m_component as source."));
+                             "did not recognize m_component as function."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
         return true;
