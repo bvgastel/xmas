@@ -55,7 +55,7 @@ Model.XPort {
         radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
     }
 
-    onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
+    //onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
 
 
     Component.onDestruction: removed()
