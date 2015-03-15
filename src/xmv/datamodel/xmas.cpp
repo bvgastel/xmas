@@ -196,12 +196,17 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
 
 const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::unused(mp);
+
+    bitpowder::lib::String function;
     bool createExtension = true;
     ParsedXMASFunctionExtension *ext = this->getComponentExtension<ParsedXMASFunctionExtension>(!createExtension);
+    if (!ext) {
+        return function;
+    }
     std::map<bitpowder::lib::String,int> enumMap;
     std::ostringstream tmp;
     ext->value->printOldCSyntax(tmp, enumMap);
-    bitpowder::lib::String function = bitpowder::lib::String(tmp.str());
+    function = bitpowder::lib::String(tmp.str());
     return std::move(function);
     //return Export(this, mp).stl();
 }
@@ -226,9 +231,8 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
             return (*func)(p);
         });
     } else {
-        std::cerr << "parsing " << expr << std::endl;
-        std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-        //exit(-1);
+        std::cerr << "[setFunctionExpression] parsing " << expr << " containing an error." << std::endl;
+        std::cerr << "[setFunctionExpression] error parsing at position " << result.position() << " is " << result.error() << std::endl;
     }
 
     return ExpressionResult(result, result.position(), result.error());

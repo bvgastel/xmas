@@ -147,14 +147,11 @@ int model::Component::updateExpression(QVariant expression) {
         XMASFunction *func = dynamic_cast<XMASFunction *>(this->m_component);
         if (func) {
             std::string expr = qexpr.toStdString();
-            auto result =  func->setFunctionExpression(expr);
+            auto result =  func->setFunctionExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed. Error message is:"));
-            if (!result.m_success) {
-                writeLog(errMsg);
-            }
+                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             return result.m_pos;
         } else {
             writeLog(QString("Fatal error in Component: "

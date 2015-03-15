@@ -61,62 +61,51 @@ protected:
     const std::string spec_end = ";";
     const std::string spec_delim = "\r\n";
 
-    std::string spec_abc_in = "data := i.data + 1\r\nkind := 1";
-    std::string spec_abc_out = "";
-    std::string spec_def_in = "def := 4 ";
-    std::string spec_def_out = "ret_def = 4;";
-    std::string spec_abc_def_in = spec_abc_in + spec_delim + spec_def_in;
-    std::string spec_abc_def_out =
-            spec_abc_out + spec_delim + spec_def_out;
+    std::string assgn1_in = "data := 1";
+    std::string assgn1_out = "";
+
+    std::string assgn2_in = "return p_dx == 0 && p_dy == 0;";       // from 2x2_xy_mesh
+    std::string assgn2_out = "";
+
+    std::string assgn3_in = "value := value - 10";   // from func
+    std::string assgn3_out = "";
 
     XMASFunction *m_function;
 
 };
 
-TEST_F(TestFunctionSpec, test1_assignment)
+TEST_F(TestFunctionSpec, test1_assignment1)
 {
     bitpowder::lib::MemoryPool mp;
+    bitpowder::lib::String result;
 
     /* Test the spec is retrievable as stored */
-    EXPECT_NO_THROW(m_function->setFunctionExpression(spec_abc_in, mp));
-    bitpowder::lib::String result = m_function->getFunctionExpression(mp);
-    EXPECT_EQ(spec_abc_out, result.stl());
+    EXPECT_NO_THROW(m_function->setFunctionExpression(assgn1_in, mp));
+    result = m_function->getFunctionExpression(mp);
+    EXPECT_EQ(assgn1_out, result.stl());
 }
 
-TEST_F(TestFunctionSpec, test2_replacement)
+TEST_F(TestFunctionSpec, test2_assignment2)
 {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::String result;
 
-    /* set specification to one string */
-    ASSERT_NO_THROW(m_function->setFunctionExpression(spec_abc_in, mp));
+    /* Test the spec is retrievable as stored */
+    EXPECT_NO_THROW(m_function->setFunctionExpression(assgn2_in, mp));
     result = m_function->getFunctionExpression(mp);
-    EXPECT_EQ(spec_abc_out, result.stl());
-
-    /* overwrite specification with a larger string */
-    ASSERT_NO_THROW(m_function->setFunctionExpression(spec_abc_def_in, mp));
-    result = m_function->getFunctionExpression(mp);
-    EXPECT_EQ(spec_abc_def_out, result.stl());
-
+    EXPECT_EQ(assgn2_out, result.stl());
 }
 
-TEST_F(TestFunctionSpec, test3_replace_short)
+TEST_F(TestFunctionSpec, test3_assignment3)
 {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::String result;
 
-    /* set specification to a larger string */
-    ASSERT_NO_THROW(m_function->setFunctionExpression(spec_abc_def_in, mp));
+    /* Test the spec is retrievable as stored */
+    EXPECT_NO_THROW(m_function->setFunctionExpression(assgn3_in, mp));
     result = m_function->getFunctionExpression(mp);
-    EXPECT_EQ(spec_abc_def_out, result.stl());
-
-    /* overwrite specification with a smaller string */
-    ASSERT_NO_THROW(m_function->setFunctionExpression(spec_def_in, mp));
-    result = m_function->getFunctionExpression(mp);
-    EXPECT_EQ(spec_def_out, result.stl());
-
+    EXPECT_EQ(assgn3_out, result.stl());
 }
-
 
 } // namespace
 
