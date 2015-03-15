@@ -139,7 +139,7 @@ int model::Component::updateExpression(QVariant expression) {
                      + (result.m_success? "succeeded."
                                         : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                QString xmas_expression = QString(source->getSourceExpression(m_mp).c_str());
+                QString xmas_expression = QString(source->getSourceExpression(m_mp).stl().c_str());
                 writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;

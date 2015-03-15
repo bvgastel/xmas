@@ -140,7 +140,7 @@ public:
         if (m_source) {
             auto expr = m_source->getSourceExpression(m_mp);
             if (expr != "") {
-                return QString(expr.c_str());  // Only return xmas string, if useful
+                return QString(expr.stl().c_str());  // Only return xmas string, if useful
             } else {
                 return m_expression;
             }
