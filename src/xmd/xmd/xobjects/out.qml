@@ -7,7 +7,10 @@ XComponent {
     height: 30
     type: Model.XComponent.Out
     prefix: "o"
-    //XPort {x: 0; y: 10; name: "o"; type:Model.XPort.Target}
+    //TODO : remove outputports once they can be drived from xmas
+    inputports: [
+        XPort {name: "i"; type:Model.XPort.Target}
+    ]
     Canvas {
         anchors.fill: parent
         antialiasing: false

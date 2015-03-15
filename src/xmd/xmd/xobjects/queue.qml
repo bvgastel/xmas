@@ -7,9 +7,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Queue
     prefix: "q"
-    property int size: isNaN(this.expression) ? 0 : this.expression
-    //XPort {x:0; y:20; name: "i"; type:Model.XPort.Target}
-    //XPort {x:90; y:20; name: "o"; type:Model.XPort.Initiator}
+    property int size: 0
     Canvas {
         anchors.fill: parent
         antialiasing: false
