@@ -181,12 +181,21 @@ int model::Component::updateExpression(QVariant expression) {
 //###################################################################################################
 //TODO : to be reviewed with Guus
 /**
- * @brief model::Component::getPorts
+ * @brief model::Component::getInputPorts
  * @return
  */
-QQmlListProperty<model::XPort> model::Component::getPorts()
+QQmlListProperty<model::XPort> model::Component::getInputPorts()
 {
-    return QQmlListProperty<model::XPort>(this,m_ports);
+    return QQmlListProperty<model::XPort>(this,m_inputports);
+}
+
+/**
+ * @brief model::Component::getOutputPorts
+ * @return
+ */
+QQmlListProperty<model::XPort> model::Component::getOutputPorts()
+{
+    return QQmlListProperty<model::XPort>(this,m_outputports);
 }
 
 ///**
@@ -203,27 +212,31 @@ QQmlListProperty<model::XPort> model::Component::getPorts()
 // Port here must be the xmascomponent port type!!
 void model::Component::extractPorts(void)
 {
-    m_ports.clear();
+    m_inputports.clear();
     for (Port* p : m_component->inputPorts())
     {
         XPort *xport = new XPort();
         xport->setName(p->getName());
         xport->setType(XPort::PortType::Target);
         xport->setConnected(p->isConnected());
-        m_ports.append(xport);
+        m_inputports.append(xport);
         qDebug() << "inpoortnaam = " << xport->getName();
 
     }
+    emit inputPortsChanged();
+
+    m_outputports.clear();
     for (Port* p : m_component->outputPorts())
     {
         XPort *xport = new XPort();
         xport->setName(p->getName());
         xport->setType(XPort::PortType::Initiator);
         xport->setConnected(p->isConnected());
-        m_ports.append(xport);
+        m_outputports.append(xport);
         qDebug() << "outpoortnaam = " << xport->getName();
 
     }
+    emit outputPortsChanged();
 }
 //###################################################################################################
 

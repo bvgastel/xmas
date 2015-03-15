@@ -8,8 +8,8 @@ XComponent {
     height: 50
     type: Model.XComponent.Function
     prefix: "f"
-    XPort {x: 0; y: 20; name: "i"; type:Model.XPort.Target}
-    XPort {x: 90; y:20; name: "o"; type:Model.XPort.Initiator}
+    //XPort {x: 0; y: 20; name: "i"; type:Model.XPort.Target}
+    //XPort {x: 90; y:20; name: "o"; type:Model.XPort.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false
