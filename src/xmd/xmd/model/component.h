@@ -157,7 +157,7 @@ private:
 
     //###################################################################################################
     //TODO : to be reviewed with Guus
-    static void append_port(QQmlListProperty<XPort> *list, XPort *port);
+    //static void append_port(QQmlListProperty<XPort> *list, XPort *port);
     void extractPorts(void);
 
     //###################################################################################################
