@@ -31,16 +31,11 @@
 import QtQuick 2.4
 import XMAS.model 1.0 as Model
 
-import "xchannel.js" as Code
-
 Model.XPort {
     id:port
     objectName: "port"
-    width: 10; height:10
-    property int id: 0
+    width: 20; height:10
     connected: false
-    //property string name: "a"
-    //property int type: Model.XPort.Target
     rotation: (port.type === Model.XPort.Target) ? 0 : 180
 
     signal update()
@@ -49,21 +44,30 @@ Model.XPort {
     Rectangle{
         id:portShape
         color: connected ? "black" : "red"
-        anchors.fill: parent
+         width: 10; height:10
+        //anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
         radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
+        Rectangle {
+            id: portWire
+            color:"black"
+            z:-1
+            border.width: 0
+            height: 4
+            width: 15
+            anchors.left: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+        }
     }
     Text {
         text:name
-        anchors.left: portShape.right
-        anchors.bottom: portShape.top
-        anchors.margins: 5
-        rotation:-parent.rotation
+        anchors.left: boxVisible ? port.right : portShape.right
+        anchors.bottom: boxVisible ?  undefined : portShape.top
+        anchors.verticalCenter: boxVisible ? portShape.verticalCenter : undefined
+        anchors.leftMargin: boxVisible ? 5 : 0
+        rotation:-port.rotation
     }
-
-    //onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
-
 
     Component.onDestruction: removed()
 

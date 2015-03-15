@@ -42,8 +42,8 @@ Model.XComponent {
 
     // Properties
     objectName: "component"
-//    width: 100
-//    height: 100
+    width: 100
+    height: box.height
     scale: 1.00
     rotation: 0
     focus: true
@@ -117,121 +117,57 @@ Model.XComponent {
     onWriteLog: console.log(message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
 
+    // Selection highlite
+     Rectangle {
+         id: highLite
+         anchors.fill: mousearea
+         anchors.margins: -5
+         color:"lightsteelblue"
+         border.color: "steelblue"
+         border.width: 1
+         visible: selected
+         z:-1 // under parent = component
+      }
 
     // box with symbol (center)
     Rectangle {
         id: box
-        width:100
-        height: Math.max(portsLeft.count,portsRight.count) * 30 + 20
+        anchors.left: columnLeft.right  //symbol.width
+        anchors.right: columnRight.left
+        height: boxVisible ? Math.max(portsLeft.count,portsRight.count) * 30 + 20 : component.height
         z:-1
-        //anchors {left:columnLeft.right; right:columnRight.left; top: parent.top; bottom:parent.bottom}
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
         border.color: "black"
         border.width: boxVisible ? 4 : 0
         radius: 10
-        color: "white"
-        Image{
-           source: symbolSource
-           anchors.centerIn: box
+        color: boxVisible ? "white" : "transparent"
+        Image {
+            id:symbol
+            fillMode: Image.Stretch
+            source: symbolSource
+            anchors.centerIn: box
+        }
+        Text {
+            //text: symbol.status === Image.Ready ? "" : type
         }
     }
 
 
-    // Input ports (left)
-    Column {
-        id:columnLeft
-        spacing: 20
-        anchors.left: box.left
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id:portsLeft
-            model:component.inputports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                Rectangle {
-                    id:wire
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+    // Valid Marker (top left)
+    Rectangle {
+        id: validmarker
+        visible: withDialog
+        width: 15
+        height: 15
+        radius: 15
+        color: "red"
+        anchors.verticalCenter: nameItem.verticalCenter
+        anchors.right: box.left
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            onDoubleClicked: component.showDialog()
         }
     }
-
-    // Output ports (right)
-    Column {
-        id:columnRight
-        spacing: 20
-        anchors.right: box.right
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id: portsRight
-            model:component.outputports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                Rectangle {
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-        }
-    }
-
-
-    // Name (top center)
-    Rectangle{
-        id:infoPlaceholder
-        rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
-        anchors {
-            bottom: topLabel ? parent.top : undefined
-            top: topLabel ? undefined : parent.bottom
-        }
-        color:"transparent"
-        border.color: name !== "" ? "transparent" : "red"
-        anchors.margins: 2
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: label.contentHeight
-        width: Math.max(parent.width,label.contentWidth + validmarker.width + 5)
-        Rectangle {
-            id: validmarker
-            visible: withDialog
-            width: 15
-            height: 15
-            radius: 15
-            color: "red"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-        }
-        TextInput {
-            id:label
-            text: name
-            anchors {left: validmarker.right; right: parent.right; top: parent.top; bottom:parent.bottom}
-            anchors.leftMargin: 5
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
-            color: "blue"
-            wrapMode: TextInput.NoWrap
-            font.pointSize : 12
-            onEditingFinished: {name = text; focus = false}
-            //TODO validate if name is unique
-            focus:true
-            onFocusChanged: if(focus)selectAll()
-            readOnly: false
-        }
-    }
-
 
 
     // Mouse area
@@ -278,16 +214,76 @@ Model.XComponent {
         }
     }
 
-    // Selection highlite
-    Rectangle {
-        id: highLite
-        anchors.fill: mousearea
-        color:"lightsteelblue"
-        border.color: "steelblue"
-        border.width: 1
-        visible: selected
-        z:-1 // under parent = component
-     }
+    // Items on top of component mousearea
+
+    // Name (top center)
+    Rectangle{
+        id:nameItem
+        rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
+        anchors {
+            left: box.left
+            right: box.right
+            bottom: topLabel ? box.top : undefined
+            top: topLabel ? undefined : box.bottom
+        }
+        color:"transparent"
+        border.color: "red"
+        border.width: component.name === "" ? 1 : 0
+        anchors.margins: 2
+        height: label.contentHeight
+
+        TextInput {
+            id:label
+            text: name
+            anchors.fill: nameItem
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            color: "blue"
+            wrapMode: TextInput.NoWrap
+            font.pointSize : 12
+            onEditingFinished: {name = text; focus = false}
+            //TODO validate if name is unique
+            focus:true
+            onFocusChanged: if(focus)selectAll()
+            readOnly: false
+        }
+    }
+
+
+    // Input ports (left)
+    Column {
+        id:columnLeft
+        spacing: boxVisible ? 20 : 50
+        anchors.left: component.left
+        anchors.verticalCenter: box.verticalCenter
+        Repeater{
+            id:portsLeft
+            model:component.inputports
+            delegate: XPort {
+                name:modelData.name
+                type:modelData.type
+                //anchors.right: columnLeft.left
+            }
+        }
+    }
+
+    // Output ports (right)
+    Column {
+        id:columnRight
+        spacing: boxVisible ? 20 : 50
+        anchors.right: component.right
+        anchors.verticalCenter: box.verticalCenter
+        Repeater{
+            id: portsRight
+            model:component.outputports
+            delegate: XPort {
+                name:modelData.name
+                type:modelData.type
+                //anchors.left: columnRight.right
+            }
+        }
+    }
+
 
     // Connections
     Connections {

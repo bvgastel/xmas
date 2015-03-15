@@ -1,17 +1,17 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.3
-import QtQuick.Layouts 1.1
 import XMAS.model 1.0 as Model
 
+
+//This is just a Test composite!!!!!!!!!!
 XComponent {
     id:component
     width: 200
-    height: calcHeight()
     type: Model.XComponent.Composite
     prefix: "test"
+    boxVisible: true
     property string symbol: "../content/cut.png"
 
-    property list<XPort> lPorts: [
+    inputports:[
         XPort {name: "t0"; type:Model.XPort.Target},
         XPort {name: "t1"; type:Model.XPort.Target},
         XPort {name: "t2"; type:Model.XPort.Target},
@@ -19,119 +19,52 @@ XComponent {
         XPort {name: "t4"; type:Model.XPort.Target},
         XPort {name: "t5"; type:Model.XPort.Target},
         XPort {name: "t6"; type:Model.XPort.Target},
-        XPort {name: "t7"; type:Model.XPort.Target}
+        XPort {name: "t7"; type:Model.XPort.Target},
+        XPort {name: "t8"; type:Model.XPort.Target},
+        XPort {name: "t9"; type:Model.XPort.Target},
+        XPort {name: "t10"; type:Model.XPort.Target},
+        XPort {name: "t11"; type:Model.XPort.Target},
+        XPort {name: "t12"; type:Model.XPort.Target},
+        XPort {name: "t13"; type:Model.XPort.Target},
+        XPort {name: "t14"; type:Model.XPort.Target},
+        XPort {name: "t15"; type:Model.XPort.Target},
+        XPort {name: "t16"; type:Model.XPort.Target},
+        XPort {name: "t17"; type:Model.XPort.Target},
+        XPort {name: "t18"; type:Model.XPort.Target},
+        XPort {name: "t19"; type:Model.XPort.Target},
+        XPort {name: "t20"; type:Model.XPort.Target},
+        XPort {name: "t21"; type:Model.XPort.Target},
+        XPort {name: "t22"; type:Model.XPort.Target},
+        XPort {name: "t23"; type:Model.XPort.Target},
+        XPort {name: "t24"; type:Model.XPort.Target},
+        XPort {name: "t25"; type:Model.XPort.Target},
+        XPort {name: "t26"; type:Model.XPort.Target},
+        XPort {name: "t27"; type:Model.XPort.Target},
+        XPort {name: "t28"; type:Model.XPort.Target},
+        XPort {name: "t29"; type:Model.XPort.Target},
+        XPort {name: "t30"; type:Model.XPort.Target},
+        XPort {name: "t31"; type:Model.XPort.Target},
+        XPort {name: "t32"; type:Model.XPort.Target},
+        XPort {name: "t33"; type:Model.XPort.Target},
+        XPort {name: "t34"; type:Model.XPort.Target},
+        XPort {name: "t35"; type:Model.XPort.Target},
+        XPort {name: "t36"; type:Model.XPort.Target},
+        XPort {name: "t37"; type:Model.XPort.Target},
+        XPort {name: "t38"; type:Model.XPort.Target},
+        XPort {name: "t39"; type:Model.XPort.Target},
+        XPort {name: "t40"; type:Model.XPort.Target},
+        XPort {name: "t41"; type:Model.XPort.Target},
+        XPort {name: "t42"; type:Model.XPort.Target},
+        XPort {name: "t43"; type:Model.XPort.Target},
+        XPort {name: "t44"; type:Model.XPort.Target},
+        XPort {name: "t45"; type:Model.XPort.Target},
+        XPort {name: "t46"; type:Model.XPort.Target},
+        XPort {name: "t47"; type:Model.XPort.Target},
+        XPort {name: "t48"; type:Model.XPort.Target},
+        XPort {name: "t49"; type:Model.XPort.Target}
     ]
-    property list<XPort> rPorts: [
+    outputports: [
         XPort {name: "i0"; type:Model.XPort.Initiator},
         XPort {name: "i1"; type:Model.XPort.Initiator}
     ]
-
-
-//    property var lPorts: [
-//        {name: "t0", type:Model.XPort.Target},
-//        {name: "t1", type:Model.XPort.Target},
-//        {name: "t2", type:Model.XPort.Target},
-//        {name: "t3", type:Model.XPort.Target},
-//        {name: "t4", type:Model.XPort.Target},
-//        {name: "t5", type:Model.XPort.Target},
-//        {name: "t6", type:Model.XPort.Target}
-//    ]
-//    property var rPorts: [
-//        {name: "i0", type:Model.XPort.Initiator},
-//        {name: "i1", type:Model.XPort.Initiator}
-//    ]
-
-    function calcHeight(){
-        var cnt =  Math.max(rpLeft.count,rpRight.count)
-        return cnt * 30 + 20
-    }
-
-    Column {
-        id:columnLeft
-        spacing: 20
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        Repeater{
-            id:rpLeft
-            model:lPorts
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                Rectangle {
-                    id:wire
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    text:modelData.name
-                    anchors.left: parent.right
-                    //anchors.bottom: parent.top
-                    anchors.leftMargin: 20
-                    rotation:-parent.rotation
-                }
-
-            }
-        }
-    }
-
-    Column {
-        id:columnRight
-        spacing: 20
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        Repeater{
-            id: rpRight
-            model:rPorts
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                Rectangle {
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    text:modelData.name
-                    anchors.left: parent.right
-                    //anchors.bottom: parent.top
-                    anchors.leftMargin: 20
-                    rotation:-parent.rotation
-                }
-            }
-        }
-    }
-
-    Rectangle {
-        id:body
-        z:-1
-        anchors {left:columnLeft.right; right:columnRight.left; top: parent.top; bottom:parent.bottom}
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
-        border.color: "black"
-        border.width: 4
-        radius: 10
-        color: "white"
-        Image{
-           source: symbol
-           anchors.centerIn: parent
-           Layout.preferredHeight: 128
-           Layout.preferredWidth: 128
-        }
-//        Text {
-//            anchors.centerIn: parent
-//            font.pixelSize: 12
-//            font.bold: true
-//            wrapMode: Text.Wrap
-//            text:"Test"
-//        }
-    }
 }
