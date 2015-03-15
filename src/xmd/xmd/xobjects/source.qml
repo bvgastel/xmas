@@ -8,7 +8,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Source
     prefix: "src"
-    XPort {x:20; y:40; name: "o"; type:Model.XPort.Initiator}
+    //XPort {x:20; y:40; name: "o"; type:Model.XPort.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false

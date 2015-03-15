@@ -30,6 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS.model 1.0 as Model
@@ -41,8 +42,8 @@ Model.XComponent {
 
     // Properties
     objectName: "component"
-    width: 100
-    height: 100
+//    width: 100
+//    height: 100
     scale: 1.00
     rotation: 0
     focus: true
@@ -54,7 +55,8 @@ Model.XComponent {
     property bool selected: false
     property bool withDialog: false
     property bool topLabel: true
-
+    property bool boxVisible: false
+    property string symbolSource: ""
 
     // Signals
     signal update()
@@ -115,7 +117,80 @@ Model.XComponent {
     onWriteLog: console.log(message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
 
-    // Name
+
+    // box with symbol (center)
+    Rectangle {
+        id: box
+        width:100
+        height: Math.max(portsLeft.count,portsRight.count) * 30 + 20
+        z:-1
+        //anchors {left:columnLeft.right; right:columnRight.left; top: parent.top; bottom:parent.bottom}
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        border.color: "black"
+        border.width: boxVisible ? 4 : 0
+        radius: 10
+        color: "white"
+        Image{
+           source: symbolSource
+           anchors.centerIn: box
+        }
+    }
+
+
+    // Input ports (left)
+    Column {
+        id:columnLeft
+        spacing: 20
+        anchors.left: box.left
+        anchors.verticalCenter: box.verticalCenter
+        Repeater{
+            id:portsLeft
+            model:component.inputports
+            delegate: XPort {
+                name:modelData.name
+                type:modelData.type
+                Rectangle {
+                    id:wire
+                    color:"black"
+                    z:-1
+                    border.width: 0
+                    height: 4
+                    width: 15
+                    anchors.left: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+        }
+    }
+
+    // Output ports (right)
+    Column {
+        id:columnRight
+        spacing: 20
+        anchors.right: box.right
+        anchors.verticalCenter: box.verticalCenter
+        Repeater{
+            id: portsRight
+            model:component.outputports
+            delegate: XPort {
+                name:modelData.name
+                type:modelData.type
+                Rectangle {
+                    color:"black"
+                    z:-1
+                    border.width: 0
+                    height: 4
+                    width: 15
+                    anchors.left: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+        }
+    }
+
+
+    // Name (top center)
     Rectangle{
         id:infoPlaceholder
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0

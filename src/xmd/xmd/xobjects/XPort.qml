@@ -54,6 +54,13 @@ Model.XPort {
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
         radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
     }
+    Text {
+        text:name
+        anchors.left: portShape.right
+        anchors.bottom: portShape.top
+        anchors.margins: 5
+        rotation:-parent.rotation
+    }
 
     //onConnectedChanged: connected ? 0 : Code.abortConnecting(port)
 

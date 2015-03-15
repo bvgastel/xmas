@@ -7,7 +7,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Sink
     prefix: "snk"
-    XPort {x:20; y:0; name: "i"; type:Model.XPort.Target}
+    //XPort {x:20; y:0; name: "i"; type:Model.XPort.Target}
     topLabel: false
     Canvas {
         anchors.fill: parent

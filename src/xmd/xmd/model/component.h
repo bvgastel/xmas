@@ -67,7 +67,8 @@ private:
 
     //###################################################################################################
     //TODO : to be reviewed with Guus
-    Q_PROPERTY(QQmlListProperty<XPort> ports READ getPorts)
+    Q_PROPERTY(QQmlListProperty<model::XPort> inputports READ getInputPorts NOTIFY inputPortsChanged)
+    Q_PROPERTY(QQmlListProperty<model::XPort> outputports READ getOutputPorts NOTIFY outputPortsChanged)
     //###################################################################################################
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -76,6 +77,8 @@ public:
 signals:
     void nameChanged(int result);
     void typeChanged();
+    void inputPortsChanged();
+    void outputPortsChanged();
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
@@ -190,7 +193,8 @@ public:
 
     //###################################################################################################
     //TODO : to be reviewed with Guus
-    QQmlListProperty<XPort> getPorts();
+    QQmlListProperty<XPort> getInputPorts();
+    QQmlListProperty<XPort> getOutputPorts();
     //###################################################################################################
 
 private:
@@ -215,7 +219,8 @@ private:
     XMASComponent *m_component;
     //###################################################################################################
     //TODO : to be reviewed with Guus
-    QList<XPort *> m_ports;
+    QList<XPort *> m_inputports;
+    QList<XPort *> m_outputports;
     //###################################################################################################
 
     bitpowder::lib::MemoryPool m_mp;
