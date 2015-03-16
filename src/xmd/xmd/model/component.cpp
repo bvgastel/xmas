@@ -178,8 +178,29 @@ int model::Component::updateExpression(QVariant expression) {
         // TODO: expressies? waarschijnlijk / unrestricted
         return true;
     } else if (getType() == Switch) {
-        // switch
-        // TODO: expressie?
+        if (typeName != "QString") {
+            return 0;
+        }
+        m_expression = expression;
+        QString qexpr = expression.toString();
+        XMASSwitch *sw = dynamic_cast<XMASSwitch *>(this->m_component);
+        if (sw) {
+            std::string expr = qexpr.toStdString();
+            auto result =  sw->setSwitchExpression(expr, m_mp);
+            QString errMsg = QString(result.m_errMsg.stl().c_str());
+            setValidExpr(result.m_success, result.m_pos, errMsg);
+            writeLog(QString("saving expression in XMASComponent ")
+                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
+            if (result.m_success) {
+                QString xmas_expression = QString(sw->getSwitchExpression(m_mp).stl().c_str());
+                writeLog(QString("result = ") + xmas_expression );
+            }
+            return result.m_pos;
+        } else {
+            writeLog(QString("Fatal error in Component: "
+                             "did not recognize m_component as switch."));
+            throw bitpowder::lib::Exception("Fatal error in Component.");
+        }
         return true;
     }
 

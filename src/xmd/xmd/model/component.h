@@ -120,15 +120,15 @@ public:
             return QVariant();
         }
         // In case of queue return queue size
-        auto m_queue = dynamic_cast<XMASQueue *>(m_component);
-        if (m_queue) {
-            qulonglong expr = m_queue->c;
+        auto queue = dynamic_cast<XMASQueue *>(m_component);
+        if (queue) {
+            qulonglong expr = queue->c;
             return expr;
         }
         // In case of function return function specification.
-        auto m_function = dynamic_cast<XMASFunction *>(m_component);
-        if (m_function) {
-            auto expr = m_function->getFunctionExpression(m_mp).stl();
+        auto func = dynamic_cast<XMASFunction *>(m_component);
+        if (func) {
+            auto expr = func->getFunctionExpression(m_mp).stl();
             if (expr != "") {
                 return QString(expr.c_str()); // Only return xmas string, if useful
             } else {
@@ -136,9 +136,18 @@ public:
             }
         }
         // In case of source return source specification.
-        auto m_source = dynamic_cast<XMASSource *>(m_component);
-        if (m_source) {
-            auto expr = m_source->getSourceExpression(m_mp);
+        auto src = dynamic_cast<XMASSource *>(m_component);
+        if (src) {
+            auto expr = src->getSourceExpression(m_mp);
+            if (expr != "") {
+                return QString(expr.stl().c_str());  // Only return xmas string, if useful
+            } else {
+                return m_expression;
+            }
+        }
+        auto sw = dynamic_cast<XMASSwitch *>(m_component);
+        if (sw) {
+            auto expr = sw->getSwitchExpression(m_mp);
             if (expr != "") {
                 return QString(expr.stl().c_str());  // Only return xmas string, if useful
             } else {
