@@ -174,8 +174,37 @@ int model::Component::updateExpression(QVariant expression) {
         }
         return true;
     } else if (getType() == Join) {
-        // join
-        // TODO: expressies? waarschijnlijk / unrestricted
+        if (typeName != "QString") {
+            return 0;
+        }
+        m_expression = expression;
+        QString qexpr = expression.toString();
+        XMASJoin *join = dynamic_cast<XMASJoin *>(this->m_component);
+        if (join) {
+            std::string expr = qexpr.toStdString();
+            ExpressionResult result;
+            QString kindOfJoin;
+            if (expr == "0" || expr == "1") {
+                kindOfJoin = "restricted";
+                result = join->setRestrictedJoinPort(expr, m_mp);
+            } else {
+                kindOfJoin = "unrestricted";
+                result =  join->setUnrestrictedJoinExpression(expr, m_mp);
+            }
+            QString errMsg = QString(result.m_errMsg.stl().c_str());
+            setValidExpr(result.m_success, result.m_pos, errMsg);
+            writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
+                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
+            if (result.m_success) {
+                QString xmas_expression = QString(join->getJoinExpression(m_mp).stl().c_str());
+                writeLog(QString("result = ") + xmas_expression );
+            }
+            return result.m_pos;
+        } else {
+            writeLog(QString("Fatal error in Component: "
+                             "did not recognize m_component as switch."));
+            throw bitpowder::lib::Exception("Fatal error in Component.");
+        }
         return true;
     } else if (getType() == Switch) {
         if (typeName != "QString") {

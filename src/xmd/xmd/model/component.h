@@ -154,6 +154,15 @@ public:
                 return m_expression;
             }
         }
+        auto join = dynamic_cast<XMASJoin *>(m_component);
+        if (join) {
+            auto expr = join->getJoinExpression(m_mp);
+            if (expr != "") {
+                return QString(expr.stl().c_str());  // Only return xmas string, if useful
+            } else {
+                return m_expression;
+            }
+        }
         return m_expression;
     }
 
