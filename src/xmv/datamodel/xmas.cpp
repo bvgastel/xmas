@@ -226,16 +226,16 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
 
 }
 
-const bitpowder::lib::String XMASSwitch::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
+const bitpowder::lib::String XMASSwitch::getSwitchExpression(bitpowder::lib::MemoryPool &mp) {
     return Export(this, mp).stl();
 }
 
-ExpressionResult XMASSwitch::setFunctionExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
+ExpressionResult XMASSwitch::setSwitchExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::String expr(str_expr);
-    return setFunctionExpression(expr, mp);
+    return setSwitchExpression(expr, mp);
 }
 
-ExpressionResult XMASSwitch::setFunctionExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
+ExpressionResult XMASSwitch::setSwitchExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
 
     // The input variable may be a temp
     expr = expr(mp);

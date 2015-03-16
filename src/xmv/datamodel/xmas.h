@@ -807,11 +807,11 @@ public:
         p[2] = &b;
     }
 
-    const bitpowder::lib::String getFunctionExpression(bitpowder::lib::MemoryPool &mp);
+    const bitpowder::lib::String getSwitchExpression(bitpowder::lib::MemoryPool &mp);
 
-    ExpressionResult setFunctionExpression(std::string &str_expr,
+    ExpressionResult setSwitchExpression(std::string &str_expr,
                                            bitpowder::lib::MemoryPool &mp);
-    ExpressionResult setFunctionExpression(bitpowder::lib::String &expr,
+    ExpressionResult setSwitchExpression(bitpowder::lib::String &expr,
                                            bitpowder::lib::MemoryPool &mp);
 
     void accept(XMASComponentVisitor &v)

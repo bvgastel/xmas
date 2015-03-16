@@ -76,8 +76,8 @@ TEST_F(TestSwitchFunctionSpec, test1_assignment1)
     bitpowder::lib::String result;
 
     /* Test the spec is retrievable as stored */
-    EXPECT_NO_THROW(m_switch->setFunctionExpression(comparison1_in, mp));
-    result = m_switch->getFunctionExpression(mp);
+    EXPECT_NO_THROW(m_switch->setSwitchExpression(comparison1_in, mp));
+    result = m_switch->getSwitchExpression(mp);
     EXPECT_EQ(comparison1_out, result.stl());
 }
 
@@ -87,8 +87,8 @@ TEST_F(TestSwitchFunctionSpec, test2_assignment2)
     bitpowder::lib::String result;
 
     /* Test the spec is retrievable as stored */
-    EXPECT_NO_THROW(m_switch->setFunctionExpression(comparison2_in, mp));
-    result = m_switch->getFunctionExpression(mp);
+    EXPECT_NO_THROW(m_switch->setSwitchExpression(comparison2_in, mp));
+    result = m_switch->getSwitchExpression(mp);
     EXPECT_EQ(comparison2_out, result.stl());
 }
 
