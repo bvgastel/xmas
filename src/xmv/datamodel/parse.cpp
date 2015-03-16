@@ -906,18 +906,30 @@ struct ParsedXMASExpressionSubstituion : public ParsedXMASExpression {
         }
         return retval;
     }
+
     virtual void print(std::ostream &out) const {
         out << *value;
         out << " with {";
         bool first = true;
+        SymbolicEnumField::Type any;
         for (const auto& e : map) {
+            if (e.first != "_") {
+                if (!first)
+                    out << ", ";
+                out << e.first << ": " << e.second;
+                first = false;
+            } else {
+                any = e.second;
+            }
+        }
+        if (!any.empty()) {
             if (!first)
                 out << ", ";
-            out << e.first << ": " << e.second;
-            first = false;
+            out << "_: " << any;
         }
         out << "}";
     }
+
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
         out << "(";
         //bool first = true;		// FIXME: unused-but-set-variable warning
