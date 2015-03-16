@@ -197,7 +197,7 @@ public:
         if (!valid) {
             if (!m_validExprWarningGiven) {
                QString cname = QString(m_component->getStdName().c_str());
-                writeLog("Component " + cname + " has an invalid spec.");
+                emit writeLog("Component " + cname + " has an invalid spec.");
                 m_validExprWarningGiven = true;
             }
         }

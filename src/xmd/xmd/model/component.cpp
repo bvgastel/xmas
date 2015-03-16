@@ -102,7 +102,7 @@ int model::Component::checkName(QString name) {
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    writeLog(QString("ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
+    emit writeLog(QString("ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
 
     if (getType() == Queue) {
         if (typeName != "int") {
@@ -116,7 +116,7 @@ int model::Component::updateExpression(QVariant expression) {
         int size = expression.toInt();
         XMASQueue *queue = dynamic_cast<XMASQueue *>(this->m_component);
         if (!queue) {
-            writeLog(QString("Fatal error in Component: "
+            emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as queue."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
@@ -135,16 +135,16 @@ int model::Component::updateExpression(QVariant expression) {
             auto result = source->setSourceExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            writeLog(QString("saving expression in XMASComponent ")
+            emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded."
                                         : "failed. Error message is:" + errMsg));
             if (result.m_success) {
                 QString xmas_expression = QString(source->getSourceExpression(m_mp).stl().c_str());
-                writeLog(QString("result = ") + xmas_expression );
+                emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
-            writeLog(QString("Fatal error in Component: "
+            emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as source."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
@@ -160,15 +160,15 @@ int model::Component::updateExpression(QVariant expression) {
             auto result =  func->setFunctionExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            writeLog(QString("saving expression in XMASComponent ")
+            emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
                 QString xmas_expression = QString(func->getFunctionExpression(m_mp).stl().c_str());
-                writeLog(QString("result = ") + xmas_expression );
+                emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
-            writeLog(QString("Fatal error in Component: "
+            emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as function."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
@@ -193,15 +193,15 @@ int model::Component::updateExpression(QVariant expression) {
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
+            emit writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
                 QString xmas_expression = QString(join->getJoinExpression(m_mp).stl().c_str());
-                writeLog(QString("result = ") + xmas_expression );
+                emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
-            writeLog(QString("Fatal error in Component: "
+            emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as switch."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
@@ -218,15 +218,15 @@ int model::Component::updateExpression(QVariant expression) {
             auto result =  sw->setSwitchExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            writeLog(QString("saving expression in XMASComponent ")
+            emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
                 QString xmas_expression = QString(sw->getSwitchExpression(m_mp).stl().c_str());
-                writeLog(QString("result = ") + xmas_expression );
+                emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
-            writeLog(QString("Fatal error in Component: "
+            emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as switch."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
