@@ -72,9 +72,13 @@ std::shared_ptr<SymbolicPacketField> SymbolicIntervalField::combine(const std::s
 
 void SymbolicIntervalField::print(std::ostream &out) const
 {
-    out << "[" << min << ".." << (max-1);
-    //out << " " << hash();
-    out << "]";
+    if (min == max-1) {
+        out << min;
+    } else {
+        out << "[" << min << ".." << (max-1);
+        //out << " " << hash();
+        out << "]";
+    }
 }
 
 void SymbolicIntervalField::updateHash()

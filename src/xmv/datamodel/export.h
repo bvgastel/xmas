@@ -17,6 +17,7 @@ bitpowder::lib::String ExportOldCStyle(std::set<XMASComponent*> allComponents, c
 bitpowder::lib::String ExportClause(const SymbolicPacket& packet, bitpowder::lib::MemoryPool& mp);
 bitpowder::lib::String Export(XMASSource* source, bitpowder::lib::MemoryPool& mp);
 bitpowder::lib::String Export(XMASSwitch* sw, bitpowder::lib::MemoryPool& mp);
+bitpowder::lib::String Export(XMASFunction* sw, bitpowder::lib::MemoryPool& mp);
 bitpowder::lib::String Export(std::set<XMASComponent*> allComponents, const bitpowder::lib::JSONData& globals, bitpowder::lib::MemoryPool& mp);
 
 #endif // EXPORT_H

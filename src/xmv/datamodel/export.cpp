@@ -148,10 +148,7 @@ public:
     }
 
     virtual String exportFunctionExpression(XMASFunction* c, MemoryPool& mp) {
-        ParsedXMASFunctionExtension *ext = c->getComponentExtension<ParsedXMASFunctionExtension>(false);
-        std::ostringstream tmp;
-        tmp << *ext->value;
-        return String(tmp.str())(mp);
+        return Export(c, mp);
     }
 
     virtual void visit(XMASFunction *c) {
@@ -330,18 +327,20 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
     {
         std::ostringstream buffer;
         ExportFieldVisitor visitor(buffer);
-        SymbolicTypesExtension *ext = source->o.getPortExtension<SymbolicTypesExtension>();
-        bool first = true;
-        bool multiple = ext->availablePackets.size() > 1;
-        for (const SymbolicPacket& packet : ext->availablePackets) {
-            if (!first)
-                buffer << " or ";
-            if (multiple)
-                buffer << "(";
-            packet.accept(visitor);
-            if (multiple)
-                buffer << ")";
-            first = false;
+        SymbolicTypesExtension *ext = source->o.getPortExtension<SymbolicTypesExtension>(false);
+        if (ext) {
+            bool first = true;
+            bool multiple = ext->availablePackets.size() > 1;
+            for (const SymbolicPacket& packet : ext->availablePackets) {
+                if (!first)
+                    buffer << " or ";
+                if (multiple)
+                    buffer << "(";
+                packet.accept(visitor);
+                if (multiple)
+                    buffer << ")";
+                first = false;
+            }
         }
         return String(buffer.str())(mp);
     }
@@ -352,19 +351,29 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
         std::ostringstream buffer;
         ExportFieldVisitor visitor(buffer);
         SymbolicSwitchingFunctionExtension *ext = c->getComponentExtension<SymbolicSwitchingFunctionExtension>();
-        bool first = true;
-        bool multiple = ext->availablePackets.size() > 1;
-        for (const SymbolicPacket& packet : ext->availablePackets) {
-            if (!first)
-                buffer << " or ";
-            if (multiple)
-                buffer << "(";
-            packet.accept(visitor);
-            if (multiple)
-                buffer << ")";
-            first = false;
+        if (ext) {
+            bool first = true;
+            bool multiple = ext->availablePackets.size() > 1;
+            for (const SymbolicPacket& packet : ext->availablePackets) {
+                if (!first)
+                    buffer << " or ";
+                if (multiple)
+                    buffer << "(";
+                packet.accept(visitor);
+                if (multiple)
+                    buffer << ")";
+                first = false;
+            }
         }
         return String(buffer.str())(mp);
+    }
+
+    String Export(XMASFunction* c, MemoryPool& mp) {
+        ParsedXMASFunctionExtension *ext = c->getComponentExtension<ParsedXMASFunctionExtension>(false);
+        std::ostringstream tmp;
+        if (ext)
+            tmp << *ext->value;
+        return String(tmp.str())(mp);
     }
 
     String Export(std::set<XMASComponent*> allComponents, const JSONData& globals, bitpowder::lib::MemoryPool& returnMemoryPool)
