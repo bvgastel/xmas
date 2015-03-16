@@ -111,7 +111,7 @@ Model.XComponent {
     // Event handling
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
-    onWriteLog: console.log(message,color)
+    onWriteLog: mainwindow.log(message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
 
