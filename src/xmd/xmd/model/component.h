@@ -82,6 +82,7 @@ signals:
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
+
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 

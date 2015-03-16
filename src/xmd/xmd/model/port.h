@@ -25,6 +25,8 @@
 
 #include <QQuickItem>
 
+#include "xmas.h"
+
 namespace model {
 
 class XPort : public QQuickItem
@@ -77,7 +79,9 @@ public:
 private:
     QString m_name;
     PortType m_type;
-    bool m_connected;
+    bool m_connected;       // useless ---> isConnected is part of Output Port.
+                            // but how to implement?
+    Port *port;           // Only one port is allowed: either input or output
 };
 
 } // namespace model
