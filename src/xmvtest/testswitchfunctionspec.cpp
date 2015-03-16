@@ -63,8 +63,8 @@ protected:
     std::string comparison1_in = "data == 1";
     std::string comparison1_out = "data == 1";
 
-    std::string comparison2_in = "a == 1 && b == 2";
-    std::string comparison2_out = "a == 1 && b == 2";
+    std::string comparison2_in = "src % 2 == 0";
+    std::string comparison2_out = "src % 2 == 0";
 
     XMASSwitch *m_switch;
 
