@@ -8,6 +8,7 @@ XComponent {
     type: Model.XComponent.Sink
     prefix: "snk"
     topLabel: false
+    XPort{x:20 ; y:0; rotation:180; name:inputports[0].name; type:inputports[0].type}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -16,14 +17,14 @@ XComponent {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 4.0
-            ctx.moveTo(10,25)
-            ctx.lineTo(35,25)
-            ctx.moveTo(35,5)
-            ctx.lineTo(35,45)
-            ctx.moveTo(40,10)
-            ctx.lineTo(40,40)
-            ctx.moveTo(45,15)
+            ctx.moveTo(25,5)
+            ctx.lineTo(25,35)
+            ctx.moveTo(5,35)
             ctx.lineTo(45,35)
+            ctx.moveTo(10,40)
+            ctx.lineTo(40,40)
+            ctx.moveTo(15,45)
+            ctx.lineTo(35,45)
             ctx.stroke()
         }
     }

@@ -46,7 +46,6 @@ function endDrag()
         draggedItem.destroy();
         draggedItem = null;
     } else {
-        draggedItem.uid = generateId()
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
         //datacontrol.componentCreated(draggedItem)
@@ -57,16 +56,16 @@ function endDrag()
 }
 
 
-function generateId()
-{
-    var max = -1
-    for(var child in sheet.children){
-        if(sheet.children[child].objectName==="component"){
-            max = Math.max(sheet.children[child].cid,max)
-        }
-    }
-    return (++max)
-}
+//function generateId()
+//{
+//    var max = -1
+//    for(var child in sheet.children){
+//        if(sheet.children[child].objectName==="component"){
+//            max = Math.max(sheet.children[child].cid,max)
+//        }
+//    }
+//    return (++max)
+//}
 
 function generateTagIndex(item)
 {

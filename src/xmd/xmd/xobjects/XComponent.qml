@@ -43,20 +43,17 @@ Model.XComponent {
     // Properties
     objectName: "component"
     width: 100
-    height: box.height
+    height: 100
     scale: 1.00
     rotation: 0
     focus: true
     type: Model.XComponent.Unknown
     z:1 //on top of channels
-    property int uid:-1
     property string prefix: ""
     property int index:-1
     property bool selected: false
     property bool withDialog: false
     property bool topLabel: true
-    property bool boxVisible: false
-    property string symbolSource: ""
 
     // Signals
     signal update()
@@ -116,6 +113,7 @@ Model.XComponent {
     onScaleChanged: doMove(0,0)
     onWriteLog: console.log(message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
+    onSelectedChanged: if(!selected) label.focus = false
 
     // Selection highlite
      Rectangle {
@@ -129,29 +127,6 @@ Model.XComponent {
          z:-1 // under parent = component
       }
 
-    // box with symbol (center)
-    Rectangle {
-        id: box
-        anchors.left: columnLeft.right  //symbol.width
-        anchors.right: columnRight.left
-        height: boxVisible ? Math.max(portsLeft.count,portsRight.count) * 30 + 20 : component.height
-        z:-1
-        border.color: "black"
-        border.width: boxVisible ? 4 : 0
-        radius: 10
-        color: boxVisible ? "white" : "transparent"
-        Image {
-            id:symbol
-            fillMode: Image.Stretch
-            source: symbolSource
-            anchors.centerIn: box
-        }
-        Text {
-            //text: symbol.status === Image.Ready ? "" : type
-        }
-    }
-
-
     // Valid Marker (top left)
     Rectangle {
         id: validmarker
@@ -161,7 +136,7 @@ Model.XComponent {
         radius: 15
         color: "red"
         anchors.verticalCenter: nameItem.verticalCenter
-        anchors.right: box.left
+        anchors.right: component.left
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
@@ -221,10 +196,10 @@ Model.XComponent {
         id:nameItem
         rotation: Math.abs(parent.rotation) > 135 && Math.abs(parent.rotation) < 225 ? -parent.rotation : 0
         anchors {
-            left: box.left
-            right: box.right
-            bottom: topLabel ? box.top : undefined
-            top: topLabel ? undefined : box.bottom
+            left: component.left
+            right: component.right
+            bottom: topLabel ? component.top : undefined
+            top: topLabel ? undefined : component.bottom
         }
         color:"transparent"
         border.color: "red"
@@ -248,42 +223,6 @@ Model.XComponent {
             readOnly: false
         }
     }
-
-
-    // Input ports (left)
-    Column {
-        id:columnLeft
-        spacing: boxVisible ? 20 : 50
-        anchors.left: component.left
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id:portsLeft
-            model:component.inputports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                //anchors.right: columnLeft.left
-            }
-        }
-    }
-
-    // Output ports (right)
-    Column {
-        id:columnRight
-        spacing: boxVisible ? 20 : 50
-        anchors.right: component.right
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id: portsRight
-            model:component.outputports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                //anchors.left: columnRight.right
-            }
-        }
-    }
-
 
     // Connections
     Connections {

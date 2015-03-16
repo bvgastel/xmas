@@ -7,11 +7,8 @@ XComponent {
     height: 30
     type: Model.XComponent.In
     prefix: "i"
-    //TODO : remove inputports once they can be drived from xmas
-    outputports:[
-        XPort {name: "o"; type:Model.XPort.Initiator}
-    ]
-
+    //TODO : remove xport once it derives from xmas
+    XPort {x:40; y:10; name: "o"; type:Model.XPort.Initiator}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -20,7 +17,7 @@ XComponent {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 4.0
-            ctx.moveTo(40,15)
+            ctx.moveTo(45,15)
             ctx.lineTo(20,15)
             ctx.lineTo(5,5)
             ctx.lineTo(5,25)

@@ -8,6 +8,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Source
     prefix: "src"
+    XPort{x:20 ; y:40; rotation:0; name:outputports[0].name; type:outputports[0].type}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -16,10 +17,10 @@ XComponent {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 4.0
-            ctx.moveTo(40,25)
-            ctx.lineTo(5,25)
+            ctx.moveTo(25,45)
+            ctx.lineTo(25,5)
             ctx.moveTo(5,5)
-            ctx.lineTo(5,45)
+            ctx.lineTo(45,5)
             ctx.stroke()
         }
     }

@@ -33,10 +33,12 @@ import XMAS.model 1.0 as Model
 
 Model.XPort {
     id:port
+    z:1
     objectName: "port"
-    width: 20; height:10
+    width: 10; height:10
     connected: false
     rotation: (port.type === Model.XPort.Target) ? 0 : 180
+    property bool nameAlignCenter: false
 
     signal update()
     signal removed()
@@ -44,28 +46,17 @@ Model.XPort {
     Rectangle{
         id:portShape
         color: connected ? "black" : "red"
-         width: 10; height:10
-        //anchors.fill: parent
+        anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
         radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
-        Rectangle {
-            id: portWire
-            color:"black"
-            z:-1
-            border.width: 0
-            height: 4
-            width: 15
-            anchors.left: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-        }
     }
     Text {
         text:name
-        anchors.left: boxVisible ? port.right : portShape.right
-        anchors.bottom: boxVisible ?  undefined : portShape.top
-        anchors.verticalCenter: boxVisible ? portShape.verticalCenter : undefined
-        anchors.leftMargin: boxVisible ? 5 : 0
+        anchors.left: nameAlignCenter ? port.right : portShape.right
+        anchors.bottom: nameAlignCenter ?  undefined : portShape.top
+        anchors.verticalCenter: nameAlignCenter ? portShape.verticalCenter : undefined
+        anchors.leftMargin: nameAlignCenter ? 15 : 0
         rotation:-port.rotation
     }
 
@@ -95,6 +86,3 @@ Model.XPort {
         }
     }
 }
-
-
-

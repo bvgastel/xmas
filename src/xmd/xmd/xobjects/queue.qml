@@ -8,6 +8,8 @@ XComponent {
     type: Model.XComponent.Queue
     prefix: "q"
     property int size: 0
+    XPort{x:0 ; y:20; name:inputports[0].name; type:inputports[0].type}
+    XPort{x:90 ; y:20; name:outputports[0].name; type:outputports[0].type}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -18,10 +20,10 @@ XComponent {
             ctx.lineWidth = 4.0
             ctx.rect(20,10,30,30)
             ctx.rect(50,10,30,30)
-            ctx.moveTo(10 ,25)
+            ctx.moveTo(5 ,25)
             ctx.lineTo(20,25)
             ctx.moveTo(80,25)
-            ctx.lineTo(90,25)
+            ctx.lineTo(95,25)
             ctx.stroke()
         }
     }

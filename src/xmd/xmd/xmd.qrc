@@ -62,5 +62,6 @@
         <file>content/packet.png</file>
         <file>uicontrols/XPacketDialog.qml</file>
         <file>xobjects/composite.qml</file>
+        <file>content/agent.png</file>
     </qresource>
 </RCC>

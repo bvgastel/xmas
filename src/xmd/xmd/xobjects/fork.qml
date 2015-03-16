@@ -7,6 +7,9 @@ XComponent {
     height: 100
     type: Model.XComponent.Fork
     prefix: "frk"
+    XPort{x:0 ; y:45; name:inputports[0].name; type:inputports[0].type}
+    XPort{x:90 ; y:15; name:outputports[0].name; type:outputports[0].type}
+    XPort{x:90 ; y:75; name:outputports[1].name; type:outputports[1].type}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -20,7 +23,7 @@ XComponent {
             ctx.moveTo(60 ,0)
             ctx.lineTo(60,100)
             //left port with arrow
-            ctx.moveTo(10 ,50)
+            ctx.moveTo(5 ,50)
             ctx.lineTo(30,50)
             ctx.lineTo(30,45)
             ctx.lineTo(40-ctx.lineWidth,50)
@@ -29,9 +32,9 @@ XComponent {
             ctx.fill()
             //right ports
             ctx.moveTo(60 ,20)
-            ctx.lineTo(90,20)
+            ctx.lineTo(95,20)
             ctx.moveTo(60 ,80)
-            ctx.lineTo(90,80)
+            ctx.lineTo(95,80)
             ctx.stroke()
         }
     }
