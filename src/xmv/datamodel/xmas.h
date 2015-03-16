@@ -807,6 +807,13 @@ public:
         p[2] = &b;
     }
 
+    const bitpowder::lib::String getFunctionExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setFunctionExpression(std::string &str_expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setFunctionExpression(bitpowder::lib::String &expr,
+                                           bitpowder::lib::MemoryPool &mp);
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);

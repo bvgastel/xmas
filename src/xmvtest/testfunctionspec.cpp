@@ -68,7 +68,7 @@ protected:
     std::string assgn2_out = "n := src, msg := msg with {req: rsp, _: rsp}";
 
     std::string assgn3_in = "n := src, n := n + 1";
-    std::string assgn3_out = "n := src, n := n + 1";
+    std::string assgn3_out = "n := (n) + (1)";
 
     XMASFunction *m_function;
 

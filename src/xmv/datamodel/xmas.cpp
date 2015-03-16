@@ -183,7 +183,7 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
     auto result = ParseSourceExpression(expr, mp);
     // note: result has a bool() operator
     if (result) {
-        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         // FIXME: Storing the values has a memory problem due to extensive use of MemoryPool (temporary memory).
         ClearMessageSpec(this);
         for (auto &packet : result.result().spec) {
@@ -210,7 +210,7 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
 
     auto result = ParsePacketFunction (expr, mp);
     if (result) {
-        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         auto func = result.result();
         removeExtensionOfBaseType<ParsedXMASFunctionExtension>();
         this->addExtension(new ParsedXMASFunctionExtension(func));
@@ -218,11 +218,40 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
             return (*func)(p);
         });
     } else {
-        std::cerr << "[setFunctionExpression] parsing " << expr << " containing an error." << std::endl;
-        std::cerr << "[setFunctionExpression] error parsing at position " << result.position() << " is " << result.error() << std::endl;
+        std::cerr << "[XMASFunction::setFunctionExpression] parsing " << expr << " containing an error." << std::endl;
+        std::cerr << "[XMASFunction::setFunctionExpression] error parsing at position " << result.position() << " is " << result.error() << std::endl;
     }
 
     return ExpressionResult(result, result.position(), result.error());
 
 }
 
+const bitpowder::lib::String XMASSwitch::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
+    return Export(this, mp).stl();
+}
+
+ExpressionResult XMASSwitch::setFunctionExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::String expr(str_expr);
+    return setFunctionExpression(expr, mp);
+}
+
+ExpressionResult XMASSwitch::setFunctionExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
+
+    // The input variable may be a temp
+    expr = expr(mp);
+
+    auto result = ParsePacketExpression(expr, mp);
+    if (result) {
+        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        removeExtensionOfBaseType<SymbolicSwitchingFunctionExtension>();
+        for (auto &packet : result.result().values) {
+            attachSwitchingFunction(this, packet);
+        }
+    } else {
+        std::cerr << "[XMASSwitch::setFunctionExpression] parsing " << expr << " containing an error." << std::endl;
+        std::cerr << "[XMASSwitch::setFunctionExpression] error parsing at position " << result.position() << " is " << result.error() << std::endl;
+    }
+
+    return ExpressionResult(result, result.position(), result.error());
+
+}

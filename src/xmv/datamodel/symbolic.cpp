@@ -150,7 +150,7 @@ void propagate(Input *input, SymbolicPacket &packet) {
 */
 
 void attach(Input *port, SymbolicPacket &&a) {
-    std::cout << "attach(Input): " << a << " valid=" << a.valid() << " port=" << *port << std::endl;
+    //std::cout << "attach(Input): " << a << " valid=" << a.valid() << " port=" << *port << std::endl;
     if (!a.valid())
         return;
     if (!port)
