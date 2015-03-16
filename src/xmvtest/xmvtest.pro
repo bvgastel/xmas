@@ -15,7 +15,8 @@ SOURCES += \
     jsonprinter.test.cpp \
     testsourcespec.cpp \
     testfunctionspec.cpp \
-    testswitchfunctionspec.cpp
+    testswitchfunctionspec.cpp \
+    testjoinfunctionspec.cpp
 
 
 CONFIG += C++11

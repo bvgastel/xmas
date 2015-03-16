@@ -254,3 +254,75 @@ ExpressionResult XMASSwitch::setSwitchExpression(bitpowder::lib::String &expr, b
     return ExpressionResult(result, result.position(), result.error());
 
 }
+
+const bitpowder::lib::String XMASJoin::getJoinExpression(bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::unused(mp);
+    bitpowder::lib::String port;
+
+    ParsedXMASRestrictedJoin* restricted = this->getComponentExtension<ParsedXMASRestrictedJoin>(false);
+    if (restricted) {
+        std::string port_str = std::to_string(restricted->function);
+        port = bitpowder::lib::String(port_str.c_str());
+    }
+    return std::move(port);
+    //return Export(this, mp).stl();  ---> does not exist yet
+}
+
+ExpressionResult XMASJoin::setRestrictedJoinPort(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::String expr(str_expr);
+    return setRestrictedJoinPort(expr, mp);
+}
+
+ExpressionResult XMASJoin::setUnrestrictedJoinExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
+    bitpowder::lib::String expr(str_expr);
+    return setUnrestrictedJoinExpression(expr, mp);
+}
+
+ExpressionResult XMASJoin::setRestrictedJoinPort(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
+
+    bitpowder::lib::String errMsg;
+
+    // The input variable may be a temp
+    expr = expr(mp);
+
+    int port;
+    try {
+        port = std::stoi(expr.stl());
+    } catch (std::invalid_argument) {
+        errMsg = "[XMASJoin::setRestrictedJoinPort] Invalid argument.";
+        errMsg = errMsg(mp);
+        return ExpressionResult(false, 0, errMsg);
+    } catch (std::out_of_range) {
+        errMsg = "[XMASJoin::setRestrictedJoinPort] Argument out of range.";
+        errMsg = errMsg(mp);
+        return ExpressionResult(false, 0, errMsg);
+    }
+
+    removeExtensionOfBaseType<ParsedXMASRestrictedJoin>();
+    auto restrictedJoin = new ParsedXMASRestrictedJoin(port);
+    this->addExtension(restrictedJoin);
+
+    return ExpressionResult(true, 0, "");
+
+}
+
+ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
+
+    // FIXME: parser only knows restricted with function (=portnr). Restricted has no function.
+    auto result = ParsePacketExpression(expr, mp);
+    if (result) {
+        //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        //removeExtensionOfBaseType<SymbolicJoinFunctionExtension>(); // does not exist yet
+        for (auto &packet : result.result().values) {
+            bitpowder::lib::unused(packet);
+            //attachjoinFunction(this, packet); // does not exist yet.
+        }
+    } else {
+        std::cerr << "[XMASJoin::setFunctionExpression] parsing " << expr << " containing an error." << std::endl;
+        std::cerr << "[XMASJoin::setFunctionExpression] error parsing at position " << result.position() << " is " << result.error() << std::endl;
+    }
+
+    return ExpressionResult(result, result.position(), result.error());
+
+}
+

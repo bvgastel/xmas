@@ -976,6 +976,19 @@ public:
         p[2] = &o;
     }
 
+    const bitpowder::lib::String getJoinExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setRestrictedJoinPort(std::string &str_expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setRestrictedJoinPort(bitpowder::lib::String &expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setUnrestrictedJoinExpression(std::string &str_expr,
+                                                   bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setUnrestrictedJoinExpression(bitpowder::lib::String &expr,
+                                                   bitpowder::lib::MemoryPool &mp);
+
+
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
