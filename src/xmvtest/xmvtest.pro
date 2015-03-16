@@ -14,7 +14,8 @@ SOURCES += \
     testdatamodel.cpp \
     jsonprinter.test.cpp \
     testsourcespec.cpp \
-    testfunctionspec.cpp
+    testfunctionspec.cpp \
+    testswitchfunctionspec.cpp
 
 
 CONFIG += C++11

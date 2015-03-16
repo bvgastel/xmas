@@ -242,7 +242,7 @@ ExpressionResult XMASSwitch::setFunctionExpression(bitpowder::lib::String &expr,
 
     auto result = ParsePacketExpression(expr, mp);
     if (result) {
-        std::cout << "parsing " << expr << ": " << result.result() << std::endl;
+        //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         removeExtensionOfBaseType<SymbolicSwitchingFunctionExtension>();
         for (auto &packet : result.result().values) {
             attachSwitchingFunction(this, packet);
