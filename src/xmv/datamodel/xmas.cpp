@@ -195,20 +195,7 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
 }
 
 const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
-    bitpowder::lib::unused(mp);
-
-    bitpowder::lib::String function;
-    bool createExtension = true;
-    ParsedXMASFunctionExtension *ext = this->getComponentExtension<ParsedXMASFunctionExtension>(!createExtension);
-    if (!ext) {
-        return function;
-    }
-    std::map<bitpowder::lib::String,int> enumMap;
-    std::ostringstream tmp;
-    tmp << *ext->value;
-    function = bitpowder::lib::String(tmp.str());
-    return std::move(function);
-    //return Export(this, mp).stl();
+    return Export(this, mp).stl();
 }
 
 ExpressionResult XMASFunction::setFunctionExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
