@@ -32,3 +32,7 @@ model::Channel::~Channel()
 
 }
 
+
+void model::Channel::componentComplete() {
+    qDebug() << "Channel created";
+}

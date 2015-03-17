@@ -41,6 +41,8 @@ namespace model
 {
 class Component : public QQuickItem //, public QQmlParserStatus
 {
+    Q_OBJECT
+
 public:
     enum Orientation {
         North = 0,
@@ -55,7 +57,6 @@ public:
     enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
 
 private:
-    Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
