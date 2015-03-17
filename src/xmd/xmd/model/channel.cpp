@@ -37,6 +37,6 @@ void model::Channel::componentComplete() {
     qDebug() << "Channel created";
 }
 
-void model::Component::classBegin() {
+void model::Channel::classBegin() {
     // No action needed.
 }
