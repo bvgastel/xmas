@@ -25,17 +25,22 @@
 
 #include <QQuickItem>
 
+
 #include "xmas.h"
 
 namespace model {
 
+class Component;
+
 class XPort : public QQuickItem
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(PortType)
     Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(bool connected READ getConnected WRITE setConnected NOTIFY connectedChanged)
+    Q_PROPERTY(model::Component *owner READ owner WRITE owner NOTIFY ownerChanged)
 
 //    property int id: 0 (komt van toepassing in composites , uniek volgnummer ipv naam)
 
@@ -43,14 +48,18 @@ signals:
     void nameChanged();
     void typeChanged();
     void connectedChanged();
+    void ownerChanged();
 
 public slots:
 
 public:
     explicit XPort(QQuickItem *parent = 0);
     ~XPort();
-    enum PortType {Target , Initiator};
+    enum PortType {INPORT, OUTPORT};
 
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
     PortType getType() const {return m_type;}
     void setType(PortType type) {
@@ -69,19 +78,34 @@ public:
         emit nameChanged();
     }
 
-    bool getConnected() {return m_connected;}
-    void setConnected(bool value) {
-        m_connected = value;
-        emit connectedChanged();
+    bool getConnected() {
+        return m_port->isConnected();
+    }
+
+    void setConnected(bool) {
+        emit connectedChanged();  // just signal, don't change anything
+    }
+
+    Component *owner() {
+        return this->m_owner;
+    }
+
+    void owner(Component *owner) {
+        this->m_owner = owner;
+    }
+
+    Port *getPort() {
+        return m_port;
     }
 
 
 private:
     QString m_name;
     PortType m_type;
-    bool m_connected;       // useless ---> isConnected is part of Output Port.
+    //bool m_connected;       // useless ---> isConnected is part of Output Port.
                             // but how to implement?
-    Port *port;           // Only one port is allowed: either input or output
+    Component *m_owner;
+    Port *m_port;           // Only one port is allowed: either input or output
 };
 
 } // namespace model

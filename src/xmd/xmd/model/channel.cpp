@@ -21,6 +21,7 @@
   **********************************************************************/
 
 #include "channel.h"
+#include "xmas.h"
 
 model::Channel::Channel(QQuickItem *parent) : QQuickItem(parent)
 {
@@ -34,7 +35,15 @@ model::Channel::~Channel()
 
 
 void model::Channel::componentComplete() {
-    qDebug() << "Channel created";
+    Output *out = dynamic_cast<Output *>(m_port1->getPort());
+    Input *in = dynamic_cast<Input *>(m_port2->getPort());
+    if (in && out) {
+        Output &output = *out;
+        Input &input = *in;
+        ::connect(output, input);
+    } else {
+        throw std::exception();
+    }
 }
 
 void model::Channel::classBegin() {

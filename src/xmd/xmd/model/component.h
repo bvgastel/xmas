@@ -211,6 +211,10 @@ public:
         emit validChanged();
 	}
 
+    XMASComponent *getXMASComponent() {
+        return this->m_component;
+    }
+
     //###################################################################################################
     //TODO : to be reviewed with Guus
     QQmlListProperty<XPort> getInputPorts();

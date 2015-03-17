@@ -275,7 +275,7 @@ void model::Component::extractPorts(void)
     {
         XPort *xport = new XPort();
         xport->setName(p->getName());
-        xport->setType(XPort::PortType::Target);
+        xport->setType(XPort::PortType::INPORT);
         xport->setConnected(p->isConnected());
         m_inputports.append(xport);
         qDebug() << "inpoortnaam = " << xport->getName();
@@ -288,7 +288,7 @@ void model::Component::extractPorts(void)
     {
         XPort *xport = new XPort();
         xport->setName(p->getName());
-        xport->setType(XPort::PortType::Initiator);
+        xport->setType(XPort::PortType::OUTPORT);
         xport->setConnected(p->isConnected());
         m_outputports.append(xport);
         qDebug() << "outpoortnaam = " << xport->getName();
