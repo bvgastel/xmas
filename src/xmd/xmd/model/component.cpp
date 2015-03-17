@@ -102,7 +102,7 @@ int model::Component::checkName(QString name) {
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    emit writeLog(QString("ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
+    emit writeLog(QString("[debug]ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
 
     if (getType() == Queue) {
         if (typeName != "int") {
@@ -122,6 +122,7 @@ int model::Component::updateExpression(QVariant expression) {
         }
         queue->c = size;
         setValidExpr(true, -1, QString(""));
+        emit writeLog(QString("queuesize set: ")+size);
         return -1;
     } else if (getType() == Source) {
         if (typeName != "QString") {
@@ -135,13 +136,11 @@ int model::Component::updateExpression(QVariant expression) {
             auto result = source->setSourceExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
+            QString xmas_expression = result.m_success ? QString(source->getSourceExpression(m_mp).stl().c_str())
+                                                       : "<should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded."
+                     + (result.m_success? "succeeded." + xmas_expression
                                         : "failed. Error message is:" + errMsg));
-            if (result.m_success) {
-                QString xmas_expression = QString(source->getSourceExpression(m_mp).stl().c_str());
-                emit writeLog(QString("result = ") + xmas_expression );
-            }
             return result.m_pos;
         } else {
             emit writeLog(QString("Fatal error in Component: "
@@ -193,12 +192,13 @@ int model::Component::updateExpression(QVariant expression) {
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
+            QString xmas_expression = result.m_success ? QString(join->getJoinExpression(m_mp).stl().c_str())
+                                                       : "<Should never show>";
+            xmas_expression = xmas_expression == "" ? "<no value returned>" : xmas_expression;
             emit writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
-            if (result.m_success) {
-                QString xmas_expression = QString(join->getJoinExpression(m_mp).stl().c_str());
-                emit writeLog(QString("result = ") + xmas_expression );
-            }
+                     + (result.m_success? "succeeded. Stored \"" + xmas_expression + "\""
+                                        : "failed. Error message is:" + errMsg));
+            emit writeLog(QString("Function for Join is not implemented yet."));
             return result.m_pos;
         } else {
             emit writeLog(QString("Fatal error in Component: "
@@ -218,12 +218,11 @@ int model::Component::updateExpression(QVariant expression) {
             auto result =  sw->setSwitchExpression(expr, m_mp);
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
+            QString xmas_expression = result.m_success ? QString(sw->getSwitchExpression(m_mp).stl().c_str())
+                                                       : "<Should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
-            if (result.m_success) {
-                QString xmas_expression = QString(sw->getSwitchExpression(m_mp).stl().c_str());
-                emit writeLog(QString("result = ") + xmas_expression );
-            }
+                     + (result.m_success? "succeeded." + xmas_expression
+                                        : "failed. Error message is:" + errMsg));
             return result.m_pos;
         } else {
             emit writeLog(QString("Fatal error in Component: "
