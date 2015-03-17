@@ -35,16 +35,12 @@ class Component;
 class Channel : public QQuickItem
 {
     Q_OBJECT
-
-    Q_PROPERTY(Component firstComponent READ getFirstComponent WRITE setFirstComponent NOTIFY firstComponentChanged)
-    Q_PROPERTY(Component secondComponent READ getSecondComponent WRITE setSecondComponent NOTIFY secondComponentChanged)
-    Q_PROPERTY(XPort firstPort READ getFirstPort WRITE setFirstPort NOTIFY firstPortChanged)
-    Q_PROPERTY(XPort secondPort READ getSecondPort WRITE setSecondPort NOTIFY secondPortChanged)
+    Q_INTERFACES(QQmlParserStatus)
+    Q_PROPERTY(XPort *firstPort READ getFirstPort WRITE setFirstPort NOTIFY firstPortChanged)
+    Q_PROPERTY(XPort *secondPort READ getSecondPort WRITE setSecondPort NOTIFY secondPortChanged)
 
 signals:
 
-    void firstComponentChanged();
-    void secondComponentChanged();
     void firstPortChanged();
     void secondPortChanged();
 
@@ -55,27 +51,18 @@ public:
     explicit Channel(QQuickItem *parent = 0);
     ~Channel();
 
+    virtual void classBegin();
     virtual void componentComplete();
 
-    Component * getFirstComponent(){return m_component1;}
-    Component * getSecondComponent(){return m_component2;}
-    XPort * getFirstPort(){return m_port1;}
-    XPort * getSecondPort(){return m_port2;}
+    XPort *getFirstPort(){return m_port1;}
+    XPort *getSecondPort(){return m_port2;}
 
-    void setFirstComponent(Component firstComponent) {
-        m_component1 = &firstComponent;
-        emit firstComponentChanged();
-    }
-    void setSecondComponent(Component secondComponent){
-        m_component2 = &secondComponent;
-        emit secondComponentChanged();
-    }
-    void setFirstPort(XPort firstPort){
-        m_port1 = &firstPort;
+    void setFirstPort(XPort *firstPort){
+        m_port1 = firstPort;
         emit firstPortChanged();
     }
-    void setSecondPort(XPort secondPort){
-        m_port2 = &secondPort;
+    void setSecondPort(XPort *secondPort){
+        m_port2 = secondPort;
         emit secondPortChanged();
     }
 
@@ -83,8 +70,6 @@ private:
 
     XPort *m_port1;
     XPort *m_port2;
-    Component *m_component1;
-    Component *m_component2;
 };
 
 } // namespace model
