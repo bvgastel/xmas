@@ -107,6 +107,17 @@ TEST_F(TestDataModel, NotConnectedInValid)
     EXPECT_FALSE(m_queue->valid());
 }
 
+TEST_F(TestDataModel, DanglingConnect) {
+    connect(m_source->o, m_function->i);
+    connect(m_source->o, m_function->i);    // connect twice: no problem
+    connect(m_function->o, m_fork->i);
+    connect(m_source->o, m_queue->i);       // now m_function is dangling
+    connect(m_queue->o, m_merge->a);
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_queue->valid());
+    EXPECT_FALSE(m_function->valid());
+}
+
 TEST_F(TestDataModel, ConnectedValid)
 {
     connect(m_source->o, m_function->i);

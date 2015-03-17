@@ -71,6 +71,14 @@ bool Input::valid() {
     return Port::valid() && isConnected() && input->output == this;
 }
 
+/*
+ * WARNING: does this need any validity checks?
+ * Cases to check:
+ *  - output port is already connected
+ *  - input port is already connected
+ *  - type of data on both ports?
+ *
+ */
 void connect(Output &o, Input &i) {
     i.input = &o;
     o.output = &i;
@@ -308,7 +316,7 @@ ExpressionResult XMASJoin::setRestrictedJoinPort(bitpowder::lib::String &expr, b
 
 ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String &expr, bitpowder::lib::MemoryPool &mp) {
 
-    // FIXME: parser only knows restricted with function (=portnr). Restricted has no function.
+    // FIXME: parser only knows restricted join with function (=portnr). Unrestricted has no function.
     auto result = ParsePacketExpression(expr, mp);
     if (result) {
         //std::cout << "parsing " << expr << ": " << result.result() << std::endl;

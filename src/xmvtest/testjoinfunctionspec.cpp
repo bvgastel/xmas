@@ -66,7 +66,7 @@ protected:
     std::string port2_out = "2";
 
     std::string comparison1_in = "data == 1";
-    std::string comparison1_out = "data == 1";
+    std::string comparison1_out = "<Not implemented yet>";
 
     XMASJoin *m_join;
 
@@ -95,11 +95,4 @@ TEST_F(TestJoinFunctionSpec, test2_restricted_join)
 }
 
 } // namespace
-
-
-// EOF
-
-
-
-
 
