@@ -32,7 +32,7 @@ function doConnect(port1,port2) {
 
 }
 
-
+//NOTE: isConnected() is a method in xmas: we should not set in qml
 //TODO : portnames are references and must match json!!!
 //TODO : avoid short naming
 function create(iComp,iPort,tComp,tPort) {

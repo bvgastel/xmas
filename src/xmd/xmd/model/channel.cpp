@@ -25,8 +25,8 @@
 
 model::Channel::Channel(QQuickItem *parent)
     : QQuickItem(parent),
-      m_port1(nullptr),
-      m_port2(nullptr)
+      m_outport(nullptr),
+      m_inport(nullptr)
 {
 }
 
@@ -43,8 +43,8 @@ void model::Channel::componentComplete()
         emit writeLog(errMsg, Qt::red);
         return;
     }
-    Output *out = dynamic_cast<Output *>(m_port1->getPort());
-    Input *in = dynamic_cast<Input *>(m_port2->getPort());
+    Output *out = dynamic_cast<Output *>(m_outport->getPort());
+    Input *in = dynamic_cast<Input *>(m_inport->getPort());
     if (in && out) {
         Output &output = *out;
         Input &input = *in;
@@ -61,21 +61,22 @@ void model::Channel::classBegin()
 
 bool model::Channel::portsOk(QString &errMsg)
 {
-    if (!m_port1) {
-        errMsg += "Component completion of channel failed due to missing output XPort.";
-        return false;
+    bool result = true;
+    if (!m_outport) {
+        errMsg += "\nComponent completion of channel failed due to missing output XPort.";
+        result = false;
     }
-    if (!m_port2) {
-        errMsg += "Component completion of channel failed due to missing input XPort.";
-        return false;
+    if (!m_inport) {
+        errMsg += "\nComponent completion of channel failed due to missing input XPort.";
+        result = false;
     }
-    if (!m_port1->getPort()) {
-        errMsg = "Component completion of channel failed due to lack of Output.";
-        return false;
+    if (m_outport && !m_outport->getPort()) {
+        errMsg += "\nComponent completion of channel failed due to lack of Output.";
+        result =  false;
     }
-    if (!m_port2->getPort()) {
-        errMsg = "Component completion of channel failed due to lack of Input.";
-        return false;
+    if (m_inport && !m_inport->getPort()) {
+        errMsg += "\nComponent completion of channel failed due to lack of Input.";
+        result = false;
     }
-    return true;
+    return result;
 }

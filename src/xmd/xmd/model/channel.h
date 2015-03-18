@@ -36,13 +36,13 @@ class Channel : public QQuickItem
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(XPort *firstPort READ getFirstPort WRITE setFirstPort NOTIFY firstPortChanged)
-    Q_PROPERTY(XPort *secondPort READ getSecondPort WRITE setSecondPort NOTIFY secondPortChanged)
+    Q_PROPERTY(XPort *outport READ outport WRITE outport NOTIFY inportChanged)
+    Q_PROPERTY(XPort *inport READ inport WRITE inport NOTIFY outportChanged)
 
 signals:
 
-    void firstPortChanged();
-    void secondPortChanged();
+    void inportChanged();
+    void outportChanged();
 
     void writeLog(QString msg, QColor color = Qt::blue);
 
@@ -56,16 +56,22 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
-    XPort *getFirstPort(){return m_port1;}
-    XPort *getSecondPort(){return m_port2;}
-
-    void setFirstPort(XPort *firstPort){
-        m_port1 = firstPort;
-        emit firstPortChanged();
+    XPort *outport() {
+        return m_outport;
     }
-    void setSecondPort(XPort *secondPort){
-        m_port2 = secondPort;
-        emit secondPortChanged();
+
+    void outport(XPort *firstPort){
+        m_outport = firstPort;
+        emit inportChanged();
+    }
+
+    XPort *inport() {
+        return m_inport;
+    }
+
+    void inport(XPort *secondPort){
+        m_inport = secondPort;
+        emit outportChanged();
     }
 
 private:
@@ -73,8 +79,8 @@ private:
 
 private:
 
-    XPort *m_port1;
-    XPort *m_port2;
+    XPort *m_outport;
+    XPort *m_inport;
 };
 
 } // namespace model
