@@ -181,12 +181,21 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
             expression = QString(source->getSourceExpression(m_mp).stl().c_str());
         }
         map.insert("expression", expression);
+    } else if (type == xjoin) { // NOTE: for now only works for restricted join
+        XMASJoin *join = dynamic_cast<XMASJoin *>(comp);
+        QString expression = QString();
+        if (join) {
+            expression = QString(join->getJoinExpression(m_mp).stl().c_str());
+        }
+        map.insert("expression", expression);
+    } else if (type == xswitch) {
+        XMASSwitch *sw = dynamic_cast<XMASSwitch *>(comp);
+        QString expression = QString();
+        if (sw) {
+            expression = QString(sw->getSwitchExpression(m_mp).stl().c_str());
+        }
+        map.insert("expression", expression);
     }
-
-
     map.insert("type", type);
     map.insert("name", qname);
-    //@Guus of Jeroen : in qml is property "expression" gelinked, dus voor queue is dit de capacity.
-    //map.insert("expression", "");
-
 }
