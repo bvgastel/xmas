@@ -68,6 +68,10 @@ private:
 
     Q_PROPERTY(QQmlListProperty<model::XPort> inputports READ getInputPorts NOTIFY inputPortsChanged)
     Q_PROPERTY(QQmlListProperty<model::XPort> outputports READ getOutputPorts NOTIFY outputPortsChanged)
+
+    Q_PROPERTY(QVariantList inports READ inports NOTIFY inPortsChanged)
+    Q_PROPERTY(QVariantList outports READ outports NOTIFY outPortsChanged)
+
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
@@ -75,8 +79,10 @@ public:
 signals:
     void nameChanged(int result);
     void typeChanged();
-    void inputPortsChanged(QVariantList list);
-    void outputPortsChanged(QVariantList list);
+    void inputPortsChanged();
+    void outputPortsChanged();
+    void inPortsChanged();
+    void outPortsChanged();
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
@@ -143,7 +149,7 @@ public:
         // Check for warning
         if (!valid) {
             if (!m_validExprWarningGiven) {
-               QString cname = QString(m_component->getStdName().c_str());
+                QString cname = QString(m_component->getStdName().c_str());
                 emit writeLog("Component " + cname + " has an invalid spec.");
                 m_validExprWarningGiven = true;
             }
@@ -154,7 +160,7 @@ public:
         }
         m_valid = valid;
         emit validChanged();
-	}
+    }
 
     XMASComponent *getXMASComponent() {
         return this->m_component;
@@ -162,6 +168,13 @@ public:
 
     QQmlListProperty<XPort> getInputPorts();
     QQmlListProperty<XPort> getOutputPorts();
+
+    QVariantList inports(){
+        return m_inports;
+    }
+    QVariantList outports(){
+        return m_outports;
+    }
 
 private:
     XMASComponent *createComponent(CompType type, QString name);
@@ -194,6 +207,9 @@ private:
     XMASComponent *m_component;
     QList<XPort *> m_inputports;
     QList<XPort *> m_outputports;
+
+    QVariantList m_inports;
+    QVariantList m_outports;
 
 };
 

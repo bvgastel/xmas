@@ -7,9 +7,24 @@ XComponent {
     height: 100
     type: Model.XComponent.Fork
     prefix: "frk"
-    XPort{x:0 ; y:45; name:inputports[0].name; type:inputports[0].type}
-    XPort{x:90 ; y:15; name:outputports[0].name; type:outputports[0].type}
-    XPort{x:90 ; y:75; name:outputports[1].name; type:outputports[1].type}
+
+//    inputports: [
+        XPort{x:0; y:45} //; name:inputports[0].name ; type:inputports[0].type}
+//    ]
+//    outputports: [
+        XPort{x:90 ; y:15} //; name:outputports[0].name; type:outputports[0].type}
+        XPort{x:90 ; y:75} //; name:outputports[1].name; type:outputports[1].type}
+//    ]
+
+//    Repeater{
+//        model:component.inputports
+//        delegate: XPort{x:modelData.x;y:modelData.y}
+//    }
+//    Repeater{
+//        model:component.outputports
+//        delegate: XPort{x:modelData.x;y:modelData.y}
+//    }
+
     Canvas {
         anchors.fill: parent
         antialiasing: false

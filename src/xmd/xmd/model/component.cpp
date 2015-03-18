@@ -29,6 +29,8 @@ model::Component::Component(QQuickItem *parent)
     m_outputports = QList<XPort *>();
     m_component = nullptr;
     qDebug() << "Constructor component done.";
+
+    //this->children()
 }
 
 model::Component::~Component()
@@ -58,27 +60,25 @@ void model::Component::componentComplete() {
 
 void model::Component::emitInports()
 {
-    QVariantList list;
     for (Port *p : m_component->inputPorts()) {
         QVariantMap map;
-        map.insert("name", QString(p->getName));
+        map.insert("name", QString(p->getName()));
         map.insert("type", XPort::PortType::INPORT);
-        list.append(map);
+        m_inports.append(map);
     }
-    emit inputPortsChanged(list);
+    emit inPortsChanged();
 
 }
 
 void model::Component::emitOutports()
 {
-    QVariantList list;
     for (Port *p : m_component->outputPorts()) {
         QVariantMap map;
-        map.insert("name", QString(p->getName));
+        map.insert("name", QString(p->getName()));
         map.insert("type", XPort::PortType::OUTPORT);
-        list.append(map);
+        m_outports.append(map);
     }
-    emit outputPortsChanged(list);
+    emit outPortsChanged();
 }
 
 XMASComponent *model::Component::createComponent(CompType type, QString qname) {
