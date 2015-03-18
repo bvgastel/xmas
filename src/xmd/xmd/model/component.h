@@ -66,11 +66,8 @@ private:
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
-    //###################################################################################################
-    //TODO : to be reviewed with Guus
     Q_PROPERTY(QQmlListProperty<model::XPort> inputports READ getInputPorts NOTIFY inputPortsChanged)
     Q_PROPERTY(QQmlListProperty<model::XPort> outputports READ getOutputPorts NOTIFY outputPortsChanged)
-    //###################################################################################################
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
@@ -163,11 +160,8 @@ public:
         return this->m_component;
     }
 
-    //###################################################################################################
-    //TODO : to be reviewed with Guus
     QQmlListProperty<XPort> getInputPorts();
     QQmlListProperty<XPort> getOutputPorts();
-    //###################################################################################################
 
 private:
     XMASComponent *createComponent(CompType type, QString name);

@@ -58,6 +58,20 @@ void model::Component::componentComplete() {
 
 void model::Component::emitInports()
 {
+    // ####################################################################
+    // To decide: just deliver data and let qml create xport
+    //            QVariantList with properties name and type
+    //            no component is connected on creation.
+    QVariantList list;
+    for (Port *p : m_component->inputPorts()) {
+        QVariantMap map;
+        map.insert("name", QString(p->getName));
+        map.insert("type", XPort::PortType::INPORT);
+        list.append(map);
+    }
+    // emit inputPortsChanged(list);  --> signature not yet adapted
+    // End proposal: return QVariantList through signal inputPortsChanged()
+    // ####################################################################
     m_inputports.clear();
     for (Port* p : m_component->inputPorts())
     {
@@ -67,7 +81,6 @@ void model::Component::emitInports()
         xport->setConnected(p->isConnected());  // necessary? Only emits.
         m_inputports.append(xport);
         qDebug() << "inportname = " << xport->getName();
-        emit xport->nameChanged();
 
     }
     emit inputPortsChanged();
