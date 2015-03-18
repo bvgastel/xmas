@@ -160,11 +160,27 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
     }
 
     if (type == xqueue) {
-        map.insert("expression", 5);
+        XMASQueue *queue = dynamic_cast<XMASQueue *>(comp);
+        QString expression = QString();
+        if (queue) {
+            int size = queue->c;
+            expression = QString(size);
+        }
+        map.insert("expression", expression);
     } else if (type == xfunction) {
-        map.insert("expression", "some function spec");
+        XMASFunction *func = dynamic_cast<XMASFunction *>(comp);
+        QString expression = QString();
+        if (func) {
+            expression = QString(func->getFunctionExpression(m_mp).stl().c_str());
+        }
+        map.insert("expression", expression);
     } else if (type == xsource) {
-        map.insert("expression", "some source specification");
+        XMASSource *source = dynamic_cast<XMASSource *>(comp);
+        QString expression = QString();
+        if (source) {
+            expression = QString(source->getSourceExpression(m_mp).stl().c_str());
+        }
+        map.insert("expression", expression);
     }
 
 
