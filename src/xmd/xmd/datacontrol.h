@@ -105,6 +105,7 @@ signals:
      ************************************************************/
 public slots:
     bool fileOpen(QUrl fileUrl);
+    bool fileSave(QUrl fileUrl);
 
     /************************************************************
      * Public methods
@@ -121,19 +122,6 @@ private:
      * Data members
      ************************************************************/
 public:
-
-    enum Orientation {
-        North = 0,
-        East = 90,
-        South = 180,
-        West = 270,
-        NorthWest = 45,
-        SouthWest = 225,
-        NorthEast = 315,
-        SouthEast = 135
-    };
-    enum PortType {Target , Initiator};
-    //enum CompType {Source, Sink, Function, Queue, Join, Merge, Switch, Fork};
 
 private:
 
@@ -164,7 +152,6 @@ template <class T>
 T *insert(bitpowder::lib::MemoryPool& mp,
           std::map<bitpowder::lib::String, XMASComponent*>& allComponents,
           const bitpowder::lib::String& name) {
-    //std::cout << name << std::endl;
     if (allComponents.find(name) != allComponents.end())
         throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
     T *comp = new(mp, &bitpowder::lib::destroy<XMASComponent>) T(name);

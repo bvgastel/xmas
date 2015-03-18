@@ -41,8 +41,10 @@ signals:
 public slots:
     bool connect(XPort *port_out, XPort *port_in) {
         bitpowder::lib::unused(port_out, port_in);
-        if (false) {
-
+        Output *outport = dynamic_cast<Output *>(port_out->getPort());
+        Input *inport = dynamic_cast<Input *>(port_in->getPort());
+        if (inport && outport) {
+            ::connect(*outport, *inport);
             return true;
         }
         return false;

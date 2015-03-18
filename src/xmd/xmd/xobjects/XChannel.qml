@@ -71,7 +71,10 @@ Model.XChannel {
         wire.size = selected ? 4 : 2
     }
 
-    //TODO replace straight canvas wire with pathfinder logic (horizontal/vertical)
+    // FIXME: Stefan: not sure how to do this, want to connect signal to log
+    onWriteLog: parent.log(msg, color)
+
+    //TODO: replace straight canvas wire with pathfinder logic (horizontal/vertical)
     XWire {
         id: wire
         color: "darkblue"

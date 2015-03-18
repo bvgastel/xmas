@@ -108,7 +108,7 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        //onTriggered: fileSaveDialog.open()
+        onTriggered: fileSaveDialog.open()
     }
 
     Action {
@@ -255,7 +255,8 @@ ApplicationWindow {
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
-        //onAccepted: controller.fileOpen(fileUrl)
+        //onAccepted: datacontrol.filesave(fileUrl)
+                //controller.fileOpen(fileUrl)
     }
 
     FileDialog {

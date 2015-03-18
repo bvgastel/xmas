@@ -36,6 +36,7 @@
 #include "model/component.h"
 #include "model/port.h"
 #include "model/channel.h"
+#include "export.h"
 #include "parse.h"
 #include "datacontrol.h"
 
@@ -75,6 +76,18 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     // Remark: mp will move out of scope and thus self destruct, like componentMap and all of the components
     auto result = emitNetwork(componentMap);
     return result;
+}
+
+bool DataControl::fileSave(QUrl fileUrl) {
+    XMP mp;
+
+    std::string filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+                                  : fileUrl.fileName().toStdString();
+
+
+    return false;
+
 }
 
 bool DataControl::emitNetwork(XCompMap &componentMap) {

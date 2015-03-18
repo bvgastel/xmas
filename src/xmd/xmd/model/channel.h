@@ -29,8 +29,8 @@
 
 namespace model {
 
-class XPort;
-class Component;
+//class XPort;
+//class Component;
 
 class Channel : public QQuickItem
 {
@@ -43,6 +43,8 @@ signals:
 
     void firstPortChanged();
     void secondPortChanged();
+
+    void writeLog(QString msg, QColor color = Qt::blue);
 
 public slots:
 
@@ -65,6 +67,9 @@ public:
         m_port2 = secondPort;
         emit secondPortChanged();
     }
+
+private:
+    bool portsOk(QString &errMsg);
 
 private:
 
