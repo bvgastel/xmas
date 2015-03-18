@@ -188,20 +188,19 @@ private:
 
 public:
 private:
+    bitpowder::lib::MemoryPool m_mp;
+
     QString m_name;
     QVariant m_expression;
     CompType m_type;
     bool m_valid;
     bool m_validExpr;
     bool m_validExprWarningGiven; // an internal flag (non-qml)
+
     XMASComponent *m_component;
-    //###################################################################################################
-    //TODO : to be reviewed with Guus
     QList<XPort *> m_inputports;
     QList<XPort *> m_outputports;
-    //###################################################################################################
 
-    bitpowder::lib::MemoryPool m_mp;
 };
 
 } // namespace model

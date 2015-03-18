@@ -37,7 +37,7 @@ Model.XPort {
     objectName: "port"
     width: 10; height:10
     connected: false
-    rotation: (port.type === Model.XPort.Target) ? 0 : 180
+    rotation: (port.type === Model.XPort.INPORT) ? 0 : 180
     property bool nameAlignCenter: false
 
     signal update()
@@ -49,7 +49,7 @@ Model.XPort {
         anchors.fill: parent
         border.color: "black"
         border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
-        radius: port.type === Model.XPort.Target ? 0 : port.width * 0.5
+        radius: port.type === Model.XPort.INPORT ? 0 : port.width * 0.5
     }
     Text {
         text:name
@@ -59,6 +59,7 @@ Model.XPort {
         anchors.leftMargin: nameAlignCenter ? 15 : 0
         rotation:-port.rotation
     }
+
 
     Component.onDestruction: removed()
 

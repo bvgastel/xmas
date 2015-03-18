@@ -8,7 +8,17 @@ XComponent {
     type: Model.XComponent.Sink
     prefix: "snk"
     topLabel: false
-    XPort{x:20 ; y:0; rotation:180; name:inputports[0].name; type:inputports[0].type}
+
+    // NOTE: Stefan, inports and outports are not known until component is fully constructed.
+    XPort{x:20 ; y:0; rotation:180; //name:inputports[0].name; type:inputports[0].type
+
+        onNameChanged: {        // NOTE: We need some way to indicatie inputports was constructed
+            name: inputports[0].name;
+        }
+        onTypeChanged: {        // NOTE: We need some way to indicatie inputports was constructed
+            type: inputports[0].type;
+        }
+    }
     Canvas {
         anchors.fill: parent
         antialiasing: false

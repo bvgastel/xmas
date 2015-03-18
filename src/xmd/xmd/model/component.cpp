@@ -25,7 +25,10 @@
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent)
 {
-
+    m_inputports = QList<XPort *>();
+    m_outputports = QList<XPort *>();
+    m_component = nullptr;
+    qDebug() << "Constructor component done.";
 }
 
 model::Component::~Component()
@@ -64,6 +67,7 @@ void model::Component::emitInports()
         xport->setConnected(p->isConnected());  // necessary? Only emits.
         m_inputports.append(xport);
         qDebug() << "inportname = " << xport->getName();
+        emit xport->nameChanged();
 
     }
     emit inputPortsChanged();
@@ -359,7 +363,12 @@ int model::Component::count_inport_list(QQmlListProperty<model::XPort> *property
 }
 
 model::XPort *model::Component::at_inport_list(QQmlListProperty<model::XPort> *property, int index) {
-    return static_cast< QList<model::XPort *> *>(property->data)->at(index);
+    if (property->data) {
+        auto *list = static_cast< QList<model::XPort *> *>(property->data);
+        model::XPort *port = list->at(index);
+        return port;
+    }
+    return nullptr;
 }
 
 void model::Component::clear_inport_list(QQmlListProperty<model::XPort> *property) {
@@ -403,7 +412,12 @@ int model::Component::count_outport_list(QQmlListProperty<XPort> *property) {
 }
 
 model::XPort *model::Component::at_outport_list(QQmlListProperty<XPort> *property, int index) {
-    return static_cast< QList<model::XPort *> *>(property->data)->at(index);
+    if (property->data) {
+        auto *list = static_cast< QList<model::XPort *> *>(property->data);
+        model::XPort *port = list->at(index);
+        return port;
+    }
+    return nullptr;
 }
 
 void model::Component::clear_outport_list(QQmlListProperty<XPort> *property) {
