@@ -79,7 +79,10 @@ public:
     }
 
     bool getConnected() {
-        return m_port->isConnected();
+        if (m_port) {
+            return m_port->isConnected();
+        }
+        return false;
     }
 
     void setConnected(bool) {

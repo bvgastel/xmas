@@ -27,11 +27,13 @@
 model::XPort::XPort(QQuickItem *parent)
     : QQuickItem(parent)
 {
+    m_port = nullptr;
+    m_owner = nullptr;
 }
 
 model::XPort::~XPort()
 {
-
+    // NOTE: should we delete m_port?
 }
 
 void model::XPort::classBegin() {
