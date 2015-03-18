@@ -83,7 +83,8 @@ public:
     }
 
     void setConnected(bool) {
-        emit connectedChanged();  // just signal, don't change anything
+        // just signal the change (is internal to Port).
+        emit connectedChanged();
     }
 
     Component *owner() {
@@ -102,8 +103,7 @@ public:
 private:
     QString m_name;
     PortType m_type;
-    //bool m_connected;       // useless ---> isConnected is part of Output Port.
-                            // but how to implement?
+
     Component *m_owner;
     Port *m_port;           // Only one port is allowed: either input or output
 };

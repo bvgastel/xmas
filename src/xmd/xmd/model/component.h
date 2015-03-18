@@ -115,59 +115,7 @@ public:
         emit nameChanged(result);
     }
 
-    // TODO: find out how to store specifications
-    QVariant getExpression() {
-        // In case we are finshed constructing
-        if (!m_component) {
-            return QVariant();
-        }
-        // In case of queue return queue size
-        auto queue = dynamic_cast<XMASQueue *>(m_component);
-        if (queue) {
-            qulonglong expr = queue->c;
-            return expr;
-        }
-        // In case of function return function specification.
-        auto func = dynamic_cast<XMASFunction *>(m_component);
-        if (func) {
-            auto expr = func->getFunctionExpression(m_mp).stl();
-            if (expr != "") {
-                return QString(expr.c_str()); // Only return xmas string, if useful
-            } else {
-                return m_expression;
-            }
-        }
-        // In case of source return source specification.
-        auto src = dynamic_cast<XMASSource *>(m_component);
-        if (src) {
-            auto expr = src->getSourceExpression(m_mp);
-            if (expr != "") {
-                return QString(expr.stl().c_str());  // Only return xmas string, if useful
-            } else {
-                return m_expression;
-            }
-        }
-        auto sw = dynamic_cast<XMASSwitch *>(m_component);
-        if (sw) {
-            auto expr = sw->getSwitchExpression(m_mp);
-            if (expr != "") {
-                return QString(expr.stl().c_str());  // Only return xmas string, if useful
-            } else {
-                return m_expression;
-            }
-        }
-        auto join = dynamic_cast<XMASJoin *>(m_component);
-        if (join) {
-            auto expr = join->getJoinExpression(m_mp);
-            if (expr != "") {
-                return QString(expr.stl().c_str());  // Only return xmas string, if useful
-            } else {
-                return m_expression;
-            }
-        }
-        return m_expression;
-    }
-
+    QVariant getExpression();
     void setExpression(QVariant expression) {
         int errorPosition = -1;
         errorPosition = updateExpression(expression);
@@ -225,12 +173,18 @@ private:
     XMASComponent *createComponent(CompType type, QString name);
     int checkName(QString name);
 
-    //###################################################################################################
-    //TODO : to be reviewed with Guus
-    //static void append_port(QQmlListProperty<XPort> *list, XPort *port);
-    void extractPorts(void);
+    void emitInports();
+    void emitOutports();
 
-    //###################################################################################################
+    static void append_inport_list(QQmlListProperty<XPort> *property, XPort *port);
+    static int count_inport_list(QQmlListProperty<XPort> *property);
+    static XPort *at_inport_list(QQmlListProperty<XPort> *property, int index);
+    static void clear_inport_list(QQmlListProperty<XPort> *property);
+
+    static void append_outport_list(QQmlListProperty<XPort> *property, XPort *port);
+    static int count_outport_list(QQmlListProperty<XPort> *property);
+    static XPort *at_outport_list(QQmlListProperty<XPort> *property, int index);
+    static void clear_outport_list(QQmlListProperty<XPort> *property);
 
 public:
 private:

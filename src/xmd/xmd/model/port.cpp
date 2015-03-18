@@ -39,10 +39,5 @@ void model::XPort::classBegin() {
 }
 
 void model::XPort::componentComplete() {
-    const char *name = m_name.toStdString().c_str();
-    if (getType() == INPORT) {
-        m_port = new Input(m_owner->getXMASComponent(), name);
-    } else {
-        m_port = new Output(m_owner->getXMASComponent(), name);
-    }
+    // no action necessary
 }

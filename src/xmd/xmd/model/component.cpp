@@ -37,18 +37,55 @@ void model::Component::classBegin() {
     // No action needed.
 }
 
+/**
+ * @brief model::Component::componentComplete
+ *
+ * When the QML properties for Component are filled completely,
+ * we can create the component and all of its ports.
+ *
+ */
 void model::Component::componentComplete() {
     m_type = (CompType)this->property("type").toInt();
     m_component = createComponent(m_type, m_name);
-    //###################################################################################################
-    //TODO : to be reviewed with Guus
     if(m_component) {
-        extractPorts();
+        emitInports();
+        emitOutports();
     }
-    //###################################################################################################
 }
 
-// TODO: What to do with IN and OUT?
+void model::Component::emitInports()
+{
+    m_inputports.clear();
+    for (Port* p : m_component->inputPorts())
+    {
+        XPort *xport = new XPort();
+        xport->setName(p->getName());
+        xport->setType(XPort::PortType::INPORT);
+        xport->setConnected(p->isConnected());  // necessary? Only emits.
+        m_inputports.append(xport);
+        qDebug() << "inportname = " << xport->getName();
+
+    }
+    emit inputPortsChanged();
+
+}
+
+void model::Component::emitOutports()
+{
+    m_outputports.clear();
+    for (Port* p : m_component->outputPorts())
+    {
+        XPort *xport = new XPort();
+        xport->setName(p->getName());
+        xport->setType(XPort::PortType::OUTPORT);
+        xport->setConnected(p->isConnected()); // necessary? Only emits.
+        m_outputports.append(xport);
+        qDebug() << "outportname = " << xport->getName();
+
+    }
+    emit outputPortsChanged();
+}
+
 XMASComponent *model::Component::createComponent(CompType type, QString qname) {
     XMASComponent *component = nullptr;
     std::string name = qname.toStdString();
@@ -102,7 +139,7 @@ int model::Component::checkName(QString name) {
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
-    emit writeLog(QString("[debug]ontvangen expressie heeft type '")+typeName+"' en inhoud "+expression.toString());
+    emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+expression.toString());
 
     if (getType() == Queue) {
         if (typeName != "int") {
@@ -235,67 +272,146 @@ int model::Component::updateExpression(QVariant expression) {
     return false;
 }
 
+QVariant model::Component::getExpression() {
+    // In case we are not finished constructing
+    if (!m_component) {
+        return QVariant();
+    }
+    // In case of queue return queue size
+    auto queue = dynamic_cast<XMASQueue *>(m_component);
+    if (queue) {
+        qulonglong expr = queue->c;
+        return expr;
+    }
+    // In case of function return function specification.
+    auto func = dynamic_cast<XMASFunction *>(m_component);
+    if (func) {
+        auto expr = func->getFunctionExpression(m_mp).stl();
+        if (expr != "") {
+            return QString(expr.c_str()); // Only return xmas string, if useful
+        } else {
+            return m_expression;
+        }
+    }
+    // In case of source return source specification.
+    auto src = dynamic_cast<XMASSource *>(m_component);
+    if (src) {
+        auto expr = src->getSourceExpression(m_mp);
+        if (expr != "") {
+            return QString(expr.stl().c_str());  // Only return xmas string, if useful
+        } else {
+            return m_expression;
+        }
+    }
+    auto sw = dynamic_cast<XMASSwitch *>(m_component);
+    if (sw) {
+        auto expr = sw->getSwitchExpression(m_mp);
+        if (expr != "") {
+            return QString(expr.stl().c_str());  // Only return xmas string, if useful
+        } else {
+            return m_expression;
+        }
+    }
+    auto join = dynamic_cast<XMASJoin *>(m_component);
+    if (join) {
+        auto expr = join->getJoinExpression(m_mp);
+        if (expr != "") {
+            return QString(expr.stl().c_str());  // Only return xmas string, if useful
+        } else {
+            return m_expression;
+        }
+    }
+    return m_expression;
+}
 
-//###################################################################################################
-//TODO : to be reviewed with Guus
+/************************************************************************************
+ * Inports
+ ************************************************************************************/
 /**
  * @brief model::Component::getInputPorts
- * @return
+ * @return a qml list of XPort instances
  */
 QQmlListProperty<model::XPort> model::Component::getInputPorts()
 {
-    return QQmlListProperty<model::XPort>(this,m_inputports);
+    return QQmlListProperty<model::XPort>(this, 0,
+                                               &model::Component::append_inport_list,
+                                               &model::Component::count_inport_list,
+                                               &model::Component::at_inport_list,
+                                               &model::Component::clear_inport_list);
+
 }
 
+void model::Component::append_inport_list(QQmlListProperty<model::XPort> *property, model::XPort *port) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        port->setParent(component);
+        component->m_inputports.append(port);
+    }
+}
+
+int model::Component::count_inport_list(QQmlListProperty<model::XPort> *property) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        return component->m_inputports.size();
+    }
+    //TODO: Should we emit an error signal? How? There is no instance! (static)
+    return 0;
+}
+
+model::XPort *model::Component::at_inport_list(QQmlListProperty<model::XPort> *property, int index) {
+    return static_cast< QList<model::XPort *> *>(property->data)->at(index);
+}
+
+void model::Component::clear_inport_list(QQmlListProperty<model::XPort> *property) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        component->m_inputports.clear();
+    }
+}
+
+/************************************************************************************
+ * Outports
+ ************************************************************************************/
 /**
  * @brief model::Component::getOutputPorts
  * @return
  */
 QQmlListProperty<model::XPort> model::Component::getOutputPorts()
 {
-    return QQmlListProperty<model::XPort>(this,m_outputports);
+    return QQmlListProperty<model::XPort>(this, 0,
+                                               &model::Component::append_outport_list,
+                                               &model::Component::count_outport_list,
+                                               &model::Component::at_outport_list,
+                                               &model::Component::clear_outport_list);
 }
 
-///**
-// * @brief model::Component::append_port
-// * @param list
-// * @param port
-// */
-//void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::XPort *port)
-//{
-//    Component *component = qobject_cast<Component *>(list->object);
-//    if (port)
-//        component->m_ports.append(port);
-//}
-// Port here must be the xmascomponent port type!!
-void model::Component::extractPorts(void)
-{
-    m_inputports.clear();
-    for (Port* p : m_component->inputPorts())
-    {
-        XPort *xport = new XPort();
-        xport->setName(p->getName());
-        xport->setType(XPort::PortType::INPORT);
-        xport->setConnected(p->isConnected());
-        m_inputports.append(xport);
-        qDebug() << "inpoortnaam = " << xport->getName();
-
+void model::Component::append_outport_list(QQmlListProperty<XPort> *property, XPort *port) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        port->setParent(component);
+        component->m_outputports.append(port);
     }
-    emit inputPortsChanged();
-
-    m_outputports.clear();
-    for (Port* p : m_component->outputPorts())
-    {
-        XPort *xport = new XPort();
-        xport->setName(p->getName());
-        xport->setType(XPort::PortType::OUTPORT);
-        xport->setConnected(p->isConnected());
-        m_outputports.append(xport);
-        qDebug() << "outpoortnaam = " << xport->getName();
-
-    }
-    emit outputPortsChanged();
 }
-//###################################################################################################
+
+int model::Component::count_outport_list(QQmlListProperty<XPort> *property) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        return component->m_outputports.size();
+    }
+    //TODO: Should we emit an error signal? How? There is no instance! (static)
+    return 0;
+}
+
+model::XPort *model::Component::at_outport_list(QQmlListProperty<XPort> *property, int index) {
+    return static_cast< QList<model::XPort *> *>(property->data)->at(index);
+}
+
+void model::Component::clear_outport_list(QQmlListProperty<XPort> *property) {
+    Component *component = qobject_cast<Component *>(property->object);
+    if (component) {
+        component->m_outputports.clear();
+    }
+}
+
 
 
