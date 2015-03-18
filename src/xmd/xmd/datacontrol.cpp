@@ -58,8 +58,6 @@ void DataControl::registerTypes() const{
 
 bool DataControl::fileOpen(QUrl fileUrl) {
 
-    XMP mp;
-
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();
@@ -67,19 +65,17 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     m_logger.log("Opening file " + filename);
 
     XCompMap componentMap;
-    std::tie(componentMap, std::ignore) = parse_xmas_from_file(filename, mp);
+    std::tie(componentMap, std::ignore) = parse_xmas_from_file(filename, m_mp);
 
     if (componentMap.empty()) {
         m_logger.log("[Component.cpp/fileOpen(fileUrl)] File "+ filename + " was parsed as empty. Maybe the file is invalid json input.",Qt::red);
         return false;
     }
-    // Remark: mp will move out of scope and thus self destruct, like componentMap and all of the components
     auto result = emitNetwork(componentMap);
     return result;
 }
 
 bool DataControl::fileSave(QUrl fileUrl) {
-    XMP mp;
 
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
