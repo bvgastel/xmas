@@ -62,6 +62,7 @@ Model.XComponent {
     // postpone creation of XPorts until names and type are known
     onInputPortsChanged: {
         // create and change XPorts according to list
+
     }
 
     // postpone creation of XPorts until names and type are known

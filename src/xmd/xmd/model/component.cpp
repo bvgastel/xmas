@@ -58,10 +58,6 @@ void model::Component::componentComplete() {
 
 void model::Component::emitInports()
 {
-    // ####################################################################
-    // To decide: just deliver data and let qml create xport
-    //            QVariantList with properties name and type
-    //            no component is connected on creation.
     QVariantList list;
     for (Port *p : m_component->inputPorts()) {
         QVariantMap map;
@@ -69,38 +65,20 @@ void model::Component::emitInports()
         map.insert("type", XPort::PortType::INPORT);
         list.append(map);
     }
-    // emit inputPortsChanged(list);  --> signature not yet adapted
-    // End proposal: return QVariantList through signal inputPortsChanged()
-    // ####################################################################
-    m_inputports.clear();
-    for (Port* p : m_component->inputPorts())
-    {
-        XPort *xport = new XPort();
-        xport->setName(p->getName());
-        xport->setType(XPort::PortType::INPORT);
-        xport->setConnected(p->isConnected());  // necessary? Only emits.
-        m_inputports.append(xport);
-        qDebug() << "inportname = " << xport->getName();
-
-    }
-    emit inputPortsChanged();
+    emit inputPortsChanged(list);
 
 }
 
 void model::Component::emitOutports()
 {
-    m_outputports.clear();
-    for (Port* p : m_component->outputPorts())
-    {
-        XPort *xport = new XPort();
-        xport->setName(p->getName());
-        xport->setType(XPort::PortType::OUTPORT);
-        xport->setConnected(p->isConnected()); // necessary? Only emits.
-        m_outputports.append(xport);
-        qDebug() << "outportname = " << xport->getName();
-
+    QVariantList list;
+    for (Port *p : m_component->outputPorts()) {
+        QVariantMap map;
+        map.insert("name", QString(p->getName));
+        map.insert("type", XPort::PortType::OUTPORT);
+        list.append(map);
     }
-    emit outputPortsChanged();
+    emit outputPortsChanged(list);
 }
 
 XMASComponent *model::Component::createComponent(CompType type, QString qname) {

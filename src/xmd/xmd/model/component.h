@@ -75,8 +75,8 @@ public:
 signals:
     void nameChanged(int result);
     void typeChanged();
-    void inputPortsChanged();
-    void outputPortsChanged();
+    void inputPortsChanged(QVariantList list);
+    void outputPortsChanged(QVariantList list);
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
