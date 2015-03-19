@@ -35,23 +35,30 @@ model::Channel::~Channel()
 
 }
 
+/* Connecting at this point is useless because the
+ * input and output ports are nullptrs. The Network
+ * object contains methods to connect and disconnect
+ * that Qml code could call.
+ *
+ * It is doubtful this class Channel is useful.
+ */
 void model::Channel::componentComplete()
 {
-    QString errMsg;
-    if (!portsOk(errMsg)) {
-        emit writeLog(errMsg, Qt::red);
-        return;
-    }
+//    QString errMsg;
+//    if (!portsOk(errMsg)) {
+//        emit writeLog(errMsg, Qt::red);
+//        return;
+//    }
 
-    Output *out = dynamic_cast<Output *>(m_outport->getPort());
-    Input *in = dynamic_cast<Input *>(m_inport->getPort());
-    if (in && out) {
-        Output &output = *out;
-        Input &input = *in;
-        ::connect(output, input);
-    } else {
-        throw std::exception();
-    }
+//    Output *out = dynamic_cast<Output *>(m_outport->getPort());
+//    Input *in = dynamic_cast<Input *>(m_inport->getPort());
+//    if (in && out) {
+//        Output &output = *out;
+//        Input &input = *in;
+//        ::connect(output, input);
+//    } else {
+//        throw std::exception();
+//    }
 }
 
 void model::Channel::classBegin()

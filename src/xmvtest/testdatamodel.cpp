@@ -109,23 +109,34 @@ TEST_F(TestDataModel, NotConnectedInValid)
 
 TEST_F(TestDataModel, DanglingConnect) {
     connect(m_source->o, m_function->i);
-    connect(m_source->o, m_function->i);    // connect twice: no problem
+    connect(m_source->o, m_function->i);    // connect twice: not a problem
     connect(m_function->o, m_fork->i);
     connect(m_source->o, m_queue->i);       // now m_function is dangling
     connect(m_queue->o, m_merge->a);
     EXPECT_TRUE(m_source->valid());
     EXPECT_TRUE(m_queue->valid());
-    EXPECT_FALSE(m_function->valid());
+    EXPECT_FALSE(m_function->valid());      // See? m_function is invalid!
 }
 
-TEST_F(TestDataModel, ConnectedValid)
-{
+TEST_F(TestDataModel, ConnectedValid) {
     connect(m_source->o, m_function->i);
     connect(m_function->o, m_queue->i);
     connect(m_queue->o, m_sink->i);
     EXPECT_TRUE(m_source->valid());
     EXPECT_TRUE(m_function->valid());
     EXPECT_TRUE(m_sink->valid());
+}
+
+TEST_F(TestDataModel, Disconnect) {
+    connect(m_source->o, m_function->i);
+    EXPECT_TRUE(m_source->o.connectedTo(m_function));
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_source->o.valid());
+    EXPECT_TRUE(m_source->o.isConnected());
+    disconnect(m_source->o);
+    EXPECT_FALSE(m_source->valid());
+    EXPECT_FALSE(m_source->o.isConnected());
+    EXPECT_FALSE(m_source->o.valid());
 }
 
 

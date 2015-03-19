@@ -84,6 +84,26 @@ void connect(Output &o, Input &i) {
     o.output = &i;
 }
 
+/**
+ * @brief disconnect disconnect a channel from an output
+ *
+ * Provided a channel is valid i.e. o.valid(), both pointers
+ * from output to input port and back are nullified.
+ *
+ * This function is necessary for the graphical designer, where
+ * a designing person may delete a channel.
+ *
+ * @param o the output port of the channel.
+ */
+
+void disconnect(Output &o) {
+    if (o.valid()) {
+        Input *i = o.output;
+        i->input = nullptr;
+        o.output = nullptr;
+    }
+}
+
 XMASComponent::~XMASComponent()
 {
     clearExtensions();
