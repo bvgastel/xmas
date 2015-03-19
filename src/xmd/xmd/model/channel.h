@@ -33,8 +33,8 @@ class Channel : public QQuickItem
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(XPort *port1 READ port1 WRITE setPort1 NOTIFY port2Changed)
-    Q_PROPERTY(XPort *port2 READ port2 WRITE setPort2 NOTIFY port1Changed)
+    Q_PROPERTY(XPort *port1 READ port1 WRITE setPort1 NOTIFY port1Changed)
+    Q_PROPERTY(XPort *port2 READ port2 WRITE setPort2 NOTIFY port2Changed)
 
 signals:
 
