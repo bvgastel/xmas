@@ -37,8 +37,8 @@ Model.XChannel {
     objectName: "channel"
     focus: true
     property int id: 0
-    outport: null
-    inport: null
+    outport: null           // NOTE: This means no value onComponentComplete()
+    inport: null            // NOTE: This means no value onComponentComplete()
     property color color: "darkblue"
     property bool selected: false
 
