@@ -89,7 +89,7 @@ Rectangle {
       id: wire
       property bool connecting: false
       property var outport: null
-      property var port2: null
+      property var inport: null
       property int mx: 0
       property int my: 0
       visible: connecting
@@ -104,10 +104,10 @@ Rectangle {
               wire.y2 = wire.y1
           }
       }
-      onPort2Changed: {
-          if(port2) {
-              wire.x2 = port2.mapToItem(sheet,5,5).x
-              wire.y2 = port2.mapToItem(sheet,5,5).y
+      onInportChanged: {
+          if(inport) {
+              wire.x2 = inport.mapToItem(sheet,5,5).x
+              wire.y2 = inport.mapToItem(sheet,5,5).y
           }
       }
       onVisibleChanged: {
@@ -141,12 +141,12 @@ Rectangle {
     function checkTarget(port) {
         if (wire.outport
                 && wire.outport !== port
-                && wire.port2 !== port) {
+                && wire.inport !== port) {
             if (wire.outport.type !== port.type){
-                wire.port2 = port
+                wire.inport = port
             }
         } else {
-            wire.port2 =  wire.connecting ? null : wire.port2
+            wire.inport =  wire.connecting ? null : wire.inport
         }
     }
 
@@ -157,7 +157,7 @@ Rectangle {
                 Code.doConnect(wire.outport,port)
                 Code.channel = null
                 wire.outport = null
-                wire.port2 = null
+                wire.inport = null
                 wire.connecting = false
             }
             else { port.connected=false}
@@ -213,7 +213,7 @@ Rectangle {
                     wire.connecting = false
                     wire.outport.connected = false
                     wire.outport = null
-                    wire.port2 = null
+                    wire.inport = null
                 }
                 else
                 {

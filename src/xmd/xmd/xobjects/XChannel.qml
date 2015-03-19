@@ -38,7 +38,7 @@ Model.XChannel {
     focus: true
     property int id: 0
     outport: null
-    port2: null
+    inport: null
     property color color: "darkblue"
     property bool selected: false
 
@@ -48,13 +48,13 @@ Model.XChannel {
         wire.y1 = mapFromItem(outport,5,5).y
     }
     function doUpdate2() {
-        wire.x2 = mapFromItem(port2,5,5).x
-        wire.y2 = mapFromItem(port2,5,5).y
+        wire.x2 = mapFromItem(inport,5,5).x
+        wire.y2 = mapFromItem(inport,5,5).y
     }
 
     function remove() {
         if(outport) outport.connected = false
-        if(port2) port2.connected = false
+        if(inport) inport.connected = false
         destroy(channel)
         //log("Channel deleted!","black")
         //TODO : channel is already null - send unique id or tempory copy?
@@ -63,7 +63,7 @@ Model.XChannel {
 
 
     onOutportChanged: outport ? doUpdate1() : null
-    onPort2Changed: port2 ? doUpdate2() : null
+    onInportChanged: inport ? doUpdate2() : null
 
     onSelectedChanged: {
         focus = selected
@@ -113,7 +113,7 @@ Model.XChannel {
         onRemoved: channel.remove()
     }
     Connections {
-        target: port2
+        target: inport
         onUpdate: doUpdate2()
         onRemoved: channel.remove()
     }
