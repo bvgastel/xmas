@@ -123,7 +123,7 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
 
         hierFlatMap[c] = fv.result;
 
-        std::cout << qualifiedName << std::endl;
+        //std::cout << qualifiedName << std::endl;
     }
 
 
@@ -162,14 +162,43 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
             // finally, connect!
             connect(*flatInitPort, *flatTargetPort);
 
-            std::cout << "Connecting " << flatInitPort->m_owner->getName() << "." << flatInitPort->getName()
-                      << " to " << flatTargetPort->m_owner->getName() << "." << flatTargetPort->getName() << std::endl;
+            //std::cout << "Connecting " << flatInitPort->m_owner->getName() << "." << flatInitPort->getName()
+            //          << " to " << flatTargetPort->m_owner->getName() << "." << flatTargetPort->getName() << std::endl;
         }
 
     }
 
     // step 3: collapse gates/composite ports
-    // TODO
+    for (auto c : src.componentsOfType<XMASComposite>()) {
+        XMASFlattenedComposite* flatC = dynamic_cast<XMASFlattenedComposite*>(hierFlatMap[c]);
+        if (!flatC)
+            throw Exception("Composite not flattened correctly.");
+
+        while (flatC->gates.inGates.size() > 0) {
+            XMASInGate* gate = flatC->gates.inGates.back();
+            flatC->gates.inGates.pop_back();
+
+            // weld the two channels
+            connect(*gate->i_ext.getInitiatorPort(), *gate->o.getTargetPort());
+
+            // and delete the gate
+            delete(gate);
+        }
+        while (flatC->gates.outGates.size() > 0) {
+            XMASOutGate* gate = flatC->gates.outGates.back();
+            flatC->gates.outGates.pop_back();
+
+            // weld the two channels
+            connect(*gate->i.getInitiatorPort(), *gate->o_ext.getTargetPort());
+
+            // and delete the gate
+            delete(gate);
+        }
+
+        // delete the temporary XMASFlattenedComposite
+        delete(flatC);
+    }
+
 
     // TODO: copy relevant extensions (e.g. messagespec, switching function) from src
     return gates;

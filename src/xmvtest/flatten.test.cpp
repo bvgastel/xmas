@@ -95,8 +95,17 @@ TEST_F(BridgeCompositeTest, SourceBridgeSink) {
     auto sink1 = test.insert<XMASSink>("sink1");
     auto bridge1 = test.insert<XMASComposite>("bridge1", std::ref(bridge));
 
+
     connect(source1->o, bridge1->getInputs()[0]);
     connect(bridge1->getOutputs()[0], sink1->i);
+
+
+    // add another bridge, isolated from the other components and connect the
+    // two gates to each other
+    // after flattening, no traces of the bridge should be left!
+    auto bridge2 = test.insert<XMASComposite>("bridge2", std::ref(bridge));
+    connect(bridge2->getOutputs()[0], bridge2->getInputs()[0]);
+
 
 
     // now flatten this network
