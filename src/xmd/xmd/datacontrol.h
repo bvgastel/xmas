@@ -65,10 +65,6 @@ const QString xout = "out";
 class DataControl : public QObject
 {
     Q_OBJECT
-    //Q_ENUMS(Orientation)
-    //Q_ENUMS(PortType)
-    //Q_ENUMS(CompType)
-
 
 public:
     explicit DataControl(QObject *parent = 0);

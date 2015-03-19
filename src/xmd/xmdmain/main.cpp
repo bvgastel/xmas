@@ -39,6 +39,7 @@
 #include "memorypool.h"
 #include "plugincontrol.h"
 #include "datacontrol.h"
+#include "model/network.h"
 
 
 int main(int argc, char *argv[])
@@ -48,19 +49,28 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
 
-    PluginControl pluginControl;
-
-    DataControl dataControl;
-
-    dataControl.registerTypes(); // Before engine.load
-
-    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
-    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
+    /*************************************************/
+    /* OOAK class registration for Qml access        */
 
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
-    ctx->setContextProperty("plugincontrol", &pluginControl);
+
+    DataControl dataControl;
+    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
     ctx->setContextProperty("datacontrol", &dataControl);
+
+    PluginControl pluginControl;
+    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
+    ctx->setContextProperty("plugincontrol", &pluginControl);
+
+    model::Network network;
+    qmlRegisterType<model::Network>("XMAS", 1, 0, "Network"); // Before engine.load
+    ctx->setContextProperty("network", &network);
+
+    /* End of OOAK class registration for Qml access */
+    /*************************************************/
+
+    dataControl.registerTypes(); // Before engine.load
 
     engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
     return app.exec();

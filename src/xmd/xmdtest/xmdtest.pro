@@ -33,7 +33,8 @@ unix|win32|macx {
 }
 
 DISTFILES += \
-    readme.md
+    readme.md \
+    network.json
 
 ################################################
 # Internal dependencies

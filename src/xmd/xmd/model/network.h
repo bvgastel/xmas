@@ -24,6 +24,7 @@
 
 #include <QQuickItem>
 
+#include "export.h"
 #include "component.h"
 
 namespace model {
@@ -31,7 +32,7 @@ namespace model {
 class Network : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList compList READ compList WRITE compList NOTIFY compListChanged)
+    //Q_PROPERTY(QVariantList compList READ compList WRITE compList NOTIFY compListChanged)
 
 private:
 
@@ -44,19 +45,35 @@ public slots:
     /** Disconnect method from output port for qml */
     bool disconnect(XPort *port);
 
-    QVariantList compList() {
-        return m_compList;
+    QString toJson(QList<Component *> allComponents) {
+        bitpowder::lib::String result;
+        bitpowder::lib::MemoryPool mp;
+        bitpowder::lib::JSONData globals;
+
+        std::set<XMASComponent *> allComp;
+        for (Component *comp : allComponents) {
+            auto c = comp->getXMASComponent();
+            allComp.insert(c);
+        }
+        result = ::Export(allComp,globals,mp);
+        QString jsonString = QString(result.stl().c_str());
+        return jsonString;
     }
-    void compList(QVariantList compList) {
-        m_compList = compList;
-    }
+
+
+//    QVariantList compList() {
+//        return m_compList;
+//    }
+//    void compList(QVariantList compList) {
+//        m_compList = compList;
+//    }
 
 public:
     explicit Network(QQuickItem *parent = 0);
     ~Network();
 
 private:
-    QVariantList m_compList;
+    //QVariantList m_compList;
 };
 
 } // namespace model

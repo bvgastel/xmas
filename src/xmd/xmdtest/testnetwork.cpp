@@ -4,6 +4,7 @@
 
 #include "xmdexception.h"
 
+
 namespace {
 
 class NetworkTest : public ::testing::Test
@@ -16,19 +17,15 @@ protected:
     }
 
     virtual void SetUp() {
-
     }
 
     virtual void TearDown() {
     }
 
+
 public:
 
-
 };
-
-TEST_F(NetworkTest, creationTest) {
-}
 
 
 } // namespace
