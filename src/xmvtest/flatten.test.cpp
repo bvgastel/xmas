@@ -85,7 +85,21 @@ protected:
     }
 };
 
+TEST_F(BridgeCompositeTest, EmptyFlatNetwork) {
+    XMASNetwork test {"test"};
 
+    auto bridge1 = test.insert<XMASComposite>("bridge", std::ref(bridge));
+
+    connect(bridge1->getOutputs()[0], bridge1->getInputs()[0]);
+
+    XMASNetwork flattened = flatten(test);
+
+    auto fcs = flattened.getComponents();
+    EXPECT_EQ(0, fcs.size());
+
+    // quite pointless to check an empty network, but why not?
+    checkValidAndFlat(flattened);
+}
 
 TEST_F(BridgeCompositeTest, SourceBridgeSink) {
     // create a simple test network containing a sink, source and a bridge composite
