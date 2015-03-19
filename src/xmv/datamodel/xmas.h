@@ -240,6 +240,7 @@ class Output : public Port
     friend class Input;
     friend void connect(Output &o, Input &i);
     friend void disconnect(Output &o);
+    friend void disconnect(Input &i);
     /**
      * @brief output This is a pointer to the output port that is connected
      *          to this input port.
@@ -266,6 +267,7 @@ class Input : public Port
     friend class Output;
     friend void connect(Output &o, Input &i);
     friend void disconnect(Output &o);
+    friend void disconnect(Input &i);
     // FIXME: why is this Output pointer named input ?
     Output *input;
 public:
@@ -296,7 +298,7 @@ public:
 void connect(Output &o, Input &i);
 
 /**
- * @brief disconnect disconnect a channel from an output
+ * @brief disconnect disconnect a channel starting from an output
  *
  * Provided a channel is valid i.e. o.valid(), both pointers
  * from output to input port and back are nullified.
@@ -306,8 +308,19 @@ void connect(Output &o, Input &i);
  *
  * @param o the output port of the channel.
  */
-
 void disconnect(Output &o);
+/**
+ * @brief disconnect disconnect a channel starting from an input
+ *
+ * Provided a channel is valid i.e. o.valid(), both pointers
+ * from output to input port and back are nullified.
+ *
+ * This function is necessary for the graphical designer, where
+ * a designing person may delete a channel.
+ *
+ * @param i the input port of the channel.
+ */
+void disconnect(Input &i);
 
 /**
  * @brief The XMASComponentExtension class

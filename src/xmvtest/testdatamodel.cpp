@@ -127,13 +127,25 @@ TEST_F(TestDataModel, ConnectedValid) {
     EXPECT_TRUE(m_sink->valid());
 }
 
-TEST_F(TestDataModel, Disconnect) {
+TEST_F(TestDataModel, Disconnect_from_output) {
     connect(m_source->o, m_function->i);
     EXPECT_TRUE(m_source->o.connectedTo(m_function));
     EXPECT_TRUE(m_source->valid());
     EXPECT_TRUE(m_source->o.valid());
     EXPECT_TRUE(m_source->o.isConnected());
     disconnect(m_source->o);
+    EXPECT_FALSE(m_source->valid());
+    EXPECT_FALSE(m_source->o.isConnected());
+    EXPECT_FALSE(m_source->o.valid());
+}
+
+TEST_F(TestDataModel, Disconnect_from_input) {
+    connect(m_source->o, m_function->i);
+    EXPECT_TRUE(m_source->o.connectedTo(m_function));
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_source->o.valid());
+    EXPECT_TRUE(m_source->o.isConnected());
+    disconnect(m_function->i);
     EXPECT_FALSE(m_source->valid());
     EXPECT_FALSE(m_source->o.isConnected());
     EXPECT_FALSE(m_source->o.valid());

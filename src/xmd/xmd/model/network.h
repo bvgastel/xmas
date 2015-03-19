@@ -40,24 +40,9 @@ signals:
 
 public slots:
     /** Connect method for qml */
-    bool connect(XPort *port_out, XPort *port_in) {
-        Output *outport = dynamic_cast<Output *>(port_out->getPort());
-        Input *inport = dynamic_cast<Input *>(port_in->getPort());
-        if (inport && outport) {
-            ::connect(*outport, *inport);
-            return true;
-        }
-        return false;
-    }
-    /** Disconnect method for qml */
-    bool disconnect(XPort *port_out) {
-        Output *outport = dynamic_cast<Output *>(port_out->getPort());
-        if (outport) {
-            ::disconnect(*outport);
-            return true;
-        }
-        return false;
-    }
+    bool connect(XPort *port_out, XPort *port_in);
+    /** Disconnect method from output port for qml */
+    bool disconnect(XPort *port);
 
     QVariantList compList() {
         return m_compList;
