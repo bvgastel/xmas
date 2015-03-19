@@ -101,21 +101,6 @@ XMASComponent::PortIterators<Output **> XMASComponent::outputPorts() {
     return {(Output**)beginPort(PortType::OUTPUT_PORT), (Output**)endPort(PortType::OUTPUT_PORT)};
 }
 
-Port* XMASComponent::findPort(const char* name, PortType type) {
-    for (Port* p : ports(type))
-        if (strcmp(name, p->getName()) == 0)
-            return p;
-    return nullptr;
-}
-
-Input* XMASComponent::findInputPort(const char *name) {
-    return static_cast<Input*>(findPort(name, PortType::INPUT_PORT));
-}
-
-Output* XMASComponent::findOutputPort(const char *name) {
-    return static_cast<Output*>(findPort(name, PortType::OUTPUT_PORT));
-}
-
 void Port::clearExtensions() {
     auto extensions = ExtensionContainer<PortExtension>::clearExtensions();
     for (auto it = extensions.begin(); it != extensions.end(); )

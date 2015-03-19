@@ -465,10 +465,6 @@ public:
      */
     PortIterators<Output**> outputPorts();
 
-    Port* findPort(const char* name, PortType type = PortType::ALL);
-    Input* findInputPort(const char* name);
-    Output* findOutputPort(const char* name);
-
     /**
      * @brief clearExtensions
      */
@@ -967,9 +963,10 @@ class XMASInGate : public XMASComponent
 {
 public:
     Output o;
-    Port* p[1];
+    Input i_ext;    // external interface port
+    Port* p[1];     // publish only the output port
 
-    XMASInGate(const bitpowder::lib::String& name) : XMASComponent(name), o(this,"o")
+    XMASInGate(const bitpowder::lib::String& name) : XMASComponent(name), o(this,"o"), i_ext(this,"i_ext")
     {
         p[0] = &o;
     }
@@ -999,9 +996,10 @@ class XMASOutGate : public XMASComponent
 {
 public:
     Input i;
-    Port* p[1];
+    Output o_ext;   // external interface port
+    Port* p[1];     // publish only the input port
 
-    XMASOutGate(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i")
+    XMASOutGate(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), o_ext(this,"o_ext")
     {
         p[0] = &i;
     }
@@ -1044,6 +1042,7 @@ public:
     const std::map<const bitpowder::lib::String, XMASComponent*>& getComponents() const {
         return components;
     }
+
 
     template<typename T>
     const std::vector<T*> componentsOfType() const
