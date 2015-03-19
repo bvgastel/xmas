@@ -25,9 +25,7 @@
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent)
 {
-//    m_ports = QList<XPort *>();
    m_component = nullptr;
-//    qDebug() << "Constructor component done.";
 }
 
 model::Component::~Component()
@@ -48,34 +46,10 @@ void model::Component::classBegin() {
  */
 void model::Component::componentComplete() {
    m_component = createComponent(m_type, m_name);
-    if(m_component) {
-       // emitInports();
-       // emitOutports();
+    if(!m_component) {
+        emit writeLog(QString("Error while create XMASComponent for ")+m_name);
     }
 }
-
-//void model::Component::emitInports()
-//{
-//    for (Port *p : m_component->inputPorts()) {
-//        QVariantMap map;
-//        map.insert("name", QString(p->getName()));
-//        map.insert("type", XPort::PortType::INPORT);
-//        m_inports.append(map);
-//    }
-//    emit portsChanged();
-
-//}
-
-//void model::Component::emitOutports()
-//{
-//    for (Port *p : m_component->outputPorts()) {
-//        QVariantMap map;
-//        map.insert("name", QString(p->getName()));
-//        map.insert("type", XPort::PortType::OUTPORT);
-//        m_outports.append(map);
-//    }
-//    emit portsChanged();
-//}
 
 XMASComponent *model::Component::createComponent(CompType type, QString qname) {
     XMASComponent *component = nullptr;
@@ -326,9 +300,6 @@ QQmlListProperty<model::XPort> model::Component::ports()
 {
     return QQmlListProperty<model::XPort>(this, 0,
                                                &model::Component::append_port,0,0,0);
-//                                               &model::Component::count_port,
-//                                               &model::Component::at_port,
-//                                               &model::Component::clear_port);
 
 }
 
@@ -339,32 +310,6 @@ void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::
         component->m_ports.append(port);
     }
 }
-
-//int model::Component::count_port_list(QQmlListProperty<model::XPort> *property) {
-//    Component *component = qobject_cast<Component *>(property->object);
-//    if (component) {
-//        return component->m_ports.size();
-//    }
-//    //TODO: Should we emit an error signal? How? There is no instance! (static)
-//    return 0;
-//}
-
-//model::XPort *model::Component::at_port_list(QQmlListProperty<model::XPort> *property, int index) {
-//    if (property->data) {
-//        auto *list = static_cast< QList<model::XPort *> *>(property->data);
-//        model::XPort *port = list->at(index);
-//        return port;
-//    }
-//    return nullptr;
-//}
-
-//void model::Component::clear_port_list(QQmlListProperty<model::XPort> *property) {
-//    Component *component = qobject_cast<Component *>(property->object);
-//    if (component) {
-//        component->m_ports.clear();
-//    }
-//}
-
 
 
 

@@ -8,9 +8,9 @@ XComponent {
     height: 100
     type: Model.XComponent.Switch
     prefix: "s"
-    XPort{x:0 ; y:45; name:inputports[0].name; type:inputports[0].type}
-    XPort{x:90 ; y:15; name:outputports[0].name; type:outputports[0].type}
-    XPort{x:90 ; y:75; name:outputports[1].name; type:outputports[1].type}
+    XPort{x:0 ; y:45; name:"i"; type:Model.XPort.INPORT}
+    XPort{x:90 ; y:15; name:"a"; type:Model.XPort.OUTPORT}
+    XPort{x:90 ; y:75; name:"b"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false
