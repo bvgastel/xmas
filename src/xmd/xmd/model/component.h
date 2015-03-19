@@ -80,6 +80,10 @@ signals:
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
 
+    /* Mainly for composites. Primitives use fixed names and types. */
+    void inportProperties(QVariantList portList);
+    void outportProperties(QVariantList portList);
+
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -165,14 +169,10 @@ public:
 private:
     XMASComponent *createComponent(CompType type, QString name);
     int checkName(QString name);
-
-//    void emitInports();
-//    void emitOutports();
+    void emitInportProperties();
+    void emitOutportProperties();
 
     static void append_port(QQmlListProperty<XPort> *list, XPort *port);
-//    static int count_port(QQmlListProperty<XPort> *list);
-//    static XPort *at_port(QQmlListProperty<XPort> *list, int index);
-//    static void clear_port(QQmlListProperty<XPort> *list);
 
 public:
 private:

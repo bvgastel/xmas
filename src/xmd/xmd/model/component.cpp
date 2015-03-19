@@ -46,9 +46,35 @@ void model::Component::classBegin() {
  */
 void model::Component::componentComplete() {
    m_component = createComponent(m_type, m_name);
-    if(!m_component) {
+    if(!m_component) { // trouble! We have no XMASComponent
         emit writeLog(QString("Error while create XMASComponent for ")+m_name);
+        return;
     }
+    // m_component is solid
+    emitInportProperties();
+    emitOutportProperties();
+}
+
+void model::Component::emitInportProperties() {
+    QVariantList portList;
+    for (Port *p : m_component->inputPorts()) {
+        QVariantMap map;
+        map.insert("name", p->getName());
+        map.insert("type", model::XPort::INPORT);
+        portList.append(map);
+    }
+    emit inportProperties(portList);
+}
+
+void model::Component::emitOutportProperties() {
+    QVariantList portList;
+    for (Port *p : m_component->outputPorts()) {
+        QVariantMap map;
+        map.insert("name", p->getName());
+        map.insert("type", model::XPort::OUTPORT);
+        portList.append(map);
+    }
+    emit outportProperties(portList);
 }
 
 XMASComponent *model::Component::createComponent(CompType type, QString qname) {
