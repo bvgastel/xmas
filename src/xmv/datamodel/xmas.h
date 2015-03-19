@@ -1035,6 +1035,13 @@ public:
 
     XMASNetwork(XMASNetwork&&) = default;
 
+    ~XMASNetwork()
+    {
+        for (auto c : components) {
+            delete(c.second);
+        }
+    }
+
     const std::string getStdName() const {
         return this->name;
     }
