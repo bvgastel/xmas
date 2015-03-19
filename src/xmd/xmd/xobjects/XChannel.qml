@@ -37,15 +37,15 @@ Model.XChannel {
     objectName: "channel"
     focus: true
     property int id: 0
-    port1: null
+    outport: null
     port2: null
     property color color: "darkblue"
     property bool selected: false
 
 
     function doUpdate1() {
-        wire.x1 = mapFromItem(port1,5,5).x
-        wire.y1 = mapFromItem(port1,5,5).y
+        wire.x1 = mapFromItem(outport,5,5).x
+        wire.y1 = mapFromItem(outport,5,5).y
     }
     function doUpdate2() {
         wire.x2 = mapFromItem(port2,5,5).x
@@ -53,7 +53,7 @@ Model.XChannel {
     }
 
     function remove() {
-        if(port1) port1.connected = false
+        if(outport) outport.connected = false
         if(port2) port2.connected = false
         destroy(channel)
         //log("Channel deleted!","black")
@@ -62,7 +62,7 @@ Model.XChannel {
     }
 
 
-    onPort1Changed: port1 ? doUpdate1() : null
+    onOutportChanged: outport ? doUpdate1() : null
     onPort2Changed: port2 ? doUpdate2() : null
 
     onSelectedChanged: {
@@ -108,7 +108,7 @@ Model.XChannel {
     }
 
     Connections {
-        target: port1
+        target: outport
         onUpdate: doUpdate1()
         onRemoved: channel.remove()
     }

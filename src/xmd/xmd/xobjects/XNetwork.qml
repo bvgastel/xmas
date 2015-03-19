@@ -88,7 +88,7 @@ Rectangle {
     XWire{
       id: wire
       property bool connecting: false
-      property var port1: null
+      property var outport: null
       property var port2: null
       property int mx: 0
       property int my: 0
@@ -96,10 +96,10 @@ Rectangle {
       size: 4
       color: "red"
 
-      onPort1Changed: {
-          if(port1) {
-              wire.x1 = port1.mapToItem(sheet,5,5).x
-              wire.y1 = port1.mapToItem(sheet,5,5).y
+      onOutportChanged: {
+          if(outport) {
+              wire.x1 = outport.mapToItem(sheet,5,5).x
+              wire.y1 = outport.mapToItem(sheet,5,5).y
               wire.x2 = wire.x1
               wire.y2 = wire.y1
           }
@@ -128,8 +128,8 @@ Rectangle {
           width: 10
           rotation: -parent.rotation
           radius: {
-              if(wire.port1) {
-                  wire.port1.type === XMAS.XPort.Target ? 10  : 0
+              if(wire.outport) {
+                  wire.outport.type === XMAS.XPort.Target ? 10  : 0
               } else 0
           }
           border.color: wire.color
@@ -139,10 +139,10 @@ Rectangle {
 
 
     function checkTarget(port) {
-        if (wire.port1
-                && wire.port1 !== port
+        if (wire.outport
+                && wire.outport !== port
                 && wire.port2 !== port) {
-            if (wire.port1.type !== port.type){
+            if (wire.outport.type !== port.type){
                 wire.port2 = port
             }
         } else {
@@ -151,18 +151,18 @@ Rectangle {
     }
 
     function wiring(port) {
-        if (wire.port1) {
-            if(wire.port1.type !== port.type)
+        if (wire.outport) {
+            if(wire.outport.type !== port.type)
             {
-                Code.doConnect(wire.port1,port)
+                Code.doConnect(wire.outport,port)
                 Code.channel = null
-                wire.port1 = null
+                wire.outport = null
                 wire.port2 = null
                 wire.connecting = false
             }
             else { port.connected=false}
         } else {
-            wire.port1 = port
+            wire.outport = port
             wire.connecting = true
         }
     }
@@ -176,8 +176,8 @@ Rectangle {
     }
 
     function isValidPort(port){
-        if(wire.port1){
-            return wire.port1.type !== port.type
+        if(wire.outport){
+            return wire.outport.type !== port.type
         }
         return true
     }
@@ -211,8 +211,8 @@ Rectangle {
                 if(wire.connecting)
                 {
                     wire.connecting = false
-                    wire.port1.connected = false
-                    wire.port1 = null
+                    wire.outport.connected = false
+                    wire.outport = null
                     wire.port2 = null
                 }
                 else

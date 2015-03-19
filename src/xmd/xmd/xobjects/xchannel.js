@@ -2,23 +2,23 @@
 var channel = null;
 var component = null;
 
-function loadcomponent(port1,port2) {
+function loadcomponent(outport,port2) {
     // component previously loaded?
     if (component !== null) {
-        createComponent(port1,port2)
+        createComponent(outport,port2)
         return
     }
     component = Qt.createComponent("qrc:///xobjects/XChannel.qml")
     // Still loading qml? Call createObject on status changed
     if (component.status === Qjs.Component.Loading)
-        component.statusChanged.connect(createComponent(port1,port2));
+        component.statusChanged.connect(createComponent(outport,port2));
     else //...status must be ready or error immediately.
-        createComponent(port1,port2)
+        createComponent(outport,port2)
 }
 
-function createComponent(port1,port2) {
+function createComponent(outport,port2) {
     if (component.status === Qjs.Component.Ready && channel == null) {
-        channel = component.createObject(sheet, {port1:port1,port2:port2})
+        channel = component.createObject(sheet, {outport:outport,port2:port2})
     } else if (component.status === Qjs.Component.Error) {
         channel = null
         log(component.errorString(),"red")
@@ -26,9 +26,9 @@ function createComponent(port1,port2) {
 }
 
 
-function doConnect(port1,port2) {
+function doConnect(outport,port2) {
     channel = null
-    loadcomponent(port1,port2)
+    loadcomponent(outport,port2)
 
 }
 
