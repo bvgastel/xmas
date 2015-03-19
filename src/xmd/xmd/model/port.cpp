@@ -27,8 +27,7 @@
 model::XPort::XPort(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_port = nullptr;
-    m_owner = nullptr;
+    m_component = nullptr;
 }
 
 model::XPort::~XPort()
@@ -41,5 +40,36 @@ void model::XPort::classBegin() {
 }
 
 void model::XPort::componentComplete() {
-    // no action necessary
+    // not necessary
 }
+
+/**
+ * @brief model::XPort::getPort
+ *
+ * Find the Port as defined in xmas.h and return
+ * it. This port should have the same name;
+ *
+ * Note: no check on type, this must be correct as
+ * set by Component.
+ *
+ * @return
+ */
+Port *model::XPort::getPort() {
+    //    if (!parent()) {
+    //        emit writeLog(QString("[XPort.getPort()] Port has no owner."));
+    //        return nullptr;
+    //    }
+    //Component *comp = qobject_cast<Component *>(parent());
+    if (m_component) {
+        XMASComponent *c = m_component->getXMASComponent();
+        if (c) {
+            for (Port *p : c->ports()) {
+                if (QString(p->getName()) == getName()) {
+                    return p;
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+

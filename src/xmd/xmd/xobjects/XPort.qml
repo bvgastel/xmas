@@ -36,7 +36,7 @@ Model.XPort {
     z:1
     objectName: "port"
     width: 10; height:10
-    connected: false
+    //connected: false        // Connected is read-only
     rotation: (port.type === Model.XPort.INPORT) ? 0 : 180
     property bool nameAlignCenter: false
 
@@ -78,7 +78,8 @@ Model.XPort {
         onPressed: {
             if (mouse.button === Qt.LeftButton
                     && !connected) {
-                connected = true
+                //connected = true    --> not allowed, read-only
+                // TODO: gbo: where to call network.connect(port-out, port-in)?
                 sheet.wiring(port)
             } else {mouse.accepted=false}
         }

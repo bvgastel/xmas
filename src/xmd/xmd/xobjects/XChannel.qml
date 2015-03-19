@@ -43,18 +43,23 @@ Model.XChannel {
     property bool selected: false
 
 
+    // TODO: gbo: insert network.connect(out, in) here??
     function doUpdate1() {
         wire.x1 = mapFromItem(outport,5,5).x
         wire.y1 = mapFromItem(outport,5,5).y
+        network.connect(channel.outport, channel.inport)
     }
     function doUpdate2() {
         wire.x2 = mapFromItem(inport,5,5).x
         wire.y2 = mapFromItem(inport,5,5).y
+        network.connect(channel.outport, channel.inport)
     }
 
     function remove() {
-        if(outport) outport.connected = false
-        if(inport) inport.connected = false
+        //if(outport) outport.connected = false     // Connected == read-only
+        //if(inport) inport.connected = false
+        // gbo: added, plz check and remove my comment
+        network.disconnect(channel.outport)
         destroy(channel)
         //log("Channel deleted!","black")
         //TODO : channel is already null - send unique id or tempory copy?

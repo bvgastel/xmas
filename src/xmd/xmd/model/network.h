@@ -60,6 +60,7 @@ public slots:
         return jsonString;
     }
 
+// TODO: Property List met 4 callbacks
 
 //    QVariantList compList() {
 //        return m_compList;

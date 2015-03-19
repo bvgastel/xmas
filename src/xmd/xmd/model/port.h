@@ -25,7 +25,6 @@
 
 #include <QQuickItem>
 
-
 #include "xmas.h"
 
 namespace model {
@@ -39,8 +38,7 @@ class XPort : public QQuickItem
     Q_ENUMS(PortType)
     Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(bool connected READ getConnected WRITE setConnected NOTIFY connectedChanged)
-    Q_PROPERTY(model::Component *owner READ owner WRITE owner NOTIFY ownerChanged)
+    Q_PROPERTY(bool connected READ getConnected NOTIFY connectedChanged)
 
 //    property int id: 0 (komt van toepassing in composites , uniek volgnummer ipv naam)
 
@@ -48,7 +46,8 @@ signals:
     void nameChanged();
     void typeChanged();
     void connectedChanged();
-    void ownerChanged();
+
+    void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
 
@@ -79,36 +78,29 @@ public:
     }
 
     bool getConnected() {
-        if (m_port) {
-            return m_port->isConnected();
+        Port *port = getPort();
+        if (port) {
+            return port->isConnected();
         }
         return false;
     }
 
-    void setConnected(bool) {
-        // just signal the change (is internal to Port).
-        emit connectedChanged();
-    }
-
-    Component *owner() {
-        return this->m_owner;
-    }
-
-    void owner(Component *owner) {
-        this->m_owner = owner;
-    }
-
-    Port *getPort() {
-        return m_port;
-    }
-
+    /**
+     * @brief getPort
+     *
+     * Returns the companion xmas port.
+     *
+     * @return Port with the same name.
+     */
+    Port *getPort();
 
 private:
     QString m_name;
     PortType m_type;
 
-    Component *m_owner;
-    Port *m_port;           // Only one port is allowed: either input or output
+    Component *m_component;
+    //Port *m_port;
+
 };
 
 } // namespace model
