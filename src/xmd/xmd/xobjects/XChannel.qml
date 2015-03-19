@@ -37,8 +37,8 @@ Model.XChannel {
     objectName: "channel"
     focus: true
     property int id: 0
-    property var port1: null
-    property var port2: null
+    port1: null
+    port2: null
     property color color: "darkblue"
     property bool selected: false
 

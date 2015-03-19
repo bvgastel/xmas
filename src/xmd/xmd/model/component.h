@@ -66,11 +66,7 @@ private:
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
 
-    Q_PROPERTY(QQmlListProperty<model::XPort> inputports READ getInputPorts NOTIFY inputPortsChanged)
-    Q_PROPERTY(QQmlListProperty<model::XPort> outputports READ getOutputPorts NOTIFY outputPortsChanged)
-
-    Q_PROPERTY(QVariantList inports READ inports NOTIFY inPortsChanged)
-    Q_PROPERTY(QVariantList outports READ outports NOTIFY outPortsChanged)
+    Q_PROPERTY(QQmlListProperty<model::XPort> ports READ ports) // NOTIFY portsChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -79,10 +75,7 @@ public:
 signals:
     void nameChanged(int result);
     void typeChanged();
-    void inputPortsChanged();
-    void outputPortsChanged();
-    void inPortsChanged();
-    void outPortsChanged();
+//    void portsChanged();
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
@@ -166,32 +159,20 @@ public:
         return this->m_component;
     }
 
-    QQmlListProperty<XPort> getInputPorts();
-    QQmlListProperty<XPort> getOutputPorts();
+    QQmlListProperty<XPort> ports();
 
-    QVariantList inports(){
-        return m_inports;
-    }
-    QVariantList outports(){
-        return m_outports;
-    }
 
 private:
     XMASComponent *createComponent(CompType type, QString name);
     int checkName(QString name);
 
-    void emitInports();
-    void emitOutports();
+//    void emitInports();
+//    void emitOutports();
 
-    static void append_inport_list(QQmlListProperty<XPort> *property, XPort *port);
-    static int count_inport_list(QQmlListProperty<XPort> *property);
-    static XPort *at_inport_list(QQmlListProperty<XPort> *property, int index);
-    static void clear_inport_list(QQmlListProperty<XPort> *property);
-
-    static void append_outport_list(QQmlListProperty<XPort> *property, XPort *port);
-    static int count_outport_list(QQmlListProperty<XPort> *property);
-    static XPort *at_outport_list(QQmlListProperty<XPort> *property, int index);
-    static void clear_outport_list(QQmlListProperty<XPort> *property);
+    static void append_port(QQmlListProperty<XPort> *list, XPort *port);
+//    static int count_port(QQmlListProperty<XPort> *list);
+//    static XPort *at_port(QQmlListProperty<XPort> *list, int index);
+//    static void clear_port(QQmlListProperty<XPort> *list);
 
 public:
 private:
@@ -205,11 +186,7 @@ private:
     bool m_validExprWarningGiven; // an internal flag (non-qml)
 
     XMASComponent *m_component;
-    QList<XPort *> m_inputports;
-    QList<XPort *> m_outputports;
-
-    QVariantList m_inports;
-    QVariantList m_outports;
+    QList<XPort *> m_ports;
 
 };
 

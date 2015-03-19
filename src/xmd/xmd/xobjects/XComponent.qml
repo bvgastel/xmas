@@ -59,31 +59,7 @@ Model.XComponent {
     signal update()
     signal showDialog()
 
-    // postpone creation of XPorts until names and type are known
-    onInputPortsChanged: {
-        // create and change XPorts according to list
-
-    }
-
-    // postpone creation of XPorts until names and type are known
-    onOutputPortsChanged: {
-        // creaet and change XPorts according to list
-    }
-
-
-
-
     // JavaScripts
-
-    // send nameChanged() to inports
-    function findInports() {
-        // walk component tree for all XPorts that are free and make them inports
-    }
-
-    // send nameChanged() to outports
-    function findOutports() {
-        // walk component tree for all XPorts that are free and make them outports
-    }
 
     // Move
     function doMove(dX,dY){

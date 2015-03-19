@@ -54,6 +54,7 @@ void DataControl::registerTypes() const{
     qmlRegisterType<model::Component>("XMAS.model", 1, 0, "XComponent");
     qmlRegisterType<model::Channel>("XMAS.model", 1, 0, "XChannel");
     qmlRegisterType<model::XPort>("XMAS.model", 1, 0, "XPort");
+    qRegisterMetaType<model::XPort*>("XPort*");
 }
 
 bool DataControl::fileOpen(QUrl fileUrl) {
