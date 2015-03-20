@@ -39,11 +39,10 @@ import "../content"
 ColumnLayout{
     spacing:0
     id:output
-    property bool open
+    property bool open: false
     property string status: "Ready"
     property int lastHeight
     property int headerHeight:25
-    state: "down"
 
     signal writeLog(string text, color clr)
 
@@ -107,18 +106,17 @@ ColumnLayout{
         style: TextAreaStyle {
             backgroundColor: "lightgrey"
         }
+        visible: open //to hide a funny scrollbar behavior (doesn't work in the states)
     }
 
     states: [
         State {
-            name: "up"
             when: !open
             PropertyChanges { target: arrow; rotation: 180 }
             PropertyChanges { target: output; height: headerHeight }
         }
         ,
         State {
-            name: "down"
             when: open
             PropertyChanges { target: arrow; rotation: 0 }
             PropertyChanges { target: output; height: lastHeight }
