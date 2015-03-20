@@ -44,21 +44,6 @@ model::Channel::~Channel()
  */
 void model::Channel::componentComplete()
 {
-//    QString errMsg;
-//    if (!portsOk(errMsg)) {
-//        emit writeLog(errMsg, Qt::red);
-//        return;
-//    }
-
-//    Output *out = dynamic_cast<Output *>(m_outport->getPort());
-//    Input *in = dynamic_cast<Input *>(m_inport->getPort());
-//    if (in && out) {
-//        Output &output = *out;
-//        Input &input = *in;
-//        ::connect(output, input);
-//    } else {
-//        throw std::exception();
-//    }
 }
 
 void model::Channel::classBegin()

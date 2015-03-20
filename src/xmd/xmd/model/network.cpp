@@ -11,18 +11,21 @@ model::Network::~Network()
 }
 /** Connect method for qml */
 bool model::Network::connect(XPort *outport, XPort *inport) {
+    // Check output
     if (!outport) {
         QString errMsg = "[Network::connect()] outport is null.";
         emit writeLog(errMsg, Qt::red);
         qDebug() << errMsg;
         return false;
     }
+    // Check inport
     if (!inport) {
         QString errMsg = "[Network::connect()] inport is null.";
         emit writeLog(errMsg, Qt::red);
         qDebug() << errMsg;
         return false;
     }
+    // obtain and check xmas inport and outport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
     if (xmas_inport && xmas_outport) {
@@ -31,6 +34,7 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
         emit inport->connectedChanged();
         return true;
     }
+    // Trouble! Send error message
     QString errMsg = "[Network::connect()] ";
     errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
                                            : "xmas_inport is null.")
@@ -49,24 +53,36 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
  *
  */
 bool model::Network::disconnect(XPort *outport, XPort *inport) {
+    // check outport
     if (!outport) {
-        QString errMsg = "[Network::disconnect()] port is null.";
+        QString errMsg = "[Network::disconnect()] outport is null.";
         emit writeLog(errMsg);
         qDebug() << errMsg;
         return false;
     }
-    qDebug() << "[model::Network::disconnect]";
+    //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
-    Input *xmas_inport = dynamic_cast<Input *>(outport->getPort());
+    Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
+    if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
+        QString out_owner = xmas_outport->m_owner->getStdName().c_str();
+        QString in_owner = xmas_inport->m_owner->getStdName().c_str();
+        QString out_port_name = xmas_outport->getName();
+        QString in_port_name = xmas_outport->getName();
+        QString errMsg = "[Network::disconnect()] outport not connected to specified inport";
+        errMsg += "\n[Network::disconnect()] output / input = "
+                + out_owner+"."+out_port_name + ", "
+                + in_owner + "." + in_port_name;
+        emit writeLog(errMsg);
+        qDebug() << errMsg;
+        return false;
+    }
     if (xmas_outport && xmas_outport->isConnected()) {
         ::disconnect(*xmas_outport);
-        qDebug() << "xmas_output disconnect." << xmas_outport->isConnected();
         emit outport->connectedChanged();
         emit inport->connectedChanged();
         return true;
     } else if (xmas_inport && xmas_inport->isConnected()) {
         ::disconnect(*xmas_inport);
-        qDebug() << "xmas_input disconnect." << xmas_inport->isConnected();
         emit outport->connectedChanged();
         emit inport->connectedChanged();
         return true;

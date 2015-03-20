@@ -39,24 +39,19 @@ function doConnect(port1,port2) {
     var inport = port2.type === Model.XPort.INPORT ? port2 : port1
     channel = null
     loadcomponent(outport,inport)
-    log("input = "+inport + " output = "+outport)
     network.connect(outport,inport)
-
-    log("outport type = "+outport.type + " inport type ? " + inport.type)
-    log("outport connected ? "+outport.connected + " inport connected ? " + inport.connected)
 }
 
-//NOTE: isConnected() is a method in xmas: we should not set in qml
 //TODO : portnames are references and must match json!!!
 //TODO : avoid short naming
 function create(iComp,iPort,tComp,tPort) {
     channel = null
-    var ic = getComponent(iComp)
-    var ip = getPort(ic,iPort)
-    var tc = getComponent(tComp)
-    var tp = getPort(tc,tPort)
-    //log("target: " + tc.name + "." + tp.name)
-    loadcomponent(ip,tp)
+    var initiator_comp = getComponent(iComp)
+    var initiator_port = getPort(initiator_comp,iPort)
+    var target_comp = getComponent(tComp)
+    var target_port = getPort(target_comp,tPort)
+    //log("target: " + target_comp.name + "." + target_port.name)
+    loadcomponent(initiator_port,target_port)
     return true
 }
 

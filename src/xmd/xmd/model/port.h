@@ -81,10 +81,8 @@ public:
     }
 
     bool getConnected() {
-        qDebug() << "port isConnected request try. ";
         Port *port = this->getPort();
         if (port) {
-            qDebug() << "port isConnected request (port ok) : " << port->isConnected();
             return port->isConnected();
         }
         return false;
