@@ -39,6 +39,8 @@ private:
 signals:
     void compListChanged();
 
+    void writeLog(QString message, QColor color = Qt::blue);
+
 public slots:
     /** Connect method for qml */
     bool connect(XPort *port_out, XPort *port_in);

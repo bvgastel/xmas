@@ -60,7 +60,10 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
-    PortType getType() const {return m_type;}
+    PortType getType() const {
+        return m_type;
+    }
+
     void setType(PortType type) {
         m_type = type;
         emit typeChanged();
@@ -99,7 +102,6 @@ private:
     PortType m_type;
 
     Component *m_component;
-    //Port *m_port;
 
 };
 
