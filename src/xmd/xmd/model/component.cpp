@@ -47,7 +47,7 @@ void model::Component::classBegin() {
 void model::Component::componentComplete() {
    m_component = createComponent(m_type, m_name);
     if(!m_component) { // trouble! We have no XMASComponent
-        emit writeLog(QString("Error while create XMASComponent for ")+m_name);
+        emit writeLog(QString("Error while create XMASComponent for ")+m_name + QString(" and type ")+m_type);
         return;
     }
     // m_component is solid

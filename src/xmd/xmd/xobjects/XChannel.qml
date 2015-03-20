@@ -96,19 +96,19 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: Code.remove()
+            onTriggered: Code.remove(channel)
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        onRemoved: Code.remove()
+        onRemoved: Code.remove(channel)
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: Code.remove()
+        onRemoved: Code.remove(channel)
     }
 
     Connections {

@@ -45,8 +45,7 @@ public slots:
     /** Connect method for qml */
     bool connect(XPort *port_out, XPort *port_in);
     /** Disconnect method from output port for qml */
-    bool disconnect(XPort *port);
-
+    bool disconnect(XPort *outport, XPort *inport);
     QString toJson(QList<Component *> allComponents) {
         bitpowder::lib::String result;
         bitpowder::lib::MemoryPool mp;

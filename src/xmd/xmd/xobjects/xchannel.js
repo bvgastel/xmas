@@ -26,9 +26,9 @@ function createComponent(outport,inport) {
     }
 }
 
-function remove() {
-    if (channel && channel.outport && channel.outport.connected) {
-        network.disconnect(channel.outport)
+function remove(channel) {
+    if (channel) {
+        network.disconnect(channel.outport, channel.inport)
     }
     destroy(channel)
 }
@@ -41,6 +41,7 @@ function doConnect(port1,port2) {
     loadcomponent(outport,inport)
     log("input = "+inport + " output = "+outport)
     network.connect(outport,inport)
+
     log("outport type = "+outport.type + " inport type ? " + inport.type)
     log("outport connected ? "+outport.connected + " inport connected ? " + inport.connected)
 }

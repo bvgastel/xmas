@@ -27,6 +27,8 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
     if (xmas_inport && xmas_outport) {
         ::connect(*xmas_outport, *xmas_inport);
+        emit outport->connectedChanged();
+        emit inport->connectedChanged();
         return true;
     }
     QString errMsg = "[Network::connect()] ";
@@ -46,20 +48,27 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
  *
  *
  */
-bool model::Network::disconnect(XPort *port) {
-    if (!port) {
+bool model::Network::disconnect(XPort *outport, XPort *inport) {
+    if (!outport) {
         QString errMsg = "[Network::disconnect()] port is null.";
         emit writeLog(errMsg);
         qDebug() << errMsg;
         return false;
     }
-    Output *outport = dynamic_cast<Output *>(port->getPort());
-    Input *inport = dynamic_cast<Input *>(port->getPort());
-    if (outport && outport->isConnected()) {
-        ::disconnect(*outport);
+    qDebug() << "[model::Network::disconnect]";
+    Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
+    Input *xmas_inport = dynamic_cast<Input *>(outport->getPort());
+    if (xmas_outport && xmas_outport->isConnected()) {
+        ::disconnect(*xmas_outport);
+        qDebug() << "xmas_output disconnect." << xmas_outport->isConnected();
+        emit outport->connectedChanged();
+        emit inport->connectedChanged();
         return true;
-    } else if (inport && inport->isConnected()) {
-        ::disconnect(*inport);
+    } else if (xmas_inport && xmas_inport->isConnected()) {
+        ::disconnect(*xmas_inport);
+        qDebug() << "xmas_input disconnect." << xmas_inport->isConnected();
+        emit outport->connectedChanged();
+        emit inport->connectedChanged();
         return true;
     }
     QString errMsg = "[Network::disconnect()] inport or outport of connection null.";

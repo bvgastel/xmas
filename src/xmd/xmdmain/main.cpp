@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
+    QCoreApplication::setApplicationName("XMAS Model Designer (2015)");
+    QCoreApplication::setOrganizationName("Open University NL");
+    QCoreApplication::setOrganizationDomain("ou.nl");
 
     /*************************************************/
     /* OOAK class registration for Qml access        */

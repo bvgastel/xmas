@@ -40,7 +40,7 @@ void model::XPort::classBegin() {
 }
 
 void model::XPort::componentComplete() {
-    // not necessary
+    m_component = qobject_cast<Component *>(parent());
 }
 
 /**
@@ -55,11 +55,6 @@ void model::XPort::componentComplete() {
  * @return
  */
 Port *model::XPort::getPort() {
-    //    if (!parent()) {
-    //        emit writeLog(QString("[XPort.getPort()] Port has no owner."));
-    //        return nullptr;
-    //    }
-    //Component *comp = qobject_cast<Component *>(parent());
     if (m_component) {
         XMASComponent *c = m_component->getXMASComponent();
         if (c) {
