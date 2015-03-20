@@ -56,10 +56,10 @@ Model.XChannel {
     }
 
     function remove() {
-        //if(outport) outport.connected = false     // Connected == read-only
-        //if(inport) inport.connected = false
-        // gbo: added, plz check and remove my comment
-        network.disconnect(channel.outport)
+        if (channel.outport.connected) {
+            network.disconnect(channel.outport)
+        }
+
         destroy(channel)
         //log("Channel deleted!","black")
         //TODO : channel is already null - send unique id or tempory copy?
