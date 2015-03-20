@@ -28,6 +28,8 @@ function createComponent(outport,inport) {
 
 function remove(channel) {
     if (channel) {
+        // FIXME: Cannot call method 'disconnect' of null // only when connected while closing down
+        // Apparantly network is null during close down of the application, while xchannel.js is still active.
         network.disconnect(channel.outport, channel.inport)
     }
     destroy(channel)
