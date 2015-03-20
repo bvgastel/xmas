@@ -1,3 +1,4 @@
+.import XMAS.model 1.0 as Model
 .import QtQuick 2.0 as Qjs
 var channel = null;
 var component = null;
@@ -25,11 +26,23 @@ function createComponent(outport,inport) {
     }
 }
 
+function remove() {
+    if (channel && channel.outport && channel.outport.connected) {
+        network.disconnect(channel.outport)
+    }
+    destroy(channel)
+}
 
-function doConnect(outport,inport) {
+
+function doConnect(port1,port2) {
+    var outport = port1.type === Model.XPort.OUTPORT ? port1 : port2
+    var inport = port2.type === Model.XPort.INPORT ? port2 : port1
     channel = null
     loadcomponent(outport,inport)
-
+    log("input = "+inport + " output = "+outport)
+    network.connect(outport,inport)
+    log("outport type = "+outport.type + " inport type ? " + inport.type)
+    log("outport connected ? "+outport.connected + " inport connected ? " + inport.connected)
 }
 
 //NOTE: isConnected() is a method in xmas: we should not set in qml
@@ -43,8 +56,6 @@ function create(iComp,iPort,tComp,tPort) {
     var tp = getPort(tc,tPort)
     //log("target: " + tc.name + "." + tp.name)
     loadcomponent(ip,tp)
-    ip.connected=true
-    tp.connected=true
     return true
 }
 

@@ -12,11 +12,15 @@ model::Network::~Network()
 /** Connect method for qml */
 bool model::Network::connect(XPort *outport, XPort *inport) {
     if (!outport) {
-        emit writeLog(QString("[Network::connect()] outport is null."), Qt::red);
+        QString errMsg = "[Network::connect()] outport is null.";
+        emit writeLog(errMsg, Qt::red);
+        qDebug() << errMsg;
         return false;
     }
     if (!inport) {
-        emit writeLog(QString("[Network::connect()] inport is null."), Qt::red);
+        QString errMsg = "[Network::connect()] inport is null.";
+        emit writeLog(errMsg, Qt::red);
+        qDebug() << errMsg;
         return false;
     }
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
@@ -30,6 +34,7 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
                                            : "xmas_inport is null.")
                             : "xmas_outport is null.");
     emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
     return false;
 }
 /** Disconnect method from output port for qml
@@ -43,7 +48,9 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
  */
 bool model::Network::disconnect(XPort *port) {
     if (!port) {
-        emit writeLog(QString("[Network::disconnect()] port is null."));
+        QString errMsg = "[Network::disconnect()] port is null.";
+        emit writeLog(errMsg);
+        qDebug() << errMsg;
         return false;
     }
     Output *outport = dynamic_cast<Output *>(port->getPort());
@@ -55,6 +62,9 @@ bool model::Network::disconnect(XPort *port) {
         ::disconnect(*inport);
         return true;
     }
+    QString errMsg = "[Network::disconnect()] inport or outport of connection null.";
+    emit writeLog(errMsg);
+    qDebug() << errMsg;
     return false;
 }
 

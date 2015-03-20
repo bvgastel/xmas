@@ -30,6 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import "xchannel.js" as Code
 import XMAS.model 1.0 as Model
 
 Model.XChannel {
@@ -47,23 +48,10 @@ Model.XChannel {
     function doUpdate1() {
         wire.x1 = mapFromItem(outport,5,5).x
         wire.y1 = mapFromItem(outport,5,5).y
-        network.connect(channel.outport, channel.inport)
     }
     function doUpdate2() {
         wire.x2 = mapFromItem(inport,5,5).x
         wire.y2 = mapFromItem(inport,5,5).y
-        network.connect(channel.outport, channel.inport)
-    }
-
-    function remove() {
-        if (channel.outport.connected) {
-            network.disconnect(channel.outport)
-        }
-
-        destroy(channel)
-        //log("Channel deleted!","black")
-        //TODO : channel is already null - send unique id or tempory copy?
-        //controller.channelDestroyed(channel)
     }
 
 
@@ -108,26 +96,26 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: channel.remove()
+            onTriggered: Code.remove()
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        onRemoved: channel.remove()
+        onRemoved: Code.remove()
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: channel.remove()
+        onRemoved: Code.remove()
     }
 
     Connections {
         target: parent
-//        onGroupSelected: channel.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-//        onDeleteSelected: if (channel.selected) channel.remove()
-//        onClearSelection: channel.selected = false
+//        onGroupSelected: Code.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
+//        onDeleteSelected: if (Code.selected) Code.remove()
+//        onClearSelection: Code.selected = false
     }
 
 

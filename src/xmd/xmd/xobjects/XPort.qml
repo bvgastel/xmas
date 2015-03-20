@@ -36,7 +36,6 @@ Model.XPort {
     z:1
     objectName: "port"
     width: 10; height:10
-    //connected: false        // Connected is read-only
     rotation: (port.type === Model.XPort.INPORT) ? 0 : 180
     property bool nameAlignCenter: false
 

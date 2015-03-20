@@ -33,7 +33,6 @@ class Network : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<model::Component> compList READ compList)
-    //Q_PROPERTY(QVariantList compList READ compList WRITE compList NOTIFY compListChanged)
 
 private:
 
@@ -65,14 +64,6 @@ public slots:
 
 QQmlListProperty<Component> compList();
 
-
-//    QVariantList compList() {
-//        return m_compList;
-//    }
-//    void compList(QVariantList compList) {
-//        m_compList = compList;
-//    }
-
 private:
     static void append_compList(QQmlListProperty<Component> *property, Component *comp);
     static int count_compList(QQmlListProperty<Component> *property);
@@ -85,7 +76,6 @@ public:
 
 private:
     QList<Component *> m_compList;
-    //QVariantList m_compList;
 };
 
 } // namespace model
