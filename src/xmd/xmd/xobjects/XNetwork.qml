@@ -211,7 +211,6 @@ Rectangle {
                 if(wire.connecting)
                 {
                     wire.connecting = false
-                    wire.outport.connected = false
                     wire.outport = null
                     wire.inport = null
                 }

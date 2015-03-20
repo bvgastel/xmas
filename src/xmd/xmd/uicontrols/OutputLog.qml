@@ -33,16 +33,17 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
+import Qt.labs.settings 1.0
 import "../content"
 
 ColumnLayout{
     spacing:0
     id:output
-    height: lastHeight
-    property bool open: true
+    property bool open
     property string status: "Ready"
-    property int lastHeight: 150
+    property int lastHeight
     property int headerHeight:25
+    state: "down"
 
     signal writeLog(string text, color clr)
 
@@ -51,6 +52,12 @@ ColumnLayout{
         if(color === "" || color === null || color === undefined) color ="black"
        logList.append("<font color=" + color + ">" + text + "</color>")
      }
+
+    Settings {
+        category: "outputLog"
+        property alias lastHeight: output.lastHeight
+        property alias open: output.open
+    }
 
     Rectangle
     {

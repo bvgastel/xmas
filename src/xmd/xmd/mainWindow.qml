@@ -44,6 +44,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
+import Qt.labs.settings 1.0
+
 import "xobjects"
 import "uicontrols"
 import XMAS.model 1.0
@@ -57,7 +59,17 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 300
     color: "darkgrey"
-    title: "XMAS Model Designer 2015"
+    title: Qt.application.name
+
+    // Persistent properties
+    Settings {
+        category: "xmd"
+        property alias x: mainwindow.x
+        property alias y: mainwindow.y
+        property alias width: mainwindow.width
+        property alias height: mainwindow.height
+    }
+
     property var vtNameList
 
     // Signals
