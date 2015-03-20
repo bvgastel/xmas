@@ -3,7 +3,7 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = toolbarItem.mapToItem(sheet,75,75)
+    posnInWindow = toolbarItem.mapToItem(sheet,-50,-50)
     loadComponent(toolbarItem.componentFile)
 }
 
