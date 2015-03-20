@@ -32,6 +32,7 @@ namespace model {
 class Network : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(QQmlListProperty<model::Component> compList READ compList)
     //Q_PROPERTY(QVariantList compList READ compList WRITE compList NOTIFY compListChanged)
 
 private:
@@ -62,7 +63,8 @@ public slots:
         return jsonString;
     }
 
-// TODO: Property List met 4 callbacks
+QQmlListProperty<Component> compList();
+
 
 //    QVariantList compList() {
 //        return m_compList;
@@ -71,11 +73,18 @@ public slots:
 //        m_compList = compList;
 //    }
 
+private:
+    static void append_compList(QQmlListProperty<Component> *property, Component *comp);
+    static int count_compList(QQmlListProperty<Component> *property);
+    static Component *at_compList(QQmlListProperty<Component> *property, int index);
+    static void clear_compList(QQmlListProperty<Component> *property);
+
 public:
     explicit Network(QQuickItem *parent = 0);
     ~Network();
 
 private:
+    QList<Component *> m_compList;
     //QVariantList m_compList;
 };
 
