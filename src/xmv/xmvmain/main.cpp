@@ -16,6 +16,8 @@
 #include "parse.h"
 #include "export.h"
 
+#include "xmasproject.h"
+
 #ifndef __MINGW32__
 #include <sys/resource.h>
 #endif
@@ -600,6 +602,10 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 }
 
 void TestFile(const std::string &filename, bool showAll) {
+
+    XMASProject project {filename};     // create an XMASProject here for testing purposes
+
+
     bitpowder::lib::MemoryPool mp;
 
     auto begin = std::chrono::high_resolution_clock::now();

@@ -10,6 +10,7 @@
 #include "messagespec.h"
 #include "memorypool.h"
 #include "export.h"
+#include "symbolic.h"
 
 XMASComponent *Port::getTarget() {
     Port *targetPort = getTargetPort();
@@ -403,3 +404,13 @@ XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& ne
         p.push_back(&o);
 }
 
+
+XMASNetwork::~XMASNetwork()
+{
+    for (auto entry : components) {
+        XMASComponent* c = entry.second;
+        ClearSymbolicTypes(c);
+        ClearMessageSpec(c);
+        //delete(c);             // FIXME: How should MemoryPool allocated object be destroyed??
+    }
+}

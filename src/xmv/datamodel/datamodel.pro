@@ -63,7 +63,8 @@ SOURCES += datamodel.cpp \
     parse-parsed-xmas-expression-interface.cpp \
     parsed-xmas-function.cpp \
     symbolic-packet-set.cpp \
-    flatten.cpp
+    flatten.cpp \
+    xmasproject.cpp
 
 
 HEADERS += datamodel.h\
@@ -92,7 +93,8 @@ HEADERS += datamodel.h\
     symbolic-enum.h \
     symbolic-packet-set.h \
     flatten.h \
-    flatten-gates.h
+    flatten-gates.h \
+    xmasproject.h
 
 
 ################################################
@@ -114,6 +116,9 @@ unix|win32|macx {
 ################################################
 # External dependencies
 ################################################
+
+LIBS += -lboost_system -lboost_filesystem
+
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
 

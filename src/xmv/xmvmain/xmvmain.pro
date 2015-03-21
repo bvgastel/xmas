@@ -54,6 +54,9 @@ DEPENDPATH += $$PWD/../vt
 ################################################
 # External dependencies
 ################################################
+
+LIBS += -lboost_system -lboost_filesystem
+
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
 
@@ -62,6 +65,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 
 else:unix|CONFIG(release, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder
+
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
