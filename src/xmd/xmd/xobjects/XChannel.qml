@@ -30,7 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
-import "xchannel.js" as channelJs
+import "xchannel.js" as ChannelJs
 import "../uicontrols"
 import XMAS.model 1.0 as Model
 
@@ -38,7 +38,6 @@ Model.XChannel {
     id: channel
     objectName: "channel"
     focus: true
-//    property int id: 0
     property color color: "darkblue"
     property bool selected: false
 
@@ -95,27 +94,27 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: channelJs.remove(channel)
+            onTriggered: ChannelJs.remove(channel)
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        onRemoved: channelJs.remove(channel)
+        onRemoved: ChannelJs.remove(channel)
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: channelJs.remove(channel)
+        onRemoved: ChannelJs.remove(channel)
     }
 
-    Connections {
-        target: parent
+//    Connections {
+//        target: network
 //        onGroupSelected: channelJs.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-        onDeleteSelected: if (channelJs.selected) channelJs.remove(channel)
-        onClearSelection: channelJs.selected = false
-    }
+//        onDeleteSelected: if (ChannelJs.selected) ChannelJs.remove(channel)
+//        onClearSelection: ChannelJs.selected = false
+//    }
 
 
 }
