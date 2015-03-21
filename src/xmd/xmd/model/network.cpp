@@ -1,5 +1,6 @@
 #include <QList>
 
+#include "util.h"
 #include "network.h"
 
 model::Network::Network(QQuickItem *parent)
@@ -52,6 +53,10 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
     emit writeLog(errMsg, Qt::red);
     qDebug() << errMsg;
     return false;
+}
+
+bool model::Network::toFile(QUrl url) {
+    return Util::toFile(url, toJson());
 }
 
 QString model::Network::toJson() {

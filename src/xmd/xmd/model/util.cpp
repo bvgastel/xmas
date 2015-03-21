@@ -20,6 +20,10 @@
   *
   **********************************************************************/
 
+#include <QTextStream>
+#include <QFile>
+#include <QUrl>
+
 #include "model/util.h"
 
 Util::Util(QObject *parent) : QObject(parent)
@@ -32,3 +36,17 @@ Util::~Util()
 
 }
 
+bool Util::toFile(QUrl fileUrl, QString contents) {
+    QString filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile()
+                                  : fileUrl.fileName();
+    // Write to file
+    QFile file(filename);
+    if (!file.open(QFile::WriteOnly | QFile::Truncate))
+        return false;
+    QTextStream out(&file);
+    out << contents;
+    file.close();
+    return true;
+
+}

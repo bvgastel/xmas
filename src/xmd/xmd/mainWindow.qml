@@ -267,7 +267,7 @@ ApplicationWindow {
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
-        //onAccepted: datacontrol.filesave(fileUrl)
+        onAccepted: network.toFile(fileSaveDialog.fileUrl)
                 //controller.fileOpen(fileUrl)
     }
 

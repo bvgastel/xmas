@@ -77,29 +77,31 @@ public slots:
      */
     QString toJson();
 
+    bool toFile(QUrl url);
+
 //QQmlListProperty<Component> compList();
-
-//#################################################################################################
-// instead of qmllist we can use this simple loop to read all components on the canvas
-// (linking a qmllist directly needs a slightly different approach at qml side too,can be done later if time left)
-QList<Component *> getAllComponents() {
-    m_compList.clear();
-
-    for(QQuickItem *item : this->childItems()) {
-        Component *c = qobject_cast<Component *>(item);
-        if(c){
-            m_compList.append(c);
-        }
-    }
-    qDebug() << "Total comps in list = " << m_compList.count();
-    return m_compList;
-}
-
-//#################################################################################################
 
     //QQmlListProperty<Component> compList();
 
 private:
+    //#################################################################################################
+    // instead of qmllist we can use this simple loop to read all components on the canvas
+    // (linking a qmllist directly needs a slightly different approach at qml side too,can be done later if time left)
+    QList<Component *> getAllComponents() {
+        m_compList.clear();
+
+        for(QQuickItem *item : this->childItems()) {
+            Component *c = qobject_cast<Component *>(item);
+            if(c){
+                m_compList.append(c);
+            }
+        }
+        qDebug() << "Total comps in list = " << m_compList.count();
+        return m_compList;
+    }
+
+    //#################################################################################################
+
 //    static void append_compList(QQmlListProperty<Component> *property, Component *comp);
 //    static int count_compList(QQmlListProperty<Component> *property);
 //    static Component *at_compList(QQmlListProperty<Component> *property, int index);

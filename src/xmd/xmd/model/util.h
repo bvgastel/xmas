@@ -35,6 +35,9 @@ public:
 signals:
 
 public slots:
+
+public:
+    static bool toFile(QUrl fileUrl, QString contents);
 };
 
 #endif // UTIL_H
