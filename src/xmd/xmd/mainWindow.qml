@@ -236,7 +236,6 @@ ApplicationWindow {
 
             }
         }
-
     }
 
     Action {
@@ -268,7 +267,6 @@ ApplicationWindow {
             "Project files (*.xmdp)",
             "All files (*)"]
         onAccepted: network.toFile(fileSaveDialog.fileUrl)
-                //controller.fileOpen(fileUrl)
     }
 
     FileDialog {
@@ -278,7 +276,7 @@ ApplicationWindow {
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
-        //onAccepted: datacontrol.fileOpen(fileUrl)
+        //onAccepted: network.openComposite(fileUrl)
     }
 
     function log(text,color)

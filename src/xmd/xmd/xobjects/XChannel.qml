@@ -38,9 +38,7 @@ Model.XChannel {
     id: channel
     objectName: "channel"
     focus: true
-    property int id: 0
-    outport: null           // NOTE: This means no value onComponentComplete()
-    inport: null            // NOTE: This means no value onComponentComplete()
+//    property int id: 0
     property color color: "darkblue"
     property bool selected: false
 
@@ -115,8 +113,8 @@ Model.XChannel {
     Connections {
         target: parent
 //        onGroupSelected: Code.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-//        onDeleteSelected: if (Code.selected) Code.remove()
-//        onClearSelection: Code.selected = false
+        onDeleteSelected: if (Code.selected) Code.remove(channel)
+        onClearSelection: Code.selected = false
     }
 
 

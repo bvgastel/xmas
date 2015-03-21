@@ -32,14 +32,12 @@ namespace model {
 class Network : public QQuickItem
 {
     Q_OBJECT
-//    Q_PROPERTY(QQmlListProperty<model::Component> compList READ compList NOTIFY compListChanged)
+    Q_PROPERTY(QQmlListProperty<model::Component> components READ components NOTIFY componentsChanged)
 
 private:
 
 signals:
-//    void compListChanged();
-
-
+    void componentsChanged();
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
@@ -79,33 +77,31 @@ public slots:
 
     bool toFile(QUrl url);
 
-//QQmlListProperty<Component> compList();
-
-    //QQmlListProperty<Component> compList();
+    QQmlListProperty<Component> components();
 
 private:
     //#################################################################################################
     // instead of qmllist we can use this simple loop to read all components on the canvas
     // (linking a qmllist directly needs a slightly different approach at qml side too,can be done later if time left)
     QList<Component *> getAllComponents() {
-        m_compList.clear();
+        m_components.clear();
 
         for(QQuickItem *item : this->childItems()) {
             Component *c = qobject_cast<Component *>(item);
             if(c){
-                m_compList.append(c);
+                m_components.append(c);
             }
         }
-        qDebug() << "Total comps in list = " << m_compList.count();
-        return m_compList;
+        qDebug() << "Total comps in list = " << m_components.count();
+        return m_components;
     }
 
     //#################################################################################################
 
-//    static void append_compList(QQmlListProperty<Component> *property, Component *comp);
-//    static int count_compList(QQmlListProperty<Component> *property);
-//    static Component *at_compList(QQmlListProperty<Component> *property, int index);
-//    static void clear_compList(QQmlListProperty<Component> *property);
+    static void append_components(QQmlListProperty<Component> *property, Component *comp);
+    static int count_components(QQmlListProperty<Component> *property);
+    static Component *at_components(QQmlListProperty<Component> *property, int index);
+    static void clear_components(QQmlListProperty<Component> *property);
 
 public:
     explicit Network(QQuickItem *parent = 0);
@@ -115,7 +111,7 @@ public:
 
 private:
 
-    QList<Component *> m_compList;
+    QList<Component *> m_components;
 };
 
 } // namespace model
