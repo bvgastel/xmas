@@ -503,15 +503,6 @@ ApplicationWindow {
                            scrollDown.stop()
                     }
 
-                    Menu {
-                        id: contextMenu
-                        MenuItem {
-                            text: "Delete"
-                            onTriggered: selection.deleteSelected()
-                        }
-                        MenuSeparator{}
-                        MenuItem {action: showComponentNamesAction}
-                    }
                 }
                 // Only show the scrollbars when the view is moving.
                 states:

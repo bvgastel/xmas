@@ -85,30 +85,30 @@ XMAS.XNetwork {
     }
 
     function checkTarget(port) {
-        if (wire.outport
-                && wire.outport !== port
-                && wire.inport !== port) {
-            if (wire.outport.type !== port.type){
-                wire.inport = port
+        if (wire.port1
+                && wire.port1 !== port
+                && wire.port2 !== port) {
+            if (wire.port1.type !== port.type){
+                wire.port2 = port
             }
         } else {
-            wire.inport =  wire.connecting ? null : wire.inport
+            wire.port2 =  wire.connecting ? null : wire.port2
         }
     }
 
     function wiring(port) {
-        if (wire.outport) {
-            if(wire.outport.type !== port.type)
+        if (wire.port1) {
+            if(wire.port1.type !== port.type)
             {
-                Code.doConnect(wire.outport,port)
+                Code.doConnect(wire.port1,port)
                 Code.channel = null
-                wire.outport = null
-                wire.inport = null
+                wire.port1 = null
+                wire.port2 = null
                 wire.connecting = false
             }
-            else { port.connected=false}
+            //else { port.connected=false}
         } else {
-            wire.outport = port
+            wire.port1 = port
             wire.connecting = true
         }
     }
@@ -122,8 +122,8 @@ XMAS.XNetwork {
     }
 
     function isValidPort(port){
-        if(wire.outport){
-            return wire.outport.type !== port.type
+        if(wire.port1){
+            return wire.port1.type !== port.type
         }
         return true
     }
@@ -138,6 +138,10 @@ XMAS.XNetwork {
         return items
     }
 
+    function deleteSelected(){
+        selection.deleteSelected()
+    }
+
     Rectangle {
         id:background
         anchors.fill: parent
@@ -148,26 +152,26 @@ XMAS.XNetwork {
     XWire{
         id: wire
         property bool connecting: false
-        property var outport: null
-        property var inport: null
+        property var port1: null
+        property var port2: null
         property int mx: 0
         property int my: 0
         visible: connecting
         size: 4
         color: "red"
 
-        onOutportChanged: {
-            if(outport) {
-                wire.x1 = outport.mapToItem(network,5,5).x
-                wire.y1 = outport.mapToItem(network,5,5).y
+        onPort1Changed: {
+            if(port1) {
+                wire.x1 = port1.mapToItem(network,5,5).x
+                wire.y1 = port1.mapToItem(network,5,5).y
                 wire.x2 = wire.x1
                 wire.y2 = wire.y1
             }
         }
-        onInportChanged: {
-            if(inport) {
-                wire.x2 = inport.mapToItem(network,5,5).x
-                wire.y2 = inport.mapToItem(network,5,5).y
+        onPort2Changed: {
+            if(port2) {
+                wire.x2 = port2.mapToItem(network,5,5).x
+                wire.y2 = port2.mapToItem(network,5,5).y
             }
         }
         onVisibleChanged: {
@@ -188,8 +192,8 @@ XMAS.XNetwork {
             width: 10
             rotation: -parent.rotation
             radius: {
-                if(wire.outport) {
-                    wire.outport.type === XMAS.XPort.Target ? 10  : 0
+                if(wire.port1) {
+                    wire.port1.type === XMAS.XPort.Target ? 10  : 0
                 } else 0
             }
             border.color: wire.color
@@ -215,11 +219,9 @@ XMAS.XNetwork {
                 if(wire.connecting)
                 {
                     wire.connecting = false
-                    wire.outport = null
-                    wire.inport = null
-                }
-                else
-                {
+                    wire.port1 = null
+                    wire.port2 = null
+                } else {
                     contextMenu.popup()
                 }
             }
@@ -254,6 +256,19 @@ XMAS.XNetwork {
             wire.y2 = mouse.y
         }
     }
+
+    Menu {
+         id: contextMenu
+         MenuItem {
+             text: "Delete"
+             onTriggered: selection.deleteSelected()
+         }
+         MenuSeparator{}
+         MenuItem {
+             action: showComponentNamesAction
+             onToggled: showComponentNames(checked)
+         }
+     }
 
     // Connections
     Connections {
