@@ -33,6 +33,7 @@
 #include <QtQml>
 #include <QVariant>
 #include "canvascomponentextension.h"
+#include "model/network.h"
 #include "model/component.h"
 #include "model/port.h"
 #include "model/channel.h"
@@ -51,6 +52,8 @@ DataControl::~DataControl()
 }
 
 void DataControl::registerTypes() const{
+    qmlRegisterType<model::Network>("XMAS.model", 1, 0, "XNetwork");
+    qRegisterMetaType<model::Network*>("XNetwork*");
     qmlRegisterType<model::Component>("XMAS.model", 1, 0, "XComponent");
     qmlRegisterType<model::Channel>("XMAS.model", 1, 0, "XChannel");
     qmlRegisterType<model::XPort>("XMAS.model", 1, 0, "XPort");

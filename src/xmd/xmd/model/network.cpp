@@ -9,8 +9,16 @@ model::Network::~Network()
 {
 
 }
-/** Connect method for qml */
+/**
+ * Connect method for qml
+ *
+ * @brief model::Network::connect
+ * @param outport
+ * @param inport
+ * @return xmas connection succeeded
+ */
 bool model::Network::connect(XPort *outport, XPort *inport) {
+    getAllComponents();
     // Check output
     if (!outport) {
         QString errMsg = "[Network::connect()] outport is null.";
@@ -93,58 +101,63 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     return false;
 }
 
-QQmlListProperty<model::Component> model::Network::compList() {
-    return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
-                                              &model::Network::append_compList,
-                                              &model::Network::count_compList,
-                                              &model::Network::at_compList,
-                                              &model::Network::clear_compList
-                                              );
+void model::Network::childItemsChanged(){
+    //NOTE : still working on , childItems in qml change and have the components but not here yet
+    qDebug() << "childItemsChanged()";
 }
 
-/*****************************************************************************/
-/*              Static methods: QQmlListProperty callbacks                   */
-/*****************************************************************************/
+//QQmlListProperty<model::Component> model::Network::compList() {
+//    return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
+//                                              &model::Network::append_compList,
+//                                              &model::Network::count_compList,
+//                                              &model::Network::at_compList,
+//                                              &model::Network::clear_compList
+//                                              );
+//}
 
-void model::Network::append_compList(QQmlListProperty<model::Component> *property,
-                     model::Component *comp) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        comp->setParent(network);
-        network->m_compList.append(comp);
-    } else {
-        std::string errMsg = "[Network.append_complist] network pointer zero ??";
-        std::cout << errMsg << std::endl;
-    }
-}
+///*****************************************************************************/
+///*              Static methods: QQmlListProperty callbacks                   */
+///*****************************************************************************/
 
-int model::Network::count_compList(QQmlListProperty<model::Component> *property) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        return network->m_compList.size();
-    }
-    std::string errMsg = "[Network.count_complist] network pointer zero ??";
-    std::cout << errMsg << std::endl;
-    return 0;
-}
+//void model::Network::append_compList(QQmlListProperty<model::Component> *property,
+//                     model::Component *comp) {
+//    Network *network = qobject_cast<Network *>(property->object);
+//    if (network) {
+//        comp->setParent(network);
+//        network->m_compList.append(comp);
+//    } else {
+//        std::string errMsg = "[Network.append_complist] network pointer zero ??";
+//        std::cout << errMsg << std::endl;
+//    }
+//}
 
-model::Component *model::Network::at_compList(QQmlListProperty<model::Component> *property,
-                                       int index) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        return network->m_compList.at(index);
-    }
-    std::string errMsg = "[Network.at_complist] network pointer zero ??";
-    std::cout << errMsg << std::endl;
-    return nullptr;
-}
+//int model::Network::count_compList(QQmlListProperty<model::Component> *property) {
+//    Network *network = qobject_cast<Network *>(property->object);
+//    if (network) {
+//        return network->m_compList.size();
+//    }
+//    std::string errMsg = "[Network.count_complist] network pointer zero ??";
+//    std::cout << errMsg << std::endl;
+//    return 0;
+//}
 
-void model::Network::clear_compList(QQmlListProperty<model::Component> *property) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        network->m_compList.clear();
-    } else {
-        std::string errMsg = "[Network.clear_complist] network pointer zero ??";
-        std::cout << errMsg << std::endl;
-    }
-}
+//model::Component *model::Network::at_compList(QQmlListProperty<model::Component> *property,
+//                                       int index) {
+//    Network *network = qobject_cast<Network *>(property->object);
+//    if (network) {
+//        return network->m_compList.at(index);
+//    }
+//    std::string errMsg = "[Network.at_complist] network pointer zero ??";
+//    std::cout << errMsg << std::endl;
+//    return nullptr;
+//}
+
+//void model::Network::clear_compList(QQmlListProperty<model::Component> *property) {
+//    Network *network = qobject_cast<Network *>(property->object);
+//    if (network) {
+//        network->m_compList.clear();
+//    } else {
+//        std::string errMsg = "[Network.clear_complist] network pointer zero ??";
+//        std::cout << errMsg << std::endl;
+//    }
+//}
