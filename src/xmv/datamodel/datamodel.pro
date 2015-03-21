@@ -62,7 +62,9 @@ SOURCES += datamodel.cpp \
     parse-specset.cpp \
     parse-parsed-xmas-expression-interface.cpp \
     parsed-xmas-function.cpp \
-    symbolic-packet-set.cpp
+    symbolic-packet-set.cpp \
+    flatten.cpp
+
 
 HEADERS += datamodel.h\
         datamodel_global.h \
@@ -88,7 +90,10 @@ HEADERS += datamodel.h\
     parse-packet-function-parse-result.h \
     symbolic-interval.h \
     symbolic-enum.h \
-    symbolic-packet-set.h
+    symbolic-packet-set.h \
+    flatten.h \
+    flatten-gates.h
+
 
 ################################################
 # INSTALL instructions

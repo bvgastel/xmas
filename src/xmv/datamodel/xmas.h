@@ -1,6 +1,8 @@
 #ifndef XMAS_H
 #define XMAS_H
 
+#include <map>
+
 #include "extension.h"
 #include "simplestring.h"
 //#include "parse-source-expression-parse-result.h"
@@ -85,6 +87,8 @@ public:
     Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner)
     {
     }
+
+    Port(Port&&) = default;
 
     virtual ~Port();
 
@@ -250,6 +254,9 @@ public:
     Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr)
     {
     }
+
+    Output(Output&&) = default;
+
     Input *getTargetPort();
     Output *getInitiatorPort();
     bool isConnected();
@@ -274,6 +281,9 @@ public:
     Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr)
     {
     }
+
+    Input(Input&&) = default;
+
     Output *getInitiatorPort();
     Input *getTargetPort();
     bool isConnected();
@@ -347,6 +357,8 @@ class XMASFork;
 class XMASMerge;
 class XMASJoin;
 
+class XMASComposite;
+
 /**
  * @brief The XMASComponentVisitor class
  *
@@ -364,7 +376,12 @@ public:
     virtual void visit(XMASFork *) = 0;
     virtual void visit(XMASMerge *) = 0;
     virtual void visit(XMASJoin *) = 0;
+    virtual void visit(XMASComposite *) {
+        throw bitpowder::lib::Exception("This XMASComponentVisitor does not support composites!");
+    }
 };
+
+
 /************************ XMASComponent *******************************************/
 
 struct ExpressionResult {
@@ -600,15 +617,15 @@ class XMASSink : public XMASComponent
 public:
     Input i;
     Port* p[1];
-
+    bool external;              // is this sink an interface port of a composite
 
     /**
      * @brief XMASSink Constructor
      *
      * @param name the name of the sink
      */
-    XMASSink(const bitpowder::lib::String& name)
-        : XMASComponent(name), i(this, "i")
+    XMASSink(const bitpowder::lib::String& name, bool external = false)
+        : XMASComponent(name), i(this, "i"), external(external)
     {
         p[0] = &i;
     }
@@ -655,8 +672,10 @@ class XMASSource : public XMASComponent
 public:
     Output o;
     Port* p[1];
+    bool external;              // is this source an interface port of a composite
 
-    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
+    XMASSource(const bitpowder::lib::String& name, bool external = false)
+        : XMASComponent(name), o(this, "o"), external(external)
     {
         p[0] = &o;
     }
@@ -1043,6 +1062,98 @@ public:
     {
         return type == PortType::INPUT_PORT ? &p[2] : &p[3];
     }
+};
+
+
+class XMASNetwork
+{
+public:
+    XMASNetwork(std::string name) : name(name)
+    {
+    }
+
+    XMASNetwork(XMASNetwork&&) = default;
+
+    ~XMASNetwork()
+    {
+        for (auto c : components) {
+            delete(c.second);
+        }
+    }
+
+    const std::string getStdName() const {
+        return this->name;
+    }
+
+    const std::map<const bitpowder::lib::String, XMASComponent*>& getComponents() const {
+        return components;
+    }
+
+
+    template<typename T>
+    const std::vector<T*> componentsOfType() const
+    {
+        std::vector<T*> result;
+        for (auto c : components)
+            if (typeid(*c.second) == typeid(T))
+                result.push_back(static_cast<T*>(c.second));
+        return std::move(result);
+    }
+
+    template <typename T, typename... Args>
+    T *insert(const bitpowder::lib::String& name, Args... args) {
+        if (components.find(name) != components.end())
+            throw 42;
+        T *comp = new T(name, args...);
+        components.insert(std::make_pair(comp->getName(), comp));
+        return comp;
+    }
+
+private:
+    std::string name;
+    std::map<const bitpowder::lib::String, XMASComponent*> components;
+};
+
+class XMASComposite : public XMASComponent
+{
+public:
+
+    XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network);
+
+    const XMASNetwork& getNetwork() const {
+        return network;
+    }
+
+    std::vector<Input>& getInputs() {
+        return inputs;
+    }
+
+    std::vector<Output>& getOutputs() {
+        return outputs;
+    }
+
+
+    void accept(XMASComponentVisitor &v) override
+    {
+        v.visit(this);
+    }
+
+
+    Port** beginPort(PortType type) override
+    {
+        return type == PortType::OUTPUT_PORT ? &p[inputs.size()] : &p[0];
+    }
+
+    Port** endPort(PortType type) override
+    {
+        return type == PortType::INPUT_PORT ? &p[inputs.size()] : &p[p.size()];
+    }
+
+private:
+    XMASNetwork& network;
+    std::vector<Input>  inputs;
+    std::vector<Output> outputs;
+    std::vector<Port*> p;
 };
 
 #endif // XMAS_H

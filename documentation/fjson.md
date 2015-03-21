@@ -35,7 +35,15 @@ PACKET_TYPE
 COMPOSITE_OBJECTS
 -----------------
 
-*TODO*
+***NEW***
+
+Description:
+Array of references to subnetworks used as composite objects by this network.
+
+A reference indicates the relative location of the subnetwork on the filesystem excluding the extension.
+E.g. "mesh" refers to the network defined in "mesh.xmas" in the same directory as this network and
+"spidergon/node" refers to the network defined in "node.xmas" in the subdirectoy "spidergon".
+
 
 
 COMPONENT

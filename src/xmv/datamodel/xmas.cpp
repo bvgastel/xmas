@@ -372,3 +372,34 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
+XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
+{
+    // get in & out gates from network
+    auto inGates = network.componentsOfType<XMASSource>();
+    auto outGates = network.componentsOfType<XMASSink>();
+
+    int numInGates = inGates.size();
+    int numOutGates = outGates.size();
+
+    inputs.reserve(numInGates);
+    outputs.reserve(numOutGates);
+
+    // for all in gates, create an input port
+    for (auto c : inGates)
+        if (c->external)
+            inputs.push_back(Input {this, c->getStdName().c_str()} );
+
+    // for all out gates, create an output port
+    for (auto c : outGates)
+        if (c->external)
+            outputs.push_back(Output {this, c->getStdName().c_str()} );
+
+    // fill p
+    p.reserve(inputs.size() + outputs.size());
+
+    for (auto& i : inputs)
+        p.push_back(&i);
+    for (auto& o : outputs)
+        p.push_back(&o);
+}
+

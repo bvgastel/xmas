@@ -16,7 +16,8 @@ SOURCES += \
     testsourcespec.cpp \
     testfunctionspec.cpp \
     testswitchfunctionspec.cpp \
-    testjoinfunctionspec.cpp
+    testjoinfunctionspec.cpp \
+    flatten.test.cpp
 
 
 CONFIG += C++11
