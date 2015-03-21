@@ -75,26 +75,17 @@ public slots:
      * @return a QString containing the json for the network.
      *
      */
-    QString toJson(QList<Component *> allComponents){
-        std::set<XMASComponent *> allComp;
-        for (Component *comp : allComponents) {
-            auto c = comp->getXMASComponent();
-            allComp.insert(c);
-        }
-        result = ::Export(allComp,globals,mp);
-        QString jsonString = QString(result.stl().c_str());
-        return jsonString;
-    }
+    QString toJson();
 
 //QQmlListProperty<Component> compList();
 
 //#################################################################################################
 // instead of qmllist we can use this simple loop to read all components on the canvas
 // (linking a qmllist directly needs a slightly different approach at qml side too,can be done later if time left)
-QList<Component *> getAllComponents(){
+QList<Component *> getAllComponents() {
     m_compList.clear();
 
-    for(QQuickItem *item : this->childItems()){
+    for(QQuickItem *item : this->childItems()) {
         Component *c = qobject_cast<Component *>(item);
         if(c){
             m_compList.append(c);
@@ -106,7 +97,7 @@ QList<Component *> getAllComponents(){
 
 //#################################################################################################
 
-    QQmlListProperty<Component> compList();
+    //QQmlListProperty<Component> compList();
 
 private:
 //    static void append_compList(QQmlListProperty<Component> *property, Component *comp);

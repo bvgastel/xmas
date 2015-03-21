@@ -1,3 +1,5 @@
+#include <QList>
+
 #include "network.h"
 
 model::Network::Network(QQuickItem *parent)
@@ -41,11 +43,23 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
         emit outport->connectedChanged();
         emit inport->connectedChanged();
         return true;
+    }
+    // Trouble! Send error message
+    QString errMsg = "[Network::connect()] ";
+    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
+                                           : "xmas_inport is null.")
+                            : "xmas_outport is null.");
+    emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
+    return false;
+}
 
-QString model::Network::toJson(QList<model::Component *> allComponents) {
+QString model::Network::toJson() {
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals;
+
+    QList<model::Component *> allComponents = getAllComponents();
 
     std::set<XMASComponent *> allComp;
     for (Component *comp : allComponents) {
@@ -112,40 +126,6 @@ void model::Network::childItemsChanged(){
 //                                              &model::Network::clear_compList
 //                                              );
 //}
-
-bool model::Network::connect(XPort *outport, XPort *inport) {
-    // Check output
-    if (!outport) {
-        QString errMsg = "[Network::connect()] outport is null.";
-        emit writeLog(errMsg, Qt::red);
-        qDebug() << errMsg;
-        return false;
-    }
-    // Check inport
-    if (!inport) {
-        QString errMsg = "[Network::connect()] inport is null.";
-        emit writeLog(errMsg, Qt::red);
-        qDebug() << errMsg;
-        return false;
-    }
-    // obtain and check xmas inport and outport
-    Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
-    Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    if (xmas_inport && xmas_outport) {
-        ::connect(*xmas_outport, *xmas_inport);
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-        return true;
-    }
-    // Trouble! Send error message
-    QString errMsg = "[Network::connect()] ";
-    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
-                                           : "xmas_inport is null.")
-                            : "xmas_outport is null.");
-    emit writeLog(errMsg, Qt::red);
-    qDebug() << errMsg;
-    return false;
-}
 
 /*****************************************************************************/
 /*              Static methods: QQmlListProperty callbacks                   */
