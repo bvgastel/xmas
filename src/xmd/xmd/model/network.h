@@ -75,7 +75,7 @@ public slots:
      * @return a QString containing the json for the network.
      *
      */
-    QString toJson(QList<Component *> allComponents);
+    QString toJson(QList<Component *> allComponents){
         std::set<XMASComponent *> allComp;
         for (Component *comp : allComponents) {
             auto c = comp->getXMASComponent();
