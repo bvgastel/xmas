@@ -19,7 +19,7 @@ function loadcomponent(outport,inport) {
 
 function createComponent(outport,inport) {
     if (component.status === Qjs.Component.Ready && channel == null) {
-        channel = component.createObject(sheet, {outport:outport,inport:inport})
+        channel = component.createObject(network, {outport:outport,inport:inport})
     } else if (component.status === Qjs.Component.Error) {
         channel = null
         log(component.errorString(),"red")
@@ -27,7 +27,8 @@ function createComponent(outport,inport) {
 }
 
 function remove(channel) {
-    if (channel && network) {
+    if (channel) {
+       // network.disconnect(channel.outport, channel.inport)
         network.disconnect(channel.outport, channel.inport)
     }
     destroy(channel)
@@ -39,7 +40,9 @@ function doConnect(port1,port2) {
     var inport = port2.type === Model.XPort.INPORT ? port2 : port1
     channel = null
     loadcomponent(outport,inport)
+    //network.connect(outport,inport)
     network.connect(outport,inport)
+
 }
 
 //TODO : portnames are references and must match json!!!
@@ -56,7 +59,7 @@ function create(iComp,iPort,tComp,tPort) {
 }
 
 function getComponent(name){
-    var childs = sheet.children
+    var childs = network.children
     for (var child in childs) {
         var chld = childs[child]
         if(chld.objectName==="component"

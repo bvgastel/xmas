@@ -28,12 +28,12 @@ Rectangle{
     // Event Handling
     Keys.onDeletePressed: deleteSelected(selectedItems)
     Keys.onEscapePressed: clear()
-    Keys.onLeftPressed: doMove(-sheet.gridsize,0)
-    Keys.onRightPressed: doMove(sheet.gridsize,0)
-    Keys.onDownPressed: doMove(0,sheet.gridsize)
-    Keys.onUpPressed: doMove(0,-sheet.gridsize)
-    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) sheet.selectionMode = true }
-    Keys.onReleased: sheet.selectionMode = false
+    Keys.onLeftPressed: doMove(-network.gridsize,0)
+    Keys.onRightPressed: doMove(network.gridsize,0)
+    Keys.onDownPressed: doMove(0,network.gridsize)
+    Keys.onUpPressed: doMove(0,-network.gridsize)
+    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) network.selectionMode = true }
+    Keys.onReleased: network.selectionMode = false
 
 
     // JavaScripts
@@ -160,23 +160,23 @@ Rectangle{
         fromTo()
         mapGroupTo(selectedItems,container)
         // horizontal
-        if (from.x + dX < sheet.margin) {
-            to.x += sheet.margin - from.x
-            from.x = sheet.margin
-        } else if (to.x + dX > sheet.width - sheet.margin){
-            from.x += sheet.width - sheet.margin - to.x
-            to.x = sheet.width - sheet.margin
+        if (from.x + dX < network.margin) {
+            to.x += network.margin - from.x
+            from.x = network.margin
+        } else if (to.x + dX > network.width - network.margin){
+            from.x += network.width - network.margin - to.x
+            to.x = network.width - network.margin
         } else {
             to.x += dX
             from.x += dX
         }
         // vertical
-        if (from.y + dY < sheet.margin) {
-            to.y += sheet.margin - from.y
-            from.y = sheet.margin
-        } else if (to.y + dY > sheet.height - sheet.margin) {
-            from.y += sheet.height - sheet.margin - to.y
-            to.y = sheet.height - sheet.margin
+        if (from.y + dY < network.margin) {
+            to.y += network.margin - from.y
+            from.y = network.margin
+        } else if (to.y + dY > network.height - network.margin) {
+            from.y += network.height - network.margin - to.y
+            to.y = network.height - network.margin
         } else {
             from.y += dY
             to.y += dY
@@ -207,10 +207,10 @@ Rectangle{
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: parent
-        drag.minimumX: sheet.margin
-        drag.minimumY: sheet.margin
-        drag.maximumX: sheet.width - selection.width - sheet.margin
-        drag.maximumY: sheet.height - selection.height - sheet.margin
+        drag.minimumX: network.margin
+        drag.minimumY: network.margin
+        drag.maximumX: network.width - selection.width - network.margin
+        drag.maximumY: network.height - selection.height - network.margin
         onPressed: {
             if (mouse.button == Qt.RightButton)
                 showContextMenu()

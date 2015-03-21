@@ -67,10 +67,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
     ctx->setContextProperty("plugincontrol", &pluginControl);
 
-    model::Network network;
-    qmlRegisterType<model::Network>("XMAS", 1, 0, "Network"); // Before engine.load
-    ctx->setContextProperty("network", &network);
-
     /* End of OOAK class registration for Qml access */
     /*************************************************/
 

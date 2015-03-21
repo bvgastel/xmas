@@ -192,7 +192,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/select.png"
         iconName: "select"
         checkable: true
-        checked: sheet.selectionMode
+        checked: network.selectionMode
         onToggled: selectionMode(checked)
     }
 
@@ -203,7 +203,7 @@ ApplicationWindow {
         iconSource: "qrc:/content/select_all.png"
         iconName: "selectAll"
         onTriggered: selectAll()
-        tooltip: "Select All items on the sheet"
+        tooltip: "Select All items on the network"
     }
 
     Action {
@@ -462,12 +462,12 @@ ApplicationWindow {
                 id: view
                 //center the scene by default
                 anchors.fill: parent
-                contentX: sheet ? (1 - sheet.scale) * sheet.width * 0.5 : 0
-                contentY: sheet ? (1 - sheet.scale) * sheet.height * 0.5 : 0
-                contentWidth: sheet ? sheet.width * sheet.scale : 0
-                contentHeight: sheet ? sheet.height * sheet.scale : 0
+                contentX: network ? (1 - network.scale) * network.width * 0.5 : 0
+                contentY: network ? (1 - network.scale) * network.height * 0.5 : 0
+                contentWidth: network ? network.width * network.scale : 0
+                contentHeight: network ? network.height * network.scale : 0
                 pixelAligned: true
-                interactive: sheet ? !sheet.selectionMode : true
+                interactive: network ? !network.selectionMode : true
 
                 //contentWidth: contentItem.childrenRect.width; contentHeight: contentItem.childrenRect.height
 
@@ -480,7 +480,7 @@ ApplicationWindow {
                 //        }
 
                 XNetwork{
-                    id:sheet
+                    id:network
                     transformOrigin: Item.TopLeft
                     color: "white"
                     width : 5940
@@ -504,8 +504,17 @@ ApplicationWindow {
                        else
                            scrollDown.stop()
                     }
-                }
 
+                    Menu {
+                        id: contextMenu
+                        MenuItem {
+                            text: "Delete"
+                            onTriggered: selection.deleteSelected()
+                        }
+                        MenuSeparator{}
+                        MenuItem {action: showComponentNamesAction}
+                    }
+                }
                 // Only show the scrollbars when the view is moving.
                 states:
                     State {

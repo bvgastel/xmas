@@ -96,7 +96,6 @@ DISTFILES += mainWindow.qml \
     xobjects/switch.qml \
     xobjects/primitive.qml \
     xobjects/XComponent.qml \
-    xobjects/XWire.qml \
     xobjects/XChannel.qml \
     xobjects/XPort.qml \
     xobjects/XNetwork.qml \
@@ -107,6 +106,7 @@ DISTFILES += mainWindow.qml \
     uicontrols/XDialog.qml \
     uicontrols/Selection.qml \
     uicontrols/OutputLog.qml \
+    uicontrols/XWire.qml \
     xobjects/xchannel.js \
     xobjects/xcomponent.js \
     uiqueries_readme.md \

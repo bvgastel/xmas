@@ -24,7 +24,7 @@
         <file>xobjects/XPort.qml</file>
         <file>xobjects/xchannel.js</file>
         <file>xobjects/xcomponent.js</file>
-        <file>xobjects/XWire.qml</file>
+        <file>uicontrols/XWire.qml</file>
         <file>xmapper/controller.js</file>
         <file>content/redo.png</file>
         <file>content/undo.png</file>

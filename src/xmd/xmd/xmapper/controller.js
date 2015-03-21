@@ -13,8 +13,8 @@ function createNetwork(object) {
         return
     }
 
-    //clear sheet
-    sheet.clear()
+    //clear network
+    network.clear()
 
     // process list of components and create components
     var complist = object["complist"]
@@ -59,9 +59,9 @@ function loadComponent(object) {
 //    log("Execution time: " + (end - start) + "ms","red")
 
     if (component.status === Qjs.Component.Loading)
-        component.statusChanged.connect(createComponent(sheet,component,object))
+        component.statusChanged.connect(createComponent(network,component,object))
     else if (component.status === Qjs.Component.Ready)
-        createComponent(sheet,component,object)
+        createComponent(network,component,object)
     else if (component.status === Qjs.Component.Error)
         log(component.errorString(),"red")
 
@@ -128,37 +128,37 @@ function destroy(component){
 }
 
 
-function destroyAll(sheet){
+function destroyAll(network){
     //only delete xmas children who has
-    //sheet as parent
+    //network as parent
     // destroy doesn't work on array items
-    //TODO destroy sheet and create new one
+    //TODO destroy network and create new one
     var temp = []
 
-    for (var child in sheet.children) {
-        if(sheet.children[child].objectName!=="component"
-                && sheet.children[child].objectName!=="channel") {
-            temp.push(sheet.children[child])
+    for (var child in network.children) {
+        if(network.children[child].objectName!=="component"
+                && network.children[child].objectName!=="channel") {
+            temp.push(network.children[child])
             }
     }
-    sheet.children = temp
-    //log("Sheet cleared.","black")
+    network.children = temp
+    //log("network cleared.","black")
 }
 
 
 // TODO : can be removed when xmd is finished
 // tempory test function
-function showXItems(sheet){
+function showXItems(network){
     var ccnt = 0
     var cnt1 = 0
-    for (var child in sheet.children) {
-        if(sheet.children[child].objectName==="channel") {
+    for (var child in network.children) {
+        if(network.children[child].objectName==="channel") {
             ccnt++
         }
-        if(sheet.children[child].objectName==="component") {
+        if(network.children[child].objectName==="component") {
             cnt1++
         }
     }
-    log("sheet has " + ccnt + " channels and " + cnt1 + " components","blue")
+    log("network has " + ccnt + " channels and " + cnt1 + " components","blue")
 }
 

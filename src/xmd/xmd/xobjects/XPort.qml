@@ -47,7 +47,7 @@ Model.XPort {
         color: connected ? "black" : "red"
         anchors.fill: parent
         border.color: "black"
-        border.width: mousearea.containsMouse && sheet.isValidPort(port) ? 2 : 0
+        border.width: mousearea.containsMouse && network.isValidPort(port) ? 2 : 0
         radius: port.type === Model.XPort.INPORT ? 0 : port.width * 0.5
     }
     Text {
@@ -71,7 +71,7 @@ Model.XPort {
         id: mousearea
         anchors.fill: parent
         anchors.margins: -10 // magic port :)
-        hoverEnabled: !connected && sheet.isValidPort(port)
+        hoverEnabled: !connected && network.isValidPort(port)
         preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: {
@@ -79,11 +79,11 @@ Model.XPort {
                     && !connected) {
                 //connected = true    --> not allowed, read-only
                 // TODO: gbo: where to call network.connect(port-out, port-in)?
-                sheet.wiring(port)
+                network.wiring(port)
             } else {mouse.accepted=false}
         }
         onContainsMouseChanged: {
-            sheet.checkTarget(port)
+            network.checkTarget(port)
         }
     }
 }

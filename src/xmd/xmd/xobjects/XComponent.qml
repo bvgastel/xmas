@@ -96,16 +96,16 @@ Model.XComponent {
 
 
     function leftBound(){
-        return sheet.margin + width/2 * (scale-1)
+        return network.margin + width/2 * (scale-1)
     }
     function topBound(){
-        return sheet.margin + height/2 * (scale -1)
+        return network.margin + height/2 * (scale -1)
     }
     function rightBound(){
-        return sheet.width - width * scale  - sheet.margin + width/2 * (scale-1)
+        return network.width - width * scale  - network.margin + width/2 * (scale-1)
     }
     function bottomBound(){
-        return sheet.height - height * scale  - sheet.margin + height/2 * (scale-1)
+        return network.height - height * scale  - network.margin + height/2 * (scale-1)
     }
 
     // Event handling
@@ -150,7 +150,7 @@ Model.XComponent {
         id: mousearea
         anchors.fill: component
         preventStealing: true
-        hoverEnabled:  sheet.isConnecting() ? false : true
+        hoverEnabled:  network.isConnecting() ? false : true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: component
         drag.minimumX: leftBound()
@@ -160,14 +160,14 @@ Model.XComponent {
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                sheet.select(component)
+                network.select(component)
             }
             if (mouse.button == Qt.RightButton){
                 contextMenu.popup()
             }
         }
         onEntered: {
-            if(sheet.isConnecting()){
+            if(network.isConnecting()){
                 component.focus = true
                 cursorShape = Qt.OpenHandCursor
             }
@@ -226,7 +226,7 @@ Model.XComponent {
 
     // Connections
     Connections {
-        target: sheet
+        target: network
         onShowComponentNames: label.visible = checked
         onMoveSelected: if(component.selected) component.update()
     }

@@ -3,7 +3,7 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = toolbarItem.mapToItem(sheet,-50,-50)
+    posnInWindow = toolbarItem.mapToItem(network,-50,-50)
     loadComponent(toolbarItem.componentFile)
 }
 
@@ -11,9 +11,9 @@ function startDrag(mouse)
 function loadComponent(qml) {
     var component = Qt.createComponent(qml)
     if (component.status === Component.Loading)
-        component.statusChanged.connect(createComponent(sheet,component));
+        component.statusChanged.connect(createComponent(network,component));
     else if (component.status === Component.Ready)
-        createComponent(sheet,component)
+        createComponent(network,component)
     else if (component.status === Component.Error)
         log(component.errorString(),"red")
 }
@@ -31,18 +31,18 @@ function continueDrag(mouse)
 {
     if (draggedItem == null)
         return;
-    draggedItem.x = mouse.x/sheet.scale + posnInWindow.x
-    draggedItem.y = mouse.y/sheet.scale + posnInWindow.y
+    draggedItem.x = mouse.x/network.scale + posnInWindow.x
+    draggedItem.y = mouse.y/network.scale + posnInWindow.y
 }
 
 function endDrag()
 {
     if (draggedItem == null)
         return;
-    if (draggedItem.x < sheet.x
-            || draggedItem.x > sheet.x + sheet.width - draggedItem.width
-            || draggedItem.y < sheet.y
-            || draggedItem.y > sheet.y + sheet.height - draggedItem.height) {
+    if (draggedItem.x < network.x
+            || draggedItem.x > network.x + network.width - draggedItem.width
+            || draggedItem.y < network.y
+            || draggedItem.y > network.y + network.height - draggedItem.height) {
         draggedItem.destroy();
         draggedItem = null;
     } else {
@@ -55,25 +55,13 @@ function endDrag()
     }
 }
 
-
-//function generateId()
-//{
-//    var max = -1
-//    for(var child in sheet.children){
-//        if(sheet.children[child].objectName==="component"){
-//            max = Math.max(sheet.children[child].cid,max)
-//        }
-//    }
-//    return (++max)
-//}
-
 function generateTagIndex(item)
 {
     var max = -1
-    for(var child in sheet.children){
-        if(sheet.children[child].objectName==="component"){
-            if(item.comptype === sheet.children[child].comptype) {
-                max = Math.max(sheet.children[child].index,max)
+    for(var child in network.children){
+        if(network.children[child].objectName==="component"){
+            if(item.comptype === network.children[child].comptype) {
+                max = Math.max(network.children[child].index,max)
             }
         }
     }
