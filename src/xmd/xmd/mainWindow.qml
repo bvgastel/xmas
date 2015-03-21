@@ -507,7 +507,7 @@ ApplicationWindow {
                         id: contextMenu
                         MenuItem {
                             text: "Delete"
-                            onTriggered: selection.deleteSelected()
+                            onTriggered: network.deleteSelected()
                         }
                         MenuSeparator{}
                         MenuItem {action: showComponentNamesAction}

@@ -138,6 +138,10 @@ XMAS.XNetwork {
         return items
     }
 
+    function deleteSelected(){
+        selection.deleteSelected()
+    }
+
     Rectangle {
         id:background
         anchors.fill: parent
