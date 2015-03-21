@@ -221,9 +221,7 @@ XMAS.XNetwork {
                     wire.connecting = false
                     wire.port1 = null
                     wire.port2 = null
-                }
-                else
-                {
+                } else {
                     contextMenu.popup()
                 }
             }
@@ -258,6 +256,19 @@ XMAS.XNetwork {
             wire.y2 = mouse.y
         }
     }
+
+    Menu {
+         id: contextMenu
+         MenuItem {
+             text: "Delete"
+             onTriggered: selection.deleteSelected()
+         }
+         MenuSeparator{}
+         MenuItem {
+             action: showComponentNamesAction
+             onToggled: showComponentNames(checked)
+         }
+     }
 
     // Connections
     Connections {
