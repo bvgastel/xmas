@@ -630,6 +630,8 @@ public:
         p[0] = &i;
     }
 
+    virtual ~XMASSink();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -679,6 +681,8 @@ public:
     {
         p[0] = &o;
     }
+
+    virtual ~XMASSource();
 
     bitpowder::lib::String getSourceExpression(bitpowder::lib::MemoryPool &mp);
 
@@ -743,6 +747,8 @@ public:
         p[1] = &o;
     }
 
+    virtual ~XMASQueue();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -793,6 +799,7 @@ public:
         p[1] = &o;
     }
 
+    virtual ~XMASFunction();
 
     const bitpowder::lib::String getFunctionExpression(bitpowder::lib::MemoryPool &mp);
 
@@ -855,6 +862,8 @@ public:
         p[2] = &b;
     }
 
+    virtual ~XMASSwitch();
+
     const bitpowder::lib::String getSwitchExpression(bitpowder::lib::MemoryPool &mp);
 
     ExpressionResult setSwitchExpression(std::string &str_expr,
@@ -915,6 +924,8 @@ public:
         p[2] = &b;
     }
 
+    virtual ~XMASFork();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -971,6 +982,8 @@ public:
         p[2] = &o;
     }
 
+    virtual ~XMASMerge();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -1024,6 +1037,8 @@ public:
         p[2] = &o;
     }
 
+    virtual ~XMASJoin();
+
     const bitpowder::lib::String getJoinExpression(bitpowder::lib::MemoryPool &mp);
 
     ExpressionResult setRestrictedJoinPort(std::string &str_expr,
@@ -1074,7 +1089,7 @@ public:
 
     XMASNetwork(XMASNetwork&&) = default;
 
-    ~XMASNetwork()
+    virtual ~XMASNetwork()
     {
         for (auto c : components) {
             delete(c.second);
@@ -1120,6 +1135,8 @@ public:
 
     XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network);
 
+    virtual ~XMASComposite();
+
     const XMASNetwork& getNetwork() const {
         return network;
     }
@@ -1139,6 +1156,7 @@ public:
     }
 
 
+    // FIXME: inputs.size() in OUTPUT_PORT? Is that correct?
     Port** beginPort(PortType type) override
     {
         return type == PortType::OUTPUT_PORT ? &p[inputs.size()] : &p[0];

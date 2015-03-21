@@ -197,6 +197,48 @@ void XMASComponent::canvasData(int x, int y, int orientation, float scale) {
 }
 
 
+XMASSink::~XMASSink() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
+
+XMASSource::~XMASSource() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
+
+XMASQueue::~XMASQueue() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
+
 bitpowder::lib::String XMASSource::getSourceExpression(bitpowder::lib::MemoryPool &mp) {
     //bitpowder::lib::StaticMemoryPool<128> mp;
     return Export(this, mp);
@@ -239,6 +281,19 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
     return ExpressionResult(result, result.position(), result.error());
 }
 
+XMASFunction::~XMASFunction() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
 const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
     return Export(this, mp).stl();
 }
@@ -271,6 +326,19 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
 
 }
 
+XMASSwitch::~XMASSwitch() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
 const bitpowder::lib::String XMASSwitch::getSwitchExpression(bitpowder::lib::MemoryPool &mp) {
     return Export(this, mp).stl();
 }
@@ -299,6 +367,45 @@ ExpressionResult XMASSwitch::setSwitchExpression(bitpowder::lib::String &expr, b
 
     return ExpressionResult(result, result.position(), result.error());
 
+}
+
+XMASFork::~XMASFork() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
+XMASMerge::~XMASMerge() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
+XMASJoin::~XMASJoin() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
 }
 
 const bitpowder::lib::String XMASJoin::getJoinExpression(bitpowder::lib::MemoryPool &mp) {
@@ -371,6 +478,21 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
     return ExpressionResult(result, result.position(), result.error());
 
 }
+
+
+XMASComposite::~XMASComposite() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
+    }
+}
+
 
 XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
 {

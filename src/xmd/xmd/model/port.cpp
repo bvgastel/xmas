@@ -54,6 +54,7 @@ void model::XPort::componentComplete() {
  *
  * @return
  */
+// FIXME: aborts after deletion of some components
 Port *model::XPort::getPort() {
     if (m_component) {
         XMASComponent *c = m_component->xmas_component();
