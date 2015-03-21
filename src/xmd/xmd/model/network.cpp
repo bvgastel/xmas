@@ -22,7 +22,6 @@ model::Network::~Network()
  * @return xmas connection succeeded
  */
 bool model::Network::connect(XPort *outport, XPort *inport) {
-    getAllComponents();
     // Check output
     if (!outport) {
         QString errMsg = "[Network::connect()] outport is null.";
