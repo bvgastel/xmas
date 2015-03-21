@@ -28,8 +28,7 @@ function createComponent(outport,inport) {
 
 function remove(channel) {
     if (channel) {
-       // network.disconnect(channel.outport, channel.inport)
-        network.disconnect(channel.outport, channel.inport)
+       network.disconnect(channel.outport, channel.inport)
     }
     destroy(channel)
 }
@@ -40,7 +39,6 @@ function doConnect(port1,port2) {
     var inport = port2.type === Model.XPort.INPORT ? port2 : port1
     channel = null
     loadcomponent(outport,inport)
-    //network.connect(outport,inport)
     network.connect(outport,inport)
 
 }
