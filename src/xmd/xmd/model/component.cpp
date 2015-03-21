@@ -41,16 +41,11 @@ void model::Component::classBegin() {
  * @brief model::Component::componentComplete
  *
  * When the QML properties for Component are filled completely,
- * we can create the component and all of its ports.
+ * Currently no action necessary.
  *
  */
 void model::Component::componentComplete() {
-   m_xmas_component = createXMASComponent(m_type, m_name);
-    if(!m_xmas_component) { // trouble! We have no XMASComponent
-        emit writeLog(QString("Error while create XMASComponent for ")+m_name + QString(" and type ")+m_type);
-        return;
-    }
-    // m_component is solid
+    // no action.
 }
 
 XMASComponent *model::Component::createXMASComponent(CompType type, QString qname) {
