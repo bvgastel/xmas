@@ -9,6 +9,7 @@ model::Network::~Network()
 {
 
 }
+
 /**
  * Connect method for qml
  *
@@ -18,7 +19,6 @@ model::Network::~Network()
  * @return xmas connection succeeded
  */
 bool model::Network::connect(XPort *outport, XPort *inport) {
-    getAllComponents();
     // Check output
     if (!outport) {
         QString errMsg = "[Network::connect()] outport is null.";
@@ -41,25 +41,22 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
         emit outport->connectedChanged();
         emit inport->connectedChanged();
         return true;
+
+QString model::Network::toJson(QList<model::Component *> allComponents) {
+    bitpowder::lib::String result;
+    bitpowder::lib::MemoryPool mp;
+    bitpowder::lib::JSONData globals;
+
+    std::set<XMASComponent *> allComp;
+    for (Component *comp : allComponents) {
+        auto c = comp->getXMASComponent();
+        allComp.insert(c);
     }
-    // Trouble! Send error message
-    QString errMsg = "[Network::connect()] ";
-    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
-                                           : "xmas_inport is null.")
-                            : "xmas_outport is null.");
-    emit writeLog(errMsg, Qt::red);
-    qDebug() << errMsg;
-    return false;
+    result = ::Export(allComp,globals,mp);
+    QString jsonString = QString(result.stl().c_str());
+    return jsonString;
 }
-/** Disconnect method from output port for qml
- *
- *  Remark that we can disconnect from either input or output port.
- *  It does not matter for the result which we use.
- *  Port must be connected for disconnect to work.
- *
- *
- *
- */
+
 bool model::Network::disconnect(XPort *outport, XPort *inport) {
     // check outport
     if (!outport) {
@@ -106,6 +103,7 @@ void model::Network::childItemsChanged(){
     qDebug() << "childItemsChanged()";
 }
 
+
 //QQmlListProperty<model::Component> model::Network::compList() {
 //    return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
 //                                              &model::Network::append_compList,
@@ -114,6 +112,45 @@ void model::Network::childItemsChanged(){
 //                                              &model::Network::clear_compList
 //                                              );
 //}
+
+bool model::Network::connect(XPort *outport, XPort *inport) {
+    // Check output
+    if (!outport) {
+        QString errMsg = "[Network::connect()] outport is null.";
+        emit writeLog(errMsg, Qt::red);
+        qDebug() << errMsg;
+        return false;
+    }
+    // Check inport
+    if (!inport) {
+        QString errMsg = "[Network::connect()] inport is null.";
+        emit writeLog(errMsg, Qt::red);
+        qDebug() << errMsg;
+        return false;
+    }
+    // obtain and check xmas inport and outport
+    Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
+    Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
+    if (xmas_inport && xmas_outport) {
+        ::connect(*xmas_outport, *xmas_inport);
+        emit outport->connectedChanged();
+        emit inport->connectedChanged();
+        return true;
+    }
+    // Trouble! Send error message
+    QString errMsg = "[Network::connect()] ";
+    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
+                                           : "xmas_inport is null.")
+                            : "xmas_outport is null.");
+    emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
+    return false;
+}
+
+/*****************************************************************************/
+/*              Static methods: QQmlListProperty callbacks                   */
+/*****************************************************************************/
+
 
 ///*****************************************************************************/
 ///*              Static methods: QQmlListProperty callbacks                   */

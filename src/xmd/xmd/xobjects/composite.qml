@@ -11,8 +11,9 @@ XComponent {
     property bool imageAsSymbol: true
     property string alias: "Composite"
 
-    inputports:[
-        XPort {name: "t0"; type:Model.XPort.INPORT}
+//    inputports:[
+    ports: [
+        XPort {name: "t0"; type:Model.XPort.INPORT},
         //XPort {name: "t1"; type:Model.XPort.Target},
         //        XPort {name: "t2"; type:Model.XPort.Target},
         //        XPort {name: "t3"; type:Model.XPort.Target},
@@ -62,9 +63,9 @@ XComponent {
         //        XPort {name: "t47"; type:Model.XPort.Target},
         //        XPort {name: "t48"; type:Model.XPort.Target},
         //        XPort {name: "t49"; type:Model.XPort.Target}
-    ]
-    outputports: [
-        XPort {name: "i0"; type:Model.XPort.OUTPORT}//,
+//    ]
+//    outputports: [
+        XPort {name: "i0"; type:Model.XPort.OUTPORT}
         //        XPort {name: "i1"; type:Model.XPort.Initiator}
     ]
 

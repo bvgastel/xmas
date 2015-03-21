@@ -43,15 +43,39 @@ signals:
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
-    /** Connect method for qml */
+    /**
+     * @brief connect
+     *
+     * Connect the specified outport to the specified
+     * inport. If one of the ports is already
+     * connected the results are unspecified.
+     *
+     * @param port_out The output XPort
+     * @param port_in The input XPort
+     * @return true if the operation is successful, false otherwise
+     */
     bool connect(XPort *port_out, XPort *port_in);
-    /** Disconnect method from output port for qml */
+    /**
+     * @brief disconnect
+     *
+     * Disconnect an output port from an input port.
+     *
+     * @param outport The outport that needs disconnection
+     * @param inport The inport connected to the outport
+     * @return true if the disconnect was successful, false otherwise
+     */
     bool disconnect(XPort *outport, XPort *inport);
-    QString toJson(QList<Component *> allComponents) {
-        bitpowder::lib::String result;
-        bitpowder::lib::MemoryPool mp;
-        bitpowder::lib::JSONData globals;
-
+    /**
+     * @brief toJson
+     *
+     *  Transfrom a given network of Component classes to
+     *  a QString containing JSON for the network.
+     *
+     * @param allComponents A QList of Component pointers
+     * @return a QString containing the json for the network.
+     *
+     */
+    QString toJson(QList<Component *> allComponents);
         std::set<XMASComponent *> allComp;
         for (Component *comp : allComponents) {
             auto c = comp->getXMASComponent();
@@ -82,6 +106,7 @@ QList<Component *> getAllComponents(){
 
 //#################################################################################################
 
+    QQmlListProperty<Component> compList();
 
 private:
 //    static void append_compList(QQmlListProperty<Component> *property, Component *comp);
