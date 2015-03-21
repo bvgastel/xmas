@@ -75,6 +75,8 @@ public slots:
      */
     QString toJson();
 
+    bool addComponent(model::Component *component);
+
     bool toFile(QUrl url);
 
     QQmlListProperty<Component> components();
@@ -112,6 +114,7 @@ public:
 private:
 
     QList<Component *> m_components;
+    std::set<XMASComponent *> m_xmas_comp_list;
 };
 
 } // namespace model

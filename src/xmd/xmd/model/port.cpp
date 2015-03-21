@@ -56,7 +56,7 @@ void model::XPort::componentComplete() {
  */
 Port *model::XPort::getPort() {
     if (m_component) {
-        XMASComponent *c = m_component->getXMASComponent();
+        XMASComponent *c = m_component->xmas_component();
         if (c) {
             for (Port *p : c->ports()) {
                 if (QString(p->getName()) == getName()) {

@@ -43,6 +43,7 @@ class Component : public QQuickItem //, public QQmlParserStatus
 {
     Q_OBJECT
 
+    friend class Network;
 public:
     enum Orientation {
         North = 0,
@@ -106,8 +107,8 @@ public:
     void setName(QString name) {
         if (name != m_name) {
             m_name = name;
-            if (m_component) {
-                m_component->name(name.toStdString());
+            if (m_xmas_component) {
+                m_xmas_component->name(name.toStdString());
             }
         }
         int result = checkName(name);
@@ -145,7 +146,7 @@ public:
         // Check for warning
         if (!valid) {
             if (!m_validExprWarningGiven) {
-                QString cname = QString(m_component->getStdName().c_str());
+                QString cname = QString(m_xmas_component->getStdName().c_str());
                 emit writeLog("Component " + cname + " has an invalid spec.");
                 m_validExprWarningGiven = true;
             }
@@ -158,15 +159,24 @@ public:
         emit validChanged();
     }
 
-    XMASComponent *getXMASComponent() {
-        return this->m_component;
+    bool xmas_component(XMASComponent *component) {
+        if (component) {
+            m_xmas_component = component;
+            return true;
+        }
+        return false;
+
+    }
+
+    XMASComponent *xmas_component() {
+        return this->m_xmas_component;
     }
 
     QQmlListProperty<XPort> ports();
 
 
 private:
-    XMASComponent *createComponent(CompType type, QString name);
+    XMASComponent *createXMASComponent(CompType type, QString name);
     int checkName(QString name);
     void emitInportProperties();
     void emitOutportProperties();
@@ -184,7 +194,7 @@ private:
     bool m_validExpr;
     bool m_validExprWarningGiven; // an internal flag (non-qml)
 
-    XMASComponent *m_component;
+    XMASComponent *m_xmas_component;
     QList<XPort *> m_ports;
 
 };

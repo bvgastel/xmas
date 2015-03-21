@@ -68,7 +68,7 @@ QString model::Network::toJson() {
 
     std::set<XMASComponent *> allComp;
     for (Component *comp : allComponents) {
-        auto c = comp->getXMASComponent();
+        auto c = comp->xmas_component();
         allComp.insert(c);
     }
     result = ::Export(allComp,globals,mp);
@@ -132,14 +132,18 @@ QQmlListProperty<model::Component> model::Network::components() {
                                               );
 }
 
+bool model::Network::addComponent(model::Component *component) {
+    auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
+    component->xmas_component(xmas_comp);
+    bool result;
+    std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
+    return result;
+}
+
+
 /*****************************************************************************/
 /*              Static methods: QQmlListProperty callbacks                   */
 /*****************************************************************************/
-
-
-///*****************************************************************************/
-///*              Static methods: QQmlListProperty callbacks                   */
-///*****************************************************************************/
 
 void model::Network::append_components(QQmlListProperty<model::Component> *property,
                      model::Component *comp) {
