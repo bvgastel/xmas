@@ -48,7 +48,7 @@ import Qt.labs.settings 1.0
 
 import "xobjects"
 import "uicontrols"
-import XMAS.model 1.0
+//import XMAS.model 1.0 as XMAS
 
 ApplicationWindow {
     id: mainwindow

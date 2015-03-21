@@ -39,16 +39,16 @@ import "xchannel.js" as Code
 import "../xmapper/controller.js" as Ctrl
 
 
-Rectangle {
+XMAS.XNetwork {
     id: sheet
     // Properties
     scale: 1.0
     width: 5940 //2970
     height: 4200 //2100
-    color: "white"
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
+    property string color: "white"
 
     // Signals
     signal moveSelected(var group)
@@ -71,7 +71,7 @@ Rectangle {
     // Select item
     function select(item){
         selection.select([item])
-   }
+    }
 
     // Select all items
     function selectAll() {
@@ -83,60 +83,6 @@ Rectangle {
         selectAll()
         selection.deleteSelected()
     }
-
-    //used to show the wiring path when adding a connection
-    XWire{
-      id: wire
-      property bool connecting: false
-      property var outport: null
-      property var inport: null
-      property int mx: 0
-      property int my: 0
-      visible: connecting
-      size: 4
-      color: "red"
-
-      onOutportChanged: {
-          if(outport) {
-              wire.x1 = outport.mapToItem(sheet,5,5).x
-              wire.y1 = outport.mapToItem(sheet,5,5).y
-              wire.x2 = wire.x1
-              wire.y2 = wire.y1
-          }
-      }
-      onInportChanged: {
-          if(inport) {
-              wire.x2 = inport.mapToItem(sheet,5,5).x
-              wire.y2 = inport.mapToItem(sheet,5,5).y
-          }
-      }
-      onVisibleChanged: {
-          if(!visible){
-              wire.x1 = 0
-              wire.y1 = 0
-              wire.x2 = 0
-              wire.y2 = 0
-          }
-      }
-
-      Rectangle {
-          id: endcap
-          color: "white"
-          x: wire.width - 5
-          y: -5 + wire.size / 2
-          height: 10
-          width: 10
-          rotation: -parent.rotation
-          radius: {
-              if(wire.outport) {
-                  wire.outport.type === XMAS.XPort.Target ? 10  : 0
-              } else 0
-          }
-          border.color: wire.color
-          border.width: 2
-      }
-    }
-
 
     function checkTarget(port) {
         if (wire.outport
@@ -187,97 +133,159 @@ Rectangle {
         var items = []
         for (var child in children){
             if(children[child].objectName==="component")
-               // || children[child].objectName==="channel")
+                // || children[child].objectName==="channel")
                 items.push(children[child])
         }
         return items
     }
 
-    Selection {
-        id: selection
-        onSizeChanged: selection.find(canvasItems())
-        onShowContextMenu:contextMenu.popup()
-        onPositionChanged: moveSelected(selection)
-    }
+    Rectangle{
+        id:canvas
+        // Properties
+        anchors.fill: parent
+        color: parent.color
 
-    MouseArea {
-        id: area
-        anchors.fill: sheet
-        hoverEnabled: wire.connecting
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: {
-            if (mouse.button == Qt.RightButton)
-            {
-                if(wire.connecting)
+        //used to show the wiring path when adding a connection
+        XWire{
+            id: wire
+            property bool connecting: false
+            property var outport: null
+            property var inport: null
+            property int mx: 0
+            property int my: 0
+            visible: connecting
+            size: 4
+            color: "red"
+
+            onOutportChanged: {
+                if(outport) {
+                    wire.x1 = outport.mapToItem(sheet,5,5).x
+                    wire.y1 = outport.mapToItem(sheet,5,5).y
+                    wire.x2 = wire.x1
+                    wire.y2 = wire.y1
+                }
+            }
+            onInportChanged: {
+                if(inport) {
+                    wire.x2 = inport.mapToItem(sheet,5,5).x
+                    wire.y2 = inport.mapToItem(sheet,5,5).y
+                }
+            }
+            onVisibleChanged: {
+                if(!visible){
+                    wire.x1 = 0
+                    wire.y1 = 0
+                    wire.x2 = 0
+                    wire.y2 = 0
+                }
+            }
+
+            Rectangle {
+                id: endcap
+                color: "white"
+                x: wire.width - 5
+                y: -5 + wire.size / 2
+                height: 10
+                width: 10
+                rotation: -parent.rotation
+                radius: {
+                    if(wire.outport) {
+                        wire.outport.type === XMAS.XPort.Target ? 10  : 0
+                    } else 0
+                }
+                border.color: wire.color
+                border.width: 2
+            }
+        }
+
+
+
+
+        Selection {
+            id: selection
+            onSizeChanged: selection.find(canvasItems())
+            onShowContextMenu:contextMenu.popup()
+            onPositionChanged: moveSelected(selection)
+        }
+
+        MouseArea {
+            id: area
+            anchors.fill: parent
+            hoverEnabled: wire.connecting
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: {
+                if (mouse.button == Qt.RightButton)
                 {
-                    wire.connecting = false
-                    wire.outport = null
-                    wire.inport = null
+                    if(wire.connecting)
+                    {
+                        wire.connecting = false
+                        wire.outport = null
+                        wire.inport = null
+                    }
+                    else
+                    {
+                        contextMenu.popup()
+                    }
                 }
-                else
-                {
-                    contextMenu.popup()
-                }
-            }
-            if (mouse.button == Qt.LeftButton){
-                if(sheet.selectionMode){
-                    selection.start(mouse)
-                 }
-            }
-        }
-        onReleased: {
-            if (mouse.button == Qt.LeftButton){
-                if(sheet.selectionMode){
-                    selection.find(canvasItems())
+                if (mouse.button == Qt.LeftButton){
+                    if(sheet.selectionMode){
+                        selection.start(mouse)
+                    }
                 }
             }
-        }
-
-        onClicked: {
-            if (mouse.button == Qt.LeftButton) {
-                if(!sheet.selectionMode) {
-                    selection.clear()
+            onReleased: {
+                if (mouse.button == Qt.LeftButton){
+                    if(sheet.selectionMode){
+                        selection.find(canvasItems())
+                    }
                 }
             }
-            if (mouse.button == Qt.RightButton) {
 
+            onClicked: {
+                if (mouse.button == Qt.LeftButton) {
+                    if(!sheet.selectionMode) {
+                        selection.clear()
+                    }
+                }
+                if (mouse.button == Qt.RightButton) {
+
+                }
+            }
+
+            onPositionChanged: {
+                if(sheet.selectionMode) selection.updateInitialSize(mouse)
+                wire.x2 = mouse.x
+                wire.y2 = mouse.y
             }
         }
 
-        onPositionChanged: {
-            if(sheet.selectionMode) selection.updateInitialSize(mouse)
-            wire.x2 = mouse.x
-            wire.y2 = mouse.y
+        Connections {
+            target: datacontrol
+            //onCreateComponent: Ctrl.loadComponent(object)
+            onCreateNetwork: Ctrl.createNetwork(object)
         }
-    }
 
-    Connections {
-        target: datacontrol
-        //onCreateComponent: Ctrl.loadComponent(object)
-        onCreateNetwork: Ctrl.createNetwork(object)
-    }
-
-    Connections {
-        target: mainwindow
-        onZoomIn: doScale(0.1)
-        onZoomOut: doScale(-0.1)
-        onZoomFit: doScale()
-        onSelectAll: selectAll()
-        onSelectionMode: selectionMode = checked
-        onShowComponentNames: showComponentNames(checked)
-    }
-
-    Menu {
-        id: contextMenu
-        MenuItem {
-            text: "Delete"
-            onTriggered: selection.deleteSelected()
+        Connections {
+            target: mainwindow
+            onZoomIn: doScale(0.1)
+            onZoomOut: doScale(-0.1)
+            onZoomFit: doScale()
+            onSelectAll: selectAll()
+            onSelectionMode: selectionMode = checked
+            onShowComponentNames: showComponentNames(checked)
         }
-        MenuSeparator{}
-        MenuItem {
-            action: showComponentNamesAction
-            onToggled: showComponentNames(checked)
+
+        Menu {
+            id: contextMenu
+            MenuItem {
+                text: "Delete"
+                onTriggered: selection.deleteSelected()
+            }
+            MenuSeparator{}
+            MenuItem {
+                action: showComponentNamesAction
+                onToggled: showComponentNames(checked)
+            }
         }
     }
 }
-
