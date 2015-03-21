@@ -117,7 +117,6 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     return false;
 }
 
-
 QQmlListProperty<model::Component> model::Network::components() {
     return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
                                               &model::Network::append_components,
