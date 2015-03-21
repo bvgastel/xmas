@@ -48,9 +48,6 @@ function endDrag()
     } else {
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
-        //datacontrol.componentCreated(draggedItem)
-        //log("component created!")
-
         draggedItem = null;
     }
 }

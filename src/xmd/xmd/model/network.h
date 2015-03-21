@@ -109,8 +109,6 @@ public:
     explicit Network(QQuickItem *parent = 0);
     ~Network();
 
-    virtual void childItemsChanged();
-
 private:
 
     QList<Component *> m_components;

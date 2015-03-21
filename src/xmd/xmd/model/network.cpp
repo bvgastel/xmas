@@ -117,11 +117,6 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     return false;
 }
 
-void model::Network::childItemsChanged(){
-    //NOTE : still working on , childItems in qml change and have the components but not here yet
-    qDebug() << "childItemsChanged()";
-}
-
 
 QQmlListProperty<model::Component> model::Network::components() {
     return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
