@@ -256,6 +256,21 @@ XMAS.XNetwork {
         }
     }
 
+    // Connections
+    Connections {
+        target: datacontrol
+        //onCreateComponent: Ctrl.loadComponent(object)
+        onCreateNetwork: Ctrl.createNetwork(object)
+    }
 
+    Connections {
+        target: mainwindow
+        onZoomIn: doScale(0.1)
+        onZoomOut: doScale(-0.1)
+        onZoomFit: doScale()
+        onSelectAll: selectAll()
+        onSelectionMode: selectionMode = checked
+        onShowComponentNames: showComponentNames(checked)
+    }
 }
 
