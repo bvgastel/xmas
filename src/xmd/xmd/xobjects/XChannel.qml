@@ -19,7 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  *
  *
- * Parts of this code were copied from Qt examples with following copyright
+ * Parts of this channelJs were copied from Qt examples with following copyright
  * and license notices:
  *
  * Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies)
@@ -30,7 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
-import "xchannel.js" as Code
+import "xchannel.js" as channelJs
 import "../uicontrols"
 import XMAS.model 1.0 as Model
 
@@ -95,26 +95,26 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: Code.remove(channel)
+            onTriggered: channelJs.remove(channel)
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        onRemoved: Code.remove(channel)
+        onRemoved: channelJs.remove(channel)
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: Code.remove(channel)
+        onRemoved: channelJs.remove(channel)
     }
 
     Connections {
         target: parent
-//        onGroupSelected: Code.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-        onDeleteSelected: if (Code.selected) Code.remove(channel)
-        onClearSelection: Code.selected = false
+//        onGroupSelected: channelJs.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
+        onDeleteSelected: if (channelJs.selected) channelJs.remove(channel)
+        onClearSelection: channelJs.selected = false
     }
 
 
