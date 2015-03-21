@@ -1,5 +1,6 @@
 #include "xmas.h"
 #include "flatten.h"
+#include "flatten-gates.h"
 
 #include <string>
 #include "gtest/gtest.h"
@@ -47,8 +48,8 @@ protected:
 
     CreditCounterTest()
     {
-        auto in = creditCounter.insert<XMASInGate>("in");
-        auto out = creditCounter.insert<XMASOutGate>("out");
+        auto in = creditCounter.insert<XMASSource>("in", true);
+        auto out = creditCounter.insert<XMASSink>("out", true);
 
         auto source = creditCounter.insert<XMASSource>("source");
         auto fork = creditCounter.insert<XMASFork>("fork");
@@ -78,8 +79,8 @@ protected:
 
     BridgeCompositeTest()
     {
-        auto in = bridge.insert<XMASInGate>("in");
-        auto out = bridge.insert<XMASOutGate>("out");
+        auto in = bridge.insert<XMASSource>("in", true);
+        auto out = bridge.insert<XMASSink>("out", true);
 
         connect(in->o, out->i);
     }

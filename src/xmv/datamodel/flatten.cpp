@@ -1,9 +1,10 @@
 #include "xmas.h"
 #include "flatten.h"
-
+#include "flatten-gates.h"
 
 using bitpowder::lib::String;
 using bitpowder::lib::Exception;
+
 
 struct Gates
 {
@@ -45,22 +46,32 @@ public:
 
 static Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string prefix);
 
-class FlattenVisitor : public HierarchicalComponentVisitor
+class FlattenVisitor : public XMASComponentVisitor
 {
 public:
     FlattenVisitor(XMASNetwork& network, Gates& gates, String name) : network(network), gates(gates), name(name)
     {}
 
-    void visit(XMASSink *) override         { result = network.insert<XMASSink>(name); }
-    void visit(XMASSource *) override       { result = network.insert<XMASSource>(name); }
+    void visit(XMASSink *c) override        {
+        if (c->external) {
+            auto outGate = new XMASOutGate(name); result = outGate; gates.outGates.push_back(outGate);
+        } else {
+            result = network.insert<XMASSink>(name);
+        }
+    }
+    void visit(XMASSource *c) override      {
+        if (c->external) {
+            auto inGate = new XMASInGate(name); result = inGate; gates.inGates.push_back(inGate);
+        } else {
+            result = network.insert<XMASSource>(name);
+        }
+    }
     void visit(XMASQueue *) override        { result = network.insert<XMASQueue>(name); }
     void visit(XMASFunction *) override     { result = network.insert<XMASFunction>(name); }
     void visit(XMASSwitch *) override       { result = network.insert<XMASSwitch>(name); }
     void visit(XMASFork *) override         { result = network.insert<XMASFork>(name); }
     void visit(XMASMerge *) override        { result = network.insert<XMASMerge>(name); }
     void visit(XMASJoin *) override         { result = network.insert<XMASJoin>(name); }
-    void visit(XMASInGate *) override       { auto inGate = new XMASInGate(name); result = inGate; gates.inGates.push_back(inGate); }
-    void visit(XMASOutGate *) override      { auto outGate = new XMASOutGate(name); result = outGate; gates.outGates.push_back(outGate); }
     void visit(XMASComposite* c) override   {
         const XMASNetwork& subnetwork = c->getNetwork();
         const std::string prefix { name.stl() + "::" };

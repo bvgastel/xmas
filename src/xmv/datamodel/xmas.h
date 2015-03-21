@@ -321,8 +321,6 @@ class XMASFork;
 class XMASMerge;
 class XMASJoin;
 
-class XMASInGate;
-class XMASOutGate;
 class XMASComposite;
 
 /**
@@ -342,15 +340,11 @@ public:
     virtual void visit(XMASFork *) = 0;
     virtual void visit(XMASMerge *) = 0;
     virtual void visit(XMASJoin *) = 0;
+    virtual void visit(XMASComposite *) {
+        throw bitpowder::lib::Exception("This XMASComponentVisitor does not support composites!");
+    }
 };
 
-class HierarchicalComponentVisitor : public XMASComponentVisitor
-{
-public:
-    virtual void visit(XMASInGate *) = 0;
-    virtual void visit(XMASOutGate *) = 0;
-    virtual void visit(XMASComposite *) = 0;
-};
 
 /************************ XMASComponent *******************************************/
 
@@ -482,10 +476,6 @@ public:
      */
     virtual void accept(XMASComponentVisitor &v) = 0;
 
-    virtual void accept(HierarchicalComponentVisitor &v) {
-        accept(static_cast<XMASComponentVisitor&>(v));
-    }
-
     /**
      * @brief getComponentExtension
      *
@@ -550,15 +540,15 @@ class XMASSink : public XMASComponent
 public:
     Input i;
     Port* p[1];
-
+    bool external;              // is this sink an interface port of a composite
 
     /**
      * @brief XMASSink Constructor
      *
      * @param name the name of the sink
      */
-    XMASSink(const bitpowder::lib::String& name)
-        : XMASComponent(name), i(this, "i")
+    XMASSink(const bitpowder::lib::String& name, bool external = false)
+        : XMASComponent(name), i(this, "i"), external(external)
     {
         p[0] = &i;
     }
@@ -605,8 +595,10 @@ class XMASSource : public XMASComponent
 public:
     Output o;
     Port* p[1];
+    bool external;              // is this source an interface port of a composite
 
-    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
+    XMASSource(const bitpowder::lib::String& name, bool external = false)
+        : XMASComponent(name), o(this, "o"), external(external)
     {
         p[0] = &o;
     }
@@ -959,72 +951,6 @@ public:
     }
 };
 
-class XMASInGate : public XMASComponent
-{
-public:
-    Output o;
-    Input i_ext;    // external interface port
-    Port* p[1];     // publish only the output port
-
-    XMASInGate(const bitpowder::lib::String& name) : XMASComponent(name), o(this,"o"), i_ext(this,"i_ext")
-    {
-        p[0] = &o;
-    }
-
-    void accept(XMASComponentVisitor&) override
-    {
-        throw bitpowder::lib::Exception("XMASInGate can only accept an hierarchical visitor!");
-    }
-
-    void accept(HierarchicalComponentVisitor &v) override
-    {
-        v.visit(this);
-    }
-
-    Port** beginPort(PortType type) override
-    {
-        return type == PortType::INPUT_PORT ? nullptr : &p[0];
-    }
-
-    Port** endPort(PortType type) override
-    {
-        return type == PortType::INPUT_PORT ? nullptr : &p[1];
-    }
-};
-
-class XMASOutGate : public XMASComponent
-{
-public:
-    Input i;
-    Output o_ext;   // external interface port
-    Port* p[1];     // publish only the input port
-
-    XMASOutGate(const bitpowder::lib::String& name) : XMASComponent(name), i(this,"i"), o_ext(this,"o_ext")
-    {
-        p[0] = &i;
-    }
-
-    void accept(XMASComponentVisitor&) override
-    {
-        throw bitpowder::lib::Exception("XMASOutGate can only accept an hierarchical visitor!");
-    }
-
-    void accept(HierarchicalComponentVisitor &v) override
-    {
-        v.visit(this);
-    }
-
-    Port** beginPort(PortType type) override
-    {
-        return type == PortType::OUTPUT_PORT ? nullptr : &p[0];
-    }
-
-    Port** endPort(PortType type) override
-    {
-        return type == PortType::OUTPUT_PORT ? nullptr : &p[1];
-    }
-};
-
 
 class XMASNetwork
 {
@@ -1094,15 +1020,11 @@ public:
     }
 
 
-    void accept(XMASComponentVisitor&) override
-    {
-        throw bitpowder::lib::Exception("XMASComposite can only accept an hierarchical visitor!");
-    }
-
-    void accept(HierarchicalComponentVisitor &v) override
+    void accept(XMASComponentVisitor &v) override
     {
         v.visit(this);
     }
+
 
     Port** beginPort(PortType type) override
     {

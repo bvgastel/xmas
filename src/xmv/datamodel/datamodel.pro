@@ -77,7 +77,8 @@ HEADERS += datamodel.h\
     serialize_network.h \
     canvascomponentextension.h \
     parseflatjsonfile.h \
-    flatten.h
+    flatten.h \
+    flatten-gates.h
 
 ################################################
 # INSTALL instructions
