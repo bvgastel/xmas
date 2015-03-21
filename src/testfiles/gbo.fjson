@@ -1,0 +1,37 @@
+{
+"NETWORK":[
+	{
+		"id":"f0",
+		"outs":[
+			{
+				"id":"snk2",
+				"in_port":0}
+				]
+			,
+		"type":"function",
+		"fields":[
+			{
+				"function":""}
+				]
+			}
+		,
+	{
+		"id":"src1",
+		"outs":[
+			{
+				"id":"f0",
+				"in_port":0}
+				]
+			,
+		"type":"source",
+		"fields":[
+			{
+				"init_types":""}
+				]
+			}
+		,
+	{
+		"id":"snk2",
+		"type":"sink"}
+		]
+	}

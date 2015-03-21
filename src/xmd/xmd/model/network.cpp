@@ -62,7 +62,7 @@ bool model::Network::toFile(QUrl url) {
 QString model::Network::toJson() {
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
-    bitpowder::lib::JSONData globals;
+    bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
 
     QList<model::Component *> allComponents = getAllComponents();
 
