@@ -142,7 +142,7 @@ public:
 };
 
 // returns true on error
-bool ErrorInMessageSpec(std::set<XMASComponent *> allComponents);
+bool CheckMessageSpec(std::set<XMASComponent *> allComponents);
 
 void attachMessageSpec(Output *port, const std::vector<SymbolicPacket> &a, MessageSpec::Ref spec);
 

@@ -242,7 +242,7 @@ struct MessageSpecWorkerItem : public Work {
  * @param allComponents
  * @return
  */
-bool ErrorInMessageSpec(std::set<XMASComponent *> allComponents) {
+bool CheckMessageSpec(std::set<XMASComponent *> allComponents) {
     std::atomic<long> problems(0);
 #ifdef CONCURRENCY
     WorkQueue allItems;
