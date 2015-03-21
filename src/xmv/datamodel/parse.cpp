@@ -1348,9 +1348,22 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             }
         }
 
+        XMASSink *sink = dynamic_cast<XMASSink*>(component);
+        if (sink) {
+            try {
+                int external = jsonComponent["external"].asNumber();    // boolean not supported by JSONData! use 0/1
+                sink->external = external > 0;
+            } catch (Exception e) {
+                std::cerr << jsonComponent << std::endl;
+                std::cerr << e << std::endl;
+                exit(-1);
+            }
+        }
         XMASSource *src = dynamic_cast<XMASSource*>(component);
         if (src) {
             try {
+                int external = jsonComponent["external"].asNumber();    // boolean not supported by JSONData! use 0/1
+                src->external = external > 0;
                 String types = jsonComponent["fields"][0]["init_types"];
                 auto result = ParseSourceExpression(types, mp);
                 if (result) {
