@@ -22,6 +22,10 @@ CONFIG(debug, debug|release) {
     win32: TARGET = $$join(TARGET,,,d)
 }
 
+# Application icon
+win32|unix: RC_ICONS = app.ico
+macx: ICON = myapp.icns
+
 HEADERS       = \
 
 SOURCES += \
