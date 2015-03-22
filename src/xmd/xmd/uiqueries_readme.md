@@ -49,3 +49,4 @@ gbo     04-03       Add filename to header (or unnamed) or anywhere else (status
 gbo     06-03       Open file, create queue (2x): results in duplicate name (xmas refuses creation)
 gbo     17-03       Queue size somehow does not trigger writeLogs: does it call Component? Function does show writeLogs.
 gbo     17-03       source expression while not connected fails (correct). After connection need source expression again: during connect in c++?
+gbo     22-03       ABORT: (alleen linux) bij f0-f1-f2, f0->f1, f1->f2, select (f0, f1), delete ==> bam! qml abort tijdens een delete actie
