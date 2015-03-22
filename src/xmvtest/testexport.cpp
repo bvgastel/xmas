@@ -64,26 +64,29 @@ protected:
 
 };
 
+std::set<XMASComponent *> convertToSet(std::map<bitpowder::lib::String, XMASComponent *> compMap) {
+    std::set<XMASComponent *> componentSet;
+    XMASComponent *comp;
+    for (auto entry : compMap) {
+        comp = entry.second;
+        componentSet.insert(comp);
+    }
+    return componentSet;
+}
+
 TEST_F(TestExport, export_json_string)
 {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
 
     std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.stl(), mp);
+    std::tie(componentMap, globals) = parse_xmas_from_json(json.stl(), mp);
 
-    std::set<XMASComponent *> componentSet;
-    XMASComponent *comp;
-    for (auto entry : componentMap) {
-        comp = entry.second;
-        componentSet.insert(comp);
-    }
-
-
+    std::set<XMASComponent *> componentSet = convertToSet(componentMap);
     bitpowder::lib::String result = ::Export(componentSet, globals, mp);
 
+    // Init types and packet types have random memory var names
     EXPECT_EQ(json, result);
-
 }
 
 
