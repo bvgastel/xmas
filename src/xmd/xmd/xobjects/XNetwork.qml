@@ -47,16 +47,22 @@ XMAS.XNetwork {
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
+    fileName: ""
+    alias:""
+    asSymbol: false
+    imageName: ""
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
     property string color: "white"
+    property bool modified: false
 
     // Signals
     signal moveSelected(var group)
     signal showComponentNames(var checked)
 
     // Event handling
+    onChildrenChanged: modified=true
 
     // JavaScripts
 

@@ -92,7 +92,10 @@ public slots:
 
     bool addComponent(model::Component *component);
 
-    bool toFile(QUrl url);
+    bool saveFile(QUrl url);
+    bool openFile(QUrl url);
+    bool closeFile();
+    bool newFile();
 
     QQmlListProperty<Component> components();
 

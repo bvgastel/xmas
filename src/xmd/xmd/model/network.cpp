@@ -1,4 +1,5 @@
 #include <QList>
+#include <QUrl>
 
 #include "util.h"
 #include "network.h"
@@ -55,8 +56,24 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
     return false;
 }
 
-bool model::Network::toFile(QUrl url) {
-    return Util::toFile(url, toJson());
+
+bool model::Network::openFile(QUrl url) {
+    Q_UNUSED(url)
+    //TODO open network via util instead of datacontrol
+    return true;
+}
+
+bool model::Network::saveFile(QUrl url) {
+    return Util::saveFile(url, toJson());
+}
+
+bool model::Network::closeFile() {
+    //TODO destruct the model and reset everything
+    return true;
+}
+
+bool model::Network::newFile() {
+    return closeFile();
 }
 
 QString model::Network::toJson() {
@@ -71,9 +88,10 @@ QString model::Network::toJson() {
         auto c = comp->xmas_component();
         allComp.insert(c);
     }
-    result = ::Export(allComp,globals,mp);
-    QString jsonString = QString(result.stl().c_str());
-    return jsonString;
+//    result = ::Export(allComp,globals,mp);
+//    QString jsonString = QString(result.stl().c_str());
+//    return jsonString;
+    return "";
 }
 
 bool model::Network::disconnect(XPort *outport, XPort *inport) {
