@@ -1080,7 +1080,11 @@ public:
 };
 
 
-class XMASNetwork
+class XMASNetworkExtension : public bitpowder::lib::Extension<XMASNetworkExtension>
+{
+};
+
+class XMASNetwork : bitpowder::lib::ExtensionContainer<PortExtension>
 {
 public:
     XMASNetwork(std::string name) : name(name)
@@ -1132,6 +1136,27 @@ public:
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
+
+    template <class NetworkExtensionType>
+    NetworkExtensionType* getNetworkExtension(bool create = true)
+    {
+        NetworkExtensionType *ext = getExtension<NetworkExtensionType*>();
+        if (ext == nullptr && create) {
+            ext = new NetworkExtensionType();
+            addExtension(ext);
+        }
+        return ext;
+    }
+
+    template <class NetworkExtensionType>
+    void clearNetworkExtension()
+    {
+        NetworkExtensionType *ext = removeExtension<NetworkExtensionType*>();
+        if (ext)
+            delete ext;
+    }
+
+    void clearExtensions();
 
 private:
     std::string name;
