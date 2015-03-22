@@ -63,5 +63,17 @@
         <file>uicontrols/XPacketDialog.qml</file>
         <file>xobjects/composite.qml</file>
         <file>content/symbols/agent.png</file>
+        <file>content/add_composite.ico</file>
+        <file>content/app.ico</file>
+        <file>content/clean.ico</file>
+        <file>content/model-setup.ico</file>
+        <file>content/not_ok.ico</file>
+        <file>content/ok.ico</file>
+        <file>content/plugin.ico</file>
+        <file>content/quit.ico</file>
+        <file>content/save.ico</file>
+        <file>content/saveAs.ico</file>
+        <file>content/setup.ico</file>
+        <file>content/warning.ico</file>
     </qresource>
 </RCC>

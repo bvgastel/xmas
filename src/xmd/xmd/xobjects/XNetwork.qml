@@ -43,8 +43,9 @@ XMAS.XNetwork {
     id: network
     // Properties
     scale: 1.0
-    width: 5940 //2970
-    height: 4200 //2100
+    size: Qt.size(5940,4200)
+    width: size.width
+    height: size.height
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
