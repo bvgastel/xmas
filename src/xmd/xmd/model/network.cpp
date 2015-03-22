@@ -80,6 +80,7 @@ QString model::Network::toJson() {
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
+    globals["PACKET_TYPE"] = bitpowder::lib::JSONData("val = 2");
 
     QList<model::Component *> allComponents = getAllComponents();
 
@@ -91,7 +92,17 @@ QString model::Network::toJson() {
 //    result = ::Export(allComp,globals,mp);
 //    QString jsonString = QString(result.stl().c_str());
 //    return jsonString;
-    return "";
+    return "{"
+           "\"VARS\": [],"
+           "\"PACKET_TYPE\": {\"val \": 2},"
+           "\"COMPOSITE_OBJECTS\": [],"
+           "\"NETWORK\": ["
+             "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[{\"id\":\"q1\",\"in_port\":0}],\"pos\":{\"x\": 100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
+             "{\"id\": \"q1\",\"type\": \"queue\",\"outs\": [{\"id\": \"q2\",\"in_port\": 0}],\"pos\": {\"x\": 210,\"y\": 210,\"orientation\": 90,\"scale\": 200},\"fields\": [{\"size\": 2}]},"
+             "{\"id\": \"q2\",\"type\": \"queue\",\"outs\": [{\"id\": \"sink3\",\"in_port\": 0}],\"pos\": {\"x\": 310,\"y\": 310,\"orientation\": 0,\"scale\": 100},\"fields\": [{\"size\": 5}]},"
+             "{\"id\": \"sink3\",\"type\": \"sink\",\"pos\": {\"x\": 410,\"y\": 410,\"orientation\": 0,\"scale\": 100}}"
+             "]"
+         "}";
 }
 
 bool model::Network::disconnect(XPort *outport, XPort *inport) {
