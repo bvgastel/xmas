@@ -50,3 +50,4 @@ gbo     06-03       Open file, create queue (2x): results in duplicate name (xma
 gbo     17-03       Queue size somehow does not trigger writeLogs: does it call Component? Function does show writeLogs.
 gbo     17-03       source expression while not connected fails (correct). After connection need source expression again: during connect in c++?
 gbo     22-03       ABORT: (alleen linux) bij f0-f1-f2, f0->f1, f1->f2, select (f0, f1), delete ==> bam! qml abort tijdens een delete actie
+gbo     22-03       Global variables in JSON: need the same in user interface. Concerns: VARS, COMPOSITE_OBJECTS and PACKET_TYPE.
