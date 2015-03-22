@@ -47,10 +47,11 @@ XMAS.XNetwork {
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
-    fileName: ""
     alias:""
     asSymbol: false
     imageName: ""
+    property string fileName: ""
+    property string fileUrl: ""
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
@@ -65,6 +66,9 @@ XMAS.XNetwork {
     onChildrenChanged: modified=true
 
     // JavaScripts
+    function getNewName(idx){
+        return "Model" + idx + "json"
+    }
 
     // Scale
     function doScale(dScale){
@@ -266,17 +270,17 @@ XMAS.XNetwork {
     }
 
     Menu {
-         id: contextMenu
-         MenuItem {
-             text: "Delete"
-             onTriggered: selection.deleteSelected()
-         }
-         MenuSeparator{}
-         MenuItem {
-             action: showComponentNamesAction
-             onToggled: showComponentNames(checked)
-         }
-     }
+        id: contextMenu
+        MenuItem {
+            text: "Delete"
+            onTriggered: selection.deleteSelected()
+        }
+        MenuSeparator{}
+        MenuItem {
+            action: showComponentNamesAction
+            onToggled: showComponentNames(checked)
+        }
+    }
 
     // Connections
     Connections {

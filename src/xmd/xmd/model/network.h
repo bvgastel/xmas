@@ -32,10 +32,6 @@ namespace model {
 class Network : public QQuickItem
 {
     Q_OBJECT
-
-    //NOTE : this is the name to be used for saving is file is already open
-    Q_PROPERTY(QString fileName MEMBER m_fileName NOTIFY fileNameChanged)
-
     //NOTE : alias, size , imageName and asSymbol must be serialized in the json in the network object
     Q_PROPERTY(QString alias MEMBER m_alias NOTIFY aliasChanged)
     Q_PROPERTY(QSize size MEMBER m_size NOTIFY sizeChanged)
@@ -46,8 +42,6 @@ class Network : public QQuickItem
 private:
 
 signals:
-
-    void fileNameChanged();
     void aliasChanged();
     void sizeChanged();
     void imageNameChanged();
@@ -132,7 +126,6 @@ private:
     QList<Component *> m_components;
     std::set<XMASComponent *> m_xmas_comp_list;
 
-    QString m_fileName;
     QString m_alias;
     QSize m_size;
     QString m_imageName;

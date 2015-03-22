@@ -62,7 +62,7 @@ ApplicationWindow {
     title: network.fileName + (network.modified ? "*" : "") + "     -     " + Qt.application.name
 
     property string defaultModelDirectory
-    property int newModelCounter:1
+    property int newModelCounter:0
 
     // Persistent properties
     Settings {
@@ -99,15 +99,26 @@ ApplicationWindow {
         outputLog.log(text,color)
     }
 
-    function modelName(url)
-    {
-        return "QUrl()"
+    // Closes the current model and starts a new one
+    function newModel(){
+        if(network.newFile()){
+            network.visible = true
+            network.clear()
+            // network.fileUrl = ""
+            newModelCounter++
+            // network.fileName = "Model" + newModelCounter + ".json"
+        }
     }
 
     // Event handling
-    onClosing: {close.accepted = false;  network.modified ? dialogSaveOnClose.open() : dialogQuit.open()}
+    onClosing: {close.accepted = false;  network.modified ? dialogSaveOnQuit.open() : dialogQuit.open()}
     //TODO load plugins in c++ property list
-    Component.onCompleted: plugincontrol.loadPlugins()
+    Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
+    onNewModelCounterChanged: {
+        network.fileUrl = ""
+        network.fileName = "Model" + newModelCounter + ".json"
+        network.modified = false
+    }
 
 
     //#######################################################################################################
@@ -122,7 +133,15 @@ ApplicationWindow {
         iconName: "new-model"
         text: "New"
         shortcut: StandardKey.New
-        //onTriggered: fileOpenDialog.open()
+        onTriggered: {
+            trigger.accept = false
+            if(network.modified) {
+                dialogSaveOnClose.open()
+                newModel()
+            } else {
+                newModel()
+            }
+        }
     }
 
     Action {
@@ -140,7 +159,19 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        onTriggered: fileSaveDialog.open()
+        onTriggered: {
+            if(network.modified){
+                if(network.fileUrl){
+                    if(network.saveFile(network.fileName))
+                    {
+                        network.modified = false
+                    }
+
+                } else {
+                    fileSaveDialog.open()
+                }
+            }
+        }
     }
 
     Action {
@@ -156,7 +187,13 @@ ApplicationWindow {
         id: fileCloseAction
         text: "Close"
         shortcut: StandardKey.Close
-        //onTriggered:
+        onTriggered: {
+            if(network.modified){
+                dialogSaveOnClose.open()
+            } else {
+                newModelCounter = 0 ; newModel()
+            }
+        }
     }
 
     Action {
@@ -488,7 +525,14 @@ ApplicationWindow {
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
-        onAccepted: datacontrol.fileOpen(fileUrl)
+        onAccepted: {
+            //            datacontrol.fileOpen(fileUrl)
+            //            if(datacontrol.fileOpen(fileUrl))
+            //            {
+            network.fileUrl = fileUrl
+            network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+            //            }
+        }
     }
 
     //File Save
@@ -503,9 +547,14 @@ ApplicationWindow {
             "All files (*)"]
 
         onAccepted: {
+            if(network.fileUrl !== fileUrl) {
+                dialogOverwrite.open()
+                //TODO call doesn't block
+            }
+
             if(network.saveFile(fileUrl))
             {
-                network.fileName = fileUrl
+                network.fileUrl = fileUrl
                 network.modified = false
             }
         }
@@ -535,23 +584,29 @@ ApplicationWindow {
         id: dialogOverwrite
         title: fileSaveAsAction.text
         icon: StandardIcon.Question
-        text:  network.fileName + " already exists!  Replace?"
-        detailedText: "To replace a file means that its existing contents will be lost. " +
-                      "The file that you are copying now will be copied over it instead."
+        text:  network.fileUrl + " already exists!  Replace?"
         standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: console.log("overwritten!")
-        onNo: visible=false
+        onYes: console.log("overwritten!") //TODO implement save from here
     }
 
-    // Close file without save?
+    // New without save?
+    MessageDialog {
+        id: dialogSaveOnNew
+        title: "New model."
+        icon: StandardIcon.Question
+        text:  "Close " + network.fileUrl + " without saving it?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: newModel()
+    }
+
+    // Close without save?
     MessageDialog {
         id: dialogSaveOnClose
         title: "Close model."
         icon: StandardIcon.Question
-        text:  "Close " + network.fileName + " without saving it?"
+        text:  "Close " + network.fileUrl + " without saving it?"
         standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: Qt.quit()
-        onNo: visible=false
+        onYes: newModel()
     }
 
     // Quit without save?
@@ -559,10 +614,9 @@ ApplicationWindow {
         id: dialogSaveOnQuit
         title: "Quit application."
         icon: StandardIcon.Question
-        text:  "Quit without saving " + network.fileName + "?"
+        text:  "Quit without saving " + network.fileUrl + "?"
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: Qt.quit()
-        onNo: visible=false
     }
 
     // Quit?
@@ -573,7 +627,6 @@ ApplicationWindow {
         text:  "Really wanna quit such a magnificent tool :P ?"
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: Qt.quit()
-        onNo: visible=false
     }
 
 
@@ -611,7 +664,8 @@ ApplicationWindow {
 
                 XNetwork{
                     id:network
-                    fileName: "Model" + newModelCounter
+                    //                    fileUrl: ""
+                    //                    fileName: "" // "Model" + newModelCounter + ".json"
                     onMoveSelected: {
                         if(group.x < view.contentX)
                             scrollLeft.start()
@@ -780,7 +834,7 @@ ApplicationWindow {
 
     //#######################################################################################################
     //
-    // Connctions
+    // Connections
     //
     //#######################################################################################################
 
