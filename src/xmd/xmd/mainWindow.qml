@@ -61,6 +61,8 @@ ApplicationWindow {
     color: "darkgrey"
     title: Qt.application.name
 
+    property string defaultModelDirectory
+
     // Persistent properties
     Settings {
         category: "xmd"
@@ -68,6 +70,7 @@ ApplicationWindow {
         property alias y: mainwindow.y
         property alias width: mainwindow.width
         property alias height: mainwindow.height
+        property alias defaultModelDirectory: mainwindow.defaultModelDirectory
     }
 
     property var vtNameList
@@ -492,11 +495,6 @@ ApplicationWindow {
 
                 XNetwork{
                     id:network
-                    transformOrigin: Item.TopLeft
-                    color: "white"
-                    width : 5940
-                    height: 4200
-
                     onMoveSelected: {
                        if(group.x < view.contentX)
                            scrollLeft.start()
