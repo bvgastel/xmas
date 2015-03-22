@@ -20,7 +20,7 @@ private:
     std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;
     XMASNetwork* root;
 
-    XMASNetwork* loadNetwork(const boost::filesystem::path& filePath);
+    XMASNetwork* loadNetwork(const std::string& filename);
 };
 
 #endif // XMASPROJECT_H

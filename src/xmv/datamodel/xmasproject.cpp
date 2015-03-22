@@ -9,16 +9,13 @@
 
 #include <sstream>
 
-#include <boost/filesystem.hpp>
-
 using namespace bitpowder::lib;
 
 JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp);
 
 XMASProject::XMASProject(const std::string& filename)
 {
-    boost::filesystem::path path { filename };
-    root = loadNetwork(path);
+    root = loadNetwork(filename);
 }
 
 XMASProject::~XMASProject()
@@ -26,14 +23,15 @@ XMASProject::~XMASProject()
 
 }
 
-XMASNetwork* XMASProject::loadNetwork(const boost::filesystem::path& filePath)
+XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 {
-    const std::string filename = filePath.filename().string();
+    size_t lastSlash = filename.find_last_of("/");
+    std::string basePath = filename.substr(0, lastSlash);
+    std::string name = filename.substr(lastSlash + 1);
 
-    boost::filesystem::path basePath { filePath };
-    basePath.remove_filename();
+    std::cout << "Loading: " << name << std::endl;
 
-    auto jsonResult = read_json_from_file(filePath.string(), mp);
+    auto jsonResult = read_json_from_file(filename, mp);
 
     if (!jsonResult)
         throw Exception("Unable to read JSON data from file");
@@ -43,28 +41,27 @@ XMASNetwork* XMASProject::loadNetwork(const boost::filesystem::path& filePath)
     // add the current networks key and a dummy network value to the networks map
     // this prevents infinite recursion of loadNetwork with a circular dependency
     XMASNetwork* dummy = new XMASNetwork {"dummy"};
-    networks.insert(std::make_pair(filename, std::unique_ptr<XMASNetwork>(dummy)));
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(dummy)));
 
     // load all composite networks used by this network
     for (auto &jsonComponent : json["COMPOSITE_OBJECTS"]) {
-        String compositeFilename = jsonComponent.asString();
-        std::cout << compositeFilename << std::endl;
+        String compositeName = jsonComponent.asString();
+        std::cout << "Depends on: " << compositeName << std::endl;
 
         // load the composite network, if not already loaded
-        if (networks.count(compositeFilename.stl()) == 0) {
-            boost::filesystem::path compositePath { basePath / compositeFilename.stl() };
-            std::cout << compositePath << std::endl;
-            loadNetwork(compositePath);
+        if (networks.count(compositeName.stl()) == 0) {
+            std::string compositeFilename = basePath + '/' + compositeName.stl();
+            loadNetwork(compositeFilename);
         }
     }
 
     // now load the network itself
     auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, mp, networks);
     auto components = componentsAndGlobals.first;
-    networks.erase(filename);
 
-    XMASNetwork* result = new XMASNetwork {filename, std::move(components)};
-    networks.insert(std::make_pair(filename, std::unique_ptr<XMASNetwork>(result)));
+    XMASNetwork* result = new XMASNetwork {name, std::move(components)};
+    networks.erase(name);
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(result)));
 
     return result;
 }

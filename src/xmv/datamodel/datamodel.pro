@@ -117,8 +117,6 @@ unix|win32|macx {
 # External dependencies
 ################################################
 
-LIBS += -lboost_system -lboost_filesystem
-
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
 
