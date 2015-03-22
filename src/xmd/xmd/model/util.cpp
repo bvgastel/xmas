@@ -36,7 +36,7 @@ Util::~Util()
 
 }
 
-bool Util::toFile(QUrl fileUrl, QString contents) {
+bool Util::saveFile(QUrl fileUrl, QString contents) {
     QString filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile()
                                   : fileUrl.fileName();

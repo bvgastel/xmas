@@ -59,9 +59,10 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 300
     color: "darkgrey"
-    title: Qt.application.name
+    title: network.fileName + (network.modified ? "*" : "") + "     -     " + Qt.application.name
 
     property string defaultModelDirectory
+    property int newModelCounter:0
 
     // Persistent properties
     Settings {
@@ -73,6 +74,7 @@ ApplicationWindow {
         property alias defaultModelDirectory: mainwindow.defaultModelDirectory
     }
 
+    //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
     property var vtNameList
 
     // Signals
@@ -86,35 +88,69 @@ ApplicationWindow {
     signal selectionMode(var checked)
     signal showComponentNames(var checked)
 
-    // Functions
+    // JavaScripts
+
     function openComposite(){
         openCompositeDialog.open()
     }
 
-
-    MessageDialog {
-        id: aboutBox
-        title: "About XMD"
-        text: "XMD is an XMAS Model Designer tool"
-        icon: StandardIcon.Information
+    function log(text,color)
+    {
+        outputLog.log(text,color)
     }
 
+    // Closes the current model and starts a new one
+    function newModel(){
+        if(network.newFile()){
+            network.visible = true
+            network.clear()
+            // network.fileUrl = ""
+            newModelCounter++
+            // network.fileName = "Model" + newModelCounter + ".json"
+        }
+    }
+
+    // Event handling
+    onClosing: {close.accepted = false;  network.modified ? dialogSaveOnQuit.open() : dialogQuit.open()}
+    //TODO load plugins in c++ property list
+    Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
+    onNewModelCounterChanged: {
+        network.fileUrl = ""
+        network.fileName = "Model" + newModelCounter + ".json"
+        network.modified = false
+    }
+
+
+    //#######################################################################################################
+    //
+    // Actions
+    //
+    //#######################################################################################################
+
     Action {
-        id: loadPlugins
-        iconSource: "qrc:/content/images/plugin.png"
-        iconName: "plugins"
-        text: "VT"
-        shortcut: "Alt+P"
-        //onTriggered:
+        id: fileNewAction
+        iconSource: "qrc:/content/new.png"
+        iconName: "new-model"
+        text: "New"
+        shortcut: StandardKey.New
+        onTriggered: {
+            trigger.accept = false
+            if(network.modified) {
+                dialogSaveOnClose.open()
+                newModel()
+            } else {
+                newModel()
+            }
+        }
     }
 
     Action {
         id: fileOpenAction
         iconSource: "qrc:/content/open.png"
         iconName: "model-open"
-        text: "Open"
+        text: "Open..."
         shortcut: StandardKey.Open
-        onTriggered: fileDialog.open()
+        onTriggered: fileOpenDialog.open()
     }
 
     Action {
@@ -123,16 +159,41 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        onTriggered: fileSaveDialog.open()
+        onTriggered: {
+            if(network.modified){
+                if(network.fileUrl){
+                    if(network.saveFile(network.fileName))
+                    {
+                        network.modified = false
+                    }
+
+                } else {
+                    fileSaveDialog.open()
+                }
+            }
+        }
     }
 
     Action {
         id: fileSaveAsAction
         iconSource: "qrc:/content/saveAs.ico"
         iconName: "model-save-as"
-        text: "SaveAs"
+        text: "Save as..."
         shortcut: StandardKey.SaveAs
         onTriggered: fileSaveDialog.open()
+    }
+
+    Action {
+        id: fileCloseAction
+        text: "Close"
+        shortcut: StandardKey.Close
+        onTriggered: {
+            if(network.modified){
+                dialogSaveOnClose.open()
+            } else {
+                newModelCounter = 0 ; newModel()
+            }
+        }
     }
 
     Action {
@@ -224,9 +285,8 @@ ApplicationWindow {
         shortcut: StandardKey.Quit
         iconSource: "qrc:/content/quit.ico"
         iconName: "Quit"
-        onTriggered: Qt.quit()
+        onTriggered: network.modified ? dialogSaveOnQuit.open() : Qt.quit()
     }
-
 
     Action {
         id: packetAction
@@ -235,6 +295,16 @@ ApplicationWindow {
         iconSource: "qrc:/content/packet.png"
         iconName: "Packet"
         onTriggered: packetDialog.show()
+    }
+
+
+    Action {
+        id: loadPlugins
+        iconSource: "qrc:/content/plugin.ico"
+        iconName: "plugins"
+        text: "VT"
+        shortcut: "Alt+P"
+        //onTriggered:
     }
 
     Action {
@@ -261,49 +331,22 @@ ApplicationWindow {
         //onTriggered: controller.stop()
     }
 
-    FileDialog {
-        id: fileDialog
-        nameFilters: [
-            "Model files (*.xmdm *.fjson *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
-        onAccepted: datacontrol.fileOpen(fileUrl)
-    }
 
-    FileDialog {
-        id: fileSaveDialog
-        selectMultiple: false
-        selectExisting: true
-        nameFilters: [
-            "Model files (*.xmd *.fjson *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
-        onAccepted: network.toFile(fileSaveDialog.fileUrl)
-    }
+    //#######################################################################################################
+    //
+    // Menu & toolbars
+    //
+    //#######################################################################################################
 
-    FileDialog {
-        id: openCompositeDialog
-        nameFilters: [
-            "Model files (*.xmd *.fjson *.wck *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
-        //onAccepted: network.openComposite(fileUrl)
-    }
-
-    function log(text,color)
-    {
-        outputLog.log(text,color)
-    }
 
     menuBar: MenuBar {
         Menu {
             title: "&File"
+            MenuItem { action: fileNewAction }
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
             MenuItem { action: fileSaveAsAction }
+            MenuItem { action: fileCloseAction }
             MenuSeparator{}
             MenuItem { action: fileQuitAction }
         }
@@ -343,26 +386,27 @@ ApplicationWindow {
         id: mainToolBar
         width: parent.width
         style: ToolBarStyle {
-               padding {
-                   left: 5
-                   right: 5
-                   top: 2
-                   bottom: 2
-               }
-               background: Rectangle {
-                   implicitWidth: 100
-                   implicitHeight: 40
-                   border.color: "gray"
-                   color: "lightgray"
-//                   gradient: Gradient {
-//                       GradientStop { position: 0 ; color: "lightgray" }
-//                       GradientStop { position: 1 ; color: "gray" }
-//                   }
-               }
-           }
+            padding {
+                left: 5
+                right: 5
+                top: 2
+                bottom: 2
+            }
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                border.color: "gray"
+                color: "lightgray"
+                //                   gradient: Gradient {
+                //                       GradientStop { position: 0 ; color: "lightgray" }
+                //                       GradientStop { position: 1 ; color: "gray" }
+                //                   }
+            }
+        }
         RowLayout {
             anchors.fill: parent
             spacing: 5
+            ToolButton { action: fileNewAction }
             ToolButton { action: fileOpenAction }
             ToolButton { action: fileSaveAction }
             ToolButton { action: fileSaveAsAction }
@@ -404,52 +448,52 @@ ApplicationWindow {
             //TODO replace with plugin progress value
             ProgressBar {
                 id:progressbar
-                    value: 50
-                    indeterminate: false
-                    minimumValue: 0
-                    maximumValue: 100
+                value: 50
+                indeterminate: false
+                minimumValue: 0
+                maximumValue: 100
 
-                    style: ProgressBarStyle {
-                            background: Rectangle {
-                                radius: 5
-                                color: "darkgray"
-                                border.color: "darkgray"
-                                border.width: 0
-                                implicitWidth: 200
-                                implicitHeight: 18
-                            }
-                            progress: Rectangle {
-                                border.width:1
-                                border.color:"steelblue"
-                                radius: 4
-                                gradient: Gradient {
-                                    GradientStop { position: 0.0; color: "steelblue" }
-                                    GradientStop { position: 0.4; color: "lightsteelblue" }
-                                    GradientStop { position: 1.0; color: "steelblue" }
-                                }
-                                Item {
-                                    anchors.fill: parent
-                                    anchors.margins: 1
-                                    visible: progressbar.indeterminate
-                                    clip: true
-                                    Row {
-                                        Repeater {
-                                            Rectangle {
-                                                color: index % 2 ? "steelblue" : "lightsteelblue"
-                                                width: 20 ; height: progressbar.height
-                                            }
-                                            model: progressbar.width / 20 + 2
-                                        }
-                                        XAnimator on x {
-                                            from: 0 ; to: -40
-                                            loops: Animation.Infinite
-                                            running: progressbar.indeterminate
-                                        }
+                style: ProgressBarStyle {
+                    background: Rectangle {
+                        radius: 5
+                        color: "darkgray"
+                        border.color: "darkgray"
+                        border.width: 0
+                        implicitWidth: 200
+                        implicitHeight: 18
+                    }
+                    progress: Rectangle {
+                        border.width:1
+                        border.color:"steelblue"
+                        radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0.0; color: "steelblue" }
+                            GradientStop { position: 0.4; color: "lightsteelblue" }
+                            GradientStop { position: 1.0; color: "steelblue" }
+                        }
+                        Item {
+                            anchors.fill: parent
+                            anchors.margins: 1
+                            visible: progressbar.indeterminate
+                            clip: true
+                            Row {
+                                Repeater {
+                                    Rectangle {
+                                        color: index % 2 ? "steelblue" : "lightsteelblue"
+                                        width: 20 ; height: progressbar.height
                                     }
+                                    model: progressbar.width / 20 + 2
+                                }
+                                XAnimator on x {
+                                    from: 0 ; to: -40
+                                    loops: Animation.Infinite
+                                    running: progressbar.indeterminate
                                 }
                             }
                         }
+                    }
                 }
+            }
             //TODO replace with plugin progress value
 
             Item { Layout.fillWidth: true }
@@ -463,9 +507,134 @@ ApplicationWindow {
         anchors {right: parent.right;  left: parent.left}
     }
 
+    //#######################################################################################################
+    //
+    // Dialogs
+    //
+    //#######################################################################################################
+
     XPacketDialog {
         id: packetDialog
     }
+
+    //File Open
+    FileDialog {
+        id: fileOpenDialog
+        nameFilters: [
+            "Model files (*.xmdm *.fjson *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+        onAccepted: {
+            //            datacontrol.fileOpen(fileUrl)
+            //            if(datacontrol.fileOpen(fileUrl))
+            //            {
+            network.fileUrl = fileUrl
+            network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+            //            }
+        }
+    }
+
+    //File Save
+    FileDialog {
+        id: fileSaveDialog
+        selectMultiple: false
+        selectExisting: true
+        nameFilters: [
+            "Model files (*.xmd *.fjson *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+
+        onAccepted: {
+            if(network.fileUrl !== fileUrl) {
+                dialogOverwrite.open()
+                //TODO call doesn't block
+            }
+
+            if(network.saveFile(fileUrl))
+            {
+                network.fileUrl = fileUrl
+                network.modified = false
+            }
+        }
+    }
+
+    //File Save as
+    FileDialog {
+        id: openCompositeDialog
+        nameFilters: [
+            "Model files (*.xmd *.fjson *.wck *.json)",
+            "Composite files (*.xmdc)",
+            "Project files (*.xmdp)",
+            "All files (*)"]
+        //onAccepted: network.openComposite(fileUrl)
+    }
+
+    // About
+    MessageDialog {
+        id: aboutBox
+        title: "About XMD"
+        text: "XMD is an XMAS Model Designer tool"
+        icon: StandardIcon.Information //"qrc:/content/app.ico"
+    }
+
+    // File overwrite
+    MessageDialog {
+        id: dialogOverwrite
+        title: fileSaveAsAction.text
+        icon: StandardIcon.Question
+        text:  network.fileUrl + " already exists!  Replace?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: console.log("overwritten!") //TODO implement save from here
+    }
+
+    // New without save?
+    MessageDialog {
+        id: dialogSaveOnNew
+        title: "New model."
+        icon: StandardIcon.Question
+        text:  "Close " + network.fileUrl + " without saving it?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: newModel()
+    }
+
+    // Close without save?
+    MessageDialog {
+        id: dialogSaveOnClose
+        title: "Close model."
+        icon: StandardIcon.Question
+        text:  "Close " + network.fileUrl + " without saving it?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: newModel()
+    }
+
+    // Quit without save?
+    MessageDialog {
+        id: dialogSaveOnQuit
+        title: "Quit application."
+        icon: StandardIcon.Question
+        text:  "Quit without saving " + network.fileUrl + "?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: Qt.quit()
+    }
+
+    // Quit?
+    MessageDialog {
+        id: dialogQuit
+        title: "Quit?"
+        icon: StandardIcon.Question
+        text:  "Really wanna quit such a magnificent tool :P ?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: Qt.quit()
+    }
+
+
+    //#######################################################################################################
+    //
+    // Canvas
+    //
+    //#######################################################################################################
 
     SplitView {
         anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
@@ -495,36 +664,38 @@ ApplicationWindow {
 
                 XNetwork{
                     id:network
+                    //                    fileUrl: ""
+                    //                    fileName: "" // "Model" + newModelCounter + ".json"
                     onMoveSelected: {
-                       if(group.x < view.contentX)
-                           scrollLeft.start()
-                       else
-                           scrollLeft.stop()
-                       if(group.x + group.width - 50 > view.contentX + view.width)
-                           scrollRight.start()
-                       else
-                           scrollRight.stop()
-                       if(group.y < view.contentY)
-                           scrollUp.start()
-                       else
-                           scrollUp.stop()
-                       if(group.y + group.height - 50 > view.contentY + view.height)
-                          scrollDown.start()
-                       else
-                           scrollDown.stop()
+                        if(group.x < view.contentX)
+                            scrollLeft.start()
+                        else
+                            scrollLeft.stop()
+                        if(group.x + group.width - 50 > view.contentX + view.width)
+                            scrollRight.start()
+                        else
+                            scrollRight.stop()
+                        if(group.y < view.contentY)
+                            scrollUp.start()
+                        else
+                            scrollUp.stop()
+                        if(group.y + group.height - 50 > view.contentY + view.height)
+                            scrollDown.start()
+                        else
+                            scrollDown.stop()
                     }
 
                 }
                 // Only show the scrollbars when the view is moving.
                 states:
                     State {
-                        name: "ShowBars"
-                        when: view.movingVertically || view.movingHorizontally
-                            || scrollLeft.running || scrollRight.running
-                            || scrollUp.running || scrollDown.running
-                        PropertyChanges { target: verticalScrollBar; opacity: 1 }
-                        PropertyChanges { target: horizontalScrollBar; opacity: 1 }
-                    }
+                    name: "ShowBars"
+                    when: view.movingVertically || view.movingHorizontally
+                          || scrollLeft.running || scrollRight.running
+                          || scrollUp.running || scrollDown.running
+                    PropertyChanges { target: verticalScrollBar; opacity: 1 }
+                    PropertyChanges { target: horizontalScrollBar; opacity: 1 }
+                }
                 transitions: Transition {
                     NumberAnimation { properties: "opacity"; duration: 600 }
                 }
@@ -661,6 +832,12 @@ ApplicationWindow {
 
     }
 
+    //#######################################################################################################
+    //
+    // Connections
+    //
+    //#######################################################################################################
+
     /************************************************
      * Data Control
      ************************************************/
@@ -688,7 +865,4 @@ ApplicationWindow {
         }
     }
 
-    Component.onCompleted: {
-        plugincontrol.loadPlugins()
-    }
 }
