@@ -17,6 +17,7 @@
 #include "export.h"
 
 #include "xmasproject.h"
+#include "flatten.h"
 
 #ifndef __MINGW32__
 #include <sys/resource.h>
@@ -603,13 +604,16 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 
 void TestFile(const std::string &filename, bool showAll) {
 
-    XMASProject project {filename};     // create an XMASProject here for testing purposes
-
 
     bitpowder::lib::MemoryPool mp;
 
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
+
+    //XMASProject project {filename};
+
+    //XMASNetwork flattened = flatten(*project.getRootNetwork());
+    //auto components = flattened.getComponents();
 
     auto parse = parse_xmas_from_file(filename, mp);
     auto& components = parse.first;

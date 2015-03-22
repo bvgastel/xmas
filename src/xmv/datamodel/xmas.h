@@ -1108,7 +1108,7 @@ public:
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
-/*
+
     template <class T, typename... Args>
     T *insert(::bitpowder::lib::MemoryPool& mp, const bitpowder::lib::String& name, Args... args) {
         if (components.find(name) != components.end())
@@ -1116,7 +1116,7 @@ public:
         T *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
-    }*/
+    }
 
 private:
     std::string name;
