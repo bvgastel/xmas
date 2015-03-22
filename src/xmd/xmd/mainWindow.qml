@@ -116,10 +116,19 @@ ApplicationWindow {
 
     Action {
         id: fileSaveAction
-        iconSource: "qrc:/content/save.png"
+        iconSource: "qrc:/content/save.ico"
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
+        onTriggered: fileSaveDialog.open()
+    }
+
+    Action {
+        id: fileSaveAsAction
+        iconSource: "qrc:/content/saveAs.ico"
+        iconName: "model-save-as"
+        text: "SaveAs"
+        shortcut: StandardKey.SaveAs
         onTriggered: fileSaveDialog.open()
     }
 
@@ -210,6 +219,8 @@ ApplicationWindow {
         id: fileQuitAction
         text: "Quit"
         shortcut: StandardKey.Quit
+        iconSource: "qrc:/content/quit.ico"
+        iconName: "Quit"
         onTriggered: Qt.quit()
     }
 
@@ -289,6 +300,7 @@ ApplicationWindow {
             title: "&File"
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
+            MenuItem { action: fileSaveAsAction }
             MenuSeparator{}
             MenuItem { action: fileQuitAction }
         }
@@ -350,6 +362,7 @@ ApplicationWindow {
             spacing: 5
             ToolButton { action: fileOpenAction }
             ToolButton { action: fileSaveAction }
+            ToolButton { action: fileSaveAsAction }
             ToolBarSeparator {}
 
 
