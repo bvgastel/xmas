@@ -126,6 +126,7 @@ public:
         json["outs"] = std::move(outs);
 
         String types = exportSourceExpression(c, mp);
+        types = types(mp);
         JSONData::Vector fields = JSONData::AllocateVector(mp);
         JSONData::Map init_types_wrapper = JSONData::AllocateMap(mp);
         init_types_wrapper["init_types"] = types;
