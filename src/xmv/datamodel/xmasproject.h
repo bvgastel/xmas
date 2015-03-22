@@ -4,8 +4,6 @@
 #include "string.h"
 #include "xmas.h"
 
-#include <boost/filesystem.hpp>
-
 class XMASProject
 {
 public:
