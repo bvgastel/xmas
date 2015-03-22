@@ -63,6 +63,9 @@ ApplicationWindow {
 
     property string defaultModelDirectory
     property int newModelCounter:0
+    property bool showComponentNames:true
+    property bool showPortNames:true
+
 
     // Persistent properties
     Settings {
@@ -72,6 +75,8 @@ ApplicationWindow {
         property alias width: mainwindow.width
         property alias height: mainwindow.height
         property alias defaultModelDirectory: mainwindow.defaultModelDirectory
+        property alias showComponentNames: mainwindow.showComponentNames
+        property alias showPortNames: mainwindow.showPortNames
     }
 
     //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
@@ -86,7 +91,6 @@ ApplicationWindow {
     signal zoomFit
     signal selectAll
     signal selectionMode(var checked)
-    signal showComponentNames(var checked)
 
     // JavaScripts
 
@@ -102,11 +106,8 @@ ApplicationWindow {
     // Closes the current model and starts a new one
     function newModel(){
         if(network.newFile()){
-            network.visible = true
             network.clear()
-            // network.fileUrl = ""
             newModelCounter++
-            // network.fileName = "Model" + newModelCounter + ".json"
         }
     }
 
@@ -227,8 +228,16 @@ ApplicationWindow {
         id: showComponentNamesAction
         text: "Show Component names"
         checkable: true
-        checked: true
-        onTriggered: showComponentNames(checked)
+        checked: mainwindow.showComponentNames
+        onTriggered: showComponentNames = checked
+    }
+
+    Action {
+        id: showPortNamesAction
+        text: "Show Port names"
+        checkable: true
+        checked: mainwindow.showPortNames
+        onTriggered: showPortNames = checked
     }
 
     Action {
@@ -280,12 +289,12 @@ ApplicationWindow {
     }
 
     Action {
-        id: fileQuitAction
+        id: quitAction
         text: "Quit"
         shortcut: StandardKey.Quit
         iconSource: "qrc:/content/quit.ico"
         iconName: "Quit"
-        onTriggered: network.modified ? dialogSaveOnQuit.open() : Qt.quit()
+        onTriggered: network.modified ? dialogSaveOnQuit.open() : dialogQuit.open()
     }
 
     Action {
@@ -348,7 +357,7 @@ ApplicationWindow {
             MenuItem { action: fileSaveAsAction }
             MenuItem { action: fileCloseAction }
             MenuSeparator{}
-            MenuItem { action: fileQuitAction }
+            MenuItem { action: quitAction }
         }
         Menu {
             title: "&Edit"
@@ -368,6 +377,7 @@ ApplicationWindow {
             MenuItem { action: zoomFitAction }
             MenuSeparator{}
             MenuItem { action: showComponentNamesAction }
+            MenuItem { action: showPortNamesAction }
         }
 
         Menu {
@@ -588,8 +598,8 @@ ApplicationWindow {
         id: dialogOverwrite
         title: fileSaveAsAction.text
         icon: StandardIcon.Question
-        text:  network.fileUrl + " already exists!  Replace?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        text:  "Overwrite " + network.fileUrl + "?  Press save to confirm!"
+        standardButtons: StandardButton.No | StandardButton.Yes
         onYes: console.log("overwritten!") //TODO implement save from here
     }
 
@@ -598,8 +608,8 @@ ApplicationWindow {
         id: dialogSaveOnNew
         title: "New model."
         icon: StandardIcon.Question
-        text:  "Close " + network.fileUrl + " without saving it?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        text:  "Save " + network.fileUrl + " first?"
+        standardButtons: StandardButton.No | StandardButton.Yes
         onYes: newModel()
     }
 
@@ -608,8 +618,8 @@ ApplicationWindow {
         id: dialogSaveOnClose
         title: "Close model."
         icon: StandardIcon.Question
-        text:  "Close " + network.fileUrl + " without saving it?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        text:  "Save " + network.fileUrl + " first?"
+        standardButtons: StandardButton.No | StandardButton.Yes
         onYes: newModel()
     }
 
@@ -619,7 +629,7 @@ ApplicationWindow {
         title: "Quit application."
         icon: StandardIcon.Question
         text:  "Quit without saving " + network.fileUrl + "?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        standardButtons: StandardButton.No | StandardButton.Yes
         onYes: Qt.quit()
     }
 
@@ -629,7 +639,7 @@ ApplicationWindow {
         title: "Quit?"
         icon: StandardIcon.Question
         text:  "Really wanna quit such a magnificent tool :P ?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        standardButtons: StandardButton.No | StandardButton.Yes
         onYes: Qt.quit()
     }
 

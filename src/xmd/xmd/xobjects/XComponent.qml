@@ -220,13 +220,14 @@ Model.XComponent {
             focus:true
             onFocusChanged: if(focus)selectAll()
             readOnly: false
+            visible: mainwindow.showComponentNames
         }
     }
 
     // Connections
+
     Connections {
         target: network
-        onShowComponentNames: label.visible = checked
         onMoveSelected: if(component.selected) component.update()
     }
 
@@ -242,13 +243,6 @@ Model.XComponent {
         MenuItem {
             text: "Delete"
             onTriggered: component.destroy()
-        }
-        MenuSeparator{}
-        MenuItem {
-            text: "Component name"
-            checkable: true
-            checked: label.visible
-            onToggled: label.visible = checked
         }
         MenuSeparator{}
         MenuItem {

@@ -51,21 +51,26 @@ Model.XPort {
         radius: port.type === Model.XPort.INPORT ? 0 : port.width * 0.5
     }
     Text {
+        id:label
         text:name
         anchors.left: nameAlignCenter ? port.right : portShape.right
         anchors.bottom: nameAlignCenter ?  undefined : portShape.top
         anchors.verticalCenter: nameAlignCenter ? portShape.verticalCenter : undefined
         anchors.leftMargin: nameAlignCenter ? 15 : 0
         rotation:-port.rotation
+        visible: mainwindow.showPortNames
+
     }
 
 
     Component.onDestruction: removed()
 
+    // Connections
     Connections {
         target: component
         onUpdate: update()
     }
+
 
     MouseArea {
         id: mousearea
