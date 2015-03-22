@@ -59,7 +59,7 @@ XMASNetwork* XMASProject::loadNetwork(const boost::filesystem::path& filePath)
     }
 
     // now load the network itself
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, mp);
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, mp, networks);
     auto components = componentsAndGlobals.first;
     networks.erase(filename);
 
