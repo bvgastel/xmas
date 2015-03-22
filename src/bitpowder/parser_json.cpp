@@ -322,17 +322,8 @@ JSONData::JSONData(JSONData &&b) noexcept : type(b.type) {
     }
 }
 
-std::string calcPrefix(unsigned int lvl) {
-    std::ostringstream os;
-    for (unsigned int i = 0; i < lvl; i++) {
-        os << "\t";
-    }
-    return os.str();
-}
-
-void JSONData::print(std::ostream &out, unsigned int lvl) const {
+void JSONData::print(std::ostream &out) const {
     //out << "(json " << type << std::endl;
-    std::string prefix = calcPrefix(lvl);   // gbo: prefix
     if (type == JSONNull)
         out << "null";
     if (type == JSONNumber)
@@ -340,29 +331,27 @@ void JSONData::print(std::ostream &out, unsigned int lvl) const {
     if (type == JSONString)
         out << '"' << str << '"';
     if (type == JSONArray) {
-        out << "[\n" << prefix; // gbo: added \n and prefix
+        out << "[";
         bool first = true;
         for (auto &it : *array) {
             if (!first)
-                out << ",\n" << prefix; // gbo: added \n and prefix
-            it.print(out, lvl+1);
+                out << ",";
+            it.print(out);
             first = false;
         }
-        out << "]\n" << prefix;  // gbo: added \n and prefix
+        out << "]";
     }
     if (type == JSONObject) {
         out << "{";
         bool first = true;
         for (auto &it : *object) {
             if (!first)
-                out << ",\n"; // gbo: added \n
-            else
-                out << "\n";   // gbo: added \n
-            out << prefix << "\"" << it.first << "\":"; // gbo: prefix
-            it.second.print(out, lvl+1);
+                out << ",";
+            out << "\"" << it.first << "\":";
+            it.second.print(out);
             first = false;
         }
-        out << "}\n" << prefix; // gbo: added \n and prefix
+        out << "}";
     }
     //out << ")";
 }
