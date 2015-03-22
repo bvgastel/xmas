@@ -60,7 +60,6 @@ XMAS.XNetwork {
 
     // Signals
     signal moveSelected(var group)
-    signal showComponentNames(var checked)
 
     // Event handling
     onChildrenChanged: modified=true
@@ -280,7 +279,9 @@ XMAS.XNetwork {
         MenuSeparator{}
         MenuItem {
             action: showComponentNamesAction
-            onToggled: showComponentNames(checked)
+        }
+        MenuItem {
+            action: showPortNamesAction
         }
     }
 
@@ -297,7 +298,6 @@ XMAS.XNetwork {
         onZoomFit: doScale()
         onSelectAll: selectAll()
         onSelectionMode: selectionMode = checked
-        onShowComponentNames: showComponentNames(checked)
     }
 }
 

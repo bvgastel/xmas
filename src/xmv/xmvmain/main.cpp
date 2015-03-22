@@ -16,6 +16,9 @@
 #include "parse.h"
 #include "export.h"
 
+#include "xmasproject.h"
+#include "flatten.h"
+
 #ifndef __MINGW32__
 #include <sys/resource.h>
 #endif
@@ -600,13 +603,20 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 }
 
 void TestFile(const std::string &filename, bool showAll) {
-    bitpowder::lib::MemoryPool mp;
+
+
+    //bitpowder::lib::MemoryPool mp;
 
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
-    auto parse = parse_xmas_from_file(filename, mp);
-    auto& components = parse.first;
+    XMASProject project {filename};
+
+    XMASNetwork flattened = flatten(*project.getRootNetwork());
+    auto components = flattened.getComponents();
+
+    //auto parse = parse_xmas_from_file(filename, mp);
+    //auto& components = parse.first;
 
     auto current = std::chrono::high_resolution_clock::now();
     std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
@@ -614,7 +624,7 @@ void TestFile(const std::string &filename, bool showAll) {
 
     std::set<XMASComponent*> allComponents;
     for (auto &it : components) {
-        //std::cout << "checking " << it.first << std::endl;
+        std::cout << "checking " << it.first << std::endl;
         checkAssert(it.second->valid());
         if (it.second)
             allComponents.insert(it.second);

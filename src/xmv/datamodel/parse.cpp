@@ -1210,6 +1210,15 @@ T *insert(MemoryPool& mp, std::map<String, XMASComponent*>& allComponents, const
     return comp;
 }
 
+template <class T, typename... Args>
+T *insert(MemoryPool& mp, std::map<String, XMASComponent*>& allComponents, const String& name, Args... args) {
+    if (allComponents.find(name) != allComponents.end())
+        throw Exception(42, __FILE__, __LINE__);
+    T *comp = new(mp, &destroy<XMASComponent>) T(name, args...);
+    allComponents.insert(std::make_pair(comp->getName(), comp));
+    return comp;
+}
+
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_json(const std::string &str, MemoryPool &mp)
 {
     String current(str);
@@ -1218,7 +1227,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
         std::cerr << "error in parsing json string stream : " << parseResult.error() << " at " << parseResult.position() << std::endl;
         return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
     }
-    return generate_xmas_from_parse_result(parseResult, mp);
+    return generate_xmas_from_parse_result(parseResult, mp, {});
 }
 
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_file(const std::string &filename, MemoryPool &mp)
@@ -1251,7 +1260,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
         std::cerr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
         return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
     }
-    return generate_xmas_from_parse_result(parseResult, mp);
+    return generate_xmas_from_parse_result(parseResult, mp, {});
 }
 
 /**
@@ -1264,7 +1273,8 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
  * @param mp A reference to the memory pool.
  * @return The map of components indexed by name
  */
-std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(JSONParseResult &parseResult, MemoryPool &mp) {
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(
+        JSONParseResult &parseResult, MemoryPool &mp, const std::map<std::string, std::unique_ptr<XMASNetwork>>& networks) {
     std::map<String, XMASComponent *> retval;
 
     //std::cout << retval.result() << std::endl;
@@ -1291,6 +1301,15 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             insert<XMASFork>(mp, retval, name);
         } else if (type == "join"_HS) {
             insert<XMASJoin>(mp, retval, name);
+        } else if (type == "composite"_HS) {
+            String networkName = jsonComponent["subnetwork"];
+            auto network_it = networks.find(networkName.stl());
+            if (network_it != networks.end()) {
+                XMASNetwork* network = network_it->second.get();
+                insert<XMASComposite>(mp, retval, name, std::ref(*network));
+            } else {
+                throw Exception("Required composite network not loaded");
+            }
         } else {
             std::cerr << type << std::endl;
             throw Exception("Unsupported component type");
@@ -1348,9 +1367,23 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             }
         }
 
+        XMASSink *sink = dynamic_cast<XMASSink*>(component);
+        if (sink) {
+            try {
+                JSONData external = jsonComponent["external"];          // boolean not supported by JSONData! use 0/1
+                sink->external = external.isNumber() && (external.asNumber() > 0);
+            } catch (Exception e) {
+                std::cerr << jsonComponent << std::endl;
+                std::cerr << e << std::endl;
+                exit(-1);
+            }
+        }
         XMASSource *src = dynamic_cast<XMASSource*>(component);
         if (src) {
             try {
+                JSONData external = jsonComponent["external"];          // boolean not supported by JSONData! use 0/1
+                src->external = external.isNumber() && (external.asNumber() > 0);
+
                 String types = jsonComponent["fields"][0]["init_types"];
                 auto result = ParseSourceExpression(types, mp);
                 if (result) {
