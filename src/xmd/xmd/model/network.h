@@ -38,10 +38,12 @@ class Network : public QQuickItem
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
     Q_PROPERTY(bool asSymbol MEMBER m_asSymbol NOTIFY asSymbolChanged)
     Q_PROPERTY(QQmlListProperty<model::Component> components READ components NOTIFY componentsChanged)
+    Q_PROPERTY(QString packet READ packet WRITE setPacket NOTIFY packetChanged)
 
 private:
 
 signals:
+    void packetChanged();
     void aliasChanged();
     void sizeChanged();
     void imageNameChanged();
@@ -121,6 +123,19 @@ public:
     explicit Network(QQuickItem *parent = 0);
     ~Network();
 
+    QString packet(){
+     return m_packet ;
+    }
+
+    void setPacket(QString expression){
+        if (expression != m_packet) {
+                m_packet = expression;
+
+            }
+            emit packetChanged();
+        qDebug() << "packet expression = " << m_packet;
+    }
+
 private:
 
     QList<Component *> m_components;
@@ -129,6 +144,7 @@ private:
     QString m_alias;
     QSize m_size;
     QString m_imageName;
+    QString m_packet;
     bool m_asSymbol;
 
 };
