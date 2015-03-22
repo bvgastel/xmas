@@ -515,6 +515,10 @@ ApplicationWindow {
 
     XPacketDialog {
         id: packetDialog
+        expression:network.packet
+        onExpressionChanged: {
+            network.packet = packetDialog.expression
+        }
     }
 
     //File Open

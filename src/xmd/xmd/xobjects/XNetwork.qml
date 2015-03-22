@@ -65,6 +65,7 @@ XMAS.XNetwork {
     // Event handling
     onChildrenChanged: modified=true
     onWriteLog: log(message, color)
+    onPacketChanged: modified=true
 
     // JavaScripts
     function getNewName(idx){
