@@ -273,7 +273,6 @@ XMAS.XNetwork {
     // Connections
     Connections {
         target: datacontrol
-        //onCreateComponent: Ctrl.loadComponent(object)
         onCreateNetwork: Ctrl.createNetwork(object)
     }
 

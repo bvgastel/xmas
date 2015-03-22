@@ -84,6 +84,13 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
         qDebug() << errMsg;
         return false;
     }
+    // check inport
+    if (!inport) {
+        QString errMsg = "[Network::disconnect()] inport is null.";
+        emit writeLog(errMsg);
+        qDebug() << errMsg;
+        return false;
+    }
     //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
