@@ -12,7 +12,8 @@ QT += qml
 QT += quickwidgets
 
 CONFIG += link_prl
-CONFIG += static
+win32: CONFIG += static
+unix: CONFIG += static dll
 CONFIG += C++11
 
 TARGET = xmdmain
@@ -58,7 +59,7 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/rel
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/libxmdd.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/release/xmd.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/xmdd.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../xmd/libxmd.a
+#else:unix: PRE_TARGETDEPS += $$OUT_PWD/../xmd/libxmd.a
 
 ################################################
 # External dependencies
