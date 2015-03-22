@@ -90,6 +90,8 @@ parse_xmas_from_json(const std::string &str, bitpowder::lib::MemoryPool &mp);
  * @return the pair of a map to all xmas components and the json data.
  */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
-generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult, bitpowder::lib::MemoryPool &mp);
+generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult,
+                                bitpowder::lib::MemoryPool &mp,
+                                const std::map<std::string, std::unique_ptr<XMASNetwork>>& networks);
 
 #endif // PARSE_H

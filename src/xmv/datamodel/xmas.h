@@ -1087,20 +1087,20 @@ public:
     {
     }
 
+    XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components)
+        : name(name), components(components)
+    {
+    }
+
     XMASNetwork(XMASNetwork&&) = default;
 
-    virtual ~XMASNetwork()
-    {
-        for (auto c : components) {
-            delete(c.second);
-        }
-    }
+    ~XMASNetwork();
 
     const std::string getStdName() const {
         return this->name;
     }
 
-    const std::map<const bitpowder::lib::String, XMASComponent*>& getComponents() const {
+    const std::map<bitpowder::lib::String, XMASComponent*>& getComponents() const {
         return components;
     }
 
@@ -1118,15 +1118,24 @@ public:
     template <typename T, typename... Args>
     T *insert(const bitpowder::lib::String& name, Args... args) {
         if (components.find(name) != components.end())
-            throw 42;
+            throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
         T *comp = new T(name, args...);
+        components.insert(std::make_pair(comp->getName(), comp));
+        return comp;
+    }
+
+    template <class T, typename... Args>
+    T *insert(::bitpowder::lib::MemoryPool& mp, const bitpowder::lib::String& name, Args... args) {
+        if (components.find(name) != components.end())
+            throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
+        T *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
 
 private:
     std::string name;
-    std::map<const bitpowder::lib::String, XMASComponent*> components;
+    std::map<bitpowder::lib::String, XMASComponent*> components;
 };
 
 class XMASComposite : public XMASComponent
@@ -1156,7 +1165,6 @@ public:
     }
 
 
-    // FIXME: inputs.size() in OUTPUT_PORT? Is that correct?
     Port** beginPort(PortType type) override
     {
         return type == PortType::OUTPUT_PORT ? &p[inputs.size()] : &p[0];

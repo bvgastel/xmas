@@ -54,6 +54,7 @@ DEPENDPATH += $$PWD/../vt
 ################################################
 # External dependencies
 ################################################
+
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
 
