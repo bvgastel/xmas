@@ -187,7 +187,7 @@ int model::Component::updateExpression(QVariant expression) {
                 result = join->setRestrictedJoinPort(expr, m_mp);
             } else {
                 kindOfJoin = "unrestricted";
-                result =  join->setUnrestrictedJoinExpression(expr, m_mp);
+                result = join->setUnrestrictedJoinExpression(expr, m_mp);
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
