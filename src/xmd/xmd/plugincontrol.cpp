@@ -24,11 +24,11 @@
 #include <QApplication>
 #include <QVariantList>
 
-#include "loggerinterface.h"
+#include "logger.h"
 #include "plugincontrol.h"
 
 PluginControl::PluginControl(QObject *parent)
-    : QObject(parent), m_logger("plugin control")
+    : QObject(parent), m_logger(new Logger("plugin control"))
 {
     std::shared_ptr<QDir> dir = pluginDir();
     m_pluginDir = QDir(*dir);
@@ -62,29 +62,30 @@ std::shared_ptr<QDir> PluginControl::pluginDir() {
 bool PluginControl::loadPlugins() {
     QVariantList vtNameList;
     foreach (QString fileName, m_pluginDir.entryList(QDir::Files)) {
-        m_logger.log("Found " + fileName + " in " + m_pluginDir.absolutePath());
+        m_logger->log("Found " + fileName + " in " + m_pluginDir.absolutePath());
         QPluginLoader pluginLoader(m_pluginDir.absoluteFilePath(fileName));
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
             VtPluginInterface *vtPluginInterface = qobject_cast<VtPluginInterface *>(plugin);
             if (vtPluginInterface) {
-                m_logger.log("Success!! Plugin found is vtPlugin in " + fileName);
+                m_logger->log("Success!! Plugin found is vtPlugin in " + fileName);
                 QString vtname = vtPluginInterface->name();
                 if (m_vtMap.contains(vtname)) {
-                    m_logger.log("Duplicate plugin found: " + vtname);
-                    m_logger.log(QString("Second occurrence ignored."));
+                    m_logger->log("Duplicate plugin found: " + vtname);
+                    m_logger->log(QString("Second occurrence ignored."));
                 } else {
                     m_vtMap[vtname] = vtPluginInterface;
                     vtNameList.append(vtname);
                     // Connect the logger writeLog to our own signal
-                    LoggerInterface *logger = vtPluginInterface->logger();
-                    QObject::connect(logger, &LoggerInterface::writeLog, this, &PluginControl::writeLog);
+                    // FIXME: Temporarily disabled, causes abort cannot load vtable of interface?
+                    //LoggerInterface *logger = vtPluginInterface->logger();
+                    //QObject::connect(logger, &LoggerInterface::writeLog, this, &PluginControl::writeLog);
                 }
             } else {
-                m_logger.log("Fail!! Loader found no vtPlugin in " + fileName);
+                m_logger->log("Fail!! Loader found no vtPlugin in " + fileName);
             }
         } else {
-            m_logger.log("Fail! Loader found no plugin in "+ fileName);
+            m_logger->log("Fail! Loader found no plugin in "+ fileName);
         }
     }
     emit pluginsLoaded(vtNameList);

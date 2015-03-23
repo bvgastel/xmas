@@ -54,7 +54,7 @@ public slots:
 private:
     QDir m_pluginDir;
     QMap<QString, VtPluginInterface *> m_vtMap;
-    Logger m_logger;
+    LoggerInterface *m_logger;
 };
 
 #endif // PLUGINCONTROL_H
