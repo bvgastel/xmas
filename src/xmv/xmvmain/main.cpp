@@ -624,9 +624,9 @@ void TestFile(const std::string &filename, bool showAll) {
 
     std::set<XMASComponent*> allComponents;
     for (auto &it : components) {
-        std::cout << "checking " << it.first << std::endl;
-        checkAssert(it.second->valid());
+        std::cout << "checking ..." << it.first << std::endl;
         if (it.second)
+            checkAssert(it.second->valid());
             allComponents.insert(it.second);
     }
 

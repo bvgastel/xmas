@@ -23,32 +23,39 @@
 #ifndef SYNTAXCHECKWORKER_H
 #define SYNTAXCHECKWORKER_H
 
+#include <set>
+#include <map>
 #include <chrono>
 
 #include "xmas.h"
 #include "simplestring.h"
 #include "result.h"
 
+typedef std::chrono::high_resolution_clock::time_point tpoint;
+typedef std::set<XMASComponent *> XSet;
+typedef std::map<bitpowder::lib::String, XMASComponent *> XMap;
 
 class SyntaxCheckWorker : public QObject
 {
     Q_OBJECT
 public:
-    SyntaxCheckWorker(QObject *parent = 0) : QObject(parent) {
+    SyntaxCheckWorker(QObject *parent = 0);
+    virtual ~SyntaxCheckWorker();
 
-    }
-
-    virtual ~SyntaxCheckWorker() {
-
-    }
 
 private:
-    std::pair<std::chrono::high_resolution_clock::time_point, std::chrono::high_resolution_clock::time_point>
-    checkSyntax(std::map<bitpowder::lib::String, XMASComponent *> componentMap,
-                Result &result);
+    void reportTimer(tpoint start, tpoint end, QString name, Result &result);
+
+std::tuple<tpoint, tpoint, XSet>
+    convertComponentMap2Set(XMap componentMap);
+
+    std::pair<tpoint, tpoint> checkSyntax(XMap componentMap, Result &result);
+
+    std::pair<tpoint, tpoint> checkCycles(XSet componentSet, Result &result);
 
 public slots:
     void doWork(const QString &json);
+
 
 signals:
     void resultReady(const Result &result);
