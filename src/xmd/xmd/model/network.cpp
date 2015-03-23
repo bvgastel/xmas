@@ -14,11 +14,15 @@ model::Network::~Network()
 
 }
 
-bool model::Network::outportError(XPort *outport) {
-    QString errMsg = "[Network::connect()] outport is null: ";
-    errMsg += (outport->getType() == model::XPort::OUTPORT ? "" : " port = input_port! ")
-              +outport->getComponent()->getName()+"."+outport->getName() + ". ";
-    if (!outport->getConnected()) {
+/*
+ * portError(port, errMsg) always return false to support error messaging.
+ *
+ */
+bool model::Network::portError(XPort *port, QString errMsg) {
+    errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
+                                                           : " port = input_port! ");
+    errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
+    if (!port->getConnected()) {
         errMsg += "Port is not connected. ";
     }
     emit writeLog(errMsg, Qt::red);
@@ -26,35 +30,78 @@ bool model::Network::outportError(XPort *outport) {
     return false;
 }
 
-bool model::Network::inportError(XPort *inport) {
-    QString errMsg = "[Network::connect()] inport is null.";
-    errMsg += (inport->getType() == model::XPort::INPORT ? "" : " port = output_port! ")
-              +inport->getComponent()->getName()+"."+inport->getName() + ". ";
-    if (!inport->getConnected()) {
-        errMsg += "Port is not connected. ";
+bool model::Network::xmasError(Output *xmas_outport, Input *xmas_inport, QString errMsg) {
+    QString out_owner = "null_output";
+    QString out_port_name = "null";
+    bool out_port_is_connected = false;
+    QString in_owner = "null_input";
+    QString in_port_name = "null";
+    bool in_port_is_connected = false;
+
+    if (xmas_outport) {
+        if (xmas_outport->m_owner)
+            out_owner = xmas_outport->m_owner->getStdName().c_str();
+        out_port_name = xmas_outport->getName();
+        out_port_is_connected = xmas_outport->isConnected();
     }
-    emit writeLog(errMsg, Qt::red);
+    if (xmas_inport) {
+        if (xmas_inport->m_owner)
+            in_owner = xmas_inport->m_owner->getStdName().c_str();
+        in_port_name = xmas_outport->getName();
+        in_port_is_connected = xmas_inport->isConnected();
+    }
+
+    errMsg += " " + out_owner+"."+out_port_name;
+    errMsg += "->" + in_owner + "." + in_port_name + " ";
+    if (in_port_is_connected && out_port_is_connected) {
+        errMsg += "(both connected).";
+    } else if (in_port_is_connected){
+        errMsg += "(inport connected, outport not connected.";
+    } else if (out_port_is_connected){
+        errMsg += "(inport not connected).";
+    } else {
+        errMsg += "(both not connected).";
+    }
+
+    emit writeLog(errMsg);
     qDebug() << errMsg;
     return false;
 }
 
-bool model::Network::xmasConnectError(Output *xmas_outport, Input *xmas_inport) {
-    QString errMsg = "[Network::connect()] ";
-    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
-                                           : "xmas_inport is null.")
-                            : "xmas_outport is null.");
-    emit writeLog(errMsg, Qt::red);
-    qDebug() << errMsg;
-    return false;
+bool model::Network::xmasConnectOk(Output *xmas_outport, Input *xmas_inport) {
+    if (!xmas_inport || !xmas_outport) {
+        return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport null. ");
+    }
+    if (xmas_inport->isConnected() || xmas_outport->isConnected()) {
+        return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport already connected. ");
+    }
+    return true;
 }
 
 bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
-    if (xmas_inport && xmas_outport) {
+    if (xmasConnectOk(xmas_outport, xmas_inport)) {
         ::connect(*xmas_outport, *xmas_inport);
         return true;
     }
-    // Trouble! Send error message
-    return xmasConnectError(xmas_outport, xmas_inport);
+    return false;
+}
+
+bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
+    if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
+        xmasError(xmas_outport, xmas_inport,
+                  "[Network::disconnect(xmas)] outport not connected to specified inport");
+        return false;
+    }
+    return true;
+}
+
+bool model::Network::disconnect(Output *xmas_outport, Input *xmas_inport) {
+    bool success = xmasDisconnectOk(xmas_outport, xmas_inport);
+    if (success) {
+        ::disconnect(*xmas_outport);
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -68,13 +115,31 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
 bool model::Network::connect(XPort *outport, XPort *inport) {
 
     // Check ports
-    if (!outport) return outportError(outport);
-    if (!inport) return inportError(inport);
+    if (!outport) return portError(outport, "[Network::connect()] outport is null: ");
+    if (!inport) return portError(inport, "[Network::connect()] inport is null.");
 
     // obtain and check xmas inport and outport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
     bool success = connect(xmas_outport, xmas_inport);
+
+    if (success) {
+        emit outport->connectedChanged();
+        emit inport->connectedChanged();
+    }
+    return success;
+}
+
+bool model::Network::disconnect(XPort *outport, XPort *inport) {
+
+    // check outport
+    if (!outport) return portError(outport, "[Network::disconnect()] outport is null: ");
+    if (!inport) return portError(inport, "[Network::disconnect()] inport is null.");
+
+    //  check outport for being xmas outport to inport
+    Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
+    Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
+    bool success = disconnect(xmas_outport, xmas_inport);
 
     if (success) {
         emit outport->connectedChanged();
@@ -131,54 +196,6 @@ QString model::Network::toJson() {
              "{\"id\": \"sink3\",\"type\": \"sink\",\"pos\": {\"x\": 410,\"y\": 410,\"orientation\": 0,\"scale\": 100}}"
              "]"
          "}";
-}
-
-bool model::Network::disconnect(XPort *outport, XPort *inport) {
-    // check outport
-    if (!outport) {
-        QString errMsg = "[Network::disconnect()] outport is null.";
-        emit writeLog(errMsg);
-        qDebug() << errMsg;
-        return false;
-    }
-    // check inport
-    if (!inport) {
-        QString errMsg = "[Network::disconnect()] inport is null.";
-        emit writeLog(errMsg);
-        qDebug() << errMsg;
-        return false;
-    }
-    //  check outport for being xmas outport to inport
-    Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
-    Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
-        QString out_owner = xmas_outport->m_owner->getStdName().c_str();
-        QString in_owner = xmas_inport->m_owner->getStdName().c_str();
-        QString out_port_name = xmas_outport->getName();
-        QString in_port_name = xmas_outport->getName();
-        QString errMsg = "[Network::disconnect()] outport not connected to specified inport";
-        errMsg += "\n[Network::disconnect()] output / input = "
-                + out_owner+"."+out_port_name + ", "
-                + in_owner + "." + in_port_name;
-        emit writeLog(errMsg);
-        qDebug() << errMsg;
-        return false;
-    }
-    if (xmas_outport && xmas_outport->isConnected()) {
-        ::disconnect(*xmas_outport);
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-        return true;
-    } else if (xmas_inport && xmas_inport->isConnected()) {
-        ::disconnect(*xmas_inport);
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-        return true;
-    }
-    QString errMsg = "[Network::disconnect()] inport or outport of connection null.";
-    emit writeLog(errMsg);
-    qDebug() << errMsg;
-    return false;
 }
 
 QQmlListProperty<model::Component> model::Network::components() {

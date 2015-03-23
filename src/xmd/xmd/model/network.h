@@ -114,11 +114,14 @@ private:
 
     //#################################################################################################
 
-    bool outportError(XPort *outport);
-    bool inportError(XPort *inport);
-    bool xmasConnectError(Output *xmas_outport, Input *xmas_inport);
+    bool portError(XPort *outport, QString errMsg);
+
+    bool xmasError(Output *xmas_outport, Input *xmas_inport, QString errMsg);
+    bool xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport);
+    bool xmasConnectOk(Output *xmas_outport, Input *xmas_inport);
 
     bool connect(Output *xmas_outport, Input *xmas_inport);
+    bool disconnect(Output *xmas_outport, Input *xmas_inport);
 
     static void append_components(QQmlListProperty<Component> *property, Component *comp);
     static int count_components(QQmlListProperty<Component> *property);
