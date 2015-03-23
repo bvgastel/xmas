@@ -48,4 +48,5 @@
 *		abort onder linux bij deleten deel van connected netwerk
 *		packet aansluiting qml / xmas
 *		plugin op timer uitvoeren
+*		Bernard: VARS - PACKET_TYPE ? Doel, inhoud
 
