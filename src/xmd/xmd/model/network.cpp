@@ -89,7 +89,7 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
 bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
         xmasError(xmas_outport, xmas_inport,
-                  "[Network::disconnect(xmas)] outport not connected to specified inport");
+                  "[Network::disconnect(xmas)] no out->in connection.");
         return false;
     }
     return true;
