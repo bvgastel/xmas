@@ -114,6 +114,12 @@ private:
 
     //#################################################################################################
 
+    bool outportError(XPort *outport);
+    bool inportError(XPort *inport);
+    bool xmasConnectError(Output *xmas_outport, Input *xmas_inport);
+
+    bool connect(Output *xmas_outport, Input *xmas_inport);
+
     static void append_components(QQmlListProperty<Component> *property, Component *comp);
     static int count_components(QQmlListProperty<Component> *property);
     static Component *at_components(QQmlListProperty<Component> *property, int index);

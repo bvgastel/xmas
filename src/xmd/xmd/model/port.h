@@ -97,6 +97,8 @@ public:
      */
     Port *getPort();
 
+    Component *getComponent();
+
 private:
     QString m_name;
     PortType m_type;

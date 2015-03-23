@@ -14,6 +14,49 @@ model::Network::~Network()
 
 }
 
+bool model::Network::outportError(XPort *outport) {
+    QString errMsg = "[Network::connect()] outport is null: ";
+    errMsg += (outport->getType() == model::XPort::OUTPORT ? "" : " port = input_port! ")
+              +outport->getComponent()->getName()+"."+outport->getName() + ". ";
+    if (!outport->getConnected()) {
+        errMsg += "Port is not connected. ";
+    }
+    emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
+    return false;
+}
+
+bool model::Network::inportError(XPort *inport) {
+    QString errMsg = "[Network::connect()] inport is null.";
+    errMsg += (inport->getType() == model::XPort::INPORT ? "" : " port = output_port! ")
+              +inport->getComponent()->getName()+"."+inport->getName() + ". ";
+    if (!inport->getConnected()) {
+        errMsg += "Port is not connected. ";
+    }
+    emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
+    return false;
+}
+
+bool model::Network::xmasConnectError(Output *xmas_outport, Input *xmas_inport) {
+    QString errMsg = "[Network::connect()] ";
+    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
+                                           : "xmas_inport is null.")
+                            : "xmas_outport is null.");
+    emit writeLog(errMsg, Qt::red);
+    qDebug() << errMsg;
+    return false;
+}
+
+bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
+    if (xmas_inport && xmas_outport) {
+        ::connect(*xmas_outport, *xmas_inport);
+        return true;
+    }
+    // Trouble! Send error message
+    return xmasConnectError(xmas_outport, xmas_inport);
+}
+
 /**
  * Connect method for qml
  *
@@ -23,37 +66,21 @@ model::Network::~Network()
  * @return xmas connection succeeded
  */
 bool model::Network::connect(XPort *outport, XPort *inport) {
-    // Check output
-    if (!outport) {
-        QString errMsg = "[Network::connect()] outport is null.";
-        emit writeLog(errMsg, Qt::red);
-        qDebug() << errMsg;
-        return false;
-    }
-    // Check inport
-    if (!inport) {
-        QString errMsg = "[Network::connect()] inport is null.";
-        emit writeLog(errMsg, Qt::red);
-        qDebug() << errMsg;
-        return false;
-    }
+
+    // Check ports
+    if (!outport) return outportError(outport);
+    if (!inport) return inportError(inport);
+
     // obtain and check xmas inport and outport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    if (xmas_inport && xmas_outport) {
-        ::connect(*xmas_outport, *xmas_inport);
+    bool success = connect(xmas_outport, xmas_inport);
+
+    if (success) {
         emit outport->connectedChanged();
         emit inport->connectedChanged();
-        return true;
     }
-    // Trouble! Send error message
-    QString errMsg = "[Network::connect()] ";
-    errMsg += (!xmas_inport ? (xmas_outport ? "xmas_inport and _outport are null."
-                                           : "xmas_inport is null.")
-                            : "xmas_outport is null.");
-    emit writeLog(errMsg, Qt::red);
-    qDebug() << errMsg;
-    return false;
+    return success;
 }
 
 

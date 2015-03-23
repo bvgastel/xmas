@@ -69,3 +69,6 @@ Port *model::XPort::getPort() {
     return nullptr;
 }
 
+model::Component *model::XPort::getComponent() {
+    return m_component;
+}
