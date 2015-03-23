@@ -68,7 +68,7 @@ bool model::Network::saveFile(QUrl url) {
 }
 
 bool model::Network::closeFile() {
-    //TODO destruct the model and reset everything
+    //TODO destroy the model and reset everything
     return true;
 }
 
@@ -81,6 +81,7 @@ QString model::Network::toJson() {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
     globals["PACKET_TYPE"] = bitpowder::lib::JSONData();        // to find out how to add packet type to json data.
+    globals["VARS"] = bitpowder::lib::JSONData();               // to find out how to add vars to json data.
 
     QList<model::Component *> allComponents = getAllComponents();
 
