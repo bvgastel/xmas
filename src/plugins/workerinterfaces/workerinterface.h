@@ -1,6 +1,6 @@
 /*********************************************************************
   *
-  * Copyright (C) <name>, <year>
+  * Copyright (C) Guus Bonnema, 2015
   *
   * This file is part of the xmas-design tool.
   *
@@ -20,43 +20,25 @@
   *
   **********************************************************************/
 
-#ifndef SYNTAXCHECKWORKER_H
-#define SYNTAXCHECKWORKER_H
+#ifndef WORKERINTERFACE_H
+#define WORKERINTERFACE_H
 
-#include "workerinterface.h"
-#include "commoninterface.h"
-#include "xmas.h"
-#include "simplestring.h"
-#include "result.h"
-
-class SyntaxCheckWorker : public QObject, public Wor
+class WorkerInterface : public QObject
 {
     Q_OBJECT
+
 public:
-    SyntaxCheckWorker(QObject *parent = 0);
-    virtual ~SyntaxCheckWorker();
-
-
-protected:
-    void reportTimer(tpoint start, tpoint end, QString name, Result &result);
-
-    std::tuple<tpoint, tpoint, XSet> convertComponentMap2Set(XMap componentMap);
-
-    std::pair<tpoint, tpoint> checkSyntax(XMap componentMap, Result &result);
-
-    std::pair<tpoint, tpoint> checkCycles(XSet componentSet, Result &result);
-
-    std::pair<tpoint, tpoint> checkSymbolicTypes(XSet componentSet, Result &result);
+    WorkerInterface(QObject *parent = 0);
+    virtual ~WorkerInterface();
 
 public slots:
-    void doProcessWork(const QString &json) override;
-    void doThreadWork(const QString &json) override;
-    void doWork(XMap &componentMap) override;
-
+    virtual void doProcessWork(const QString &json) = 0;
+    virtual void doThreadWork(const QString &json) = 0;
+    virtual void doWork(XMap &componentMap) = 0;
 
 signals:
     void resultReady(const Result &result);
+
 };
 
-
-#endif // SYNTAXCHECKWORKER_H
+#endif // WORKERINTERFACE_H

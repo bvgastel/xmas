@@ -23,6 +23,7 @@
 #include <map>
 #include <tuple>
 
+#include "commoninterface.h"
 #include "cycle.h"
 #include "parse.h"
 #include "syntaxcheckworker.h"
@@ -42,14 +43,9 @@ void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Resu
     std::cout << duration_qstr.toStdString() << std::endl;
 }
 
-void SyntaxCheckWorker::doWork(const QString &json) {
+void SyntaxCheckWorker::doWork(XMap &componentMap) {
     Result result;
-
-    // STEP 0: parse the json string toward a component map
-    bitpowder::lib::MemoryPool mp;
-    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
-    std::chrono::high_resolution_clock::time_point start, end, nextstart, nextend;
+    tpoint start, end, nextstart, nextend;
 
     // STEP 1: convert map to set
     std::set<XMASComponent *> componentSet;
@@ -57,28 +53,33 @@ void SyntaxCheckWorker::doWork(const QString &json) {
     start = nextstart;
     end = nextend;
     reportTimer(nextstart, nextend, "convert to set", result);
-//    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
-//    QString duration_step1 = QString("convert to set in \t")+duration+" ms\n";
-//    result.add2ResultString(duration_step1);
-//    std::cout << duration_step1.toStdString() << std::endl;
 
     // STEP 2: check if the topology is well formed
     std::tie(nextstart, nextend) = checkSyntax(componentMap, result);
     end = nextend;
     reportTimer(nextstart, nextend, "syntax check (valid ports)", result);
-//    duration = std::chrono::duration_cast<std::chrono::milliseconds>(nextend-nextstart).count();
-//    QString duration_step2 = QString("syntactic check in \t")+duration+" ms";
-//    result.add2ResultString(duration_step2+"\n");
-//    std::cout << duration_step2.toStdString() << std::endl;
 
     // STEP 2: check for cycles
     std::tie(nextstart, nextend) = checkCycles(componentSet, result);
     end = nextend;
     reportTimer(nextstart, nextend, "syntax check (valid ports)", result);
 
+    // STEP 3: check symbolic types
+    std::tie(nextstart, nextend) = checkSymbolicTypes(componentSet, result);
+    end = nextend;
+    reportTimer(nextstart, nextend, "symbolic types", result);
+
     // Final STEP: Reporting final timers
     reportTimer(start, end, "Complete check", result);
     emit resultReady(result);
+}
+
+void SyntaxCheckWorker::doThreadWork(const QString &json) {
+    // STEP 0: parse the json string toward a component map
+    bitpowder::lib::MemoryPool mp;
+    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
+    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
+    doWork(componentMap);
 }
 
 std::tuple<tpoint, tpoint, XSet>
@@ -144,3 +145,21 @@ SyntaxCheckWorker::checkCycles(XSet componentSet,
 
     return make_pair(start, end);
 }
+
+std::pair<tpoint, tpoint>
+SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
+                               Result &result) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    SymbolicTypes(componentSet);
+
+    QString msg = "Network symbolic types executed: check your messages.\n";
+    result.add2ResultString(msg);
+
+    std::cout << msg.toStdString() << std::endl;
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    return make_pair(start, end);
+}
+

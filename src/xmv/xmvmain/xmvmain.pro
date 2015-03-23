@@ -8,9 +8,6 @@ CONFIG -= qt
 CONFIG += C++11
 CONFIG += link_prl
 
-#include(deployment.pri)
-#qtcAddDeployment()
-
 SOURCES += main.cpp
 
 CONFIG(debug, debug|release) {
@@ -61,7 +58,7 @@ macx:CONFIG(debug, debug|release): LIBS += \
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
 
-else:unix|CONFIG(release, debug|release): LIBS += \
+else:unix|CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder

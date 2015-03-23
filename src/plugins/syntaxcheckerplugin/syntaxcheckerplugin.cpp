@@ -23,10 +23,7 @@
 
 #include <QUrl>
 #include <QColor>
-#include <QtConcurrent/QtConcurrent>
 
-#include "parseflatjsonfile.h"
-#include "parse.h"
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
 #include "loggerfactory.h"
@@ -40,18 +37,54 @@ SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}}),
     m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
 {
-    SyntaxCheckWorker *worker = new SyntaxCheckWorker;
-    worker->moveToThread(&m_workerThread);
-    connect(&m_workerThread, &QThread::finished, worker, &QObject::deleteLater);
-    connect(this, &SyntaxCheckerPlugin::operate, worker, &SyntaxCheckWorker::doWork);
-    connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
-    m_workerThread.start();
 }
 
 SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.quit();
     m_workerThread.wait();
+    // NOTE: from windows we should use kill() because the program
+    // does not respond to the WM_CLOSE message
+    // we need an ifdef
+    m_process.terminate();
+
 }
+
+void start(XMap &componentMap) {
+    SyntaxCheckWorker *worker = new SyntaxCheckWorker;
+    worker->doWork(componentMap);
+}
+
+/**
+ * @brief PluginThread::startThread This method starts the workerthread
+ *
+ * This method uses a workerthread to have the syntax checker do its work in a separate
+ * thread that returns the result in a Result object.
+ *
+ * @param json the string containing the network in a flat json format
+ */
+void SyntaxCheckerPlugin::startThread(const QString &json) {
+    SyntaxCheckWorker *worker = new SyntaxCheckWorker;
+    worker->moveToThread(&m_workerThread);
+
+    connect(&m_workerThread, &QThread::finished, worker, &QObject::deleteLater);
+    connect(this, &SyntaxCheckerPlugin::operate, worker, &SyntaxCheckWorker::doThreadWork);
+    connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
+
+    m_workerThread.start();
+
+    emit operate(json);
+
+}
+void SyntaxCheckerPlugin::startProcess(const QString &json) {
+    bitpowder::lib::unused(json);
+
+    m_process.setProcessChannelMode(QProcess::ForwardedChannels);
+    // TODO: How to start processes?
+    m_process.setProgram("dir");  // fixed program
+    m_process.setArguments("");   // variable argument
+    m_process.start();
+}
+
 
 void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
     // Don't know what to do yet, with the results. Show them I guess
@@ -84,14 +117,3 @@ LoggerInterface *SyntaxCheckerPlugin::logger() {
     return m_logger;
 }
 
-/**
- * @brief PluginThread::start This method starts the workerthread
- *
- * This method uses a workerthread to have the syntax checker do its work in a separate
- * thread that returns the result in a Result object.
- *
- * @param json the string containing the network in a flat json format
- */
-void SyntaxCheckerPlugin::start(const QString &json) override {
-    emit operate(json);
-}

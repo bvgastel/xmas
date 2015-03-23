@@ -28,6 +28,7 @@
 #include <QVariant>
 #include <QMap>
 #include <QThread>
+#include <QProcess>
 
 #include "xmas.h"
 #include "logger.h"
@@ -51,7 +52,9 @@ public:
     virtual void parameters(QVariantMap paramMap) override;
     virtual QVariantMap paramMap() override;
 
-    virtual void start(const QString &json) override;
+    virtual void start(XMap &componentMap) override;
+    virtual void startThread(const QString &json) override;
+    virtual void startProcess(const QString &json) override;
 
     virtual LoggerInterface *logger() override;
 
@@ -78,6 +81,7 @@ private:
      * @brief m_workerThread The thread that will run the verification tool
      */
     QThread m_workerThread;
+    QProcess m_process;
 };
 
 

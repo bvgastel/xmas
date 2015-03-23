@@ -33,8 +33,10 @@ QT -= gui
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
+
 win32: CONFIG += static
 unix: CONFIG += static dll
+
 #CONFIG += build_all
 
 TARGET = datamodel

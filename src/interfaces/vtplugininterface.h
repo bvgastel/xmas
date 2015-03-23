@@ -29,8 +29,9 @@
 #include <QString>
 #include <QVariant>
 
+#include "commoninterface.h"
 #include "xmas.h"
-#include "logger.h"
+#include "loggerinterface.h"
 
 class VtPluginInterface
 {
@@ -44,7 +45,9 @@ public:
     virtual QVariantMap paramMap() = 0;
     virtual void parameters(QVariantMap paramMap) = 0;
 
-    virtual void start(const QString &json) = 0;
+    virtual void start(XMap &componentMap) = 0;
+    virtual void startThread(const QString &json) = 0;
+    virtual void startProcess(const QString &json) = 0;
 
     virtual LoggerInterface *logger() = 0;
 

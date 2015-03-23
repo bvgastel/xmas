@@ -23,8 +23,6 @@
 #include <sys/resource.h>
 #endif
 
-using namespace std;
-
 /**
   * Features:
   * - combinatorial cycle detection

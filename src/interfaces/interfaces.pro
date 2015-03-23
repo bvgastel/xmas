@@ -28,7 +28,8 @@ HEADERS +=\
     result.h \
     logger.h \
     loggerinterface.h \
-    resultinterface.h
+    resultinterface.h \
+    commoninterface.h
 
 ################################################
 # INSTALL instructions
