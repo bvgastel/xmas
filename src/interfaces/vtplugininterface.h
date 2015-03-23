@@ -25,9 +25,8 @@
 
 #include <map>
 
-#include <QtPlugin>
-#include <QColor>
-#include <QMap>
+//#include <QtPlugin>
+#include <QString>
 #include <QVariant>
 
 #include "xmas.h"

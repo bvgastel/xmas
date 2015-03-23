@@ -21,10 +21,8 @@ class in the interface library.
 
 ### Redirecting std::out and std::err in threads
 If the plugin starts a thread, it *cannot* redirect standard output for this
-thread, because the thread uses the standard output of the process. Running
-several plugin will cause weird concurrency errors due to data races when
-both try to write to the standard output. This means, that the plugin should
-capture errors and error messages using special objects (like the Result class).
+thread, because the thread uses the standard output of the process. Any redirection
+should take place from the process main thread.
 
 ### Redirecting std::out and std::err from processes
 If the plugin starts a new process, then for this process it can safely redirect the

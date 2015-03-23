@@ -45,7 +45,8 @@ unix|win32|macx {
 }
 
 DISTFILES += \
-    vtplugin.json
+    vtplugin.json \
+    readme_todo.md
 
 ################################################
 # Internal dependencies
