@@ -75,5 +75,6 @@
         <file>content/saveAs.ico</file>
         <file>content/setup.ico</file>
         <file>content/warning.ico</file>
+        <file>uicontrols/ModelSetupDialog.qml</file>
     </qresource>
 </RCC>

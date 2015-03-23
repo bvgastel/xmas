@@ -41,7 +41,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
-import QtQuick.Dialogs 1.1
+import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import Qt.labs.settings 1.0
@@ -59,13 +59,11 @@ ApplicationWindow {
     minimumWidth: 400
     minimumHeight: 300
     color: "darkgrey"
-    title: network.fileName + (network.modified ? "*" : "") + "     -     " + Qt.application.name
+    title: Qt.application.name + "     -     " + network.fileName + (network.modified ? "*" : "")
 
     property string defaultModelDirectory
-    property int newModelCounter:0
     property bool showComponentNames:true
     property bool showPortNames:true
-
 
     // Persistent properties
     Settings {
@@ -76,7 +74,7 @@ ApplicationWindow {
         property alias height: mainwindow.height
         property alias defaultModelDirectory: mainwindow.defaultModelDirectory
         property alias showComponentNames: mainwindow.showComponentNames
-        property alias showPortNames: mainwindow.showPortNames
+        property alias showPortNames: mainwindow.showPortNames        
     }
 
     //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
@@ -91,6 +89,7 @@ ApplicationWindow {
     signal zoomFit
     signal selectAll
     signal selectionMode(var checked)
+    signal modelSetupDialog
 
     // JavaScripts
 
@@ -104,23 +103,31 @@ ApplicationWindow {
     }
 
     // Closes the current model and starts a new one
-    function newModel(){
+    function newModel(save){
+        if(save) saveModel()
         if(network.newFile()){
             network.clear()
-            newModelCounter++
         }
     }
 
-    // Event handling
-    onClosing: {close.accepted = false;  network.modified ? dialogSaveOnQuit.open() : dialogQuit.open()}
-    //TODO load plugins in c++ property list
-    Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
-    onNewModelCounterChanged: {
-        network.fileUrl = ""
-        network.fileName = "Model" + newModelCounter + ".json"
+    function openModel(save){
+        if(save) saveModel()
+        network.modified = false
+        dialogFileOpen.open()
+    }
+
+    function saveModel(){
+        network.saveFile(network.folder)
         network.modified = false
     }
 
+
+    // Event handling
+    onClosing: {
+        close.accepted = false; network.modified ? dialogSaveBeforeQuit.open() : dialogQuit.open()
+    }
+    //TODO load plugins in c++ property list
+    Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
 
     //#######################################################################################################
     //
@@ -134,15 +141,7 @@ ApplicationWindow {
         iconName: "new-model"
         text: "New"
         shortcut: StandardKey.New
-        onTriggered: {
-            trigger.accept = false
-            if(network.modified) {
-                dialogSaveOnClose.open()
-                newModel()
-            } else {
-                newModel()
-            }
-        }
+        onTriggered: network.modified ? dialogSaveBeforeNew.open(): newModel(false)
     }
 
     Action {
@@ -151,7 +150,7 @@ ApplicationWindow {
         iconName: "model-open"
         text: "Open..."
         shortcut: StandardKey.Open
-        onTriggered: fileOpenDialog.open()
+        onTriggered: network.modified ? dialogSaveBeforeOpen.open() : openModel(false)
     }
 
     Action {
@@ -160,41 +159,15 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        onTriggered: {
-            if(network.modified){
-                if(network.fileUrl){
-                    if(network.saveFile(network.fileName))
-                    {
-                        network.modified = false
-                    }
-
-                } else {
-                    fileSaveDialog.open()
-                }
-            }
-        }
+        onTriggered: network.folder === "" ? modelSetupDialog() : saveModel()
     }
 
     Action {
-        id: fileSaveAsAction
-        iconSource: "qrc:/content/saveAs.ico"
-        iconName: "model-save-as"
-        text: "Save as..."
-        shortcut: StandardKey.SaveAs
-        onTriggered: fileSaveDialog.open()
-    }
-
-    Action {
-        id: fileCloseAction
-        text: "Close"
-        shortcut: StandardKey.Close
-        onTriggered: {
-            if(network.modified){
-                dialogSaveOnClose.open()
-            } else {
-                newModelCounter = 0 ; newModel()
-            }
-        }
+        id: modelSetupAction
+        iconSource: "qrc:/content/model-setup.ico"
+        iconName: "model-setup"
+        text: "Model setup..."
+        onTriggered: modelSetupDialog()
     }
 
     Action {
@@ -294,7 +267,7 @@ ApplicationWindow {
         shortcut: StandardKey.Quit
         iconSource: "qrc:/content/quit.ico"
         iconName: "Quit"
-        onTriggered: network.modified ? dialogSaveOnQuit.open() : dialogQuit.open()
+        onTriggered: network.modified ? dialogSaveBeforeQuit.open() : dialogQuit.open()
     }
 
     Action {
@@ -326,7 +299,6 @@ ApplicationWindow {
             for (var i in mainwindow.vtNameList) {
                 var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
                 log ("params = [" + params +"] Running to be implemented", "green");
-
             }
         }
     }
@@ -339,7 +311,6 @@ ApplicationWindow {
         iconName: "select"
         //onTriggered: controller.stop()
     }
-
 
     //#######################################################################################################
     //
@@ -354,8 +325,7 @@ ApplicationWindow {
             MenuItem { action: fileNewAction }
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
-            MenuItem { action: fileSaveAsAction }
-            MenuItem { action: fileCloseAction }
+            MenuItem { action: modelSetupAction }
             MenuSeparator{}
             MenuItem { action: quitAction }
         }
@@ -419,7 +389,7 @@ ApplicationWindow {
             ToolButton { action: fileNewAction }
             ToolButton { action: fileOpenAction }
             ToolButton { action: fileSaveAction }
-            ToolButton { action: fileSaveAsAction }
+            ToolButton { action: modelSetupAction }
             ToolBarSeparator {}
 
 
@@ -533,46 +503,23 @@ ApplicationWindow {
 
     //File Open
     FileDialog {
-        id: fileOpenDialog
+        id: dialogFileOpen
         nameFilters: [
             "Model files (*.xmdm *.fjson *.json)",
             "Composite files (*.xmdc)",
             "Project files (*.xmdp)",
             "All files (*)"]
         onAccepted: {
-            //            datacontrol.fileOpen(fileUrl)
-            //            if(datacontrol.fileOpen(fileUrl))
-            //            {
-            network.fileUrl = fileUrl
-            network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
-            //            }
+            datacontrol.fileOpen(fileUrl)
+//            if(network.fileOpen(fileUrl))
+//            {
+                network.folder = folder
+                network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+//            }
         }
     }
 
-    //File Save
-    FileDialog {
-        id: fileSaveDialog
-        selectMultiple: false
-        selectExisting: true
-        nameFilters: [
-            "Model files (*.xmd *.fjson *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
 
-        onAccepted: {
-            if(network.fileUrl !== fileUrl) {
-                dialogOverwrite.open()
-                //TODO call doesn't block
-            }
-
-            if(network.saveFile(fileUrl))
-            {
-                network.fileUrl = fileUrl
-                network.modified = false
-            }
-        }
-    }
 
     //File Save as
     FileDialog {
@@ -596,41 +543,45 @@ ApplicationWindow {
     // File overwrite
     MessageDialog {
         id: dialogOverwrite
-        title: fileSaveAsAction.text
+        title: "Overwrite"
         icon: StandardIcon.Question
-        text:  "Overwrite " + network.fileUrl + "?  Press save to confirm!"
+        text:  "Overwrite " + network.fileName + "?  Press save to confirm!"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: console.log("overwritten!") //TODO implement save from here
+        onYes: saveModel(true)
     }
 
-    // New without save?
+    // Save before new?
     MessageDialog {
-        id: dialogSaveOnNew
+        id: dialogSaveBeforeNew
         title: "New model."
         icon: StandardIcon.Question
-        text:  "Save " + network.fileUrl + " first?"
+        text:  "Save " + network.fileName + " first?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: newModel()
+        onYes: newModel(true)
+        onNo:  newModel(false)
     }
 
-    // Close without save?
+    // Save before open?
     MessageDialog {
-        id: dialogSaveOnClose
-        title: "Close model."
+        id: dialogSaveBeforeOpen
+        title: "Open model."
         icon: StandardIcon.Question
-        text:  "Save " + network.fileUrl + " first?"
+        text:  "Save " + network.fileName + " first?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: newModel()
+        onYes: openModel(true)
+        onNo:  openModel(false)
     }
 
-    // Quit without save?
+    // Save before quit?
     MessageDialog {
-        id: dialogSaveOnQuit
+        id: dialogSaveBeforeQuit
         title: "Quit application."
         icon: StandardIcon.Question
-        text:  "Quit without saving " + network.fileUrl + "?"
+        text:  "Quit without saving " + network.fileName + "?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: Qt.quit()
+        // Qt BUG (MS Windows): need to destroy dialog internally before quit
+        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
+        onYes: {this.destroy(); Qt.quit()}
     }
 
     // Quit?
@@ -640,7 +591,9 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Really wanna quit such a magnificent tool :P ?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: Qt.quit()
+        // Qt BUG (MS Windows): need to destroy dialog internally before quit
+        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
+        onYes: {this.destroy(); Qt.quit()}
     }
 
 
@@ -845,6 +798,8 @@ ApplicationWindow {
         }
 
     }
+
+
 
     //#######################################################################################################
     //

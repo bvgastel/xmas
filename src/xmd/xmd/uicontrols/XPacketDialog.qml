@@ -96,11 +96,13 @@ Window {
             Layout.alignment: Qt.AlignRight
             Button{
                 action:cancelAction
+                tooltip: ""
 
             }
             Button {
                 isDefault: true
                 action: okAction
+                tooltip: ""
             }
         }
     }

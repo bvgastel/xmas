@@ -125,8 +125,13 @@ ColumnLayout{
 
     transitions:
         Transition {
+        id: transOpenClose
+        enabled: false
         PropertyAnimation { target: arrow; properties: "rotation"; duration: 250 }
         PropertyAnimation { target: output; properties: "height"; duration: 100 }
     }
+
+    // release animation when settings are restored
+    Component.onCompleted: transOpenClose.enabled = true
 }
 

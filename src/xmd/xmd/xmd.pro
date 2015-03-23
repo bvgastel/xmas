@@ -112,7 +112,8 @@ DISTFILES += mainWindow.qml \
     uiqueries_readme.md \
     uicontrols/SelectionHandle.qml \
     uicontrols/XPacketDialog.qml \
-    xobjects/composite.qml
+    xobjects/composite.qml \
+    uicontrols/ModelSetupDialog.qml
 
 RESOURCES += \
     xmd.qrc

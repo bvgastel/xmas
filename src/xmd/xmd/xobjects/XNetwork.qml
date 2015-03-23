@@ -50,8 +50,8 @@ XMAS.XNetwork {
     alias:""
     asSymbol: false
     imageName: ""
-    property string fileName: ""
-    property string fileUrl: ""
+    property string fileName: "?"
+    property string folder: ""
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
@@ -95,6 +95,12 @@ XMAS.XNetwork {
     function clear(){
         selectAll()
         selection.deleteSelected()
+        network.fileName = "?"
+        network.folder = ""
+        network.alias = ""
+        network.imageName = ""
+        network.asSymbol = false
+        network.modified = false
     }
 
     function checkTarget(port) {
@@ -154,6 +160,7 @@ XMAS.XNetwork {
     function deleteSelected(){
         selection.deleteSelected()
     }
+
 
     Rectangle {
         id:background
@@ -283,6 +290,16 @@ XMAS.XNetwork {
         MenuItem {
             action: showPortNamesAction
         }
+        MenuSeparator{}
+        MenuItem {
+            action: modelSetupAction
+        }
+    }
+
+
+    ModelSetupDialog {
+        id:setupDialog
+
     }
 
     // Connections
@@ -298,6 +315,7 @@ XMAS.XNetwork {
         onZoomFit: doScale()
         onSelectAll: selectAll()
         onSelectionMode: selectionMode = checked
+        onModelSetupDialog: setupDialog.show()
     }
 }
 
