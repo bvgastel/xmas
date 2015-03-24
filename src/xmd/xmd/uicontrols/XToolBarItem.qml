@@ -40,7 +40,7 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-import "../xobjects/xcomponent.js" as Code
+import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
 Image {
     id: toolbarItem

@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.3
+import "qrc:/ui/uicontrols/"
 
 Rectangle {
     id:toolbox
@@ -17,54 +18,54 @@ Rectangle {
         anchors.margins: {top: 5; bottom: 5}
         spacing: 10
         XToolBarItem {
-            componentFile: "../xobjects/queue.qml"
-            image: "../content/queue.png"
+            componentFile: "qrc:/xmas/xobjects/queue.qml"
+            image: "qrc:/icons/content/queue.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/function.qml"
-            image: "../content/function.png"
+            componentFile: "qrc:/xmas/xobjects/function.qml"
+            image: "qrc:/icons/content/function.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/fork.qml"
-            image: "../content/fork.png"
+            componentFile: "qrc:/xmas/xobjects/fork.qml"
+            image: "qrc:/icons/content/fork.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/join.qml"
-            image: "../content/join.png"
+            componentFile: "qrc:/xmas/xobjects/join.qml"
+            image: "qrc:/icons/content/join.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/switch.qml"
-            image: "../content/switch.png"
+            componentFile: "qrc:/xmas/xobjects/switch.qml"
+            image: "qrc:/icons/content/switch.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/merge.qml"
-            image: "../content/merge.png"
+            componentFile: "qrc:/xmas/xobjects/merge.qml"
+            image: "qrc:/icons/content/merge.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/sink.qml"
-            image: "../content/sink.png"
+            componentFile: "qrc:/xmas/xobjects/sink.qml"
+            image: "qrc:/icons/content/sink.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/source.qml"
-            image: "../content/source.png"
+            componentFile: "qrc:/xmas/xobjects/source.qml"
+            image: "qrc:/icons/content/source.png"
         }
         ToolBarSeparator {}
         XToolBarItem {
-            componentFile: "../xobjects/in.qml"
-            image: "../content/in.png"
+            componentFile: "qrc:/xmas/xobjects/in.qml"
+            image: "qrc:/icons/content/in.png"
         }
         XToolBarItem {
-            componentFile: "../xobjects/out.qml"
-            image: "../content/out.png"
+            componentFile: "qrc:/xmas/xobjects/out.qml"
+            image: "qrc:/icons/content/out.png"
         }
         ToolBarSeparator {}
         XToolBarItem {
             //TODO : this is just a test "XToolBarItem" an can be removed later
-            componentFile: "../xobjects/composite.qml"
-            image: "../content/composite.png"
+            componentFile: "qrc:/xmas/xobjects/composite.qml"
+            image: "qrc:/icons/content/composite.png"
         }
         ToolButton {
-            iconSource: "qrc:/content/composite.png"
+            iconSource: "qrc:/icons/content/composite.png"
             iconName: "Composite"
             text: "Open Composite"
             onClicked: mainwindow.openComposite()

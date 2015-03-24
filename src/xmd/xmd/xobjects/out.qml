@@ -7,8 +7,7 @@ XComponent {
     height: 30
     type: Model.XComponent.Out
     prefix: "o"
-     //TODO : remove xport once it derives from xmas
-    XPort {x:0; y:10; name: "i"; type:Model.XPort.Target}
+    XPort {x:0; y:10; name: "i"; type:Model.XPort.INPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false

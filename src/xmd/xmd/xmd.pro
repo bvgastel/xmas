@@ -116,7 +116,9 @@ DISTFILES += mainWindow.qml \
     uicontrols/ModelSetupDialog.qml
 
 RESOURCES += \
-    xmd.qrc
+    images.qrc \
+    javascripts.qrc \
+    quick.qrc
 
 ################################################
 # Internal dependencies

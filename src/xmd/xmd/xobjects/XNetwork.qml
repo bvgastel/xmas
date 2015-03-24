@@ -33,9 +33,9 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
-import "../uicontrols"
-import "../xobjects/xchannel.js" as Code
-import "../xmapper/controller.js" as Ctrl
+import "qrc:/ui/uicontrols/"
+import "qrc:/javascripts/xobjects/xchannel.js" as Code
+import "qrc:/javascripts/xmapper/controller.js" as Ctrl
 import XMAS.model 1.0 as XMAS
 
 
@@ -50,7 +50,7 @@ XMAS.XNetwork {
     alias:""
     asSymbol: false
     imageName: ""
-    property string fileName: "?"
+    property string fileName: "?.json"
     property string folder: ""
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
@@ -67,9 +67,6 @@ XMAS.XNetwork {
     onPacketChanged: modified=true
 
     // JavaScripts
-    function getNewName(idx){
-        return "Model" + idx + "json"
-    }
 
     // Scale
     function doScale(dScale){
@@ -95,13 +92,14 @@ XMAS.XNetwork {
     function clear(){
         selectAll()
         selection.deleteSelected()
-        network.fileName = "?"
+        network.fileName = "?.json"
         network.folder = ""
         network.alias = ""
         network.imageName = ""
         network.asSymbol = false
         network.modified = false
     }
+
 
     function checkTarget(port) {
         if (wire.port1
@@ -299,7 +297,7 @@ XMAS.XNetwork {
 
     ModelSetupDialog {
         id:setupDialog
-
+        onSetupAccepted: mainwindow.saveModel()
     }
 
     // Connections

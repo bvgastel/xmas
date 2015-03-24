@@ -34,7 +34,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 import Qt.labs.settings 1.0
-import "../content"
+import "qrc:/ui/uicontrols/"
 
 ColumnLayout{
     spacing:0
@@ -81,13 +81,13 @@ ColumnLayout{
             }
             Image {
                 id:arrow
-                source: "../content/arrow.png"
+                source: "qrc:/icons/content/arrow.png"
                 Layout.alignment: Qt.AlignRight
                 MouseArea{
                     anchors.fill:parent
                     hoverEnabled: true
-                    onEntered: arrow.source = "../content/arrowLit.png"
-                    onExited: arrow.source = "../content/arrow.png"
+                    onEntered: arrow.source = "qrc:/icons/content/arrowLit.png"
+                    onExited: arrow.source = "qrc:/icons/content/arrow.png"
                     onClicked: open = !open
                 }
             }

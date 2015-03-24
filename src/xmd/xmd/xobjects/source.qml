@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import "../uicontrols"
+import "qrc:/ui/uicontrols/"
 import XMAS.model 1.0 as Model
 
 XComponent {

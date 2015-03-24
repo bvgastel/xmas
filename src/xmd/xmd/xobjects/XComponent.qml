@@ -34,7 +34,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS.model 1.0 as Model
-import "../uicontrols"
+import "qrc:/ui/uicontrols/"
 
 Model.XComponent {
     id: component

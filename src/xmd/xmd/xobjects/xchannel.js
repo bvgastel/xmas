@@ -9,7 +9,7 @@ function loadcomponent(outport,inport) {
         createComponent(outport,inport)
         return
     }
-    component = Qt.createComponent("qrc:///xobjects/XChannel.qml")
+    component = Qt.createComponent("qrc:/xmas/xobjects/XChannel.qml")
     // Still loading qml? Call createObject on status changed
     if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(outport,inport));

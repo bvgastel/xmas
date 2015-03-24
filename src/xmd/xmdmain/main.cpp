@@ -45,7 +45,9 @@
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(xmd);
+    Q_INIT_RESOURCE(quick);
+    Q_INIT_RESOURCE(javascripts);
+    Q_INIT_RESOURCE(images);
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
@@ -72,7 +74,7 @@ int main(int argc, char *argv[])
 
     dataControl.registerTypes(); // Before engine.load
 
-    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:ui///mainWindow.qml")));
     return app.exec();
 
 }

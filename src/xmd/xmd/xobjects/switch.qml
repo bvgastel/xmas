@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import XMAS.model 1.0 as Model
-import "../uicontrols"
+import "qrc:/ui/uicontrols/"
 
 XComponent {
     id:component

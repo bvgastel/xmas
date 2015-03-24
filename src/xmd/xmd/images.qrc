@@ -1,31 +1,5 @@
 <RCC>
-    <qresource prefix="/">
-        <file>uicontrols/ScrollBar.qml</file>
-        <file>uicontrols/Selection.qml</file>
-        <file>uicontrols/OutputLog.qml</file>
-        <file>uicontrols/XDialog.qml</file>
-        <file>uicontrols/XToolBar.qml</file>
-        <file>uicontrols/XToolBarItem.qml</file>
-        <file>uicontrols/ToolBarSeparator.qml</file>
-        <file>mainWindow.qml</file>
-        <file>xobjects/fork.qml</file>
-        <file>xobjects/function.qml</file>
-        <file>xobjects/in.qml</file>
-        <file>xobjects/join.qml</file>
-        <file>xobjects/merge.qml</file>
-        <file>xobjects/out.qml</file>
-        <file>xobjects/queue.qml</file>
-        <file>xobjects/sink.qml</file>
-        <file>xobjects/source.qml</file>
-        <file>xobjects/switch.qml</file>
-        <file>xobjects/XNetwork.qml</file>
-        <file>xobjects/XChannel.qml</file>
-        <file>xobjects/XComponent.qml</file>
-        <file>xobjects/XPort.qml</file>
-        <file>xobjects/xchannel.js</file>
-        <file>xobjects/xcomponent.js</file>
-        <file>uicontrols/XWire.qml</file>
-        <file>xmapper/controller.js</file>
+    <qresource prefix="/icons">
         <file>content/redo.png</file>
         <file>content/undo.png</file>
         <file>content/copy.png</file>
@@ -51,7 +25,6 @@
         <file>content/switch.png</file>
         <file>content/function.png</file>
         <file>content/composite.png</file>
-        <file>uicontrols/SelectionHandle.qml</file>
         <file>content/stop.ico</file>
         <file>content/run.ico</file>
         <file>content/rotate_left.png</file>
@@ -60,9 +33,6 @@
         <file>content/bigger.ico</file>
         <file>content/smaller.ico</file>
         <file>content/packet.png</file>
-        <file>uicontrols/XPacketDialog.qml</file>
-        <file>xobjects/composite.qml</file>
-        <file>content/symbols/agent.png</file>
         <file>content/add_composite.ico</file>
         <file>content/app.ico</file>
         <file>content/clean.ico</file>
@@ -75,6 +45,8 @@
         <file>content/saveAs.ico</file>
         <file>content/setup.ico</file>
         <file>content/warning.ico</file>
-        <file>uicontrols/ModelSetupDialog.qml</file>
+    </qresource>
+	    <qresource prefix="/symbols">
+        <file>content/symbols/agent.png</file>
     </qresource>
 </RCC>

@@ -30,8 +30,8 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Controls 1.3
-import "xchannel.js" as ChannelJs
-import "../uicontrols"
+import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
+import "qrc:/ui/uicontrols/"
 import XMAS.model 1.0 as Model
 
 Model.XChannel {

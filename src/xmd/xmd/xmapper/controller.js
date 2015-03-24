@@ -1,6 +1,6 @@
 .import XMAS.model 1.0 as Model
 .import QtQuick 2.0 as Qjs
-.import "../xobjects/xchannel.js" as Channel
+.import "qrc:/javascripts/xobjects/xchannel.js" as Channel
 
 var start
 var end
@@ -71,27 +71,27 @@ function loadComponent(object) {
 function getXQml(type) {
     switch(type) {
     case Model.XComponent.Queue:
-        return "../xobjects/queue.qml"
+        return "qrc:/xmas/xobjects/queue.qml"
     case Model.XComponent.Function:
-        return "../xobjects/function.qml"
+        return "qrc:/xmas/xobjects/function.qml"
     case Model.XComponent.Fork:
-        return "../xobjects/fork.qml"
+        return "qrc:/xmas/xobjects/fork.qml"
     case Model.XComponent.Join:
-        return "../xobjects/join.qml"
+        return "qrc:/xmas/xobjects/join.qml"
     case Model.XComponent.Switch:
-        return "../xobjects/switch.qml"
+        return "qrc:/xmas/xobjects/switch.qml"
     case Model.XComponent.Merge:
-        return "../xobjects/merge.qml"
+        return "qrc:/xmas/xobjects/merge.qml"
     case Model.XComponent.Sink:
-        return "../xobjects/sink.qml"
+        return "qrc:/xmas/xobjects/sink.qml"
     case Model.XComponent.Source:
-        return "../xobjects/source.qml"
+        return "qrc:/xmas/xobjects/source.qml"
     case Model.XComponent.In:
-        return "../xobjects/in.qml"
+        return "qrc:/xmas/xobjects/in.qml"
     case Model.XComponent.Out:
-        return "../xobjects/out.qml"
+        return "qrc:/xmas/xobjects/out.qml"
     case Model.XComponent.Composite:
-        return "../xobjects/spidergon.qml" //test
+        return "qrc:/xmas/xobjects/composite.qml"
     default:
         log("Unknown xmas type! (" + type + ")","red")
         return ""
