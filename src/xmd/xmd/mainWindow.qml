@@ -46,9 +46,8 @@ import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import Qt.labs.settings 1.0
 
-import "xobjects"
-import "uicontrols"
-//import XMAS.model 1.0 as XMAS
+import "qrc:/xmas/xobjects/"
+import "qrc:/ui/uicontrols/"
 
 ApplicationWindow {
     id: mainwindow
@@ -137,7 +136,7 @@ ApplicationWindow {
 
     Action {
         id: fileNewAction
-        iconSource: "qrc:/content/new.png"
+        iconSource: "qrc:/icons/content/new.png"
         iconName: "new-model"
         text: "New"
         shortcut: StandardKey.New
@@ -146,7 +145,7 @@ ApplicationWindow {
 
     Action {
         id: fileOpenAction
-        iconSource: "qrc:/content/open.png"
+        iconSource: "qrc:/icons/content/open.png"
         iconName: "model-open"
         text: "Open..."
         shortcut: StandardKey.Open
@@ -155,7 +154,7 @@ ApplicationWindow {
 
     Action {
         id: fileSaveAction
-        iconSource: "qrc:/content/save.ico"
+        iconSource: "qrc:/icons/content/save.ico"
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
@@ -164,7 +163,7 @@ ApplicationWindow {
 
     Action {
         id: modelSetupAction
-        iconSource: "qrc:/content/model-setup.ico"
+        iconSource: "qrc:/icons/content/model-setup.ico"
         iconName: "model-setup"
         text: "Model setup..."
         onTriggered: modelSetupDialog()
@@ -174,7 +173,7 @@ ApplicationWindow {
         id: cutAction
         text: "Cut"
         shortcut: StandardKey.Cut
-        iconSource: "qrc:/content/cut.png"
+        iconSource: "qrc:/icons/content/cut.png"
         iconName: "edit-cut"
         onTriggered: cut()
     }
@@ -183,7 +182,7 @@ ApplicationWindow {
         id: copyAction
         text: "Copy"
         shortcut: StandardKey.Copy
-        iconSource: "qrc:/content/copy.png"
+        iconSource: "qrc:/icons/content/copy.png"
         iconName: "edit-copy"
         onTriggered: copy()
     }
@@ -192,7 +191,7 @@ ApplicationWindow {
         id: pasteAction
         text: "Paste"
         shortcut: StandardKey.Paste
-        iconSource: "qrc:/content/paste.png"
+        iconSource: "qrc:/icons/content/paste.png"
         iconName: "edit-paste"
         onTriggered: paste()
     }
@@ -217,7 +216,7 @@ ApplicationWindow {
         id: zoomInAction
         text: "Zoom In"
         shortcut: StandardKey.ZoomIn
-        iconSource: "qrc:/content/zoom-in.png"
+        iconSource: "qrc:/icons/content/zoom-in.png"
         iconName: "zoom-in"
         onTriggered: zoomIn()
     }
@@ -226,7 +225,7 @@ ApplicationWindow {
         id: zoomOutAction
         text: "Zoom Out"
         shortcut: StandardKey.ZoomOut
-        iconSource: "qrc:/content/zoom-out.png"
+        iconSource: "qrc:/icons/content/zoom-out.png"
         iconName: "zoom-out"
         onTriggered: zoomOut()
     }
@@ -235,7 +234,7 @@ ApplicationWindow {
         id: zoomFitAction
         text: "Zoom Fit"
         shortcut: "Ctrl+1"
-        iconSource: "qrc:/content/zoom-fit.png"
+        iconSource: "qrc:/icons/content/zoom-fit.png"
         iconName: "zoom-fit"
         onTriggered: zoomFit()
     }
@@ -244,7 +243,7 @@ ApplicationWindow {
         id: selectAreaAction
         text: "Selection Mode"
         shortcut:"Ctrl"
-        iconSource: "qrc:/content/select.png"
+        iconSource: "qrc:/icons/content/select.png"
         iconName: "select"
         checkable: true
         checked: network.selectionMode
@@ -255,7 +254,7 @@ ApplicationWindow {
         id: selectAllAction
         text: "Select All"
         shortcut: StandardKey.SelectAll
-        iconSource: "qrc:/content/select_all.png"
+        iconSource: "qrc:/icons/content/select_all.png"
         iconName: "selectAll"
         onTriggered: selectAll()
         tooltip: "Select All items on the network"
@@ -265,7 +264,7 @@ ApplicationWindow {
         id: quitAction
         text: "Quit"
         shortcut: StandardKey.Quit
-        iconSource: "qrc:/content/quit.ico"
+        iconSource: "qrc:/icons/content/quit.ico"
         iconName: "Quit"
         onTriggered: network.modified ? dialogSaveBeforeQuit.open() : dialogQuit.open()
     }
@@ -274,7 +273,7 @@ ApplicationWindow {
         id: packetAction
         text: "Packet"
         shortcut: ""
-        iconSource: "qrc:/content/packet.png"
+        iconSource: "qrc:/icons/content/packet.png"
         iconName: "Packet"
         onTriggered: packetDialog.show()
     }
@@ -282,7 +281,7 @@ ApplicationWindow {
 
     Action {
         id: loadPlugins
-        iconSource: "qrc:/content/plugin.ico"
+        iconSource: "qrc:/icons/content/plugin.ico"
         iconName: "plugins"
         text: "VT"
         shortcut: "Alt+P"
@@ -293,7 +292,7 @@ ApplicationWindow {
         id: runVtAction
         text: "Run"
         shortcut: "Ctrl+R"
-        iconSource: "qrc:/content/run.ico"
+        iconSource: "qrc:/icons/content/run.ico"
         iconName: "select"
         onTriggered: {
             for (var i in mainwindow.vtNameList) {
@@ -307,7 +306,7 @@ ApplicationWindow {
         id: stopVtAction
         text: "Stop"
         shortcut: ""
-        iconSource: "qrc:/content/stop.ico"
+        iconSource: "qrc:/icons/content/stop.ico"
         iconName: "select"
         //onTriggered: controller.stop()
     }
@@ -537,7 +536,7 @@ ApplicationWindow {
         id: aboutBox
         title: "About XMD"
         text: "XMD is an XMAS Model Designer tool"
-        icon: StandardIcon.Information //"qrc:/content/app.ico"
+        icon: StandardIcon.Information //"qrc:/icons/content/app.ico"
     }
 
     // File overwrite
@@ -557,7 +556,6 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Save " + network.fileName + " first?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: newModel(true)
         onNo:  newModel(false)
     }
 
@@ -631,8 +629,6 @@ ApplicationWindow {
 
                 XNetwork{
                     id:network
-                    //                    fileUrl: ""
-                    //                    fileName: "" // "Model" + newModelCounter + ".json"
                     onMoveSelected: {
                         if(group.x < view.contentX)
                             scrollLeft.start()

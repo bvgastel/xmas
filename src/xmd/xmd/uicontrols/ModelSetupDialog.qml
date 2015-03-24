@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
+import Qt.labs.folderlistmodel 2.1
 
 Window {
     id:dialog
@@ -19,180 +20,332 @@ Window {
     maximumHeight: height
     maximumWidth: width
 
-
-//    property string modelFileName: "?"
-//    property string modelFilePath: ""
-//    property string modelAlias:""
-    property string modelImage:""
-//    property bool modelImageAsSymbol: false
-    property size modelSize: Qt.size(800,400)
+    signal setupAccepted
 
     ColumnLayout {
-        id: column
         anchors.fill: parent
-        anchors.margins: 10
-        spacing:10
-
+        spacing:5
+        anchors.margins: 5
+        // Model group 1
         RowLayout {
-            id:rowName
-            spacing:5
-            Label{
-                Layout.preferredWidth: 100
+            GroupBox {
+                id:group1
+                title: "Model properties"
+                Layout.fillWidth: true
+                ColumnLayout {
+                    id: column
+                    anchors.fill: parent
+                    spacing:5
+
+                    // Model file name
+                    RowLayout {
+                        Layout.preferredHeight: 25
+                        Layout.maximumHeight: 25
+                        Layout.minimumHeight: 25
+                        Label{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            text:"Filename"
+                            color:"darkblue"
+                            font.pixelSize: 12
+                            font.bold: true
+                            horizontalAlignment: Text.AlignRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        Rectangle{
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            color: "white"
+                            border.color: "red"
+                            radius: 5
+                            border.width: txtInputModelFileName.acceptableInput ? 0 : 2
+                            TextInput{
+                                id:txtInputModelFileName
+                                anchors.fill:parent
+                                anchors.leftMargin: 10
+                                text: network.fileName
+                                focus:true
+                                selectByMouse:true
+                                validator: RegExpValidator{id:regFileName ; regExp:/^[\w,\s-]+(\.json){1}$/}
+                                wrapMode: TextInput.NoWrap
+                                font.pointSize : 10
+                                onFocusChanged: if(focus)selectAll()
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+
+                    // Model folder
+                    RowLayout {
+                        Layout.preferredHeight: 60
+                        Layout.maximumHeight: 60
+                        Layout.minimumHeight: 60
+                        Item{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            Label{
+                                id: folderLabel
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.topMargin: 5
+                                text:"Folder"
+                                color:"darkblue"
+                                font.pixelSize: 12
+                                font.bold: true
+                            }
+                            Button{
+                                anchors.top: folderLabel.bottom
+                                anchors.left: folderLabel.left
+                                anchors.right: folderLabel.right
+                                anchors.topMargin: 2
+                                text:"..."
+                                onClicked: modelFolderDialog.open()
+                            }
+                        }
+                        Rectangle{
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            radius: 5
+                            border.color: "red"
+                            border.width: txtInputModelFolder.acceptableInput ? 0 : 2
+                            color: "white"
+                            TextInput{
+                                id:txtInputModelFolder
+                                anchors.fill:parent
+                                anchors.leftMargin: 10
+                                text: network.folder
+                                readOnly: true
+                                inputMethodHints: Qt.ImhUrlCharactersOnly
+                                validator: RegExpValidator{regExp:/^(\S.*)$/}
+                                wrapMode: TextInput.WordWrap
+                                font.pointSize : 8
+                            }
+                        }
+                    }
+
+
+
+                    // Model size
+                    RowLayout {
+                        Layout.preferredHeight: 25
+                        Layout.maximumHeight: 25
+                        Layout.minimumHeight: 25
+                        Label{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            text:"Width"
+                            color:"darkblue"
+                            font.pixelSize: 12
+                            font.bold: true
+                            horizontalAlignment: Text.AlignRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        Rectangle{
+                            Layout.preferredWidth: 100
+                            Layout.fillHeight: true
+                            anchors.rightMargin: 5
+                            color: "white"
+                            border.color: "red"
+                            radius: 5
+                            border.width: txtInputModelWidth.acceptableInput ? 0 : 2
+                            TextInput{
+                                id:txtInputModelWidth
+                                anchors.fill:parent
+                                anchors.leftMargin: 10
+                                text: network.size.width
+                                focus:true
+                                selectByMouse:true
+                                inputMethodHints: Qt.ImhDigitsOnly
+                                validator: IntValidator{bottom: 500; top:25000}
+                                wrapMode: TextInput.NoWrap
+                                font.pointSize : 10
+                                onFocusChanged: if(focus)selectAll()
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+
+                        Label{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            text:"Height"
+                            color:"darkblue"
+                            font.pixelSize: 12
+                            font.bold: true
+                            horizontalAlignment: Text.AlignRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Rectangle{
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            color: "white"
+                            border.color: "red"
+                            radius: 5
+                            border.width: txtInputModelHeight.acceptableInput ? 0 : 2
+                            TextInput{
+                                id:txtInputModelHeight
+                                anchors.fill:parent
+                                anchors.leftMargin: 10
+                                text: network.size.height
+                                focus:true
+                                selectByMouse:true
+                                inputMethodHints: Qt.ImhDigitsOnly
+                                validator: IntValidator{bottom: 500; top:25000}
+                                wrapMode: TextInput.NoWrap
+                                font.pointSize : 10
+                                onFocusChanged: if(focus)selectAll()
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        // Model group 2
+        RowLayout {
+            GroupBox {
+                id:group2
+                title: "Reuse properties"
+                Layout.fillWidth: true
                 Layout.fillHeight: true
-                text:"Model name"
-                color:"darkblue"
-                font.pixelSize: 12
-                font.bold: true
-                horizontalAlignment: Text.AlignRight
-            }
-            Rectangle{
-                Layout.fillWidth: true
-                height: 30
-                color: "white"
-                border.color: "red"
-                border.width: txtInputModelFileName.acceptableInput ? 0 : 2
-                TextInput{
-                    id:txtInputModelFileName
-                    anchors.fill:parent
-                    anchors.margins: 10
-                    text: network.fileName
-                    focus:true
-                    selectByMouse:true
-                    validator: RegExpValidator{id:regex ; regExp:/^[\w,\s-]+$/}
-                    wrapMode: TextInput.NoWrap
-                    font.pointSize : 10
-                    onFocusChanged: if(focus)selectAll()
-//                    onAccepted: okAction.trigger()
-//                    Keys.onEscapePressed:cancelAction.trigger()
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing:5
+
+                    // Model alias
+                    RowLayout {
+                        Layout.preferredHeight: 25
+                        Layout.maximumHeight: 25
+                        Layout.minimumHeight: 25
+                        Label{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            text:"Alias"
+                            color:"darkblue"
+                            font.pixelSize: 12
+                            font.bold: true
+                            horizontalAlignment: Text.AlignRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        Rectangle{
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            radius: 5
+                            color: "white"
+                            TextInput{
+                                id:txtInputModelAlias
+                                anchors.fill:parent
+                                anchors.leftMargin: 10
+                                text: network.alias
+                                focus:true
+                                selectByMouse:true
+                                validator: RegExpValidator{id:regAlias ; regExp:/^[\w,\s-]+$/}
+                                wrapMode: TextInput.NoWrap
+                                font.pointSize : 10
+                                onFocusChanged: if(focus)selectAll()
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+
+                    // Model image
+                    RowLayout {
+                        Layout.preferredHeight: 40
+                        Layout.maximumHeight: 40
+                        Layout.minimumHeight: 40
+                        Item{
+                            Layout.preferredWidth: 75
+                            Layout.fillHeight: true
+                            CheckBox {
+                                id: chkImage
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.topMargin: 5
+                                checked: network.imageName !== ""
+                                style: CheckBoxStyle{
+                                    label: Text {
+                                        color:"darkblue"
+                                        font.pixelSize: 12
+                                        font.bold: true
+                                        text: "Image"
+                                    }
+                                }
+
+                            }
+                            CheckBox {
+                                id: chkImageAsSymbol
+                                anchors.top: chkImage.bottom
+                                anchors.topMargin: 5
+                                anchors.left: chkImage.left
+                                checked: network.asSymbol
+                                style: CheckBoxStyle{
+                                    label: Text {
+                                        color:"darkblue"
+                                        font.pixelSize: 10
+                                        text: "symbol?"
+                                    }
+                                }
+                            }
+                        }
+
+                        Rectangle{
+                            id:imageRect
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            color: chkImage.checked ? "white" : "lightgrey"
+                            radius: 5
+                            border.color: chkImage.checked ? "darkblue" : "darkgrey"
+                            border.width: 2
+                            ListView {
+                                id:imageList
+                                anchors.fill: imageRect
+                                contentWidth: 50
+                                contentHeight: 50
+                                anchors.margins: 2
+                                enabled: chkImage.checked
+                                orientation: ListView.Horizontal
+                                model: symbols
+                                snapMode: ListView.SnapOneItem
+                                highlightFollowsCurrentItem: true
+                                flickDeceleration: 200
+                                clip:true
+                                //cacheBuffer: 200
+                                highlight:
+                                    Rectangle {
+                                    width: imageList.height
+                                    height:imageList.height
+                                    radius: 5
+                                    z:1
+                                    color: "transparent"
+                                    border.color: "cyan"
+                                    border.width: 3
+                                    visible: chkImage.checked
+                                }
+                                delegate:
+                                    Image {
+                                    height: imageList.height
+                                    width: imageList.height
+                                    source: Qt.resolvedUrl(fileURL)
+                                    fillMode: Image.PreserveAspectFit
+                                    opacity: chkImage.checked ? 1.0 : 0.25
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: imageList.currentIndex = index
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        RowLayout {
-            spacing:5
-            Label{
-                Layout.preferredWidth: 100
-                Layout.fillHeight: true
-                text:"Model file path"
-                color:"darkblue"
-                font.pixelSize: 12
-                font.bold: true
-                horizontalAlignment: Text.AlignRight
-            }
-            Button{
-                text:"..."
-                onClicked: modelFolderDialog.open()
-            }
-            Rectangle{
-                Layout.fillWidth: true
-                height: 60
-                border.color: "red"
-                border.width: txtInputModelFolder.acceptableInput ? 0 : 2
-                color: "white"
-                TextInput{
-                    id:txtInputModelFolder
-                    anchors.fill:parent
-                    anchors.margins: 10
-                    text: network.folder
-                    readOnly: true
-                    validator: RegExpValidator{id:regFolder ; regExp:/^(\S.*)$/}
-                    wrapMode: TextInput.WordWrap
-                    font.pointSize : 10
- //                    onAccepted: okAction.trigger()
-//                    Keys.onEscapePressed:cancelAction.trigger()
-                }
-            }
-
-        }
-        RowLayout {
-            spacing:5
-            Layout.preferredHeight: 15
-            Label{
-                text:"Alias"
-                color:"darkblue"
-                font.pixelSize: 12
-                font.bold: true
-                width: 100
-            }
-            Rectangle{
-                Layout.fillWidth: true
-                height: 30
-                color: "white"
-                TextInput{
-                    id:txtInputModelAlias
-                    anchors.fill:parent
-                    anchors.margins: 10
-                    text: network.alias
-                    focus:true
-                    selectByMouse:true
-//                    validator: RegExpValidator{id:regAlias ; regExp:/^(\S.*)$/}
-                    wrapMode: TextInput.NoWrap
-                    font.pointSize : 10
-                    onFocusChanged: if(focus)selectAll()
-//                    onAccepted: okAction.trigger()
-//                    Keys.onEscapePressed:cancelAction.trigger()
-                }
-            }
-        }
-        RowLayout {
-            spacing:5
-            Label{
-                text:"Model size"
-                color:"darkblue"
-                font.pixelSize: 12
-                font.bold: true
-                width: 100
-            }
-            ComboBox {
-                id: comboSize
-                height: 30
-                editable: false
-                model: ListModel {
-                    id: model
-                    ListElement { text: "Very large"}
-                    ListElement { text: "Large"}
-                    ListElement { text: "Normal"}
-                    ListElement { text: "Small"}
-                    ListElement { text: "Very small"}
-                }
-            }
-        }
-
-        RowLayout {
-            spacing:5
-            Layout.preferredHeight: 15
-            Label{
-                text:"Image"
-                color:"darkblue"
-                font.pixelSize: 12
-                font.bold: true
-                width: 100
-            }
-        }
-        RowLayout {
-            spacing:5
-            Layout.preferredHeight: 15
-            CheckBox {
-                id: chkImageAsSymbol
-                text: "as symbol"
-                checked: network.asSymbol
-            }
-        }
-
+        // Dialog buttons
         RowLayout{
-            spacing:10
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignRight
-
-            Label{
-                text:"UNDER CONSTRUCTION!!"
-                color:"red"
-                font.pixelSize: 18
-                font.bold: true
-                width: 100
-            }
-
             Button{
                 action:cancelAction
                 tooltip: ""
@@ -205,6 +358,8 @@ Window {
         }
     }
 
+
+    // Dialog actions
     Action {
         id:cancelAction
         text: "Cancel"
@@ -214,19 +369,30 @@ Window {
         id: okAction
         text: "Ok"
         enabled: txtInputModelFileName.acceptableInput
+                 & txtInputModelFolder.acceptableInput
+                 & txtInputModelWidth.acceptableInput
+                 & txtInputModelHeight.acceptableInput
         onTriggered: {
-            //dialog.expression = expr.text
             network.fileName = txtInputModelFileName.text
             network.folder = txtInputModelFolder.text
             network.alias = txtInputModelAlias.text
-            //network.size = Qt.size(??,??)
-            //network.imageName = ""
+            network.size = Qt.size(txtInputModelWidth.text,txtInputModelHeight.text)
+            network.imageName = symbols.get(imageList.currentIndex,"fileName")
             network.asSymbol = chkImageAsSymbol.checked
+            dialog.setupAccepted()
             dialog.close()
         }
     }
 
-    //Model path dialog
+    // Image model
+    FolderListModel {
+        id: symbols
+        showDirs: false
+        folder: "qrc:/symbols/content/symbols/"
+        nameFilters: [ "*.png", "*.jpg", "*.ico", "*.svg" ]
+    }
+
+    // Model path dialog
     FileDialog {
         id: modelFolderDialog
         selectExisting: true
@@ -234,6 +400,5 @@ Window {
         selectMultiple: false
         onAccepted: network.folder = modelFolderDialog.folder
     }
-
 }
 
