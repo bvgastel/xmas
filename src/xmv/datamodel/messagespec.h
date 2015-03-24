@@ -136,6 +136,11 @@ public:
 
     MessageSpecExtension() : PortExtension(), specs() {
     }
+    MessageSpecExtension& operator=(const MessageSpecExtension& b) {
+        this->specs = b.specs;
+        return *this;
+    }
+
     void addMessageSpec(const std::vector<SymbolicPacket> &p, MessageSpec::Ref s) {
         specs.emplace_back(p, s);
     }

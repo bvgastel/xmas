@@ -122,6 +122,11 @@ public:
     std::set<SymbolicPacket> availablePackets;
     SymbolicSwitchingFunctionExtension() : availablePackets() {
     }
+    SymbolicSwitchingFunctionExtension& operator=(const SymbolicSwitchingFunctionExtension& b) {
+        this->availablePackets = b.availablePackets;
+        return *this;
+    }
+
     void addSymbolicPacket(const SymbolicPacket &p);
 };
 

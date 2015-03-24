@@ -1,6 +1,9 @@
 #include "xmas.h"
 #include "flatten.h"
 #include "flatten-gates.h"
+#include "parse.h"
+
+#include "messagespec.h"
 
 using bitpowder::lib::String;
 using bitpowder::lib::Exception;
@@ -52,26 +55,52 @@ public:
     FlattenVisitor(XMASNetwork& network, Gates& gates, String name) : network(network), gates(gates), name(name)
     {}
 
-    void visit(XMASSink *c) override        {
+    void visit(XMASSink *c) override {
         if (c->external) {
             auto outGate = new XMASOutGate(name); result = outGate; gates.outGates.push_back(outGate);
         } else {
             result = network.insert<XMASSink>(name);
         }
     }
-    void visit(XMASSource *c) override      {
+    void visit(XMASSource *c) override {
         if (c->external) {
             auto inGate = new XMASInGate(name); result = inGate; gates.inGates.push_back(inGate);
         } else {
-            result = network.insert<XMASSource>(name);
+            auto src = network.insert<XMASSource>(name);
+            MessageSpecExtension *info = c->o.getPortExtension<MessageSpecExtension>();
+            MessageSpecExtension *flatInfo = src->o.getPortExtension<MessageSpecExtension>();
+            *flatInfo = *info;
+            result = src;
         }
     }
-    void visit(XMASQueue *) override        { result = network.insert<XMASQueue>(name); }
-    void visit(XMASFunction *) override     { result = network.insert<XMASFunction>(name); }
-    void visit(XMASSwitch *) override       { result = network.insert<XMASSwitch>(name); }
+    void visit(XMASQueue *c) override {
+        auto q = network.insert<XMASQueue>(name);
+        q->c = c->c;
+        result = q;
+    }
+    void visit(XMASFunction *c) override {
+        auto f = network.insert<XMASFunction>(name);
+        ParsedXMASFunctionExtension *ext = c->getComponentExtension<ParsedXMASFunctionExtension>();
+        ParsedXMASFunctionExtension *flatExt = f->getComponentExtension<ParsedXMASFunctionExtension>();
+        *flatExt = *ext;
+        result = f;
+    }
+    void visit(XMASSwitch *c) override {
+        auto sw = network.insert<XMASSwitch>(name);
+        SymbolicSwitchingFunctionExtension *ext = c->getComponentExtension<SymbolicSwitchingFunctionExtension>();
+        SymbolicSwitchingFunctionExtension *flatExt = sw->getComponentExtension<SymbolicSwitchingFunctionExtension>();
+        *flatExt = *ext;
+        result = sw;
+    }
     void visit(XMASFork *) override         { result = network.insert<XMASFork>(name); }
     void visit(XMASMerge *) override        { result = network.insert<XMASMerge>(name); }
-    void visit(XMASJoin *) override         { result = network.insert<XMASJoin>(name); }
+    void visit(XMASJoin *c) override {
+        auto join = network.insert<XMASJoin>(name);
+        ParsedXMASRestrictedJoin *ext = c->getComponentExtension<ParsedXMASRestrictedJoin>();
+        ParsedXMASRestrictedJoin *flatExt = join->getComponentExtension<ParsedXMASRestrictedJoin>();
+        *flatExt = *ext;
+        result = join;
+    }
     void visit(XMASComposite* c) override   {
         const XMASNetwork& subnetwork = c->getNetwork();
         const std::string prefix { name.stl() + "::" };
@@ -210,7 +239,5 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
         delete(flatC);
     }
 
-
-    // TODO: copy relevant extensions (e.g. messagespec, switching function) from src
     return gates;
 }

@@ -27,6 +27,11 @@ struct ParsedXMASFunctionExtension : public XMASComponentExtension {
     }
     ParsedXMASFunctionExtension(const std::shared_ptr<ParsedXMASFunction>& value) : value(value) {
     }
+    ParsedXMASFunctionExtension& operator=(const ParsedXMASFunctionExtension& b) {
+        this->value = b.value;
+        return *this;
+    }
+
 };
 
 struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
@@ -34,6 +39,10 @@ struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
     ParsedXMASRestrictedJoin() {
     }
     ParsedXMASRestrictedJoin(int function) : function(function) {
+    }
+    ParsedXMASRestrictedJoin& operator=(const ParsedXMASRestrictedJoin& b) {
+        this->function = b.function;
+        return *this;
     }
 };
 

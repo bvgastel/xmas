@@ -612,6 +612,7 @@ void TestFile(const std::string &filename, bool showAll) {
 
     XMASNetwork flattened = flatten(*project.getRootNetwork());
     auto components = flattened.getComponents();
+    //auto components = project.getRootNetwork()->getComponents();
 
     //auto parse = parse_xmas_from_file(filename, mp);
     //auto& components = parse.first;
