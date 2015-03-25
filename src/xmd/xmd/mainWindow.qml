@@ -616,7 +616,7 @@ ApplicationWindow {
         id: dialogQuit
         title: "Quit?"
         icon: StandardIcon.Question
-        text:  "Really wanna quit such a magnificent tool :P ?"
+        text:  "Are you sure you want to quit?"
         standardButtons: StandardButton.No | StandardButton.Yes
         // Qt BUG (MS Windows): need to destroy dialog internally before quit
         // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
