@@ -62,7 +62,7 @@ public:
  * A port on an xMas component.
  *
  */
-class Port : bitpowder::lib::ExtensionContainer<PortExtension>
+class Port : public bitpowder::lib::ExtensionContainer<PortExtension>
 {
     // due to compiler bug in GCC 4.8, can not be std::string
     // to avoid a memory leak (Input has an "o" argument as

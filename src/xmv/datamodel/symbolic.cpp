@@ -37,6 +37,7 @@ public:
 
     virtual void visit(XMASFunction *c) {
         SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)> *ext = c->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>(false);
+        // FIXME: is this if expression correct ??
         if (ext != nullptr || (bool)ext->function) {
             std::vector<SymbolicPacket> packets;
             packets.push_back(packet);

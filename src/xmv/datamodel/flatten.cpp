@@ -148,6 +148,41 @@ Port* getPort(XMASComponent* comp, int index) {
     return nullptr;
 }
 
+/**
+ * Test code to compare the number of extensions on the hierarchical
+ * components/ports and the number of extensions on the flattened
+ * equivalents. (Mismatches expected for composites).
+ */
+template<typename T>
+std::pair<int, int> compareExtensionCounts(T* a, T* b) {
+    int i = 0, j = 0;
+    for (auto x : a->getAllExtensions()) {
+        i++;
+    }
+    for (auto x : b->getAllExtensions()) {
+        j++;
+    }
+    return std::make_pair(i, j);
+}
+
+void compareComponents(XMASComponent* a, XMASComponent* b) {
+    int i = 0, j = 0;
+    std::tie(i,j) = compareExtensionCounts(a, b);
+    if (i != j) {
+        std::cout << a->getName() << "/" << b->getName() << " :   " << i << ", " << j << std::endl;
+    }
+
+    auto x = a->ports().begin();
+    auto y = b->ports().begin();
+    while (x != a->ports().end() && y != b->ports().end()) {
+        std::tie(i,j) = compareExtensionCounts(*x, *y);
+        if (i !=  j) {
+            std::cout << a->getName() << "." << (*x)->getName() << "/" << b->getName() << "." << (*y)->getName() << " :   " << i << ", " << j << std::endl;
+        }
+        ++x;
+        ++y;
+    }
+}
 
 Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string prefix)
 {
@@ -167,7 +202,7 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
 
         hierFlatMap[c] = fv.result;
 
-        //std::cout << qualifiedName << std::endl;
+        compareComponents(c, fv.result);
     }
 
 
