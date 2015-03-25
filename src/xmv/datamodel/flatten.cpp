@@ -67,9 +67,13 @@ public:
             auto inGate = new XMASInGate(name); result = inGate; gates.inGates.push_back(inGate);
         } else {
             auto src = network.insert<XMASSource>(name);
-            MessageSpecExtension *info = c->o.getPortExtension<MessageSpecExtension>();
-            MessageSpecExtension *flatInfo = src->o.getPortExtension<MessageSpecExtension>();
-            *flatInfo = *info;
+            MessageSpecExtension *msInfo = c->o.getPortExtension<MessageSpecExtension>();
+            MessageSpecExtension *flatMsInfo = src->o.getPortExtension<MessageSpecExtension>();
+            *flatMsInfo = *msInfo;
+
+            SymbolicTypesExtension* stInfo = c->o.getPortExtension<SymbolicTypesExtension>();
+            SymbolicTypesExtension* flatStInfo = src->o.getPortExtension<SymbolicTypesExtension>();
+            *flatStInfo = *stInfo;
             result = src;
         }
     }

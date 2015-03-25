@@ -3,11 +3,13 @@
 #include "parser_json.h"
 #include "parse.h"
 #include "simplestring.h"
+#include "export.h"
 
 #include <sys/stat.h>
 #include <fcntl.h>
 
 #include <sstream>
+#include <fstream>
 
 using namespace bitpowder::lib;
 
@@ -20,6 +22,26 @@ XMASProject::XMASProject(const std::string& filename)
 
 XMASProject::~XMASProject()
 {
+
+}
+
+void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
+{
+    MemoryPool mp;
+    std::set<XMASComponent*> allComponents;
+
+    JSONData::Map globals = JSONData::AllocateMap(mp);
+
+    network = network ? network : root;
+
+    for (auto& it : network->getComponents()) {
+        allComponents.insert(it.second);
+    }
+
+    String jsonStr = Export(allComponents, globals, mp);
+
+    std::ofstream file { filename };
+    file << jsonStr;
 
 }
 

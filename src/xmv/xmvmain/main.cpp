@@ -614,6 +614,9 @@ void TestFile(const std::string &filename, bool showAll) {
     auto components = flattened.getComponents();
     //auto components = project.getRootNetwork()->getComponents();
 
+    project.saveNetwork(filename + ".export");
+    project.saveNetwork(filename + ".flat", &flattened);
+
     //auto parse = parse_xmas_from_file(filename, mp);
     //auto& components = parse.first;
 

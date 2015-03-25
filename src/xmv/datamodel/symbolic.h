@@ -167,6 +167,15 @@ public:
 
     SymbolicTypesExtension() : PortExtension(), availablePackets(), availablePacketsHashes(), candidates(), workerItem(nullptr) {
     }
+    SymbolicTypesExtension& operator=(const SymbolicTypesExtension& b) {
+        this->availablePackets = b.availablePackets;
+        this->availablePacketsHashes = b.availablePacketsHashes;
+        this->candidates = b.candidates;
+        this->workerItem = b.workerItem;        // FIXME: does simply copying this pointer cause any trouble?
+        // FIXME: what about the SpinLock?
+        return *this;
+    }
+
     // returns true if packet is not yet in here
     void addSymbolicPacket(SymbolicPacket &&p);
     void simplify(const std::string &desc, bool full = false);

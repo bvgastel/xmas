@@ -13,6 +13,8 @@ public:
     XMASNetwork* getRootNetwork() const { return root; }
     const XMASNetwork* getNetwork(const std::string name) const { return networks.find(name)->second.get(); }
 
+    void saveNetwork(const std::string& filename, XMASNetwork* network = nullptr);
+
 private:
     bitpowder::lib::MemoryPool mp;
     std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;
