@@ -45,8 +45,9 @@
         <file>content/saveAs.ico</file>
         <file>content/setup.ico</file>
         <file>content/warning.ico</file>
+        <file>content/exit.ico</file>
     </qresource>
-	    <qresource prefix="/symbols">
+    <qresource prefix="/symbols">
         <file>content/symbols/agent.png</file>
     </qresource>
 </RCC>

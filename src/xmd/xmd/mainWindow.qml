@@ -270,7 +270,7 @@ ApplicationWindow {
         id: quitAction
         text: "Quit"
         shortcut: StandardKey.Quit
-        iconSource: "qrc:/icons/content/quit.ico"
+        iconSource: "qrc:/icons/content/exit.ico"
         iconName: "Quit"
         onTriggered: network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }
@@ -485,6 +485,8 @@ ApplicationWindow {
             //TODO replace with plugin progress value
 
             Item { Layout.fillWidth: true }
+            ToolBarSeparator{}
+            ToolButton {action: quitAction}
         }
     }
 
