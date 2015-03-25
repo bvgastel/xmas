@@ -7,7 +7,6 @@
         <file>content/new.png</file>
         <file>content/open.png</file>
         <file>content/paste.png</file>
-        <file>content/save.png</file>
         <file>content/zoom-fit.png</file>
         <file>content/zoom-in.png</file>
         <file>content/zoom-out.png</file>
@@ -40,12 +39,10 @@
         <file>content/not_ok.ico</file>
         <file>content/ok.ico</file>
         <file>content/plugin.ico</file>
-        <file>content/quit.ico</file>
         <file>content/save.ico</file>
-        <file>content/saveAs.ico</file>
         <file>content/setup.ico</file>
         <file>content/warning.ico</file>
-        <file>content/exit.ico</file>
+        <file>content/quit.ico</file>
     </qresource>
     <qresource prefix="/symbols">
         <file>content/symbols/agent.png</file>
