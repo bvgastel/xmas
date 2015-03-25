@@ -32,11 +32,11 @@ namespace model {
 class Network : public QQuickItem
 {
     Q_OBJECT
-    //NOTE : alias, size , imageName and asSymbol must be serialized in the json in the network object
+    //NOTE : alias, size , imageName and boxedImage must be serialized in the json in the network object
     Q_PROPERTY(QString alias MEMBER m_alias NOTIFY aliasChanged)
     Q_PROPERTY(QSize size MEMBER m_size NOTIFY sizeChanged)
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
-    Q_PROPERTY(bool asSymbol MEMBER m_asSymbol NOTIFY asSymbolChanged)
+    Q_PROPERTY(bool boxedImage MEMBER m_boxedImage NOTIFY boxedImageChanged)
     Q_PROPERTY(QString packet READ packet WRITE setPacket NOTIFY packetChanged)
 
 private:
@@ -46,7 +46,7 @@ signals:
     void aliasChanged();
     void sizeChanged();
     void imageNameChanged();
-    void asSymbolChanged();
+    void boxedImageChanged();
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
@@ -140,7 +140,7 @@ private:
     QSize m_size;
     QString m_imageName;
     QString m_packet;
-    bool m_asSymbol;
+    bool m_boxedImage;
 
 };
 

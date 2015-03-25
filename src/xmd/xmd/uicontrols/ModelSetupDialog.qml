@@ -205,14 +205,14 @@ Window {
         RowLayout {
             GroupBox {
                 id:group2
-                title: "Reuse properties"
+                title: "Composite properties"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 ColumnLayout {
                     anchors.fill: parent
                     spacing:5
 
-                    // Model alias
+                    // Composite alias
                     RowLayout {
                         Layout.preferredHeight: 25
                         Layout.maximumHeight: 25
@@ -272,16 +272,16 @@ Window {
                                 }
                             }
                             CheckBox {
-                                id: chkImageAsSymbol
+                                id: chkBoxedImage
                                 anchors.top: chkImage.bottom
                                 anchors.topMargin: 5
                                 anchors.left: chkImage.left
-                                checked: network.asSymbol
+                                checked: network.boxedImage
                                 style: CheckBoxStyle{
                                     label: Text {
                                         color:"darkblue"
                                         font.pixelSize: 10
-                                        text: "symbol?"
+                                        text: "boxed?"
                                     }
                                 }
                             }
@@ -376,7 +376,7 @@ Window {
             network.alias = txtInputModelAlias.text
             network.size = Qt.size(txtInputModelWidth.text,txtInputModelHeight.text)
             network.imageName = symbols.get(imageList.currentIndex,"fileName")
-            network.asSymbol = chkImageAsSymbol.checked
+            network.boxedImage = chkBoxedImage.checked
             dialog.setupAccepted()
             dialog.close()
         }

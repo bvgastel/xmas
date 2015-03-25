@@ -37,6 +37,7 @@ import "qrc:/ui/uicontrols/"
 import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
 import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
 import XMAS.model 1.0 as XMAS
+import XMAS 1.0 as X
 
 
 XMAS.XNetwork {
@@ -48,7 +49,7 @@ XMAS.XNetwork {
     height: size.height
     transformOrigin: Item.TopLeft
     alias:""
-    asSymbol: false
+    boxedImage: true
     imageName: ""
     property string fileName: "?.json"
     property string folder: modelFolder
@@ -63,7 +64,7 @@ XMAS.XNetwork {
 
     // Event handling
     onChildrenChanged: modified=true
-    onWriteLog: log(message, color)
+    onWriteLog: log(X.Util.Designer,message, color)
     onPacketChanged: modified=true
 
     // JavaScripts
@@ -100,7 +101,7 @@ XMAS.XNetwork {
         network.folder = modelFolder
         network.alias = ""
         network.imageName = ""
-        network.asSymbol = false
+        network.boxedImage = true
         network.modified = false
     }
 
