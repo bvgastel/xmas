@@ -38,6 +38,11 @@ CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
 unix: CONFIG += static dll
+
+# Some problems are easier to debug using no optimization
+# In that case: uncomment the following line (-O1 might be enough)
+#QMAKE_CXXFLAGS_DEBUG += -O0
+
 #CONFIG += build_all
 
 TARGET = xmd
@@ -67,7 +72,9 @@ SOURCES       = \
     model/channel.cpp \
     model/port.cpp \
     model/network.cpp
-    
+
+
+
 ################################################
 # INSTALL instructions
 ################################################

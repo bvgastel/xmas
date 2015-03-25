@@ -37,7 +37,6 @@ class Network : public QQuickItem
     Q_PROPERTY(QSize size MEMBER m_size NOTIFY sizeChanged)
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
     Q_PROPERTY(bool asSymbol MEMBER m_asSymbol NOTIFY asSymbolChanged)
-    Q_PROPERTY(QQmlListProperty<model::Component> components READ components NOTIFY componentsChanged)
     Q_PROPERTY(QString packet READ packet WRITE setPacket NOTIFY packetChanged)
 
 private:
@@ -48,7 +47,6 @@ signals:
     void sizeChanged();
     void imageNameChanged();
     void asSymbolChanged();
-    void componentsChanged();
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
@@ -93,26 +91,20 @@ public slots:
     bool closeFile();
     bool newFile();
 
-    QQmlListProperty<Component> components();
-
 private:
-    //#################################################################################################
-    // instead of qmllist we can use this simple loop to read all components on the canvas
-    // (linking a qmllist directly needs a slightly different approach at qml side too,can be done later if time left)
     QList<Component *> getAllComponents() {
-        m_components.clear();
+        QList<Component *> componentList;
+        componentList.clear();
 
         for(QQuickItem *item : this->childItems()) {
             Component *c = qobject_cast<Component *>(item);
             if(c){
-                m_components.append(c);
+                componentList.append(c);
             }
         }
-        qDebug() << "Total comps in list = " << m_components.count();
-        return m_components;
+        qDebug() << "Total comps in list = " << componentList.count();
+        return componentList;
     }
-
-    //#################################################################################################
 
     bool portError(XPort *outport, QString errMsg);
 
@@ -122,11 +114,6 @@ private:
 
     bool connect(Output *xmas_outport, Input *xmas_inport);
     bool disconnect(Output *xmas_outport, Input *xmas_inport);
-
-    static void append_components(QQmlListProperty<Component> *property, Component *comp);
-    static int count_components(QQmlListProperty<Component> *property);
-    static Component *at_components(QQmlListProperty<Component> *property, int index);
-    static void clear_components(QQmlListProperty<Component> *property);
 
 public:
     explicit Network(QQuickItem *parent = 0);
@@ -147,7 +134,6 @@ public:
 
 private:
 
-    QList<Component *> m_components;
     std::set<XMASComponent *> m_xmas_comp_list;
 
     QString m_alias;

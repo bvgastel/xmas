@@ -19,11 +19,13 @@ model::Network::~Network()
  *
  */
 bool model::Network::portError(XPort *port, QString errMsg) {
-    errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
-                                                           : " port = input_port! ");
-    errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
-    if (!port->getConnected()) {
-        errMsg += "Port is not connected. ";
+    if (port) {
+        errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
+                                                               : " port = input_port! ");
+        errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
+        if (!port->getConnected()) {
+            errMsg += "Port is not connected. ";
+        }
     }
     emit writeLog(errMsg, Qt::red);
     qDebug() << errMsg;
@@ -198,67 +200,10 @@ QString model::Network::toJson() {
          "}";
 }
 
-QQmlListProperty<model::Component> model::Network::components() {
-    return QQmlListProperty<model::Component>(this, 0,      // The 0 = (void *)data
-                                              &model::Network::append_components,
-                                              &model::Network::count_components,
-                                              &model::Network::at_components,
-                                              &model::Network::clear_components
-                                              );
-}
-
 bool model::Network::addComponent(model::Component *component) {
     auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
     component->xmas_component(xmas_comp);
     bool result;
     std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
     return result;
-}
-
-
-/*****************************************************************************/
-/*              Static methods: QQmlListProperty callbacks                   */
-/*****************************************************************************/
-
-void model::Network::append_components(QQmlListProperty<model::Component> *property,
-                     model::Component *comp) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        comp->setParent(network);
-        network->m_components.append(comp);
-    } else {
-        std::string errMsg = "[Network.append_components] network pointer zero ??";
-        std::cout << errMsg << std::endl;
-    }
-}
-
-int model::Network::count_components(QQmlListProperty<model::Component> *property) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        return network->m_components.size();
-    }
-    std::string errMsg = "[Network.count_components] network pointer zero ??";
-    std::cout << errMsg << std::endl;
-    return 0;
-}
-
-model::Component *model::Network::at_components(QQmlListProperty<model::Component> *property,
-                                       int index) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        return network->m_components.at(index);
-    }
-    std::string errMsg = "[Network.at_components] network pointer zero ??";
-    std::cout << errMsg << std::endl;
-    return nullptr;
-}
-
-void model::Network::clear_components(QQmlListProperty<model::Component> *property) {
-    Network *network = qobject_cast<Network *>(property->object);
-    if (network) {
-        network->m_components.clear();
-    } else {
-        std::string errMsg = "[Network.clear_components] network pointer zero ??";
-        std::cout << errMsg << std::endl;
-    }
 }
