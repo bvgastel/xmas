@@ -84,9 +84,13 @@ public:
     }
     void visit(XMASFunction *c) override {
         auto f = network.insert<XMASFunction>(name);
-        ParsedXMASFunctionExtension *ext = c->getComponentExtension<ParsedXMASFunctionExtension>();
-        ParsedXMASFunctionExtension *flatExt = f->getComponentExtension<ParsedXMASFunctionExtension>();
-        *flatExt = *ext;
+        ParsedXMASFunctionExtension *pmeExt = c->getComponentExtension<ParsedXMASFunctionExtension>();
+        ParsedXMASFunctionExtension *flatPmeExt = f->getComponentExtension<ParsedXMASFunctionExtension>();
+        *flatPmeExt = *pmeExt;
+
+        auto sfeExt = c->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>();
+        auto flatSfeExt = f->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>();
+        *flatSfeExt = *sfeExt;
         result = f;
     }
     void visit(XMASSwitch *c) override {

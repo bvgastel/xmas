@@ -138,6 +138,10 @@ public:
     }
     SymbolicFunctionExtension(std::function<T> &function) : function(function) {
     }
+    SymbolicFunctionExtension& operator=(const SymbolicFunctionExtension& b) {
+        this->function = b.function;
+        return *this;
+    }
 };
 
 template <class T>
