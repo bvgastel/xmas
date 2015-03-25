@@ -271,7 +271,7 @@ ApplicationWindow {
         id: quitAction
         text: "Quit"
         shortcut: StandardKey.Quit
-        iconSource: "qrc:/icons/content/exit.ico"
+        iconSource: "qrc:/icons/content/quit.ico"
         iconName: "Quit"
         onTriggered: network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }

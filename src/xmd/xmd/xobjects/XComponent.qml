@@ -110,7 +110,7 @@ Model.XComponent {
     // Event handling
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
-    onWriteLog: mainwindow.log(message,color)
+ //   onWriteLog: mainwindow.log(message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
 
@@ -247,25 +247,25 @@ Model.XComponent {
         MenuSeparator{}
         MenuItem {
             text: "Rotate Right (90°)"
-            iconSource: "qrc:/content/rotate_right.png"
+            iconSource: "qrc:/icons/content/rotate_right.png"
             iconName: "RotateRight"
             onTriggered: doRotate(90)
         }
         MenuItem {
             text: "Rotate Left (90°)"
-            iconSource: "qrc:/content/rotate_left.png"
+            iconSource: "qrc:/icons/content/rotate_left.png"
             iconName: "RotateLeft"
             onTriggered: doRotate(-90)
         }
         MenuItem {
             text: "Increase Size"
-            iconSource: "qrc:/content/bigger.ico"
+            iconSource: "qrc:/icons/content/bigger.ico"
             iconName: "Bigger"
             onTriggered: doScale(0.25)
         }
         MenuItem {
             text: "Decrease Size"
-            iconSource: "qrc:/content/smaller.ico"
+            iconSource: "qrc:/icons/content/smaller.ico"
             iconName: "Smaller"
             onTriggered: doScale(-0.25)
         }
