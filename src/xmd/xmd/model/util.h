@@ -38,10 +38,11 @@ public:
 
     enum messageType {
         Info = Qt::black,
+        Succes = Qt::green,
         Warning = Qt::yellow,
         Error = Qt::red
         };
-    enum logType {Designer,Plugin};
+    enum logType {Designer=0,Plugin=1};
 
 
 signals:

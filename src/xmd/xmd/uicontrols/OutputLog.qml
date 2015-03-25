@@ -47,16 +47,16 @@ ColumnLayout{
 
     //   signal writeLog(string text, color clr)
 
-    function log(type,text,color){
+    function log(type,message,color){
         //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
         if(type===XMAS.Util.Designer){
-            tabview.designerTabLog(text,color)
+            tabview.designerLogSig(message,color)
         }
         if(type===XMAS.Util.Plugin){
-            tabview.pluginTabLog(text,color)
+            tabview.pluginLogSig(message,color)
         }
-   }
+    }
 
     Settings {
         category: "outputLog"
@@ -108,47 +108,67 @@ ColumnLayout{
         tabPosition: Qt.BottomEdge
         frameVisible: false
         visible: open //to hide tabs & scrollbar
-        function designerTabLog(text,color){
-            designerTab.designerLog(text,color)
-        }
-        function pluginTabLog(text,color){
-            pluginTab.pluginLog(text,color)
-        }
+
+        signal designerLogSig(var message, var color)
+        signal pluginLogSig(var message, var color)
         Tab {
             id:designerTab
             title: "Designer log"
-            function designerLog(text,color){
-                //designerLogList.append("<font color=" + color + ">" + text + "</color>")
-            }
+            active: true
             TextArea {
-                id:designerLogList
+                id:designerList
                 anchors.fill: parent
                 z:-1 //to hide scrollbar when height is 0
                 readOnly: true
                 font.pointSize: 10
                 textFormat: Qt.RichText
                 style: TextAreaStyle {
-                    backgroundColor: "white"
+                    backgroundColor: "lavender"
+                }
+                Connections{
+                    target: tabview
+                    onDesignerLogSig: designerList.append("<font color=" + color + ">" + message + "</color>")
                 }
             }
+
         }
         Tab {
             id:pluginTab
             title: "Plugin log"
-            function pluginLog(text,color){
-                //pluginLogList.append("<font color=" + color + ">" + text + "</color>")
-            }
+            active:true
             TextArea {
-                id:pluginLogList
+                id:pluginList
                 anchors.fill: parent
                 z:-1 //to hide scrollbar when height is 0
                 readOnly: true
                 font.pointSize: 10
                 textFormat: Qt.RichText
                 style: TextAreaStyle {
-                    backgroundColor: "white"
+                    backgroundColor: "lavender"
+                }
+                Connections{
+                    target: tabview
+                    onPluginLogSig: pluginList.append("<font color=" + color + ">" + message + "</color>")
                 }
             }
+        }
+
+        style: TabViewStyle {
+            frameOverlap: 1
+            tab: Rectangle {
+                color: styleData.selected ? "steelblue" :"lightsteelblue"
+                border.color:  "steelblue"
+                implicitWidth: Math.max(text.width + 4, 80)
+                implicitHeight: 20
+                radius: 2
+                Text {
+                    id: text
+                    anchors.centerIn: parent
+                    text: styleData.title
+                    color: styleData.selected ? "white" : "black"
+                }
+            }
+            frame: Rectangle { color: "steelblue" }
         }
     }
 

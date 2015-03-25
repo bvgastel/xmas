@@ -47,6 +47,7 @@ import QtGraphicalEffects 1.0
 import Qt.labs.settings 1.0
 import "qrc:/xmas/xobjects/"
 import "qrc:/ui/uicontrols/"
+import XMAS 1.0 as XMAS
 
 ApplicationWindow {
     id: mainwindow
@@ -840,7 +841,7 @@ ApplicationWindow {
      ************************************************/
     Connections {
         target: datacontrol
-        onWriteLog: output.log(0,message,color)
+        onWriteLog: output.log(XMAS.Util.Designer,message,color)
     }
 
     //TODO log via util
@@ -849,7 +850,7 @@ ApplicationWindow {
      ************************************************/
     Connections {
         target: plugincontrol
-        onWriteLog: output.log(0,message,color)
+        onWriteLog: output.log(XMAS.Util.Plugin,message,color)
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
             var line = " Loaded plugins: [ ";
@@ -859,7 +860,7 @@ ApplicationWindow {
                 glue = ", ";
             }
             line += " ]";
-            output.log(0,line, "red");
+            output.log(XMAS.Util.Plugin,line, "red");
         }
     }
 
