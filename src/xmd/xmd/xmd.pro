@@ -53,7 +53,7 @@ CONFIG(debug, debug|release) {
 
 DEFINES += XMD_LIBRARY
 
-HEADERS       = \ 
+HEADERS       = \
     xmdexception.h \
     plugincontrol.h \
     datacontrol.h \
@@ -62,8 +62,8 @@ HEADERS       = \
     model/channel.h \
     model/port.h \
     model/network.h
-				
-SOURCES       = \ 
+
+SOURCES       = \
     xmdexception.cpp \
     plugincontrol.cpp \
     datacontrol.cpp \
@@ -87,8 +87,8 @@ unix|win32|macx {
     INSTALLS += headerfiles
 }
 
-INCLUDEPATH += uicontrols xobjects xmapper content
-DEPENDPATH += uicontrols xobjects xmapper content
+INCLUDEPATH += uicontrols xobjects content
+DEPENDPATH += uicontrols xobjects content
 
 DISTFILES += mainWindow.qml \
     xobjects/fork.qml \
@@ -106,7 +106,7 @@ DISTFILES += mainWindow.qml \
     xobjects/XChannel.qml \
     xobjects/XPort.qml \
     xobjects/XNetwork.qml \
-    xmapper/controller.js \
+    xobjects/xnetwork.js \
     uicontrols/ScrollBar.qml \
     uicontrols/XToolBar.qml \
     uicontrols/XToolBarItem.qml \
@@ -120,7 +120,8 @@ DISTFILES += mainWindow.qml \
     uicontrols/SelectionHandle.qml \
     uicontrols/XPacketDialog.qml \
     xobjects/composite.qml \
-    uicontrols/ModelSetupDialog.qml
+    uicontrols/ModelSetupDialog.qml \
+    uicontrols/ApplicationSetupDialog.qml
 
 RESOURCES += \
     images.qrc \

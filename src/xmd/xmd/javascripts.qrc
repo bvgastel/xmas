@@ -2,6 +2,6 @@
     <qresource prefix="/javascripts">
         <file>xobjects/xchannel.js</file>
         <file>xobjects/xcomponent.js</file>
-        <file>xmapper/controller.js</file>
+        <file>xobjects/xnetwork.js</file>
     </qresource>
 </RCC>

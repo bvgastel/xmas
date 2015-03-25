@@ -26,6 +26,7 @@ Window {
         anchors.fill: parent
         spacing:5
         anchors.margins: 5
+
         // Model group 1
         RowLayout {
             GroupBox {
@@ -123,8 +124,6 @@ Window {
                         }
                     }
 
-
-
                     // Model size
                     RowLayout {
                         Layout.preferredHeight: 25
@@ -176,7 +175,7 @@ Window {
                         }
 
                         Rectangle{
-                            Layout.fillWidth: true
+                            Layout.preferredWidth: 100
                             Layout.fillHeight: true
                             color: "white"
                             border.color: "red"
@@ -271,7 +270,6 @@ Window {
                                         text: "Image"
                                     }
                                 }
-
                             }
                             CheckBox {
                                 id: chkImageAsSymbol

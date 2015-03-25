@@ -35,22 +35,28 @@ import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
 import Qt.labs.settings 1.0
 import "qrc:/ui/uicontrols/"
+import XMAS 1.0 as XMAS
 
 ColumnLayout{
-    spacing:0
     id:output
-    property bool open: false
-    property string status: "Ready"
+    spacing:0
     property int lastHeight
     property int headerHeight:25
+    property bool open: false
+    property string status // current tab title not working
 
-    signal writeLog(string text, color clr)
+    //   signal writeLog(string text, color clr)
 
-    function log(text,color){
+    function log(type,text,color){
         //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
-       logList.append("<font color=" + color + ">" + text + "</color>")
-     }
+        if(type===XMAS.Util.Designer){
+            tabview.designerTabLog(text,color)
+        }
+        if(type===XMAS.Util.Plugin){
+            tabview.pluginTabLog(text,color)
+        }
+   }
 
     Settings {
         category: "outputLog"
@@ -94,19 +100,56 @@ ColumnLayout{
         }
     }
 
-    TextArea {
-        id:logList
-        z:-1 //to hide scrollbar when height is 0
+    TabView{
+        id:tabview
         anchors.margins: 5
         Layout.fillWidth: true
         Layout.fillHeight: true
-        readOnly: true
-        font.pointSize: 10
-        textFormat: Qt.RichText
-        style: TextAreaStyle {
-            backgroundColor: "lightgrey"
+        tabPosition: Qt.BottomEdge
+        frameVisible: false
+        visible: open //to hide tabs & scrollbar
+        function designerTabLog(text,color){
+            designerTab.designerLog(text,color)
         }
-        visible: open //to hide a funny scrollbar behavior (doesn't work in the states)
+        function pluginTabLog(text,color){
+            pluginTab.pluginLog(text,color)
+        }
+        Tab {
+            id:designerTab
+            title: "Designer log"
+            function designerLog(text,color){
+                //designerLogList.append("<font color=" + color + ">" + text + "</color>")
+            }
+            TextArea {
+                id:designerLogList
+                anchors.fill: parent
+                z:-1 //to hide scrollbar when height is 0
+                readOnly: true
+                font.pointSize: 10
+                textFormat: Qt.RichText
+                style: TextAreaStyle {
+                    backgroundColor: "white"
+                }
+            }
+        }
+        Tab {
+            id:pluginTab
+            title: "Plugin log"
+            function pluginLog(text,color){
+                //pluginLogList.append("<font color=" + color + ">" + text + "</color>")
+            }
+            TextArea {
+                id:pluginLogList
+                anchors.fill: parent
+                z:-1 //to hide scrollbar when height is 0
+                readOnly: true
+                font.pointSize: 10
+                textFormat: Qt.RichText
+                style: TextAreaStyle {
+                    backgroundColor: "white"
+                }
+            }
+        }
     }
 
     states: [
@@ -132,6 +175,9 @@ ColumnLayout{
     }
 
     // release animation when settings are restored
-    Component.onCompleted: transOpenClose.enabled = true
+    Component.onCompleted: {
+        transOpenClose.enabled = true
+    }
 }
+
 

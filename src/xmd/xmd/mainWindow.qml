@@ -45,7 +45,6 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
 import Qt.labs.settings 1.0
-
 import "qrc:/xmas/xobjects/"
 import "qrc:/ui/uicontrols/"
 
@@ -60,7 +59,9 @@ ApplicationWindow {
     color: "darkgrey"
     title: Qt.application.name + "     -     " + network.fileName + (network.modified ? "*" : "")
 
-    property string defaultModelDirectory
+    property string modelFolder: util.modelPath()
+    property bool confirmQuit:true
+    property bool autoSave:true
     property bool showComponentNames:true
     property bool showPortNames:true
 
@@ -71,7 +72,9 @@ ApplicationWindow {
         property alias y: mainwindow.y
         property alias width: mainwindow.width
         property alias height: mainwindow.height
-        property alias defaultModelDirectory: mainwindow.defaultModelDirectory
+        property alias confirmQuit: mainwindow.confirmQuit
+        property alias autoSave: mainwindow.autoSave
+        property alias modelFolder: mainwindow.modelFolder
         property alias showComponentNames: mainwindow.showComponentNames
         property alias showPortNames: mainwindow.showPortNames        
     }
@@ -96,11 +99,6 @@ ApplicationWindow {
         openCompositeDialog.open()
     }
 
-    function log(text,color)
-    {
-        outputLog.log(text,color)
-    }
-
     // Closes the current model and starts a new one
     function newModel(save){
         if(save) saveModel()
@@ -116,14 +114,14 @@ ApplicationWindow {
     }
 
     function saveModel(){
-        network.saveFile(network.folder)
+        network.saveFile(network.url())
         network.modified = false
     }
 
 
     // Event handling
     onClosing: {
-        close.accepted = false; network.modified ? dialogSaveBeforeQuit.open() : dialogQuit.open()
+        close.accepted = false; network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }
     //TODO load plugins in c++ property list
     Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
@@ -158,7 +156,15 @@ ApplicationWindow {
         iconName: "model-save"
         text: "Save"
         shortcut: StandardKey.Save
-        onTriggered: network.folder === "" ? modelSetupDialog() : saveModel()
+        onTriggered: network.fileName === "?.json" ? modelSetupDialog() : saveModel()
+    }
+
+    Action {
+        id: setupAction
+        iconSource: "qrc:/icons/content/setup.ico"
+        iconName: "setup"
+        text: "Setup..."
+        onTriggered: appSetupDialog.show()
     }
 
     Action {
@@ -266,7 +272,7 @@ ApplicationWindow {
         shortcut: StandardKey.Quit
         iconSource: "qrc:/icons/content/quit.ico"
         iconName: "Quit"
-        onTriggered: network.modified ? dialogSaveBeforeQuit.open() : dialogQuit.open()
+        onTriggered: network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }
 
     Action {
@@ -324,7 +330,7 @@ ApplicationWindow {
             MenuItem { action: fileNewAction }
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
-            MenuItem { action: modelSetupAction }
+            MenuItem { action: setupAction }
             MenuSeparator{}
             MenuItem { action: quitAction }
         }
@@ -336,6 +342,9 @@ ApplicationWindow {
             MenuSeparator{}
             MenuItem {action: selectAreaAction}
             MenuItem {action: selectAllAction}
+            MenuSeparator{}
+            MenuItem { action: modelSetupAction }
+
         }
 
         Menu {
@@ -388,9 +397,9 @@ ApplicationWindow {
             ToolButton { action: fileNewAction }
             ToolButton { action: fileOpenAction }
             ToolButton { action: fileSaveAction }
+            ToolBarSeparator {}
             ToolButton { action: modelSetupAction }
             ToolBarSeparator {}
-
 
             ToolButton { action: copyAction }
             ToolButton { action: cutAction }
@@ -488,6 +497,20 @@ ApplicationWindow {
 
     //#######################################################################################################
     //
+    // Time triggered actions
+    //
+    //#######################################################################################################
+    Timer {
+        id: autoSaveTimer
+            interval: 500000 //every 5min
+            running: autoSave & network.modified
+            repeat: true
+            onTriggered: saveModel()
+        }
+
+
+    //#######################################################################################################
+    //
     // Dialogs
     //
     //#######################################################################################################
@@ -498,6 +521,10 @@ ApplicationWindow {
         onExpressionChanged: {
             network.packet = packetDialog.expression
         }
+    }
+
+    ApplicationSetupDialog{
+        id:appSetupDialog
     }
 
     //File Open
@@ -784,39 +811,43 @@ ApplicationWindow {
 
         //remember the log height
         onResizingChanged: {
-            outputLog.lastHeight = outputLog.height
-            outputLog.open = outputLog.lastHeight > 0
+            output.lastHeight = output.height
+            output.open = output.lastHeight > 0
         }
 
         OutputLog {
-            id: outputLog
+            id: output
             Layout.minimumHeight: headerHeight
         }
 
     }
-
-
 
     //#######################################################################################################
     //
     // Connections
     //
     //#######################################################################################################
+    Connections {
+        target: util
+        onWriteLog: output.log(type,message,color)
+    }
 
+    //TODO: log via util
     /************************************************
      * Data Control
      ************************************************/
     Connections {
         target: datacontrol
-        onWriteLog: log(message,color)
+        onWriteLog: output.log(0,message,color)
     }
 
+    //TODO log via util
     /************************************************
      * Plugin Control
      ************************************************/
     Connections {
         target: plugincontrol
-        onWriteLog: log(message,color)
+        onWriteLog: output.log(0,message,color)
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
             var line = " Loaded plugins: [ ";
@@ -826,7 +857,7 @@ ApplicationWindow {
                 glue = ", ";
             }
             line += " ]";
-            log(line, "red");
+            output.log(0,line, "red");
         }
     }
 

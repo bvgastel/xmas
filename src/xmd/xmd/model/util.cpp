@@ -50,3 +50,7 @@ bool Util::saveFile(QUrl fileUrl, QString contents) {
     return true;
 
 }
+
+QString Util::modelPath() {
+    return QDir::homePath() + "/xmas-models";
+}

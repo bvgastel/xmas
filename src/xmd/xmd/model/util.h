@@ -24,20 +24,37 @@
 #define UTIL_H
 
 #include <QObject>
+#include <QDir>
 
 class Util : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(messageType)
+    Q_ENUMS(logType)
+
 public:
     explicit Util(QObject *parent = 0);
     ~Util();
 
+    enum messageType {
+        Info = Qt::black,
+        Warning = Qt::yellow,
+        Error = Qt::red
+        };
+    enum logType {Designer,Plugin};
+
+
 signals:
+    void writeLog(logType log, QString message, messageType color = Info);
 
 public slots:
 
+    static QString modelPath();
+
+
 public:
     static bool saveFile(QUrl fileUrl, QString contents);
+
 };
 
 #endif // UTIL_H

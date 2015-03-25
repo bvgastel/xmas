@@ -45,14 +45,14 @@ function doConnect(port1,port2) {
 
 //TODO : portnames are references and must match json!!!
 //TODO : avoid short naming
-function create(iComp,iPort,tComp,tPort) {
+function create(outcomp,outport,incomp,inport) {
     channel = null
-    var initiator_comp = getComponent(iComp)
-    var initiator_port = getPort(initiator_comp,iPort)
-    var target_comp = getComponent(tComp)
-    var target_port = getPort(target_comp,tPort)
-    //log("target: " + target_comp.name + "." + target_port.name)
-    loadcomponent(initiator_port,target_port)
+    var out_comp = getComponent(outcomp)
+    var out_port = getPort(out_comp,outport)
+    var in_comp = getComponent(incomp)
+    var in_port = getPort(in_comp,inport)
+    //log("in: " + in_comp.name + "." + in_port.name)
+    loadcomponent(out_port,in_port)
     return true
 }
 
@@ -79,9 +79,7 @@ function getPort(comp,name){
 }
 
 function abortConnecting(port) {
-    //channel.destroy()
-    //component.destroy()
-    port.connected = false
+//    port.connected = false
     port = null
     channel = null
     component = null

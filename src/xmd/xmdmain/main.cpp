@@ -39,6 +39,7 @@
 #include "memorypool.h"
 #include "plugincontrol.h"
 #include "datacontrol.h"
+#include "model/util.h"
 #include "model/network.h"
 
 
@@ -69,12 +70,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
     ctx->setContextProperty("plugincontrol", &pluginControl);
 
+    Util util;
+    qmlRegisterType<Util>("XMAS", 1, 0, "Util"); // Before engine.load
+    ctx->setContextProperty("util", &util);
+
+
     /* End of OOAK class registration for Qml access */
     /*************************************************/
 
     dataControl.registerTypes(); // Before engine.load
 
-    engine.load(QUrl(QStringLiteral("qrc:ui///mainWindow.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/ui/mainWindow.qml")));
     return app.exec();
 
 }

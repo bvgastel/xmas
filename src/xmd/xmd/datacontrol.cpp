@@ -127,10 +127,10 @@ void DataControl::connectInQml(QVariantList &list, XMASComponent *comp) {
     for (Output *out : comp->outputPorts()) {
         if (out->isConnected()) {
             QVariantMap map;
-            map.insert("initiator", QString(out->getInitiator()->getStdName().c_str()));
-            map.insert("initiatorport", QString(out->getName()));
-            map.insert("target", QString(out->getTarget()->getStdName().c_str()));
-            map.insert("targetport", QString(out->getTargetPort()->getName()));
+            map.insert("outcomp", QString(out->getInitiator()->getStdName().c_str()));
+            map.insert("outport", QString(out->getName()));
+            map.insert("incomp", QString(out->getTarget()->getStdName().c_str()));
+            map.insert("inport", QString(out->getTargetPort()->getName()));
 //            m_logger.log(
 //             "channel created from " + out->getInitiator()->getStdName() +
 //             " to " + out->getTarget()->getStdName());

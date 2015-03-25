@@ -19,7 +19,7 @@
  *  <http://www.gnu.org/licenses/>.
  *
  *
- * Parts of this code were copied from Qt examples with following copyright
+ * Parts of this ChannelJs were copied from Qt examples with following copyright
  * and license notices:
  *
  * Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies)
@@ -34,8 +34,8 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
 import "qrc:/ui/uicontrols/"
-import "qrc:/javascripts/xobjects/xchannel.js" as Code
-import "qrc:/javascripts/xmapper/controller.js" as Ctrl
+import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
+import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
 import XMAS.model 1.0 as XMAS
 
 
@@ -51,7 +51,7 @@ XMAS.XNetwork {
     asSymbol: false
     imageName: ""
     property string fileName: "?.json"
-    property string folder: ""
+    property string folder: modelFolder
     property bool selectionMode: Qt.Unchecked
     property int gridsize: 10
     property int margin: 25
@@ -67,6 +67,10 @@ XMAS.XNetwork {
     onPacketChanged: modified=true
 
     // JavaScripts
+
+    function url(){
+       return network.folder + "/" + network.fileName
+    }
 
     // Scale
     function doScale(dScale){
@@ -93,7 +97,7 @@ XMAS.XNetwork {
         selectAll()
         selection.deleteSelected()
         network.fileName = "?.json"
-        network.folder = ""
+        network.folder = modelFolder
         network.alias = ""
         network.imageName = ""
         network.asSymbol = false
@@ -117,8 +121,8 @@ XMAS.XNetwork {
         if (wire.port1) {
             if(wire.port1.type !== port.type)
             {
-                Code.doConnect(wire.port1,port)
-                Code.channel = null
+                ChannelJs.doConnect(wire.port1,port)
+                ChannelJs.channel = null
                 wire.port1 = null
                 wire.port2 = null
                 wire.connecting = false
@@ -303,7 +307,7 @@ XMAS.XNetwork {
     // Connections
     Connections {
         target: datacontrol
-        onCreateNetwork: Ctrl.createNetwork(object)
+        onCreateNetwork: NetworkJs.createNetwork(object)
     }
 
     Connections {

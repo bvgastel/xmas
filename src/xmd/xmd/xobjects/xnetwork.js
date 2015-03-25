@@ -6,6 +6,7 @@ var start
 var end
 var time
 
+// called by datacontrol signal
 function createNetwork(object) {
 
     if(!object) {
@@ -26,10 +27,10 @@ function createNetwork(object) {
     var connlist = object["channellist"]
     for (var conn in connlist) {
         var result = Channel.create(
-                    connlist[conn]["initiator"],
-                    connlist[conn]["initiatorport"],
-                    connlist[conn]["target"],
-                    connlist[conn]["targetport"]
+                    connlist[conn]["outcomp"],
+                    connlist[conn]["outport"],
+                    connlist[conn]["incomp"],
+                    connlist[conn]["inport"]
                     )
     }
 
@@ -144,21 +145,3 @@ function destroyAll(network){
     network.children = temp
     //log("network cleared.","black")
 }
-
-
-// TODO : can be removed when xmd is finished
-// tempory test function
-function showXItems(network){
-    var ccnt = 0
-    var cnt1 = 0
-    for (var child in network.children) {
-        if(network.children[child].objectName==="channel") {
-            ccnt++
-        }
-        if(network.children[child].objectName==="component") {
-            cnt1++
-        }
-    }
-    log("network has " + ccnt + " channels and " + cnt1 + " components","blue")
-}
-
