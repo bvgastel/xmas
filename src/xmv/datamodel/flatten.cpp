@@ -161,9 +161,11 @@ template<typename T>
 std::pair<int, int> compareExtensionCounts(T* a, T* b) {
     int i = 0, j = 0;
     for (auto x : a->getAllExtensions()) {
+        bitpowder::lib::unused(x);
         i++;
     }
     for (auto x : b->getAllExtensions()) {
+        bitpowder::lib::unused(x);
         j++;
     }
     return std::make_pair(i, j);

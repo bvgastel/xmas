@@ -602,9 +602,6 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 
 void TestFile(const std::string &filename, bool showAll) {
 
-
-    //bitpowder::lib::MemoryPool mp;
-
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
@@ -612,13 +609,9 @@ void TestFile(const std::string &filename, bool showAll) {
 
     XMASNetwork flattened = flatten(*project.getRootNetwork());
     auto components = flattened.getComponents();
-    //auto components = project.getRootNetwork()->getComponents();
 
     project.saveNetwork(filename + ".export");
     project.saveNetwork(filename + ".flat", &flattened);
-
-    //auto parse = parse_xmas_from_file(filename, mp);
-    //auto& components = parse.first;
 
     auto current = std::chrono::high_resolution_clock::now();
     std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
@@ -670,14 +663,8 @@ void TestFile(const std::string &filename, bool showAll) {
 }
 
 int main(int argc, char* argv[]) {
-/*
-    XMASQueue q("test");
-    for (Port* p : q.ports())
-        std::cout << *p << std::endl;
-    return 1;
-    */
     bool showall = false;
-    bool showsinks = true;
+    bool showsinks = false;
     try {
         if (argc >= 3 && strcmp("-json", argv[1]) == 0) {
             TestFile(argv[2], showall);

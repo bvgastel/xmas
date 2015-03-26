@@ -19,7 +19,7 @@ public:
 
     void accept(XMASComponentVisitor &) override
     {
-        throw Exception("Unable to visit XMASOutGate.");
+        throw Exception("Unable to visit XMASInGate.");
     }
 
     Port** beginPort(PortType type) override

@@ -8,6 +8,7 @@ modules/xmas-vt
 include*
 lib*
 bin*
+src/testfiles/*
 *~
 LICENSE-TEMPLATE-*
 
