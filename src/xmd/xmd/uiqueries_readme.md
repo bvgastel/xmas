@@ -54,4 +54,5 @@ gbo     22-03       Global variables in JSON: need the same in user interface. C
 gbo     23-03       What gets entered into PACKET_TYPE? How to check? (network.cpp)
 gbo     23-03       What gets entered into VARS? How to check? (network.ccp & qml)
 gbo     23-03       Don't ask for quit/save if network is empty (after deletion for instance)
-gbo     23-03       Really quit question discuss
+gbo     23-03  ok   Really quit question discuss --> in setup
+gbo     26-03       Saving default home folder does not work
