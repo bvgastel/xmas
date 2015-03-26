@@ -50,7 +50,7 @@ protected:
     {
     }
 
-    const bitpowder::lib::String json = "{"
+    const bitpowder::lib::String json_input = "{"
                                         "\"VARS\": [],"
                                         "\"PACKET_TYPE\": {\"val \": 2},"
                                         "\"COMPOSITE_OBJECTS\": [],"
@@ -80,6 +80,7 @@ TEST_F(TestExport, export_json_string)
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
 
     std::map<bitpowder::lib::String, XMASComponent *> componentMap;
+    bitpowder::lib::String json = json_input(mp);
     std::tie(componentMap, globals) = parse_xmas_from_json(json.stl(), mp);
 
     std::set<XMASComponent *> componentSet = convertToSet(componentMap);
