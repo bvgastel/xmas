@@ -169,7 +169,7 @@ Window {
         selectExisting: true
         selectFolder: true
         selectMultiple: false
-        onAccepted: mainwindow.modelfolder = modelFolderDialog.folder
+        onAccepted: mainwindow.modelFolder = modelFolderDialog.folder
     }
 }
 
