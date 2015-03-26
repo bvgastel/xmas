@@ -38,7 +38,7 @@ public:
 
     enum messageType {
         Info = Qt::black,
-        Succes = Qt::green,
+        Success = Qt::green,
         Warning = Qt::yellow,
         Error = Qt::red
         };

@@ -92,19 +92,7 @@ public slots:
     bool newFile();
 
 private:
-    QList<Component *> getAllComponents() {
-        QList<Component *> componentList;
-        componentList.clear();
-
-        for(QQuickItem *item : this->childItems()) {
-            Component *c = qobject_cast<Component *>(item);
-            if(c){
-                componentList.append(c);
-            }
-        }
-        qDebug() << "Total comps in list = " << componentList.count();
-        return componentList;
-    }
+    QList<Component *> getAllComponents();
 
     bool portError(XPort *outport, QString errMsg);
 
@@ -119,18 +107,8 @@ public:
     explicit Network(QQuickItem *parent = 0);
     ~Network();
 
-    QString packet(){
-     return m_packet ;
-    }
-
-    void setPacket(QString expression){
-        if (expression != m_packet) {
-                m_packet = expression;
-
-            }
-            emit packetChanged();
-        qDebug() << "packet expression = " << m_packet;
-    }
+    QString packet();
+    void setPacket(QString expression);
 
 private:
 

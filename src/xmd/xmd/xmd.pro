@@ -121,7 +121,8 @@ DISTFILES += mainWindow.qml \
     uicontrols/XPacketDialog.qml \
     xobjects/composite.qml \
     uicontrols/ModelSetupDialog.qml \
-    uicontrols/ApplicationSetupDialog.qml
+    uicontrols/ApplicationSetupDialog.qml \
+    qml-xmas-readme.md
 
 RESOURCES += \
     images.qrc \
