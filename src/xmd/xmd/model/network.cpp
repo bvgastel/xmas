@@ -14,6 +14,33 @@ model::Network::~Network()
 
 }
 
+QString model::Network::packet() {
+ return m_packet ;
+}
+
+void model::Network::setPacket(QString expression) {
+    if (expression != m_packet) {
+        m_packet = expression;
+
+    }
+    emit packetChanged();
+    qDebug() << "packet expression = " << m_packet;
+}
+
+QList<model::Component *> model::Network::getAllComponents() {
+    QList<Component *> componentList;
+    componentList.clear();
+
+    for(QQuickItem *item : this->childItems()) {
+        Component *c = qobject_cast<Component *>(item);
+        if(c){
+            componentList.append(c);
+        }
+    }
+    qDebug() << "Total comps in list = " << componentList.count();
+    return componentList;
+}
+
 /*
  * portError(port, errMsg) always return false to support error messaging.
  *
@@ -49,7 +76,7 @@ bool model::Network::xmasError(Output *xmas_outport, Input *xmas_inport, QString
     if (xmas_inport) {
         if (xmas_inport->m_owner)
             in_owner = xmas_inport->m_owner->getStdName().c_str();
-        in_port_name = xmas_outport->getName();
+        in_port_name = xmas_inport->getName();
         in_port_is_connected = xmas_inport->isConnected();
     }
 
@@ -141,6 +168,8 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
+    qDebug() << "outport = " << outport->getName();
+    qDebug() << "inport = " << inport->getName();
     bool success = disconnect(xmas_outport, xmas_inport);
 
     if (success) {
@@ -184,20 +213,9 @@ QString model::Network::toJson() {
         auto c = comp->xmas_component();
         allComp.insert(c);
     }
-//    result = ::Export(allComp,globals,mp);
-//    QString jsonString = QString(result.stl().c_str());
-//    return jsonString;
-    return "{"
-           "\"VARS\": [],"
-           "\"PACKET_TYPE\": {\"val \": 2},"
-           "\"COMPOSITE_OBJECTS\": [],"
-           "\"NETWORK\": ["
-             "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[{\"id\":\"q1\",\"in_port\":0}],\"pos\":{\"x\": 100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
-             "{\"id\": \"q1\",\"type\": \"queue\",\"outs\": [{\"id\": \"q2\",\"in_port\": 0}],\"pos\": {\"x\": 210,\"y\": 210,\"orientation\": 90,\"scale\": 200},\"fields\": [{\"size\": 2}]},"
-             "{\"id\": \"q2\",\"type\": \"queue\",\"outs\": [{\"id\": \"sink3\",\"in_port\": 0}],\"pos\": {\"x\": 310,\"y\": 310,\"orientation\": 0,\"scale\": 100},\"fields\": [{\"size\": 5}]},"
-             "{\"id\": \"sink3\",\"type\": \"sink\",\"pos\": {\"x\": 410,\"y\": 410,\"orientation\": 0,\"scale\": 100}}"
-             "]"
-         "}";
+    result = ::Export(allComp,globals,mp);
+     QString jsonString = QString(result.stl().c_str());
+    return jsonString;
 }
 
 bool model::Network::addComponent(model::Component *component) {

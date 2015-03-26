@@ -55,4 +55,7 @@ gbo     23-03       What gets entered into PACKET_TYPE? How to check? (network.c
 gbo     23-03       What gets entered into VARS? How to check? (network.ccp & qml)
 gbo     23-03       Don't ask for quit/save if network is empty (after deletion for instance)
 gbo     23-03  ok   Really quit question discuss --> in setup
-gbo     26-03       Saving default home folder does not work
+gbo     26-03  ok   Saving default home folder does not work
+gbo     26-03       Expression valid: bolletje blijft rood
+gbo     26-03  ok   2x disconnect
+Stefan  26-03       Tussenpunten op connecties
