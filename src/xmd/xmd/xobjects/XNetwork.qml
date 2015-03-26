@@ -36,11 +36,11 @@ import QtQuick.Window 2.1
 import "qrc:/ui/uicontrols/"
 import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
 import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
-import XMAS.model 1.0 as XMAS
-import XMAS 1.0 as X
+import XMAS.model 1.0 as Model
+import XMAS 1.0 as XMAS
 
 
-XMAS.XNetwork {
+Model.XNetwork {
     id: network
     // Properties
     scale: 1.0
@@ -64,7 +64,7 @@ XMAS.XNetwork {
 
     // Event handling
     onChildrenChanged: modified=true
-    onWriteLog: log(X.Util.Designer,message, color)
+    onWriteLog: log(XMAS.Util.Designer,message, color)
     onPacketChanged: modified=true
 
     // JavaScripts
@@ -216,7 +216,7 @@ XMAS.XNetwork {
             rotation: -parent.rotation
             radius: {
                 if(wire.port1) {
-                    wire.port1.type === XMAS.XPort.Target ? 10  : 0
+                    wire.port1.type === Model.XPort.Target ? 10  : 0
                 } else 0
             }
             border.color: wire.color

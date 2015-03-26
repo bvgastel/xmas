@@ -34,6 +34,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS.model 1.0 as Model
+import XMAS 1.0 as XMAS
 import "qrc:/ui/uicontrols/"
 
 Model.XComponent {
@@ -110,7 +111,7 @@ Model.XComponent {
     // Event handling
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
- //   onWriteLog: mainwindow.log(message,color)
+    onWriteLog: mainwindow.log(XMAS.Util.Designer ,message,color)
     onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
 

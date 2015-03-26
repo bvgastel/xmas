@@ -119,6 +119,9 @@ ApplicationWindow {
         network.modified = false
     }
 
+    function log(type,message,color){
+        output.log(type,message,color)
+    }
 
     // Event handling
     onClosing: {
