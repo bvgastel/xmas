@@ -23,6 +23,11 @@
 #ifndef WORKERINTERFACE_H
 #define WORKERINTERFACE_H
 
+#include <QObject>
+
+#include "commoninterface.h"
+#include "resultinterface.h"
+
 class WorkerInterface : public QObject
 {
     Q_OBJECT
@@ -37,7 +42,7 @@ public slots:
     virtual void doWork(XMap &componentMap) = 0;
 
 signals:
-    void resultReady(const Result &result);
+    void resultReady(const ResultInterface &result);
 
 };
 

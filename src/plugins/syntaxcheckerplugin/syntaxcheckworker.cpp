@@ -28,7 +28,7 @@
 #include "parse.h"
 #include "syntaxcheckworker.h"
 
-SyntaxCheckWorker::SyntaxCheckWorker(QObject *parent) : QObject(parent) {
+SyntaxCheckWorker::SyntaxCheckWorker(QObject *parent) : WorkerInterface(parent) {
 
 }
 

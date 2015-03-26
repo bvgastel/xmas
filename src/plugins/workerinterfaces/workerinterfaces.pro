@@ -12,8 +12,8 @@ TEMPLATE = lib
 WARNINGS += -Wall
 
 CONFIG += C++11
-CONFIG += create_prl
 CONFIG += dll
+CONFIG += create_prl
 
 CONFIG(debug, debug|release) {
     macx: TARGET = $$join(TARGET,,,_debug)
@@ -49,19 +49,28 @@ unix {
 ################################################
 macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug \
+
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodeld
+    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
+    -L$$PWD/../../../lib/interfaces/ -linterfacesd \
 
-else:unix|CONFIG(release, debug|release): LIBS += \
+
+else:unix|CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel
+    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
+    -L$$PWD/../../../lib/interfaces/ -linterfaces \
+
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder
 
 INCLUDEPATH += $$PWD/../../../include/datamodel
 DEPENDPATH += $$PWD/../../../include/datamodel
+
+INCLUDEPATH += $$PWD/../../../include/interfaces
+DEPENDPATH +=  $$PWD/../../../include/interfaces
 

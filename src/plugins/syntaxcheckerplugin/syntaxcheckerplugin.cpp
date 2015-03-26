@@ -81,7 +81,8 @@ void SyntaxCheckerPlugin::startProcess(const QString &json) {
     m_process.setProcessChannelMode(QProcess::ForwardedChannels);
     // TODO: How to start processes?
     m_process.setProgram("dir");  // fixed program
-    m_process.setArguments("");   // variable argument
+    QStringList argList = {};
+    m_process.setArguments(argList);   // variable argument
     m_process.start();
 }
 

@@ -29,7 +29,7 @@
 #include "simplestring.h"
 #include "result.h"
 
-class SyntaxCheckWorker : public QObject, public Wor
+class SyntaxCheckWorker : public WorkerInterface
 {
     Q_OBJECT
 public:

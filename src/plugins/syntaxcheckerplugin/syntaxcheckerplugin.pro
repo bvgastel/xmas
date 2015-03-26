@@ -52,11 +52,16 @@ DISTFILES += \
 # Internal dependencies
 ################################################
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../workerinterfaces/release/ -lworkerinterfaces
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfacesd
-else:macx:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../workerinterfaces/release/ -lworkerinterfaces
-else:macx:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfaces_debug
-else:unix: LIBS += -L$$OUT_PWD/../workerinterfaces/ -lworkerinterfaces
+macx:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfaces_debug \
+
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfacesd \
+
+
+else:unix:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../workerinterfaces/ -lworkerinterfaces \
+
 
 INCLUDEPATH += $$PWD/../workerinterfaces
 DEPENDPATH += $$PWD/../workerinterfaces
