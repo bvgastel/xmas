@@ -79,17 +79,6 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     return result;
 }
 
-bool DataControl::fileSave(QUrl fileUrl) {
-
-    std::string filename =
-            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
-                                  : fileUrl.fileName().toStdString();
-
-
-    return false;
-
-}
-
 bool DataControl::emitNetwork(XCompMap &componentMap) {
     // Works with (local) the parameter componentMap,  not the datamember m_componentMap.
     std::clock_t c_start = std::clock();

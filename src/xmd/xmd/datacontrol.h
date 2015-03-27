@@ -101,7 +101,6 @@ signals:
      ************************************************************/
 public slots:
     bool fileOpen(QUrl fileUrl);
-    bool fileSave(QUrl fileUrl);
 
     /************************************************************
      * Public methods
