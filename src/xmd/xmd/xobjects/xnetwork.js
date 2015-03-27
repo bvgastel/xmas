@@ -45,8 +45,8 @@ function loadComponent(object) {
         return
     }
 
-    if(object.comptype!==undefined){
-        qml = getXQml(object.comptype)
+    if(object.type!==undefined){
+        qml = getXQml(object.type)
     } else {
         log("Undefined type!" + object,"red")
         return

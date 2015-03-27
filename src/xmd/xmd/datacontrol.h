@@ -37,20 +37,21 @@
 #include "memorypool.h"
 #include "exception.h"
 #include "common.h" // for destroy template
+#include "model/component.h"
 
 typedef std::map<bitpowder::lib::String, XMASComponent *> XCompMap;
 typedef bitpowder::lib::MemoryPool XMP;
 
-const QString xsource = "source";
-const QString xsink = "sink";
-const QString xfunction = "function";
-const QString xqueue = "queue";
-const QString xjoin = "join";
-const QString xmerge = "merge";
-const QString xfork = "fork";
-const QString xswitch = "switch";
-const QString xin = "in";
-const QString xout = "out";
+const model::Component::CompType xsource = model::Component::CompType::Source;
+const model::Component::CompType xsink = model::Component::CompType::Sink;
+const model::Component::CompType xfunction = model::Component::CompType::Function;
+const model::Component::CompType xqueue = model::Component::CompType::Queue;
+const model::Component::CompType xjoin = model::Component::CompType::Join;
+const model::Component::CompType xmerge = model::Component::CompType::Merge;
+const model::Component::CompType xfork = model::Component::CompType::Fork;
+const model::Component::CompType xswitch = model::Component::CompType::Switch;
+const model::Component::CompType xin = model::Component::CompType::In;
+const model::Component::CompType xout = model::Component::CompType::Out;
 
 /**
  * @brief The DataControl class
@@ -127,7 +128,7 @@ private:
      * enums and constant data members
      ************************************************************/
     //TODO : enumeration in javascript.
-    std::map<std::type_index, QString> m_type_index_map = {
+    std::map<std::type_index, model::Component::CompType> m_type_index_map = {
         {std::type_index(typeid(XMASSource)), xsource},
         {std::type_index(typeid(XMASSink)), xsink},
         {std::type_index(typeid(XMASFunction)), xfunction},

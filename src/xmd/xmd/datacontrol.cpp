@@ -137,7 +137,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
 //    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
-    QString type = m_type_index_map[typeIndex];
+    model::Component::CompType type = m_type_index_map[typeIndex];
     QString qname = QString::fromStdString(name);
 
     CanvasComponentExtension *ext = comp->getExtension<CanvasComponentExtension *>();
