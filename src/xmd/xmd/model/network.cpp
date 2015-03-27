@@ -219,8 +219,9 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
 
 
 bool model::Network::openFile(QUrl url) {
-    Q_UNUSED(url)
-    //TODO open network via util instead of datacontrol
+
+    QString json = Util::openFile(url);
+    // TODO: convert json to XMASComponent
     return true;
 }
 

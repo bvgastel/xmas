@@ -12,4 +12,4 @@ gbo     26-03       Pos lijst in connecties --> xmas
 
 gbo     26-03       Plugins werkend, maar niet verder?
 
-gbo     26-03   ok  [EXPORT] Abort bij 2e x saven
+gbo     26-03   ok  [EXPORT] Abort bij 2e x saven <--- caused by unconnected components

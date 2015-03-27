@@ -36,21 +36,42 @@ Util::~Util()
 
 }
 
+QString Util::modelPath() {
+    return QDir::homePath() + "/xmas-models";
+}
+
 bool Util::saveFile(QUrl fileUrl, QString contents) {
     QString filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile()
                                   : fileUrl.fileName();
     // Write to file
     QFile file(filename);
-    if (!file.open(QFile::WriteOnly | QFile::Truncate))
+    if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
         return false;
+    }
     QTextStream out(&file);
     out << contents;
     file.close();
     return true;
-
 }
 
-QString Util::modelPath() {
-    return QDir::homePath() + "/xmas-models";
+QString Util::openFile(QUrl fileUrl) {
+    QString filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile()
+                                  : fileUrl.fileName();
+
+    emit (new Util())->writeLog(Designer, "Opening file " + filename);
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly)) {
+        return QString();
+    }
+
+    QTextStream in(&file);
+
+    QString contents;
+    in >> contents;
+
+    return contents;
 }
+
+

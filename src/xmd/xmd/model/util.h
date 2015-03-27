@@ -55,6 +55,7 @@ public slots:
 
 public:
     static bool saveFile(QUrl fileUrl, QString contents);
+    static QString openFile(QUrl fileUrl);
 
 };
 
