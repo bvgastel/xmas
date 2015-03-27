@@ -14,7 +14,7 @@ QT       += core
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG += C++11
-CONFIG += link_prl
+##CONFIG += link_prl
 
 SOURCES += main.cpp
 

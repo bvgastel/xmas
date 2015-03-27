@@ -13,7 +13,7 @@ WARNINGS += -Wall
 
 CONFIG += C++11
 CONFIG += dll
-CONFIG += create_prl
+##CONFIG += create_prl
 
 CONFIG(debug, debug|release) {
     macx: TARGET = $$join(TARGET,,,_debug)
@@ -25,8 +25,7 @@ DEFINES += WORKERINTERFACES_LIBRARY
 
 SOURCES += workerinterface.cpp
 
-HEADERS += workerinterface.h\
-        workerinterfaces_global.h
+HEADERS += workerinterface.h
 
 ################################################
 # INSTALL instructions

@@ -25,19 +25,17 @@
 
 #include <map>
 
-//#include <QtPlugin>
+#include <QtPlugin>
 #include <QString>
 #include <QVariant>
 
 #include "commoninterface.h"
 #include "xmas.h"
-#include "loggerinterface.h"
 
 class VtPluginInterface
 {
 
 public:
-    virtual ~VtPluginInterface() {}
 
     virtual QString name() = 0;
     virtual void name(QString name) = 0;
@@ -49,14 +47,11 @@ public:
     virtual void startThread(const QString &json) = 0;
     virtual void startProcess(const QString &json) = 0;
 
-    virtual LoggerInterface *logger() = 0;
-
 };
 
 #define VtPluginInterface_iid "nl.ou.xmd.VtPluginInterface/1.0"
 
 Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
-
 
 #endif // VTPLUGININTERFACE
 

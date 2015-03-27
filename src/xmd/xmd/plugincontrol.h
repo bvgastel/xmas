@@ -29,6 +29,7 @@
 #include <QColor>
 #include <QVariantMap>
 
+#include "loggerinterface.h"
 #include "vtplugininterface.h"
 
 class PluginControl : public QObject

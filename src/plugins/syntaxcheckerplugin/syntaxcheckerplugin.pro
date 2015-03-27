@@ -13,7 +13,7 @@ QT       -= gui
 
 CONFIG += plugin
 CONFIG += C++11
-CONFIG += create_prl
+##CONFIG += create_prl
 CONFIG += dll
 #CONFIG += build_all
 
@@ -27,7 +27,8 @@ DEFINES += PLUGINS_LIBRARY
 
 SOURCES += \
     syntaxcheckerplugin.cpp \
-    syntaxcheckworker.cpp
+    syntaxcheckworker.cpp \
+    loggerfactory.cpp
 
 HEADERS +=\
     syntaxcheckerplugin.h \

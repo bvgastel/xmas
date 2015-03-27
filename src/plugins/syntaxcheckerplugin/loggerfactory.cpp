@@ -20,4 +20,12 @@
   *
   **********************************************************************/
 
+#include "logger.h"
+#include "loggerfactory.h"
+
+/********** Static **********************************************************/
+LoggerInterface *LoggerFactory::MakeLogger(QString name) {
+    return new Logger(name, nullptr);
+}
+
 

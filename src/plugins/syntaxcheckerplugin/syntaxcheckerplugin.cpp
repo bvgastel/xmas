@@ -26,7 +26,7 @@
 
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
-#include "loggerfactory.h"
+//#include "loggerfactory.h"
 
 QString SyntaxCheckerPlugin::name() {
     return m_name;
@@ -34,8 +34,8 @@ QString SyntaxCheckerPlugin::name() {
 
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
-    m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}}),
-    m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
+    m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}})
+//    m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
 {
 }
 
@@ -92,10 +92,10 @@ void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
     auto list = result.errorList();
     for (ErrorObject err : list) {
         if (err.error) {
-            m_logger->log(err.errorMessage);
-            m_logger->log(err.errorObjectName);
+            std::cout << err.errorMessage.toStdString() << std::endl;
+            std::cout << err.errorObjectName.toStdString() << std::endl;
         } else {
-            m_logger->log(result.description());
+            std::cout << result.description().toStdString() << std::endl;
         }
 
     }
@@ -114,7 +114,7 @@ void SyntaxCheckerPlugin::parameters(QVariantMap paramMap) {
     m_paramMap = paramMap;
 }
 
-LoggerInterface *SyntaxCheckerPlugin::logger() {
-    return m_logger;
-}
+//LoggerInterface *SyntaxCheckerPlugin::logger() {
+//    return m_logger;
+//}
 

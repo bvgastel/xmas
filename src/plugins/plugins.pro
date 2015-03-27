@@ -5,8 +5,10 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 SUBDIRS += \
-        syntaxcheckerplugin \
     workerinterfaces \
-    mainplugin
+    syntaxcheckerplugin \
+    mainplugin \
+
+
 
 
