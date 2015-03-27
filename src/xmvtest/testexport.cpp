@@ -65,7 +65,7 @@ protected:
     const bitpowder::lib::String json_input_2 = "{"
                                         "\"COMPOSITE_OBJECTS\":[],"
                                         "\"NETWORK\":["
-                                          "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[],\"pos\":{\"x\":100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
+                                          "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[{}],\"pos\":{\"x\":100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
                                           "],"
                                           "\"PACKET_TYPE\":{\"val \": 2},"
                                           "\"VARS\":[]"

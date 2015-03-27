@@ -98,14 +98,16 @@ public:
 
     void writeOut(Output &output, bitpowder::lib::JSONData::Vector& to) {
         bitpowder::lib::JSONData::Map channel = JSONData::AllocateMap(mp);
-        channel["id"] = bitpowder::lib::String(output.getTarget()->getName());
-        int index = 0;
-        for (Input* input : output.getTarget()->inputPorts()) {
-            if (input->getInitiatorPort() == &output)
-                break;
-            ++index;
+        if (output.getTarget() != nullptr) {
+            channel["id"] = bitpowder::lib::String(output.getTarget()->getName());
+            int index = 0;
+            for (Input* input : output.getTarget()->inputPorts()) {
+                if (input->getInitiatorPort() == &output)
+                    break;
+                ++index;
+            }
+            channel["in_port"] = index;
         }
-        channel["in_port"] = index;
         to.push_back(std::move(channel));
     }
 
