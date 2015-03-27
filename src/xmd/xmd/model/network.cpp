@@ -208,13 +208,17 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    bool success = disconnect(xmas_outport, xmas_inport);
-
-    if (success) {
+    if (xmas_outport == nullptr || xmas_inport == nullptr) {
+        xmasError(xmas_outport, xmas_inport, "[model::Network::disconnect()] xmas ports null: ");
+        return false;
+    }
+    if (disconnect(xmas_outport, xmas_inport)) {
         emit outport->connectedChanged();
         emit inport->connectedChanged();
+        return true;
     }
-    return success;
+
+    return false;
 }
 
 
