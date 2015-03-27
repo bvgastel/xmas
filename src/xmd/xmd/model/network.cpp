@@ -21,7 +21,6 @@ QString model::Network::packet() {
 void model::Network::setPacket(QString expression) {
     if (expression != m_packet) {
         m_packet = expression;
-
     }
     emit packetChanged();
     qDebug() << "packet expression = " << m_packet;
@@ -115,8 +114,38 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
     return false;
 }
 
+/*
+ * @brief model::Network::xmasDisconnectOk
+ *
+ *  The Qml system calls the disconnect on request of the qml
+ * javascript both explicitly and implicitly. Due to the way Qml
+ * works, at closing time, Qml might ask for disconnect of ports
+ * that are not connected. This is not an error. The cause is a
+ * difference in structure on the canvas and in xmas-components.
+ *
+ * On the canvas the channel is an object that has 2 ports that are
+ * also objects. When deleting the canvas, Qml deletes each port in
+ * sequence. This causes two disconnect requests in sequence. The first
+ * will always be ok, as the components are connected. The second
+ * will meet with components that are already disconnect. In xmas
+ * the disconnects leads to automatic disconnection of both ends of
+ * the channel, while in Qml the system tries to disconnect both ports
+ * in sequence. So, we ignore this fact en execute the disconnect anyways,
+ * because xmas.cpp will not do anything for already disconnected ports.
+ *
+ * For that reason the disconnect responds to a request to disconnect
+ * already disconnected ports as if the disconnect was successful.
+ *
+ * @param xmas_outport
+ * @param xmas_inport
+ * @return
+ */
 bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
+        if (xmas_inport && !xmas_inport->isConnected()
+                && xmas_outport && !xmas_outport->isConnected()) {
+            return true;
+        }
         xmasError(xmas_outport, xmas_inport,
                   "[Network::disconnect(xmas)] no out->in connection.");
         return false;
@@ -124,6 +153,17 @@ bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) 
     return true;
 }
 
+/*
+ * @brief model::Network::disconnect
+ *
+ * Disconnecting already disconnected ports does not lead to error,
+ * because xmas.cpp ::disconnect checks first and deletes after ok.
+ * If not output.valid() it does nothing.
+ *
+ * @param xmas_outport
+ * @param xmas_inport
+ * @return
+ */
 bool model::Network::disconnect(Output *xmas_outport, Input *xmas_inport) {
     bool success = xmasDisconnectOk(xmas_outport, xmas_inport);
     if (success) {
@@ -168,8 +208,6 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    qDebug() << "outport = " << outport->getName();
-    qDebug() << "inport = " << inport->getName();
     bool success = disconnect(xmas_outport, xmas_inport);
 
     if (success) {
