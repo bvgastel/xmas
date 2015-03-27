@@ -159,15 +159,12 @@ Port* getPort(XMASComponent* comp, int index) {
  */
 template<typename T>
 std::pair<int, int> compareExtensionCounts(T* a, T* b) {
-    int i = 0, j = 0;
-    for (auto x : a->getAllExtensions()) {
-        bitpowder::lib::unused(x);
-        i++;
-    }
-    for (auto x : b->getAllExtensions()) {
-        bitpowder::lib::unused(x);
-        j++;
-    }
+
+    auto& x = a->getAllExtensions();
+    auto& y = b->getAllExtensions();
+    int i = std::distance(x.begin(), x.end());
+    int j = std::distance(y.begin(), y.end());
+
     return std::make_pair(i, j);
 }
 

@@ -1084,7 +1084,7 @@ class XMASNetworkExtension : public bitpowder::lib::Extension<XMASNetworkExtensi
 {
 };
 
-class XMASNetwork : bitpowder::lib::ExtensionContainer<PortExtension>
+class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
 public:
     XMASNetwork(std::string name) : name(name)
