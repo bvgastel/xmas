@@ -32,12 +32,22 @@
       "subnetwork": "my_composite.xmas",
       "outs": [
         {
-          "id": "sink1",
+          "id": "my-comp2",
           "in_port": 0
         }
       ],
     },
-    
+    {
+      "id": "my-comp2",
+      "type": "composite",
+      "subnetwork": "my_composite.xmas",
+      "outs": [
+        {
+          "id": "sink1",
+          "in_port": 0
+        }
+      ]
+    },
     {
       "id": "sink1",
       "type": "sink",

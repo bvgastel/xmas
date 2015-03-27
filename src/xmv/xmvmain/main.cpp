@@ -602,24 +602,43 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 
 void TestFile(const std::string &filename, bool showAll) {
 
+
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
+    //============
+    //bitpowder::lib::MemoryPool mp;
+
+    //auto parse = parse_xmas_from_file(filename, mp);
+    //auto& components = parse.first;
+    //============
+
+    //============
     XMASProject project {filename};
-
-    XMASNetwork flattened = flatten(*project.getRootNetwork());
-    auto components = flattened.getComponents();
-
-    project.saveNetwork(filename + ".export");
-    project.saveNetwork(filename + ".flat", &flattened);
+    //============
 
     auto current = std::chrono::high_resolution_clock::now();
     std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
+    //============
+    XMASNetwork flattened = flatten(*project.getRootNetwork());
+    auto& components = flattened.getComponents();               // TODO: flattened network is quite a bit slower than the original (type inference), due to lack of a MemoryPool?
+    //auto& components = project.getRootNetwork()->getComponents();
+    //============
+
+    std::cout << "flattening in \t\t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
+    start = current;
+
+
+    project.saveNetwork(filename + ".export");
+    //project.saveNetwork(filename + ".flat", &flattened);
+
+
+
     std::set<XMASComponent*> allComponents;
     for (auto &it : components) {
-        std::cout << "checking ..." << it.first << std::endl;
+        //std::cout << "checking ..." << it.first << std::endl;
         if (it.second)
             checkAssert(it.second->valid());
             allComponents.insert(it.second);

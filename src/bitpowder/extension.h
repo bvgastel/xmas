@@ -53,6 +53,9 @@ public:
 #endif
     // one virtual method to make dynamic_cast work
     virtual ~Extension() {}
+
+    Extension(Extension&) = delete;
+    Extension& operator=(Extension&) = delete;
 };
 
 template <class E>
