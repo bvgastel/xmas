@@ -631,7 +631,7 @@ void TestFile(const std::string &filename, bool showAll) {
     start = current;
 
 
-    //project.saveNetwork(filename + ".export");
+    project.saveNetwork(filename + ".export");
     //project.saveNetwork(filename + ".flat", &flattened);
 
 

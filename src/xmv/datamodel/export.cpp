@@ -221,6 +221,17 @@ public:
             json["fields"] = std::move(fields);
         }
     }
+
+    virtual void visit(XMASComposite *c) {
+        json["type"] = "composite"_S;
+        json["subnetwork"] = String(c->getNetwork().getStdName());
+
+        JSONData::Vector outs = JSONData::AllocateVector(mp);
+        for (auto o : c->outputPorts()) {
+            writeOut(*o, outs);
+        }
+        json["outs"] = std::move(outs);
+    }
 };
 
 
@@ -393,8 +404,21 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
             network.push_back(std::move(jsonComponent));
         }
 
+        std::set<std::string> compositeNetworks;
+        for (auto c : allComponents) {
+            auto composite = dynamic_cast<XMASComposite*>(c);
+            if (composite)
+                compositeNetworks.insert(composite->getNetwork().getStdName());
+        }
+
+        JSONData::Vector compositeObjects = JSONData::AllocateVector(mp);
+        for (auto n : compositeNetworks) {
+            compositeObjects.push_back(String(n));
+        }
+
         JSONData::Map root = globals.asObject();
         root["NETWORK"] = network;
+        root["COMPOSITE_OBJECTS"] = compositeObjects;
 
         std::ostringstream buffer;
         buffer << root;

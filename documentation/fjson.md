@@ -60,6 +60,7 @@ Properties:
 * "fields"      : array of **FIELD** *(optional)*
 * "pos"         : **POSITION** - *new* - position of the component on the canvas
 
+
 Component_type
 --------------
 
@@ -74,6 +75,15 @@ Enumeration:
 * xswitch
 * merge
 
+
+COMPONENT [type="composite"]
+----------------------------
+
+Properties:
+
+* "subnetwork"  : **String** - name of the subnetwork
+
+See also field **COMPOSITE_OBJECTS**
 
 OUT
 ---
