@@ -20,15 +20,4 @@
   *
   **********************************************************************/
 
-#ifndef WORKERINTERFACES_GLOBAL_H
-#define WORKERINTERFACES_GLOBAL_H
 
-#include <QtCore/qglobal.h>
-
-#if defined(WORKERINTERFACES_LIBRARY)
-#  define WORKERINTERFACESSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define WORKERINTERFACESSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // WORKERINTERFACES_GLOBAL_H
