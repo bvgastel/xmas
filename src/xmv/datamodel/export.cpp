@@ -5,6 +5,7 @@
 #include "symbolic-interval-field.h"
 #include "symbolic-enum-field.h"
 #include "parse.h"
+#include "canvascomponentextension.h"
 
 #include <sstream>
 
@@ -390,6 +391,21 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
         return String(tmp.str())(mp);
     }
 
+    void ExportCommon(JSONData::Map& jsonComponent, XMASComponent* c) {
+        MemoryPool& mp = *jsonComponent.get_allocator().mp;
+
+        auto ext = c->getComponentExtension<CanvasComponentExtension>(false);
+        if (ext) {
+            JSONData::Map jsonPos = JSONData::AllocateMap(mp);
+            jsonPos["x"] = ext->x();
+            jsonPos["y"] = ext->y();
+            jsonPos["orientation"] = ext->orientation();
+            jsonPos["scale"] = ext->scale();
+
+            jsonComponent["pos"] = jsonPos;
+        }
+    }
+
     String Export(std::set<XMASComponent*> allComponents, const JSONData& globals, bitpowder::lib::MemoryPool& returnMemoryPool)
     {
         MemoryPool mp;
@@ -400,6 +416,8 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
 
             ExportVisitor visitor(jsonComponent);
             component->accept(visitor);
+
+            ExportCommon(jsonComponent, component);
 
             network.push_back(std::move(jsonComponent));
         }
