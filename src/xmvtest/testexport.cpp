@@ -50,13 +50,22 @@ protected:
     {
     }
 
-    const bitpowder::lib::String json_input = "{"
+    const bitpowder::lib::String json_input_1 = "{"
                                         "\"COMPOSITE_OBJECTS\":[],"
                                         "\"NETWORK\":["
                                           "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[{\"id\":\"q1\",\"in_port\":0}],\"pos\":{\"x\":100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
                                           "{\"id\":\"q1\",\"type\":\"queue\",\"outs\":[{\"id\":\"q2\",\"in_port\": 0}],\"pos\":{\"x\":210,\"y\":210,\"orientation\":90,\"scale\":200},\"fields\":[{\"size\": 2}]},"
                                           "{\"id\":\"q2\",\"type\":\"queue\",\"outs\":[{\"id\":\"sink3\",\"in_port\": 0}],\"pos\":{\"x\":310,\"y\":310,\"orientation\":0,\"scale\":100},\"fields\":[{\"size\": 5}]},"
                                           "{\"id\":\"sink3\",\"type\":\"sink\",\"pos\": {\"x\":410,\"y\":410,\"orientation\":0,\"scale\":100}}"
+                                          "],"
+                                          "\"PACKET_TYPE\":{\"val \": 2},"
+                                          "\"VARS\":[]"
+                                      "}";
+
+    const bitpowder::lib::String json_input_2 = "{"
+                                        "\"COMPOSITE_OBJECTS\":[],"
+                                        "\"NETWORK\":["
+                                          "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[],\"pos\":{\"x\":100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
                                           "],"
                                           "\"PACKET_TYPE\":{\"val \": 2},"
                                           "\"VARS\":[]"
@@ -74,13 +83,13 @@ std::set<XMASComponent *> convertToSet(std::map<bitpowder::lib::String, XMASComp
     return componentSet;
 }
 
-TEST_F(TestExport, export_json_string)
+TEST_F(TestExport, export_json_string_1)
 {
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
 
     std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-    bitpowder::lib::String json = json_input(mp);
+    bitpowder::lib::String json = json_input_1(mp);
     std::tie(componentMap, globals) = parse_xmas_from_json(json.stl(), mp);
 
     std::set<XMASComponent *> componentSet = convertToSet(componentMap);
@@ -90,6 +99,22 @@ TEST_F(TestExport, export_json_string)
     EXPECT_EQ(json, result);
 }
 
+
+TEST_F(TestExport, export_json_string_2)
+{
+    bitpowder::lib::MemoryPool mp;
+    bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
+
+    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
+    bitpowder::lib::String json = json_input_2(mp);
+    std::tie(componentMap, globals) = parse_xmas_from_json(json.stl(), mp);
+
+    std::set<XMASComponent *> componentSet = convertToSet(componentMap);
+    bitpowder::lib::String result = ::Export(componentSet, globals, mp);
+
+    // Init types and packet types have random memory var names
+    EXPECT_EQ(json, result);
+}
 
 } // namespace
 
