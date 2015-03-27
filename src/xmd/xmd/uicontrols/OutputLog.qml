@@ -45,8 +45,6 @@ ColumnLayout{
     property bool open: false
     property string status // current tab title not working
 
-    //   signal writeLog(string text, color clr)
-
     function log(type,message,color){
         //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
@@ -79,6 +77,12 @@ ColumnLayout{
             anchors.fill: parent
             anchors.leftMargin: 10
             anchors.rightMargin: 10
+            ToolButton{
+                action: clearLogAction
+                Layout.fillHeight: true
+                Layout.preferredWidth: 20
+                Layout.alignment: Qt.AlignVCenter
+            }
             Text {
                 id:status
                 Layout.alignment: Qt.AlignLeft
@@ -111,10 +115,12 @@ ColumnLayout{
 
         signal designerLogSig(var message, var color)
         signal pluginLogSig(var message, var color)
+        signal clearLog()
         Tab {
             id:designerTab
             title: "Designer log"
             active: true
+
             TextArea {
                 id:designerList
                 anchors.fill: parent
@@ -128,6 +134,12 @@ ColumnLayout{
                 Connections{
                     target: tabview
                     onDesignerLogSig: designerList.append("<font color=" + color + ">" + message + "</color>")
+                    onClearLog:{
+                        if(designerTab.visible){
+                          designerList.select(0,0)
+                           designerList.text = ""
+                        }
+                    }
                 }
             }
 
@@ -149,6 +161,12 @@ ColumnLayout{
                 Connections{
                     target: tabview
                     onPluginLogSig: pluginList.append("<font color=" + color + ">" + message + "</color>")
+                    onClearLog:{
+                        if(pluginTab.visible){
+                            pluginList.select(0,0)
+                            pluginList.text = ""
+                        }
+                    }
                 }
             }
         }
@@ -197,6 +215,11 @@ ColumnLayout{
     // release animation when settings are restored
     Component.onCompleted: {
         transOpenClose.enabled = true
+    }
+
+    Connections {
+        target: mainwindow
+        onClearLog: tabview.clearLog()
     }
 }
 
