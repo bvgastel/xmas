@@ -31,7 +31,6 @@
         <file>content/select_all.png</file>
         <file>content/bigger.ico</file>
         <file>content/smaller.ico</file>
-        <file>content/packet.png</file>
         <file>content/add_composite.ico</file>
         <file>content/app.ico</file>
         <file>content/clean.ico</file>
@@ -43,8 +42,11 @@
         <file>content/setup.ico</file>
         <file>content/warning.ico</file>
         <file>content/quit.ico</file>
+        <file>content/packet.ico</file>
     </qresource>
     <qresource prefix="/symbols">
-        <file>content/symbols/agent.png</file>
+        <file>content/symbols/counter.png</file>
+        <file>content/symbols/delay.png</file>
+        <file>content/symbols/muxsource.png</file>
     </qresource>
 </RCC>

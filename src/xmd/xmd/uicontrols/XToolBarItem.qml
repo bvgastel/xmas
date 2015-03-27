@@ -47,8 +47,11 @@ Image {
     property string componentFile
     property string image
 
-    Layout.preferredHeight: parent.height
-    Layout.preferredWidth: parent.height
+    Layout.preferredHeight: 40
+    Layout.preferredWidth: 40
+    anchors.verticalCenter: parent.verticalCenter
+
+    fillMode: Image.PreserveAspectFit
 
     source: image
     opacity: 0.6

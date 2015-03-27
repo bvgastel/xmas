@@ -7,7 +7,7 @@ XComponent {
     height: Math.max(portsLeft.count,portsRight.count) * 30 + 20
     type: Model.XComponent.Composite
     prefix: "test"
-    property string imageUrl: "qrc:/symbols/content/symbols/agent.png"
+    property string imageUrl: "qrc:/symbols/content/symbols/counter.png"
     property bool imageAsSymbol: true
     property string alias: "Composite"
 

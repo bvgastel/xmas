@@ -154,7 +154,7 @@ Model.XNetwork {
         var children = network.children
         var items = []
         for (var child in children){
-            if(children[child].objectName==="component" || children[child].objectName==="channel")
+            if(children[child].objectName==="component") // || children[child].objectName==="channel")
                 items.push(children[child])
         }
         return items

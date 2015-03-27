@@ -77,7 +77,7 @@ ApplicationWindow {
         property alias autoSave: mainwindow.autoSave
         property alias modelFolder: mainwindow.modelFolder
         property alias showComponentNames: mainwindow.showComponentNames
-        property alias showPortNames: mainwindow.showPortNames        
+        property alias showPortNames: mainwindow.showPortNames
     }
 
     //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
@@ -93,11 +93,12 @@ ApplicationWindow {
     signal selectAll
     signal selectionMode(var checked)
     signal modelSetupDialog
+    signal clearLog
 
     // JavaScripts
 
-    function openComposite(){
-        openCompositeDialog.open()
+    function addComposite(){
+        addCompositeDialog.open()
     }
 
     // Closes the current model and starts a new one
@@ -283,11 +284,29 @@ ApplicationWindow {
         id: packetAction
         text: "Packet"
         shortcut: ""
-        iconSource: "qrc:/icons/content/packet.png"
+        iconSource: "qrc:/icons/content/packet.ico"
         iconName: "Packet"
         onTriggered: packetDialog.show()
     }
 
+    Action {
+        id: addCompositeAction
+        text: "Add composite"
+        shortcut: ""
+        iconSource: "qrc:/icons/content/add_composite.ico"
+        iconName: "add-composite"
+        onTriggered: addCompositeDialog.open()
+    }
+
+    Action {
+        id: clearLogAction
+        text: "Clear log"
+        shortcut: ""
+        iconSource: "qrc:/icons/content/clean.ico"
+        iconName: "Clean"
+        onTriggered: clearLog()
+        enabled: output.open
+    }
 
     Action {
         id: loadPlugins
@@ -360,6 +379,8 @@ ApplicationWindow {
             MenuSeparator{}
             MenuItem { action: showComponentNamesAction }
             MenuItem { action: showPortNamesAction }
+            MenuSeparator{}
+            MenuItem { action: clearLogAction }
         }
 
         Menu {
@@ -376,17 +397,9 @@ ApplicationWindow {
 
     toolBar: ToolBar {
         id: mainToolBar
-        width: parent.width
         style: ToolBarStyle {
-            padding {
-                left: 5
-                right: 5
-                top: 2
-                bottom: 2
-            }
+            padding {left:0;right:0;top:0;bottom:0}
             background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 40
                 border.color: "gray"
                 color: "lightgray"
                 //                   gradient: Gradient {
@@ -395,111 +408,115 @@ ApplicationWindow {
                 //                   }
             }
         }
-        RowLayout {
+        ColumnLayout{
             anchors.fill: parent
-            spacing: 5
-            ToolButton { action: fileNewAction }
-            ToolButton { action: fileOpenAction }
-            ToolButton { action: fileSaveAction }
-            ToolBarSeparator {}
-            ToolButton { action: modelSetupAction }
-            ToolBarSeparator {}
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 24
+                spacing: 2
+                anchors.leftMargin: 5
+                anchors.rightMargin: 5
+//                Layout.alignment: Qt.AlignVCenter
+                ToolButton { action: fileNewAction }
+                ToolButton { action: fileOpenAction }
+                ToolButton { action: fileSaveAction }
+                ToolBarSeparator {}
+                ToolButton { action: modelSetupAction }
+                ToolBarSeparator {}
 
-            ToolButton { action: copyAction }
-            ToolButton { action: cutAction }
-            ToolButton { action: pasteAction }
+                ToolButton { action: copyAction }
+                ToolButton { action: cutAction }
+                ToolButton { action: pasteAction }
 
-            ToolBarSeparator {}
+                ToolBarSeparator {}
 
-            ToolButton { action: zoomInAction }
-            ToolButton { action: zoomOutAction }
-            ToolButton { action: zoomFitAction }
+                ToolButton { action: zoomInAction }
+                ToolButton { action: zoomOutAction }
+                ToolButton { action: zoomFitAction }
 
-            ToolBarSeparator {}
+                ToolBarSeparator {}
 
-            ToolButton {action: selectAreaAction}
-            ToolButton {action: selectAllAction}
+                ToolButton {action: selectAreaAction}
+                ToolButton {action: selectAllAction}
 
-            ToolBarSeparator {}
+                ToolBarSeparator {}
 
-            ToolButton {action: packetAction}
+                ToolButton {action: runVtAction}
+                ToolButton {action: stopVtAction}
 
-            ToolBarSeparator {}
+                ComboBox {
+                    width: 200
+                    //TODO replace with plugin list
+                    model: [ "SyntaxChecker"]
+                    implicitWidth: 200
+                    implicitHeight: 20
+                }
 
-            ToolButton {action: runVtAction}
-            ToolButton {action: stopVtAction}
+                //TODO replace with plugin progress value
+                ProgressBar {
+                    id:progressbar
+                    value: 50
+                    indeterminate: false
+                    minimumValue: 0
+                    maximumValue: 100
 
-            ComboBox {
-                width: 200
-                //TODO replace with plugin list
-                model: [ "SyntaxChecker"]
-                implicitWidth: 200
-                implicitHeight: 20
-            }
-
-            //TODO replace with plugin progress value
-            ProgressBar {
-                id:progressbar
-                value: 50
-                indeterminate: false
-                minimumValue: 0
-                maximumValue: 100
-
-                style: ProgressBarStyle {
-                    background: Rectangle {
-                        radius: 5
-                        color: "darkgray"
-                        border.color: "darkgray"
-                        border.width: 0
-                        implicitWidth: 200
-                        implicitHeight: 18
-                    }
-                    progress: Rectangle {
-                        border.width:1
-                        border.color:"steelblue"
-                        radius: 4
-                        gradient: Gradient {
-                            GradientStop { position: 0.0; color: "steelblue" }
-                            GradientStop { position: 0.4; color: "lightsteelblue" }
-                            GradientStop { position: 1.0; color: "steelblue" }
+                    style: ProgressBarStyle {
+                        background: Rectangle {
+                            radius: 5
+                            color: "darkgray"
+                            border.color: "darkgray"
+                            border.width: 0
+                            implicitWidth: 200
+                            implicitHeight: 18
                         }
-                        Item {
-                            anchors.fill: parent
-                            anchors.margins: 1
-                            visible: progressbar.indeterminate
-                            clip: true
-                            Row {
-                                Repeater {
-                                    Rectangle {
-                                        color: index % 2 ? "steelblue" : "lightsteelblue"
-                                        width: 20 ; height: progressbar.height
+                        progress: Rectangle {
+                            border.width:1
+                            border.color:"steelblue"
+                            radius: 4
+                            gradient: Gradient {
+                                GradientStop { position: 0.0; color: "steelblue" }
+                                GradientStop { position: 0.4; color: "lightsteelblue" }
+                                GradientStop { position: 1.0; color: "steelblue" }
+                            }
+                            Item {
+                                anchors.fill: parent
+                                anchors.margins: 1
+                                visible: progressbar.indeterminate
+                                clip: true
+                                Row {
+                                    Repeater {
+                                        Rectangle {
+                                            color: index % 2 ? "steelblue" : "lightsteelblue"
+                                            width: 20 ; height: progressbar.height
+                                        }
+                                        model: progressbar.width / 20 + 2
                                     }
-                                    model: progressbar.width / 20 + 2
-                                }
-                                XAnimator on x {
-                                    from: 0 ; to: -40
-                                    loops: Animation.Infinite
-                                    running: progressbar.indeterminate
+                                    XAnimator on x {
+                                        from: 0 ; to: -40
+                                        loops: Animation.Infinite
+                                        running: progressbar.indeterminate
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            //TODO replace with plugin progress value
+                //TODO replace with plugin progress value
 
-            Item { Layout.fillWidth: true }
-            ToolBarSeparator{}
-            ToolButton {action: quitAction}
+                Item { Layout.fillWidth: true }
+                ToolBarSeparator{}
+                ToolButton {action: quitAction}
+            }
+            RowLayout {
+                XToolBar{
+                    id: xmasToolbar
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+            }
         }
     }
 
-
-    XToolBar{
-        id: xmasToolbar
-        height:48
-        anchors {right: parent.right;  left: parent.left}
-    }
 
     //#######################################################################################################
     //
@@ -508,11 +525,11 @@ ApplicationWindow {
     //#######################################################################################################
     Timer {
         id: autoSaveTimer
-            interval: 500000 //every 5min
-            running: autoSave & network.modified
-            repeat: true
-            onTriggered: saveModel()
-        }
+        interval: 500000 //every 5min
+        running: autoSave & network.modified
+        repeat: true
+        onTriggered: saveModel()
+    }
 
 
     //#######################################################################################################
@@ -537,31 +554,25 @@ ApplicationWindow {
     FileDialog {
         id: dialogFileOpen
         nameFilters: [
-            "Model files (*.xmdm *.fjson *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
+            "Model files (*.xmdm *.json)",
             "All files (*)"]
         onAccepted: {
             datacontrol.fileOpen(fileUrl)
-//            if(network.fileOpen(fileUrl))
-//            {
-                network.folder = folder
-                network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
-//            }
+            //            if(network.fileOpen(fileUrl))
+            //            {
+            network.folder = folder
+            network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+            //            }
         }
     }
 
-
-
-    //File Save as
+    //Add composite dialog
     FileDialog {
-        id: openCompositeDialog
+        id: addCompositeDialog
         nameFilters: [
-            "Model files (*.xmd *.fjson *.wck *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
+            "Model files (*.json)",
             "All files (*)"]
-        //onAccepted: network.openComposite(fileUrl)
+        //        onAccepted: network.openComposite(fileUrl)
     }
 
     // About
@@ -627,15 +638,15 @@ ApplicationWindow {
         onYes: {this.destroy(); Qt.quit()}
     }
 
-
     //#######################################################################################################
     //
-    // Canvas
+    // XMAS toolbar & Canvas
     //
     //#######################################################################################################
 
     SplitView {
-        anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+        //anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+        anchors.fill: parent
         orientation: Qt.Vertical
         Item {
             Layout.fillHeight: true
