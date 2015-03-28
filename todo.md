@@ -7,6 +7,7 @@
 *		Valid check visible
 *		Required voor source en sink
 *	--	Bij openen netwerk zijn porten niet connected: is xmas model wel gevuld ----> pending Jeroen's XMASProject effort.
+*		plugin op timer uitvoeren 
 
 *   -- 	commentaar uniform maken zoals al in sommige qml's het geval is (kijken of dit voldoet aan bvb Javadoc, of ander best practices)
 *   -- 	is controller.js in xmapper nog nodig ? deze is een overblijfsel van de mapper , restanten via datacontroller.cpp of util.cpp
@@ -49,9 +50,9 @@
 *	--	lezen en schrijven files oplossen (export probleem) ---> samen met Stefan
 *		compleet netwerk lezen en schrijven / testen
 *   xx	plugin thread, main en process maken ---> stel uit, stel af
-*		plugin integreren met qml --> met Stefan
+*	--	plugin integreren met qml --> met Stefan
 *		opties voor plugins bepalen ---> met Stefan
-*		plugin op timer uitvoeren
+*	xx	plugin op timer uitvoeren --> doet Stefan
 *	ok	plugin syntax checker volledig maken
 *	--	plugin logger probleem oplossing (abort) -- removed
 *	ok	abort onder linux bij deleten deel van connected netwerk
