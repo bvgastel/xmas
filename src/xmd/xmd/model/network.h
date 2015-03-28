@@ -110,6 +110,8 @@ public:
     QString packet();
     void setPacket(QString expression);
 
+    std::map<bitpowder::lib::String, XMASComponent *> getXMap();
+
 private:
 
     std::set<XMASComponent *> m_xmas_comp_list;

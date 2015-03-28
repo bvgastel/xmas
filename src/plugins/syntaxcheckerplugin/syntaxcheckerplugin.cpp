@@ -51,7 +51,12 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
 
 void SyntaxCheckerPlugin::start(XMap &componentMap) {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
+
+    connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
+
+    std::cout << "[SyntaxCheckWorker] Starting in main thread." << std::endl;
     worker->doWork(componentMap);
+    std::cout << "[SyntaxCheckWorker] finished in main thread." << std::endl;
 }
 
 /**
@@ -92,8 +97,8 @@ void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
     auto list = result.errorList();
     for (ErrorObject err : list) {
         if (err.error) {
-            std::cout << err.errorMessage.toStdString() << std::endl;
-            std::cout << err.errorObjectName.toStdString() << std::endl;
+            std::cerr << err.errorMessage.toStdString() << std::endl;
+            std::cerr << err.errorObjectName.toStdString() << std::endl;
         } else {
             std::cout << result.description().toStdString() << std::endl;
         }

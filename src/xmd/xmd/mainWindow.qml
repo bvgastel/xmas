@@ -327,7 +327,9 @@ ApplicationWindow {
             for (var i in mainwindow.vtNameList) {
                 var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
                 log ("params = [" + params +"] Running to be implemented", "green");
+                plugincontrol.startPlugin(mainwindow.vtNameList[i], network);
             }
+
         }
     }
 

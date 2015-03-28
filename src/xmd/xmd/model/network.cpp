@@ -269,6 +269,16 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
+std::map<bitpowder::lib::String, XMASComponent *> model::Network::getXMap() {
+    QList<model::Component *> allComponents = getAllComponents();
+    std::map<bitpowder::lib::String, XMASComponent *> xmap;
+    for (Component *comp : allComponents) {
+        auto c = comp->xmas_component();
+        xmap[c->getName()] = c;
+    }
+    return xmap;
+}
+
 bool model::Network::addComponent(model::Component *component) {
     auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
     component->xmas_component(xmas_comp);

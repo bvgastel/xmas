@@ -30,6 +30,7 @@
 #include <QVariantMap>
 
 #include "loggerinterface.h"
+#include "model/network.h"
 #include "vtplugininterface.h"
 
 class PluginControl : public QObject
@@ -51,6 +52,7 @@ signals:
 
 public slots:
     bool loadPlugins();
+    bool startPlugin(QString vtPlugin, model::Network *network);
 
 private:
     QDir m_pluginDir;

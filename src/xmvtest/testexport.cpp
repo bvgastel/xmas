@@ -62,14 +62,11 @@ protected:
                                           "\"VARS\":[]"
                                       "}";
 
-    const bitpowder::lib::String json_input_2 = "{"
-                                        "\"COMPOSITE_OBJECTS\":[],"
-                                        "\"NETWORK\":["
-                                          "{\"id\":\"src0\",\"type\":\"source\",\"outs\":[{}],\"pos\":{\"x\":100,\"y\":100,\"orientation\":0,\"scale\":100},\"fields\":[{\"init_types\":\"value < 65384\"}]},"
-                                          "],"
-                                          "\"PACKET_TYPE\":{\"val \": 2},"
-                                          "\"VARS\":[]"
-                                      "}";
+    const bitpowder::lib::String json_input_2 = "{\"COMPOSITE_OBJECTS\":[],"
+                                                "\"NETWORK\":[{\"fields\":["
+                                                "{\"function\":\"\"}],\"id\":\"f0\",\"outs\":[],\"type\":\"function\"}],"
+                                                "\"PACKET_TYPE\":[],"
+                                                "\"VARS\":{}}";
 
 };
 
@@ -112,7 +109,6 @@ TEST_F(TestExport, export_json_string_2)
     std::set<XMASComponent *> componentSet = convertToSet(componentMap);
     bitpowder::lib::String result = ::Export(componentSet, globals, mp);
 
-    // Init types and packet types have random memory var names
     EXPECT_EQ(json, result);
 }
 

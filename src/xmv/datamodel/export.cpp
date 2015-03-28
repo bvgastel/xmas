@@ -108,8 +108,8 @@ public:
                 ++index;
             }
             channel["in_port"] = index;
+            to.push_back(std::move(channel));
         }
-        to.push_back(std::move(channel));
     }
 
     virtual void visit(XMASSink *c) {

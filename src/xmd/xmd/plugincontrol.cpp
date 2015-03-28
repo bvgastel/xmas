@@ -40,6 +40,14 @@ PluginControl::~PluginControl()
 
 }
 
+bool PluginControl::startPlugin(QString vtPlugin, model::Network *network) {
+    VtPluginInterface *plugin = m_vtMap[vtPlugin];
+    auto xmap = network->getXMap();
+    plugin->start(xmap);
+    return true;
+}
+
+
 std::shared_ptr<QDir> PluginControl::pluginDir() {
     std::shared_ptr<QDir> pluginDir = std::make_shared<QDir>(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
