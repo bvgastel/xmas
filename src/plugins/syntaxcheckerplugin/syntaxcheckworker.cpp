@@ -163,3 +163,8 @@ SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
     return make_pair(start, end);
 }
 
+void SyntaxCheckWorker::doProcessWork(const QString &json) {
+    Q_UNUSED(json)
+    std::cout << "[SyntaxCheckWorker::doProcessWork()] Not implemented." << std::endl;
+}
+

@@ -53,20 +53,6 @@ DISTFILES += \
 # Internal dependencies
 ################################################
 
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfaces_debug \
-
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../workerinterfaces/debug/ -lworkerinterfacesd \
-
-
-else:unix:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../workerinterfaces/ -lworkerinterfaces \
-
-
-INCLUDEPATH += $$PWD/../workerinterfaces
-DEPENDPATH += $$PWD/../workerinterfaces
-
 ################################################
 # External dependencies
 ################################################

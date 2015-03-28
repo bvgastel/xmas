@@ -65,7 +65,7 @@ private:
     Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
-    Q_PROPERTY(bool valid READ getValid WRITE setValid NOTIFY validChanged)
+    Q_PROPERTY(bool valid READ getValid NOTIFY validChanged)
 
     Q_PROPERTY(QQmlListProperty<model::XPort> ports READ ports) // NOTIFY portsChanged)
 
@@ -131,32 +131,19 @@ public:
     void setValidExpr(bool validExpr) {
         m_validExpr = validExpr;
         emit validExprChanged(-1, QString(""));
+        emit validChanged();
     }
 
     void setValidExpr(bool validExpr, int pos, QString errMsg) {
         m_validExpr = validExpr;
         emit validExprChanged(pos, errMsg);
+        emit validChanged();
     }
 
     bool getValid() {
-        return m_valid;
-    }
-
-    void setValid(bool valid) {
-        // Check for warning
-        if (!valid) {
-            if (!m_validExprWarningGiven) {
-                QString cname = QString(m_xmas_component->getStdName().c_str());
-                emit writeLog("Component " + cname + " has an invalid spec.");
-                m_validExprWarningGiven = true;
-            }
+        if (m_xmas_component) {
+            return m_xmas_component->valid();
         }
-        // Reset warning status if valid
-        if (valid) {
-            m_validExprWarningGiven = false;
-        }
-        m_valid = valid;
-        emit validChanged();
     }
 
     bool xmas_component(XMASComponent *component) {

@@ -20,12 +20,12 @@ CONFIG(debug, debug|release) {
 DEFINES += INTERFACES_LIBRARY
 
 SOURCES += \
-	workerinterface.cpp \
+    workerinterface.cpp \
     logger.cpp \
     result.cpp
 
 HEADERS +=\
-	workerinterface.h \
+    workerinterface.h \
     vtplugininterface.h \
     result.h \
     logger.h \

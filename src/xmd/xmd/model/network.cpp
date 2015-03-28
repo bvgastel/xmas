@@ -193,6 +193,12 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
     bool success = connect(xmas_outport, xmas_inport);
 
     if (success) {
+        if (outport->getComponent()) {
+            emit outport->getComponent()->validChanged();
+        }
+        if (inport->getComponent()) {
+            emit inport->getComponent()->validChanged();
+        }
         emit outport->connectedChanged();
         emit inport->connectedChanged();
     }

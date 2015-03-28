@@ -134,7 +134,7 @@ Model.XComponent {
         width: 15
         height: 15
         radius: 15
-        color: "red"
+        color: valid ? "green" : "red"
         anchors.verticalCenter: nameItem.verticalCenter
         anchors.right: component.left
         MouseArea {

@@ -49,7 +49,7 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
 
 }
 
-void start(XMap &componentMap) {
+void SyntaxCheckerPlugin::start(XMap &componentMap) {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
     worker->doWork(componentMap);
 }

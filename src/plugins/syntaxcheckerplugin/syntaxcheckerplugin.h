@@ -19,20 +19,18 @@
  * <http://www.gnu.org/licenses/>.
  *
  **********************************************************************/
-#ifndef PLUGINTHREAD_H
-#define PLUGINTHREAD_H
+#ifndef SYNTAXCHECKERPLUGIN_H
+#define SYNTAXCHECKERPLUGIN_H
 
 #include <chrono>
 
 #include <QString>
 #include <QVariant>
-#include <QMap>
 #include <QThread>
 #include <QProcess>
 
-#include "xmas.h"
-//#include "logger.h"
 #include "resultinterface.h"
+#include "commoninterface.h"
 #include "vtplugininterface.h"
 
 class SyntaxCheckerPlugin : public QObject, public VtPluginInterface
@@ -85,4 +83,4 @@ private:
 };
 
 
-#endif // PLUGINTHREAD_H
+#endif // SYNTAXCHECKERPLUGIN_H
