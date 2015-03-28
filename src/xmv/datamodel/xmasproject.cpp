@@ -78,7 +78,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     }
 
     // now load the network itself
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, mp, networks);
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, m_mp, networks);
     auto components = componentsAndGlobals.first;
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components)};
