@@ -38,9 +38,8 @@
 #include "exception.h"
 #include "common.h" // for destroy template
 #include "model/component.h"
+#include "xmasproject.h"
 
-typedef std::map<bitpowder::lib::String, XMASComponent *> XCompMap;
-typedef bitpowder::lib::MemoryPool XMP;
 
 const model::Component::CompType xsource = model::Component::CompType::Source;
 const model::Component::CompType xsink = model::Component::CompType::Sink;
@@ -109,7 +108,7 @@ public:
      * Private methods
      ************************************************************/
 private:
-    bool emitNetwork(XCompMap &componentMap);
+    bool emitNetwork(XMASNetwork &network);
     void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
     /************************************************************
@@ -119,7 +118,7 @@ public:
 
 private:
 
-    XMP m_mp;
+    std::unique_ptr<XMASProject> project;
     Logger m_logger;
 
     /************************************************************

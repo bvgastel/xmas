@@ -53,7 +53,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
     std::cout << "Loading: " << name << std::endl;
 
-    auto jsonResult = read_json_from_file(filename, mp);
+    auto jsonResult = read_json_from_file(filename, m_mp);
 
     if (!jsonResult)
         throw Exception("Unable to read JSON data from file");
