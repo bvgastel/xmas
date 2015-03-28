@@ -18,6 +18,11 @@ public:
 
     void saveNetwork(const std::string& filename, XMASNetwork* network = nullptr);
 
+    template <class T, typename... Args>
+    T *insert(const bitpowder::lib::String& name, Args... args) {
+        return root->insert<T>(m_mp, name, args...);
+    }
+
 private:
     bitpowder::lib::MemoryPool m_mp;
     std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;

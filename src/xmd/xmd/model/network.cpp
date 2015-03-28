@@ -263,10 +263,10 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
-bool model::Network::addComponent(model::Component *component) {
-    auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
-    component->xmas_component(xmas_comp);
-    bool result;
-    std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
-    return result;
-}
+//bool model::Network::addComponent(model::Component *component) {
+//    auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
+//    component->xmas_component(xmas_comp);
+//    bool result;
+//    std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
+//    return result;
+//}

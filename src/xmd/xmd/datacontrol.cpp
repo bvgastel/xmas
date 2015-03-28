@@ -78,6 +78,48 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     return result;
 }
 
+bool DataControl::addComponent(model::Component *component) {
+
+    std::string name = component->getName().toStdString();
+    model::Component::CompType type = component->getType();
+
+    XMASComponent *xmas_comp;
+    switch(type) {
+    case model::Component::CompType::Source :
+        xmas_comp = project->insert<XMASSource>(name);
+        break;
+    case model::Component::CompType::Sink :
+        xmas_comp = project->insert<XMASSink>(name);
+        break;
+    case model::Component::CompType::Function :
+        xmas_comp = project->insert<XMASFunction>(name);
+        break;
+    case model::Component::CompType::Queue :
+        xmas_comp = project->insert<XMASQueue>(name);
+        break;
+    case model::Component::CompType::Join :
+        xmas_comp = project->insert<XMASJoin>(name);
+        break;
+    case model::Component::CompType::Merge :
+        xmas_comp = project->insert<XMASMerge>(name);
+        break;
+    case model::Component::CompType::Switch :
+        xmas_comp = project->insert<XMASSwitch>(name);
+        break;
+    case model::Component::CompType::Fork :
+        xmas_comp = project->insert<XMASFork>(name);
+        break;
+    case model::Component::CompType::Composite :
+        emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
+        return false;
+    default :
+        emit writeLog(QString("Unknown component type!"), Qt::red);
+        return false;
+    }
+
+    return component->xmas_component(xmas_comp);
+}
+
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
     auto& components = network.getComponents();

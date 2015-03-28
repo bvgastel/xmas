@@ -15,6 +15,13 @@ using namespace bitpowder::lib;
 
 JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp);
 
+XMASProject::XMASProject()
+{
+    std::string name = "?.xmas";
+    root = new XMASNetwork {name};
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(root)));
+}
+
 XMASProject::XMASProject(const std::string& filename)
 {
     root = loadNetwork(filename);

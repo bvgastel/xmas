@@ -84,7 +84,7 @@ public slots:
      */
     QString toJson();
 
-    bool addComponent(model::Component *component);
+    //bool addComponent(model::Component *component);
 
     bool saveFile(QUrl url);
     bool openFile(QUrl url);
@@ -112,7 +112,7 @@ public:
 
 private:
 
-    std::set<XMASComponent *> m_xmas_comp_list;
+    //std::set<XMASComponent *> m_xmas_comp_list;
 
     QString m_alias;
     QSize m_size;
