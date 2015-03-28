@@ -58,7 +58,7 @@ Rectangle {
 
         ToolButton {
             action: addCompositeAction
-         }
+        }
         Rectangle{
             id:compositeListRect
             Layout.fillWidth: true
@@ -74,17 +74,18 @@ Rectangle {
                 contentHeight: 40
                 anchors.margins: 2
                 orientation: ListView.Horizontal
-                model: composites
+                model: network.composites
                 snapMode: ListView.SnapOneItem
                 highlightFollowsCurrentItem: true
                 flickDeceleration: 200
                 clip:true
                 delegate:
                     XToolBarItem {
+                    id:item
                     height:30
                     width:40
                     fillMode: Image.PreserveAspectFit
-                    image: Qt.resolvedUrl(symbol)
+                    image: getImage(modelData.symbol)
                     componentFile: "qrc:/xmas/xobjects/composite.qml"
                 }
             }
@@ -94,37 +95,11 @@ Rectangle {
         Item{Layout.preferredWidth: 200}
     }
 
-    // Composite list model
-    //TODO remove test data
-    ListModel {
-        id: composites
-        ListElement{url:""; alias:"a"; symbol:"qrc:/symbols/content/symbols/counter.png"}
-        ListElement{url:""; alias:"b"; symbol:"qrc:/symbols/content/symbols/delay.png"}
-        ListElement{url:""; alias:"c"; symbol:"qrc:/symbols/content/symbols/muxsource.png"}
-        ListElement{url:""; alias:"d"; symbol:"qrc:/icons/content/composite.png"}
-        ListElement{url:""; alias:"e"; symbol:"qrc:/icons/content/composite.png"}
-        ListElement{url:""; alias:"f"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"g"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"h"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"i"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"j"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"k"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"l"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"m"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"n"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"o"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"p"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"q"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"r"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"s"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"t"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"u"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"v"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"w"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"x"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"y"; symbol:"qrc:/icons/content/composite.png"}
-//        ListElement{url:""; alias:"z"; symbol:"qrc:/icons/content/composite.png"}
+    function getImage(symbol){
+        if(symbol==="") {
+            return "qrc:/icons/content/composite.png"
+        } else {
+            return "qrc:/symbols/content/symbols/" + symbol
+        }
     }
-
 }
-

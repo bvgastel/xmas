@@ -9,7 +9,6 @@ model::Network::Network(QQuickItem *parent)
 {
 
 
-
 }
 
 model::Network::~Network()
@@ -302,8 +301,6 @@ bool model::Network::addComponent(model::Component *component) {
 //##
 //#############################################################################################################
 //#############################################################################################################
-
-
 /**
  * Gets the composite list of this network
  *      (Related to the composites section in json)
@@ -317,7 +314,7 @@ QVariantList model::Network::composites() {
     QVariantMap composite1;
     composite1.insert("url", "");
     composite1.insert("alias", "Credit Counter");
-    composite1.insert("symbol", "counter");
+    composite1.insert("symbol", "counter.png");
     composite1.insert("boxed", false);
     composite1.insert("ins", QStringList{"i"});
     composite1.insert("outs", QStringList{"o"});
@@ -327,7 +324,7 @@ QVariantList model::Network::composites() {
     QVariantMap composite2;
     composite2.insert("url", "");
     composite2.insert("alias", "Delay");
-    composite2.insert("symbol", "delay");
+    composite2.insert("symbol", "delay.png");
     composite2.insert("boxed", false);
     composite2.insert("ins", QStringList{"i"});
     composite2.insert("outs", QStringList{"o"});
@@ -337,7 +334,7 @@ QVariantList model::Network::composites() {
     QVariantMap composite3;
     composite3.insert("url", "");
     composite3.insert("alias", "MuxSrc");
-    composite3.insert("symbol", "muxsource");
+    composite3.insert("symbol", "muxsource.png");
     composite3.insert("boxed", false);
     composite3.insert("ins", QStringList{});
     composite3.insert("outs", QStringList{"o"});
@@ -357,7 +354,7 @@ QVariantList model::Network::composites() {
     QVariantMap composite5;
     composite5.insert("url", "");
     composite5.insert("alias", "spidergon");
-    composite5.insert("symbol", "spidergon");
+    composite5.insert("symbol", "spidergon.ico");
     composite5.insert("boxed", true);
     composite5.insert("ins", QStringList{"a","b","c","d","e","f","g"});
     composite5.insert("outs", QStringList{"r","s","t"});

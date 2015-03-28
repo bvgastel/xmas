@@ -46,5 +46,7 @@
         <file>content/symbols/counter.png</file>
         <file>content/symbols/delay.png</file>
         <file>content/symbols/muxsource.png</file>
+        <file>content/symbols/mesh.ico</file>
+        <file>content/symbols/spidergon.ico</file>
     </qresource>
 </RCC>

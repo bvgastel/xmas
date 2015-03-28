@@ -7,8 +7,8 @@ var posnInWindow;
 
 function startDrag(mouse)
 {
-    posnInWindow = toolbarItem.mapToItem(network,-50,-50)
-    loadComponent(toolbarItem.componentFile)
+    posnInWindow = item.mapToItem(network,-50,-50)
+    loadComponent(item.componentFile)
 }
 
 

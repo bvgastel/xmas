@@ -43,9 +43,9 @@ import QtQuick.Layouts 1.1
 import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
 Image {
-    id: toolbarItem
+    id: item
     property string componentFile
-    property string image
+    property alias image:item.source
 
     Layout.preferredHeight: 40
     Layout.preferredWidth: 40
@@ -53,7 +53,6 @@ Image {
 
     fillMode: Image.PreserveAspectFit
 
-    source: image
     opacity: 0.6
 
     MouseArea {
@@ -61,14 +60,23 @@ Image {
         onPressed: Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
-//        onClicked: {
-//            Code.loadComponent(componentFile)
-//            Code.draggedItem.x = 100
-//            Code.draggedItem.y = 100
-//            Code.endDrag()
-//        }
         hoverEnabled: true
-        onEntered: toolbarItem.opacity = 1.0
-        onExited: toolbarItem.opacity = 0.6
+        onEntered: item.opacity = 1.0
+        onExited: item.opacity = 0.6
     }
+
+    onStatusChanged: {
+        try{
+            if (status === Image.Null || status === Image.Error){
+                item.image = "qrc:/icons/content/composite.png"
+                return
+            }
+        } catch(e){
+            item.image = "qrc:/icons/content/composite.png"
+        }
+    }
+
+    //
+    Component.onCompleted: try{}catch(e){}
+
 }
