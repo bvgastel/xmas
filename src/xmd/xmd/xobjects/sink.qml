@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtQuick.Controls 1.3
 import XMAS.model 1.0 as Model
 
 XComponent {
@@ -28,5 +29,20 @@ XComponent {
             ctx.lineTo(35,45)
             ctx.stroke()
         }
+    }
+
+    Component.onCompleted: {
+        //insert on top
+        insertMenuSeparator()
+        insertMenuItem(menuRequired)
+    }
+
+    // Sink context menu item
+    MenuItem {
+        id:menuRequired
+        text: "Required"
+        checkable: true
+        checked: component.required
+        onCheckedChanged: component.required = checked
     }
 }

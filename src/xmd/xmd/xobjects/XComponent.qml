@@ -52,7 +52,7 @@ Model.XComponent {
     property string prefix: ""
     property int index:-1
     property bool selected: false
-    property bool withDialog: false
+    property bool withValidMarker: false
     property bool topLabel: true
 
     // Signals
@@ -107,6 +107,12 @@ Model.XComponent {
     function bottomBound(){
         return network.height - height * scale  - network.margin + height/2 * (scale-1)
     }
+    function insertMenuItem(item) {
+        contextMenu.insertItem(0,item)
+    }
+    function insertMenuSeparator() {
+        contextMenu.insertSeparator(0)
+    }
 
     // Event handling
     onRotationChanged:component.update()
@@ -130,7 +136,7 @@ Model.XComponent {
     // Valid Marker (top left)
     Rectangle {
         id: validmarker
-        visible: withDialog
+        visible: withValidMarker
         width: 15
         height: 15
         radius: 15
@@ -235,12 +241,6 @@ Model.XComponent {
     // Context menu
     Menu {
         id: contextMenu
-        MenuItem {
-            visible: withDialog
-            text: "Properties"
-            onTriggered: component.showDialog()
-        }
-        MenuSeparator{visible: withDialog}
         MenuItem {
             text: "Delete"
             onTriggered: component.destroy()

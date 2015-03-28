@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtQuick.Controls 1.3
 import XMAS.model 1.0 as Model
 import "qrc:/ui/uicontrols/"
 
@@ -38,8 +39,8 @@ XComponent {
         }
     }
 
-    withDialog: true
-    onShowDialog: dialog.visible = true
+    withValidMarker: true
+    onShowDialog: dialog.show()
     XDialog {
         id: dialog
         title: "Enter expression for switch " + name
@@ -50,5 +51,18 @@ XComponent {
                 + "(dst > 4 ? src <= 4 : colour == 0) && src % 2 == 0"
         validator: /^(\S.*)$/
         onAccepted: component.expression = dialog.expression
+    }
+
+    Component.onCompleted: {
+        //insert on top
+        insertMenuSeparator()
+        insertMenuItem(menuExpression)
+    }
+
+    // context menu expression item
+    MenuItem {
+        id:menuExpression
+        text: "Expression..."
+        onTriggered: dialog.show()
     }
 }
