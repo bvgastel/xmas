@@ -140,19 +140,26 @@ macx:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
     -L$$PWD/../../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
+    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug \
+#    -L$$PWD/../../../lib/plugins/ -lworkerinterfaces_debug \
+
 
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
     -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
     -L$$PWD/../../../lib/vt/ -lvtd \
-    -L$$PWD/../../../lib/interfaces/ -linterfacesd
+    -L$$PWD/../../../lib/interfaces/ -linterfacesd \
+#    -L$$PWD/../../../lib/plugins/ -lworkerinterfacesd \
+
 
 else:unix|CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
     -L$$PWD/../../../lib/datamodel/ -ldatamodel \
     -L$$PWD/../../../lib/vt/ -lvt \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces
+    -L$$PWD/../../../lib/interfaces/ -linterfaces \
+    -L$$PWD/../../../lib/plugins/  \
+#    -L$$PWD/../../../lib/plugins/ -lworkerinterfaces \
+
 
 INCLUDEPATH += $$PWD/../../../include/bitpowder
 DEPENDPATH += $$PWD/../../../include/bitpowder

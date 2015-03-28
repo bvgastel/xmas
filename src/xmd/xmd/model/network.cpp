@@ -246,8 +246,10 @@ QString model::Network::toJson() {
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
-    globals["PACKET_TYPE"] = bitpowder::lib::JSONData();        // to find out how to add packet type to json data.
-    globals["VARS"] = bitpowder::lib::JSONData();               // to find out how to add vars to json data.
+    bitpowder::lib::JSONData packet = bitpowder::lib::JSONData::AllocateVector(mp);
+    //packet.insert(m_packet);
+    globals["PACKET_TYPE"] = packet;
+    globals["VARS"] = bitpowder::lib::JSONData::AllocateMap(mp);
 
     QList<model::Component *> allComponents = getAllComponents();
 
