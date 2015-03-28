@@ -7,6 +7,9 @@
 model::Network::Network(QQuickItem *parent)
     : QQuickItem(parent)
 {
+
+
+
 }
 
 model::Network::~Network()
@@ -286,3 +289,127 @@ bool model::Network::addComponent(model::Component *component) {
     std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
     return result;
 }
+
+
+
+//#############################################################################################################
+//#############################################################################################################
+//##
+//##        Example of how to populate composite list
+//##        This must be started when a netwerk is opened and loop through
+//##        the data comming from the Composite section of the json.
+//##
+//##
+//#############################################################################################################
+//#############################################################################################################
+
+
+/**
+ * Gets the composite list of this network
+ *      (Related to the composites section in json)
+ * @brief model::Network::getComposites
+ * @return Network composite list
+ */
+//TODO replace example data with json data
+QVariantList model::Network::composites() {
+    m_composites.clear();
+    //example composite 1
+    QVariantMap composite1;
+    composite1.insert("url", "");
+    composite1.insert("alias", "Credit Counter");
+    composite1.insert("symbol", "counter");
+    composite1.insert("boxed", false);
+    composite1.insert("ins", QStringList{"i"});
+    composite1.insert("outs", QStringList{"o"});
+    m_composites.append(composite1);
+
+    //example composite 2
+    QVariantMap composite2;
+    composite2.insert("url", "");
+    composite2.insert("alias", "Delay");
+    composite2.insert("symbol", "delay");
+    composite2.insert("boxed", false);
+    composite2.insert("ins", QStringList{"i"});
+    composite2.insert("outs", QStringList{"o"});
+    m_composites.append(composite2);
+
+    //example composite 3
+    QVariantMap composite3;
+    composite3.insert("url", "");
+    composite3.insert("alias", "MuxSrc");
+    composite3.insert("symbol", "muxsource");
+    composite3.insert("boxed", false);
+    composite3.insert("ins", QStringList{});
+    composite3.insert("outs", QStringList{"o"});
+    m_composites.append(composite3);
+
+    //example composite 4
+    QVariantMap composite4;
+    composite4.insert("url", "");
+    composite4.insert("alias", "mySubnet");
+    composite4.insert("symbol", "");
+    composite4.insert("boxed", true);
+    composite4.insert("ins", QStringList{"a","b","enable","go"});
+    composite4.insert("outs", QStringList{"out"});
+    m_composites.append(composite4);
+
+    //example composite 5
+    QVariantMap composite5;
+    composite5.insert("url", "");
+    composite5.insert("alias", "spidergon");
+    composite5.insert("symbol", "spidergon");
+    composite5.insert("boxed", true);
+    composite5.insert("ins", QStringList{"a","b","c","d","e","f","g"});
+    composite5.insert("outs", QStringList{"r","s","t"});
+    m_composites.append(composite5);
+
+    //tell qml that composites has been changed so
+    // it can update gui
+    emit compositesChanged();
+    return m_composites;
+}
+
+/**
+ * Adds a composite to the composite list of this network
+ *      (Related to the composites section in json)
+ * @brief model::Network::addComposite
+ * @param url
+ * @return True is composite has been added to the composite list.
+ */
+bool model::Network::addComposite(QUrl url){
+       qDebug() << "Add composite with url = " << url;
+       //1 - send url to xmas and parse as composite
+       //2 - return of xmas --> (url,alias,symbol,boxed,ins,outs)
+       //3 - if ok ; add this in xmas composites + this m_composites
+       //4 - if not ok return false without emit
+            //4.1 url doesn't exist
+            //4.2 url already in list
+            //4.3 parser failed to read composite
+       emit compositesChanged();
+       return true;
+}
+
+/**
+ * Removes a composite in the composite list of this network
+ *      (Related to the composites section in json)
+ * @brief model::Network::removeComposite
+ * @param url
+ * @return True is composite has been removed from the composite list.
+ */
+bool model::Network::removeComposite(QUrl url){
+    qDebug() << "Remove composite with url = " << url;
+    //1 - send url to xmas find composite in list by url
+    //2 - remove composite in xmas if not used in current network
+    //3 - if ok ; remove composite in m_composites based on url
+    //4 - if not ok return false without emit
+         //4.1 url doesn't exist in xmas composite list
+         //4.2 url still used in current network
+         //4.3 xmas failed to delete composite
+
+    emit compositesChanged();
+    return true;
+}
+
+
+
+
