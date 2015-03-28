@@ -144,6 +144,7 @@ public:
         if (m_xmas_component) {
             return m_xmas_component->valid();
         }
+        return false;
     }
 
     bool xmas_component(XMASComponent *component) {
