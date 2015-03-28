@@ -88,10 +88,6 @@ function getXQml(type) {
         return "qrc:/xmas/xobjects/sink.qml"
     case Model.XComponent.Source:
         return "qrc:/xmas/xobjects/source.qml"
-    case Model.XComponent.In:
-        return "qrc:/xmas/xobjects/in.qml"
-    case Model.XComponent.Out:
-        return "qrc:/xmas/xobjects/out.qml"
     case Model.XComponent.Composite:
         return "qrc:/xmas/xobjects/composite.qml"
     default:
@@ -144,5 +140,5 @@ function destroyAll(network){
             }
     }
     network.children = temp
-    //log(XMAS.Util.Designer,"network cleared.",XMAS.Util.Info)
+    //log(XMAS.Util.Designer,"network cleared.","black")
 }

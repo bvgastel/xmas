@@ -93,10 +93,8 @@ DEPENDPATH += uicontrols xobjects content
 DISTFILES += mainWindow.qml \
     xobjects/fork.qml \
     xobjects/function.qml \
-    xobjects/in.qml \
     xobjects/join.qml \
     xobjects/merge.qml \
-    xobjects/out.qml \
     xobjects/queue.qml \
     xobjects/sink.qml \
     xobjects/source.qml \

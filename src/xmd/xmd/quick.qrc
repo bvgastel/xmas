@@ -17,10 +17,8 @@
     <qresource prefix="/xmas">
         <file>xobjects/fork.qml</file>
         <file>xobjects/function.qml</file>
-        <file>xobjects/in.qml</file>
         <file>xobjects/join.qml</file>
         <file>xobjects/merge.qml</file>
-        <file>xobjects/out.qml</file>
         <file>xobjects/queue.qml</file>
         <file>xobjects/sink.qml</file>
         <file>xobjects/source.qml</file>

@@ -8,6 +8,7 @@ XComponent {
     height: 50
     type: Model.XComponent.Source
     prefix: "src"
+    property bool required: true
     XPort{x:20 ; y:40; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
@@ -24,7 +25,6 @@ XComponent {
             ctx.stroke()
         }
     }
-
     withDialog: true
     onShowDialog: dialog.visible = true
     XDialog {

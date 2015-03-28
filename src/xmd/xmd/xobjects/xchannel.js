@@ -52,6 +52,7 @@ function create(outcomp,outport,incomp,inport) {
     var out_port = getPort(out_comp,outport)
     var in_comp = getComponent(incomp)
     var in_port = getPort(in_comp,inport)
+    //log(XMAS.Util.Designer,"in: " + in_comp.name + "." + in_port.name,"black")
     loadcomponent(out_port,in_port)
     return true
 }
