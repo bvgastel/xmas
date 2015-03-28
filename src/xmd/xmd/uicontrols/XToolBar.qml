@@ -55,15 +55,6 @@ Rectangle {
             image: "qrc:/icons/content/source.png"
         }
         ToolBarSeparator {}
-        XToolBarItem {
-            componentFile: "qrc:/xmas/xobjects/in.qml"
-            image: "qrc:/icons/content/in.png"
-        }
-        XToolBarItem {
-            componentFile: "qrc:/xmas/xobjects/out.qml"
-            image: "qrc:/icons/content/out.png"
-        }
-        ToolBarSeparator {}
 
         ToolButton {
             action: addCompositeAction

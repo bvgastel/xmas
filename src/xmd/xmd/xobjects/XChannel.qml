@@ -33,6 +33,7 @@ import QtQuick.Controls 1.3
 import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
 import "qrc:/ui/uicontrols/"
 import XMAS.model 1.0 as Model
+import XMAS 1.0 as XMAS
 
 Model.XChannel {
     id: channel
@@ -63,7 +64,7 @@ Model.XChannel {
     }
 
     // FIXME: Stefan: not sure how to do this, want to connect signal to mainWindow.log()
-    onWriteLog: console.log(msg, color)
+    onWriteLog: console.log(XMAS.Util.Designer,msg, color)
 
     //TODO: replace straight canvas wire with pathfinder logic (horizontal/vertical)
     XWire {

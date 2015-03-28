@@ -76,12 +76,6 @@ XMASComponent *model::Component::createXMASComponent(CompType type, QString qnam
     case CompType::Fork :
         component = new XMASFork(name);
         break;
-    case CompType::In :
-        emit writeLog(QString("type in is not implemented .... yet"), Qt::red);
-        break;
-    case CompType::Out :
-        emit writeLog(QString("type out is not implemented .... yet"), Qt::red);
-        break;
     case CompType::Composite :
         emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
         break;

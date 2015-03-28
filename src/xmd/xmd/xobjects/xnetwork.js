@@ -1,4 +1,5 @@
 .import XMAS.model 1.0 as Model
+.import XMAS 1.0 as XMAS
 .import QtQuick 2.0 as Qjs
 .import "qrc:/javascripts/xobjects/xchannel.js" as Channel
 
@@ -10,7 +11,7 @@ var time
 function createNetwork(object) {
 
     if(!object) {
-        log("Undefined network!","red")
+        log(XMAS.Util.Designer,"Undefined network!","red")
         return
     }
 
@@ -41,14 +42,14 @@ function loadComponent(object) {
     var component = null
     var type = ""
     if(!object) {
-        log("Undefined object!","red")
+        log(XMAS.Util.Designer,"Undefined object!","red")
         return
     }
 
     if(object.type!==undefined){
         qml = getXQml(object.type)
     } else {
-        log("Undefined type!" + object,"red")
+        log(XMAS.Util.Designer,"Undefined type!" + object,"red")
         return
     }
 
@@ -57,14 +58,14 @@ function loadComponent(object) {
 //    start = new Date().getTime()
     component = Qt.createComponent(qml)
 //    end = new Date().getTime()
-//    log("Execution time: " + (end - start) + "ms","red")
+//    log(XMAS.Util.Designer,"Execution time: " + (end - start) + "ms","red")
 
     if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(network,component,object))
     else if (component.status === Qjs.Component.Ready)
         createComponent(network,component,object)
     else if (component.status === Qjs.Component.Error)
-        log(component.errorString(),"red")
+        log(XMAS.Util.Designer,component.errorString(),"red")
 
 }
 
@@ -87,14 +88,10 @@ function getXQml(type) {
         return "qrc:/xmas/xobjects/sink.qml"
     case Model.XComponent.Source:
         return "qrc:/xmas/xobjects/source.qml"
-    case Model.XComponent.In:
-        return "qrc:/xmas/xobjects/in.qml"
-    case Model.XComponent.Out:
-        return "qrc:/xmas/xobjects/out.qml"
     case Model.XComponent.Composite:
         return "qrc:/xmas/xobjects/composite.qml"
     default:
-        log("Unknown xmas type! (" + type + ")","red")
+        log(XMAS.Util.Designer,"Unknown xmas type! (" + type + ")","red")
         return ""
     }
 }
@@ -120,7 +117,7 @@ function createComponent(parent,component,object) {
         // NOTE: distinguish between sources of input (screen or json)
         //datacontrol.componentCreated(component) --> disabled, no longer necessary in new direct data model
     } else if (component.status === Qjs.Component.Error) {
-        log(component.errorString(),"red")
+        log(XMAS.Util.Designer,component.errorString(),"red")
     }
 }
 
@@ -143,5 +140,5 @@ function destroyAll(network){
             }
     }
     network.children = temp
-    //log("network cleared.","black")
+    //log(XMAS.Util.Designer,"network cleared.","black")
 }

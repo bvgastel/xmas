@@ -50,8 +50,6 @@ const model::Component::CompType xjoin = model::Component::CompType::Join;
 const model::Component::CompType xmerge = model::Component::CompType::Merge;
 const model::Component::CompType xfork = model::Component::CompType::Fork;
 const model::Component::CompType xswitch = model::Component::CompType::Switch;
-const model::Component::CompType xin = model::Component::CompType::In;
-const model::Component::CompType xout = model::Component::CompType::Out;
 
 /**
  * @brief The DataControl class

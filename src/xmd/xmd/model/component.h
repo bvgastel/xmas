@@ -55,7 +55,7 @@ public:
         NorthEast = 315,
         SouthEast = 135
     };
-    enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, In, Out, Composite};
+    enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, Composite};
 
 private:
     Q_INTERFACES(QQmlParserStatus)

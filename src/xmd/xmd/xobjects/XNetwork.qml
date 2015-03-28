@@ -140,7 +140,7 @@ Model.XNetwork {
     }
 
     function boundReached(dx,dy){
-        console.log("boundReached")
+        console.log(XMAS.Util.Designer,"boundReached",XMAS.Util.Info)
     }
 
     function isValidPort(port){
