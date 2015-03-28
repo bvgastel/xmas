@@ -35,6 +35,8 @@
 *		XMASProject integratie met xmd / plugins.
 *	--	Netwerk uitbreiden met extenties
 *		XMASProject uitbreiden voor xmd / plugin use case.
+*		required property toevoegen aan source en sink
+* 		required property integreren met xmd.
 
 * 	ok	xmas.h updaten ("required")
 * 	ok	Flattener wijzigen en mergen, kopieren extenties
