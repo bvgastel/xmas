@@ -1,4 +1,5 @@
 .import XMAS.model 1.0 as Model
+.import XMAS 1.0 as XMAS
 .import QtQuick 2.0 as Qjs
 var channel = null;
 var component = null;
@@ -22,7 +23,7 @@ function createComponent(outport,inport) {
         channel = component.createObject(network, {outport:outport,inport:inport})
     } else if (component.status === Qjs.Component.Error) {
         channel = null
-        log(component.errorString(),"red")
+        log(XMAS.Util.Designer,component.errorString(),"red")
     }
 }
 
@@ -51,7 +52,6 @@ function create(outcomp,outport,incomp,inport) {
     var out_port = getPort(out_comp,outport)
     var in_comp = getComponent(incomp)
     var in_port = getPort(in_comp,inport)
-    //log("in: " + in_comp.name + "." + in_port.name)
     loadcomponent(out_port,in_port)
     return true
 }

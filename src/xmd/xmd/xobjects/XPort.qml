@@ -30,6 +30,7 @@
  **************************************************************************/
 import QtQuick 2.4
 import XMAS.model 1.0 as Model
+import XMAS 1.0 as XMAS
 
 Model.XPort {
     id:port

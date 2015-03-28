@@ -1,3 +1,7 @@
+.import XMAS.model 1.0 as Model
+.import XMAS 1.0 as XMAS
+.import QtQuick 2.0 as Qjs
+
 var draggedItem = null;
 var posnInWindow;
 
@@ -10,20 +14,20 @@ function startDrag(mouse)
 
 function loadComponent(qml) {
     var component = Qt.createComponent(qml)
-    if (component.status === Component.Loading)
+    if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(network,component));
-    else if (component.status === Component.Ready)
+    else if (component.status === Qjs.Component.Ready)
         createComponent(network,component)
-    else if (component.status === Component.Error)
-        log(component.errorString(),"red")
+    else if (component.status === Qjs.Component.Error)
+        log(XMAS.Util.Designer,component.errorString(),"red")
 }
 
 function createComponent(parent,component) {
-    if (component.status === Component.Ready && draggedItem == null) {
+    if (component.status === Qjs.Component.Ready && draggedItem == null) {
         draggedItem = component.createObject(parent,{"x":posnInWindow.x, "y": posnInWindow.y})
-     } else if (component.status === Component.Error) {
+     } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
-        log(component.errorString(),"red")
+        log(XMAS.Util.Designer,component.errorString(),"red")
     }
 }
 
