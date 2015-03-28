@@ -13,8 +13,8 @@ QT       -= gui
 
 CONFIG += plugin
 CONFIG += C++11
-##CONFIG += create_prl
 CONFIG += dll
+CONFIG += create_prl
 #CONFIG += build_all
 
 TARGET = syntaxcheckerplugin

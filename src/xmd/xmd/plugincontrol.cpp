@@ -23,6 +23,7 @@
 #include <QPluginLoader>
 #include <QApplication>
 #include <QVariantList>
+#include <QDebug>
 
 #include "logger.h"
 #include "plugincontrol.h"
@@ -56,6 +57,10 @@ std::shared_ptr<QDir> PluginControl::pluginDir() {
     pluginDir->cdUp(); // to xmas
     pluginDir->cd("lib");
     pluginDir->cd("plugins");
+//    qApp->addLibraryPath(pluginDir->absolutePath());
+    QString msg = QString("Plugin directory is ")+pluginDir->absolutePath();
+    m_logger->log(msg);
+    qDebug() << msg;
     return pluginDir;
 }
 
@@ -64,6 +69,14 @@ bool PluginControl::loadPlugins() {
     foreach (QString fileName, m_pluginDir.entryList(QDir::Files)) {
         m_logger->log("Found " + fileName + " in " + m_pluginDir.absolutePath());
         QPluginLoader pluginLoader(m_pluginDir.absoluteFilePath(fileName));
+        pluginLoader.load();
+        if (!pluginLoader.isLoaded()) {
+            QString errorString = pluginLoader.errorString();
+            QString msg = "[Load plugins] Error loading plugin, msg = " + errorString;
+            qDebug() << msg;
+            m_logger->log(msg);
+            return false;
+        }
         QObject *plugin = pluginLoader.instance();
         if (plugin) {
             VtPluginInterface *vtPluginInterface = qobject_cast<VtPluginInterface *>(plugin);
@@ -76,10 +89,6 @@ bool PluginControl::loadPlugins() {
                 } else {
                     m_vtMap[vtname] = vtPluginInterface;
                     vtNameList.append(vtname);
-                    // Connect the logger writeLog to our own signal
-                    // FIXME: Temporarily disabled, causes abort cannot load vtable of interface?
-                    //LoggerInterface *logger = vtPluginInterface->logger();
-                    //QObject::connect(logger, &LoggerInterface::writeLog, this, &PluginControl::writeLog);
                 }
             } else {
                 m_logger->log("Fail!! Loader found no vtPlugin in " + fileName);
