@@ -28,7 +28,7 @@ function createComponent(parent,component) {
         if(draggedItem.type === Model.XComponent.Composite){
             draggedItem.url = item.url
             draggedItem.alias = item.alias
-            draggedItem.image = item.source
+            draggedItem.image = item.image ? item.source : ""
             draggedItem.boxed = item.boxed
         }
     } else if (component.status === Qjs.Component.Error) {
