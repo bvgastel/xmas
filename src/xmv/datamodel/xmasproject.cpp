@@ -4,6 +4,7 @@
 #include "parse.h"
 #include "simplestring.h"
 #include "export.h"
+#include "composite-network-extension.h"
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -40,6 +41,18 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
     JSONData::Map globals = JSONData::AllocateMap(mp);
 
     network = network ? network : root;
+
+    auto cne = network->getNetworkExtension<CompositeNetworkExtension>(false);
+    if (cne) {
+        JSONData::Map jsonComposite = JSONData::AllocateMap(mp);
+        jsonComposite["alias"] = String(cne->alias);
+        jsonComposite["width"] = cne->width;
+        jsonComposite["height"] = cne->height;
+        jsonComposite["image-name"] = String(cne->imageName);
+        jsonComposite["packet"] = String(cne->packet);
+        jsonComposite["boxed-imaged"] = cne->boxedImage ? 1 : 0;
+        globals["COMPOSITE_NETWORK"] = jsonComposite;
+    }
 
     for (auto& it : network->getComponents()) {
         allComponents.insert(it.second);
@@ -91,6 +104,17 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     XMASNetwork* result = new XMASNetwork {name, std::move(components)};
     networks.erase(name);
     networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(result)));
+
+    auto jsonComposite = json["COMPOSITE_NETWORK"];
+    if (!jsonComposite.isNull()) {
+        auto cne = result->getNetworkExtension<CompositeNetworkExtension>(true);
+        cne->alias      = jsonComposite["alias"].asString().stl();
+        cne->width      = jsonComposite["width"].asNumber();
+        cne->height     = jsonComposite["height"].asNumber();
+        cne->imageName  = jsonComposite["image-name"].asString().stl();
+        cne->packet     = jsonComposite["packet"].asString().stl();
+        cne->boxedImage = jsonComposite["boxed-image"].asNumber() > 0;
+    }
 
     return result;
 }
