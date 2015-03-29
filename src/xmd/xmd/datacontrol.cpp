@@ -33,6 +33,7 @@
 #include <QtQml>
 #include <QVariant>
 #include "canvascomponentextension.h"
+#include "composite-network-extension.h"
 #include "model/network.h"
 #include "model/component.h"
 #include "model/port.h"
@@ -130,15 +131,19 @@ bool DataControl::addComponent(model::Component *component) {
 bool DataControl::addCompositeNetwork(QUrl url) {
 
     std::string name = url.toLocalFile().toStdString();
-    m_project->loadNetwork(name);
+    XMASNetwork* xmas_network = m_project->loadNetwork(name);
+
+
+    auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
+    if (!cne)
+        return false;   // Composite network information missing, can't use as a composite network!
 
     QVariantMap map;
     map.insert("url", url);
-
-    // TODO: read from XMASNetwork
-    map.insert("alias", "Credit Counter");
-    map.insert("symbol", "counter.png");
-    map.insert("boxed", false);
+    map.insert("alias", QString::fromStdString(cne->alias));
+    map.insert("symbol", QString::fromStdString(cne->imageName));
+    map.insert("boxed", cne->boxedImage);
+    map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
     m_compositeLibrary.append(map);
 
     return true;
