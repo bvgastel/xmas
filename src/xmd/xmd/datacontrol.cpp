@@ -120,6 +120,14 @@ bool DataControl::addComponent(model::Component *component) {
     return component->xmas_component(xmas_comp);
 }
 
+bool DataControl::addCompositeNetwork(model::Network *network) {
+
+    std::string name = "TODO";
+    XMASNetwork* xmas_network = project->loadNetwork(name);
+
+    return network->xmas_network(xmas_network);
+}
+
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
     auto& components = network.getComponents();

@@ -110,7 +110,23 @@ public:
     QString packet();
     void setPacket(QString expression);
 
+
+    bool xmas_network(XMASNetwork *network) {
+        if (network) {
+            m_xmas_network = network;
+            return true;
+        }
+        return false;
+
+    }
+
+    XMASNetwork *xmas_component() {
+        return this->m_xmas_network;
+    }
+
 private:
+
+    XMASNetwork *m_xmas_network;
 
     //std::set<XMASComponent *> m_xmas_comp_list;
 

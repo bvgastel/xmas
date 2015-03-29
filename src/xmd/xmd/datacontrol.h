@@ -38,6 +38,7 @@
 #include "exception.h"
 #include "common.h" // for destroy template
 #include "model/component.h"
+#include "model/network.h"
 #include "xmasproject.h"
 
 
@@ -101,6 +102,7 @@ public slots:
     bool fileOpen(QUrl fileUrl);
 
     bool addComponent(model::Component *component);
+    bool addCompositeNetwork(model::Network *network);
 
     /************************************************************
      * Public methods
