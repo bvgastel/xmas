@@ -271,34 +271,34 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
-std::map<bitpowder::lib::String, XMASComponent *> model::Network::getXMap() {
-    QList<model::Component *> allComponents = getAllComponents();
-    std::map<bitpowder::lib::String, XMASComponent *> xmap;
-    for (Component *comp : allComponents) {
-        auto c = comp->xmas_component();
-        xmap[c->getName()] = c;
-    }
-    return xmap;
-}
+//std::map<bitpowder::lib::String, XMASComponent *> model::Network::getXMap() {
+//    QList<model::Component *> allComponents = getAllComponents();
+//    std::map<bitpowder::lib::String, XMASComponent *> xmap;
+//    for (Component *comp : allComponents) {
+//        auto c = comp->xmas_component();
+//        xmap[c->getName()] = c;
+//    }
+//    return xmap;
+//}
 
-bool model::Network::addComponent(model::Component *component) {
-    bool result=false;
-    //TODO if composites are available through xmas , remove if statement and else code block
-    if(component->getType() != model::Component::CompType::Composite){
-        auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
-        component->xmas_component(xmas_comp);
-        std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
-    } else {
-        //example of addComposite, until xmas composite available
-        qDebug() << "Composite url = " << component->property("url");
-        qDebug() << "Composite alias = " << component->property("alias");
-        qDebug() << "Composite image = " << component->property("image");
-        qDebug() << "Composite boxed = " << component->property("boxed");
-        addComposite( (QUrl)(component->property("url").toString()));
-    }
-    return result;
-}
-
+// FIXME: move to DataControl
+//bool model::Network::addComponent(model::Component *component) {
+//    bool result=false;
+//    //TODO if composites are available through xmas , remove if statement and else code block
+//    if(component->getType() != model::Component::CompType::Composite){
+//        auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
+//        component->xmas_component(xmas_comp);
+//        std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
+//    } else {
+//        //example of addComposite, until xmas composite available
+//        qDebug() << "Composite url = " << component->property("url");
+//        qDebug() << "Composite alias = " << component->property("alias");
+//        qDebug() << "Composite image = " << component->property("image");
+//        qDebug() << "Composite boxed = " << component->property("boxed");
+//        addComposite( (QUrl)(component->property("url").toString()));
+//    }
+//    return result;
+//}
 
 
 //#############################################################################################################
@@ -409,5 +409,3 @@ bool model::Network::addComposite(QUrl url){
     qDebug() << "add composite with url = " << url;
     return true;
 }
-
-

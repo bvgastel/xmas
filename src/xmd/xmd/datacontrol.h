@@ -38,9 +38,9 @@
 #include "exception.h"
 #include "common.h" // for destroy template
 #include "model/component.h"
+#include "model/network.h"
+#include "xmasproject.h"
 
-typedef std::map<bitpowder::lib::String, XMASComponent *> XCompMap;
-typedef bitpowder::lib::MemoryPool XMP;
 
 const model::Component::CompType xsource = model::Component::CompType::Source;
 const model::Component::CompType xsink = model::Component::CompType::Sink;
@@ -101,6 +101,9 @@ signals:
 public slots:
     bool fileOpen(QUrl fileUrl);
 
+    bool addComponent(model::Component *component);
+    bool addCompositeNetwork(QUrl url);
+
     /************************************************************
      * Public methods
      ************************************************************/
@@ -109,7 +112,7 @@ public:
      * Private methods
      ************************************************************/
 private:
-    bool emitNetwork(XCompMap &componentMap);
+    bool emitNetwork(XMASNetwork &network);
     void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
     /************************************************************
@@ -119,8 +122,11 @@ public:
 
 private:
 
-    XMP m_mp;
+    // TODO: Jeroen: why initialize outside constructor?
+    std::unique_ptr<XMASProject> project { new XMASProject };
     Logger m_logger;
+
+    QVariantList m_compositeLibrary;
 
     /************************************************************
      * enums and constant data members
@@ -143,16 +149,16 @@ private:
 };
 
 // Remark; copied from parse.cpp
-template <class T>
-T *insert(bitpowder::lib::MemoryPool& mp,
-          std::map<bitpowder::lib::String, XMASComponent*>& allComponents,
-          const bitpowder::lib::String& name) {
-    if (allComponents.find(name) != allComponents.end())
-        throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
-    T *comp = new(mp, &bitpowder::lib::destroy<XMASComponent>) T(name);
-    allComponents.insert(std::make_pair(comp->getName(), comp));
-    return comp;
-}
+//template <class T>
+//T *insert(bitpowder::lib::MemoryPool& mp,
+//          std::map<bitpowder::lib::String, XMASComponent*>& allComponents,
+//          const bitpowder::lib::String& name) {
+//    if (allComponents.find(name) != allComponents.end())
+//        throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
+//    T *comp = new(mp, &bitpowder::lib::destroy<XMASComponent>) T(name);
+//    allComponents.insert(std::make_pair(comp->getName(), comp));
+//    return comp;
+//}
 
 
 #endif // DATACONTROL_H

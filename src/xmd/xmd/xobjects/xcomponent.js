@@ -58,8 +58,8 @@ function endDrag()
     } else {
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
-        if (!network.addComponent(draggedItem)){
-            draggedItem.destroy();
+        if (!datacontrol.addComponent(draggedItem)){
+          draggedItem.destroy();
         }
         draggedItem = null;
     }

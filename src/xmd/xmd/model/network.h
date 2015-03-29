@@ -86,7 +86,7 @@ public slots:
      */
     QString toJson();
 
-    bool addComponent(model::Component *component);
+    //bool addComponent(model::Component *component);
 
     bool saveFile(QUrl url);
     bool openFile(QUrl url);
@@ -118,11 +118,24 @@ public:
     QVariantList compositeLibrary();
 
 
-    std::map<bitpowder::lib::String, XMASComponent *> getXMap();
+    bool xmas_network(XMASNetwork *network) {
+        if (network) {
+            m_xmas_network = network;
+            return true;
+        }
+        return false;
+
+    }
+
+    XMASNetwork *xmas_network() {
+        return this->m_xmas_network;
+    }
 
 private:
 
-    std::set<XMASComponent *> m_xmas_comp_list;
+    XMASNetwork *m_xmas_network;
+
+    //std::set<XMASComponent *> m_xmas_comp_list;
 
     QString m_alias;
     QSize m_size;

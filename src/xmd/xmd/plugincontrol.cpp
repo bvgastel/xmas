@@ -42,8 +42,8 @@ PluginControl::~PluginControl()
 
 bool PluginControl::startPlugin(QString vtPlugin, model::Network *network) {
     VtPluginInterface *plugin = m_vtMap[vtPlugin];
-    auto xmap = network->getXMap();
-    plugin->start(xmap);
+    auto xmap = network->xmas_network()->getComponents();
+    //plugin->start(xmap);      // FIXME: xmap is not a string!
     return true;
 }
 
