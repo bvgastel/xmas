@@ -15,7 +15,7 @@ XComponent {
 
     //TEST ports
 
-    onPortsChanged: getPorts()
+//    onPortsChanged: getPorts()
     property var inports:[]
     property var outports:[]
     function getPorts(){
