@@ -120,11 +120,12 @@ private:
      ************************************************************/
 public:
 
+    std::shared_ptr<XMASProject> project();
+
 private:
 
-    // TODO: Jeroen: why initialize outside constructor?
-    std::unique_ptr<XMASProject> project { new XMASProject };
     Logger m_logger;
+    std::shared_ptr<XMASProject> m_project;
 
     QVariantList m_compositeLibrary;
 
@@ -147,18 +148,6 @@ private:
     const int m_modelMinor = 0;
 
 };
-
-// Remark; copied from parse.cpp
-//template <class T>
-//T *insert(bitpowder::lib::MemoryPool& mp,
-//          std::map<bitpowder::lib::String, XMASComponent*>& allComponents,
-//          const bitpowder::lib::String& name) {
-//    if (allComponents.find(name) != allComponents.end())
-//        throw bitpowder::lib::Exception(42, __FILE__, __LINE__);
-//    T *comp = new(mp, &bitpowder::lib::destroy<XMASComponent>) T(name);
-//    allComponents.insert(std::make_pair(comp->getName(), comp));
-//    return comp;
-//}
 
 
 #endif // DATACONTROL_H

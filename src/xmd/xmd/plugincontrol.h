@@ -29,9 +29,13 @@
 #include <QColor>
 #include <QVariantMap>
 
+#include "commoninterface.h"
+#include "datacontrol.h"
 #include "loggerinterface.h"
 #include "model/network.h"
 #include "vtplugininterface.h"
+
+extern DataControl *dataControl;
 
 class PluginControl : public QObject
 {
@@ -45,6 +49,8 @@ public:
 
 private:
     std::shared_ptr<QDir> pluginDir();
+    XMap getXmasComponents();
+
 
 signals:
     void pluginsLoaded(QVariantList vtNameList);
@@ -52,7 +58,7 @@ signals:
 
 public slots:
     bool loadPlugins();
-    bool startPlugin(QString vtPlugin, model::Network *network);
+    bool startPlugin(QString vtPlugin);
 
 private:
     QDir m_pluginDir;

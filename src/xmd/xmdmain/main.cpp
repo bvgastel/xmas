@@ -43,6 +43,15 @@
 #include "model/network.h"
 
 
+/*
+ * Access globals in C++ through statements like
+ *
+ *      "extern DataControl *dataControl;"
+ *
+ */
+DataControl *dataControl = nullptr;
+PluginControl *pluginControl = nullptr;
+Util *util = nullptr;
 
 int main(int argc, char *argv[])
 {
@@ -62,23 +71,23 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
 
-    DataControl dataControl;
+    dataControl = new DataControl();
     qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
-    ctx->setContextProperty("datacontrol", &dataControl);
+    ctx->setContextProperty("datacontrol", dataControl);
 
-    PluginControl pluginControl;
+    pluginControl = new PluginControl();
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
-    ctx->setContextProperty("plugincontrol", &pluginControl);
+    ctx->setContextProperty("plugincontrol", pluginControl);
 
-    Util util;
+    util = new Util();
     qmlRegisterType<Util>("XMAS", 1, 0, "Util"); // Before engine.load
-    ctx->setContextProperty("util", &util);
+    ctx->setContextProperty("util", util);
 
 
     /* End of OOAK class registration for Qml access */
     /*************************************************/
 
-    dataControl.registerTypes(); // Before engine.load
+    dataControl->registerTypes(); // Before engine.load
 
     engine.load(QUrl(QStringLiteral("qrc:/ui/mainWindow.qml")));
     return app.exec();

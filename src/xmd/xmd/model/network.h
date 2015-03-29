@@ -24,6 +24,7 @@
 
 #include <QQuickItem>
 
+#include "datacontrol.h"
 #include "export.h"
 #include "component.h"
 
@@ -114,28 +115,9 @@ public:
     QString packet();
     void setPacket(QString expression);
 
-
     QVariantList compositeLibrary();
 
-
-    bool xmas_network(XMASNetwork *network) {
-        if (network) {
-            m_xmas_network = network;
-            return true;
-        }
-        return false;
-
-    }
-
-    XMASNetwork *xmas_network() {
-        return this->m_xmas_network;
-    }
-
 private:
-
-    XMASNetwork *m_xmas_network;
-
-    //std::set<XMASComponent *> m_xmas_comp_list;
 
     QString m_alias;
     QSize m_size;

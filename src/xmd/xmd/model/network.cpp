@@ -4,18 +4,12 @@
 #include "util.h"
 #include "network.h"
 
-model::Network::Network(QQuickItem *parent)
-    : QQuickItem(parent),
-      m_xmas_network(nullptr)
-{
+/* Access to the global datacontrol pointer */
+extern DataControl *dataControl;
 
+model::Network::Network(QQuickItem *parent) : QQuickItem(parent) {}
 
-}
-
-model::Network::~Network()
-{
-
-}
+model::Network::~Network() {}
 
 QString model::Network::packet() {
     return m_packet ;

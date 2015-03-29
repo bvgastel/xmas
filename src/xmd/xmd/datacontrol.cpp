@@ -41,7 +41,10 @@
 #include "parse.h"
 #include "datacontrol.h"
 
-DataControl::DataControl(QObject *parent) : QObject(parent),m_logger("datacontrol")
+DataControl::DataControl(QObject *parent)
+    : QObject(parent),
+      m_logger("datacontrol"),
+      m_project(new XMASProject)
 {
     QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
 }
@@ -60,6 +63,10 @@ void DataControl::registerTypes() const{
     qRegisterMetaType<model::XPort*>("XPort*");
 }
 
+std::shared_ptr<XMASProject> DataControl::project() {
+    return m_project;
+}
+
 bool DataControl::fileOpen(QUrl fileUrl) {
 
     std::string filename =
@@ -69,12 +76,12 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     m_logger.log("Opening file " + filename);
 
     try {
-        project.reset(new XMASProject {filename});
+        m_project.reset(new XMASProject {filename});
     } catch (bitpowder::lib::Exception) {
-        m_logger.log("[DataControl/fileOpen(fileUrl)] Unabe to parse file " + filename + ". Maybe the file is invalid json input.", Qt::red);
+        m_logger.log("[DataControl::fileOpen] Unable to parse file " + filename + ". Maybe the file is invalid json input.", Qt::red);
         return false;
     }
-    auto result = emitNetwork(*project->getRootNetwork());
+    auto result = emitNetwork(*m_project->getRootNetwork());
     return result;
 }
 
@@ -86,28 +93,28 @@ bool DataControl::addComponent(model::Component *component) {
     XMASComponent *xmas_comp;
     switch(type) {
     case model::Component::CompType::Source :
-        xmas_comp = project->insert<XMASSource>(name);
+        xmas_comp = m_project->insert<XMASSource>(name);
         break;
     case model::Component::CompType::Sink :
-        xmas_comp = project->insert<XMASSink>(name);
+        xmas_comp = m_project->insert<XMASSink>(name);
         break;
     case model::Component::CompType::Function :
-        xmas_comp = project->insert<XMASFunction>(name);
+        xmas_comp = m_project->insert<XMASFunction>(name);
         break;
     case model::Component::CompType::Queue :
-        xmas_comp = project->insert<XMASQueue>(name);
+        xmas_comp = m_project->insert<XMASQueue>(name);
         break;
     case model::Component::CompType::Join :
-        xmas_comp = project->insert<XMASJoin>(name);
+        xmas_comp = m_project->insert<XMASJoin>(name);
         break;
     case model::Component::CompType::Merge :
-        xmas_comp = project->insert<XMASMerge>(name);
+        xmas_comp = m_project->insert<XMASMerge>(name);
         break;
     case model::Component::CompType::Switch :
-        xmas_comp = project->insert<XMASSwitch>(name);
+        xmas_comp = m_project->insert<XMASSwitch>(name);
         break;
     case model::Component::CompType::Fork :
-        xmas_comp = project->insert<XMASFork>(name);
+        xmas_comp = m_project->insert<XMASFork>(name);
         break;
     case model::Component::CompType::Composite :
         emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
@@ -123,7 +130,7 @@ bool DataControl::addComponent(model::Component *component) {
 bool DataControl::addCompositeNetwork(QUrl url) {
 
     std::string name = url.toLocalFile().toStdString();
-    project->loadNetwork(name);
+    m_project->loadNetwork(name);
 
     QVariantMap map;
     map.insert("url", url);
@@ -208,7 +215,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
         map.insert("scale", ext->scale());
     }
 
-    bitpowder::lib::MemoryPool& mp = project->mp();
+    bitpowder::lib::MemoryPool& mp = m_project->mp();
 
     if (type == xqueue) {
         XMASQueue *queue = dynamic_cast<XMASQueue *>(comp);

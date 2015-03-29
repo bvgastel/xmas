@@ -25,6 +25,7 @@
 #include <QVariantList>
 #include <QDebug>
 
+#include "commoninterface.h"
 #include "logger.h"
 #include "plugincontrol.h"
 
@@ -40,17 +41,40 @@ PluginControl::~PluginControl()
 
 }
 
-bool PluginControl::startPlugin(QString vtPlugin, model::Network *network) {
+bool PluginControl::startPlugin(QString vtPlugin) {
     VtPluginInterface *plugin = m_vtMap[vtPlugin];
-    if (!network->xmas_network()) {
-        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null xmas_network.";
+    auto xmap = getXmasComponents();
+    if (!xmap.empty()) {
+        plugin->start(xmap);
+        return true;
+    }
+    m_logger->log(QString("[PluginControl] Plugin not started due to empty map."));
+    return false;
+}
+
+/*
+ * Return the map of xmas components by name
+ * Return an empty map if things go wrong.
+ * But do show some message of what went wrong.
+ *
+ */
+XMap PluginControl::getXmasComponents() {
+    std::shared_ptr<XMASProject> project = dataControl->project();
+    if (!project) {
+        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null xmas_project.";
         m_logger->log(msg);
         std::cerr << msg.toStdString() << std::endl;
-        return false;
+        return XMap();
     }
-    auto xmap = network->xmas_network()->getComponents();
-    plugin->start(xmap);
-    return true;
+    XMASNetwork *network = project->getRootNetwork();
+    if (!network) {
+        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null network from xmas_project.";
+        m_logger->log(msg);
+        std::cerr << msg.toStdString() << std::endl;
+        return XMap();
+    }
+    auto xmap = network->getComponents();
+    return xmap;
 }
 
 
