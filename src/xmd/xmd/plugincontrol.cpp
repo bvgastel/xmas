@@ -42,8 +42,14 @@ PluginControl::~PluginControl()
 
 bool PluginControl::startPlugin(QString vtPlugin, model::Network *network) {
     VtPluginInterface *plugin = m_vtMap[vtPlugin];
+    if (!network->xmas_network()) {
+        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null xmas_network.";
+        m_logger->log(msg);
+        std::cerr << msg.toStdString() << std::endl;
+        return false;
+    }
     auto xmap = network->xmas_network()->getComponents();
-    //plugin->start(xmap);      // FIXME: xmap is not a string!
+    plugin->start(xmap);
     return true;
 }
 
