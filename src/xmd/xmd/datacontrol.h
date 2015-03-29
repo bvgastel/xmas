@@ -102,7 +102,7 @@ public slots:
     bool fileOpen(QUrl fileUrl);
 
     bool addComponent(model::Component *component);
-    bool addCompositeNetwork(model::Network *network);
+    bool addCompositeNetwork(QUrl url);
 
     /************************************************************
      * Public methods
@@ -125,6 +125,8 @@ private:
     // TODO: Jeroen: why initialize outside constructor?
     std::unique_ptr<XMASProject> project { new XMASProject };
     Logger m_logger;
+
+    QVariantList m_compositeLibrary;
 
     /************************************************************
      * enums and constant data members

@@ -120,12 +120,21 @@ bool DataControl::addComponent(model::Component *component) {
     return component->xmas_component(xmas_comp);
 }
 
-bool DataControl::addCompositeNetwork(model::Network *network) {
+bool DataControl::addCompositeNetwork(QUrl url) {
 
-    std::string name = "TODO";
-    XMASNetwork* xmas_network = project->loadNetwork(name);
+    std::string name = url.toLocalFile().toStdString();
+    project->loadNetwork(name);
 
-    return network->xmas_network(xmas_network);
+    QVariantMap map;
+    map.insert("url", url);
+
+    // TODO: read from XMASNetwork
+    map.insert("alias", "Credit Counter");
+    map.insert("symbol", "counter.png");
+    map.insert("boxed", false);
+    m_compositeLibrary.append(map);
+
+    return true;
 }
 
 bool DataControl::emitNetwork(XMASNetwork &network) {
