@@ -25,7 +25,13 @@ function loadComponent(qml) {
 function createComponent(parent,component) {
     if (component.status === Qjs.Component.Ready && draggedItem == null) {
         draggedItem = component.createObject(parent,{"x":posnInWindow.x, "y": posnInWindow.y})
-     } else if (component.status === Qjs.Component.Error) {
+        if(draggedItem.type === Model.XComponent.Composite){
+            draggedItem.url = item.url
+            draggedItem.alias = item.alias
+            draggedItem.image = item.source
+            draggedItem.boxed = item.boxed
+        }
+    } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
         log(XMAS.Util.Designer,component.errorString(),"red")
     }
@@ -53,7 +59,7 @@ function endDrag()
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
         if (!network.addComponent(draggedItem)){
-          draggedItem.destroy();
+            draggedItem.destroy();
         }
         draggedItem = null;
     }
@@ -64,7 +70,7 @@ function generateTagIndex(item)
     var max = -1
     for(var child in network.children){
         if(network.children[child].objectName==="component"){
-            if(item.comptype === network.children[child].comptype) {
+            if(item.type === network.children[child].type) {
                 max = Math.max(network.children[child].index,max)
             }
         }

@@ -86,7 +86,10 @@ Rectangle {
                     height:30
                     width:40
                     fillMode: Image.PreserveAspectFit
+                    url: modelData.url
+                    alias:modelData.alias
                     image: modelData.symbol
+                    boxed: modelData.boxed
                     onRemove: if(!network.removeLibraryComposite(modelData.url)) removeCompositeFailedDialog.open()
                 }
             }

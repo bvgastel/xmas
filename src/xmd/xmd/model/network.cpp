@@ -17,7 +17,7 @@ model::Network::~Network()
 }
 
 QString model::Network::packet() {
- return m_packet ;
+    return m_packet ;
 }
 
 void model::Network::setPacket(QString expression) {
@@ -49,7 +49,7 @@ QList<model::Component *> model::Network::getAllComponents() {
 bool model::Network::portError(XPort *port, QString errMsg) {
     if (port) {
         errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
-                                                               : " port = input_port! ");
+                                                            : " port = input_port! ");
         errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
         if (!port->getConnected()) {
             errMsg += "Port is not connected. ";
@@ -267,7 +267,7 @@ QString model::Network::toJson() {
         allComp.insert(c);
     }
     result = ::Export(allComp,globals,mp);
-     QString jsonString = QString(result.stl().c_str());
+    QString jsonString = QString(result.stl().c_str());
     return jsonString;
 }
 
@@ -282,10 +282,20 @@ std::map<bitpowder::lib::String, XMASComponent *> model::Network::getXMap() {
 }
 
 bool model::Network::addComponent(model::Component *component) {
-    auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
-    component->xmas_component(xmas_comp);
-    bool result;
-    std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
+    bool result=false;
+    //TODO if composites are available through xmas , remove if statement and else code block
+    if(component->getType() != model::Component::CompType::Composite){
+        auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
+        component->xmas_component(xmas_comp);
+        std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
+    } else {
+        //example of addComposite, until xmas composite available
+        qDebug() << "Composite url = " << component->property("url");
+        qDebug() << "Composite alias = " << component->property("alias");
+        qDebug() << "Composite image = " << component->property("image");
+        qDebug() << "Composite boxed = " << component->property("boxed");
+        addComposite( (QUrl)(component->property("url").toString()));
+    }
     return result;
 }
 
@@ -361,16 +371,16 @@ QVariantList model::Network::compositeLibrary() {
  * @return True is composite has been added to the library.
  */
 bool model::Network::addLibraryComposite(QUrl url){
-       qDebug() << "Add composite with url = " << url;
-       //1 - send url to xmas and parse as composite
-       //2 - return of xmas --> (url,alias,symbol,boxed)
-       //3 - if ok ; add this in xmas composites + this m_compositeLibrary
-       //4 - if not ok return false without emit
-            //4.1 url doesn't exist
-            //4.2 url already in list
-            //4.3 parser failed to read composite
-       emit compositeLibraryChanged();
-       return true;
+    qDebug() << "Add library composite with url = " << url;
+    //1 - send url to xmas and parse as composite
+    //2 - return of xmas --> (url,alias,symbol,boxed)
+    //3 - if ok ; add this in xmd network composites library
+    //4 - if not ok return false without emit
+    //4.1 url doesn't exist
+    //4.2 url already in list
+    //4.3 parser failed to read composite
+    emit compositeLibraryChanged();
+    return true;
 }
 
 /**
@@ -381,19 +391,23 @@ bool model::Network::addLibraryComposite(QUrl url){
  * @return True is composite has been removed from the library.
  */
 bool model::Network::removeLibraryComposite(QUrl url){
-    qDebug() << "Remove composite with url = " << url;
-    //1 - send url to xmas find composite in list by url
+    qDebug() << "Remove library composite with url = " << url;
+    //1 - send url to xmas find composite in library by url
     //2 - remove composite in xmas if not used in current network
-    //3 - if ok ; remove composite in m_compositeLibrary based on url
+    //3 - if ok ; remove composite in library based on url
     //4 - if not ok return false without emit
-         //4.1 url doesn't exist in xmas composite list
-         //4.2 url still used in current network
-         //4.3 xmas failed to delete composite
+    //4.1 url doesn't exist in xmas composite library
+    //4.2 url still used in current network
+    //4.3 xmas failed to delete composite
 
     emit compositeLibraryChanged();
     return true;
 }
 
 
+bool model::Network::addComposite(QUrl url){
+    qDebug() << "add composite with url = " << url;
+    return true;
+}
 
 
