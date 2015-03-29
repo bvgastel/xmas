@@ -312,7 +312,7 @@ QVariantList model::Network::composites() {
     m_composites.clear();
     //example composite 1
     QVariantMap composite1;
-    composite1.insert("url", "");
+    composite1.insert("url", "file://xmas-models/test.json");
     composite1.insert("alias", "Credit Counter");
     composite1.insert("symbol", "counter.png");
     composite1.insert("boxed", false);

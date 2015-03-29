@@ -38,7 +38,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
+import QtQuick 2.4
+import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
@@ -46,6 +47,7 @@ Image {
     id: item
     property string componentFile
     property alias image:item.source
+    property bool hasMenu: false
 
     Layout.preferredHeight: 40
     Layout.preferredWidth: 40
@@ -55,26 +57,39 @@ Image {
 
     opacity: 0.6
 
+    signal remove()
+
     MouseArea {
         anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
         hoverEnabled: true
         onEntered: item.opacity = 1.0
         onExited: item.opacity = 0.6
+        onClicked:if (mouse.button === Qt.RightButton
+                          && hasMenu)contextMenu.popup()
     }
 
-    onStatusChanged: {
-        try{
-            if (status === Image.Null || status === Image.Error){
-                item.image = "qrc:/icons/content/composite.png"
-                return
-            }
-        } catch(e){
-            item.image = "qrc:/icons/content/composite.png"
+    Menu{
+        id:contextMenu
+        MenuItem{
+            text: "Remove..."
+            onTriggered: item.remove()
         }
     }
+
+//    onStatusChanged: {
+//        try{
+//            if (status === Image.Null || status === Image.Error){
+//                item.image = "qrc:/icons/content/composite.ico"
+//                return
+//            }
+//        } catch(e){
+//            item.image = "qrc:/icons/content/composite.ico"
+//        }
+//    }
 
     //
     Component.onCompleted: try{}catch(e){}

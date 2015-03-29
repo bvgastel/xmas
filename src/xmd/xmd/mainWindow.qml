@@ -97,10 +97,6 @@ ApplicationWindow {
 
     // JavaScripts
 
-    function addComposite(){
-        addCompositeDialog.open()
-    }
-
     // Closes the current model and starts a new one
     function newModel(save){
         if(save) saveModel()
@@ -278,24 +274,6 @@ ApplicationWindow {
         iconSource: "qrc:/icons/content/quit.ico"
         iconName: "Quit"
         onTriggered: network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
-    }
-
-    Action {
-        id: packetAction
-        text: "Packet"
-        shortcut: ""
-        iconSource: "qrc:/icons/content/packet.ico"
-        iconName: "Packet"
-        onTriggered: packetDialog.show()
-    }
-
-    Action {
-        id: addCompositeAction
-        text: "Add composite"
-        shortcut: ""
-        iconSource: "qrc:/icons/content/add_composite.ico"
-        iconName: "add-composite"
-        onTriggered: addCompositeDialog.open()
     }
 
     Action {
@@ -540,14 +518,6 @@ ApplicationWindow {
     //
     //#######################################################################################################
 
-    XPacketDialog {
-        id: packetDialog
-        expression:network.packet
-        onExpressionChanged: {
-            network.packet = packetDialog.expression
-        }
-    }
-
     ApplicationSetupDialog{
         id:appSetupDialog
     }
@@ -566,15 +536,6 @@ ApplicationWindow {
             network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
             //            }
         }
-    }
-
-    //Add composite dialog
-    FileDialog {
-        id: addCompositeDialog
-        nameFilters: [
-            "Model files (*.json)",
-            "All files (*)"]
-        //        onAccepted: network.openComposite(fileUrl)
     }
 
     // About

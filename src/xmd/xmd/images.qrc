@@ -21,7 +21,6 @@
         <file>content/source.png</file>
         <file>content/switch.png</file>
         <file>content/function.png</file>
-        <file>content/composite.png</file>
         <file>content/stop.ico</file>
         <file>content/run.ico</file>
         <file>content/rotate_left.png</file>
@@ -41,6 +40,7 @@
         <file>content/warning.ico</file>
         <file>content/quit.ico</file>
         <file>content/packet.ico</file>
+        <file>content/composite.ico</file>
     </qresource>
     <qresource prefix="/symbols">
         <file>content/symbols/counter.png</file>

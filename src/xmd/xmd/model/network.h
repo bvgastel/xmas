@@ -92,6 +92,8 @@ public slots:
     bool openFile(QUrl url);
     bool closeFile();
     bool newFile();
+    bool addComposite(QUrl url);
+    bool removeComposite(QUrl url);
 
 private:
     QList<Component *> getAllComponents();
@@ -114,8 +116,7 @@ public:
 
 
     QVariantList composites();
-    bool addComposite(QUrl url);
-    bool removeComposite(QUrl url);
+
 
     std::map<bitpowder::lib::String, XMASComponent *> getXMap();
 
