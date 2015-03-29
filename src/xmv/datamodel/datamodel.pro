@@ -84,6 +84,7 @@ HEADERS += datamodel.h\
     jsonprinter.h \
     serialize_network.h \
     canvascomponentextension.h \
+    composite-network-extension.h \
     parseflatjsonfile.h \
     parse-specset.h \
     parse-packet-expression-parse-result.h \
