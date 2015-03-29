@@ -69,7 +69,7 @@ public:
     }
 
     virtual const QList<std::shared_ptr<ResultObject>> &errorList() const = 0;
-    virtual void addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) = 0;
+    virtual void addError(QString stepName, QString errorMessage, QString errorObjectName) = 0;
     virtual void addStep(QString stepName, QString stepMessage) = 0;
 
 };

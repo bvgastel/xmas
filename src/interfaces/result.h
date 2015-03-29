@@ -22,7 +22,7 @@ public:
     virtual ~Result();
 
     virtual const QList<std::shared_ptr<ResultObject>> &errorList() const override;
-    virtual void addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) override;
+    virtual void addError(QString stepName, QString errorMessage, QString errorObjectName) override;
     virtual void addStep(QString stepName, QString stepMessage) override;
 
 private:

@@ -35,8 +35,9 @@ const QList<std::shared_ptr<ResultObject>> &Result::errorList() const {
     return m_errorList;
 }
 
-void Result::addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) {
+void Result::addError(QString stepName, QString errorMessage, QString errorObjectName) {
 
+    bool error = true;
     auto resultObject = std::make_shared<ResultObject>(error, stepName, errorMessage, errorObjectName);
     m_errorList.append(resultObject);
 }

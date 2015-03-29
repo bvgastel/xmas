@@ -140,10 +140,13 @@ SyntaxCheckWorker::checkSyntax(XMap componentMap,
         valid = valid & c->valid();
         it++;
     }
+    QString msg;
     if (valid) {
-        result.addStep(stepName, QString("All ports connected"));
+        msg = QString("All ports connected");
+        result.addStep(stepName, msg);
     } else {
-        result.addError(true, stepName, QString("Some ports not connected"), QString());
+        msg = "Some ports not connected";
+        result.addError(stepName, msg, QString());
     }
 
     std::cout << msg.toStdString() << std::endl;
@@ -151,7 +154,7 @@ SyntaxCheckWorker::checkSyntax(XMap componentMap,
 
     auto end = std::chrono::high_resolution_clock::now();
 
-    return make_pair(start, end);"No cycles in network\n"
+    return make_pair(start, end);
 }
 
 std::pair<tpoint, tpoint>
@@ -162,10 +165,13 @@ SyntaxCheckWorker::checkCycles(XSet componentSet,
 
     bool cycles = CombinatorialCycleDetector(componentSet);
 
+    QString msg;
     if (cycles) {
-        result.addError(true, stepName, QString("Network contains cycles\n"), QString());
+        msg = QString("Network contains cycles\n");
+        result.addError(stepName, msg, QString());
     } else {
-        result.addStep(stepName, "No cycles in network\n");
+        msg = "No cycles in network\n";
+        result.addStep(stepName, msg);
     }
     std::cout << msg.toStdString() << std::endl;
 
@@ -185,7 +191,7 @@ SyntaxCheckWorker::checkCycles(XSet componentSet,
  */
 std::pair<tpoint, tpoint>
 SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
-                               Result &result) {
+                               Result &result, QString stepName) {
     auto start = std::chrono::high_resolution_clock::now();
 
     SymbolicTypes(componentSet);
@@ -209,7 +215,7 @@ void SyntaxCheckWorker::doProcessWork(const QString &json) {
 bool SyntaxCheckWorker::extractSuccess(Result &result) {
     bool success = true;
     for (auto e : result.errorList()) {
-        success = success && !e.m_error;
+        success = success && !e->m_error;
     }
     return success;
 }
