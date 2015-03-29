@@ -5,7 +5,6 @@
         <file>uicontrols/OutputLog.qml</file>
         <file>uicontrols/XDialog.qml</file>
         <file>uicontrols/XToolBar.qml</file>
-        <file>uicontrols/XToolBarItem.qml</file>
         <file>uicontrols/ToolBarSeparator.qml</file>
         <file>mainWindow.qml</file>
         <file>uicontrols/XWire.qml</file>
@@ -13,6 +12,8 @@
         <file>uicontrols/XPacketDialog.qml</file>
         <file>uicontrols/ModelSetupDialog.qml</file>
         <file>uicontrols/ApplicationSetupDialog.qml</file>
+        <file>uicontrols/XToolBarCompositeItem.qml</file>
+        <file>uicontrols/XToolBarPrimitiveItem.qml</file>
     </qresource>
     <qresource prefix="/xmas">
         <file>xobjects/fork.qml</file>

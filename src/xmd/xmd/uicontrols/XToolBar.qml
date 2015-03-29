@@ -23,42 +23,42 @@ Rectangle {
             action: packetAction
         }
         ToolBarSeparator {}
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/queue.qml"
             image: "qrc:/icons/content/queue.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/function.qml"
             image: "qrc:/icons/content/function.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/fork.qml"
             image: "qrc:/icons/content/fork.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/join.qml"
             image: "qrc:/icons/content/join.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/switch.qml"
             image: "qrc:/icons/content/switch.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/merge.qml"
             image: "qrc:/icons/content/merge.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/sink.qml"
             image: "qrc:/icons/content/sink.png"
         }
-        XToolBarItem {
+        XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/source.qml"
             image: "qrc:/icons/content/source.png"
         }
         ToolBarSeparator {}
 
         ToolButton {
-            action: addCompositeAction
+            action: addLibraryCompositeAction
         }
         Rectangle{
             id:compositeListRect
@@ -69,27 +69,25 @@ Rectangle {
             border.color: "darkgrey"
             border.width: 2
             ListView {
-                id:compositeList
+                id:compositeLibrary
                 anchors.fill: compositeListRect
                 contentWidth: 40
                 contentHeight: 40
                 anchors.margins: 2
                 orientation: ListView.Horizontal
-                model: network.composites
+                model: network.compositeLibrary
                 snapMode: ListView.SnapOneItem
                 highlightFollowsCurrentItem: true
                 flickDeceleration: 200
                 clip:true
                 delegate:
-                    XToolBarItem {
+                    XToolBarCompositeItem {
                     id:item
                     height:30
                     width:40
                     fillMode: Image.PreserveAspectFit
-                    image: getImage(modelData.symbol)
-                    hasMenu:true
-                    componentFile: "qrc:/xmas/xobjects/composite.qml"
-                    onRemove: if(!network.removeComposite(modelData.url)) removeCompositeFailedDialog.open()
+                    image: modelData.symbol
+                    onRemove: if(!network.removeLibraryComposite(modelData.url)) removeCompositeFailedDialog.open()
                 }
             }
         }
@@ -108,12 +106,12 @@ Rectangle {
     }
 
     Action {
-        id: addCompositeAction
+        id: addLibraryCompositeAction
         text: "Add composite"
         shortcut: ""
         iconSource: "qrc:/icons/content/add_composite.ico"
         iconName: "add-composite"
-        onTriggered: addCompositeDialog.open()
+        onTriggered: addLibraryCompositeDialog.open()
     }
 
     XPacketDialog {
@@ -126,19 +124,19 @@ Rectangle {
 
     // Add composite dialog
     FileDialog {
-        id: addCompositeDialog
+        id: addLibraryCompositeDialog
         selectExisting: true
         selectFolder: false
         selectMultiple: false
         nameFilters: [
             "Model files (*.json)",
             "All files (*)"]
-        onAccepted: if(!network.addComposite(fileUrl)) addCompositeFailedDialog.open()
+        onAccepted: if(!network.addLibraryComposite(fileUrl)) addLibraryCompositeFailedDialog.open()
     }
 
     // Add composite failed dialog
     MessageDialog{
-        id:addCompositeFailedDialog
+        id:addLibraryCompositeFailedDialog
         title: "Add composite error"
         icon: StandardIcon.Warning
         text:  "Cannot add composite!"
@@ -149,7 +147,7 @@ Rectangle {
 
     // Remove composite failed dialog
     MessageDialog{
-        id:removeCompositeFailedDialog
+        id:removeLibraryCompositeFailedDialog
         title: "Remove composite error"
         icon: StandardIcon.Warning
         text:  "Cannot remove composite!"
@@ -158,12 +156,4 @@ Rectangle {
         onApply: this.destroy()
     }
 
-
-    function getImage(symbol){
-        if(symbol==="") {
-            return "qrc:/icons/content/composite.ico"
-        } else {
-            return "qrc:/symbols/content/symbols/" + symbol
-        }
-    }
 }

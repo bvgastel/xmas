@@ -45,9 +45,12 @@ import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
 Image {
     id: item
-    property string componentFile
-    property alias image:item.source
-    property bool hasMenu: false
+    property string componentFile: "qrc:/xmas/xobjects/composite.qml"
+    property string modelUrl
+    property string alias:"Composite"
+    property string image
+    property bool boxed: true
+    source:"qrc:/icons/content/composite.ico"
 
     Layout.preferredHeight: 40
     Layout.preferredWidth: 40
@@ -68,8 +71,7 @@ Image {
         hoverEnabled: true
         onEntered: item.opacity = 1.0
         onExited: item.opacity = 0.6
-        onClicked:if (mouse.button === Qt.RightButton
-                          && hasMenu)contextMenu.popup()
+        onClicked:if (mouse.button === Qt.RightButton)contextMenu.popup()
     }
 
     Menu{
@@ -80,18 +82,24 @@ Image {
         }
     }
 
-//    onStatusChanged: {
-//        try{
-//            if (status === Image.Null || status === Image.Error){
-//                item.image = "qrc:/icons/content/composite.ico"
-//                return
-//            }
-//        } catch(e){
-//            item.image = "qrc:/icons/content/composite.ico"
-//        }
-//    }
+    onImageChanged: {
+        if(item.image!=="" && item.image !== null) {
+            item.source = "qrc:/symbols/content/symbols/" + item.image
+        }
+    }
 
-    //
-    Component.onCompleted: try{}catch(e){}
+    onStatusChanged: {
+        if(item.status === Image.Error){
+            item.source =  "qrc:/icons/content/composite.ico"
+        }
+        if(item.status === Image.Null){
+            item.source =  "qrc:/icons/content/composite.ico"
+        }
+    }
+
+    // Catch console message on invalid source
+    Component.onCompleted: {
+        try{}catch(e){}
+    }
 
 }

@@ -107,7 +107,6 @@ DISTFILES += mainWindow.qml \
     xobjects/xnetwork.js \
     uicontrols/ScrollBar.qml \
     uicontrols/XToolBar.qml \
-    uicontrols/XToolBarItem.qml \
     uicontrols/XDialog.qml \
     uicontrols/Selection.qml \
     uicontrols/OutputLog.qml \
@@ -120,7 +119,9 @@ DISTFILES += mainWindow.qml \
     xobjects/composite.qml \
     uicontrols/ModelSetupDialog.qml \
     uicontrols/ApplicationSetupDialog.qml \
-    qml-xmas-readme.md
+    qml-xmas-readme.md \
+    uicontrols/XToolBarPrimitiveItem.qml \
+    uicontrols/XToolBarCompositeItem.qml
 
 RESOURCES += \
     images.qrc \
