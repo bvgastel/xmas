@@ -122,6 +122,7 @@ Model.XNetwork {
     }
 
     function wiring(port) {
+        selection.clear()
         if (wire.port1) {
             if(wire.port1.type !== port.type)
             {
@@ -297,6 +298,7 @@ Model.XNetwork {
             if (mouse.button == Qt.RightButton) {
 
             }
+            focus = true
         }
 
         onPositionChanged: {

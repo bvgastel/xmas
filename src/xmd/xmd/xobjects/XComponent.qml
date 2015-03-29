@@ -228,7 +228,6 @@ Model.XComponent {
             wrapMode: TextInput.NoWrap
             font.pointSize : 12
             onEditingFinished: {name = text; focus = false}
-            //TODO validate if name is unique
             focus:true
             onFocusChanged: if(focus)selectAll()
             readOnly: false
