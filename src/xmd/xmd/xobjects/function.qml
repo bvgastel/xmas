@@ -6,11 +6,11 @@ import XMAS.model 1.0 as Model
 XComponent {
     id:component
     width: 100
-    height: 50
+    height: 80
     type: Model.XComponent.Function
     prefix: "f"
-    XPort{x:0 ; y:20; name:"i"; type:Model.XPort.INPORT}
-    XPort{x:90 ; y:20; name:"o"; type:Model.XPort.OUTPORT}
+    XPort{x:0 ; y:40; name:"i"; type:Model.XPort.INPORT}
+    XPort{x:100 ; y:40; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -19,10 +19,10 @@ XComponent {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 4.0
-            ctx.moveTo(5 ,25)
-            ctx.lineTo(95,25)
-            ctx.moveTo(30 ,5)
-            ctx.lineTo(70,45)
+            ctx.moveTo(0 ,40)
+            ctx.lineTo(100,40)
+            ctx.moveTo(30 ,20)
+            ctx.lineTo(70,60)
             ctx.stroke()
         }
     }

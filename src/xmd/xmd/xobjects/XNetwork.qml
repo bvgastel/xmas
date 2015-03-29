@@ -58,6 +58,9 @@ Model.XNetwork {
     property int margin: 25
     property string color: "white"
     property bool modified: false
+    property bool gridVisible:mainwindow.showGrid
+    property bool gridSnap:mainwindow.snapToGrid
+    property int gridSize:20
 
     // Signals
     signal moveSelected(var group)
@@ -70,7 +73,7 @@ Model.XNetwork {
     // JavaScripts
 
     function url(){
-       return network.folder + "/" + network.fileName
+        return network.folder + "/" + network.fileName
     }
 
     // Scale
@@ -169,6 +172,29 @@ Model.XNetwork {
         id:background
         anchors.fill: parent
         color:parent.color
+        Canvas{
+            anchors.fill: parent
+            antialiasing: false
+            smooth:false
+            visible: gridVisible
+            onPaint: {
+                var ctx = getContext('2d')
+                ctx.strokeStyle = "#F0F0F0"
+                ctx.lineWidth = 1.0
+                for(var v=margin; v<=size.height-margin; v+=gridSize){
+                    ctx.beginPath()
+                    ctx.moveTo(margin ,v)
+                    ctx.lineTo(size.width-margin,v)
+                    ctx.stroke()
+                }
+                for(var h=margin; h<=size.width-margin; h+=gridSize){
+                    ctx.beginPath()
+                    ctx.moveTo(h,margin)
+                    ctx.lineTo(h,size.height-margin)
+                    ctx.stroke()
+                }
+            }
+        }
     }
 
     //used to show the wiring path when adding a connection
@@ -285,6 +311,13 @@ Model.XNetwork {
         MenuItem {
             text: "Delete"
             onTriggered: selection.deleteSelected()
+        }
+        MenuSeparator{}
+        MenuItem {
+            action: showGridAction
+        }
+        MenuItem {
+            action: snapToGridAction
         }
         MenuSeparator{}
         MenuItem {

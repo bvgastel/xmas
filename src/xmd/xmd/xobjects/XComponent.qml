@@ -35,6 +35,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import XMAS.model 1.0 as Model
 import XMAS 1.0 as XMAS
+import "qrc:/javascripts/xobjects/xcomponent.js" as ComponentJs
 import "qrc:/ui/uicontrols/"
 
 Model.XComponent {
@@ -85,6 +86,7 @@ Model.XComponent {
             component.scale = 4.0;
     }
 
+    // Rotate
     function doRotate(dAngle){
         component.rotation += (dAngle + 360.0)   // -90 --> 270°
         component.rotation %= 360.0
@@ -93,7 +95,6 @@ Model.XComponent {
         if (Math.abs(component.rotation) > 315)
             component.rotation = 0;
     }
-
 
     function leftBound(){
         return network.margin + width/2 * (scale-1)
@@ -184,6 +185,10 @@ Model.XComponent {
         onDoubleClicked: component.showDialog()
 
         onPositionChanged: {
+            if(network.gridSnap){
+                ComponentJs.doGridSnap(component)
+            }
+
             component.update()
         }
 
@@ -262,13 +267,13 @@ Model.XComponent {
             text: "Increase Size"
             iconSource: "qrc:/icons/content/bigger.ico"
             iconName: "Bigger"
-            onTriggered: doScale(0.25)
+            onTriggered: doScale(0.5)
         }
         MenuItem {
             text: "Decrease Size"
             iconSource: "qrc:/icons/content/smaller.ico"
             iconName: "Smaller"
-            onTriggered: doScale(-0.25)
+            onTriggered: doScale(-0.5)
         }
     }
 }

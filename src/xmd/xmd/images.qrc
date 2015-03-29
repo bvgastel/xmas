@@ -41,6 +41,8 @@
         <file>content/quit.ico</file>
         <file>content/packet.ico</file>
         <file>content/composite.ico</file>
+        <file>content/grid.ico</file>
+        <file>content/snap.ico</file>
     </qresource>
     <qresource prefix="/symbols">
         <file>content/symbols/counter.png</file>

@@ -40,6 +40,8 @@ Model.XPort {
     rotation: (port.type === Model.XPort.INPORT) ? 0 : 180
     property bool nameAlignCenter: false
 
+    transform: Translate {x: -port.width/2; y: -port.height/2 }
+
     signal update()
     signal removed()
 

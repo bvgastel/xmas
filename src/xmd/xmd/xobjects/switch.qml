@@ -9,9 +9,9 @@ XComponent {
     height: 100
     type: Model.XComponent.Switch
     prefix: "s"
-    XPort{x:0 ; y:45; name:"i"; type:Model.XPort.INPORT}
-    XPort{x:90 ; y:15; name:"a"; type:Model.XPort.OUTPORT}
-    XPort{x:90 ; y:75; name:"b"; type:Model.XPort.OUTPORT}
+    XPort{x:0 ; y:50; name:"i"; type:Model.XPort.INPORT}
+    XPort{x:100 ; y:20; name:"a"; type:Model.XPort.OUTPORT}
+    XPort{x:100 ; y:80; name:"b"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -23,7 +23,7 @@ XComponent {
             ctx.moveTo(50,0)
             ctx.lineTo(50,100)
             //left port with arrow
-            ctx.moveTo(5,50)
+            ctx.moveTo(0,50)
             ctx.lineTo(40,50)
             ctx.lineTo(40,45)
             ctx.lineTo(50-ctx.lineWidth,50)
@@ -32,9 +32,9 @@ XComponent {
             ctx.fill()
             //right ports
             ctx.moveTo(50,20)
-            ctx.lineTo(95,20)
+            ctx.lineTo(100,20)
             ctx.moveTo(50,80)
-            ctx.lineTo(95,80)
+            ctx.lineTo(100,80)
             ctx.stroke()
         }
     }

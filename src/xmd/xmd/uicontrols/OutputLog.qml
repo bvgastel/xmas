@@ -40,6 +40,7 @@ import XMAS 1.0 as XMAS
 ColumnLayout{
     id:output
     spacing:0
+    z:10
     property int lastHeight
     property int headerHeight:25
     property bool open: false
@@ -112,7 +113,6 @@ ColumnLayout{
         tabPosition: Qt.BottomEdge
         frameVisible: false
         visible: open //to hide tabs & scrollbar
-
         signal designerLogSig(var message, var color)
         signal pluginLogSig(var message, var color)
         signal clearLog()
@@ -221,6 +221,7 @@ ColumnLayout{
         target: mainwindow
         onClearLog: tabview.clearLog()
     }
+
 }
 
 

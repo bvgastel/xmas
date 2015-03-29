@@ -43,6 +43,7 @@ function continueDrag(mouse)
         return;
     draggedItem.x = mouse.x/network.scale + posnInWindow.x
     draggedItem.y = mouse.y/network.scale + posnInWindow.y
+    if(network.gridSnap)doGridSnap(draggedItem)
 }
 
 function endDrag()
@@ -63,6 +64,14 @@ function endDrag()
         }
         draggedItem = null;
     }
+}
+
+// Grid Snap
+function doGridSnap(item){
+    var snapX = Math.round(((item.x-network.margin) / network.gridSize)) * network.gridSize + network.margin
+    var snapY =  Math.round(((item.y-network.margin) / network.gridSize)) * network.gridSize + network.margin
+    item.x = snapX
+    item.y = snapY
 }
 
 function generateTagIndex(item)

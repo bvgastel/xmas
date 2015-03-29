@@ -4,13 +4,14 @@ import XMAS.model 1.0 as Model
 XComponent {
     id:component
     width: boxed ? 200 : 100
-    height: Math.max(portsLeft.count,portsRight.count) * 30 + 20
+    height: Math.max(portsLeft.count,portsRight.count) * (portSpace + XPort.width) + 20
     type: Model.XComponent.Composite
     prefix: "C"
     property string url:""
     property string alias:"Composite"
     property string image:""
     property bool boxed: true
+    property int portSpace: 20
 
 //    inputports:[
     ports: [
@@ -100,7 +101,7 @@ XComponent {
     // Input ports (left)
     Column {
         id:columnLeft
-        spacing: 20
+        spacing: portSpace
         anchors.left: component.left
         anchors.verticalCenter: box.verticalCenter
         Repeater{
@@ -128,7 +129,7 @@ XComponent {
     // Output ports (right)
     Column {
         id:columnRight
-        spacing: 20
+        spacing: portSpace
         anchors.right: component.right
         anchors.verticalCenter: box.verticalCenter
         Repeater{

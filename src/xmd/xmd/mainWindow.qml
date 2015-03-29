@@ -65,6 +65,8 @@ ApplicationWindow {
     property bool autoSave:true
     property bool showComponentNames:true
     property bool showPortNames:true
+    property bool showGrid:true
+    property bool snapToGrid:true
 
     // Persistent properties
     Settings {
@@ -78,6 +80,8 @@ ApplicationWindow {
         property alias modelFolder: mainwindow.modelFolder
         property alias showComponentNames: mainwindow.showComponentNames
         property alias showPortNames: mainwindow.showPortNames
+        property alias showGrid: mainwindow.showGrid
+        property alias snapToGrid: mainwindow.snapToGrid
     }
 
     //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
@@ -260,11 +264,35 @@ ApplicationWindow {
     Action {
         id: selectAllAction
         text: "Select All"
+        tooltip: "Select All items on the network"
         shortcut: StandardKey.SelectAll
         iconSource: "qrc:/icons/content/select_all.png"
         iconName: "selectAll"
         onTriggered: selectAll()
-        tooltip: "Select All items on the network"
+    }
+
+    Action {
+        id: showGridAction
+        text: "Show grid"
+        tooltip: "Show grid on model page"
+        shortcut: "Ctrl+Shift+G"
+        iconSource: "qrc:/icons/content/grid.ico"
+        iconName: "Grid"
+        checkable: true
+        checked: showGrid
+        onTriggered: showGrid = checked
+    }
+
+    Action {
+        id: snapToGridAction
+        text: "Snap to grid"
+        tooltip: "Snap items to grid"
+        shortcut: "Ctrl+Shift+S"
+        iconSource: "qrc:/icons/content/snap.ico"
+        iconName: "Snap"
+        checkable: true
+        checked: snapToGrid
+        onTriggered: snapToGrid = checked
     }
 
     Action {
@@ -357,6 +385,9 @@ ApplicationWindow {
             MenuItem { action: zoomOutAction }
             MenuItem { action: zoomFitAction }
             MenuSeparator{}
+            MenuItem { action: showGridAction }
+            MenuItem { action: snapToGridAction }
+            MenuSeparator{}
             MenuItem { action: showComponentNamesAction }
             MenuItem { action: showPortNamesAction }
             MenuSeparator{}
@@ -396,7 +427,7 @@ ApplicationWindow {
                 spacing: 2
                 anchors.leftMargin: 5
                 anchors.rightMargin: 5
-//                Layout.alignment: Qt.AlignVCenter
+                //                Layout.alignment: Qt.AlignVCenter
                 ToolButton { action: fileNewAction }
                 ToolButton { action: fileOpenAction }
                 ToolButton { action: fileSaveAction }
@@ -420,7 +451,10 @@ ApplicationWindow {
                 ToolButton {action: selectAllAction}
 
                 ToolBarSeparator {}
+                ToolButton {action: showGridAction}
+                ToolButton {action: snapToGridAction}
 
+                ToolBarSeparator {}
                 ToolButton {action: runVtAction}
                 ToolButton {action: stopVtAction}
 
@@ -623,6 +657,7 @@ ApplicationWindow {
                 contentHeight: network ? network.height * network.scale : 0
                 pixelAligned: true
                 interactive: network ? !network.selectionMode : true
+                clip:true
 
                 //contentWidth: contentItem.childrenRect.width; contentHeight: contentItem.childrenRect.height
 
@@ -789,15 +824,15 @@ ApplicationWindow {
             }
         }
 
+        OutputLog {
+            id: output
+            Layout.minimumHeight: headerHeight
+        }
+
         //remember the log height
         onResizingChanged: {
             output.lastHeight = output.height
             output.open = output.lastHeight > 0
-        }
-
-        OutputLog {
-            id: output
-            Layout.minimumHeight: headerHeight
         }
 
     }

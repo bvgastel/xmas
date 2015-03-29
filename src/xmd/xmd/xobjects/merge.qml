@@ -7,9 +7,9 @@ XComponent {
     height: 100
     type: Model.XComponent.Merge
     prefix: "m"
-    XPort{x:0 ; y:15; name:"a"; type:Model.XPort.INPORT}
-    XPort{x:0 ; y:75; name:"b"; type:Model.XPort.INPORT}
-    XPort{x:90 ; y:45; name:"o"; type:Model.XPort.OUTPORT}
+    XPort{x:0 ; y:20; name:"a"; type:Model.XPort.INPORT}
+    XPort{x:0 ; y:80; name:"b"; type:Model.XPort.INPORT}
+    XPort{x:100 ; y:50; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -21,7 +21,7 @@ XComponent {
             ctx.moveTo(50,0)
             ctx.lineTo(50,100)
             //left top port with arrow
-            ctx.moveTo(5,20)
+            ctx.moveTo(0,20)
             ctx.lineTo(40,20)
             ctx.lineTo(40,15)
             ctx.lineTo(50-ctx.lineWidth,20)
@@ -29,7 +29,7 @@ XComponent {
             ctx.lineTo(40,20)
             ctx.fill()
             //left bottom port with arrow
-            ctx.moveTo(5,80)
+            ctx.moveTo(0,80)
             ctx.lineTo(40,80)
             ctx.lineTo(40,75)
             ctx.lineTo(50-ctx.lineWidth,80)
@@ -38,7 +38,7 @@ XComponent {
             ctx.fill()
             //right port
             ctx.moveTo(50,50)
-            ctx.lineTo(95,50)
+            ctx.lineTo(100,50)
             ctx.stroke()
         }
     }

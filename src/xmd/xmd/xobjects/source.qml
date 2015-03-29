@@ -5,12 +5,12 @@ import XMAS.model 1.0 as Model
 
 XComponent {
     id:component
-    width: 50
-    height: 50
+    width: 60
+    height: 60
     type: Model.XComponent.Source
     prefix: "src"
     property bool required: true
-    XPort{x:20 ; y:40; name:"o"; type:Model.XPort.OUTPORT}
+    XPort{x:30 ; y:40; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
         antialiasing: false
@@ -19,10 +19,10 @@ XComponent {
             var ctx = getContext('2d')
             ctx.strokeStyle = "black"
             ctx.lineWidth = 4.0
-            ctx.moveTo(25,45)
-            ctx.lineTo(25,5)
-            ctx.moveTo(5,5)
-            ctx.lineTo(45,5)
+            ctx.moveTo(30,40)
+            ctx.lineTo(30,5)
+            ctx.moveTo(10,5)
+            ctx.lineTo(50,5)
             ctx.stroke()
         }
     }
