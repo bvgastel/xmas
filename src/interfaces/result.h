@@ -21,14 +21,14 @@ public:
     Result(QObject *parent = 0);
     virtual ~Result();
 
-    virtual const QList<ErrorObject> &errorList() const;
-    virtual const QString description() const;
-    virtual void addErrorList(ErrorObject errorObject);
-    virtual void add2ResultString(QString partialResult);
+    virtual const QList<std::shared_ptr<ResultObject>> &errorList() const override;
+    virtual void addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) override;
+    virtual void addStep(QString stepName, QString stepMessage) override;
 
 private:
-    QList<ErrorObject> m_errorList;
+    QList<std::shared_ptr<ResultObject>> m_errorList;
     QString m_description;
+    bool m_error;
 };
 
 #endif // RESULT_H

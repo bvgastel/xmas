@@ -23,12 +23,30 @@
 #ifndef RESULTINTERFACE
 #define RESULTINTERFACE
 
+#include <memory>
+
 #include <QObject>
 
-struct ErrorObject {
-    bool error;
-    QString errorMessage;
-    QString errorObjectName;
+struct ResultObject {
+    bool m_error;
+    QString m_errorMessage;
+    QString m_errorObjectName;
+    QString m_stepName;
+    QString m_stepMessage;
+
+    ResultObject(bool error, QString stepName, QString errorMessage, QString errorObjectName)
+        : m_error(error),
+          m_errorMessage(errorMessage),
+          m_errorObjectName(errorObjectName),
+          m_stepName(stepName),
+          m_stepMessage() {}
+
+    ResultObject(QString stepName, QString stepMessage)
+        : m_error(false),
+          m_errorMessage(),
+          m_errorObjectName(),
+          m_stepName(stepName),
+          m_stepMessage(stepMessage) {}
 };
 
 
@@ -50,13 +68,9 @@ public:
 
     }
 
-    virtual const QList<ErrorObject> &errorList() const = 0;
-
-    virtual const QString description() const = 0;
-
-    virtual void addErrorList(ErrorObject errorObject) = 0;
-
-    virtual void add2ResultString(QString partialResult) = 0;
+    virtual const QList<std::shared_ptr<ResultObject>> &errorList() const = 0;
+    virtual void addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) = 0;
+    virtual void addStep(QString stepName, QString stepMessage) = 0;
 
 };
 

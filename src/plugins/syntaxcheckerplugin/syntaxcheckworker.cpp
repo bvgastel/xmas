@@ -23,10 +23,13 @@
 #include <map>
 #include <tuple>
 
+#include <QList>
+
 #include "commoninterface.h"
 #include "cycle.h"
 #include "parse.h"
 #include "syntaxcheckworker.h"
+#include "result.h"
 
 SyntaxCheckWorker::SyntaxCheckWorker(QObject *parent) : WorkerInterface(parent) {
 
@@ -39,38 +42,55 @@ SyntaxCheckWorker::~SyntaxCheckWorker() {
 void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Result &result) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
     QString duration_qstr = name + QString(" in \t")+duration+" ms\n";
-    result.add2ResultString(duration_qstr);
+    result.addStep(name, duration_qstr);
     std::cout << duration_qstr.toStdString() << std::endl;
 }
 
 void SyntaxCheckWorker::doWork(XMap &componentMap) {
     Result result;
+    bool success;
     tpoint start, end, nextstart, nextend;
+    QString stepName;
 
     // STEP 1: convert map to set
+    stepName = "convert to set";
     std::set<XMASComponent *> componentSet;
     std::tie(nextstart, nextend, componentSet) = convertComponentMap2Set(componentMap);
     start = nextstart;
     end = nextend;
-    reportTimer(nextstart, nextend, "convert to set", result);
+    reportTimer(nextstart, nextend, stepName, result);
+    success = true;
 
-    // STEP 2: check if the topology is well formed
-    std::tie(nextstart, nextend) = checkSyntax(componentMap, result);
-    end = nextend;
-    reportTimer(nextstart, nextend, "syntax check (valid ports)", result);
+    if (success) {
+        // STEP 2: check if the topology is well formed
+        stepName = "syntax check (valid ports)";
+        std::tie(nextstart, nextend) = checkSyntax(componentMap, result, stepName);
+        end = nextend;
+        reportTimer(nextstart, nextend, stepName, result);
+        success = success && extractSuccess(result);
+    }
 
-    // STEP 2: check for cycles
-    std::tie(nextstart, nextend) = checkCycles(componentSet, result);
-    end = nextend;
-    reportTimer(nextstart, nextend, "syntax check (valid ports)", result);
+    if (success) {
+        // STEP 3: check for cycles
+        stepName = "check cycles";
+        std::tie(nextstart, nextend) = checkCycles(componentSet, result, stepName);
+        end = nextend;
+        reportTimer(nextstart, nextend, stepName, result);
+        success = success && extractSuccess(result);
+    }
 
-    // STEP 3: check symbolic types
-    std::tie(nextstart, nextend) = checkSymbolicTypes(componentSet, result);
-    end = nextend;
-    reportTimer(nextstart, nextend, "symbolic types", result);
+    if (success) {
+        // STEP 4: check symbolic types
+        stepName = "symbolic types";
+        std::tie(nextstart, nextend) = checkSymbolicTypes(componentSet, result, stepName);
+        end = nextend;
+        reportTimer(nextstart, nextend, stepName, result);
+        success = success && extractSuccess(result);
+    }
 
     // Final STEP: Reporting final timers
-    reportTimer(start, end, "Complete check", result);
+    stepName = "Complete check duration";
+    reportTimer(start, end, stepName, result);
     emit resultReady(result);
 }
 
@@ -88,7 +108,7 @@ std::tuple<tpoint, tpoint, XSet>
 
     XSet componentSet;
 
-    // check that each pointer is reflexive
+    // Create componentSet
     auto cbegin = componentMap.cbegin();
     auto cend = componentMap.cend();
     auto it = cbegin;
@@ -105,7 +125,8 @@ std::tuple<tpoint, tpoint, XSet>
 
 std::pair<tpoint, tpoint>
 SyntaxCheckWorker::checkSyntax(XMap componentMap,
-                               Result &result) {
+                               Result &result,
+                               QString stepName) {
     auto start = std::chrono::high_resolution_clock::now();
 
     // check that each pointer is reflexive
@@ -119,26 +140,33 @@ SyntaxCheckWorker::checkSyntax(XMap componentMap,
         valid = valid & c->valid();
         it++;
     }
-    QString msg = valid ? "All ports connected" : "Some ports not connected";
-    result.add2ResultString(msg+"\n");
+    if (valid) {
+        result.addStep(stepName, QString("All ports connected"));
+    } else {
+        result.addError(true, stepName, QString("Some ports not connected"), QString());
+    }
 
     std::cout << msg.toStdString() << std::endl;
 
+
     auto end = std::chrono::high_resolution_clock::now();
 
-    return make_pair(start, end);
+    return make_pair(start, end);"No cycles in network\n"
 }
 
 std::pair<tpoint, tpoint>
 SyntaxCheckWorker::checkCycles(XSet componentSet,
-                               Result &result) {
+                               Result &result,
+                               QString stepName) {
     auto start = std::chrono::high_resolution_clock::now();
 
     bool cycles = CombinatorialCycleDetector(componentSet);
 
-    QString msg = cycles ? "Network contains cycles\n" : "No cycles in network\n";
-    result.add2ResultString(msg);
-
+    if (cycles) {
+        result.addError(true, stepName, QString("Network contains cycles\n"), QString());
+    } else {
+        result.addStep(stepName, "No cycles in network\n");
+    }
     std::cout << msg.toStdString() << std::endl;
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -146,6 +174,15 @@ SyntaxCheckWorker::checkCycles(XSet componentSet,
     return make_pair(start, end);
 }
 
+/**
+ * @brief SyntaxCheckWorker::checkSymbolicTypes
+ *
+ * This check will never return an error. All errors are in std::cout or std::cerr
+ *
+ * @param componentSet
+ * @param result
+ * @return
+ */
 std::pair<tpoint, tpoint>
 SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
                                Result &result) {
@@ -153,8 +190,9 @@ SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
 
     SymbolicTypes(componentSet);
 
+
     QString msg = "Network symbolic types executed: check your messages.\n";
-    result.add2ResultString(msg);
+    result.addStep(stepName, msg);
 
     std::cout << msg.toStdString() << std::endl;
 
@@ -166,5 +204,13 @@ SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
 void SyntaxCheckWorker::doProcessWork(const QString &json) {
     Q_UNUSED(json)
     std::cout << "[SyntaxCheckWorker::doProcessWork()] Not implemented." << std::endl;
+}
+
+bool SyntaxCheckWorker::extractSuccess(Result &result) {
+    bool success = true;
+    for (auto e : result.errorList()) {
+        success = success && !e.m_error;
+    }
+    return success;
 }
 

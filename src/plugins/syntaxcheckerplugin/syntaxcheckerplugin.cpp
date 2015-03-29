@@ -95,12 +95,12 @@ void SyntaxCheckerPlugin::startProcess(const QString &json) {
 void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
     // Don't know what to do yet, with the results. Show them I guess
     auto list = result.errorList();
-    for (ErrorObject err : list) {
-        if (err.error) {
-            std::cerr << err.errorMessage.toStdString() << std::endl;
-            std::cerr << err.errorObjectName.toStdString() << std::endl;
+    for (auto resObj : list) {
+        if (resObj->m_error) {
+            std::cerr << resObj->m_errorMessage.toStdString() << std::endl;
+            std::cerr << resObj->m_errorObjectName.toStdString() << std::endl;
         } else {
-            std::cout << result.description().toStdString() << std::endl;
+            std::cout << "[" << resObj->m_stepName.toStdString() << "] " << resObj->m_stepMessage.toStdString()  << std::endl;
         }
 
     }

@@ -31,20 +31,21 @@ Result::~Result() {
 
 }
 
-const QList<ErrorObject> &Result::errorList() const {
+const QList<std::shared_ptr<ResultObject>> &Result::errorList() const {
     return m_errorList;
 }
 
-const QString Result::description() const {
-    return m_description;
+void Result::addError(bool error, QString stepName, QString errorMessage, QString errorObjectName) {
+
+    auto resultObject = std::make_shared<ResultObject>(error, stepName, errorMessage, errorObjectName);
+    m_errorList.append(resultObject);
 }
 
-void Result::addErrorList(ErrorObject errorObject) {
-    m_errorList.append(errorObject);
+void Result::addStep(QString stepName, QString stepMessage) {
+    auto resultObject = std::make_shared<ResultObject>(stepName, stepMessage);
+    m_errorList.append(resultObject);
 }
 
-void Result::add2ResultString(QString partialResult) {
-    m_description += partialResult;
-}
+
 
 

@@ -42,11 +42,11 @@ protected:
 
     std::tuple<tpoint, tpoint, XSet> convertComponentMap2Set(XMap componentMap);
 
-    std::pair<tpoint, tpoint> checkSyntax(XMap componentMap, Result &result);
+    std::pair<tpoint, tpoint> checkSyntax(XMap componentMap, Result &result, QString stepName);
 
-    std::pair<tpoint, tpoint> checkCycles(XSet componentSet, Result &result);
+    std::pair<tpoint, tpoint> checkCycles(XSet componentSet, Result &result, QString stepName);
 
-    std::pair<tpoint, tpoint> checkSymbolicTypes(XSet componentSet, Result &result);
+    std::pair<tpoint, tpoint> checkSymbolicTypes(XSet componentSet, Result &result, QString stepName);
 
 public slots:
     void doProcessWork(const QString &json) override;
@@ -56,6 +56,9 @@ public slots:
 
 signals:
     void resultReady(const Result &result);
+
+private:
+    bool extractSuccess(Result &result);
 };
 
 
