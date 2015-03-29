@@ -350,9 +350,6 @@ QVariantList model::Network::compositeLibrary() {
     composite5.insert("boxed", true);
     m_compositeLibrary.append(composite5);
 
-    //tell qml that composites has been changed so
-    // it can update gui
-    emit compositeLibraryChanged();
     return m_compositeLibrary;
 }
 
