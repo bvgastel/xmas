@@ -308,17 +308,15 @@ bool model::Network::addComponent(model::Component *component) {
  * @return Network composite list
  */
 //TODO replace example data with json data
-QVariantList model::Network::composites() {
-    m_composites.clear();
+QVariantList model::Network::compositeLibrary() {
+    m_compositeLibrary.clear();
     //example composite 1
     QVariantMap composite1;
     composite1.insert("url", "file://xmas-models/test.json");
     composite1.insert("alias", "Credit Counter");
     composite1.insert("symbol", "counter.png");
     composite1.insert("boxed", false);
-    composite1.insert("ins", QStringList{"i"});
-    composite1.insert("outs", QStringList{"o"});
-    m_composites.append(composite1);
+    m_compositeLibrary.append(composite1);
 
     //example composite 2
     QVariantMap composite2;
@@ -326,9 +324,7 @@ QVariantList model::Network::composites() {
     composite2.insert("alias", "Delay");
     composite2.insert("symbol", "delay.png");
     composite2.insert("boxed", false);
-    composite2.insert("ins", QStringList{"i"});
-    composite2.insert("outs", QStringList{"o"});
-    m_composites.append(composite2);
+    m_compositeLibrary.append(composite2);
 
     //example composite 3
     QVariantMap composite3;
@@ -336,9 +332,7 @@ QVariantList model::Network::composites() {
     composite3.insert("alias", "MuxSrc");
     composite3.insert("symbol", "muxsource.png");
     composite3.insert("boxed", false);
-    composite3.insert("ins", QStringList{});
-    composite3.insert("outs", QStringList{"o"});
-    m_composites.append(composite3);
+    m_compositeLibrary.append(composite3);
 
     //example composite 4
     QVariantMap composite4;
@@ -346,9 +340,7 @@ QVariantList model::Network::composites() {
     composite4.insert("alias", "mySubnet");
     composite4.insert("symbol", "");
     composite4.insert("boxed", true);
-    composite4.insert("ins", QStringList{"a","b","enable","go"});
-    composite4.insert("outs", QStringList{"out"});
-    m_composites.append(composite4);
+    m_compositeLibrary.append(composite4);
 
     //example composite 5
     QVariantMap composite5;
@@ -356,54 +348,52 @@ QVariantList model::Network::composites() {
     composite5.insert("alias", "spidergon");
     composite5.insert("symbol", "spidergon.ico");
     composite5.insert("boxed", true);
-    composite5.insert("ins", QStringList{"a","b","c","d","e","f","g"});
-    composite5.insert("outs", QStringList{"r","s","t"});
-    m_composites.append(composite5);
+    m_compositeLibrary.append(composite5);
 
     //tell qml that composites has been changed so
     // it can update gui
-    emit compositesChanged();
-    return m_composites;
+    emit compositeLibraryChanged();
+    return m_compositeLibrary;
 }
 
 /**
- * Adds a composite to the composite list of this network
+ * Adds a composite to this network its composite library
  *      (Related to the composites section in json)
- * @brief model::Network::addComposite
+ * @brief model::Network::addLibraryComposite
  * @param url
- * @return True is composite has been added to the composite list.
+ * @return True is composite has been added to the library.
  */
-bool model::Network::addComposite(QUrl url){
+bool model::Network::addLibraryComposite(QUrl url){
        qDebug() << "Add composite with url = " << url;
        //1 - send url to xmas and parse as composite
-       //2 - return of xmas --> (url,alias,symbol,boxed,ins,outs)
-       //3 - if ok ; add this in xmas composites + this m_composites
+       //2 - return of xmas --> (url,alias,symbol,boxed)
+       //3 - if ok ; add this in xmas composites + this m_compositeLibrary
        //4 - if not ok return false without emit
             //4.1 url doesn't exist
             //4.2 url already in list
             //4.3 parser failed to read composite
-       emit compositesChanged();
+       emit compositeLibraryChanged();
        return true;
 }
 
 /**
- * Removes a composite in the composite list of this network
+ * Removes a composite in this network its composite library
  *      (Related to the composites section in json)
- * @brief model::Network::removeComposite
+ * @brief model::Network::removeLibraryComposite
  * @param url
- * @return True is composite has been removed from the composite list.
+ * @return True is composite has been removed from the library.
  */
-bool model::Network::removeComposite(QUrl url){
+bool model::Network::removeLibraryComposite(QUrl url){
     qDebug() << "Remove composite with url = " << url;
     //1 - send url to xmas find composite in list by url
     //2 - remove composite in xmas if not used in current network
-    //3 - if ok ; remove composite in m_composites based on url
+    //3 - if ok ; remove composite in m_compositeLibrary based on url
     //4 - if not ok return false without emit
          //4.1 url doesn't exist in xmas composite list
          //4.2 url still used in current network
          //4.3 xmas failed to delete composite
 
-    emit compositesChanged();
+    emit compositeLibraryChanged();
     return true;
 }
 

@@ -38,7 +38,7 @@ class Network : public QQuickItem
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
     Q_PROPERTY(bool boxedImage MEMBER m_boxedImage NOTIFY boxedImageChanged)
     Q_PROPERTY(QString packet READ packet WRITE setPacket NOTIFY packetChanged)
-    Q_PROPERTY(QVariantList composites READ composites NOTIFY compositesChanged)
+    Q_PROPERTY(QVariantList compositeLibrary READ compositeLibrary NOTIFY compositeLibraryChanged)
 
 private:
 
@@ -48,7 +48,7 @@ signals:
     void sizeChanged();
     void imageNameChanged();
     void boxedImageChanged();
-    void compositesChanged();
+    void compositeLibraryChanged();
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
@@ -92,8 +92,8 @@ public slots:
     bool openFile(QUrl url);
     bool closeFile();
     bool newFile();
-    bool addComposite(QUrl url);
-    bool removeComposite(QUrl url);
+    bool addLibraryComposite(QUrl url);
+    bool removeLibraryComposite(QUrl url);
 
 private:
     QList<Component *> getAllComponents();
@@ -115,7 +115,7 @@ public:
     void setPacket(QString expression);
 
 
-    QVariantList composites();
+    QVariantList compositeLibrary();
 
 
     std::map<bitpowder::lib::String, XMASComponent *> getXMap();
@@ -129,7 +129,7 @@ private:
     QString m_imageName;
     QString m_packet;
     bool m_boxedImage;
-    QVariantList m_composites;
+    QVariantList m_compositeLibrary;
 
 };
 
