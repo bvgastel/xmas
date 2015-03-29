@@ -3,13 +3,14 @@ import XMAS.model 1.0 as Model
 
 XComponent {
     id:component
-    width: imageAsSymbol ? 100 : 200
+    width: boxed ? 200 : 100
     height: Math.max(portsLeft.count,portsRight.count) * 30 + 20
     type: Model.XComponent.Composite
-    prefix: "test"
-    property string imageUrl: "qrc:/symbols/content/symbols/counter.png"
-    property bool imageAsSymbol: true
-    property string alias: "Composite"
+    prefix: "C"
+    property string url:""
+    property string alias:"Composite"
+    property string image:""
+    property bool boxed: true
 
 //    inputports:[
     ports: [
@@ -73,22 +74,22 @@ XComponent {
     Rectangle {
         id: box
         anchors.fill: parent
-        anchors.leftMargin: imageAsSymbol ? 0 : 18
-        anchors.rightMargin: imageAsSymbol ? 0 : 18
+        anchors.leftMargin: boxed ? 18 : 0
+        anchors.rightMargin: boxed ? 18 : 0
         z:-1
         border.color: "black"
-        border.width: imageAsSymbol ? 0 : 4
+        border.width: boxed ? 4 : 0
         radius: 10
-        color: imageAsSymbol ? "transparent" : "white"
+        color: boxed ? "white" : "transparent"
         Image {
             id:symbol
             fillMode: Image.Stretch
-            source: imageUrl
+            source: image
             anchors.centerIn: parent
-            onStatusChanged: if(symbol.status === Image.Error) imageAsSymbol = false
+            onStatusChanged: if(symbol.status === Image.Error) boxed = true
             Text {
                 text: symbol.status === Image.Error ? ("???\n" + alias) : alias
-                visible: !imageAsSymbol
+                visible: boxed
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -108,7 +109,7 @@ XComponent {
             delegate: XPort {
                 name:modelData.name
                 type:modelData.type
-                nameAlignCenter: !imageAsSymbol
+                nameAlignCenter: boxed
                 Rectangle {
                     id:leftWire
                     color:"black"
@@ -116,7 +117,7 @@ XComponent {
                     border.width: 0
                     height: 4
                     width: 15
-                    visible: !imageAsSymbol
+                    visible: boxed
                     anchors.left: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -136,7 +137,7 @@ XComponent {
             delegate: XPort {
                 name:modelData.name
                 type:modelData.type
-                nameAlignCenter: !imageAsSymbol
+                nameAlignCenter: boxed
                 Rectangle {
                     id:rightWire
                     color:"black"
@@ -144,7 +145,7 @@ XComponent {
                     border.width: 0
                     height: 4
                     width: 15
-                    visible: !imageAsSymbol
+                    visible: boxed
                     anchors.left: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                 }

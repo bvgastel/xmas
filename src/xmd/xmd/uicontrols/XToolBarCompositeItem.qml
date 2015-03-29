@@ -46,7 +46,7 @@ import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 Image {
     id: item
     property string componentFile: "qrc:/xmas/xobjects/composite.qml"
-    property string modelUrl
+    property string url
     property string alias:"Composite"
     property string image
     property bool boxed: true

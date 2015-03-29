@@ -130,6 +130,7 @@ private:
     QString m_packet;
     bool m_boxedImage;
     QVariantList m_compositeLibrary;
+    bool addComposite(QUrl url);
 
 };
 

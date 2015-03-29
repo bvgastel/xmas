@@ -66,8 +66,7 @@ private:
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid NOTIFY validChanged)
-
-    Q_PROPERTY(QQmlListProperty<model::XPort> ports READ ports) // NOTIFY portsChanged)
+    Q_PROPERTY(QQmlListProperty<model::XPort> ports READ ports)
 
 public:
     explicit Component(QQuickItem *parent = 0);
