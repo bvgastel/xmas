@@ -120,6 +120,7 @@ public:
 
 private:
 
+    // TODO: Jeroen: why initialize outside constructor?
     std::unique_ptr<XMASProject> project { new XMASProject };
     Logger m_logger;
 
