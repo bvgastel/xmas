@@ -28,10 +28,10 @@ Rectangle{
     // Event Handling
     Keys.onDeletePressed: deleteSelected(selectedItems)
     Keys.onEscapePressed: clear()
-    Keys.onLeftPressed: doMove(-network.gridsize,0)
-    Keys.onRightPressed: doMove(network.gridsize,0)
-    Keys.onDownPressed: doMove(0,network.gridsize)
-    Keys.onUpPressed: doMove(0,-network.gridsize)
+    Keys.onLeftPressed: doMove(-network.gridSize,0)
+    Keys.onRightPressed: doMove(network.gridSize,0)
+    Keys.onDownPressed: doMove(0,network.gridSize)
+    Keys.onUpPressed: doMove(0,-network.gridSize)
     Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) network.selectionMode = true }
     Keys.onReleased: network.selectionMode = false
 

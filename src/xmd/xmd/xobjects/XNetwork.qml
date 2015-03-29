@@ -54,7 +54,6 @@ Model.XNetwork {
     property string fileName: "?.json"
     property string folder: modelFolder
     property bool selectionMode: Qt.Unchecked
-    property int gridsize: 10
     property int margin: 25
     property string color: "white"
     property bool modified: false
@@ -83,7 +82,7 @@ Model.XNetwork {
         else
             scale += dScale
         if (scale > 2) scale = 2
-        if (scale < 0.2) scale = 0.2
+        if (scale < 0.25) scale = 0.25
     }
 
     // Select item
