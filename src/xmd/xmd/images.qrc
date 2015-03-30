@@ -7,9 +7,6 @@
         <file>content/new.png</file>
         <file>content/open.png</file>
         <file>content/paste.png</file>
-        <file>content/zoom-fit.png</file>
-        <file>content/zoom-in.png</file>
-        <file>content/zoom-out.png</file>
         <file>content/fork.png</file>
         <file>content/arrow.png</file>
         <file>content/arrowLit.png</file>
@@ -43,6 +40,9 @@
         <file>content/composite.ico</file>
         <file>content/grid.ico</file>
         <file>content/snap.ico</file>
+        <file>content/unzoom.ico</file>
+        <file>content/zoom-in.ico</file>
+        <file>content/zoom-out.ico</file>
     </qresource>
     <qresource prefix="/symbols">
         <file>content/symbols/counter.png</file>
