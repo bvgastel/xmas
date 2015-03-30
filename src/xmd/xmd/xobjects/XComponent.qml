@@ -185,10 +185,9 @@ Model.XComponent {
         onDoubleClicked: component.showDialog()
 
         onPositionChanged: {
-            if(network.gridSnap){
+            if(network.gridSnap && drag.active){
                 ComponentJs.doGridSnap(component)
             }
-
             component.update()
         }
 
