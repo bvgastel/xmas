@@ -58,19 +58,18 @@ Image {
 
     fillMode: Image.PreserveAspectFit
 
-    opacity: 0.6
-
     signal remove()
 
     MouseArea {
         anchors.fill: parent
+        preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
         hoverEnabled: true
-        onEntered: item.opacity = 1.0
-        onExited: item.opacity = 0.6
+//        onEntered: item.opacity = 1.0
+//        onExited: item.opacity = 0.6
         onClicked:if (mouse.button === Qt.RightButton)contextMenu.popup()
     }
 
