@@ -30,20 +30,6 @@ void model::Network::setPacket(QString expression) {
     qDebug() << "packet expression = " << m_packet;
 }
 
-QList<model::Component *> model::Network::getAllComponents() {
-    QList<Component *> componentList;
-    componentList.clear();
-
-    for(QQuickItem *item : this->childItems()) {
-        Component *c = qobject_cast<Component *>(item);
-        if(c){
-            componentList.append(c);
-        }
-    }
-    qDebug() << "Total comps in list = " << componentList.count();
-    return componentList;
-}
-
 /*
  * portError(port, errMsg) always return false to support error messaging.
  *
@@ -254,11 +240,6 @@ bool model::Network::newFile() {
 
 QString model::Network::toJson() {
 
-//    if (dataControl->m_project) {
-//        auto network = dataControl->m_project->getRootNetwork();
-//        auto xmap = network ? network->getComponents() : XMap();
-//    }
-
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
@@ -267,47 +248,18 @@ QString model::Network::toJson() {
     globals["PACKET_TYPE"] = packet;
     globals["VARS"] = bitpowder::lib::JSONData::AllocateMap(mp);
 
-    QList<model::Component *> allComponents = getAllComponents();
-
-    std::set<XMASComponent *> allComp;
-    for (Component *comp : allComponents) {
-        auto c = comp->xmas_component();
-        allComp.insert(c);
+    auto xset = std::set<XMASComponent *>();
+    if (dataControl->project()) {
+        auto network = dataControl->project()->getRootNetwork();
+        if (network) {
+            network->getComponentSet(xset);
+        }
     }
-    result = ::Export(allComp,globals,mp);
+    result = ::Export(xset, globals, mp);
+
     QString jsonString = QString(result.stl().c_str());
     return jsonString;
 }
-
-//std::map<bitpowder::lib::String, XMASComponent *> model::Network::getXMap() {
-//    QList<model::Component *> allComponents = getAllComponents();
-//    std::map<bitpowder::lib::String, XMASComponent *> xmap;
-//    for (Component *comp : allComponents) {
-//        auto c = comp->xmas_component();
-//        xmap[c->getName()] = c;
-//    }
-//    return xmap;
-//}
-
-// FIXME: move to DataControl
-//bool model::Network::addComponent(model::Component *component) {
-//    bool result=false;
-//    //TODO if composites are available through xmas , remove if statement and else code block
-//    if(component->getType() != model::Component::CompType::Composite){
-//        auto xmas_comp = component->createXMASComponent(component->getType(), component->getName());
-//        component->xmas_component(xmas_comp);
-//        std::tie(std::ignore, result) = this->m_xmas_comp_list.insert(xmas_comp);
-//    } else {
-//        //example of addComposite, until xmas composite available
-//        qDebug() << "Composite url = " << component->property("url");
-//        qDebug() << "Composite alias = " << component->property("alias");
-//        qDebug() << "Composite image = " << component->property("image");
-//        qDebug() << "Composite boxed = " << component->property("boxed");
-//        addComposite( (QUrl)(component->property("url").toString()));
-//    }
-//    return result;
-//}
-
 
 //#############################################################################################################
 //#############################################################################################################
