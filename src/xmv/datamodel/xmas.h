@@ -2,6 +2,7 @@
 #define XMAS_H
 
 #include <map>
+#include <set>
 
 #include "extension.h"
 #include "simplestring.h"
@@ -1104,10 +1105,8 @@ public:
         return this->name;
     }
 
-    const std::map<bitpowder::lib::String, XMASComponent*>& getComponents() const {
-        return components;
-    }
-
+    const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
+    void getComponentSet(std::set<XMASComponent*> &) const;
 
     template<typename T>
     const std::vector<T*> componentsOfType() const

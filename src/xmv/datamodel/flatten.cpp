@@ -195,7 +195,7 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
     std::map<XMASComponent*, XMASComponent*> hierFlatMap;
 
     // step 1: copy all components and gates, composites are recursively flattened
-    for (auto entry : src.getComponents()) {
+    for (auto entry : src.getComponentMap()) {
         auto name = entry.first;
         auto c = entry.second;
 
@@ -210,7 +210,7 @@ Gates flattenInto(XMASNetwork& dst, const XMASNetwork& src, const std::string pr
 
 
     // step 2: copy all channels; this implicitly connects composite channels to the subnetworks gates
-    for (auto entry : src.getComponents()) {
+    for (auto entry : src.getComponentMap()) {
         // consider this component as the initiator of a channel
         XMASComponent* hierInitComp = entry.second;
         XMASComponent* flatInitComp = hierFlatMap[hierInitComp];

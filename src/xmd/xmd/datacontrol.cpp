@@ -151,7 +151,7 @@ bool DataControl::addCompositeNetwork(QUrl url) {
 
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
-    auto& components = network.getComponents();
+    auto& components = network.getComponentMap();
 
     std::clock_t c_start = std::clock();
     QVariantList compList;

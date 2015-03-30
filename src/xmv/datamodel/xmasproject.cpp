@@ -54,7 +54,7 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
         globals["COMPOSITE_NETWORK"] = jsonComposite;
     }
 
-    for (auto& it : network->getComponents()) {
+    for (auto& it : network->getComponentMap()) {
         allComponents.insert(it.second);
     }
 

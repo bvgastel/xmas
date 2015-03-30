@@ -847,6 +847,11 @@ ApplicationWindow {
         onWriteLog: output.log(type,message,color)
     }
 
+    Connections {
+        target: network
+        onWriteLog: output.log(XMAS.Util.Network,message,color)
+    }
+
     //TODO: log via util
     /************************************************
      * Data Control
@@ -865,13 +870,13 @@ ApplicationWindow {
         onWriteLog: output.log(XMAS.Util.Plugin,message,color)
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
-            var line = " Loaded plugins: [ ";
+            var line = " Loaded plugins: [";
             var glue = "";
             for (var i in vtNameList) {
                 line += glue + vtNameList[i];
                 glue = ", ";
             }
-            line += " ]";
+            line += "]";
             output.log(XMAS.Util.Plugin,line, "red");
         }
     }

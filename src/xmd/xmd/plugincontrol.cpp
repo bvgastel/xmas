@@ -73,7 +73,7 @@ XMap PluginControl::getXmasComponents() {
         std::cerr << msg.toStdString() << std::endl;
         return XMap();
     }
-    auto xmap = network->getComponents();
+    auto xmap = network->getComponentMap();
     return xmap;
 }
 

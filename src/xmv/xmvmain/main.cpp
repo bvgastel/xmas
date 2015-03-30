@@ -623,7 +623,7 @@ void TestFile(const std::string &filename, bool showAll) {
 
     //============
     XMASNetwork flattened = flatten(*project.getRootNetwork());
-    auto& components = flattened.getComponents();               // TODO: flattened network is quite a bit slower than the original (type inference), due to lack of a MemoryPool?
+    auto& components = flattened.getComponentMap();               // TODO: flattened network is quite a bit slower than the original (type inference), due to lack of a MemoryPool?
     //auto& components = project.getRootNetwork()->getComponents();
     //============
 

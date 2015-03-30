@@ -2,12 +2,18 @@
 #include <QUrl>
 
 #include "util.h"
+#include "commoninterface.h"
 #include "network.h"
 
 /* Access to the global datacontrol pointer */
 extern DataControl *dataControl;
 
-model::Network::Network(QQuickItem *parent) : QQuickItem(parent) {}
+model::Network::Network(QQuickItem *parent)
+    : QQuickItem(parent),
+      m_logger("Network.cpp")
+{
+    QObject::connect(&m_logger, &Logger::writeLog, dataControl, &DataControl::writeLog );
+}
 
 model::Network::~Network() {}
 
@@ -20,6 +26,7 @@ void model::Network::setPacket(QString expression) {
         m_packet = expression;
     }
     emit packetChanged();
+    m_logger.log(QString("packet expression = ")+m_packet);
     qDebug() << "packet expression = " << m_packet;
 }
 
@@ -246,6 +253,12 @@ bool model::Network::newFile() {
 }
 
 QString model::Network::toJson() {
+
+//    if (dataControl->m_project) {
+//        auto network = dataControl->m_project->getRootNetwork();
+//        auto xmap = network ? network->getComponents() : XMap();
+//    }
+
     bitpowder::lib::String result;
     bitpowder::lib::MemoryPool mp;
     bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);

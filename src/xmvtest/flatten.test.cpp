@@ -32,7 +32,7 @@ void checkGateAndCompositeFree(XMASComponent* comp) {
 }
 
 void checkValidAndFlat(const XMASNetwork& network) {
-    for (auto x : network.getComponents()) {
+    for (auto x : network.getComponentMap()) {
         XMASComponent* c = x.second;
         EXPECT_TRUE(c->valid());
         checkGateAndCompositeFree(c);
@@ -95,7 +95,7 @@ TEST_F(BridgeCompositeTest, EmptyFlatNetwork) {
 
     XMASNetwork flattened = flatten(test);
 
-    auto fcs = flattened.getComponents();
+    auto fcs = flattened.getComponentMap();
     EXPECT_EQ(0, fcs.size());
 
     // quite pointless to check an empty network, but why not?
@@ -127,7 +127,7 @@ TEST_F(BridgeCompositeTest, SourceBridgeSink) {
     XMASNetwork flattened = flatten(test);
 
     // and test the result
-    auto fcs = flattened.getComponents();
+    auto fcs = flattened.getComponentMap();
     EXPECT_EQ(2, fcs.size());
     EXPECT_TRUE(fcs.find("::source1") != fcs.end());
     EXPECT_TRUE(fcs.find("::sink1") != fcs.end());
@@ -154,7 +154,7 @@ TEST_F(CreditCounterTest, AlreadyFlat) {
 
     XMASNetwork flattened = flatten(test);
 
-    auto fcs = flattened.getComponents();
+    auto fcs = flattened.getComponentMap();
     EXPECT_EQ(4, fcs.size());
     EXPECT_TRUE(fcs.find("::source1") != fcs.end());
     EXPECT_TRUE(fcs.find("::sink1") != fcs.end());
@@ -182,7 +182,7 @@ TEST_F(CreditCounterTest, SourceCCSink) {
     XMASNetwork flattened = flatten(test);
 
     // and test the result
-    auto fcs = flattened.getComponents();
+    auto fcs = flattened.getComponentMap();
     EXPECT_TRUE(fcs.find("::source1") != fcs.end());
     EXPECT_TRUE(fcs.find("::sink1") != fcs.end());
     EXPECT_TRUE(fcs.find("::cc1::source") != fcs.end());
@@ -220,7 +220,7 @@ TEST_F(CreditCounterTest, ConsecutiveCC) {
     XMASNetwork flattened = flatten(test);
 
     // and test the result
-    auto fcs = flattened.getComponents();
+    auto fcs = flattened.getComponentMap();
     EXPECT_TRUE(fcs.find("::source1") != fcs.end());
     EXPECT_TRUE(fcs.find("::sink1") != fcs.end());
     EXPECT_TRUE(fcs.find("::cc1::source") != fcs.end());

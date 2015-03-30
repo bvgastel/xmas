@@ -30,11 +30,9 @@ model::Component::Component(QQuickItem *parent)
 
 model::Component::~Component()
 {
-    //delete m_xmas_component;  // removed since XMASProject owns the components
 }
 
 void model::Component::classBegin() {
-    // No action needed.
 }
 
 /**

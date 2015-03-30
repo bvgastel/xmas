@@ -119,6 +119,7 @@ public:
 
 private:
 
+    Logger m_logger;
     QString m_alias;
     QSize m_size;
     QString m_imageName;

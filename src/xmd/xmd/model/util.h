@@ -37,12 +37,12 @@ public:
     ~Util();
 
     enum messageType {
-        Info = Qt::black,
+        Info = Qt::blue,
         Success = Qt::green,
         Warning = Qt::yellow,
         Error = Qt::red
         };
-    enum logType {Designer=0,Plugin=1};
+    enum logType {Designer=0,Plugin=1,Network=3};
 
 
 signals:

@@ -49,10 +49,13 @@ ColumnLayout{
     function log(type,message,color){
         //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
-        if(type===XMAS.Util.Designer){
+        if(type===XMAS.Util.Designer) {
             tabview.designerLogSig(message,color)
         }
-        if(type===XMAS.Util.Plugin){
+        if(type===XMAS.Util.Plugin) {
+            tabview.pluginLogSig(message,color)
+        }
+        if (type===XMAS.Util.Network) {
             tabview.pluginLogSig(message,color)
         }
     }

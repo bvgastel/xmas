@@ -480,6 +480,20 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
+const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponentMap() const {
+    return components;
+}
+
+void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
+    XMASComponent *c;
+    auto xmap = getComponentMap();
+    for (auto entry : xmap) {
+        c = entry.second;
+        xset.insert(c);
+    }
+}
+
+
 
 XMASComposite::~XMASComposite() {
     for (Input* i : inputPorts()) {
