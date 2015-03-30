@@ -102,7 +102,6 @@ public slots:
     bool fileOpen(QUrl fileUrl);
 
     bool addComponent(model::Component *component);
-    bool addCompositeNetwork(QUrl url);
 
     /************************************************************
      * Public methods

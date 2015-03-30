@@ -5,6 +5,9 @@
 #include "commoninterface.h"
 #include "network.h"
 
+#include "xmas.h"
+#include "composite-network-extension.h"
+
 /* Access to the global datacontrol pointer */
 extern DataControl *dataControl;
 
@@ -279,46 +282,46 @@ QString model::Network::toJson() {
  */
 //TODO replace example data with json data
 QVariantList model::Network::compositeLibrary() {
-    m_compositeLibrary.clear();
-    //example composite 1
-    QVariantMap composite1;
-    composite1.insert("url", "file://xmas-models/test.json");
-    composite1.insert("alias", "Credit Counter");
-    composite1.insert("symbol", "counter.png");
-    composite1.insert("boxed", false);
-    m_compositeLibrary.append(composite1);
+//    m_compositeLibrary.clear();
+//    //example composite 1
+//    QVariantMap composite1;
+//    composite1.insert("url", "file://xmas-models/test.json");
+//    composite1.insert("alias", "Credit Counter");
+//    composite1.insert("symbol", "counter.png");
+//    composite1.insert("boxed", false);
+//    m_compositeLibrary.append(composite1);
 
-    //example composite 2
-    QVariantMap composite2;
-    composite2.insert("url", "");
-    composite2.insert("alias", "Delay");
-    composite2.insert("symbol", "delay.png");
-    composite2.insert("boxed", false);
-    m_compositeLibrary.append(composite2);
+//    //example composite 2
+//    QVariantMap composite2;
+//    composite2.insert("url", "");
+//    composite2.insert("alias", "Delay");
+//    composite2.insert("symbol", "delay.png");
+//    composite2.insert("boxed", false);
+//    m_compositeLibrary.append(composite2);
 
-    //example composite 3
-    QVariantMap composite3;
-    composite3.insert("url", "");
-    composite3.insert("alias", "MuxSrc");
-    composite3.insert("symbol", "muxsource.png");
-    composite3.insert("boxed", false);
-    m_compositeLibrary.append(composite3);
+//    //example composite 3
+//    QVariantMap composite3;
+//    composite3.insert("url", "");
+//    composite3.insert("alias", "MuxSrc");
+//    composite3.insert("symbol", "muxsource.png");
+//    composite3.insert("boxed", false);
+//    m_compositeLibrary.append(composite3);
 
-    //example composite 4
-    QVariantMap composite4;
-    composite4.insert("url", "");
-    composite4.insert("alias", "mySubnet");
-    composite4.insert("symbol", "");
-    composite4.insert("boxed", true);
-    m_compositeLibrary.append(composite4);
+//    //example composite 4
+//    QVariantMap composite4;
+//    composite4.insert("url", "");
+//    composite4.insert("alias", "mySubnet");
+//    composite4.insert("symbol", "");
+//    composite4.insert("boxed", true);
+//    m_compositeLibrary.append(composite4);
 
-    //example composite 5
-    QVariantMap composite5;
-    composite5.insert("url", "");
-    composite5.insert("alias", "spidergon");
-    composite5.insert("symbol", "spidergon.ico");
-    composite5.insert("boxed", true);
-    m_compositeLibrary.append(composite5);
+//    example composite 5
+//    QVariantMap composite5;
+//    composite5.insert("url", "");
+//    composite5.insert("alias", "spidergon");
+//    composite5.insert("symbol", "spidergon.ico");
+//    composite5.insert("boxed", true);
+//    m_compositeLibrary.append(composite5);
 
     return m_compositeLibrary;
 }
@@ -332,13 +335,30 @@ QVariantList model::Network::compositeLibrary() {
  */
 bool model::Network::addLibraryComposite(QUrl url){
     qDebug() << "Add library composite with url = " << url;
+
     //1 - send url to xmas and parse as composite
+    std::string name = url.toLocalFile().toStdString();
+    XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
+
     //2 - return of xmas --> (url,alias,symbol,boxed)
     //3 - if ok ; add this in xmd network composites library
     //4 - if not ok return false without emit
+    auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
+    if (!cne)
+        return false;   // Composite network information missing, can't use as a composite network!
     //4.1 url doesn't exist
     //4.2 url already in list
     //4.3 parser failed to read composite
+
+
+    QVariantMap map;
+    map.insert("url", url);
+    map.insert("alias", QString::fromStdString(cne->alias));
+    map.insert("symbol", QString::fromStdString(cne->imageName));
+    map.insert("boxed", cne->boxedImage);
+    map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
+    m_compositeLibrary.append(map);
+
     emit compositeLibraryChanged();
     return true;
 }

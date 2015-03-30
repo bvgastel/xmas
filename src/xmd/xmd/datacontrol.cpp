@@ -132,26 +132,6 @@ bool DataControl::addComponent(model::Component *component) {
     return true;
 }
 
-bool DataControl::addCompositeNetwork(QUrl url) {
-
-    std::string name = url.toLocalFile().toStdString();
-    XMASNetwork* xmas_network = m_project->loadNetwork(name);
-
-
-    auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
-    if (!cne)
-        return false;   // Composite network information missing, can't use as a composite network!
-
-    QVariantMap map;
-    map.insert("url", url);
-    map.insert("alias", QString::fromStdString(cne->alias));
-    map.insert("symbol", QString::fromStdString(cne->imageName));
-    map.insert("boxed", cne->boxedImage);
-    map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
-    m_compositeLibrary.append(map);
-
-    return true;
-}
 
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
