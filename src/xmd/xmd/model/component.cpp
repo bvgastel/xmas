@@ -193,7 +193,7 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             emit writeLog(QString("Fatal error in Component: "
-                             "did not recognize m_component as switch."));
+                             "did not recognize m_component as join."));
             throw bitpowder::lib::Exception("Fatal error in Component.");
         }
         return true;
