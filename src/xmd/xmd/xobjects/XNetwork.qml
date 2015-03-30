@@ -347,9 +347,7 @@ Model.XNetwork {
 
     Connections {
         target: mainwindow
-        onZoomIn: doScale(0.1)
-        onZoomOut: doScale(-0.1)
-        onZoomFit: doScale()
+        onZoom: doScale(value)
         onSelectAll: selectAll()
         onSelectionMode: selectionMode = checked
         onModelSetupDialog: setupDialog.show()

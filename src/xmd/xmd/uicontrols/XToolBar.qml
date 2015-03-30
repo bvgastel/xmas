@@ -80,6 +80,10 @@ Rectangle {
                 highlightFollowsCurrentItem: true
                 flickDeceleration: 200
                 clip:true
+                header:Item{width:10; height: parent.height}
+                headerPositioning:ListView.OverlayHeader
+                footer:Item{width:10; height: parent.height}
+                footerPositioning:ListView.OverlayFooter
                 delegate:
                     XToolBarCompositeItem {
                     id:item

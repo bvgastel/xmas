@@ -91,9 +91,7 @@ ApplicationWindow {
     signal cut
     signal copy
     signal paste
-    signal zoomIn
-    signal zoomOut
-    signal zoomFit
+    signal zoom(var value)
     signal selectAll
     signal selectionMode(var checked)
     signal modelSetupDialog
@@ -227,27 +225,27 @@ ApplicationWindow {
         id: zoomInAction
         text: "Zoom In"
         shortcut: StandardKey.ZoomIn
-        iconSource: "qrc:/icons/content/zoom-in.png"
+        iconSource: "qrc:/icons/content/zoom-in.ico"
         iconName: "zoom-in"
-        onTriggered: zoomIn()
+        onTriggered: zoom(0.1)
     }
 
     Action {
         id: zoomOutAction
         text: "Zoom Out"
         shortcut: StandardKey.ZoomOut
-        iconSource: "qrc:/icons/content/zoom-out.png"
+        iconSource: "qrc:/icons/content/zoom-out.ico"
         iconName: "zoom-out"
-        onTriggered: zoomOut()
+        onTriggered: zoom(-0.1)
     }
 
     Action {
-        id: zoomFitAction
-        text: "Zoom Fit"
+        id: unZoomAction
+        text: "Unzoom"
         shortcut: "Ctrl+1"
-        iconSource: "qrc:/icons/content/zoom-fit.png"
-        iconName: "zoom-fit"
-        onTriggered: zoomFit()
+        iconSource: "qrc:/icons/content/unzoom.ico"
+        iconName: "unzoom"
+        onTriggered: zoom(1-network.scale)
     }
 
     Action {
@@ -383,7 +381,7 @@ ApplicationWindow {
 
             MenuItem { action: zoomInAction }
             MenuItem { action: zoomOutAction }
-            MenuItem { action: zoomFitAction }
+            MenuItem { action: unZoomAction }
             MenuSeparator{}
             MenuItem { action: showGridAction }
             MenuItem { action: snapToGridAction }
@@ -443,7 +441,7 @@ ApplicationWindow {
 
                 ToolButton { action: zoomInAction }
                 ToolButton { action: zoomOutAction }
-                ToolButton { action: zoomFitAction }
+                ToolButton { action: unZoomAction }
 
                 ToolBarSeparator {}
 
@@ -651,43 +649,17 @@ ApplicationWindow {
                 id: view
                 //center the scene by default
                 anchors.fill: parent
-                contentX: network ? (1 - network.scale) * network.width * 0.5 : 0
-                contentY: network ? (1 - network.scale) * network.height * 0.5 : 0
-                contentWidth: network ? network.width * network.scale : 0
-                contentHeight: network ? network.height * network.scale : 0
+                contentWidth: network.width
+                contentHeight: network.height
                 pixelAligned: true
-                interactive: network ? !network.selectionMode : true
+                interactive: !network.selectionMode
                 clip:true
-
-                //contentWidth: contentItem.childrenRect.width; contentHeight: contentItem.childrenRect.height
-
-
-                //        onFlickEnded: {
-                //            console.log("x : " + view.visibleArea.xPosition
-                //                        + " wr : " + view.visibleArea.widthRatio
-                //                        + " y : " + view.visibleArea.yPosition
-                //                        + " hr : " + view.visibleArea.heightRatio)
-                //        }
 
                 XNetwork{
                     id:network
-                    onMoveSelected: {
-                        if(group.x < view.contentX)
-                            scrollLeft.start()
-                        else
-                            scrollLeft.stop()
-                        if(group.x + group.width - 50 > view.contentX + view.width)
-                            scrollRight.start()
-                        else
-                            scrollRight.stop()
-                        if(group.y < view.contentY)
-                            scrollUp.start()
-                        else
-                            scrollUp.stop()
-                        if(group.y + group.height - 50 > view.contentY + view.height)
-                            scrollDown.start()
-                        else
-                            scrollDown.stop()
+                    onScaleChanged: {
+                        view.resizeContent(network.width * network.scale,
+                                           network.height * network.scale,Qt.point(0,0))
                     }
 
                 }
@@ -696,8 +668,6 @@ ApplicationWindow {
                     State {
                     name: "ShowBars"
                     when: view.movingVertically || view.movingHorizontally
-                          || scrollLeft.running || scrollRight.running
-                          || scrollUp.running || scrollDown.running
                     PropertyChanges { target: verticalScrollBar; opacity: 1 }
                     PropertyChanges { target: horizontalScrollBar; opacity: 1 }
                 }
@@ -737,90 +707,6 @@ ApplicationWindow {
                 orientation: Qt.Horizontal
                 position: view.visibleArea.xPosition
                 pageSize: view.visibleArea.widthRatio
-            }
-
-            MouseArea {
-                id: scrollZoneLeft
-                width: 10
-                height: view.height
-                anchors.left: view.left
-                hoverEnabled: true
-                preventStealing: false
-                z: 100
-                onExited: view.returnToBounds()
-            }
-
-            MouseArea {
-                id: scrollZoneRight
-                width: 10
-                height: view.height
-                anchors.right: view.right
-                hoverEnabled: true
-                preventStealing: false
-                z: 100
-                onExited: view.returnToBounds()
-            }
-
-            MouseArea {
-                id: scrollZoneTop
-                width: view.width
-                height: 10
-                anchors.top: view.top
-                hoverEnabled: true
-                preventStealing: false
-                z: 100
-                onExited: view.returnToBounds()
-            }
-
-            MouseArea {
-                id: scrollZoneBottom
-                width: view.width
-                height: 10
-                anchors.bottom: view.bottom
-                hoverEnabled: true
-                preventStealing: false
-                z: 100
-                onExited: view.returnToBounds()
-            }
-
-            SmoothedAnimation {
-                id: scrollLeft
-                target: view
-                property: "contentX"
-                to:-50
-                velocity: 1000
-                onStopped: view.returnToBounds()
-                //running: scrollZoneLeft.containsMouse
-            }
-
-            SmoothedAnimation {
-                id: scrollRight
-                target: view
-                property: "contentX"
-                to: view.contentWidth + 50
-                velocity: 1000
-                onStopped: view.returnToBounds()
-                //running: scrollZoneRight.containsMouse
-            }
-
-            SmoothedAnimation {
-                id: scrollUp
-                target: view
-                property: "contentY"
-                to: -50
-                velocity: 1000
-                onStopped: view.returnToBounds()
-                //running: scrollZoneTop.containsMouse
-            }
-
-            SmoothedAnimation {
-                id: scrollDown
-                target: view
-                property: "contentY"
-                to: view.contentHeight + 50
-                velocity: 1000
-                onStopped: view.returnToBounds()
-                //running: scrollZoneBottom.containsMouse
             }
         }
 

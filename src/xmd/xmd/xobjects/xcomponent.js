@@ -50,10 +50,10 @@ function endDrag()
 {
     if (draggedItem == null)
         return;
-    if (draggedItem.x < network.x
-            || draggedItem.x > network.x + network.width - draggedItem.width
-            || draggedItem.y < network.y
-            || draggedItem.y > network.y + network.height - draggedItem.height) {
+    if (draggedItem.x < network.x + network.margin
+            || draggedItem.x > network.x + network.width - network.margin - draggedItem.width
+            || draggedItem.y < network.y + network.margin
+            || draggedItem.y > network.y + network.height - network.margin - draggedItem.height) {
         draggedItem.destroy();
         draggedItem = null;
     } else {
