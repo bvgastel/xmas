@@ -330,7 +330,7 @@ ApplicationWindow {
         onTriggered: {
             for (var i in mainwindow.vtNameList) {
                 var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
-                log ("params = [" + params +"] Running to be implemented", "green");
+                log (XMAS.Util.Plugin,"params = [" + params +"] Running to be implemented", "green");
                 plugincontrol.startPlugin(mainwindow.vtNameList[i], network);
             }
 
@@ -393,12 +393,6 @@ ApplicationWindow {
         }
 
         Menu {
-            title: "&Tools"
-            MenuItem { action: runVtAction }
-            MenuItem { action: stopVtAction }
-        }
-
-        Menu {
             title: "&Help"
             MenuItem { text: "About..." ; onTriggered: aboutBox.open() }
         }
@@ -411,11 +405,7 @@ ApplicationWindow {
             background: Rectangle {
                 border.color: "gray"
                 color: "lightgray"
-                //                   gradient: Gradient {
-                //                       GradientStop { position: 0 ; color: "lightgray" }
-                //                       GradientStop { position: 1 ; color: "gray" }
-                //                   }
-            }
+           }
         }
         ColumnLayout{
             anchors.fill: parent
@@ -451,69 +441,6 @@ ApplicationWindow {
                 ToolBarSeparator {}
                 ToolButton {action: showGridAction}
                 ToolButton {action: snapToGridAction}
-
-                ToolBarSeparator {}
-                ToolButton {action: runVtAction}
-                ToolButton {action: stopVtAction}
-
-                ComboBox {
-                    width: 200
-                    //TODO replace with plugin list
-                    model: [ "SyntaxChecker"]
-                    implicitWidth: 200
-                    implicitHeight: 20
-                }
-
-                //TODO replace with plugin progress value
-                ProgressBar {
-                    id:progressbar
-                    value: 50
-                    indeterminate: false
-                    minimumValue: 0
-                    maximumValue: 100
-
-                    style: ProgressBarStyle {
-                        background: Rectangle {
-                            radius: 5
-                            color: "darkgray"
-                            border.color: "darkgray"
-                            border.width: 0
-                            implicitWidth: 200
-                            implicitHeight: 18
-                        }
-                        progress: Rectangle {
-                            border.width:1
-                            border.color:"steelblue"
-                            radius: 4
-                            gradient: Gradient {
-                                GradientStop { position: 0.0; color: "steelblue" }
-                                GradientStop { position: 0.4; color: "lightsteelblue" }
-                                GradientStop { position: 1.0; color: "steelblue" }
-                            }
-                            Item {
-                                anchors.fill: parent
-                                anchors.margins: 1
-                                visible: progressbar.indeterminate
-                                clip: true
-                                Row {
-                                    Repeater {
-                                        Rectangle {
-                                            color: index % 2 ? "steelblue" : "lightsteelblue"
-                                            width: 20 ; height: progressbar.height
-                                        }
-                                        model: progressbar.width / 20 + 2
-                                    }
-                                    XAnimator on x {
-                                        from: 0 ; to: -40
-                                        loops: Animation.Infinite
-                                        running: progressbar.indeterminate
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                //TODO replace with plugin progress value
 
                 Item { Layout.fillWidth: true }
                 ToolBarSeparator{}

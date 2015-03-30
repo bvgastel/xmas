@@ -32,199 +32,41 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
-import QtQuick.Layouts 1.1
-import Qt.labs.settings 1.0
-import "qrc:/ui/uicontrols/"
-import XMAS 1.0 as XMAS
 
-ColumnLayout{
-    id:output
-    spacing:0
-    z:10
-    property int lastHeight
-    property int headerHeight:25
-    property bool open: false
-    property string status // current tab title not working
+Rectangle
+{
+    id:log
+    signal clear
+    signal write(var message, var color)
 
-    function log(type,message,color){
-        //TODO : check for valid color (As QColor.isValidColor(x))
-        if(color === "" || color === null || color === undefined) color ="black"
-        if(type===XMAS.Util.Designer) {
-            tabview.designerLogSig(message,color)
-        }
-        if(type===XMAS.Util.Plugin) {
-            tabview.pluginLogSig(message,color)
-        }
-        if (type===XMAS.Util.Network) {
-            tabview.pluginLogSig(message,color)
-        }
-    }
+    //z:-1 //to hide scrollbar when height is 0
+    color:"lavender"
+    radius:5
 
-    Settings {
-        category: "outputLog"
-        property alias lastHeight: output.lastHeight
-        property alias open: output.open
-    }
-
-    Rectangle
-    {
-        id:logHeader
-        height: headerHeight
-        Layout.fillWidth: true
-        color:"darkgray"
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "black" }
-            GradientStop { position: 0.4; color: "grey" }
-            GradientStop { position: 1.0; color: "black" }
+    TextArea {
+        id:textArea
+        anchors.fill: parent
+        readOnly: true
+        font.pointSize: 10
+        textFormat: Qt.RichText
+        clip: true
+        style: TextAreaStyle {
+            backgroundColor: "transparent"
         }
-        RowLayout{
-            anchors.fill: parent
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            ToolButton{
-                action: clearLogAction
-                Layout.fillHeight: true
-                Layout.preferredWidth: 20
-                Layout.alignment: Qt.AlignVCenter
+        Connections{
+            target:log
+            onClear:{
+                textArea.select(0,0)
+                textArea.text = ""
             }
-            Text {
-                id:status
-                Layout.alignment: Qt.AlignLeft
-                color: "white"
-                text:output.status
-            }
-            Image {
-                id:arrow
-                source: "qrc:/icons/content/arrow.png"
-                Layout.alignment: Qt.AlignRight
-                MouseArea{
-                    anchors.fill:parent
-                    hoverEnabled: true
-                    onEntered: arrow.source = "qrc:/icons/content/arrowLit.png"
-                    onExited: arrow.source = "qrc:/icons/content/arrow.png"
-                    onClicked: open = !open
-                }
+
+            onWrite:{
+                if(color===undefined)color = "black"
+                textArea.append("<font color=" + color + ">" + message + "</color>")
             }
         }
     }
-
-    TabView{
-        id:tabview
-        anchors.margins: 5
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        tabPosition: Qt.BottomEdge
-        frameVisible: false
-        visible: open //to hide tabs & scrollbar
-        signal designerLogSig(var message, var color)
-        signal pluginLogSig(var message, var color)
-        signal clearLog()
-        Tab {
-            id:designerTab
-            title: "Designer log"
-            active: true
-
-            TextArea {
-                id:designerList
-                anchors.fill: parent
-                z:-1 //to hide scrollbar when height is 0
-                readOnly: true
-                font.pointSize: 10
-                textFormat: Qt.RichText
-                style: TextAreaStyle {
-                    backgroundColor: "lavender"
-                }
-                Connections{
-                    target: tabview
-                    onDesignerLogSig: designerList.append("<font color=" + color + ">" + message + "</color>")
-                    onClearLog:{
-                        if(designerTab.visible){
-                          designerList.select(0,0)
-                           designerList.text = ""
-                        }
-                    }
-                }
-            }
-
-        }
-        Tab {
-            id:pluginTab
-            title: "Plugin log"
-            active:true
-            TextArea {
-                id:pluginList
-                anchors.fill: parent
-                z:-1 //to hide scrollbar when height is 0
-                readOnly: true
-                font.pointSize: 10
-                textFormat: Qt.RichText
-                style: TextAreaStyle {
-                    backgroundColor: "lavender"
-                }
-                Connections{
-                    target: tabview
-                    onPluginLogSig: pluginList.append("<font color=" + color + ">" + message + "</color>")
-                    onClearLog:{
-                        if(pluginTab.visible){
-                            pluginList.select(0,0)
-                            pluginList.text = ""
-                        }
-                    }
-                }
-            }
-        }
-
-        style: TabViewStyle {
-            frameOverlap: 1
-            tab: Rectangle {
-                color: styleData.selected ? "steelblue" :"lightsteelblue"
-                border.color:  "steelblue"
-                implicitWidth: Math.max(text.width + 4, 80)
-                implicitHeight: 20
-                radius: 2
-                Text {
-                    id: text
-                    anchors.centerIn: parent
-                    text: styleData.title
-                    color: styleData.selected ? "white" : "black"
-                }
-            }
-            frame: Rectangle { color: "steelblue" }
-        }
-    }
-
-    states: [
-        State {
-            when: !open
-            PropertyChanges { target: arrow; rotation: 180 }
-            PropertyChanges { target: output; height: headerHeight }
-        }
-        ,
-        State {
-            when: open
-            PropertyChanges { target: arrow; rotation: 0 }
-            PropertyChanges { target: output; height: lastHeight }
-        }
-    ]
-
-    transitions:
-        Transition {
-        id: transOpenClose
-        enabled: false
-        PropertyAnimation { target: arrow; properties: "rotation"; duration: 250 }
-        PropertyAnimation { target: output; properties: "height"; duration: 100 }
-    }
-
-    // release animation when settings are restored
-    Component.onCompleted: {
-        transOpenClose.enabled = true
-    }
-
-    Connections {
-        target: mainwindow
-        onClearLog: tabview.clearLog()
-    }
-
 }
+
 
 

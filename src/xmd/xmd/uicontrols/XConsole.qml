@@ -56,7 +56,7 @@ ColumnLayout{
             tabview.pluginLogSig(message,color)
         }
         if (type===XMAS.Util.Network) {
-            tabview.pluginLogSig(message,color)
+            tabview.networkLogSig(message,color)
         }
     }
 
@@ -118,58 +118,56 @@ ColumnLayout{
         visible: open //to hide tabs & scrollbar
         signal designerLogSig(var message, var color)
         signal pluginLogSig(var message, var color)
+        signal networkLogSig(var message, var color)
         signal clearLog()
         Tab {
             id:designerTab
             title: "Designer log"
             active: true
-
-            TextArea {
-                id:designerList
+            Log{
+                id:designerLog
                 anchors.fill: parent
-                z:-1 //to hide scrollbar when height is 0
-                readOnly: true
-                font.pointSize: 10
-                textFormat: Qt.RichText
-                style: TextAreaStyle {
-                    backgroundColor: "lavender"
-                }
+                anchors.margins: 2
+
                 Connections{
                     target: tabview
-                    onDesignerLogSig: designerList.append("<font color=" + color + ">" + message + "</color>")
-                    onClearLog:{
-                        if(designerTab.visible){
-                          designerList.select(0,0)
-                           designerList.text = ""
-                        }
-                    }
+                    onDesignerLogSig: designerLog.write(message,color)
+                    onClearLog:if(designerTab.visible)designerLog.clear()
                 }
             }
-
         }
         Tab {
             id:pluginTab
-            title: "Plugin log"
+            title: "Checker" //TODO will be filled in from pluginlist
             active:true
-            TextArea {
-                id:pluginList
+
+            XPlugin{
+                id:plugin1Log
                 anchors.fill: parent
-                z:-1 //to hide scrollbar when height is 0
-                readOnly: true
-                font.pointSize: 10
-                textFormat: Qt.RichText
-                style: TextAreaStyle {
-                    backgroundColor: "lavender"
-                }
+                anchors.margins: 2
+
                 Connections{
                     target: tabview
-                    onPluginLogSig: pluginList.append("<font color=" + color + ">" + message + "</color>")
-                    onClearLog:{
-                        if(pluginTab.visible){
-                            pluginList.select(0,0)
-                            pluginList.text = ""
-                        }
-                    }
+                    onPluginLogSig: plugin1Log.write(message,color)
+                    onClearLog:if(pluginTab.visible)plugin1Log.clear()
+                }
+            }
+        }
+
+        Tab {
+            id:networkTab //TODO : is this a plugin?? network should log into designer log like "[network] - messagetext"
+            title: "Network" //TODO will be filled in from pluginlist
+            active:true
+
+            Log{
+                id:network2Log
+                anchors.fill: parent
+                anchors.margins: 2
+
+                Connections{
+                    target: tabview
+                    onNetworkLogSig: network2Log.write(message,color)
+                    onClearLog:if(networkTab.visible)network2Log.clear()
                 }
             }
         }
