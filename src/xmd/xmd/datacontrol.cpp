@@ -88,34 +88,38 @@ bool DataControl::fileOpen(QUrl fileUrl) {
 
 bool DataControl::addComponent(model::Component *component) {
 
+    if (!project()) {
+        emit writeLog(QString("Project not existing! All will fail!"));
+        return false;
+    }
+
     std::string name = component->getName().toStdString();
     model::Component::CompType type = component->getType();
 
-    XMASComponent *xmas_comp;
     switch(type) {
     case model::Component::CompType::Source :
-        xmas_comp = m_project->insert<XMASSource>(name);
+        m_project->insert<XMASSource>(name);
         break;
     case model::Component::CompType::Sink :
-        xmas_comp = m_project->insert<XMASSink>(name);
+        m_project->insert<XMASSink>(name);
         break;
     case model::Component::CompType::Function :
-        xmas_comp = m_project->insert<XMASFunction>(name);
+        m_project->insert<XMASFunction>(name);
         break;
     case model::Component::CompType::Queue :
-        xmas_comp = m_project->insert<XMASQueue>(name);
+        m_project->insert<XMASQueue>(name);
         break;
     case model::Component::CompType::Join :
-        xmas_comp = m_project->insert<XMASJoin>(name);
+        m_project->insert<XMASJoin>(name);
         break;
     case model::Component::CompType::Merge :
-        xmas_comp = m_project->insert<XMASMerge>(name);
+        m_project->insert<XMASMerge>(name);
         break;
     case model::Component::CompType::Switch :
-        xmas_comp = m_project->insert<XMASSwitch>(name);
+        m_project->insert<XMASSwitch>(name);
         break;
     case model::Component::CompType::Fork :
-        xmas_comp = m_project->insert<XMASFork>(name);
+        m_project->insert<XMASFork>(name);
         break;
     case model::Component::CompType::Composite :
         emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
@@ -125,7 +129,7 @@ bool DataControl::addComponent(model::Component *component) {
         return false;
     }
 
-    return component->xmas_component(xmas_comp);
+    return true;
 }
 
 bool DataControl::addCompositeNetwork(QUrl url) {

@@ -106,8 +106,9 @@ public:
     void setName(QString name) {
         if (name != m_name) {
             m_name = name;
-            if (m_xmas_component) {
-                m_xmas_component->name(name.toStdString());
+            auto c = xmas_component();
+            if (c) {
+                c->name(name.toStdString());
             }
         }
         int result = checkName(name);
@@ -140,24 +141,14 @@ public:
     }
 
     bool getValid() {
-        if (m_xmas_component) {
-            return m_xmas_component->valid();
+        auto c = xmas_component();
+        if (c) {
+            return c->valid();
         }
         return false;
     }
 
-    bool xmas_component(XMASComponent *component) {
-        if (component) {
-            m_xmas_component = component;
-            return true;
-        }
-        return false;
-
-    }
-
-    XMASComponent *xmas_component() {
-        return this->m_xmas_component;
-    }
+    XMASComponent *xmas_component();
 
     QQmlListProperty<XPort> ports();
 
@@ -181,7 +172,6 @@ private:
     bool m_validExpr;
     bool m_validExprWarningGiven; // an internal flag (non-qml)
 
-    XMASComponent *m_xmas_component;
     QList<XPort *> m_ports;
 
 };

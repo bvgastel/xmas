@@ -1,11 +1,1 @@
-{
-  "VARS": [],
-  "PACKET_TYPE": {"val ": 2},
-  "COMPOSITE_OBJECTS": [],
-  "NETWORK": [
-    {"id":"src0","type":"source","outs":[{"id":"q1","in_port":0}],"pos":{"x": 100,"y":100,"orientation":0,"scale":100},"fields":[{"init_types":"value < 65384"}]},
-    {"id": "q1","type": "queue","outs": [{"id": "q2","in_port": 0}],"pos": {"x": 300,"y": 100,"orientation": 0,"scale": 100},"fields": [{"size": 2}]},
-    {"id": "q2","type": "queue","outs": [{"id": "sink3","in_port": 0}],"pos": {"x": 500,"y": 100,"orientation": 0,"scale": 100},"fields": [{"size": 5}]},
-    {"id": "sink3","type": "sink","pos": {"x": 700,"y": 100,"orientation": 0,"scale": 100}}
-    ]
-}
+{"COMPOSITE_OBJECTS":[],"NETWORK":[{"fields":[{"init_types":"value >= 0 && value < 65384"}],"id":"src0","outs":[{"id":"q1","in_port":0}],"pos":{"orientation":0,"scale":1,"x":100,"y":100},"type":"source"},{"fields":[{"size":2}],"id":"q1","outs":[{"id":"q2","in_port":0}],"pos":{"orientation":0,"scale":1,"x":300,"y":100},"type":"queue"},{"fields":[{"size":5}],"id":"q2","outs":[{"id":"sink3","in_port":0}],"pos":{"orientation":0,"scale":1,"x":500,"y":100},"type":"queue"},{"id":"sink3","pos":{"orientation":0,"scale":1,"x":700,"y":100},"type":"sink"}],"PACKET_TYPE":[],"VARS":{}}
