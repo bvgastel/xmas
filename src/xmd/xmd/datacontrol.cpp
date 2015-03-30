@@ -179,6 +179,9 @@ bool DataControl::emitNetwork(XMASNetwork &network) {
     QVariantMap qmlNetwork;
     qmlNetwork["complist"] = compList;
     qmlNetwork["channellist"] = channelList;
+    // TODO: add methods to network.
+    //qmlNetwork["packet_type"] = m_project->getRootNetwork()->getPacketType();
+    //qmlNetwork["var"] = m_project->getRootNetwork()->getVar();
 
     emit createNetwork(qmlNetwork);
     std::clock_t c_end = std::clock();
