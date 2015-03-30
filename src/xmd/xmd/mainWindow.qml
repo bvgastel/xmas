@@ -119,7 +119,7 @@ ApplicationWindow {
     }
 
     function log(type,message,color){
-        output.log(type,message,color)
+        xconsole.log(type,message,color)
     }
 
     // Event handling
@@ -309,7 +309,7 @@ ApplicationWindow {
         iconSource: "qrc:/icons/content/clean.ico"
         iconName: "Clean"
         onTriggered: clearLog()
-        enabled: output.open
+        enabled: xconsole.open
     }
 
     Action {
@@ -710,15 +710,15 @@ ApplicationWindow {
             }
         }
 
-        OutputLog {
-            id: output
+        XConsole {
+            id: xconsole
             Layout.minimumHeight: headerHeight
         }
 
         //remember the log height
         onResizingChanged: {
-            output.lastHeight = output.height
-            output.open = output.lastHeight > 0
+            xconsole.lastHeight = xconsole.height
+            xconsole.open = xconsole.lastHeight > 0
         }
 
     }
@@ -730,12 +730,12 @@ ApplicationWindow {
     //#######################################################################################################
     Connections {
         target: util
-        onWriteLog: output.log(type,message,color)
+        onWriteLog: xconsole.log(type,message,color)
     }
 
     Connections {
         target: network
-        onWriteLog: output.log(XMAS.Util.Network,message,color)
+        onWriteLog: xconsole.log(XMAS.Util.Network,message,color)
     }
 
     //TODO: log via util
@@ -744,7 +744,7 @@ ApplicationWindow {
      ************************************************/
     Connections {
         target: datacontrol
-        onWriteLog: output.log(XMAS.Util.Designer,message,color)
+        onWriteLog: xconsole.log(XMAS.Util.Designer,message,color)
     }
 
     //TODO log via util
@@ -753,7 +753,7 @@ ApplicationWindow {
      ************************************************/
     Connections {
         target: plugincontrol
-        onWriteLog: output.log(XMAS.Util.Plugin,message,color)
+        onWriteLog: xconsole.log(XMAS.Util.Plugin,message,color)
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
             var line = " Loaded plugins: [";
@@ -763,7 +763,7 @@ ApplicationWindow {
                 glue = ", ";
             }
             line += "]";
-            output.log(XMAS.Util.Plugin,line, "red");
+            xconsole.log(XMAS.Util.Plugin,line, "red");
         }
     }
 

@@ -2,7 +2,6 @@
     <qresource prefix="/ui">
         <file>uicontrols/ScrollBar.qml</file>
         <file>uicontrols/Selection.qml</file>
-        <file>uicontrols/OutputLog.qml</file>
         <file>uicontrols/XDialog.qml</file>
         <file>uicontrols/XToolBar.qml</file>
         <file>uicontrols/ToolBarSeparator.qml</file>
@@ -14,6 +13,9 @@
         <file>uicontrols/ApplicationSetupDialog.qml</file>
         <file>uicontrols/XToolBarCompositeItem.qml</file>
         <file>uicontrols/XToolBarPrimitiveItem.qml</file>
+        <file>uicontrols/XConsole.qml</file>
+        <file>uicontrols/Log.qml</file>
+        <file>uicontrols/XPlugin.qml</file>
     </qresource>
     <qresource prefix="/xmas">
         <file>xobjects/fork.qml</file>
