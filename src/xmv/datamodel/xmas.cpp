@@ -484,6 +484,16 @@ const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponen
     return components;
 }
 
+// FIXME: needs implementation
+bitpowder::lib::String XMASNetwork::getPacketType() {
+    return "";
+}
+
+// FIXME: needs implementation
+bitpowder::lib::String XMASNetwork::getVars() {
+    return "yet to be defined";
+}
+
 void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
     XMASComponent *c;
     auto xmap = getComponentMap();

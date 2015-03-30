@@ -1051,8 +1051,6 @@ public:
     ExpressionResult setUnrestrictedJoinExpression(bitpowder::lib::String &expr,
                                                    bitpowder::lib::MemoryPool &mp);
 
-
-
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -1104,6 +1102,11 @@ public:
     const std::string getStdName() const {
         return this->name;
     }
+
+    // FIXME: needs implementation (see cpp file)
+    bitpowder::lib::String getPacketType();
+    // FIXME: needs implementation (see cpp file)
+    bitpowder::lib::String getVars();
 
     const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
     void getComponentSet(std::set<XMASComponent*> &) const;
