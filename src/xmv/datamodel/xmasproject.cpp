@@ -71,6 +71,9 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     std::string basePath = filename.substr(0, lastSlash);
     std::string name = filename.substr(lastSlash + 1);
 
+    if (networks.count(name) > 0) {
+        throw Exception("Network already loaded");
+    }
     std::cout << "Loading: " << name << std::endl;
 
     auto jsonResult = read_json_from_file(filename, m_mp);

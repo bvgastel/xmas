@@ -338,28 +338,33 @@ bool model::Network::addLibraryComposite(QUrl url){
 
     //1 - send url to xmas and parse as composite
     std::string name = url.toLocalFile().toStdString();
-    XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
+    try {
+        XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
 
-    //2 - return of xmas --> (url,alias,symbol,boxed)
-    //3 - if ok ; add this in xmd network composites library
-    //4 - if not ok return false without emit
-    auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
-    if (!cne)
-        return false;   // Composite network information missing, can't use as a composite network!
-    //4.1 url doesn't exist
-    //4.2 url already in list
-    //4.3 parser failed to read composite
+        //2 - return of xmas --> (url,alias,symbol,boxed)
+        //3 - if ok ; add this in xmd network composites library
+        //4 - if not ok return false without emit
+        auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
+        if (!cne)
+            return false;   // Composite network information missing, can't use as a composite network!
+        //4.1 url doesn't exist
+        //4.2 url already in list
+        //4.3 parser failed to read composite
 
 
-    QVariantMap map;
-    map.insert("url", url);
-    map.insert("alias", QString::fromStdString(cne->alias));
-    map.insert("symbol", QString::fromStdString(cne->imageName));
-    map.insert("boxed", cne->boxedImage);
-    map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
-    m_compositeLibrary.append(map);
+        QVariantMap map;
+        map.insert("url", url);
+        map.insert("alias", QString::fromStdString(cne->alias));
+        map.insert("symbol", QString::fromStdString(cne->imageName));
+        map.insert("boxed", cne->boxedImage);
+        map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
+        m_compositeLibrary.append(map);
 
-    emit compositeLibraryChanged();
+        emit compositeLibraryChanged();
+    } catch (bitpowder::lib::Exception) {
+        return false;
+    }
+
     return true;
 }
 
