@@ -64,11 +64,11 @@ void model::Component::setName(QString name) {
     emit nameChanged(result);
 }
 
-CompType getType() const {
+model::Component::CompType model::Component::getType() const {
     return m_type;
 }
 
-void setType(CompType type) {
+void model::Component::setType(CompType type) {
     m_type = type;
     emit typeChanged();
 }

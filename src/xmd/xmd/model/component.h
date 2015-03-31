@@ -27,7 +27,7 @@
 #include <QQmlParserStatus>
 #include <QQmlListProperty>
 
-#include "xmas.h"
+//#include "xmas.h"
 #include "port.h"
 
 /**
