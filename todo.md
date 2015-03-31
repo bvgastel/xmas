@@ -2,7 +2,7 @@
 
 ## Stefan
 
-*		Valid check visible
+*	--	Valid check visible ---> needs separate valid of expr and connection.
 *   -- 	plugin dialog verbeteren (8h, hoge prioriteit) 
 *   -- 	plugin lijstje zou ik in c++ vullen en via een property aan qml geven ipv een javascript in mainwindow
 *	--	Bij openen netwerk zijn porten niet connected: is xmas model wel gevuld ----> pending Jeroen's XMASProject effort.
