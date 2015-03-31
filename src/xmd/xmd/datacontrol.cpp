@@ -86,6 +86,12 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     return result;
 }
 
+/*
+ *
+ * TODO: Needs thorough thinking though: the network should not be part of the call
+ * TODO: it should be loaded into the project using the filename.
+ *
+ */
 bool DataControl::addComposite(model::Component *component, XMASNetwork &network) {
 
     if (!m_project) {
