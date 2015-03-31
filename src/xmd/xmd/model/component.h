@@ -155,9 +155,8 @@ private:
     QVariant m_expression;
 
     CompType m_type;
-    bool m_valid;
-    bool m_validExpr;
-    bool m_validExprWarningGiven; // an internal flag (non-qml)
+    bool m_valid;       /* Is the object fully connected? */
+    bool m_validExpr;   /* Is the expression correctly updated in xmas? */
 
     QList<XPort *> m_ports;
 
