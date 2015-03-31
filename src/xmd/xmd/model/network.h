@@ -87,7 +87,7 @@ public slots:
      */
     QString toJson();
 
-    //bool addComponent(model::Component *component);
+    bool addComponent(model::Component *component);
 
     bool saveFile(QUrl url);
     bool openFile(QUrl url);

@@ -101,7 +101,6 @@ signals:
 public slots:
     bool fileOpen(QUrl fileUrl);
 
-    bool addComponent(model::Component *component);
     bool addComposite(model::Component *component, XMASNetwork &network);
 
     /************************************************************

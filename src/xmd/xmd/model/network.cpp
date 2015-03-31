@@ -264,12 +264,60 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
+bool model::Network::addComponent(model::Component *component) {
+
+    auto project = dataControl->project();
+    if (!project) {
+        emit writeLog(QString("Project not existing! All will fail!"));
+        return false;
+    }
+
+    std::string name = component->getName().toStdString();
+    model::Component::CompType type = component->getType();
+
+    switch(type) {
+    case model::Component::CompType::Source :
+        project->insertSource(name);
+        break;
+    case model::Component::CompType::Sink :
+        project->insertSink(name);
+        break;
+    case model::Component::CompType::Function :
+        project->insertFunction(name);
+        break;
+    case model::Component::CompType::Queue :
+        project->insertQueue(name);
+        break;
+    case model::Component::CompType::Join :
+        project->insertJoin(name);
+        break;
+    case model::Component::CompType::Merge :
+        project->insertMerge(name);
+        break;
+    case model::Component::CompType::Switch :
+        project->insertSwitch(name);
+        break;
+    case model::Component::CompType::Fork :
+        project->insertFork(name);
+        break;
+    case model::Component::CompType::Composite :
+        emit writeLog(QString("type composite cannot create without network reference .... "), Qt::red);
+        return false;
+    default :
+        emit writeLog(QString("Unknown component type!"), Qt::red);
+        return false;
+    }
+    return true;
+}
+
+
+
 //#############################################################################################################
 //#############################################################################################################
 //##
 //##        Example of how to populate composite list
 //##        This must be started when a netwerk is opened and loop through
-//##        the data comming from the Composite section of the json.
+//##        the data from the Composite section of the json.
 //##
 //##
 //#############################################################################################################

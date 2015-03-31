@@ -106,52 +106,6 @@ bool DataControl::addComposite(model::Component *component, XMASNetwork &network
 
 }
 
-bool DataControl::addComponent(model::Component *component) {
-
-    if (!m_project) {
-        emit writeLog(QString("Project not existing! All will fail!"));
-        return false;
-    }
-
-    std::string name = component->getName().toStdString();
-    model::Component::CompType type = component->getType();
-
-    switch(type) {
-    case model::Component::CompType::Source :
-        m_project->insertSource(name);
-        break;
-    case model::Component::CompType::Sink :
-        m_project->insertSink(name);
-        break;
-    case model::Component::CompType::Function :
-        m_project->insertFunction(name);
-        break;
-    case model::Component::CompType::Queue :
-        m_project->insertQueue(name);
-        break;
-    case model::Component::CompType::Join :
-        m_project->insertJoin(name);
-        break;
-    case model::Component::CompType::Merge :
-        m_project->insertMerge(name);
-        break;
-    case model::Component::CompType::Switch :
-        m_project->insertSwitch(name);
-        break;
-    case model::Component::CompType::Fork :
-        m_project->insertFork(name);
-        break;
-    case model::Component::CompType::Composite :
-        emit writeLog(QString("type composite cannot create without network reference .... "), Qt::red);
-        return false;
-    default :
-        emit writeLog(QString("Unknown component type!"), Qt::red);
-        return false;
-    }
-
-    return true;
-}
-
 
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
