@@ -160,13 +160,13 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
     auto jsonComposite = json["COMPOSITE_NETWORK"];
     if (!jsonComposite.isNull()) {
-        auto cne = result->getNetworkExtension<CompositeNetworkExtension>(true);
-        cne->alias      = jsonComposite["alias"].asString().stl();
-        cne->width      = jsonComposite["width"].asNumber();
-        cne->height     = jsonComposite["height"].asNumber();
-        cne->imageName  = jsonComposite["image-name"].asString().stl();
-        cne->packet     = jsonComposite["packet"].asString().stl();
-        cne->boxedImage = jsonComposite["boxed-image"].asNumber() > 0;
+        auto cn_ext = result->getNetworkExtension<CompositeNetworkExtension>(true);
+        cn_ext->alias      = jsonComposite["alias"].asString().stl();
+        cn_ext->width      = jsonComposite["width"].asNumber();
+        cn_ext->height     = jsonComposite["height"].asNumber();
+        cn_ext->imageName  = jsonComposite["image-name"].asString().stl();
+        cn_ext->packet     = jsonComposite["packet"].asString().stl();
+        cn_ext->boxedImage = jsonComposite["boxed-image"].asNumber() > 0;
     }
 
     return result;

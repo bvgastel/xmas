@@ -92,7 +92,7 @@ bool DataControl::fileOpen(QUrl fileUrl) {
  * TODO: it should be loaded into the project using the filename.
  *
  */
-bool DataControl::addComposite(model::Component *component, QUrl filename) {
+bool DataControl::addComposite(model::Component *component, QUrl fileUrl) {
 
     if (!m_project) {
         emit writeLog(QString("Project not existing! All will fail!"));
