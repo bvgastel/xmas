@@ -123,7 +123,8 @@ DISTFILES += mainWindow.qml \
     uicontrols/XToolBarCompositeItem.qml \
     uicontrols/XConsole.qml \
     uicontrols/XPlugin.qml \
-    uicontrols/Log.qml
+    uicontrols/Log.qml \
+    test_findings.md
 
 RESOURCES += \
     images.qrc \
