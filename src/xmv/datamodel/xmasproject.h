@@ -34,6 +34,8 @@ public:
     XMASComponent *insertFork(const bitpowder::lib::String& name);
     XMASComponent *insertComposite(const bitpowder::lib::String& name, XMASNetwork& network);
 
+    bool changeComponentName(std::string oldName, std::string newName);
+
 private:
     bitpowder::lib::MemoryPool m_mp;
     std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;

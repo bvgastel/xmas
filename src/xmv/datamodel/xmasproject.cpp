@@ -101,6 +101,19 @@ XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, 
     return root->insert<XMASComposite>(m_mp, name, std::ref(network));
 }
 
+bool XMASProject::changeComponentName(std::string oldName, std::string newName)
+{
+    /* ensure memory is permanent enough */
+    bitpowder::lib::String b_oldName = bitpowder::lib::String(oldName);
+    b_oldName = b_oldName(m_mp);
+    bitpowder::lib::String b_newName = bitpowder::lib::String(newName);
+    b_newName = b_newName(m_mp);
+
+    /* change the name and position in the component map */
+    bool result = root->changeComponentName(b_oldName, b_newName);
+    return result;
+}
+
 
 XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 {

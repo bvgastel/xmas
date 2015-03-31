@@ -1085,7 +1085,7 @@ class XMASNetworkExtension : public bitpowder::lib::Extension<XMASNetworkExtensi
 
 class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
-
+    friend class XMASProject;
 public:
     XMASNetwork(std::string name) : name(name)
     {
@@ -1162,6 +1162,10 @@ public:
     }
 
     void clearExtensions();
+
+private:
+    bool changeComponentName(bitpowder::lib::String oldName, bitpowder::lib::String &newName);
+
 
 private:
     std::string name;

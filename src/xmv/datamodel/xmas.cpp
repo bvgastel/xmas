@@ -494,6 +494,15 @@ const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponen
     return components;
 }
 
+void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
+    XMASComponent *c;
+    auto xmap = getComponentMap();
+    for (auto entry : xmap) {
+        c = entry.second;
+        xset.insert(c);
+    }
+}
+
 // FIXME: needs implementation
 bitpowder::lib::String XMASNetwork::getPacketType() {
     return "";
@@ -504,13 +513,33 @@ bitpowder::lib::String XMASNetwork::getVars() {
     return "yet to be defined";
 }
 
-void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
-    XMASComponent *c;
-    auto xmap = getComponentMap();
-    for (auto entry : xmap) {
-        c = entry.second;
-        xset.insert(c);
+/**
+ * @brief XMASNetwork::changeComponentName
+ *
+ * Only use this function of newName is on a permanent memory location.
+ * Because the way bitpowder::lib::String works is it copies the pointer
+ * to the string, not the string itself. Beware!
+ *
+ * Preferrably use the same function from project. The project function copies the memory
+ * to a memorypool it has, before calling this function.
+ *
+ * @param oldName
+ * @param newName
+ * @return
+ */
+bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder::lib::String &newName)
+{
+    auto it = components.find(oldName);
+    if (it != components.end()) {
+        XMASComponent *c = components.at(oldName);
+        components.erase(oldName);
+        c->name(newName.stl());
+        bool success = false;
+
+        std::tie(std::ignore, success) = components.insert(std::make_pair(c->getName(), c));
+        return success;
     }
+    return false;
 }
 
 XMASComposite *XMASNetwork::insert(bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, XMASNetwork &network) {
