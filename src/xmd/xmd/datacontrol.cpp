@@ -86,9 +86,29 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     return result;
 }
 
+bool DataControl::addComposite(model::Component *component, XMASNetwork &network) {
+
+    if (!m_project) {
+        emit writeLog(QString("Project not existing! All will fail!"));
+        return false;
+    }
+
+    std::string name = component->getName().toStdString();
+    model::Component::CompType type = component->getType();
+
+    if (type != model::Component::CompType::Composite) {
+        emit writeLog(QString("Only type composite needs a network, not ") + type, Qt::red);
+        return false;
+    }
+
+    m_project->insertComposite(name, std::ref(network));
+    return true;
+
+}
+
 bool DataControl::addComponent(model::Component *component) {
 
-    if (!project()) {
+    if (!m_project) {
         emit writeLog(QString("Project not existing! All will fail!"));
         return false;
     }
@@ -98,31 +118,31 @@ bool DataControl::addComponent(model::Component *component) {
 
     switch(type) {
     case model::Component::CompType::Source :
-        m_project->insert<XMASSource>(name);
+        m_project->insertSource(name);
         break;
     case model::Component::CompType::Sink :
-        m_project->insert<XMASSink>(name);
+        m_project->insertSink(name);
         break;
     case model::Component::CompType::Function :
-        m_project->insert<XMASFunction>(name);
+        m_project->insertFunction(name);
         break;
     case model::Component::CompType::Queue :
-        m_project->insert<XMASQueue>(name);
+        m_project->insertQueue(name);
         break;
     case model::Component::CompType::Join :
-        m_project->insert<XMASJoin>(name);
+        m_project->insertJoin(name);
         break;
     case model::Component::CompType::Merge :
-        m_project->insert<XMASMerge>(name);
+        m_project->insertMerge(name);
         break;
     case model::Component::CompType::Switch :
-        m_project->insert<XMASSwitch>(name);
+        m_project->insertSwitch(name);
         break;
     case model::Component::CompType::Fork :
-        m_project->insert<XMASFork>(name);
+        m_project->insertFork(name);
         break;
     case model::Component::CompType::Composite :
-        emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
+        emit writeLog(QString("type composite cannot create without network reference .... "), Qt::red);
         return false;
     default :
         emit writeLog(QString("Unknown component type!"), Qt::red);
