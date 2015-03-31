@@ -37,6 +37,8 @@ Rectangle
 {
     id:log
     color:"lightgrey"
+    radius:5
+    clip:true
 
     signal clear
     signal write(var message, var color)
@@ -44,12 +46,13 @@ Rectangle
     TextArea {
         id:textArea
         anchors.fill: parent
+        anchors.margins: 5
         readOnly: true
         font.pointSize: 10
         textFormat: Qt.RichText
         clip: true
         style: TextAreaStyle {
-            backgroundColor: "transparent"
+            backgroundColor: "lightgrey"
         }
         Connections{
             target:log

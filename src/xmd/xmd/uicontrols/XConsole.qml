@@ -37,15 +37,18 @@ import Qt.labs.settings 1.0
 import "qrc:/ui/uicontrols/"
 import XMAS 1.0 as XMAS
 
-// text:if(tabview.currentIndex >= 0 && tabview.count > 0)
-//   tabview.getTab(tabview.currentIndex).title
-
-Item{
+Rectangle{
     id:output
     z:10
     property int lastHeight
     property int headerHeight:25
     property bool open: false
+
+    gradient: Gradient {
+        GradientStop { position: 0.0; color: "black" }
+        GradientStop { position: 1.0; color: "grey" }
+    }
+
 
     function log(message,color,name){
         //TODO : check for valid color (As QColor.isValidColor(x))
@@ -76,6 +79,8 @@ Item{
     Component{id:plug
         XPlugin{
             id:pluginLog
+            anchors.fill: parent
+            anchors.margins: 5
             visible: open //to hide scrollbar
             Connections{
                 target: tabview
@@ -101,6 +106,7 @@ Item{
             Log{
                 id:designerLog
                 anchors.fill: parent
+                anchors.margins: 5
                 visible: open //to hide scrollbar
                 Connections{
                     target: tabview
@@ -129,6 +135,7 @@ Item{
                 height: headerHeight
                 Layout.fillWidth: true
                 gradient:greyGradient
+                border.width: 0
             }
         }
     }
