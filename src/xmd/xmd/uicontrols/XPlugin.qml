@@ -35,7 +35,6 @@ import QtQuick.Controls.Styles 1.3
 
 RowLayout{
     id:plugin
-    spacing:0
 
     property string name:""
     property bool enabled:true
@@ -43,19 +42,12 @@ RowLayout{
     signal clear
     signal write(var message, var color)
 
-    Rectangle{
+    Item{
         id:pluginControlPanel
         Layout.preferredWidth: 300
         Layout.fillHeight: true
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "black" }
-            GradientStop { position: 1.0; color: "grey" }
-        }
-        border.width:0
-
         ColumnLayout{
             anchors.fill: pluginControlPanel
-            anchors.margins: 10
             spacing: 4
             Rectangle{
                 color:"darkgrey"
@@ -99,10 +91,28 @@ RowLayout{
                 radius:5
                 ListView {
                     anchors.fill: parent
+                    anchors.margins: 5
+                    contentWidth: parent.width-10
+                    contentHeight: 10
+
+                    header: Rectangle{
+                        color:"darkgray"
+                        anchors.left:parent.left
+                        anchors.right:parent.right
+                        height: 15
+                        clip:true
+                        Text{
+                            text:"parameters"
+                            anchors.fill: parent
+                            anchors.centerIn: parent
+                            color:"white"
+                        }
+                    }
                     clip:true
+                    headerPositioning:ListView.OverlayHeader
                     enabled: plugin.enabled
                     model: plugincontrol.pluginParams(name)
-                    delegate: Text{text: key +  " - " + value}
+                    delegate: Text{anchors.margins:10; text: name +  " - " + value}
                 }
             }
         }
@@ -138,7 +148,15 @@ RowLayout{
         iconSource: "qrc:/icons/content/run.ico"
         iconName: "run"
         enabled: plugin.enabled && !timerAction.checked
-        onTriggered: plugincontrol.startPlugin(name)
+        onTriggered: {
+            plugincontrol.startPlugin(name)
+            var params = plugincontrol.pluginParams(name)
+            console.log("Param scanning....")
+            for (var prop in params) {
+                        console.log("Param :", prop, "=", params[prop])
+                    }
+        }
+
     }
 
     Action {
