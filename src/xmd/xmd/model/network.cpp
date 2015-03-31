@@ -405,6 +405,10 @@ QVariantList model::Network::compositeLibrary() {
  * @param url
  * @return True is composite has been added to the library.
  */
+// NOTE: are these remarks important for the code?
+//4.1 url doesn't exist
+//4.2 url already in list
+//4.3 parser failed to read composite
 bool model::Network::addLibraryComposite(QUrl url){
     qDebug() << "Add library composite with url = " << url;
 
@@ -412,26 +416,17 @@ bool model::Network::addLibraryComposite(QUrl url){
     std::string name = url.toLocalFile().toStdString();
     try {
         XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
-
-        //2 - return of xmas --> (url,alias,symbol,boxed)
-        //3 - if ok ; add this in xmd network composites library
-        //4 - if not ok return false without emit
-        auto cne = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
-        if (!cne)
+        auto cn_ext = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
+        if (!cn_ext)
             return false;   // Composite network information missing, can't use as a composite network!
-        //4.1 url doesn't exist
-        //4.2 url already in list
-        //4.3 parser failed to read composite
-
 
         QVariantMap map;
         map.insert("url", url);
-        map.insert("alias", QString::fromStdString(cne->alias));
-        map.insert("symbol", QString::fromStdString(cne->imageName));
-        map.insert("boxed", cne->boxedImage);
+        map.insert("alias", QString::fromStdString(cn_ext->alias));
+        map.insert("symbol", QString::fromStdString(cn_ext->imageName));
+        map.insert("boxed", cn_ext->boxedImage);
         map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
         m_compositeLibrary.append(map);
-
         emit compositeLibraryChanged();
     } catch (bitpowder::lib::Exception) {
         return false;
