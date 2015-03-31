@@ -81,11 +81,12 @@ void model::Component::setValidExpr(bool validExpr, int pos, QString errMsg) {
 }
 
 bool model::Component::getValid() {
+    bool result = false;
     auto c = xmas_component();
     if (c) {
-        return c->valid();
+        result = c->valid();
     }
-    return false;
+    return result;
 }
 
 XMASComponent *model::Component::createXMASComponent(CompType type, QString qname) {
@@ -348,7 +349,7 @@ void model::Component::setExpression(QVariant expression) {
 
 
 /************************************************************************************
- * Inports
+ * ports
  ************************************************************************************/
 /**
  * @brief model::Component::ports

@@ -102,6 +102,11 @@ public:
     QString getName();
     void setName(QString name);
 
+    /**
+     * @brief getExpression the getter for expression.
+     *
+     * @return the xmas value of the expression or if that is empty the class member m_expression.
+     */
     QVariant getExpression();
     void setExpression(QVariant expression);
 
@@ -110,6 +115,10 @@ public:
 
     void setValidExpr(bool validExpr, int pos, QString errMsg);
 
+    /**
+     * @brief getValid
+     * @return
+     */
     bool getValid();
 
     XMASComponent *xmas_component();
@@ -132,7 +141,23 @@ private:
     bitpowder::lib::MemoryPool m_mp;
 
     QString m_name;
+    /**
+     * @brief m_expression
+     *
+     * m_expression contains the expression, even if it is syntactically incorrect.
+     * However, as long as it is xmas will not register the expression.
+     *
+     * Only when correct will xmas register the expression.
+     *
+     * An incorrect expression will never result in JSON output.
+     *
+     * The getter for m_expression: getExpression(), preferrably returns
+     * the value from xmas. Only if it has no value, does it return the
+     * class member field m_expression.
+     *
+     */
     QVariant m_expression;
+
     CompType m_type;
     bool m_valid;
     bool m_validExpr;

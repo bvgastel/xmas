@@ -119,7 +119,8 @@ Model.XComponent {
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
     onWriteLog: mainwindow.log(XMAS.Util.Designer ,message,color)
-    onExpressionChanged: validmarker.color = result === -1 ? "transparent" : "red"
+    onExpressionChanged: validmarker.color = valid ? "green" : "red"
+                         // result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
 
     // Selection highlite
