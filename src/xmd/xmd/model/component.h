@@ -27,7 +27,6 @@
 #include <QQmlParserStatus>
 #include <QQmlListProperty>
 
-//#include "xmas.h"
 #include "port.h"
 
 /**
@@ -125,7 +124,7 @@ public:
 
 private:
     XMASComponent *createXMASComponent(CompType type, QString name);
-    int checkName(QString name);
+    //int checkName(QString name);
     int updateExpression(QVariant expression);
 
     void emitInportProperties();

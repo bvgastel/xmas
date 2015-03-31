@@ -60,7 +60,7 @@ void model::Component::setName(QString name) {
             c->name(name.toStdString());
         }
     }
-    int result = checkName(name);
+    int result = true; // checkName(name);
     emit nameChanged(result);
 }
 
@@ -134,10 +134,10 @@ XMASComponent *model::Component::createXMASComponent(CompType type, QString qnam
 }
 
 //TODO Check if name is unique and not empty : return -1 if ok
-int model::Component::checkName(QString name) {
-    bitpowder::lib::unused(name);
-    return -1;
-}
+//int model::Component::checkName(QString name) {
+//    bitpowder::lib::unused(name);
+//    return -1;
+//}
 
 // TODO: Update in XMASComponent
 // TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
