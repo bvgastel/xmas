@@ -80,13 +80,11 @@ bool model::Component::getValidExpr() {
 void model::Component::setValidExpr(bool validExpr) {
     m_validExpr = validExpr;
     emit validExprChanged(-1, QString(""));
-    emit validChanged();
 }
 
 void model::Component::setValidExpr(bool validExpr, int pos, QString errMsg) {
     m_validExpr = validExpr;
     emit validExprChanged(pos, errMsg);
-    emit validChanged();
 }
 
 bool model::Component::getValid() {
