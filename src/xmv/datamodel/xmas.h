@@ -1085,6 +1085,7 @@ class XMASNetworkExtension : public bitpowder::lib::Extension<XMASNetworkExtensi
 
 class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
+
 public:
     XMASNetwork(std::string name) : name(name)
     {
@@ -1131,13 +1132,15 @@ public:
     }
 
     template <class T, typename... Args>
-    T *insert(::bitpowder::lib::MemoryPool& mp, const bitpowder::lib::String& name, Args... args) {
+    T *insert(::bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, Args... args) {
         if (components.find(name) != components.end())
             throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
         T *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
+
+    XMASComposite *insert(::bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, XMASNetwork &network);
 
     template <class NetworkExtensionType>
     NetworkExtensionType* getNetworkExtension(bool create = true)
@@ -1169,7 +1172,7 @@ class XMASComposite : public XMASComponent
 {
 public:
 
-    XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network);
+    XMASComposite(const bitpowder::lib::String& name, XMASNetwork &network);
 
     virtual ~XMASComposite();
 

@@ -480,6 +480,16 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
+XMASNetwork::~XMASNetwork()
+{
+    for (auto entry : components) {
+        XMASComponent* c = entry.second;
+        ClearSymbolicTypes(c);
+        ClearMessageSpec(c);
+        //delete(c);             // FIXME: How should MemoryPool allocated object be destroyed??
+    }
+}
+
 const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponentMap() const {
     return components;
 }
@@ -503,23 +513,16 @@ void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
     }
 }
 
-
-
-XMASComposite::~XMASComposite() {
-    for (Input* i : inputPorts()) {
-        if (i->isConnected()) {
-            disconnect(*i);
-        }
-    }
-    for (Output *o : outputPorts()) {
-        if (o->isConnected()) {
-            disconnect(*o);
-        }
-    }
+XMASComposite *XMASNetwork::insert(bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, XMASNetwork &network) {
+    if (components.find(name) != components.end())
+        throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
+    XMASComposite *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) XMASComposite(name, std::ref(network));
+    components.insert(std::make_pair(comp->getName(), comp));
+    return comp;
 }
 
 
-XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& network) : XMASComponent(name), network(network)
+XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &network) : XMASComponent(name), network(network)
 {
     // get in & out gates from network
     auto inGates = network.componentsOfType<XMASSource>();
@@ -550,13 +553,17 @@ XMASComposite::XMASComposite(const bitpowder::lib::String& name, XMASNetwork& ne
         p.push_back(&o);
 }
 
-
-XMASNetwork::~XMASNetwork()
-{
-    for (auto entry : components) {
-        XMASComponent* c = entry.second;
-        ClearSymbolicTypes(c);
-        ClearMessageSpec(c);
-        //delete(c);             // FIXME: How should MemoryPool allocated object be destroyed??
+XMASComposite::~XMASComposite() {
+    for (Input* i : inputPorts()) {
+        if (i->isConnected()) {
+            disconnect(*i);
+        }
+    }
+    for (Output *o : outputPorts()) {
+        if (o->isConnected()) {
+            disconnect(*o);
+        }
     }
 }
+
+

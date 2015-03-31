@@ -1274,7 +1274,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
  * @return The map of components indexed by name
  */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(
-        JSONParseResult &parseResult, MemoryPool &mp, const std::map<std::string, std::unique_ptr<XMASNetwork>>& networks) {
+        JSONParseResult &parseResult, MemoryPool &mp, const std::map<std::string, std::unique_ptr<XMASNetwork>> &networks) {
     std::map<String, XMASComponent *> retval;
 
     //std::cout << retval.result() << std::endl;

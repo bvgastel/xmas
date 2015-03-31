@@ -65,6 +65,43 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 
 }
 
+XMASComponent *XMASProject::insertSource(const bitpowder::lib::String &name, bool external) {
+    return insert<XMASSource>(name, external);
+}
+
+XMASComponent *XMASProject::insertSink(const bitpowder::lib::String &name, bool external) {
+    return insert<XMASSink>(name, external);
+}
+
+XMASComponent *XMASProject::insertFunction(const bitpowder::lib::String &name) {
+    return insert<XMASFunction>(name);
+}
+
+XMASComponent *XMASProject::insertQueue(const bitpowder::lib::String &name, size_t capacity) {
+    return insert<XMASQueue>(name, capacity);
+}
+
+XMASComponent *XMASProject::insertJoin(const bitpowder::lib::String &name) {
+    return insert<XMASJoin>(name);
+}
+
+XMASComponent *XMASProject::insertMerge(const bitpowder::lib::String &name) {
+    return insert<XMASMerge>(name);
+}
+
+XMASComponent *XMASProject::insertSwitch(const bitpowder::lib::String &name) {
+    return insert<XMASSwitch>(name);
+}
+
+XMASComponent *XMASProject::insertFork(const bitpowder::lib::String &name) {
+    return insert<XMASFork>(name);
+}
+
+XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, XMASNetwork &network) {
+    return root->insert<XMASComposite>(m_mp, name, std::ref(network));
+}
+
+
 XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 {
     size_t lastSlash = filename.find_last_of("/");

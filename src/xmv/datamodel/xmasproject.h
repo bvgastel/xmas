@@ -24,6 +24,16 @@ public:
         return root->insert<T>(m_mp, name, args...);
     }
 
+    XMASComponent *insertSource(const bitpowder::lib::String& name, bool external = false);
+    XMASComponent *insertSink(const bitpowder::lib::String& name, bool external = false);
+    XMASComponent *insertFunction(const bitpowder::lib::String& name);
+    XMASComponent *insertQueue(const bitpowder::lib::String& name, size_t capacity = 1);
+    XMASComponent *insertJoin(const bitpowder::lib::String& name);
+    XMASComponent *insertMerge(const bitpowder::lib::String& name);
+    XMASComponent *insertSwitch(const bitpowder::lib::String& name);
+    XMASComponent *insertFork(const bitpowder::lib::String& name);
+    XMASComponent *insertComposite(const bitpowder::lib::String& name, XMASNetwork& network);
+
 private:
     bitpowder::lib::MemoryPool m_mp;
     std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;
