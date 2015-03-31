@@ -48,6 +48,46 @@ void model::Component::componentComplete() {
     // no action.
 }
 
+QString model::Component::getName() {
+    return m_name;
+}
+
+void model::Component::setName(QString name) {
+    if (name != m_name) {
+        m_name = name;
+        auto c = xmas_component();
+        if (c) {
+            c->name(name.toStdString());
+        }
+    }
+    int result = checkName(name);
+    emit nameChanged(result);
+}
+
+bool model::Component::getValidExpr() {
+    return m_validExpr;
+}
+
+void model::Component::setValidExpr(bool validExpr) {
+    m_validExpr = validExpr;
+    emit validExprChanged(-1, QString(""));
+    emit validChanged();
+}
+
+void model::Component::setValidExpr(bool validExpr, int pos, QString errMsg) {
+    m_validExpr = validExpr;
+    emit validExprChanged(pos, errMsg);
+    emit validChanged();
+}
+
+bool model::Component::getValid() {
+    auto c = xmas_component();
+    if (c) {
+        return c->valid();
+    }
+    return false;
+}
+
 XMASComponent *model::Component::createXMASComponent(CompType type, QString qname) {
     XMASComponent *component = nullptr;
     std::string name = qname.toStdString();
@@ -299,6 +339,14 @@ QVariant model::Component::getExpression() {
     return m_expression;
 }
 
+void model::Component::setExpression(QVariant expression) {
+    int errorPosition = -1;
+    errorPosition = updateExpression(expression);
+    emit expressionChanged(errorPosition);
+}
+
+
+
 /************************************************************************************
  * Inports
  ************************************************************************************/
@@ -320,15 +368,3 @@ void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::
         component->m_ports.append(port);
     }
 }
-
-
-//#############################################################################################################
-//#############################################################################################################
-//##
-//##        Example of how to populate a composite component
-//##
-//##
-//#############################################################################################################
-//#############################################################################################################
-
-

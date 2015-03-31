@@ -99,54 +99,18 @@ public:
         emit typeChanged();
     }
 
-    QString getName() {
-        return m_name;
-    }
-
-    void setName(QString name) {
-        if (name != m_name) {
-            m_name = name;
-            auto c = xmas_component();
-            if (c) {
-                c->name(name.toStdString());
-            }
-        }
-        int result = checkName(name);
-        emit nameChanged(result);
-    }
+    QString getName();
+    void setName(QString name);
 
     QVariant getExpression();
-    void setExpression(QVariant expression) {
-        int errorPosition = -1;
-        errorPosition = updateExpression(expression);
-        emit expressionChanged(errorPosition);
-    }
+    void setExpression(QVariant expression);
 
-    int updateExpression(QVariant expression);
+    bool getValidExpr();
+    void setValidExpr(bool validExpr);
 
-    bool getValidExpr() {
-        return m_validExpr;
-    }
+    void setValidExpr(bool validExpr, int pos, QString errMsg);
 
-    void setValidExpr(bool validExpr) {
-        m_validExpr = validExpr;
-        emit validExprChanged(-1, QString(""));
-        emit validChanged();
-    }
-
-    void setValidExpr(bool validExpr, int pos, QString errMsg) {
-        m_validExpr = validExpr;
-        emit validExprChanged(pos, errMsg);
-        emit validChanged();
-    }
-
-    bool getValid() {
-        auto c = xmas_component();
-        if (c) {
-            return c->valid();
-        }
-        return false;
-    }
+    bool getValid();
 
     XMASComponent *xmas_component();
 
@@ -156,6 +120,8 @@ public:
 private:
     XMASComponent *createXMASComponent(CompType type, QString name);
     int checkName(QString name);
+    int updateExpression(QVariant expression);
+
     void emitInportProperties();
     void emitOutportProperties();
 
