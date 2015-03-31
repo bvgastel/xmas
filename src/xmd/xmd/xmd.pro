@@ -124,7 +124,7 @@ DISTFILES += mainWindow.qml \
     uicontrols/XConsole.qml \
     uicontrols/XPlugin.qml \
     uicontrols/Log.qml \
-    test_findings.md
+    findings.md
 
 RESOURCES += \
     images.qrc \
