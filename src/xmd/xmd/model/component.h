@@ -93,11 +93,8 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
-    CompType getType() const {return m_type;}
-    void setType(CompType type) {
-        m_type = type;
-        emit typeChanged();
-    }
+    CompType getType() const;
+    void setType(CompType type);
 
     QString getName();
     void setName(QString name);

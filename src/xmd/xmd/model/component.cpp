@@ -64,6 +64,15 @@ void model::Component::setName(QString name) {
     emit nameChanged(result);
 }
 
+CompType getType() const {
+    return m_type;
+}
+
+void setType(CompType type) {
+    m_type = type;
+    emit typeChanged();
+}
+
 bool model::Component::getValidExpr() {
     return m_validExpr;
 }
@@ -266,6 +275,7 @@ int model::Component::updateExpression(QVariant expression) {
         return true;
     }
 
+    emit writeLog(QString("Component type not recognized for expression: ")+getType());
     return false;
 }
 
