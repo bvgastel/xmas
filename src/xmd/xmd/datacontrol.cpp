@@ -92,12 +92,15 @@ bool DataControl::fileOpen(QUrl fileUrl) {
  * TODO: it should be loaded into the project using the filename.
  *
  */
-bool DataControl::addComposite(model::Component *component, XMASNetwork &network) {
+bool DataControl::addComposite(model::Component *component, QUrl filename) {
 
     if (!m_project) {
         emit writeLog(QString("Project not existing! All will fail!"));
         return false;
     }
+
+
+    //m_project->insertComposite();
 
     std::string name = component->getName().toStdString();
     model::Component::CompType type = component->getType();
