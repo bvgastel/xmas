@@ -118,22 +118,22 @@ Model.XComponent {
     // Event handling
     onRotationChanged:component.update()
     onScaleChanged: doMove(0,0)
-    onWriteLog: mainwindow.log(XMAS.Util.Designer ,message,color)
+    onWriteLog: mainwindow.log(message,color)
     onExpressionChanged: validmarker.color = valid ? "green" : "red"
-                         // result === -1 ? "transparent" : "red"
+    // result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
 
     // Selection highlite
-     Rectangle {
-         id: highLite
-         anchors.fill: mousearea
-         anchors.margins: -5
-         color:"lightsteelblue"
-         border.color: "steelblue"
-         border.width: 1
-         visible: selected
-         z:-1 // under parent = component
-      }
+    Rectangle {
+        id: highLite
+        anchors.fill: mousearea
+        anchors.margins: -5
+        color:"lightsteelblue"
+        border.color: "steelblue"
+        border.width: 1
+        visible: selected
+        z:-1 // under parent = component
+    }
 
     // Valid Marker (top left)
     Rectangle {

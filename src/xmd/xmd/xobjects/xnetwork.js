@@ -41,7 +41,7 @@ var time
 function createNetwork(object) {
 
     if(!object) {
-        log(XMAS.Util.Designer,"Undefined network!","red")
+        log("Undefined network!","red")
         return
     }
 
@@ -72,14 +72,14 @@ function loadComponent(object) {
     var component = null
     var type = ""
     if(!object) {
-        log(XMAS.Util.Designer,"Undefined object!","red")
+        log("Undefined object!","red")
         return
     }
 
     if(object.type!==undefined){
         qml = getXQml(object.type)
     } else {
-        log(XMAS.Util.Designer,"Undefined type!" + object,"red")
+        log("Undefined type!" + object,"red")
         return
     }
 
@@ -88,14 +88,14 @@ function loadComponent(object) {
 //    start = new Date().getTime()
     component = Qt.createComponent(qml)
 //    end = new Date().getTime()
-//    log(XMAS.Util.Designer,"Execution time: " + (end - start) + "ms","red")
+//    log("Execution time: " + (end - start) + "ms","red")
 
     if (component.status === Qjs.Component.Loading)
         component.statusChanged.connect(createComponent(network,component,object))
     else if (component.status === Qjs.Component.Ready)
         createComponent(network,component,object)
     else if (component.status === Qjs.Component.Error)
-        log(XMAS.Util.Designer,component.errorString(),"red")
+        log(component.errorString(),"red")
 
 }
 
@@ -121,7 +121,7 @@ function getXQml(type) {
     case Model.XComponent.Composite:
         return "qrc:/xmas/xobjects/composite.qml"
     default:
-        log(XMAS.Util.Designer,"Unknown xmas type! (" + type + ")","red")
+        log("Unknown xmas type! (" + type + ")","red")
         return ""
     }
 }
@@ -147,7 +147,7 @@ function createComponent(parent,component,object) {
         // NOTE: distinguish between sources of input (screen or json)
         //datacontrol.componentCreated(component) --> disabled, no longer necessary in new direct data model
     } else if (component.status === Qjs.Component.Error) {
-        log(XMAS.Util.Designer,component.errorString(),"red")
+        log(component.errorString(),"red")
     }
 }
 
@@ -170,7 +170,7 @@ function destroyAll(network){
             }
     }
     network.children = temp
-    //log(XMAS.Util.Designer,"network cleared.","black")
+    //log("network cleared.","black")
 }
 
 // Grid Snap

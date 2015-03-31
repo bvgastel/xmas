@@ -37,26 +37,32 @@ import Qt.labs.settings 1.0
 import "qrc:/ui/uicontrols/"
 import XMAS 1.0 as XMAS
 
-ColumnLayout{
+// text:if(tabview.currentIndex >= 0 && tabview.count > 0)
+//   tabview.getTab(tabview.currentIndex).title
+
+Item{
     id:output
-    spacing:0
     z:10
     property int lastHeight
     property int headerHeight:25
     property bool open: false
-    property string status // current tab title not working
 
-    function log(type,message,color){
+    function log(message,color,name){
         //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
-        if(type===XMAS.Util.Designer) {
+        if(name===undefined || name==="") {
             tabview.designerLogSig(message,color)
+        } else {
+            tabview.pluginLogSig(message,color,name)
         }
-        if(type===XMAS.Util.Plugin) {
-            tabview.pluginLogSig(message,color)
-        }
-        if (type===XMAS.Util.Network) {
-            tabview.networkLogSig(message,color)
+    }
+
+    function addPlugin(name){
+        var tab = tabview.addTab(name,plug)
+        if(tab){
+            tab.active = true
+            tab.item.write("Plugin " + name + " loaded!","green")
+            tab.item.name = name
         }
     }
 
@@ -66,69 +72,36 @@ ColumnLayout{
         property alias open: output.open
     }
 
-    Rectangle
-    {
-        id:logHeader
-        height: headerHeight
-        Layout.fillWidth: true
-        color:"darkgray"
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "black" }
-            GradientStop { position: 0.4; color: "grey" }
-            GradientStop { position: 1.0; color: "black" }
-        }
-        RowLayout{
-            anchors.fill: parent
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            ToolButton{
-                action: clearLogAction
-                Layout.fillHeight: true
-                Layout.preferredWidth: 20
-                Layout.alignment: Qt.AlignVCenter
-            }
-            Text {
-                id:status
-                Layout.alignment: Qt.AlignLeft
-                color: "white"
-                text:output.status
-            }
-            Image {
-                id:arrow
-                source: "qrc:/icons/content/arrow.png"
-                Layout.alignment: Qt.AlignRight
-                MouseArea{
-                    anchors.fill:parent
-                    hoverEnabled: true
-                    onEntered: arrow.source = "qrc:/icons/content/arrowLit.png"
-                    onExited: arrow.source = "qrc:/icons/content/arrow.png"
-                    onClicked: open = !open
-                }
+    // Plugin component to create tabs
+    Component{id:plug
+        XPlugin{
+            id:pluginLog
+            visible: open //to hide scrollbar
+            Connections{
+                target: tabview
+                onPluginLogSig: if(pluginLog.name===name)pluginLog.write(message,color)
+                onClearLog:if(pluginLog.parent.visible)pluginLog.clear()
             }
         }
     }
 
     TabView{
         id:tabview
-        anchors.margins: 5
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        tabPosition: Qt.BottomEdge
+        anchors.fill: parent
+        tabPosition: Qt.TopEdge
         frameVisible: false
-        visible: open //to hide tabs & scrollbar
         signal designerLogSig(var message, var color)
         signal pluginLogSig(var message, var color)
-        signal networkLogSig(var message, var color)
         signal clearLog()
+
         Tab {
             id:designerTab
-            title: "Designer log"
+            title: "Designer"
             active: true
             Log{
                 id:designerLog
                 anchors.fill: parent
-                anchors.margins: 2
-
+                visible: open //to hide scrollbar
                 Connections{
                     target: tabview
                     onDesignerLogSig: designerLog.write(message,color)
@@ -136,49 +109,13 @@ ColumnLayout{
                 }
             }
         }
-        Tab {
-            id:pluginTab
-            title: "Checker" //TODO will be filled in from pluginlist
-            active:true
-
-            XPlugin{
-                id:plugin1Log
-                anchors.fill: parent
-                anchors.margins: 2
-
-                Connections{
-                    target: tabview
-                    onPluginLogSig: plugin1Log.write(message,color)
-                    onClearLog:if(pluginTab.visible)plugin1Log.clear()
-                }
-            }
-        }
-
-        Tab {
-            id:networkTab //TODO : is this a plugin?? network should log into designer log like "[network] - messagetext"
-            title: "Network" //TODO will be filled in from pluginlist
-            active:true
-
-            Log{
-                id:network2Log
-                anchors.fill: parent
-                anchors.margins: 2
-
-                Connections{
-                    target: tabview
-                    onNetworkLogSig: network2Log.write(message,color)
-                    onClearLog:if(networkTab.visible)network2Log.clear()
-                }
-            }
-        }
 
         style: TabViewStyle {
             frameOverlap: 1
             tab: Rectangle {
-                color: styleData.selected ? "steelblue" :"lightsteelblue"
-                border.color:  "steelblue"
+                gradient: styleData.selected ? blueGradient : greyGradient
                 implicitWidth: Math.max(text.width + 4, 80)
-                implicitHeight: 20
+                implicitHeight: headerHeight
                 radius: 2
                 Text {
                     id: text
@@ -187,8 +124,54 @@ ColumnLayout{
                     color: styleData.selected ? "white" : "black"
                 }
             }
-            frame: Rectangle { color: "steelblue" }
+            tabBar:
+                Rectangle {
+                height: headerHeight
+                Layout.fillWidth: true
+                gradient:greyGradient
+            }
         }
+    }
+
+    RowLayout{
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        Layout.minimumHeight: headerHeight
+        Layout.maximumHeight: headerHeight
+        ToolButton{
+            action: clearLogAction
+            implicitHeight: 20
+            implicitWidth: 20
+            Layout.alignment: Qt.AlignVCenter
+        }
+
+        Image {
+            id:arrow
+            source: "qrc:/icons/content/arrow.png"
+            Layout.alignment: Qt.AlignVCenter
+            MouseArea{
+                anchors.fill:parent
+                hoverEnabled: true
+                onEntered: arrow.source = "qrc:/icons/content/arrowLit.png"
+                onExited: arrow.source = "qrc:/icons/content/arrow.png"
+                onClicked: open = !open
+            }
+        }
+    }
+
+    Gradient {
+        id:greyGradient
+        GradientStop { position: 0.0; color: "black" }
+        GradientStop { position: 0.4; color: "grey" }
+        GradientStop { position: 1.0; color: "black" }
+    }
+    Gradient {
+        id:blueGradient
+        GradientStop { position: 0.0; color: "black" }
+        GradientStop { position: 0.4; color: "steelblue" }
+        GradientStop { position: 1.0; color: "black" }
     }
 
     states: [

@@ -42,7 +42,7 @@ PluginControl::~PluginControl()
 }
 
 bool PluginControl::startPlugin(QString vtPlugin) {
-    VtPluginInterface *plugin = m_vtMap[vtPlugin];
+   VtPluginInterface *plugin = m_vtMap[vtPlugin];
     auto xmap = getXmasComponents();
     if (!xmap.empty()) {
         plugin->start(xmap);
@@ -50,6 +50,14 @@ bool PluginControl::startPlugin(QString vtPlugin) {
     }
     m_logger->log(QString("[PluginControl] Plugin not started due to empty map."));
     return false;
+}
+
+bool PluginControl::stopPlugin(QString vtPlugin) {
+    Q_UNUSED(vtPlugin)
+//    VtPluginInterface *plugin = m_vtMap[vtPlugin];
+//        plugin->stop();
+        return true;
+    m_logger->log(QString("[PluginControl] Plugin stopped."));
 }
 
 /*
@@ -149,6 +157,8 @@ QVariantMap PluginControl::pluginParams(QString vtname) {
         VtPluginInterface *vtPluginInterface = m_vtMap[vtname];
         map = vtPluginInterface->paramMap();
     }
+    qDebug() << "plugin param count : " << (map.size());
+
     return map;
 }
 

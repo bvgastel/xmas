@@ -64,7 +64,7 @@ Model.XChannel {
     }
 
     // FIXME: Stefan: not sure how to do this, want to connect signal to mainWindow.log()
-    onWriteLog: console.log(XMAS.Util.Designer,msg, color)
+    onWriteLog: console.log(msg, color)
 
     //TODO: replace straight canvas wire with pathfinder logic (horizontal/vertical)
     XWire {

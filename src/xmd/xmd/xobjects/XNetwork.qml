@@ -33,6 +33,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.1
+import Qt.labs.settings 1.0
 import "qrc:/ui/uicontrols/"
 import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
 import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
@@ -44,7 +45,7 @@ Model.XNetwork {
     id: network
     // Properties
     scale: 1.0
-    size: Qt.size(5940,4200)
+    size: Qt.size(2500,2000)
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
@@ -61,12 +62,20 @@ Model.XNetwork {
     property bool gridSnap:mainwindow.snapToGrid
     property int gridSize:20
 
+
+    // Persistent properties
+    Settings {
+        category: "network"
+        property alias size: network.size
+    }
+
+
     // Signals
     signal moveSelected(var group)
 
     // Event handling
     onChildrenChanged: modified=true
-    onWriteLog: log(XMAS.Util.Designer,message, color)
+    onWriteLog: log(message, color)
     onPacketChanged: modified=true
 
     // JavaScripts
@@ -140,10 +149,6 @@ Model.XNetwork {
 
     function isConnecting() {
         return wire.connecting
-    }
-
-    function boundReached(dx,dy){
-        console.log(XMAS.Util.Designer,"boundReached",XMAS.Util.Info)
     }
 
     function isValidPort(port){

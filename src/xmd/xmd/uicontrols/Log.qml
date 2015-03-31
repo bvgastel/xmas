@@ -36,12 +36,10 @@ import QtQuick.Controls.Styles 1.3
 Rectangle
 {
     id:log
+    color:"lightgrey"
+
     signal clear
     signal write(var message, var color)
-
-    //z:-1 //to hide scrollbar when height is 0
-    color:"lavender"
-    radius:5
 
     TextArea {
         id:textArea

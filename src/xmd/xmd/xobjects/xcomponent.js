@@ -49,7 +49,7 @@ function loadComponent(qml) {
     else if (component.status === Qjs.Component.Ready)
         createComponent(network,component)
     else if (component.status === Qjs.Component.Error)
-        log(XMAS.Util.Designer,component.errorString(),"red")
+        log(component.errorString(),"red")
 }
 
 function createComponent(parent,component) {
@@ -63,7 +63,7 @@ function createComponent(parent,component) {
         }
     } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
-        log(XMAS.Util.Designer,component.errorString(),"red")
+        log(component.errorString(),"red")
     }
 }
 

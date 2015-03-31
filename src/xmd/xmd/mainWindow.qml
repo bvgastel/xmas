@@ -118,8 +118,8 @@ ApplicationWindow {
         network.modified = false
     }
 
-    function log(type,message,color){
-        xconsole.log(type,message,color)
+    function log(message,color,name){
+        xconsole.log(message,color,name)
     }
 
     // Event handling
@@ -207,7 +207,7 @@ ApplicationWindow {
 
     Action {
         id: showComponentNamesAction
-        text: "Show Component names"
+        text: "Show component names"
         checkable: true
         checked: mainwindow.showComponentNames
         onTriggered: showComponentNames = checked
@@ -215,7 +215,7 @@ ApplicationWindow {
 
     Action {
         id: showPortNamesAction
-        text: "Show Port names"
+        text: "Show port names"
         checkable: true
         checked: mainwindow.showPortNames
         onTriggered: showPortNames = checked
@@ -261,8 +261,8 @@ ApplicationWindow {
 
     Action {
         id: selectAllAction
-        text: "Select All"
-        tooltip: "Select All items on the network"
+        text: "Select all"
+        tooltip: "Select all items on the network"
         shortcut: StandardKey.SelectAll
         iconSource: "qrc:/icons/content/select_all.png"
         iconName: "selectAll"
@@ -313,16 +313,17 @@ ApplicationWindow {
     }
 
     Action {
-        id: loadPlugins
+        id: loadPluginAction
         iconSource: "qrc:/icons/content/plugin.ico"
-        iconName: "plugins"
-        text: "VT"
-        shortcut: "Alt+P"
+        iconName: "plugin"
+        text: "Load plugin..."
+        shortcut: "Alt+L"
+        enabled: false //auto load at startup application
         //onTriggered:
     }
 
     Action {
-        id: runVtAction
+        id: runPluginAction
         text: "Run"
         shortcut: "Ctrl+R"
         iconSource: "qrc:/icons/content/run.ico"
@@ -330,15 +331,14 @@ ApplicationWindow {
         onTriggered: {
             for (var i in mainwindow.vtNameList) {
                 var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
-                log (XMAS.Util.Plugin,"params = [" + params +"] Running to be implemented", "green");
-                plugincontrol.startPlugin(mainwindow.vtNameList[i], network);
+                log ("params = [" + params +"] Running to be implemented", "green",vtNameList[i]);
+                plugincontrol.startPlugin(mainwindow.vtNameList[i]);
             }
-
         }
     }
 
     Action {
-        id: stopVtAction
+        id: stopPluginAction
         text: "Stop"
         shortcut: ""
         iconSource: "qrc:/icons/content/stop.ico"
@@ -390,6 +390,14 @@ ApplicationWindow {
             MenuItem { action: showPortNamesAction }
             MenuSeparator{}
             MenuItem { action: clearLogAction }
+        }
+
+        Menu {
+            title: "&Plugins"
+            MenuItem { action: loadPluginAction }
+            MenuSeparator{}
+            MenuItem { action: runPluginAction }
+            MenuItem { action: stopPluginAction }
         }
 
         Menu {
@@ -657,41 +665,28 @@ ApplicationWindow {
     //#######################################################################################################
     Connections {
         target: util
-        onWriteLog: xconsole.log(type,message,color)
+        onWriteLog: xconsole.log("[util]: " + message,color)
     }
 
-    Connections {
-        target: network
-        onWriteLog: xconsole.log(XMAS.Util.Network,message,color)
-    }
-
-    //TODO: log via util
     /************************************************
      * Data Control
      ************************************************/
     Connections {
         target: datacontrol
-        onWriteLog: xconsole.log(XMAS.Util.Designer,message,color)
+        onWriteLog: xconsole.log("[datacontrol]: " + message,color)
     }
 
-    //TODO log via util
     /************************************************
      * Plugin Control
      ************************************************/
     Connections {
         target: plugincontrol
-        onWriteLog: xconsole.log(XMAS.Util.Plugin,message,color)
+        onWriteLog: xconsole.log("[plugincontrol]: " + message,color)
         onPluginsLoaded: {
             mainwindow.vtNameList = vtNameList
-            var line = " Loaded plugins: [";
-            var glue = "";
             for (var i in vtNameList) {
-                line += glue + vtNameList[i];
-                glue = ", ";
+                xconsole.addPlugin(vtNameList[i])
             }
-            line += "]";
-            xconsole.log(XMAS.Util.Plugin,line, "red");
         }
     }
-
 }

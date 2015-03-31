@@ -54,11 +54,12 @@ private:
 
 signals:
     void pluginsLoaded(QVariantList vtNameList);
-    void writeLog(QString message,QColor color=Qt::black);
+    void writeLog(QString message,QColor color=Qt::black,QString name="");
 
 public slots:
     bool loadPlugins();
     bool startPlugin(QString vtPlugin);
+    bool stopPlugin(QString vtPlugin);
 
 private:
     QDir m_pluginDir;

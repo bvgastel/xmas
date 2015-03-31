@@ -34,8 +34,11 @@ import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
 
 RowLayout{
-    id:output
-    spacing:2
+    id:plugin
+    spacing:0
+
+    property string name:""
+    property bool enabled:true
 
     signal clear
     signal write(var message, var color)
@@ -44,76 +47,65 @@ RowLayout{
         id:pluginControlPanel
         Layout.preferredWidth: 300
         Layout.fillHeight: true
-        color:"black"
-        radius:5
-        anchors.margins: 5
-        border.color:"darkgrey"
-        border.width:2
-
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "darkgrey" }
+            GradientStop { position: 0.0; color: "black" }
             GradientStop { position: 1.0; color: "grey" }
         }
+        border.width:0
 
         ColumnLayout{
+            anchors.fill: pluginControlPanel
             anchors.margins: 10
-
-        Button {action: runVtAction}
-
-        Button {action: stopVtAction}
-
-        //TODO replace with plugin progress value
-        ProgressBar {
-            id:progressbar
-            value: 50
-            indeterminate: false
-            minimumValue: 0
-            maximumValue: 100
-
-            style: ProgressBarStyle {
-                background: Rectangle {
-                    radius: 5
-                    color: "darkgray"
-                    border.color: "darkgray"
-                    border.width: 0
-                    implicitWidth: 200
-                    implicitHeight: 18
-                }
-                progress: Rectangle {
-                    border.width:1
-                    border.color:"steelblue"
-                    radius: 4
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "steelblue" }
-                        GradientStop { position: 0.4; color: "lightsteelblue" }
-                        GradientStop { position: 1.0; color: "steelblue" }
+            spacing: 4
+            Rectangle{
+                color:"darkgrey"
+                border.width: 0
+                height: 25
+                Layout.fillWidth: true
+                radius:5
+                RowLayout{
+                    anchors.fill:parent
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
+                    spacing: 2
+                    CheckBox {
+                        id:enable
+                        text:"enable"
+                        focus: false
+                        checked: plugin.enabled
+                        onCheckedChanged: plugin.enabled = checked
                     }
-                    Item {
-                        anchors.fill: parent
-                        anchors.margins: 1
-                        visible: progressbar.indeterminate
-                        clip: true
-                        Row {
-                            Repeater {
-                                Rectangle {
-                                    color: index % 2 ? "steelblue" : "lightsteelblue"
-                                    width: 20 ; height: progressbar.height
-                                }
-                                model: progressbar.width / 20 + 2
-                            }
-                            XAnimator on x {
-                                from: 0 ; to: -40
-                                loops: Animation.Infinite
-                                running: progressbar.indeterminate
-                            }
-                        }
+                    ToolButton{action: timerAction; implicitHeight: 20; implicitWidth: 20}
+                    ToolButton{action: runAction; implicitHeight: 20; implicitWidth: 20}
+                    ToolButton{action: stopAction; implicitHeight: 20; implicitWidth: 20}
+                    ProgressBar {
+                        id:progressbar
+                        value: plugin.enabled ? 50 : 0
+                        //indeterminate: plugin.isRunning
+                        minimumValue: 0
+                        maximumValue: 100
+                        implicitHeight: 15
+                        enabled: plugin.enabled
+                        Layout.fillWidth: true
                     }
                 }
             }
-        }
-        }
 
-
+            Rectangle{
+                color:"lightgrey"
+                border.width: 1
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                radius:5
+                ListView {
+                    anchors.fill: parent
+                    clip:true
+                    enabled: plugin.enabled
+                    model: plugincontrol.pluginParams(name)
+                    delegate: Text{text: key +  " - " + value}
+                }
+            }
+        }
     }
 
     Log{
@@ -121,12 +113,49 @@ RowLayout{
         Layout.fillWidth: true
         Layout.fillHeight: true
         Connections{
-            target: output
+            target: plugin
             onWrite: log.write(message,color)
             onClear: log.clear()
         }
     }
 
+    Action {
+        id: timerAction
+        text: "Timer"
+        tooltip: "Timer triggered run"
+        iconSource: "qrc:/icons/content/timer.ico"
+        iconName: "timer"
+        enabled: plugin.enabled
+        checkable: true
+        checked: false
+    }
 
+    Action {
+        id: runAction
+        text: "Run"
+        tooltip: "Run plugin"
+        shortcut: "Ctrl+R"
+        iconSource: "qrc:/icons/content/run.ico"
+        iconName: "run"
+        enabled: plugin.enabled && !timerAction.checked
+        onTriggered: plugincontrol.startPlugin(name)
+    }
+
+    Action {
+        id: stopAction
+        text: "Stop"
+        tooltip: "Stop plugin"
+        iconSource: "qrc:/icons/content/stop.ico"
+        iconName: "stop"
+        enabled: plugin.enabled && !timerAction.checked
+        onTriggered: plugincontrol.stopPlugin(name)
+    }
+
+    Timer {
+        id: autoRunTimer
+        interval: 10000 //every 10s
+        running: timerAction.enabled && timerAction.checked
+        repeat: true
+        onTriggered: plugincontrol.startPlugin(name)
+    }
 }
-
