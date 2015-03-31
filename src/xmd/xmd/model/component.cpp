@@ -26,7 +26,7 @@
 extern DataControl *dataControl;
 
 model::Component::Component(QQuickItem *parent)
-    : QQuickItem(parent)
+    : QQuickItem(parent), m_name()
 {
 }
 
@@ -53,15 +53,26 @@ QString model::Component::getName() {
 }
 
 void model::Component::setName(QString name) {
-    if (name != m_name) {
+    // initial setting
+    if (m_name == QString()) {
         m_name = name;
-        auto c = xmas_component();
-        if (c) {
-            c->name(name.toStdString());
-        }
+        emit nameChanged(true);
+        return;
     }
-    int result = true; // checkName(name);
-    emit nameChanged(result);
+    // change current name
+    if (name == m_name) {
+        return;
+    }
+    // get project
+    auto project = dataControl->project();
+    if (!project) {
+        return;
+    }
+    if (project->changeComponentName(m_name.toStdString(), name.toStdString())) {
+        m_name = name;
+        emit nameChanged(true);
+    }
+    emit nameChanged(false);
 }
 
 model::Component::CompType model::Component::getType() const {
