@@ -101,8 +101,6 @@ signals:
 public slots:
     bool fileOpen(QUrl fileUrl);
 
-    bool addComposite(model::Component *component, QUrl fileUrl);
-
     /************************************************************
      * Public methods
      ************************************************************/

@@ -86,36 +86,6 @@ bool DataControl::fileOpen(QUrl fileUrl) {
     return result;
 }
 
-/*
- *
- * TODO: Needs thorough thinking though: the network should not be part of the call
- * TODO: it should be loaded into the project using the filename.
- *
- */
-bool DataControl::addComposite(model::Component *component, QUrl fileUrl) {
-
-    if (!m_project) {
-        emit writeLog(QString("Project not existing! All will fail!"));
-        return false;
-    }
-
-
-    //m_project->insertComposite();
-
-    std::string name = component->getName().toStdString();
-    model::Component::CompType type = component->getType();
-
-    if (type != model::Component::CompType::Composite) {
-        emit writeLog(QString("Only type composite needs a network, not ") + type, Qt::red);
-        return false;
-    }
-
-    m_project->insertComposite(name, std::ref(network));
-    return true;
-
-}
-
-
 bool DataControl::emitNetwork(XMASNetwork &network) {
 
     auto& components = network.getComponentMap();

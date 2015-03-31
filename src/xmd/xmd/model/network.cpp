@@ -264,6 +264,29 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
+bool model::Network::addComposite(model::Component *component) {
+
+    auto project = dataControl->project();
+
+    if (!project) {
+        emit writeLog(QString("Project not existing! All will fail!"));
+        return false;
+    }
+
+    QUrl fileUrl = QUrl(component->property("url").toString());
+
+    std::string filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+                                  : fileUrl.fileName().toStdString();
+
+    std::string name = component->getName().toStdString();
+
+    auto xnetwork = project->loadNetwork(filename);
+    project->insertComposite(name, std::ref(*xnetwork));
+
+    return true;
+}
+
 bool model::Network::addComponent(model::Component *component) {
 
     auto project = dataControl->project();
@@ -275,6 +298,7 @@ bool model::Network::addComponent(model::Component *component) {
     std::string name = component->getName().toStdString();
     model::Component::CompType type = component->getType();
 
+    bool result = true;
     switch(type) {
     case model::Component::CompType::Source :
         project->insertSource(name);
@@ -301,13 +325,13 @@ bool model::Network::addComponent(model::Component *component) {
         project->insertFork(name);
         break;
     case model::Component::CompType::Composite :
-        emit writeLog(QString("type composite cannot create without network reference .... "), Qt::red);
-        return false;
+        result = addComposite(component);
+        break;
     default :
         emit writeLog(QString("Unknown component type!"), Qt::red);
         return false;
     }
-    return true;
+    return result;
 }
 
 

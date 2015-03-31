@@ -98,6 +98,7 @@ public slots:
 
 private:
     QList<Component *> getAllComponents();
+    bool addComposite(model::Component *component);
 
     bool portError(XPort *outport, QString errMsg);
 
