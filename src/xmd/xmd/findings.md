@@ -21,4 +21,5 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
     5   g   2015-04-01              Reading a file aborts                   bug     high
     6   g   2015-04-01              Composite Network ext. not filled       bug     high
                                     properly
+    7   g   2015-04-01              New file: aborts                        bug     high
    99
