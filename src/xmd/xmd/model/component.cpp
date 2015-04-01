@@ -34,6 +34,24 @@ model::Component::~Component()
 {
 }
 
+QVariantMap model::Component::getPorts()
+{
+    auto project = dataControl->project();
+    if (!project) {
+        emit writeLog("[model::Component::getPorts()] no project: big problems.");
+        return QVariantMap();
+    }
+
+    auto comp = xmas_component();
+    QVariantMap map;
+    for(Port *p : comp->ports()) {
+        QString name = p->getName();
+        QString type = typeid(*p) == typeid(Input) ? "input" : "output";
+        map[name] = type;
+    }
+    return map;
+}
+
 void model::Component::classBegin() {
 }
 
@@ -107,6 +125,7 @@ bool model::Component::getValid() {
     return result;
 }
 
+// FIXME: all via Project
 XMASComponent *model::Component::createXMASComponent(CompType type, QString qname) {
     XMASComponent *component = nullptr;
     std::string name = qname.toStdString();

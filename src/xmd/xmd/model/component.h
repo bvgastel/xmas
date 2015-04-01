@@ -87,6 +87,8 @@ signals:
 
 public slots:
 
+    QVariantMap getPorts();
+
 public:
 
     virtual void classBegin();

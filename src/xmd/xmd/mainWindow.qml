@@ -102,7 +102,7 @@ ApplicationWindow {
     // Closes the current model and starts a new one
     function newModel(save){
         if(save) saveModel()
-        if(network.newFile()){
+        if(network.newFile()) {
             network.clear()
         }
     }
