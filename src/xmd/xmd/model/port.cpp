@@ -33,7 +33,7 @@ model::XPort::~XPort()
 {
 }
 
-PortType model::XPort::getType() const {
+model::XPort::PortType model::XPort::getType() const {
     return m_type;
 }
 
