@@ -135,14 +135,27 @@ Model.XComponent {
         z:-1 // under parent = component
     }
 
-    // Valid Marker (top left)
+    // XMAS Valid highlite
+    Rectangle {
+        id: validHighlite
+        anchors.fill: mousearea
+        anchors.margins: -5
+        color:"transparent"
+        opacity: 1
+        border.color: "red"
+        border.width: 4
+        visible: !valid
+        z:-1 // under parent = component
+    }
+
+    // Expression valid Marker (top left)
     Rectangle {
         id: validmarker
         visible: withValidMarker
         width: 15
         height: 15
         radius: 15
-        color: valid ? "green" : "red"
+        color: validExpr ? "green" : "red"
         anchors.verticalCenter: nameItem.verticalCenter
         anchors.right: component.left
         MouseArea {
