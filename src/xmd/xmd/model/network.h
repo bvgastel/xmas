@@ -27,6 +27,7 @@
 #include "datacontrol.h"
 #include "export.h"
 #include "component.h"
+#include "port.h"
 
 namespace model {
 

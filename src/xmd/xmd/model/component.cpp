@@ -125,52 +125,6 @@ bool model::Component::getValid() {
     return result;
 }
 
-// FIXME: all via Project
-XMASComponent *model::Component::createXMASComponent(CompType type, QString qname) {
-    XMASComponent *component = nullptr;
-    std::string name = qname.toStdString();
-    switch(type) {
-    case CompType::Source :
-        component = new XMASSource(name);
-        break;
-    case CompType::Sink :
-        component = new XMASSink(name);
-        break;
-    case CompType::Function :
-        component = new XMASFunction(name);
-        break;
-    case CompType::Queue :
-        component = new XMASQueue(name);
-        break;
-    case CompType::Join :
-        component = new XMASJoin(name);
-        break;
-    case CompType::Merge :
-        component = new XMASMerge(name);
-        break;
-    case CompType::Switch :
-        component = new XMASSwitch(name);
-        break;
-    case CompType::Fork :
-        component = new XMASFork(name);
-        break;
-    case CompType::Composite :
-        emit writeLog(QString("type composite is not implemented .... yet"), Qt::red);
-        break;
-    default :
-        emit writeLog(QString("Unknown component type!"), Qt::red);
-    }
-    return component;
-}
-
-//TODO Check if name is unique and not empty : return -1 if ok
-//int model::Component::checkName(QString name) {
-//    bitpowder::lib::unused(name);
-//    return -1;
-//}
-
-// TODO: Update in XMASComponent
-// TODO check expression en emit valid changed with -1 if ok , or > -1 if not where int is position error
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
     emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+expression.toString());
@@ -329,7 +283,6 @@ XMASComponent *model::Component::xmas_component() {
 }
 
 QVariant model::Component::getExpression() {
-    // gbo: TODO: access xmas_component from XMASNetwork
     auto c = xmas_component();
     // In case of queue return queue size
     auto queue = dynamic_cast<XMASQueue *>(c);
@@ -384,26 +337,3 @@ void model::Component::setExpression(QVariant expression) {
     emit expressionChanged(errorPosition);
 }
 
-
-
-/************************************************************************************
- * ports
- ************************************************************************************/
-/**
- * @brief model::Component::ports
- * @return a qml list of XPort instances
- */
-QQmlListProperty<model::XPort> model::Component::ports()
-{
-    return QQmlListProperty<model::XPort>(this, 0,
-                                               &model::Component::append_port,0,0,0);
-
-}
-
-void model::Component::append_port(QQmlListProperty<model::XPort> *list, model::XPort *port) {
-    Component *component = qobject_cast<Component *>(list->object);
-    if (component) {
-        port->setParent(component);
-        component->m_ports.append(port);
-    }
-}

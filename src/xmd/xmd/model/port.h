@@ -103,8 +103,6 @@ private:
     QString m_name;
     PortType m_type;
 
-    Component *m_component;
-
 };
 
 } // namespace model

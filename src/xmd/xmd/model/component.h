@@ -27,7 +27,7 @@
 #include <QQmlParserStatus>
 #include <QQmlListProperty>
 
-#include "port.h"
+#include "xmas.h"
 
 /**
  * @brief The Component class
@@ -65,7 +65,6 @@ private:
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid NOTIFY validChanged)
-    Q_PROPERTY(QQmlListProperty<model::XPort> ports READ ports)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -121,18 +120,13 @@ public:
 
     XMASComponent *xmas_component();
 
-    QQmlListProperty<XPort> ports();
-
 
 private:
-    XMASComponent *createXMASComponent(CompType type, QString name);
-    //int checkName(QString name);
     int updateExpression(QVariant expression);
 
     void emitInportProperties();
     void emitOutportProperties();
 
-    static void append_port(QQmlListProperty<XPort> *list, XPort *port);
 
 public:
 private:
@@ -160,7 +154,6 @@ private:
     bool m_valid;       /* Is the object fully connected? */
     bool m_validExpr;   /* Is the expression correctly updated in xmas? */
 
-    QList<XPort *> m_ports;
 
 };
 

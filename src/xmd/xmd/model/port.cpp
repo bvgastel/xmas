@@ -27,12 +27,10 @@
 model::XPort::XPort(QQuickItem *parent)
     : QQuickItem(parent)
 {
-    m_component = nullptr;
 }
 
 model::XPort::~XPort()
 {
-    // NOTE: should we delete m_port?
 }
 
 void model::XPort::classBegin() {
@@ -40,7 +38,7 @@ void model::XPort::classBegin() {
 }
 
 void model::XPort::componentComplete() {
-    m_component = qobject_cast<Component *>(parent());
+    // no action necessary
 }
 
 /**
@@ -54,10 +52,10 @@ void model::XPort::componentComplete() {
  *
  * @return
  */
-// FIXME: aborts after deletion of some components
 Port *model::XPort::getPort() {
-    if (m_component) {
-        XMASComponent *c = m_component->xmas_component();
+    auto component = qobject_cast<Component *>(parent());
+    if (component) {
+        XMASComponent *c = component->xmas_component();
         if (c) {
             for (Port *p : c->ports()) {
                 if (QString(p->getName()) == getName()) {
@@ -70,5 +68,6 @@ Port *model::XPort::getPort() {
 }
 
 model::Component *model::XPort::getComponent() {
-    return m_component;
+    auto component = qobject_cast<Component *>(parent());
+    return component;
 }
