@@ -1363,7 +1363,9 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             } catch (Exception e) {
                 std::cerr << "Invalid canvas data:" << std::endl << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                std::cerr << "Skipping parse of pos data from json." << std::endl;
+                // Removed exit(-1): frustrates xmd / user interface
+                throw e;
             }
         }
 
@@ -1375,7 +1377,9 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                std::cerr << "Skipping parse of Sink external from json." << std::endl;
+                // Removed exit(-1): frustrates xmd / user interface
+                throw e;
             }
         }
         XMASSource *src = dynamic_cast<XMASSource*>(component);
@@ -1396,12 +1400,14 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Source expression (init_type) from json." << std::endl;
+                    std::cerr << "In source file " << __FILE__ << " and line number " << __LINE__ << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASSwitch *sw = dynamic_cast<XMASSwitch*>(component);
@@ -1420,12 +1426,13 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Switch expression (fields) from json." << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASFunction *f = dynamic_cast<XMASFunction*>(component);
@@ -1445,12 +1452,13 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Function expression (fields) from json." << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASQueue *q = dynamic_cast<XMASQueue*>(component);
