@@ -11,6 +11,10 @@ public:
     XMASProject(const std::string& filename);
     ~XMASProject();
 
+    void allocate_initial_project();
+    void deallocate_project();
+    void clear();
+
     bitpowder::lib::MemoryPool& mp();
 
     XMASNetwork* getRootNetwork() const;

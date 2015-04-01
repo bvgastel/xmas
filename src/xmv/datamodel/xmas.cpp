@@ -496,7 +496,6 @@ XMASNetwork::~XMASNetwork()
         XMASComponent* c = entry.second;
         ClearSymbolicTypes(c);
         ClearMessageSpec(c);
-        //delete(c);             // FIXME: How should MemoryPool allocated object be destroyed??
     }
 }
 

@@ -18,9 +18,7 @@ JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp)
 
 XMASProject::XMASProject()
 {
-    std::string name = "?.xmas";
-    root = new XMASNetwork {name};
-    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(root)));
+    allocate_initial_project();
 }
 
 XMASProject::XMASProject(const std::string& filename)
@@ -30,7 +28,26 @@ XMASProject::XMASProject(const std::string& filename)
 
 XMASProject::~XMASProject()
 {
+    deallocate_project();
+}
 
+void XMASProject::clear() {
+    deallocate_project();
+    allocate_initial_project();
+}
+
+void XMASProject::allocate_initial_project() {
+    std::string name = "?.xmas";
+    root = new XMASNetwork {name};
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(root)));
+}
+
+void XMASProject::deallocate_project() {
+    m_mp.clear();
+    if (root) {
+        delete root;
+    }
+    networks.clear();
 }
 
 bitpowder::lib::MemoryPool& XMASProject::mp() {

@@ -48,6 +48,28 @@ void model::Network::setPacket(QString expression) {
     qDebug() << "packet expression = " << m_packet;
 }
 
+bool model::Network::openFile(QUrl url) {
+
+    QString json = Util::openFile(url);
+    // TODO: convert json to XMASComponent
+    return true;
+}
+
+bool model::Network::saveFile(QUrl url) {
+    return Util::saveFile(url, toJson());
+}
+
+bool model::Network::closeFile() {
+    //TODO destroy the model and reset everything
+    XMASProject *project = dataControl->project();
+    //project->clear();
+    return true;
+}
+
+bool model::Network::newFile() {
+    return closeFile();
+}
+
 /*
  * portError(port, errMsg) always return false to support error messaging.
  *
@@ -235,26 +257,6 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     return false;
 }
 
-
-bool model::Network::openFile(QUrl url) {
-
-    QString json = Util::openFile(url);
-    // TODO: convert json to XMASComponent
-    return true;
-}
-
-bool model::Network::saveFile(QUrl url) {
-    return Util::saveFile(url, toJson());
-}
-
-bool model::Network::closeFile() {
-    //TODO destroy the model and reset everything
-    return true;
-}
-
-bool model::Network::newFile() {
-    return closeFile();
-}
 
 QString model::Network::toJson() {
 
