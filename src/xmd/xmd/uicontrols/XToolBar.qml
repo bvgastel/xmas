@@ -167,7 +167,7 @@ Rectangle {
         selectFolder: false
         selectMultiple: false
         nameFilters: [
-            "Model files (*.xmdm *.json *.xmas)",
+            "Model files (*.json)",
             "All files (*)"]
         onAccepted: if(!network.addLibraryComposite(fileUrl)) addLibraryCompositeFailedDialog.open()
     }

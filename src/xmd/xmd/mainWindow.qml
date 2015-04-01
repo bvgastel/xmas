@@ -451,7 +451,7 @@ ApplicationWindow {
     FileDialog {
         id: dialogFileOpen
         nameFilters: [
-            "Model files (*.xmdm *.json *.xmas)",
+            "Model files (*.xmdm *.json)",
             "All files (*)"]
         onAccepted: {
             datacontrol.fileOpen(fileUrl)
@@ -533,6 +533,7 @@ ApplicationWindow {
     //#######################################################################################################
 
     SplitView {
+        //anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
         anchors.fill: parent
         orientation: Qt.Vertical
         Item {
