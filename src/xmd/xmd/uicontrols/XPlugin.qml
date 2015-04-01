@@ -38,9 +38,11 @@ RowLayout{
 
     property string name:""
     property bool enabled:true
+    property bool timeTriggered:false
 
     signal clear
     signal write(var message, var color)
+    signal parametersReady
 
     Item{
         id:pluginControlPanel
@@ -67,7 +69,7 @@ RowLayout{
                         checked: plugin.enabled
                         onCheckedChanged: plugin.enabled = checked
                     }
-                    ToolButton{action: timerAction; implicitHeight: 20; implicitWidth: 20}
+                    ToolButton{action: timerAction; implicitHeight: 24; implicitWidth: 24}
                     ToolButton{action: runAction; implicitHeight: 20; implicitWidth: 20}
                     ToolButton{action: stopAction; implicitHeight: 20; implicitWidth: 20}
                     ProgressBar {
@@ -85,34 +87,34 @@ RowLayout{
 
             Rectangle{
                 color:"lightgrey"
-                border.width: 1
+                border.width: 0
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 radius:5
                 ListView {
                     anchors.fill: parent
                     anchors.margins: 5
-                    contentWidth: parent.width-10
-                    contentHeight: 10
-
                     header: Rectangle{
+                        z:10
                         color:"darkgray"
                         anchors.left:parent.left
                         anchors.right:parent.right
-                        height: 15
+                        height: 20
                         clip:true
                         Text{
-                            text:"parameters"
-                            anchors.fill: parent
-                            anchors.centerIn: parent
+                            text:"parameters:"
+                            anchors.verticalCenter: parent.verticalCenter
                             color:"white"
+                            font.bold: true
+                            font.pixelSize: 14
                         }
                     }
                     clip:true
                     headerPositioning:ListView.OverlayHeader
                     enabled: plugin.enabled
-                    model: plugincontrol.pluginParams(name)
-                    delegate: Text{anchors.margins:10; text: name +  " - " + value}
+                    model: parameterModel
+                    delegate: parameterDelegate
+
                 }
             }
         }
@@ -129,13 +131,41 @@ RowLayout{
         }
     }
 
+    onNameChanged: {
+        try {
+            var params = plugincontrol.pluginParams(name)
+            parameterModel.clear()
+            for (var p in params) {
+                parameterModel.append({name: p, value:params[p]})
+                if(p==="timer (sec)" && params[p]) {
+                    autoRunTimer.interval = params[p] * 1000
+                    timeTriggered = true
+                    write("Auto run timer set to " + params[p] + "s","green")
+                }
+            }
+        }
+        catch(e){write(e,"red")}
+    }
+
+    Component {
+        id: parameterDelegate
+        RowLayout {
+            Text { text: name; color: "black"; Layout.preferredWidth:100}
+            Text { text: value; color: "blue"; Layout.fillWidth: true }
+        }
+    }
+
+    ListModel {
+        id: parameterModel
+    }
+
     Action {
         id: timerAction
         text: "Timer"
         tooltip: "Timer triggered run"
         iconSource: "qrc:/icons/content/timer.ico"
         iconName: "timer"
-        enabled: plugin.enabled
+        enabled: plugin.enabled && timeTriggered
         checkable: true
         checked: false
     }
@@ -147,16 +177,8 @@ RowLayout{
         shortcut: "Ctrl+R"
         iconSource: "qrc:/icons/content/run.ico"
         iconName: "run"
-        enabled: plugin.enabled && !timerAction.checked
-        onTriggered: {
-            plugincontrol.startPlugin(name)
-            var params = plugincontrol.pluginParams(name)
-            console.log("Param scanning....")
-            for (var prop in params) {
-                        console.log("Param :", prop, "=", params[prop])
-                    }
-        }
-
+        enabled: plugin.enabled && !timeTriggered
+        onTriggered: plugincontrol.startPlugin(name)
     }
 
     Action {
@@ -165,7 +187,7 @@ RowLayout{
         tooltip: "Stop plugin"
         iconSource: "qrc:/icons/content/stop.ico"
         iconName: "stop"
-        enabled: plugin.enabled && !timerAction.checked
+        enabled: plugin.enabled && !timeTriggered
         onTriggered: plugincontrol.stopPlugin(name)
     }
 

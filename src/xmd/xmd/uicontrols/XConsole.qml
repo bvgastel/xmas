@@ -51,7 +51,6 @@ Rectangle{
 
 
     function log(message,color,name){
-        //TODO : check for valid color (As QColor.isValidColor(x))
         if(color === "" || color === null || color === undefined) color ="black"
         if(name===undefined || name==="") {
             tabview.designerLogSig(message,color)
@@ -151,13 +150,11 @@ Rectangle{
             action: clearLogAction
             implicitHeight: 20
             implicitWidth: 20
-            Layout.alignment: Qt.AlignVCenter
         }
 
         Image {
             id:arrow
             source: "qrc:/icons/content/arrow.png"
-            Layout.alignment: Qt.AlignVCenter
             MouseArea{
                 anchors.fill:parent
                 hoverEnabled: true
@@ -167,6 +164,7 @@ Rectangle{
             }
         }
     }
+
 
     Gradient {
         id:greyGradient
@@ -180,6 +178,7 @@ Rectangle{
         GradientStop { position: 0.4; color: "steelblue" }
         GradientStop { position: 1.0; color: "black" }
     }
+
 
     states: [
         State {
