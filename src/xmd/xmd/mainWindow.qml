@@ -312,40 +312,6 @@ ApplicationWindow {
         enabled: xconsole.open
     }
 
-    Action {
-        id: loadPluginAction
-        iconSource: "qrc:/icons/content/plugin.ico"
-        iconName: "plugin"
-        text: "Load plugin..."
-        shortcut: "Alt+L"
-        enabled: false //auto load at startup application
-        //onTriggered:
-    }
-
-    Action {
-        id: runPluginAction
-        text: "Run"
-        shortcut: "Ctrl+R"
-        iconSource: "qrc:/icons/content/run.ico"
-        iconName: "select"
-        onTriggered: {
-            for (var i in mainwindow.vtNameList) {
-                var params = plugincontrol.pluginParams(mainwindow.vtNameList[i])
-                log ("params = [" + params +"] Running to be implemented", "green",vtNameList[i]);
-                plugincontrol.startPlugin(mainwindow.vtNameList[i]);
-            }
-        }
-    }
-
-    Action {
-        id: stopPluginAction
-        text: "Stop"
-        shortcut: ""
-        iconSource: "qrc:/icons/content/stop.ico"
-        iconName: "select"
-        //onTriggered: controller.stop()
-    }
-
     //#######################################################################################################
     //
     // Menu & toolbars
@@ -390,14 +356,6 @@ ApplicationWindow {
             MenuItem { action: showPortNamesAction }
             MenuSeparator{}
             MenuItem { action: clearLogAction }
-        }
-
-        Menu {
-            title: "&Plugins"
-            MenuItem { action: loadPluginAction }
-            MenuSeparator{}
-            MenuItem { action: runPluginAction }
-            MenuItem { action: stopPluginAction }
         }
 
         Menu {

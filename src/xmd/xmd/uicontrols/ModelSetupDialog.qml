@@ -430,6 +430,7 @@ Window {
                 network.boxedImage = chkBoxedImage.checked
                 dialog.setupAccepted()
                 dialog.close()
+                network.modified = true
                 // NOTE: gbo: let me know: is this the right place?
                 network.setCompositeNetworkData()
             }
