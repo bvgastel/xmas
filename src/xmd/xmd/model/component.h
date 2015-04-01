@@ -19,30 +19,25 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #ifndef COMPONENT_H
 #define COMPONENT_H
-
 #include <QQuickItem>
 #include <QQmlParserStatus>
 #include <QQmlListProperty>
-
 #include "xmas.h"
 
+namespace model
+{
 /**
  * @brief The Component class
  *
  * A wrapper around XMASComponent from xmas.h to connect to
  * Qml using properties.
  */
-
-namespace model
-{
 class Component : public QQuickItem //, public QQmlParserStatus
 {
     Q_OBJECT
 
-    friend class Network;
 public:
     enum Orientation {
         North = 0,
@@ -57,7 +52,6 @@ public:
     enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, Composite};
 
 private:
-    Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
@@ -90,9 +84,6 @@ public slots:
 
 public:
 
-    virtual void classBegin();
-    virtual void componentComplete();
-
     CompType getType() const;
     void setType(CompType type);
 
@@ -109,13 +100,8 @@ public:
 
     bool getValidExpr();
     void setValidExpr(bool validExpr);
-
     void setValidExpr(bool validExpr, int pos, QString errMsg);
 
-    /**
-     * @brief getValid
-     * @return
-     */
     bool getValid();
 
     XMASComponent *xmas_component();
@@ -127,36 +113,23 @@ private:
     void emitInportProperties();
     void emitOutportProperties();
 
+    bitpowder::lib::MemoryPool &mp();
+
 
 public:
 private:
-    bitpowder::lib::MemoryPool m_mp;
+    //bitpowder::lib::MemoryPool m_mp;
 
     QString m_name;
     /**
-     * @brief m_expression
-     *
-     * m_expression contains the expression, even if it is syntactically incorrect.
-     * However, as long as it is xmas will not register the expression.
-     *
-     * Only when correct will xmas register the expression.
-     *
-     * An incorrect expression will never result in JSON output.
-     *
-     * The getter for m_expression: getExpression(), preferrably returns
-     * the value from xmas. Only if it has no value, does it return the
-     * class member field m_expression.
-     *
+     * @brief m_expression the expression entered (if syntactically incorrect)     *
      */
     QVariant m_expression;
 
     CompType m_type;
     bool m_valid;       /* Is the object fully connected? */
     bool m_validExpr;   /* Is the expression correctly updated in xmas? */
-
-
 };
-
 } // namespace model
 
 #endif // COMPONENT_H

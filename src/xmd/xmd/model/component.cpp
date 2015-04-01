@@ -33,7 +33,7 @@ model::Component::Component(QQuickItem *parent)
 model::Component::~Component()
 {
 }
-
+// This method was made for composite objects.
 QVariantMap model::Component::getPorts()
 {
     auto project = dataControl->project();
@@ -50,20 +50,6 @@ QVariantMap model::Component::getPorts()
         map[name] = type;
     }
     return map;
-}
-
-void model::Component::classBegin() {
-}
-
-/**
- * @brief model::Component::componentComplete
- *
- * When the QML properties for Component are filled completely,
- * Currently no action necessary.
- *
- */
-void model::Component::componentComplete() {
-    // no action.
 }
 
 QString model::Component::getName() {
@@ -125,6 +111,11 @@ bool model::Component::getValid() {
     return result;
 }
 
+bitpowder::lib::MemoryPool &model::Component::mp() {
+    auto project = dataControl->project();
+    return project->mp();
+}
+
 int model::Component::updateExpression(QVariant expression) {
     QString typeName = QString(expression.typeName());
     emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+expression.toString());
@@ -156,11 +147,11 @@ int model::Component::updateExpression(QVariant expression) {
         XMASSource *source = dynamic_cast<XMASSource *>(c);
         if (source) {
             std::string expr = qexpr.toStdString();
-            auto result = source->setSourceExpression(expr, m_mp);
+            auto result = source->setSourceExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             QString xmas_expression =
-                    result.m_success ? QString(source->getSourceExpression(m_mp)
+                    result.m_success ? QString(source->getSourceExpression(mp())
                                                .stl().c_str())
                                      : "<should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
@@ -181,13 +172,13 @@ int model::Component::updateExpression(QVariant expression) {
         XMASFunction *func = dynamic_cast<XMASFunction *>(c);
         if (func) {
             std::string expr = qexpr.toStdString();
-            auto result =  func->setFunctionExpression(expr, m_mp);
+            auto result =  func->setFunctionExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                QString xmas_expression = QString(func->getFunctionExpression(m_mp).stl().c_str());
+                QString xmas_expression = QString(func->getFunctionExpression(mp()).stl().c_str());
                 emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
@@ -210,14 +201,14 @@ int model::Component::updateExpression(QVariant expression) {
             QString kindOfJoin;
             if (expr == "0" || expr == "1") {
                 kindOfJoin = "restricted";
-                result = join->setRestrictedJoinPort(expr, m_mp);
+                result = join->setRestrictedJoinPort(expr, mp());
             } else {
                 kindOfJoin = "unrestricted";
-                result = join->setUnrestrictedJoinExpression(expr, m_mp);
+                result = join->setUnrestrictedJoinExpression(expr, mp());
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            QString xmas_expression = result.m_success ? QString(join->getJoinExpression(m_mp).stl().c_str())
+            QString xmas_expression = result.m_success ? QString(join->getJoinExpression(mp()).stl().c_str())
                                                        : "<Should never show>";
             xmas_expression = xmas_expression == "" ? "<no value returned>" : xmas_expression;
             emit writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
@@ -240,10 +231,10 @@ int model::Component::updateExpression(QVariant expression) {
         XMASSwitch *sw = dynamic_cast<XMASSwitch *>(c);
         if (sw) {
             std::string expr = qexpr.toStdString();
-            auto result =  sw->setSwitchExpression(expr, m_mp);
+            auto result =  sw->setSwitchExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
-            QString xmas_expression = result.m_success ? QString(sw->getSwitchExpression(m_mp).stl().c_str())
+            QString xmas_expression = result.m_success ? QString(sw->getSwitchExpression(mp()).stl().c_str())
                                                        : "<Should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." + xmas_expression
@@ -293,7 +284,7 @@ QVariant model::Component::getExpression() {
     // In case of function return function specification.
     auto func = dynamic_cast<XMASFunction *>(c);
     if (func) {
-        auto expr = func->getFunctionExpression(m_mp).stl();
+        auto expr = func->getFunctionExpression(mp()).stl();
         if (expr != "") {
             return QString(expr.c_str()); // Only return xmas string, if useful
         } else {
@@ -303,25 +294,27 @@ QVariant model::Component::getExpression() {
     // In case of source return source specification.
     auto src = dynamic_cast<XMASSource *>(c);
     if (src) {
-        auto expr = src->getSourceExpression(m_mp);
+        auto expr = src->getSourceExpression(mp());
         if (expr != "") {
             return QString(expr.stl().c_str());  // Only return xmas string, if useful
         } else {
             return m_expression;
         }
     }
+    // In case of switch return switch expression
     auto sw = dynamic_cast<XMASSwitch *>(c);
     if (sw) {
-        auto expr = sw->getSwitchExpression(m_mp);
+        auto expr = sw->getSwitchExpression(mp());
         if (expr != "") {
             return QString(expr.stl().c_str());  // Only return xmas string, if useful
         } else {
             return m_expression;
         }
     }
+    // In case of join return join expression
     auto join = dynamic_cast<XMASJoin *>(c);
     if (join) {
-        auto expr = join->getJoinExpression(m_mp);
+        auto expr = join->getJoinExpression(mp());
         if (expr != "") {
             return QString(expr.stl().c_str());  // Only return xmas string, if useful
         } else {
