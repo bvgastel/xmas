@@ -19,28 +19,21 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #ifndef XPORT_H
 #define XPORT_H
-
 #include <QQuickItem>
-
 #include "xmas.h"
 
 namespace model {
-
 class Component;
 
 class XPort : public QQuickItem
 {
     Q_OBJECT
-    Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(PortType)
     Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(bool connected READ getConnected NOTIFY connectedChanged)
-
-//    property int id: 0 (komt van toepassing in composites , uniek volgnummer ipv naam)
 
 signals:
     void nameChanged();
@@ -54,47 +47,17 @@ public slots:
 public:
     explicit XPort(QQuickItem *parent = 0);
     ~XPort();
+
     enum PortType {INPORT, OUTPORT};
 
+    PortType getType() const;
+    void setType(PortType type);
 
-    virtual void classBegin();
-    virtual void componentComplete();
+    QString getName();
+    void setName(QString name);
 
-    PortType getType() const {
-        return m_type;
-    }
+    bool getConnected();
 
-    void setType(PortType type) {
-        m_type = type;
-        emit typeChanged();
-    }
-
-    QString getName() {
-        return m_name;
-    }
-
-    void setName(QString name) {
-        if (name != m_name) {
-            m_name = name;
-        }
-        emit nameChanged();
-    }
-
-    bool getConnected() {
-        Port *port = this->getPort();
-        if (port) {
-            return port->isConnected();
-        }
-        return false;
-    }
-
-    /**
-     * @brief getPort
-     *
-     * Returns the companion xmas port.
-     *
-     * @return Port with the same name.
-     */
     Port *getPort();
 
     Component *getComponent();
@@ -104,7 +67,6 @@ private:
     PortType m_type;
 
 };
-
 } // namespace model
 
 #endif // XPORT_H

@@ -33,13 +33,35 @@ model::XPort::~XPort()
 {
 }
 
-void model::XPort::classBegin() {
-    // no action necessary
+PortType model::XPort::getType() const {
+    return m_type;
 }
 
-void model::XPort::componentComplete() {
-    // no action necessary
+void model::XPort::setType(PortType type) {
+    m_type = type;
+    emit typeChanged();
 }
+
+QString model::XPort::getName() {
+    return m_name;
+}
+
+void model::XPort::setName(QString name) {
+    if (name != m_name) {
+        m_name = name;
+    }
+    emit nameChanged();
+}
+
+bool model::XPort::getConnected() {
+    Port *port = this->getPort();
+    if (port) {
+        return port->isConnected();
+    }
+    return false;
+}
+
+
 
 /**
  * @brief model::XPort::getPort
