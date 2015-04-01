@@ -33,6 +33,18 @@ XMASProject::~XMASProject()
 
 }
 
+bitpowder::lib::MemoryPool& XMASProject::mp() {
+    return m_mp;
+}
+
+XMASNetwork* XMASProject::getRootNetwork() const {
+    return root;
+}
+
+XMASNetwork* XMASProject::getNetwork(const std::string name) const {
+    return networks.find(name)->second.get();
+}
+
 void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 {
     MemoryPool mp;
@@ -114,6 +126,16 @@ bool XMASProject::changeComponentName(std::string oldName, std::string newName)
     return result;
 }
 
+/**
+ * @brief XMASProject::loadNetwork
+ *
+ * Beware. This is a recursively called network loading utility.
+ * Each level of new composites leads to a new load network for
+ * each composite.
+ *
+ * @param filename
+ * @return
+ */
 
 XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 {

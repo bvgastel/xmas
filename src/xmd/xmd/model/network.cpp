@@ -279,9 +279,9 @@ bool model::Network::addComposite(model::Component *component) {
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();
 
-    std::string name = component->getName().toStdString();
+    XMASNetwork *xnetwork = project->getNetwork(filename);
 
-    auto xnetwork = project->loadNetwork(filename);
+    std::string name = component->getName().toStdString();
     project->insertComposite(name, std::ref(*xnetwork));
 
     return true;

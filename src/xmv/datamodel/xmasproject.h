@@ -11,10 +11,10 @@ public:
     XMASProject(const std::string& filename);
     ~XMASProject();
 
-    bitpowder::lib::MemoryPool& mp() { return m_mp; }
+    bitpowder::lib::MemoryPool& mp();
 
-    XMASNetwork* getRootNetwork() const { return root; }
-    const XMASNetwork* getNetwork(const std::string name) const { return networks.find(name)->second.get(); }
+    XMASNetwork* getRootNetwork() const;
+    XMASNetwork* getNetwork(const std::string name) const;
 
     XMASNetwork* loadNetwork(const std::string& filename);
     void saveNetwork(const std::string& filename, XMASNetwork* network = nullptr);
