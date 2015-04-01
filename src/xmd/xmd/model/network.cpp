@@ -265,7 +265,7 @@ QString model::Network::toJson() {
     std::cout << "m_packet = " << m_packet.toStdString() << std::endl;
     bitpowder::lib::String packet = bitpowder::lib::String(m_packet.toStdString())(mp);
     globals["PACKET_TYPE"] = packet;
-    globals["VARS"] = bitpowder::lib::JSONData::AllocateMap(mp);        // no VARS implemented
+    globals["VARS"] = bitpowder::lib::String("")(mp);        // no VARS implemented
 
     auto xset = std::set<XMASComponent *>();
     if (dataControl->project()) {
