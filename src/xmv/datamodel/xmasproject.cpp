@@ -43,11 +43,10 @@ void XMASProject::allocate_initial_project() {
 }
 
 void XMASProject::deallocate_project() {
-    m_mp.clear();
-    if (root) {
-        delete root;
-    }
+    // m_mp.clear();
+    // Don't delete the root: networks.clear takes care of that (unique_ptr)
     networks.clear();
+    root = nullptr;
 }
 
 bitpowder::lib::MemoryPool& XMASProject::mp() {

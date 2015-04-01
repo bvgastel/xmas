@@ -61,8 +61,8 @@ bool model::Network::saveFile(QUrl url) {
 
 bool model::Network::closeFile() {
     //TODO destroy the model and reset everything
-    XMASProject *project = dataControl->project();
-    //project->clear();
+    auto project = dataControl->project();
+    project->clear();
     return true;
 }
 
