@@ -18,4 +18,7 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
                                     Read network: position gone
     4   g   2015-03-31  2015-30-31  Adding expression to src or function    bug     high    Qml correction applied: didn't check correctly.
                                     even if connected
+    5   g   2015-04-01              Reading a file aborts                   bug     high
+    6   g   2015-04-01              Composite Network ext. not filled       bug     high
+                                    properly
    99
