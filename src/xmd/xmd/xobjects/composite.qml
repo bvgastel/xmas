@@ -48,14 +48,20 @@ XComponent {
 //    onPortsChanged: getPorts()
     property var inports:[]
     property var outports:[]
-    function getPorts(){
-        for (var child in component.ports) {
+
+    Component.onCompleted: doPorts()
+
+    function doPorts(){
+        var ports = getPorts()
+        for (var child in ports) {
             var chld = ports[child]
             console.log("child " + chld)
-            if(chld.type===Model.XPort.INPORT) {
+            //if(chld.type===Model.XPort.INPORT) {
+            if(chld.type==="input") {
                 inports.pop(chld)
             }
-            if(chld.type===Model.XPort.OUTPORT) {
+            //if(chld.type===Model.XPort.OUTPORT) {
+            if(chld.type==="output") {
                 outports.pop(chld)
             }
         }
