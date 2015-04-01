@@ -146,10 +146,11 @@ bool PluginControl::loadPlugins() {
     emit pluginsLoaded(vtNameList);
     return m_vtMap.size()>0;
 }
+
 /**
  * @brief PluginControl::pluginParams
- * @param name
- * @return
+ * @param name  : name of plugin verification tool
+ * @return Parameter map (key,value)
  */
 QVariantMap PluginControl::pluginParams(QString vtname) {
     QVariantMap map;
@@ -157,11 +158,16 @@ QVariantMap PluginControl::pluginParams(QString vtname) {
         VtPluginInterface *vtPluginInterface = m_vtMap[vtname];
         map = vtPluginInterface->paramMap();
     }
-    qDebug() << "plugin param count : " << (map.size());
-
     return map;
 }
 
+/**
+ * @brief PluginControl::pluginParam
+ * @param name  : name of plugin verification tool
+ * @param key   : parameter key to set
+ * @param value : new parameter value
+ * @return True if success
+ */
 bool PluginControl::pluginParam(QString name, QString key, QString value) {
     const char *cname = name.toStdString().c_str();
     const char *ckey = key.toStdString().c_str();
