@@ -131,21 +131,8 @@ Model.XComponent {
         color:"lightsteelblue"
         border.color: "steelblue"
         border.width: 1
+        opacity: 0.5
         visible: selected
-        z:-1 // under parent = component
-    }
-
-    // XMAS Valid highlite
-    Rectangle {
-        id: validHighlite
-        anchors.fill: mousearea
-        anchors.margins: -5
-        color:"transparent"
-        opacity: 1
-        border.color: "red"
-        border.width: 4
-        visible: !valid
-        z:-1 // under parent = component
     }
 
     // Expression valid Marker (top left)
