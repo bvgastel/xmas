@@ -20,6 +20,21 @@ model::Network::Network(QQuickItem *parent)
 
 model::Network::~Network() {}
 
+bool model::Network::setCompositeNetworkData() {
+    auto project = dataControl->project();
+    if (!project || !project->getRootNetwork()) {
+        emit writeLog(QString("This network has no project or no network: big problems!"));
+        return false;
+    }
+
+    project->getRootNetwork()->setCompositeNetworkData(m_alias.toStdString(),
+                                                       m_size.width(),
+                                                       m_size.height(),
+                                                       m_imageName.toStdString(),
+                                                       m_boxedImage);
+    return true;
+}
+
 QString model::Network::packet() {
     return m_packet ;
 }

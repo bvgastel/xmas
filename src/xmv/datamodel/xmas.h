@@ -1087,30 +1087,21 @@ class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
     friend class XMASProject;
 public:
-    XMASNetwork(std::string name) : name(name)
-    {
-    }
-
-    XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components)
-        : name(name), components(components)
-    {
-    }
-
+    XMASNetwork(std::string name);
+    XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components);
     XMASNetwork(XMASNetwork&&) = default;
 
     ~XMASNetwork();
 
-    const std::string getStdName() const {
-        return this->name;
-    }
+    const std::string getStdName() const;
 
-    // FIXME: needs implementation (see cpp file)
     bitpowder::lib::String getPacketType();
-    // FIXME: needs implementation (see cpp file)
     bitpowder::lib::String getVars();
 
     const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
     void getComponentSet(std::set<XMASComponent*> &) const;
+
+    void setCompositeNetworkData(std::string alias, int width, int heigh, std::string imageName, bool boxedImage);
 
     template<typename T>
     const std::vector<T*> componentsOfType() const

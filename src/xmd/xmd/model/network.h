@@ -88,6 +88,7 @@ public slots:
     QString toJson();
 
     bool addComponent(model::Component *component);
+    bool setCompositeNetworkData();
 
     bool saveFile(QUrl url);
     bool openFile(QUrl url);
@@ -121,10 +122,11 @@ public:
 private:
 
     Logger m_logger;
+    QString m_packet;
+
     QString m_alias;
     QSize m_size;
     QString m_imageName;
-    QString m_packet;
     bool m_boxedImage;
     QVariantList m_compositeLibrary;
     bool addComposite(QUrl url);

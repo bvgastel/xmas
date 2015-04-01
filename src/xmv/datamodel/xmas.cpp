@@ -5,6 +5,7 @@
 
 #include "xmas.h"
 #include "canvascomponentextension.h"
+#include "composite-network-extension.h"
 #include "simplestring.h"
 #include "parse.h"
 #include "messagespec.h"
@@ -480,6 +481,15 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
+XMASNetwork::XMASNetwork(std::string name) : name(name)
+{
+}
+
+XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components)
+    : name(name), components(components)
+{
+}
+
 XMASNetwork::~XMASNetwork()
 {
     for (auto entry : components) {
@@ -488,6 +498,10 @@ XMASNetwork::~XMASNetwork()
         ClearMessageSpec(c);
         //delete(c);             // FIXME: How should MemoryPool allocated object be destroyed??
     }
+}
+
+const std::string XMASNetwork::getStdName() const {
+    return this->name;
 }
 
 const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponentMap() const {
@@ -500,6 +514,18 @@ void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
     for (auto entry : xmap) {
         c = entry.second;
         xset.insert(c);
+    }
+}
+
+void XMASNetwork::setCompositeNetworkData(std::string alias, int width, int height, std::string imageName, bool boxedImage)
+{
+    auto cn_ext = getNetworkExtension<CompositeNetworkExtension>(true);
+    if (cn_ext) {
+        cn_ext->alias = alias;
+        cn_ext->width = width;
+        cn_ext->height = height;
+        cn_ext->imageName = imageName;
+        cn_ext->boxedImage = boxedImage;
     }
 }
 

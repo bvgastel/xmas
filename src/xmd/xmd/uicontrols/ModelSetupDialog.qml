@@ -424,11 +424,12 @@ Window {
                 network.folder = txtInputModelFolder.text
                 network.alias = txtInputModelAlias.text
                 network.size = Qt.size(txtInputModelWidth.text,txtInputModelHeight.text)
-                // FIXME: cannot assign [undefined] to QString
-                // network.imageName = symbols.get(imageList.currentIndex,"fileName")
+                network.imageName = symbols.get(imageList.currentIndex,"fileName")
                 network.boxedImage = chkBoxedImage.checked
                 dialog.setupAccepted()
                 dialog.close()
+                // NOTE: gbo: let me know: is this the right place?
+                network.setCompositeNetworkData()
             }
         }
 
