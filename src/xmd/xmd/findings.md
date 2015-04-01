@@ -24,4 +24,5 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
     7   g   2015-04-01  2015-04-01  New file: aborts                        bug     high    Removed some "exit(-1)" from xmv/datamodel
     8   g   2015-04-01              Does not parse source expr correctly    bug     medium
                                     from json when reading network.
+    9   g   2015-04-01  2015-04-01  save json does not export PACKET_TYPE   bug     high    Solved.
    99
