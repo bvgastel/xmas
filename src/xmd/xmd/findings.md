@@ -21,5 +21,7 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
     5   g   2015-04-01              Reading a file aborts                   bug     high
     6   g   2015-04-01              Composite Network ext. not filled       bug     high
                                     properly
-    7   g   2015-04-01              New file: aborts                        bug     high
+    7   g   2015-04-01  2015-04-01  New file: aborts                        bug     high    Removed some "exit(-1)" from xmv/datamodel
+    8   g   2015-04-01              Does not parse source expr correctly    bug     medium
+                                    from json when reading network.
    99
