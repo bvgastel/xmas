@@ -39,14 +39,14 @@ void XMASProject::clear() {
 void XMASProject::allocate_initial_project() {
     std::string name = "?.xmas";
     root = new XMASNetwork {name};
-    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(root)));
+    networks.insert(std::make_pair(name, root));
 }
 
 void XMASProject::deallocate_project() {
-    // m_mp.clear();
     // Don't delete the root: networks.clear takes care of that (unique_ptr)
     networks.clear();
     root = nullptr;
+    m_mp.clear();
 }
 
 bitpowder::lib::MemoryPool& XMASProject::mp() {
@@ -58,7 +58,8 @@ XMASNetwork* XMASProject::getRootNetwork() const {
 }
 
 XMASNetwork* XMASProject::getNetwork(const std::string name) const {
-    return networks.find(name)->second.get();
+    //return networks.find(name)->second.get();
+    return networks.find(name)->second;
 }
 
 void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
@@ -174,7 +175,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     // add the current networks key and a dummy network value to the networks map
     // this prevents infinite recursion of loadNetwork with a circular dependency
     XMASNetwork* dummy = new XMASNetwork {"dummy"};
-    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(dummy)));
+    networks.insert(std::make_pair(name, dummy));
 
     // load all composite networks used by this network
     for (auto &jsonComponent : json["COMPOSITE_OBJECTS"]) {
@@ -194,7 +195,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components)};
     networks.erase(name);
-    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork>(result)));
+    networks.insert(std::make_pair(name, result));
 
     auto jsonComposite = json["COMPOSITE_NETWORK"];
     if (!jsonComposite.isNull()) {

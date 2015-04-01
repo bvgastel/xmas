@@ -1274,7 +1274,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
  * @return The map of components indexed by name
  */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(
-        JSONParseResult &parseResult, MemoryPool &mp, const std::map<std::string, std::unique_ptr<XMASNetwork>> &networks) {
+        JSONParseResult &parseResult, MemoryPool &mp, const std::map<std::string, XMASNetwork *> &networks) {
     std::map<String, XMASComponent *> retval;
 
     //std::cout << retval.result() << std::endl;
@@ -1305,7 +1305,7 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             String networkName = jsonComponent["subnetwork"];
             auto network_it = networks.find(networkName.stl());
             if (network_it != networks.end()) {
-                XMASNetwork* network = network_it->second.get();
+                XMASNetwork* network = network_it->second;
                 insert<XMASComposite>(mp, retval, name, std::ref(*network));
             } else {
                 throw Exception("Required composite network not loaded");

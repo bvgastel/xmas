@@ -42,7 +42,7 @@ public:
 
 private:
     bitpowder::lib::MemoryPool m_mp;
-    std::map<std::string, std::unique_ptr<XMASNetwork>>  networks;
+    std::map<std::string, XMASNetwork *>networks;
     XMASNetwork* root;
 
 };
