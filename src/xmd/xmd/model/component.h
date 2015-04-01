@@ -22,7 +22,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 #include <QQuickItem>
-#include <QQmlParserStatus>
 #include <QQmlListProperty>
 #include "xmas.h"
 
@@ -71,10 +70,6 @@ signals:
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
 
-    /* Mainly for composites. Primitives use fixed names and types. */
-    void inportProperties(QVariantList portList);
-    void outportProperties(QVariantList portList);
-
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -115,10 +110,8 @@ private:
 
     bitpowder::lib::MemoryPool &mp();
 
-
 public:
 private:
-    //bitpowder::lib::MemoryPool m_mp;
 
     QString m_name;
     /**
