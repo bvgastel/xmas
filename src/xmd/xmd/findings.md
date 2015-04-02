@@ -13,7 +13,6 @@ D    =  Developer
 -----   -   -----       ----------  --------------------------------------- ----    -----  ------------------------------------------
     2   g   2015-03-31              Create network, save file, restart app  bug     high    Parsing of expressions fail (all)
                                     Read network: Queue: size gone                          (see 17)
-    5   g   2015-04-01              Reading a file aborts                   bug     high
     6   g   2015-04-01              Composite Network ext. not filled       bug     high
                                     properly
     8   g   2015-04-01              Does not parse source expr correctly    bug     high
@@ -38,6 +37,8 @@ D    =  Developer
                                     Read network: position gone
     4   g   2015-03-31  2015-30-31  Adding expression to src or function    bug     high    Qml correction applied: didn't check correctly.
                                     even if connected
+    5   g   2015-04-01              Reading a file aborts                   bug     high    Solved dus to correcting other errors
+                                                                                            Not sure what solved it.
     7   g   2015-04-01  2015-04-01  New: aborts                             bug     high    Removed some "exit(-1)" from xmv/datamodel
     9   g   2015-04-01  2015-04-01  save json does not export PACKET_TYPE   bug     high    Solved.
    10   g   2015-04-01  2015-04-02  New aborts, only in certain connected   bug     medium  Delete during qml: solved by removing channel only once!
