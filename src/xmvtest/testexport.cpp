@@ -64,7 +64,8 @@ protected:
 
     const bitpowder::lib::String json_input_2 = "{\"COMPOSITE_OBJECTS\":[],"
                                                 "\"NETWORK\":[{\"fields\":["
-                                                "{\"function\":\"\"}],\"id\":\"f0\",\"outs\":[],\"type\":\"function\"}],"
+                                                "{\"function\":\"\"}],\"id\":\"f0\",\"outs\":[],"
+                                                "\"pos\":{\"x\":410,\"y\":410,\"orientation\":0,\"scale\":100}}\"type\":\"function\"}],"
                                                 "\"PACKET_TYPE\":[],"
                                                 "\"VARS\":{}}";
 

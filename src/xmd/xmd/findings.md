@@ -20,7 +20,6 @@ D    =  Developer
                                     properly
     8   g   2015-04-01              Does not parse source expr correctly    bug     high
                                     from json when reading network.
-   11   g   2015-04-02              Save json does not save the position    bug     high
    12   g   2015-04-02              Source parse expression does not accept bug     low     (Out of scope for user interface)
                                     a percentage token (%)
    13   g   2015-04-02              Remove library composite                bug     high    Not implemented !
@@ -42,5 +41,6 @@ D    =  Developer
     9   g   2015-04-01  2015-04-01  save json does not export PACKET_TYPE   bug     high    Solved.
    10   g   2015-04-01  2015-04-02  New aborts, only in certain connected   bug     medium  Delete during qml: solved by removing channel only once!
                                     conditions.
+   11   g   2015-04-02  2015-04-02  Save json does not save the position    bug     high    Solved: added to ::Export(allcomponents)
 99999
 

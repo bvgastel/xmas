@@ -361,16 +361,6 @@ bool model::Network::addComponent(model::Component *component) {
 
 
 
-//#############################################################################################################
-//#############################################################################################################
-//##
-//##        Example of how to populate composite list
-//##        This must be started when a netwerk is opened and loop through
-//##        the data from the Composite section of the json.
-//##
-//##
-//#############################################################################################################
-//#############################################################################################################
 /**
  * Gets the composite list of this network
  *      (Related to the composites section in json)
