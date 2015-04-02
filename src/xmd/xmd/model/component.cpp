@@ -33,6 +33,7 @@ model::Component::Component(QQuickItem *parent)
 model::Component::~Component()
 {
 }
+
 // This method was made for composite objects.
 QVariantMap model::Component::getPorts()
 {
