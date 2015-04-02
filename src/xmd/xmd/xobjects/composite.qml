@@ -29,127 +29,119 @@
  *
  **************************************************************************/
 import QtQuick 2.4
+import QtQuick.Layouts 1.1
 import XMAS.model 1.0 as Model
 
 XComponent {
     id:component
     width: boxed ? 200 : 100
-    height: Math.max(portsLeft.count,portsRight.count) * (portSpace + 10) + 20
+    height: Math.max(portsLeft.count,portsRight.count) * (portSpace) + 30
     type: Model.XComponent.Composite
     prefix: "C"
     property string url:""
     property string alias:"Composite"
     property string image:""
     property bool boxed: true
-    property int portSpace: 20
+    property int portSpace: 30 //2 times default gridsize - 1 time portsize
 
-    //TEST ports
-
-//    onPortsChanged: getPorts()
-    property var inports:[]
-    property var outports:[]
-
-    Component.onCompleted: doPorts()
-
-    function doPorts(){
+    Component.onCompleted:{
         var ports = getPorts()
-        for (var child in ports) {
-            var chld = ports[child]
-            console.log("child " + chld)
-            //if(chld.type===Model.XPort.INPORT) {
-            if(chld.type==="input") {
-                inports.pop(chld)
+        inportModel.clear()
+        outportModel.clear()
+        for (var key in ports) {
+            if(ports[key]===Model.XPort.INPORT) {
+                inportModel.append({portName: key, portType:ports[key]})
             }
-            //if(chld.type===Model.XPort.OUTPORT) {
-            if(chld.type==="output") {
-                outports.pop(chld)
+            if(ports[key]===Model.XPort.OUTPORT) {
+                outportModel.append({portName: key, portType:ports[key]})
             }
         }
     }
 
-    Rectangle {
-        id: box
+    Rectangle{
         anchors.fill: parent
-        anchors.leftMargin: boxed ? 18 : 0
-        anchors.rightMargin: boxed ? 18 : 0
-        z:-1
-        border.color: "black"
-        border.width: boxed ? 4 : 0
-        radius: 10
-        color: boxed ? "white" : "transparent"
-        Image {
-            id:symbol
-            //fillMode: Image.Stretch
-            height: boxed ? component.height - 50 : 100
-            width: 100
-            fillMode: Image.PreserveAspectFit
-            source: image
-            anchors.centerIn: parent
-            onStatusChanged: if(symbol.status === Image.Error) boxed = true
-            Text {
-                text: symbol.status === Image.Error ? ("???\n" + alias) : alias
+        color:"transparent"
+        border.color: "green"
+        border.width: 1
+    }
+
+    RowLayout{
+       anchors.fill: parent
+
+        // Input ports (left)
+        Column{
+            id:columnLeft
+            spacing: portSpace
+            Repeater{
+                id:portsLeft
+                model:inportModel
+                delegate: portDelegate
+            }
+        }
+
+        Rectangle {
+            id: box
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            border.color: "black"
+            border.width: boxed ? 4 : 0
+            radius: 10
+            color: boxed ? "white" : "transparent"
+            Image {
+                id:symbol
+                height: boxed ? component.height - 50 : 100
+                width: 100
+                fillMode: Image.PreserveAspectFit
+                source: image
+                anchors.centerIn: parent
+                onStatusChanged: if(symbol.status === Image.Error) boxed = true
+                Text {
+                    text: symbol.status === Image.Error ? ("???\n" + alias) : alias
+                    visible: boxed
+                    anchors.centerIn: image ? undefined : parent
+                    anchors.top: image ? symbol.bottom : undefined
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+        }
+
+        // Output ports (right)
+        Column{
+            id:columnRight
+            spacing: portSpace
+            Repeater{
+                id: portsRight
+                model:outportModel
+                delegate: portDelegate
+            }
+        }
+    }
+
+    ListModel {
+        id: inportModel
+    }
+
+    ListModel {
+        id: outportModel
+    }
+
+    Component {
+        id: portDelegate
+        XPort {
+            name:portName
+            type:portType
+            nameAlignCenter: boxed
+            Rectangle {
+                id:portWire
+                color:"black"
+                z:-1
+                border.width: 0
+                height: 4
+                width: 15
                 visible: boxed
-                anchors.centerIn: image ? undefined : parent
-                anchors.top: image ? symbol.bottom : undefined
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-        }
-    }
-
-
-    // Input ports (left)
-    Column {
-        id:columnLeft
-        spacing: portSpace
-        anchors.left: component.left
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id:portsLeft
-            model:inports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                nameAlignCenter: boxed
-                Rectangle {
-                    id:leftWire
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    visible: boxed
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-        }
-    }
-
-    // Output ports (right)
-    Column {
-        id:columnRight
-        spacing: portSpace
-        anchors.right: component.right
-        anchors.verticalCenter: box.verticalCenter
-        Repeater{
-            id: portsRight
-            model:outports
-            delegate: XPort {
-                name:modelData.name
-                type:modelData.type
-                nameAlignCenter: boxed
-                Rectangle {
-                    id:rightWire
-                    color:"black"
-                    z:-1
-                    border.width: 0
-                    height: 4
-                    width: 15
-                    visible: boxed
-                    anchors.left: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                anchors.left: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
     }
