@@ -21,8 +21,9 @@ D    =  Developer
     8   g   2015-04-01              Does not parse source expr correctly    bug     high
                                     from json when reading network.
    11   g   2015-04-02              Save json does not save the position    bug     high
-   12   g   2015-04-02              Source parse expression does not accept bug     low     Out of scope for user interface
+   12   g   2015-04-02              Source parse expression does not accept bug     low     (Out of scope for user interface)
                                     a percentage token (%)
+   13   g   2015-04-02              Remove library composite                bug     high    Not implemented !
 99999
 
 
