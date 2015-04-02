@@ -43,9 +43,8 @@ void XMASProject::allocate_initial_project() {
 }
 
 void XMASProject::deallocate_project() {
-    // Don't delete the root: networks.clear takes care of that (unique_ptr)
     networks.clear();
-    root = nullptr;
+    delete root;
     m_mp.clear();
 }
 
@@ -195,6 +194,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components)};
     networks.erase(name);
+    delete dummy;
     networks.insert(std::make_pair(name, result));
 
     auto jsonComposite = json["COMPOSITE_NETWORK"];

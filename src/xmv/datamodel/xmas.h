@@ -802,7 +802,7 @@ public:
 
     virtual ~XMASFunction();
 
-    const bitpowder::lib::String getFunctionExpression(bitpowder::lib::MemoryPool &mp);
+    const std::string getFunctionExpression(bitpowder::lib::MemoryPool &mp);
 
     ExpressionResult setFunctionExpression(std::string &str_expr,
                                            bitpowder::lib::MemoryPool &mp);

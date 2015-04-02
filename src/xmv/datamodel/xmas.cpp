@@ -296,7 +296,7 @@ XMASFunction::~XMASFunction() {
     }
 }
 
-const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
+const std::string XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
     return Export(this, mp).stl();
 }
 
