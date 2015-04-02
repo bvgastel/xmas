@@ -25,6 +25,6 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
     8   g   2015-04-01              Does not parse source expr correctly    bug     medium
                                     from json when reading network.
     9   g   2015-04-01  2015-04-01  save json does not export PACKET_TYPE   bug     high    Solved.
-   10   g   2015-04-01              New aborts, only in certain connected   bug     high
+   10   g   2015-04-01              New aborts, only in certain connected   bug     medium  Delete during qml
                                     conditions.
    99
