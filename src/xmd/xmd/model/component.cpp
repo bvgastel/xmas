@@ -178,8 +178,8 @@ int model::Component::updateExpression(QVariant expression) {
             emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                bitpowder::lib::String expr = func->getFunctionExpression(mp());
-                QString xmas_expression = QString(expr.stl().c_str());
+                std::string expr = func->getFunctionExpression(mp());
+                QString xmas_expression = QString(expr.c_str());
                 emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
@@ -286,7 +286,7 @@ QVariant model::Component::getExpression() {
     // In case of function return function specification.
     auto func = dynamic_cast<XMASFunction *>(c);
     if (func) {
-        auto expr = func->getFunctionExpression(mp()).stl();
+        auto expr = func->getFunctionExpression(mp());
         if (expr != "") {
             return QString(expr.c_str()); // Only return xmas string, if useful
         } else {

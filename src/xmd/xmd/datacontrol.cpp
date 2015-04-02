@@ -173,7 +173,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
         XMASFunction *func = dynamic_cast<XMASFunction *>(comp);
         QString expression = QString();
         if (func) {
-            expression = QString(func->getFunctionExpression(mp).stl().c_str());
+            expression = QString(func->getFunctionExpression(mp).c_str());
         }
         map.insert("expression", expression);
     } else if (type == xsource) {
