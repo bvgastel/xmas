@@ -44,15 +44,14 @@
 
 DataControl::DataControl(QObject *parent)
     : QObject(parent),
-      m_logger("datacontrol"),
-      m_project(new XMASProject)
+      m_logger("datacontrol")
 {
+    m_project = std::make_shared<XMASProject>();
     QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
 }
 
 DataControl::~DataControl()
 {
-
 }
 
 void DataControl::registerTypes() const{

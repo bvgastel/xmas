@@ -13,9 +13,14 @@ extern DataControl *dataControl;
 
 model::Network::Network(QQuickItem *parent)
     : QQuickItem(parent),
-      m_logger("Network.cpp")
+      m_logger("Network.cpp"),
+      m_alias(),
+      m_size(),
+      m_imageName(),
+      m_boxedImage(false)
 {
     QObject::connect(&m_logger, &Logger::writeLog, dataControl, &DataControl::writeLog );
+    m_logger.log(QString("Network starting ..."));
 }
 
 model::Network::~Network() {}

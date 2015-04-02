@@ -178,7 +178,8 @@ int model::Component::updateExpression(QVariant expression) {
             emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                QString xmas_expression = QString(func->getFunctionExpression(mp()).stl().c_str());
+                bitpowder::lib::String expr = func->getFunctionExpression(mp());
+                QString xmas_expression = QString(expr.stl().c_str());
                 emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
@@ -263,9 +264,10 @@ XMASComponent *model::Component::xmas_component() {
         return nullptr;
     }
 
-    bitpowder::lib::String name = bitpowder::lib::String(getName().toStdString().c_str());
+    std::string stdName = getName().toStdString();
+    bitpowder::lib::String name = bitpowder::lib::String(stdName);
     auto xmap = network->getComponentMap();
-    auto c = xmap[name];
+    auto *c = xmap[name];
     if (!c) {
         return nullptr;
     }
