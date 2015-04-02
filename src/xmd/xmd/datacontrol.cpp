@@ -42,6 +42,8 @@
 #include "parse.h"
 #include "datacontrol.h"
 
+DataControl dataControl;
+
 DataControl::DataControl(QObject *parent)
     : QObject(parent),
       m_logger("datacontrol")
