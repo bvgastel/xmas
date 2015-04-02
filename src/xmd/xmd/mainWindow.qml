@@ -502,17 +502,19 @@ ApplicationWindow {
         onNo:  openModel(false)
     }
 
-    // Save before quit?
+    // Quit without save?
     MessageDialog {
         id: dialogSaveBeforeQuit
         title: "Quit application."
         icon: StandardIcon.Question
-        text:  "Save before quitting? " + network.fileName + "?"
+        text:  "Quit without saving " + network.fileName + "?"
         standardButtons: StandardButton.No | StandardButton.Yes
         // Qt BUG (MS Windows): need to destroy dialog internally before quit
         // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
-        onNo: {this.destroy(); Qt.quit()}
+        onYes: {this.destroy(); Qt.quit()}
         // gbo: why don't you save on yes??
+        // stf: a user asks to quit in the first place and if a dialog pops up it makes more sense to confirm as yes for quit
+        // .. but you are right , the question in that case would be better "sure you want to quit without save?"
         // onYes: save file somewhere if name is filled.
     }
 
