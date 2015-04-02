@@ -522,8 +522,8 @@ void XMASNetwork::setCompositeNetworkData(std::string alias, int width, int heig
     auto cn_ext = getNetworkExtension<CompositeNetworkExtension>(true);
     if (cn_ext) {
         cn_ext->alias = alias;
-        //cn_ext->width = width;
-        //cn_ext->height = height;
+        cn_ext->width = width;
+        cn_ext->height = height;
         cn_ext->imageName = imageName;
         cn_ext->boxedImage = boxedImage;
     }
