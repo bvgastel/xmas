@@ -2,8 +2,8 @@
 
 ## Stefan
 
-*   -- 	plugin lijstje zou ik in c++ vullen en via een property aan qml geven ipv een javascript in mainwindow
 *	--	Bij openen netwerk zijn porten niet connected: is xmas model wel gevuld ----> pending Jeroen's XMASProject effort.
+*   -- 	plugin lijstje zou ik in c++ vullen en via een property aan qml geven ipv een javascript in mainwindow
 
 *   -- 	commentaar uniform maken zoals al in sommige qml's het geval is (kijken of dit voldoet aan bvb Javadoc, of ander best practices)
 *    	knooppunten in de connecties voorzien zoals Bernard voorstelde (4h werk , lage prioriteit)
