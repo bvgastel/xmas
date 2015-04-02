@@ -27,13 +27,7 @@
 
 namespace model
 {
-/**
- * @brief The Component class
- *
- * A wrapper around XMASComponent from xmas.h to connect to
- * Qml using properties.
- */
-class Component : public QQuickItem //, public QQmlParserStatus
+class Component : public QQuickItem
 {
     Q_OBJECT
 
@@ -85,11 +79,6 @@ public:
     QString getName();
     void setName(QString name);
 
-    /**
-     * @brief getExpression the getter for expression.
-     *
-     * @return the xmas value of the expression or if that is empty the class member m_expression.
-     */
     QVariant getExpression();
     void setExpression(QVariant expression);
 
@@ -101,14 +90,9 @@ public:
 
     XMASComponent *xmas_component();
 
-
 private:
     int updateExpression(QVariant expression);
-
-    void emitInportProperties();
-    void emitOutportProperties();
-
-    bitpowder::lib::MemoryPool &mp();
+    bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
 
 public:
 private:

@@ -85,8 +85,6 @@ Model.XPort {
         onPressed: {
             if (mouse.button === Qt.LeftButton
                     && !connected) {
-                //connected = true    --> not allowed, read-only
-                // TODO: gbo: where to call network.connect(port-out, port-in)?
                 network.wiring(port)
             } else {mouse.accepted=false}
         }

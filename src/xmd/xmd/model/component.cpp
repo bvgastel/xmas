@@ -33,6 +33,7 @@ model::Component::Component(QQuickItem *parent)
 model::Component::~Component()
 {
 }
+
 // This method was made for composite objects.
 QVariantMap model::Component::getPorts()
 {
@@ -134,7 +135,9 @@ int model::Component::updateExpression(QVariant expression) {
         if (!queue) {
             emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as queue."));
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+            std::cerr   << "Fatal error in Component: did not recognize m_component"
+                         " as queue : " << c->getStdName() << std::endl;
+            return false;
         }
         queue->c = size;
         setValidExpr(true, -1, QString(""));
@@ -162,8 +165,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as source." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as source : " << c->getStdName() << std::endl;
+            return false;
         }
     } else if (getType() == Function) {
         if (typeName != "QString") {
@@ -180,14 +183,16 @@ int model::Component::updateExpression(QVariant expression) {
             emit writeLog(QString("saving expression in XMASComponent ")
                      + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                QString xmas_expression = QString(func->getFunctionExpression(mp()).stl().c_str());
+                std::string expr = func->getFunctionExpression(mp());
+                QString xmas_expression = QString(expr.c_str());
                 emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
         } else {
-            std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as function." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+            std::cerr   << "Fatal error in Component: did not recognize m_component"
+                         " as function : "
+                        << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     } else if (getType() == Join) {
@@ -220,8 +225,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as join." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as join : " << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     } else if (getType() == Switch) {
@@ -244,8 +249,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as switch." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as switch : " << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     }
@@ -265,9 +270,10 @@ XMASComponent *model::Component::xmas_component() {
         return nullptr;
     }
 
-    bitpowder::lib::String name = bitpowder::lib::String(getName().toStdString().c_str());
+    std::string stdName = getName().toStdString();
+    bitpowder::lib::String name = bitpowder::lib::String(stdName);
     auto xmap = network->getComponentMap();
-    auto c = xmap[name];
+    auto *c = xmap[name];
     if (!c) {
         return nullptr;
     }
@@ -286,7 +292,7 @@ QVariant model::Component::getExpression() {
     // In case of function return function specification.
     auto func = dynamic_cast<XMASFunction *>(c);
     if (func) {
-        auto expr = func->getFunctionExpression(mp()).stl();
+        auto expr = func->getFunctionExpression(mp());
         if (expr != "") {
             return QString(expr.c_str()); // Only return xmas string, if useful
         } else {

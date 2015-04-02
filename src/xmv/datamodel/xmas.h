@@ -802,7 +802,7 @@ public:
 
     virtual ~XMASFunction();
 
-    const bitpowder::lib::String getFunctionExpression(bitpowder::lib::MemoryPool &mp);
+    const std::string getFunctionExpression(bitpowder::lib::MemoryPool &mp);
 
     ExpressionResult setFunctionExpression(std::string &str_expr,
                                            bitpowder::lib::MemoryPool &mp);
@@ -1087,8 +1087,8 @@ class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
     friend class XMASProject;
 public:
-    XMASNetwork(std::string name);
-    XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components);
+    XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp = nullptr);
+    XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp = nullptr);
     XMASNetwork(XMASNetwork&&) = default;
 
     ~XMASNetwork();
@@ -1117,21 +1117,10 @@ public:
     T *insert(const bitpowder::lib::String& name, Args... args) {
         if (components.find(name) != components.end())
             throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
-        T *comp = new T(name, args...);
+        T *comp = new(*m_mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
         components.insert(std::make_pair(comp->getName(), comp));
         return comp;
     }
-
-    template <class T, typename... Args>
-    T *insert(::bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, Args... args) {
-        if (components.find(name) != components.end())
-            throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
-        T *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
-        components.insert(std::make_pair(comp->getName(), comp));
-        return comp;
-    }
-
-    XMASComposite *insert(::bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, XMASNetwork &network);
 
     template <class NetworkExtensionType>
     NetworkExtensionType* getNetworkExtension(bool create = true)
@@ -1161,6 +1150,7 @@ private:
 private:
     std::string name;
     std::map<bitpowder::lib::String, XMASComponent*> components;
+    std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
 };
 
 class XMASComposite : public XMASComponent

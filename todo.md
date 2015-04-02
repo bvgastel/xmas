@@ -2,11 +2,8 @@
 
 ## Stefan
 
-*	--	Valid check visible ---> needs separate valid of expr and connection.
-*   -- 	plugin dialog verbeteren (8h, hoge prioriteit) 
-*   -- 	plugin lijstje zou ik in c++ vullen en via een property aan qml geven ipv een javascript in mainwindow
 *	--	Bij openen netwerk zijn porten niet connected: is xmas model wel gevuld ----> pending Jeroen's XMASProject effort.
-*		plugin op timer uitvoeren 
+*   -- 	plugin lijstje zou ik in c++ vullen en via een property aan qml geven ipv een javascript in mainwindow
 
 *   -- 	commentaar uniform maken zoals al in sommige qml's het geval is (kijken of dit voldoet aan bvb Javadoc, of ander best practices)
 *    	knooppunten in de connecties voorzien zoals Bernard voorstelde (4h werk , lage prioriteit)
@@ -30,21 +27,24 @@
 *	ok	Required voor source en sink
 *   ok 	is controller.js in xmapper nog nodig ? deze is een overblijfsel van de mapper , restanten via datacontroller.cpp of util.cpp
 *   ok 	zoomfit moet de canvas vullen , deze werkt nu als schaal 1:1 (0.5h)
+*	ok	Valid check visible ---> needs separate valid of expr and connection.
+*   ok 	plugin dialog verbeteren (8h, hoge prioriteit) 
+*	ok	plugin op timer uitvoeren 
 
 ## Jeroen
 
-*		Integreren composites
-*		Netwerk eigenschappen integreren met xmd
+*	--	Integreren composites
+*	--	Netwerk eigenschappen integreren met xmd
 *	--	XMASProject integratie met xmd / plugins.
 *	--	Netwerk uitbreiden met extenties
-*	ok	required property toevoegen aan source en sink
-* 		required property integreren met xmd.
 *		XMASNetwerk: getPacketType, getVars
 
 * 	ok	xmas.h updaten ("required")
 * 	ok	Flattener wijzigen en mergen, kopieren extenties
 * 	ok	Parser updaten voor composites
 * 	ok	Exporter updates voor composites
+*	ok	required property toevoegen aan source en sink
+* 	ok	required property integreren met xmd.
 
 
 ## Guus
@@ -53,11 +53,11 @@
 *		Herlezen van files abort ---> Samen met Stefan
 *		TEST: compleet netwerk lezen en schrijven ---> Alle 3
 *		opties voor plugins bepalen ---> met Stefan
-*	xx	plugin op timer uitvoeren --> doet Stefan
 *	ok	plugin syntax checker volledig maken
-*		plugin logger probleem oplossing (abort) -- removed ---> bij plugin integratie
+*	ok	plugin logger probleem oplossing (abort) -- removed ---> bij plugin integratie
 *	ok	abort onder linux bij deleten deel van connected netwerk
 *	ok	packet aansluiting qml / xmas
 *	ok	Bernard: VARS - PACKET_TYPE ? Doel, inhoud
 *	ok	plugin integreren met qml --> met Stefan
+*	xx	plugin op timer uitvoeren --> doet Stefan
 *   xx	plugin thread, main en process maken ---> stel uit, stel af

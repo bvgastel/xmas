@@ -507,11 +507,13 @@ ApplicationWindow {
         id: dialogSaveBeforeQuit
         title: "Quit application."
         icon: StandardIcon.Question
-        text:  "Quit without saving " + network.fileName + "?"
+        text:  "Save before quitting? " + network.fileName + "?"
         standardButtons: StandardButton.No | StandardButton.Yes
         // Qt BUG (MS Windows): need to destroy dialog internally before quit
         // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
-        onYes: {this.destroy(); Qt.quit()}
+        onNo: {this.destroy(); Qt.quit()}
+        // gbo: why don't you save on yes??
+        // onYes: save file somewhere if name is filled.
     }
 
     // Quit?

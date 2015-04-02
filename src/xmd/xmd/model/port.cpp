@@ -20,7 +20,6 @@
   *
   **********************************************************************/
 
-#include "simplestring.h"
 #include "port.h"
 #include "component.h"
 
@@ -53,7 +52,7 @@ void model::XPort::setName(QString name) {
     emit nameChanged();
 }
 
-bool model::XPort::getConnected() {
+bool model::XPort::isConnected() {
     Port *port = this->getPort();
     if (port) {
         return port->isConnected();

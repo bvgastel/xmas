@@ -59,7 +59,9 @@ function createComponent(outport,inport) {
 
 function remove(channel) {
     if (channel) {
-       network.disconnect(channel.outport, channel.inport)
+        if (channel.outport && channel.inport) {
+            network.disconnect(channel.outport, channel.inport)
+        }
     }
     destroy(channel)
 }

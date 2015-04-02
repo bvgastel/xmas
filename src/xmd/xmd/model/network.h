@@ -21,20 +21,16 @@
   **********************************************************************/
 #ifndef NETWORK_H
 #define NETWORK_H
-
 #include <QQuickItem>
-
 #include "datacontrol.h"
 #include "export.h"
 #include "component.h"
 #include "port.h"
 
 namespace model {
-
 class Network : public QQuickItem
 {
     Q_OBJECT
-    //NOTE : alias, size , imageName and boxedImage must be serialized in the json in the network object
     Q_PROPERTY(QString alias MEMBER m_alias NOTIFY aliasChanged)
     Q_PROPERTY(QSize size MEMBER m_size NOTIFY sizeChanged)
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
@@ -54,38 +50,9 @@ signals:
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
-    /**
-     * @brief connect
-     *
-     * Connect the specified outport to the specified
-     * inport. If one of the ports is already
-     * connected the results are unspecified.
-     *
-     * @param port_out The output XPort
-     * @param port_in The input XPort
-     * @return true if the operation is successful, false otherwise
-     */
     bool connect(XPort *port_out, XPort *port_in);
-    /**
-     * @brief disconnect
-     *
-     * Disconnect an output port from an input port.
-     *
-     * @param outport The outport that needs disconnection
-     * @param inport The inport connected to the outport
-     * @return true if the disconnect was successful, false otherwise
-     */
     bool disconnect(XPort *outport, XPort *inport);
-    /**
-     * @brief toJson
-     *
-     *  Transfrom a given network of Component classes to
-     *  a QString containing JSON for the network.
-     *
-     * @param allComponents A QList of Component pointers
-     * @return a QString containing the json for the network.
-     *
-     */
+
     QString toJson();
 
     bool addComponent(model::Component *component);

@@ -19,20 +19,15 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #ifndef CHANNEL_H
 #define CHANNEL_H
-
 #include <QQuickItem>
-#include "component.h"
 #include "port.h"
 
 namespace model {
-
 class Channel : public QQuickItem
 {
     Q_OBJECT
-    Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(XPort *outport READ outport WRITE outport NOTIFY outportChanged)
     Q_PROPERTY(XPort *inport READ inport WRITE inport NOTIFY inportChanged)
 
@@ -50,28 +45,11 @@ public:
     explicit Channel(QQuickItem *parent = 0);
     ~Channel();
 
-    virtual void classBegin();
-    virtual void componentComplete();
+    XPort *outport();
+    void outport(XPort *port);
 
-    XPort *outport() {
-        return m_outport;
-    }
-
-    void outport(XPort *port){
-        if (m_outport==port) return;
-        m_outport = port;
-        emit outportChanged();
-    }
-
-    XPort *inport() {
-        return m_inport;
-    }
-
-    void inport(XPort *port){
-        if (m_inport==port) return;
-        m_inport = port;
-        emit inportChanged();
-    }
+    XPort *inport();
+    void inport(XPort *port);
 
 private:
     bool portsOk(QString &errMsg);

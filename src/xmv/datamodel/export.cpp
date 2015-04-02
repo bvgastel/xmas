@@ -413,6 +413,16 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
         for (XMASComponent* component : allComponents) {
             JSONData::Map jsonComponent = JSONData::AllocateMap(mp);
             jsonComponent["id"] = JSONData(component->getName());
+            int x, y, orientation;
+            float scale;
+            std::tie(x, y, orientation, scale) = component->canvasData();
+            JSONData::Vector json_pos = JSONData::AllocateVector(mp);
+            json_pos.push_back(x);
+            json_pos.push_back(y);
+            json_pos.push_back(orientation);
+            json_pos.push_back(scale*100);
+
+            jsonComponent["pos"] = json_pos;
 
             ExportVisitor visitor(jsonComponent);
             component->accept(visitor);

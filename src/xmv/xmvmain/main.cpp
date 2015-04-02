@@ -624,14 +624,14 @@ void TestFile(const std::string &filename, bool showAll) {
     //============
     XMASNetwork flattened = flatten(*project.getRootNetwork());
     auto& components = flattened.getComponentMap();               // TODO: flattened network is quite a bit slower than the original (type inference), due to lack of a MemoryPool?
-    //auto& components = project.getRootNetwork()->getComponents();
+    //auto& components = project.getRootNetwork()->getComponentMap();
     //============
 
     std::cout << "flattening in \t\t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
 
-    project.saveNetwork(filename + ".export");
+    //project.saveNetwork(filename + ".export");
     //project.saveNetwork(filename + ".flat", &flattened);
 
 

@@ -296,7 +296,7 @@ XMASFunction::~XMASFunction() {
     }
 }
 
-const bitpowder::lib::String XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
+const std::string XMASFunction::getFunctionExpression(bitpowder::lib::MemoryPool &mp) {
     return Export(this, mp).stl();
 }
 
@@ -481,12 +481,13 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
-XMASNetwork::XMASNetwork(std::string name) : name(name)
+XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
+    : name(name), m_mp{mp ? mp : std::shared_ptr<bitpowder::lib::MemoryPool>{new bitpowder::lib::MemoryPool}}
 {
 }
 
-XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components)
-    : name(name), components(components)
+XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
+    : name(name), components(components), m_mp{mp ? mp : std::shared_ptr<bitpowder::lib::MemoryPool>{new bitpowder::lib::MemoryPool}}
 {
 }
 
@@ -565,14 +566,6 @@ bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder:
         return success;
     }
     return false;
-}
-
-XMASComposite *XMASNetwork::insert(bitpowder::lib::MemoryPool &mp, const bitpowder::lib::String &name, XMASNetwork &network) {
-    if (components.find(name) != components.end())
-        throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
-    XMASComposite *comp = new(mp, &::bitpowder::lib::destroy<XMASComponent>) XMASComposite(name, std::ref(network));
-    components.insert(std::make_pair(comp->getName(), comp));
-    return comp;
 }
 
 

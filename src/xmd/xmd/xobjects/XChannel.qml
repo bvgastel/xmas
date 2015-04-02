@@ -96,12 +96,14 @@ Model.XChannel {
     Connections {
         target: outport
         onUpdate: doUpdate1()
+        // gbo: Only one channel remove plz. Otherwise on new / clear: abort
         onRemoved: ChannelJs.remove(channel)
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: ChannelJs.remove(channel)
+        // gbo: The second remove is responsible for null deletes and subsequent abort; Don't do it.
+        //onRemoved: ChannelJs.remove(channel)
     }
 }
 

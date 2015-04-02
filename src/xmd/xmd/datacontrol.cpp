@@ -42,17 +42,18 @@
 #include "parse.h"
 #include "datacontrol.h"
 
+DataControl dataControl;
+
 DataControl::DataControl(QObject *parent)
     : QObject(parent),
-      m_logger("datacontrol"),
-      m_project(new XMASProject)
+      m_logger("datacontrol")
 {
+    m_project = std::make_shared<XMASProject>();
     QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
 }
 
 DataControl::~DataControl()
 {
-
 }
 
 void DataControl::registerTypes() const{
@@ -174,7 +175,7 @@ void DataControl::convertToQml(QVariantMap &map, XMASComponent *comp) {
         XMASFunction *func = dynamic_cast<XMASFunction *>(comp);
         QString expression = QString();
         if (func) {
-            expression = QString(func->getFunctionExpression(mp).stl().c_str());
+            expression = QString(func->getFunctionExpression(mp).c_str());
         }
         map.insert("expression", expression);
     } else if (type == xsource) {

@@ -13,9 +13,14 @@ extern DataControl *dataControl;
 
 model::Network::Network(QQuickItem *parent)
     : QQuickItem(parent),
-      m_logger("Network.cpp")
+      m_logger("Network.cpp"),
+      m_alias(),
+      m_size(),
+      m_imageName(),
+      m_boxedImage(false)
 {
     QObject::connect(&m_logger, &Logger::writeLog, dataControl, &DataControl::writeLog );
+    m_logger.log(QString("Network starting ..."));
 }
 
 model::Network::~Network() {}
@@ -79,7 +84,7 @@ bool model::Network::portError(XPort *port, QString errMsg) {
         errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
                                                             : " port = input_port! ");
         errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
-        if (!port->getConnected()) {
+        if (!port->isConnected()) {
             errMsg += "Port is not connected. ";
         }
     }
@@ -172,6 +177,8 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
  */
 bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
+        // Ignore requests for disconnecting already disconnected channels.
+        // Qml issue 1 disconnect request for each port
         if (xmas_inport && !xmas_inport->isConnected()
                 && xmas_outport && !xmas_outport->isConnected()) {
             return true;
@@ -354,16 +361,6 @@ bool model::Network::addComponent(model::Component *component) {
 
 
 
-//#############################################################################################################
-//#############################################################################################################
-//##
-//##        Example of how to populate composite list
-//##        This must be started when a netwerk is opened and loop through
-//##        the data from the Composite section of the json.
-//##
-//##
-//#############################################################################################################
-//#############################################################################################################
 /**
  * Gets the composite list of this network
  *      (Related to the composites section in json)
