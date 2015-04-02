@@ -84,7 +84,7 @@ bool model::Network::portError(XPort *port, QString errMsg) {
         errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
                                                             : " port = input_port! ");
         errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
-        if (!port->getConnected()) {
+        if (!port->isConnected()) {
             errMsg += "Port is not connected. ";
         }
     }

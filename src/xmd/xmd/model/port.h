@@ -33,7 +33,7 @@ class XPort : public QQuickItem
     Q_ENUMS(PortType)
     Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(bool connected READ getConnected NOTIFY connectedChanged)
+    Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
 
 signals:
     void nameChanged();
@@ -56,7 +56,7 @@ public:
     QString getName();
     void setName(QString name);
 
-    bool getConnected();
+    bool isConnected();
 
     Port *getPort();
 
