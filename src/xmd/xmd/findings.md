@@ -27,4 +27,5 @@ D    =  Developer   b = Bernard, g = Guus, s = Stefan, j = Jeroen
     9   g   2015-04-01  2015-04-01  save json does not export PACKET_TYPE   bug     high    Solved.
    10   g   2015-04-01  2015-04-02  New aborts, only in certain connected   bug     medium  Delete during qml: solved by removing channel only once!
                                     conditions.
+   11   g   2015-04-02              Save json does not save the position    bug     high
    99
