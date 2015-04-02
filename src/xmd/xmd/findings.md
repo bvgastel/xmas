@@ -24,6 +24,9 @@ D    =  Developer
    12   g   2015-04-02              Source parse expression does not accept bug     low     (Out of scope for user interface)
                                     a percentage token (%)
    13   g   2015-04-02              Remove library composite                bug     high    Not implemented !
+   14   g   2015-04-02              After first save, file is still '*'     bug     medium
+   15   g   2015-04-02              After new, file is still '*'            bug     medium
+   16   g   2015-04-02              src = green without expr (sometimes)    bug     medium
 99999
 
 
