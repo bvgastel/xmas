@@ -133,7 +133,9 @@ int model::Component::updateExpression(QVariant expression) {
         if (!queue) {
             emit writeLog(QString("Fatal error in Component: "
                              "did not recognize m_component as queue."));
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+            std::cerr   << "Fatal error in Component: did not recognize m_component"
+                         " as queue : " << c->getStdName() << std::endl;
+            return false;
         }
         queue->c = size;
         setValidExpr(true, -1, QString(""));
@@ -161,8 +163,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as source." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as source : " << c->getStdName() << std::endl;
+            return false;
         }
     } else if (getType() == Function) {
         if (typeName != "QString") {
@@ -185,9 +187,10 @@ int model::Component::updateExpression(QVariant expression) {
             }
             return result.m_pos;
         } else {
-            std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as function." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+            std::cerr   << "Fatal error in Component: did not recognize m_component"
+                         " as function : "
+                        << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     } else if (getType() == Join) {
@@ -220,8 +223,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as join." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as join : " << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     } else if (getType() == Switch) {
@@ -244,8 +247,8 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
-                         " as switch." << std::endl;
-            throw bitpowder::lib::Exception("Fatal error in Component.");
+                         " as switch : " << c->getStdName() << std::endl;
+            return false;
         }
         return true;
     }

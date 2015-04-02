@@ -13,8 +13,8 @@ D    =  Developer
 -----   -   -----       ----------  --------------------------------------- ----    -----  ------------------------------------------
     1   g   2015-03-31              Create network, save file, restart app  bug     high
                                     Read network: No Connections
-    2   g   2015-03-31              Create network, save file, restart app  bug     high
-                                    Read network: Queue: size gone
+    2   g   2015-03-31              Create network, save file, restart app  bug     high    Parsing of expressions fail (all)
+                                    Read network: Queue: size gone                          (see 17)
     5   g   2015-04-01              Reading a file aborts                   bug     high
     6   g   2015-04-01              Composite Network ext. not filled       bug     high
                                     properly
@@ -26,6 +26,7 @@ D    =  Developer
    14   g   2015-04-02              After first save, file is still '*'     bug     medium
    15   g   2015-04-02              After new, file is still '*'            bug     medium
    16   g   2015-04-02              src = green without expr (sometimes)    bug     medium
+   17   g   2015-04-02              Parsing of all expressions fail         bug     high
 99999
 
 
