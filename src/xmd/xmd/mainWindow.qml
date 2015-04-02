@@ -55,8 +55,8 @@ ApplicationWindow {
     visible: true
     width: 1000
     height: 800
-    minimumWidth: 400
-    minimumHeight: 300
+    minimumWidth: 800
+    minimumHeight: 600
     color: "darkgrey"
     title: Qt.application.name + "     -     " + network.fileName + (network.modified ? "*" : "")
 
