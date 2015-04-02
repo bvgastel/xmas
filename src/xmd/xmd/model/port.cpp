@@ -20,7 +20,6 @@
   *
   **********************************************************************/
 
-#include "simplestring.h"
 #include "port.h"
 #include "component.h"
 
