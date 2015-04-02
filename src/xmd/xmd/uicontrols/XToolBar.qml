@@ -95,6 +95,7 @@ Rectangle {
             id:compositeListRect
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.minimumWidth: 150
             color: "#F8F8F8"
             radius: 5
             border.color: "darkgrey"
@@ -131,7 +132,7 @@ Rectangle {
         }
 
         //dummy filler
-        Item{Layout.preferredWidth: 200}
+       // Item{Layout.preferredWidth: 50}
     }
 
     Action {
