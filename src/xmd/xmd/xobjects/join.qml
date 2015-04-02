@@ -69,7 +69,7 @@ XComponent {
             //left bottom port with arrow
             ctx.moveTo(0 ,80)
             ctx.lineTo(30,80)
-            ctx.lineTo(30,70)
+            ctx.lineTo(30,75)
             ctx.lineTo(40-ctx.lineWidth,80)
             ctx.lineTo(30,85)
             ctx.lineTo(30,80)
