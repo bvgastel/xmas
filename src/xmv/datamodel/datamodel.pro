@@ -97,8 +97,7 @@ HEADERS += datamodel.h\
     symbolic-packet-set.h \
     flatten.h \
     flatten-gates.h \
-    xmasproject.h \
-    canvas-network-extension.h
+    xmasproject.h
 
 
 ################################################
