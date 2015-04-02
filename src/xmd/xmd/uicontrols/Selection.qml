@@ -52,7 +52,6 @@ Rectangle{
     property rect rubberBandRectangle: Qt.rect(0,0,0,0)
 
     // Signals
-    signal sizeChanged
     signal positionChanged
     signal showContextMenu
 
@@ -63,9 +62,6 @@ Rectangle{
     Keys.onRightPressed: doMove(network.gridSize,0)
     Keys.onDownPressed: doMove(0,network.gridSize)
     Keys.onUpPressed: doMove(0,-network.gridSize)
-    Keys.onPressed: { if(event.modifiers=== Qt.ControlModifier) network.selectionMode = true }
-    Keys.onReleased: network.selectionMode = false
-
 
     // JavaScripts
 
@@ -97,8 +93,8 @@ Rectangle{
     }
 
     // Select items
-    function select(items){
-        clear()
+    function select(items,append){
+        if(!append)clear()
         for (var i in items){
             if(items[i].selected !== undefined)items[i].selected = true
                 selectedItems.push(items[i])
@@ -237,6 +233,7 @@ Rectangle{
         id:mouseArea
         anchors.fill: parent
         preventStealing: false
+        propagateComposedEvents:true
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         drag.target: parent
@@ -260,114 +257,6 @@ Rectangle{
         onPositionChanged:selection.positionChanged()
     }
 
-    // top left handle
-    SelectionHandle {
-        id:tlh
-        anchors.horizontalCenter: parent.left
-        anchors.verticalCenter: parent.top
-        cursor:Qt.SizeFDiagCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) {
-                from.x = mapToItem(selection.parent,mouse.x,0).x
-                from.y = mapToItem(selection.parent,0,mouse.y).y
-            }
-        }
-    }
-
-    // top right handle
-    SelectionHandle {
-        id:trh
-        anchors.horizontalCenter: parent.right
-        anchors.verticalCenter: parent.top
-        cursor:Qt.SizeBDiagCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) {
-                to.x = mapToItem(selection.parent,mouse.x,0).x
-                from.y = mapToItem(selection.parent,0,mouse.y).y
-            }
-        }
-    }
-
-    // bottom left handle
-    SelectionHandle {
-        id:blh
-        anchors.horizontalCenter: parent.left
-        anchors.verticalCenter: parent.bottom
-        cursor:Qt.SizeBDiagCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) {
-                from.x = mapToItem(selection.parent,mouse.x,0).x
-                to.y = mapToItem(selection.parent,0,mouse.y).y
-            }
-        }
-    }
-
-    // bottom right handle
-    SelectionHandle {
-        id:brh
-        anchors.horizontalCenter: parent.right
-        anchors.verticalCenter: parent.bottom
-        cursor:Qt.SizeFDiagCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) {
-                to.x = mapToItem(selection.parent,mouse.x,0).x
-                to.y = mapToItem(selection.parent,0,mouse.y).y
-            }
-        }
-    }
-
-    // left handle
-    SelectionHandle {
-        id:lh
-        anchors.horizontalCenter: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        cursor:Qt.SizeHorCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) from.x = mapToItem(selection.parent,mouse.x,0).x
-        }
-    }
-
-    // right handle
-    SelectionHandle {
-        id:rh
-        anchors.horizontalCenter: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        cursor:Qt.SizeHorCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) to.x = mapToItem(selection.parent,mouse.x,0).x
-        }
-    }
-
-    // top handle
-    SelectionHandle {
-        id:th
-        anchors.verticalCenter: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        cursor:Qt.SizeVerCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) from.y = mapToItem(selection.parent,0,mouse.y).y
-        }
-    }
-
-    // bottom handle
-    SelectionHandle {
-        id:bh
-        anchors.verticalCenter: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        cursor:Qt.SizeVerCursor
-        onReleased: sizeChanged()
-        onPositionChanged: {
-            if(pressed) to.y = mapToItem(selection.parent,0,mouse.y).y
-        }
-    }
-
     // selection states
     states: [
         State {
@@ -375,6 +264,7 @@ Rectangle{
             PropertyChanges {
                 target: selection
                 visible: true
+                border.width:1
                 initialSizing: true
             }
         },
@@ -383,6 +273,7 @@ Rectangle{
             PropertyChanges {
                 target: selection
                 visible: true
+                border.width:0 //set this to 1 to see rubberband
                 initialSizing: false
                 focus: true
             }
@@ -392,6 +283,7 @@ Rectangle{
             PropertyChanges {
                 target: selection
                 visible: false
+                border.width:0
                 initialSizing: false
                 focus: true
             }

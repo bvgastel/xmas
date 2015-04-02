@@ -7,7 +7,6 @@
         <file>uicontrols/ToolBarSeparator.qml</file>
         <file>mainWindow.qml</file>
         <file>uicontrols/XWire.qml</file>
-        <file>uicontrols/SelectionHandle.qml</file>
         <file>uicontrols/XPacketDialog.qml</file>
         <file>uicontrols/ModelSetupDialog.qml</file>
         <file>uicontrols/ApplicationSetupDialog.qml</file>
