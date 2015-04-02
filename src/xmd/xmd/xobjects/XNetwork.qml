@@ -95,8 +95,8 @@ Model.XNetwork {
     }
 
     // Select item
-    function select(item){
-        selection.select([item])
+    function select(item,append){
+       selection.select([item],append)
     }
 
     // Select all items
@@ -140,7 +140,6 @@ Model.XNetwork {
                 wire.port2 = null
                 wire.connecting = false
             }
-            //else { port.connected=false}
         } else {
             wire.port1 = port
             wire.connecting = true
@@ -162,7 +161,8 @@ Model.XNetwork {
         var children = network.children
         var items = []
         for (var child in children){
-            if(children[child].objectName==="component") // || children[child].objectName==="channel")
+            if(children[child].objectName==="component")
+                   // || children[child].objectName==="channel")
                 items.push(children[child])
         }
         return items
@@ -172,9 +172,9 @@ Model.XNetwork {
         selection.deleteSelected()
     }
 
-
+    // Grid
     Rectangle {
-        id:background
+        id:grid
         anchors.fill: parent
         color:parent.color
         Canvas{
@@ -257,7 +257,6 @@ Model.XNetwork {
 
     Selection {
         id: selection
-        onSizeChanged: selection.find(canvasItems())
         onShowContextMenu:contextMenu.popup()
         onPositionChanged: moveSelected(selection)
     }
@@ -267,6 +266,7 @@ Model.XNetwork {
         anchors.fill: parent
         hoverEnabled: wire.connecting
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+
         onPressed: {
             if (mouse.button == Qt.RightButton)
             {

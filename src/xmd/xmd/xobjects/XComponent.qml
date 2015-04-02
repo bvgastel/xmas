@@ -168,7 +168,8 @@ Model.XComponent {
 
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                network.select(component)
+                network.select(component,
+                               mouse.modifiers === Qt.ControlModifier)
             }
             if (mouse.button == Qt.RightButton){
                 contextMenu.popup()
@@ -236,7 +237,6 @@ Model.XComponent {
     }
 
     // Connections
-
     Connections {
         target: network
         onMoveSelected: if(component.selected) component.update()

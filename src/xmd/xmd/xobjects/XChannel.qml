@@ -38,10 +38,9 @@ import XMAS 1.0 as XMAS
 Model.XChannel {
     id: channel
     objectName: "channel"
-    focus: true
+    focus: selected
     property color color: "darkblue"
     property bool selected: false
-
 
     // TODO: gbo: insert network.connect(out, in) here??
     function doUpdate1() {
@@ -53,15 +52,8 @@ Model.XChannel {
         wire.y2 = mapFromItem(inport,5,5).y
     }
 
-
     onOutportChanged: outport ? doUpdate1() : null
     onInportChanged: inport ? doUpdate2() : null
-
-    onSelectedChanged: {
-        focus = selected
-        wire.color = selected ? "steelblue" : "darkblue"
-        wire.size = selected ? 4 : 2
-    }
 
     // FIXME: Stefan: not sure how to do this, want to connect signal to mainWindow.log()
     onWriteLog: console.log(msg, color)
@@ -69,8 +61,8 @@ Model.XChannel {
     //TODO: replace straight canvas wire with pathfinder logic (horizontal/vertical)
     XWire {
         id: wire
-        color: "darkblue"
-        size: 2
+        color: selected ? "steelblue" : "darkblue"
+        size: selected ? 4 : 2
 
         MouseArea {
             anchors.fill: parent
@@ -78,11 +70,13 @@ Model.XChannel {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
                 if (mouse.button == Qt.LeftButton) {
-                    var tmp = selected
-                    if(mouse.modifiers != Qt.ControlModifier){
-                        //channel.parent ? channel.parent.clearSelections(channel): null
-                    }
-                    selected = !tmp
+                    network.select(channel,
+                                   mouse.modifiers === Qt.ControlModifier)
+                    //                    var tmp = selected
+                    //                    if(mouse.modifiers != Qt.ControlModifier){
+                    //                        //channel.parent ? channel.parent.clearSelections(channel): null
+                    //                    }
+                    //                    selected = !tmp
                 }
                 if (mouse.button == Qt.RightButton){
                     contextMenu.popup()
@@ -109,14 +103,5 @@ Model.XChannel {
         onUpdate: doUpdate2()
         onRemoved: ChannelJs.remove(channel)
     }
-
-//    Connections {
-//        target: network
-//        onGroupSelected: channelJs.selected = group.contains(wire.x1,wire.y1) || group.contains(wire.x2,wire.y2)
-//        onDeleteSelected: if (ChannelJs.selected) ChannelJs.remove(channel)
-//        onClearSelection: ChannelJs.selected = false
-//    }
-
-
 }
 
