@@ -177,6 +177,8 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
  */
 bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
+        // Ignore requests for disconnecting already disconnected channels.
+        // Qml issue 1 disconnect request for each port
         if (xmas_inport && !xmas_inport->isConnected()
                 && xmas_outport && !xmas_outport->isConnected()) {
             return true;
