@@ -15,7 +15,8 @@ public:
     void deallocate_project();
     void clear();
 
-    bitpowder::lib::MemoryPool& mp();
+    bitpowder::lib::MemoryPool& mp() { return *m_mp; }
+
 
     XMASNetwork* getRootNetwork() const;
     XMASNetwork* getNetwork(const std::string name) const;
@@ -25,7 +26,7 @@ public:
 
     template <class T, typename... Args>
     T *insert(const bitpowder::lib::String& name, Args... args) {
-        return root->insert<T>(m_mp, name, args...);
+        return root->insert<T>(name, args...);
     }
 
     XMASComponent *insertSource(const bitpowder::lib::String& name, bool external = false);
@@ -41,7 +42,7 @@ public:
     bool changeComponentName(std::string oldName, std::string newName);
 
 private:
-    bitpowder::lib::MemoryPool m_mp;
+    std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
     std::map<std::string, XMASNetwork *>networks;
     XMASNetwork* root;
 

@@ -17,11 +17,13 @@ using namespace bitpowder::lib;
 JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp);
 
 XMASProject::XMASProject()
+  : m_mp {new bitpowder::lib::MemoryPool}
 {
     allocate_initial_project();
 }
 
 XMASProject::XMASProject(const std::string& filename)
+    : m_mp {new bitpowder::lib::MemoryPool}
 {
     root = loadNetwork(filename);
 }
@@ -45,12 +47,9 @@ void XMASProject::allocate_initial_project() {
 void XMASProject::deallocate_project() {
     networks.clear();
     delete root;
-    m_mp.clear();
+    m_mp->clear();
 }
 
-bitpowder::lib::MemoryPool& XMASProject::mp() {
-    return m_mp;
-}
 
 XMASNetwork* XMASProject::getRootNetwork() const {
     return root;
@@ -126,16 +125,16 @@ XMASComponent *XMASProject::insertFork(const bitpowder::lib::String &name) {
 }
 
 XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, XMASNetwork &network) {
-    return root->insert<XMASComposite>(m_mp, name, std::ref(network));
+    return root->insert<XMASComposite>(name, std::ref(network));
 }
 
 bool XMASProject::changeComponentName(std::string oldName, std::string newName)
 {
     /* ensure memory is permanent enough */
     bitpowder::lib::String b_oldName = bitpowder::lib::String(oldName);
-    b_oldName = b_oldName(m_mp);
+    b_oldName = b_oldName(*m_mp);
     bitpowder::lib::String b_newName = bitpowder::lib::String(newName);
-    b_newName = b_newName(m_mp);
+    b_newName = b_newName(*m_mp);
 
     /* change the name and position in the component map */
     bool result = root->changeComponentName(b_oldName, b_newName);
@@ -164,7 +163,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     }
     std::cout << "Loading: " << name << std::endl;
 
-    auto jsonResult = read_json_from_file(filename, m_mp);
+    auto jsonResult = read_json_from_file(filename, *m_mp);
 
     if (!jsonResult)
         throw Exception("Unable to read JSON data from file");
@@ -189,10 +188,10 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     }
 
     // now load the network itself
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, m_mp, networks);
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, networks);
     auto components = componentsAndGlobals.first;
 
-    XMASNetwork* result = new XMASNetwork {name, std::move(components)};
+    XMASNetwork* result = new XMASNetwork {name, std::move(components), m_mp};
     networks.erase(name);
     delete dummy;
     networks.insert(std::make_pair(name, result));
