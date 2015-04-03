@@ -81,7 +81,7 @@ private:
         Match() {
 #endif
         }
-        bool operator()(Extension<E>* e) {
+        bool operator()(Extension<E,CopyArgs...>* e) {
 #ifdef EXTENSION_USING_CPP_TYPE_INDEX
             return e->type == targetType;
 #else
@@ -92,9 +92,9 @@ private:
     template <class T>
     class MatchDynamic {
     public:
-        T* retval;
-        bool operator()(const Element& e) {
-            retval = dynamic_cast<T*>(&*e); // extra &* is used to get rid of smart-containers like lib::shared_object
+        T retval;
+        bool operator()(Element e) {
+            retval = dynamic_cast<T>(&*e); // extra &* is used to get rid of smart-containers like lib::shared_object
             return retval != nullptr;
         }
     };
@@ -141,7 +141,7 @@ public:
     }
 
     template <class T>
-    T* getExtensionOfBaseType() const {
+    T getExtensionOfBaseType() const {
         MatchDynamic<T> m;
         return extensions.first(std::ref(m)) ? m.retval : nullptr;
     }
@@ -175,10 +175,10 @@ public:
     }
 
     template <class T>
-    T* removeExtensionOfBaseType() {
+    T removeExtensionOfBaseType() {
         MatchDynamic<T> m;
         for (auto it = extensions.select(std::ref(m)).begin(); it != extensions.end(); )
-            return static_cast<T*>(it.erase());
+            return static_cast<T>(it.erase());
         return nullptr;
     }
 
