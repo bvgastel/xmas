@@ -6,6 +6,7 @@
 #include "xmas.h"
 #include "canvascomponentextension.h"
 #include "composite-network-extension.h"
+#include "canvas-network-extension.h"
 #include "simplestring.h"
 #include "parse.h"
 #include "messagespec.h"
@@ -525,13 +526,14 @@ void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
 void XMASNetwork::setCompositeNetworkData(std::string alias, int width, int height, std::string imageName, bool boxedImage)
 {
     auto cn_ext = getNetworkExtension<CompositeNetworkExtension>(true);
-    if (cn_ext) {
-        cn_ext->alias = alias;
-        cn_ext->width = width;
-        cn_ext->height = height;
-        cn_ext->imageName = imageName;
-        cn_ext->boxedImage = boxedImage;
-    }
+    cn_ext->alias = alias;
+    cn_ext->imageName = imageName;
+    cn_ext->boxedImage = boxedImage;
+    // FIXME: what about packet??
+
+    auto canvas_ext = getNetworkExtension<CanvasNetworkExtension>(true);
+    canvas_ext->width = width;
+    canvas_ext->height = height;
 }
 
 // FIXME: needs implementation

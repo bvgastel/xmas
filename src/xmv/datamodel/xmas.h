@@ -1101,7 +1101,7 @@ public:
     const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
     void getComponentSet(std::set<XMASComponent*> &) const;
 
-    void setCompositeNetworkData(std::string alias, int width, int heigh, std::string imageName, bool boxedImage);
+    void setCompositeNetworkData(std::string alias, int width, int height, std::string imageName, bool boxedImage);
 
     template<typename T>
     const std::vector<T*> componentsOfType() const

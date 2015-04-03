@@ -5,6 +5,7 @@
 #include "simplestring.h"
 #include "export.h"
 #include "composite-network-extension.h"
+#include "canvas-network-extension.h"
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -73,12 +74,18 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
     if (cne) {
         JSONData::Map jsonComposite = JSONData::AllocateMap(mp);
         jsonComposite["alias"] = String(cne->alias);
-        jsonComposite["width"] = cne->width;
-        jsonComposite["height"] = cne->height;
         jsonComposite["image-name"] = String(cne->imageName);
         jsonComposite["packet"] = String(cne->packet);
         jsonComposite["boxed-imaged"] = cne->boxedImage ? 1 : 0;
         globals["COMPOSITE_NETWORK"] = jsonComposite;
+    }
+
+    auto canvas_ext = network->getNetworkExtension<CanvasNetworkExtension>(false);
+    if (cne) {
+        JSONData::Map jsonCanvas = JSONData::AllocateMap(mp);
+        jsonCanvas["width"] = canvas_ext->width;
+        jsonCanvas["height"] = canvas_ext->height;
+        globals["CANVAS"] = jsonCanvas;
     }
 
     for (auto& it : network->getComponentMap()) {
@@ -187,8 +194,14 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
         }
     }
 
+
     // now load the network itself
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, networks);
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this](std::string name) -> XMASNetwork* {
+        auto network_it = networks.find(name);
+        if (network_it != networks.end())
+            return network_it->second;
+        return nullptr;
+    });
     auto components = componentsAndGlobals.first;
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components), m_mp};
@@ -200,11 +213,16 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     if (!jsonComposite.isNull()) {
         auto cn_ext = result->getNetworkExtension<CompositeNetworkExtension>(true);
         cn_ext->alias      = jsonComposite["alias"].asString().stl();
-        cn_ext->width      = jsonComposite["width"].asNumber();
-        cn_ext->height     = jsonComposite["height"].asNumber();
         cn_ext->imageName  = jsonComposite["image-name"].asString().stl();
         cn_ext->packet     = jsonComposite["packet"].asString().stl();
         cn_ext->boxedImage = jsonComposite["boxed-image"].asNumber() > 0;
+    }
+
+    auto jsonCanvas = json["CANVAS"];
+    if (!jsonCanvas.isNull()) {
+        auto canvas_ext = result->getNetworkExtension<CanvasNetworkExtension>(false);
+        canvas_ext->width   = jsonCanvas["width"].asNumber();
+        canvas_ext->height  = jsonCanvas["height"].asNumber();
     }
 
     return result;
