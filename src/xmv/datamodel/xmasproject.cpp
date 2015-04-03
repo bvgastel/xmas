@@ -219,7 +219,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     }
 
     auto jsonCanvas = json["CANVAS"];
-    if (jsonCanvas.isNull()) {
+    if (!jsonCanvas.isNull()) {
         auto canvas_ext = result->getNetworkExtension<CanvasNetworkExtension>(false);
         canvas_ext->width   = jsonCanvas["width"].asNumber();
         canvas_ext->height  = jsonCanvas["height"].asNumber();
