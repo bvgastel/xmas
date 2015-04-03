@@ -247,7 +247,7 @@ Model.XComponent {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: component.destroy()
+            onTriggered: ComponentJs.remove(component)
         }
         MenuSeparator{}
         MenuItem {

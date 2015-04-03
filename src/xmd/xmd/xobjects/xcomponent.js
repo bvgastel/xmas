@@ -96,6 +96,12 @@ function endDrag()
     }
 }
 
+function remove(component) {
+    if (network.removeComponent(component)) {
+        destroy(component)
+    }
+}
+
 // Grid Snap
 function doGridSnap(item){
     var snapX = Math.round(((item.x-network.margin) / network.gridSize)) * network.gridSize + network.margin
