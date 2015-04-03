@@ -104,8 +104,6 @@ public:
     ExtensionContainer() {
     }
 
-    ExtensionContainer(ExtensionContainer&&) = default;
-
     ExtensionContainer(const ExtensionContainer& c) {
         // otherwise wrong order will be used, can matter
         ExtensionStack toBeAdded;
@@ -118,7 +116,18 @@ public:
             extensions.push(toBeAdded.pop());
     }
 
-    ExtensionContainer& copy(const ExtensionContainer& c, CopyArgs&&... args) {
+    ExtensionContainer(ExtensionContainer&& c) {
+        *this = std::move(c);
+    }
+
+    ExtensionContainer& operator=(ExtensionContainer&& c) {
+        if (this == &c)
+            return *this;
+        extensions = std::move(c.extensions);
+        return *this;
+    }
+
+    ExtensionContainer copy(const ExtensionContainer& c, CopyArgs&&... args) {
         // otherwise wrong order will be used, can matter
         ExtensionContainer retval;
         ExtensionStack toBeAdded;

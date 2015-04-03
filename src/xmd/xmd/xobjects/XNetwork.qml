@@ -347,7 +347,8 @@ Model.XNetwork {
     // Connections
     Connections {
         target: network
-        onCreateNetwork: NetworkJs.createNetwork(object)
+        onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
+
     }
 
     Connections {
