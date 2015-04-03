@@ -16,6 +16,7 @@
 #include "parse.h"
 #include "export.h"
 
+#include "memorypool.h"
 #include "xmasproject.h"
 #include "flatten.h"
 
@@ -711,6 +712,7 @@ int main(int argc, char* argv[]) {
     std::cout << (usage.ru_maxrss/1024) << " megabytes of memory used at max" << std::endl;
 #endif
 #endif
+    bitpowder::lib::MemoryPool::vacuum();
     return 0;
 }
 
