@@ -28,6 +28,17 @@
 #include "port.h"
 
 namespace model {
+
+const model::Component::CompType xsource = model::Component::CompType::Source;
+const model::Component::CompType xsink = model::Component::CompType::Sink;
+const model::Component::CompType xfunction = model::Component::CompType::Function;
+const model::Component::CompType xqueue = model::Component::CompType::Queue;
+const model::Component::CompType xjoin = model::Component::CompType::Join;
+const model::Component::CompType xmerge = model::Component::CompType::Merge;
+const model::Component::CompType xfork = model::Component::CompType::Fork;
+const model::Component::CompType xswitch = model::Component::CompType::Switch;
+
+
 class Network : public QQuickItem
 {
     Q_OBJECT
@@ -48,6 +59,7 @@ signals:
     void boxedImageChanged();
     void compositeLibraryChanged();
     void writeLog(QString message, QColor color = Qt::blue);
+    bool createNetwork(const QVariantMap &object);
 
 public slots:
     bool connect(XPort *port_out, XPort *port_in);
@@ -58,8 +70,8 @@ public slots:
     bool addComponent(model::Component *component);
     bool setCompositeNetworkData();
 
-    bool saveFile(QUrl url);
-    bool openFile(QUrl url);
+    bool saveFile(QUrl fileUrl);
+    bool openFile(QUrl fileUrl);
     bool closeFile();
     bool newFile();
     bool addLibraryComposite(QUrl url);
@@ -68,6 +80,10 @@ public slots:
 private:
     QList<Component *> getAllComponents();
     bool addComposite(model::Component *component);
+
+    bool emitNetwork(XMASNetwork &network);
+    void convertToQml(QVariantMap &map, XMASComponent *comp);
+    void connectInQml(QVariantList &list, XMASComponent *comp);
 
     bool portError(XPort *outport, QString errMsg);
 
@@ -98,6 +114,17 @@ private:
     bool m_boxedImage;
     QVariantList m_compositeLibrary;
     bool addComposite(QUrl url);
+
+    std::map<std::type_index, model::Component::CompType> m_type_index_map = {
+        {std::type_index(typeid(XMASSource)), xsource},
+        {std::type_index(typeid(XMASSink)), xsink},
+        {std::type_index(typeid(XMASFunction)), xfunction},
+        {std::type_index(typeid(XMASQueue)), xqueue},
+        {std::type_index(typeid(XMASJoin)), xjoin},
+        {std::type_index(typeid(XMASMerge)), xmerge},
+        {std::type_index(typeid(XMASFork)), xfork},
+        {std::type_index(typeid(XMASSwitch)), xswitch},
+    };
 
 };
 

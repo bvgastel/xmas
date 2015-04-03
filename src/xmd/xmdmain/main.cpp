@@ -71,15 +71,18 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
 
-    dataControl = new DataControl();
+    DataControl *dataControl = new DataControl();
+    ::dataControl = dataControl;
     qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
     ctx->setContextProperty("datacontrol", dataControl);
 
-    pluginControl = new PluginControl();
+    PluginControl *pluginControl = new PluginControl();
+    ::pluginControl = pluginControl;
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
     ctx->setContextProperty("plugincontrol", pluginControl);
 
-    util = new Util();
+    Util *util = new Util();
+    ::util = util;
     qmlRegisterType<Util>("XMAS", 1, 0, "Util"); // Before engine.load
     ctx->setContextProperty("util", util);
 

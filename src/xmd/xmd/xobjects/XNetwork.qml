@@ -346,7 +346,7 @@ Model.XNetwork {
 
     // Connections
     Connections {
-        target: datacontrol
+        target: network
         onCreateNetwork: NetworkJs.createNetwork(object)
     }
 

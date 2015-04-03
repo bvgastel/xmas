@@ -454,12 +454,10 @@ ApplicationWindow {
             "Model files (*.xmdm *.json)",
             "All files (*)"]
         onAccepted: {
-            datacontrol.fileOpen(fileUrl)
-            //            if(network.fileOpen(fileUrl))
-            //            {
-            network.folder = folder
-            network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
-            //            }
+            if (network.openFile(fileUrl)) {
+                network.folder = folder
+                network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+            }
         }
     }
 
