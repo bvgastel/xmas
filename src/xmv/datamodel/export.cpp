@@ -97,12 +97,13 @@ public:
     ExportVisitor(JSONData::Map& json) : json(json), mp(*json.get_allocator().mp) {
     }
 
-    void writeOut(Output &output, bitpowder::lib::JSONData::Vector& to) {
-        bitpowder::lib::JSONData::Map channel = JSONData::AllocateMap(mp);
-        if (output.getTarget() != nullptr) {
-            channel["id"] = bitpowder::lib::String(output.getTarget()->getName());
+    void writeOut(Output &output, JSONData::Vector& to) {
+        auto target = output.getTarget();
+        if (target) {
+            JSONData::Map channel = JSONData::AllocateMap(mp);
+            channel["id"] = String(target->getName());
             int index = 0;
-            for (Input* input : output.getTarget()->inputPorts()) {
+            for (Input* input : target->inputPorts()) {
                 if (input->getInitiatorPort() == &output)
                     break;
                 ++index;

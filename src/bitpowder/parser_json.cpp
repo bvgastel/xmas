@@ -246,6 +246,8 @@ void JSONData::clear() {
 }
 
 JSONData& JSONData::operator=(const JSONData &b) {
+    if (this == &b)
+        return *this;
     //std::cerr << "JSONData assignment" << std::endl;
     clear();
     type = b.type;

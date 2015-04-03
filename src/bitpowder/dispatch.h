@@ -99,11 +99,12 @@ public:
 class Dispatch {
 public:
     typedef unsigned short Priority;
+    static const Priority PRIORITY_TIME = 4;
     static const Priority PRIORITY_EVENT = 3;
     static const Priority PRIORITY_HIGH = 2;
     static const Priority PRIORITY_MEDIUM = 1;
     static const Priority PRIORITY_LOW = 0;
-    static const Priority priorities = 4;
+    static const Priority priorities = 5;
 };
 
 template <class DispatchObject>
@@ -159,7 +160,7 @@ public:
 #ifdef __BLOCKS__
 class MainDispatcher : public lib::DispatcherFor<lib::DispatchOperation*,lib::Dispatch::priorities> {
 protected:
-    std::atomic<bool> dispatched;
+    bool dispatched = false;
     Lock m;
     MainDispatcher();
     void execute();
@@ -329,10 +330,16 @@ protected:
                         //goto end;
                     l.lock(this->m);
                 }
-            } catch (Exception exc) {
+            } catch (Exception& exc) {
                 if (op)
                     abortedOn(op, exc);
-            } catch (std::string &str) {
+            } catch (std::exception& e) {
+                if (op) {
+                    Exception exc(e.what());
+                    abortedOn(op, exc);
+                }
+                l.lock(this->m);
+            } catch (std::string& str) {
                 if (op) {
                     Exception exc(str);
                     abortedOn(op, exc);
@@ -499,11 +506,17 @@ class SerialDispatchBuffer : public DispatcherFor<On, priorities> {
                     }
                     l.lock(this->m);
                 }
-            } catch (Exception exc) {
+            } catch (Exception& exc) {
                 if (op)
                     abortedOn(op, exc);
                 l.lock(this->m);
-            } catch (std::string &str) {
+            } catch (std::exception& e) {
+                if (op) {
+                    Exception exc(e.what());
+                    abortedOn(op, exc);
+                }
+                l.lock(this->m);
+            } catch (std::string& str) {
                 if (op) {
                     Exception exc(str);
                     abortedOn(op, exc);

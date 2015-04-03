@@ -42,6 +42,7 @@ extern "C" {
 #include <utility>
 #include <type_traits>
 #include <algorithm>
+#include <tuple>
 
 namespace bitpowder {
 namespace lib {
@@ -117,20 +118,8 @@ inline void performDelete(T *object) {
     delete object;
 }
 
-template <class T>
-inline void nothing(T) {
-}
-
-template <class T, class A>
-inline void nothing(T, A) {
-}
-
-template <class T, class A, class B>
-inline void nothing(T, A, B) {
-}
-
-template <class T, class A, class B, class C>
-inline void nothing(T, A, B, C) {
+template <class T, class... Args>
+inline void nothing(T, Args...) {
 }
 
 template <class T, class A>
@@ -247,32 +236,32 @@ struct evaluateHelper {
 #define evaluate(x) evaluateHelper{(x,1)...}
 
 // with help from http://stackoverflow.com/questions/7858817/unpacking-a-tuple-to-call-a-matching-function-pointer
-template <int...>
+template <std::size_t...>
 struct CountDown { };
-template <int current, int... partialCountDown>
+template <int current, std::size_t... partialCountDown>
 struct GenerateCountDown : GenerateCountDown<current-1, current-1, partialCountDown...> {
 };
-template <int... partialCountDown>
+template <std::size_t... partialCountDown>
 struct GenerateCountDown<0, partialCountDown...> {
     typedef CountDown<partialCountDown...> countDown;
 };
 
-template <typename Func, typename... Args, int... countdown>
-void callFunctionHelper(const Func &f, const std::tuple<Args...> &tuple, CountDown<countdown...>) {
-    f(std::get<countdown>(tuple)...);
+template <typename Func, typename Args, std::size_t... countdown>
+void callFunctionHelper(Func &&f, Args&& args, CountDown<countdown...>) {
+    f(std::get<countdown>(std::forward<Args>(args))...);
 }
-template <typename Func, typename... Args>
-void callFunction(const Func &f, const std::tuple<Args...> &args) {
-    callFunctionHelper(f, args, typename GenerateCountDown<sizeof...(Args)>::countDown());
+template <typename Func, typename Args>
+void callFunction(Func &&f, Args&& args) {
+    callFunctionHelper<Func, Args>(std::forward<Func>(f), std::forward<Args>(args), typename GenerateCountDown<std::tuple_size<typename std::decay<Args>::type>::value>::countDown());
 }
 
-template <typename Func, typename Retval, typename... Args, int... countdown>
-Retval evaluateFunctionHelper(const Func &f, const std::tuple<Args...> &tuple, CountDown<countdown...>) {
-    return f(std::get<countdown>(tuple)...);
+template <typename Func, typename Args, std::size_t... countdown>
+auto evaluateFunctionHelper(Func &f, Args& args, CountDown<countdown...>) -> decltype(f(std::get<countdown>(args)...)) {
+    return f(std::get<countdown>(args)...);
 }
-template <typename Func, typename Retval, typename... Args>
-Retval evaluteFunction(const Func &f, const std::tuple<Args...> &args) {
-    return evaluateFunctionHelper<Func, Retval, Args...>(f, args, typename GenerateCountDown<sizeof...(Args)>::countDown());
+template <typename Func, typename Args>
+auto evaluateFunction(Func &f, Args& args) -> decltype(evaluateFunctionHelper<Func, Args>(f, args, typename GenerateCountDown<std::tuple_size<typename std::decay<Args>::type>::value>::countDown())) {
+    return evaluateFunctionHelper<Func, Args>(f, args, typename GenerateCountDown<std::tuple_size<typename std::decay<Args>::type>::value>::countDown());
 }
 
 /**

@@ -57,10 +57,10 @@ public:
     typedef std::map<Key, JSONData, lessIgnoreCaseAlfa<Key>, AllocatorMap> Map;
 
     static Map AllocateMap(MemoryPool &mp) {
-        return JSONData::Map(lessIgnoreCaseAlfa<Key>(), mp.allocator<std::pair<Key,JSONData>>());
+        return Map(lessIgnoreCaseAlfa<Key>(), mp.allocator<std::pair<Key,JSONData>>());
     }
     static Vector AllocateVector(MemoryPool &mp) {
-        return JSONData::Vector(mp.allocator<JSONData>());
+        return Vector(mp.allocator<JSONData>());
     }
 private:
     enum {JSONNull, JSONString, JSONNumber, JSONArray, JSONObject} type;

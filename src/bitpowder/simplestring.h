@@ -215,10 +215,10 @@ class StableHashedString;
 class String {
 protected:
     const char *ptr;
-    size_t len;
+    std::size_t len;
 public:
-    constexpr static size_t UNKNOWN_LENGTH = std::numeric_limits<size_t>::max();
-    constexpr inline String(const char *pointer, size_t len = UNKNOWN_LENGTH) : ptr(pointer), len(len < UNKNOWN_LENGTH ? len : pointer ? strlen(pointer) : 0) {
+    constexpr static std::size_t UNKNOWN_LENGTH = std::numeric_limits<std::size_t>::max();
+    constexpr inline String(const char *pointer, std::size_t len = UNKNOWN_LENGTH) : ptr(pointer), len(len < UNKNOWN_LENGTH ? len : pointer ? strlen(pointer) : 0) {
     }
     String(const std::string& str) : ptr(str.c_str()), len(str.length()) {
     }
@@ -256,13 +256,13 @@ public:
     inline const_iterator end() const {
         return ptr+len;
     }
-    inline constexpr size_t length() const __attribute__ ((pure)) {
+    inline constexpr std::size_t length() const __attribute__ ((pure)) {
         return len;
     }
-    inline constexpr size_t size() const __attribute__ ((pure)) {
+    inline constexpr std::size_t size() const __attribute__ ((pure)) {
         return len;
     }
-    size_t _size() const __attribute__ ((pure)) {
+    std::size_t _size() const __attribute__ ((pure)) {
         return len;
     }
     inline constexpr const char *pointer() const __attribute__ ((pure)) {
@@ -620,7 +620,7 @@ public:
             i++;
         }
         if (next)
-            *next = i > isNegative ? substring(i) : *this;
+            *next = i > (int)isNegative ? substring(i) : *this;
         return isNegative ? -result : result;
     }
     template <typename T, int _base = 10>
@@ -670,7 +670,7 @@ public:
             i++;
         }
         if (next)
-            *next = i > isNegative ? substring(i) : *this;
+            *next = i > (int)isNegative ? substring(i) : *this;
         return isNegative ? -result : result;
     }
 

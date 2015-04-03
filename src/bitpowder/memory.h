@@ -266,4 +266,9 @@ void* operator new(std::size_t nbytes, std::size_t extra, Args&&... args) {
     return operator new(nbytes+extra, std::forward<Args>(args)...);
 }
 
+template <typename... Args>
+void operator delete(void* p, std::size_t extra, Args&&... args) noexcept {
+    return operator delete(p);
+}
+
 #endif // MEMORY_H
