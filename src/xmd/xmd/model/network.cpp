@@ -75,7 +75,18 @@ bool model::Network::openFile(QUrl fileUrl) {
 }
 
 bool model::Network::saveFile(QUrl fileUrl) {
-    return Util::saveFile(fileUrl, toJson());
+
+    auto project = dataControl->project();
+
+    std::string filename =
+            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+                                  : fileUrl.fileName().toStdString();
+
+    m_logger.log("Saving file " + filename);
+
+    project->saveNetwork(filename);
+
+    return true;
 }
 
 bool model::Network::closeFile() {
