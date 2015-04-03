@@ -26,6 +26,7 @@ D    =  Developer
    17   g   2015-04-02              Parsing of all expressions fail         bug     high
    18   g   2015-04-02              Abort when closing application          bug     high    Global pointer to datacontrol (see ~QObject() comment)
    19   g   2015-04-02              New aborts again .... pffff             bug     high
+   20   s   2015-04-03              component delete --> no xmas delete     bug     high
 99999
 
 
