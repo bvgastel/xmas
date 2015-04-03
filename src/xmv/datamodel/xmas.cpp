@@ -314,7 +314,7 @@ ExpressionResult XMASFunction::setFunctionExpression(bitpowder::lib::String &exp
     if (result) {
         //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
         auto func = result.result();
-        removeExtensionOfBaseType<ParsedXMASFunctionExtension>();
+        removeExtensionOfBaseType<ParsedXMASFunctionExtension *>();
         this->addExtension(new ParsedXMASFunctionExtension(func));
         attachFunction(this, [func](const std::vector<SymbolicPacket> &p) {
             return (*func)(p);
@@ -358,7 +358,7 @@ ExpressionResult XMASSwitch::setSwitchExpression(bitpowder::lib::String &expr, b
     auto result = ParsePacketExpression(expr, mp);
     if (result) {
         //std::cout << "parsing " << expr << ": " << result.result() << std::endl;
-        removeExtensionOfBaseType<SymbolicSwitchingFunctionExtension>();
+        removeExtensionOfBaseType<SymbolicSwitchingFunctionExtension *>();
         for (auto &packet : result.result().values) {
             attachSwitchingFunction(this, packet);
         }
@@ -453,7 +453,7 @@ ExpressionResult XMASJoin::setRestrictedJoinPort(bitpowder::lib::String &expr, b
         return ExpressionResult(false, 0, errMsg);
     }
 
-    removeExtensionOfBaseType<ParsedXMASRestrictedJoin>();
+    removeExtensionOfBaseType<ParsedXMASRestrictedJoin *>();
     auto restrictedJoin = new ParsedXMASRestrictedJoin(port);
     this->addExtension(restrictedJoin);
 
@@ -482,12 +482,17 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 }
 
 XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
-    : name(name), m_mp{mp ? mp : std::shared_ptr<bitpowder::lib::MemoryPool>{new bitpowder::lib::MemoryPool}}
+    : name(name),
+      m_mp(mp ? mp
+              : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
+    ;
 }
 
 XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
-    : name(name), components(components), m_mp{mp ? mp : std::shared_ptr<bitpowder::lib::MemoryPool>{new bitpowder::lib::MemoryPool}}
+    : name(name), components(components),
+      m_mp(mp ? mp
+              : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
 }
 
@@ -540,19 +545,19 @@ bitpowder::lib::String XMASNetwork::getVars() {
 }
 
 /**
- * @brief XMASNetwork::changeComponentName
- *
- * Only use this function of newName is on a permanent memory location.
- * Because the way bitpowder::lib::String works is it copies the pointer
- * to the string, not the string itself. Beware!
- *
- * Preferrably use the same function from project. The project function copies the memory
- * to a memorypool it has, before calling this function.
- *
- * @param oldName
- * @param newName
- * @return
- */
+  * @brief XMASNetwork::changeComponentName
+  *
+  * Only use this function of newName is on a permanent memory location.
+  * Because the way bitpowder::lib::String works is it copies the pointer
+  * to the string, not the string itself. Beware!
+  *
+  * Preferrably use the same function from project. The project function copies the memory
+  * to a memorypool it has, before calling this function.
+  *
+  * @param oldName
+  * @param newName
+  * @return
+  */
 bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder::lib::String &newName)
 {
     auto it = components.find(oldName);
@@ -569,8 +574,8 @@ bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder:
 }
 
 
-XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &network) : XMASComponent(name), network(network)
-{
+XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &network)
+    : XMASComponent(name), network(network) {
     // get in & out gates from network
     auto inGates = network.componentsOfType<XMASSource>();
     auto outGates = network.componentsOfType<XMASSink>();
@@ -583,8 +588,9 @@ XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &ne
 
     // for all in gates, create an input port
     for (auto c : inGates)
-        if (c->external)
+        if (c->external) {
             inputs.push_back(Input {this, c->getStdName().c_str()} );
+        }
 
     // for all out gates, create an output port
     for (auto c : outGates)
