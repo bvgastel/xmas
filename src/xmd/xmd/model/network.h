@@ -68,6 +68,7 @@ public slots:
     QString toJson();
 
     bool addComponent(model::Component *component);
+    bool removeComponent(model::Component *component);
     bool setCompositeNetworkData();
 
     bool saveFile(QUrl fileUrl);

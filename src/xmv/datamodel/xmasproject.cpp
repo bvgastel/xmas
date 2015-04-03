@@ -148,6 +148,13 @@ bool XMASProject::changeComponentName(std::string oldName, std::string newName)
     return result;
 }
 
+bool XMASProject::removeComponent(std::string name)
+{
+    bitpowder::lib::String bname = bitpowder::lib::String(name)(mp());
+    bool result = root->removeComponent(bname);
+    return result;
+}
+
 /**
  * @brief XMASProject::loadNetwork
  *

@@ -501,6 +501,12 @@ bool model::Network::addComponent(model::Component *component) {
     return result;
 }
 
+bool model::Network::removeComponent(model::Component *component) {
+    auto project = dataControl->project();
+    auto name = component->getName().toStdString();
+    bool result = project->removeComponent(name);
+    return result;
+}
 
 
 /**

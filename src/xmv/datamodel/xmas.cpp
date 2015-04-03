@@ -575,6 +575,27 @@ bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder:
     return false;
 }
 
+bool XMASNetwork::removeComponent(bitpowder::lib::String name)
+{
+    auto it = components.find(name);
+    if (it != components.end()) {
+        XMASComponent *c = components.at(name);
+        for (Input* i : c->inputPorts()) {
+            if (i->isConnected()) {
+                disconnect(*i);
+            }
+        }
+        for (Output *o : c->outputPorts()) {
+            if (o->isConnected()) {
+                disconnect(*o);
+            }
+        }
+        components.erase(it);
+        return true;
+    }
+    return false;
+}
+
 
 XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &network)
     : XMASComponent(name), network(network) {

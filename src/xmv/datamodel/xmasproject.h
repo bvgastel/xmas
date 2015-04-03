@@ -40,6 +40,8 @@ public:
 
     bool changeComponentName(std::string oldName, std::string newName);
 
+    bool removeComponent(std::string name);
+
 private:
     std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
     std::map<std::string, XMASNetwork *>networks;
