@@ -67,7 +67,7 @@ bool model::Network::openFile(QUrl fileUrl) {
     try {
         project.reset(new XMASProject {filename});
     } catch (bitpowder::lib::Exception) {
-        m_logger.log("[DataControl::fileOpen] Unable to parse file " + filename + ". Maybe the file is invalid json input.", Qt::red);
+        m_logger.log("[Network::openFile] Unable to parse file " + filename + ". Maybe the file is invalid json input.", Qt::red);
         return false;
     }
     auto result = emitNetwork(*project->getRootNetwork());
