@@ -25,8 +25,6 @@ D    =  Developer
    16   g   2015-04-02              src = green without expr (sometimes)    bug     medium
    17   g   2015-04-02              Parsing of all expressions fail         bug     high
    18   g   2015-04-02              Abort when closing application          bug     high    Global pointer to datacontrol (see ~QObject() comment)
-   19   g   2015-04-03              When a file just read: already '*'      bug     medium  Annoys the hell out of me
-                                    Expected: not '*' until modified
 99999
 
 
@@ -47,5 +45,7 @@ D    =  Developer
    10   g   2015-04-01  2015-04-02  New aborts, only in certain connected   bug     medium  Delete during qml: solved by removing channel only once!
                                     conditions.
    11   g   2015-04-02  2015-04-02  Save json does not save the position    bug     high    Solved: added to ::Export(allcomponents)
+   19   g   2015-04-03  2015-04-03  When a file just read: already '*'      bug     medium  Annoys the hell out of me / solved
+                                    Expected: not '*' until modified
 99999
 
