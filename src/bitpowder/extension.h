@@ -104,6 +104,8 @@ public:
     ExtensionContainer() {
     }
 
+    ExtensionContainer(ExtensionContainer&&) = default;
+
     ExtensionContainer(const ExtensionContainer& c) {
         // otherwise wrong order will be used, can matter
         ExtensionStack toBeAdded;
