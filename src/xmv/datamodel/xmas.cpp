@@ -590,8 +590,10 @@ bool XMASNetwork::removeComponent(bitpowder::lib::String name)
                 disconnect(*o);
             }
         }
-        components.erase(it);
-        return true;
+        auto count = components.erase(it);
+        if (count == 1) {
+            return true;
+        }
     }
     return false;
 }
