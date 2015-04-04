@@ -28,6 +28,8 @@ D    =  Developer
    20   s   2015-04-03              component delete --> no xmas delete     bug     high
    21   s   2015-04-03              Retrieving ports for composites aborts  bug     high
                                     Composite.cpp::getPorts()
+   22   g   2015-04-04              Storing canvas data: only w + h         bug     high
+                                    need rot and scale too
 99999
 
 
