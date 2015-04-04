@@ -88,6 +88,11 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
         globals["CANVAS"] = jsonCanvas;
     }
 
+    JSONData::Map jsonPacketType = JSONData::AllocateMap(mp);
+    jsonPacketType["val "] = bitpowder::lib::String(network->packetType());
+    globals["PACKET_TYPE"] = JSONData::AllocateMap(mp);
+
+
     for (auto& it : network->getComponentMap()) {
         allComponents.insert(it.second);
     }
@@ -218,7 +223,12 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
     auto jsonPacketType = json["PACKET_TYPE"];
     if (!jsonPacketType.isNull()) {
-        // Help: don't know how to store packet_type !!
+        auto jsonValue = jsonPacketType["val "];
+        if (jsonValue.isString()) {
+            result->packetType(jsonValue.asString().stl());
+        } else if (jsonValue.isNumber()) {
+            result->packetType(std::to_string(jsonValue.asNumber()));
+        }
     }
 
     auto jsonComposite = json["COMPOSITE_NETWORK"];

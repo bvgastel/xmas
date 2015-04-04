@@ -1098,6 +1098,9 @@ public:
 
     const std::string getStdName() const;
 
+    const std::string packetType() const;
+    void packetType(const std::string m_packet_type);
+
     bitpowder::lib::String getPacketType();
     bitpowder::lib::String getVars();
 
@@ -1155,6 +1158,7 @@ private:
 
 private:
     std::string name;
+    std::string m_packet_type;
     std::map<bitpowder::lib::String, XMASComponent*> components;
     std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
 };
