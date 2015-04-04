@@ -57,8 +57,8 @@ XMASNetwork* XMASProject::getRootNetwork() const {
 }
 
 XMASNetwork* XMASProject::getNetwork(const std::string name) const {
-    //return networks.find(name)->second.get();
-    return networks.find(name)->second;
+    auto it = networks.find(name);
+    return (it != networks.end()) ? it->second : nullptr;
 }
 
 void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
