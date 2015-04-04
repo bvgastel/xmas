@@ -283,9 +283,7 @@ XMASComponent *model::Component::xmas_component() {
     }
 
     std::string stdName = getName().toStdString();
-    bitpowder::lib::String name = bitpowder::lib::String(stdName);
-    auto xmap = network->getComponentMap();
-    auto *c = xmap[name];
+    auto c = network->getComponent(stdName);
     if (!c) {
         return nullptr;
     }

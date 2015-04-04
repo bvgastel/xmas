@@ -65,7 +65,7 @@ bool model::Network::openFile(QUrl fileUrl) {
     m_logger.log("Opening file " + filename);
 
     try {
-        project.reset(new XMASProject {filename});
+        project.reset(new XMASProject(filename));
     } catch (bitpowder::lib::Exception e) {
         m_logger.log("[Network::openFile] Unable to parse file " + filename + ". Error msg: " + e.description(), Qt::red);
         return false;
