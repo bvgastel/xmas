@@ -433,6 +433,8 @@ bool model::Network::addComposite(model::Component *component) {
                                   : fileUrl.fileName().toStdString();
 
     XMASNetwork *xnetwork = project->getNetwork(filename);
+    if (!xnetwork)
+        return false;
 
     std::string name = component->getName().toStdString();
     if(project->insertComposite(name, std::ref(*xnetwork))){
