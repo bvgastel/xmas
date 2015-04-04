@@ -401,7 +401,7 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
             jsonPos["x"] = ext->x();
             jsonPos["y"] = ext->y();
             jsonPos["orientation"] = ext->orientation();
-            jsonPos["scale"] = ext->scale();
+            jsonPos["scale"] = ext->scale() * 100.0f;
 
             jsonComponent["pos"] = jsonPos;
         }
