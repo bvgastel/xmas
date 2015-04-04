@@ -66,7 +66,23 @@ Window {
         txtInputModelAlias.text = network.alias
         chkImage.checked = network.imageName !== ""
         chkBoxedImage.checked = network.boxedImage
-        //imageList.currentIndex = network.imageName
+        setCurrentSymbol(network.imageName)
+    }
+    Component.onCompleted: imageList.count
+
+    // Javascripts
+    function setCurrentSymbol(symbol){
+        if(symbol===undefined || symbol === ""){
+            imageList.currentIndex = -1
+            return
+        }
+
+        for ( var i=0 ; i < imageList.count; i++){
+            imageList.currentIndex = i
+            if(imageList.currentItem.name===symbol){
+                return;
+            }
+        }
     }
 
     FocusScope{
@@ -319,6 +335,7 @@ Window {
                                             text: "Image"
                                         }
                                     }
+                                    onCheckedChanged: if(!checked) imageList.currentIndex = -1
                                     KeyNavigation.tab: chkBoxedImage
                                 }
                                 CheckBox {
@@ -376,6 +393,7 @@ Window {
                                         source: Qt.resolvedUrl(fileURL)
                                         fillMode: Image.PreserveAspectFit
                                         opacity: chkImage.checked ? 1.0 : 0.25
+                                        property string name: fileName
                                         MouseArea {
                                             anchors.fill: parent
                                             onClicked: imageList.currentIndex = index
@@ -433,6 +451,8 @@ Window {
                 network.size = Qt.size(txtInputModelWidth.text,txtInputModelHeight.text)
                 if (symbols.get(imageList.currentIndex, "fileName")) {
                     network.imageName = symbols.get(imageList.currentIndex,"fileName")
+                } else {
+                   network.imageName = ""
                 }
                 network.boxedImage = chkBoxedImage.checked
                 dialog.accepted
