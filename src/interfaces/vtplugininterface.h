@@ -43,7 +43,7 @@ public:
     virtual QVariantMap paramMap() = 0;
     virtual void parameters(QVariantMap paramMap) = 0;
 
-    virtual void start(XMap &componentMap) = 0;
+    virtual void start(std::shared_ptr<XProject> project) = 0;
     virtual void startThread(const QString &json) = 0;
     virtual void startProcess(const QString &json) = 0;
 

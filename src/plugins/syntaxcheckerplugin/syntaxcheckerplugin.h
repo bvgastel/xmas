@@ -51,7 +51,7 @@ public:
     virtual void parameters(QVariantMap paramMap) override;
     virtual QVariantMap paramMap() override;
 
-    virtual void start(XMap &componentMap) override;
+    virtual void start(std::shared_ptr<XProject> project) override;
     virtual void startThread(const QString &json) override;
     virtual void startProcess(const QString &json) override;
 

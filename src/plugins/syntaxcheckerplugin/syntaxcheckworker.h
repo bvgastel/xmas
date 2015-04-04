@@ -51,7 +51,7 @@ protected:
 public slots:
     void doProcessWork(const QString &json) override;
     void doThreadWork(const QString &json) override;
-    void doWork(XMap &componentMap) override;
+    void doWork(std::shared_ptr<XProject> project) override;
 
 
 signals:

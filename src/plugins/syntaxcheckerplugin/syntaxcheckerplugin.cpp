@@ -48,14 +48,10 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
 
 }
 
-void SyntaxCheckerPlugin::start(XMap &componentMap) {
+void SyntaxCheckerPlugin::start(std::shared_ptr<XProject> project) {
     SyntaxCheckWorker *worker = new SyntaxCheckWorker;
-
     connect(worker, &SyntaxCheckWorker::resultReady, this, &SyntaxCheckerPlugin::handleResults);
-
-    std::cout << "[SyntaxCheckWorker] Starting in main thread." << std::endl;
-    worker->doWork(componentMap);
-    std::cout << "[SyntaxCheckWorker] finished in main thread." << std::endl;
+    worker->doWork(project);
 }
 
 /**

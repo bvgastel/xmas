@@ -29,12 +29,13 @@
 
 #include "xmas.h"
 #include "simplestring.h"
+#include "xmasproject.h"
 
 typedef std::chrono::high_resolution_clock::time_point tpoint;
 typedef std::set<XMASComponent *> XSet;
 typedef std::map<bitpowder::lib::String, XMASComponent *> XMap;
-
-
+typedef XMASProject XProject;
+typedef XMASNetwork XNetwork;
 
 #endif // COMMONINTERFACE_H
 

@@ -46,24 +46,19 @@ void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Resu
     std::cout << duration_qstr.toStdString() << std::endl;
 }
 
-void SyntaxCheckWorker::doWork(XMap &componentMap) {
+void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
     Result result;
     bool success;
     tpoint start, end, nextstart, nextend;
     QString stepName;
 
-    // STEP 1: convert map to set
-    stepName = "convert to set";
-    std::set<XMASComponent *> componentSet;
-    std::tie(nextstart, nextend, componentSet) = convertComponentMap2Set(componentMap);
-    start = nextstart;
-    end = nextend;
-    reportTimer(nextstart, nextend, stepName, result);
+    std::set<XMASComponent *> componentSet = project->getRootNetwork()->getComponentSet();
+    XMap componentMap = project->getRootNetwork()->getComponentMap();
     success = true;
 
     if (success) {
-        // STEP 2: check if the topology is well formed
-        stepName = "syntax check (valid ports)";
+        // STEP 1: check if the topology is well formed
+        stepName = "syntax check for valid ports";
         std::tie(nextstart, nextend) = checkSyntax(componentMap, result, stepName);
         end = nextend;
         reportTimer(nextstart, nextend, stepName, result);
@@ -71,8 +66,8 @@ void SyntaxCheckWorker::doWork(XMap &componentMap) {
     }
 
     if (success) {
-        // STEP 3: check for cycles
-        stepName = "check cycles";
+        // STEP 2: check for cycles
+        stepName = "check for cycles";
         std::tie(nextstart, nextend) = checkCycles(componentSet, result, stepName);
         end = nextend;
         reportTimer(nextstart, nextend, stepName, result);
@@ -80,8 +75,8 @@ void SyntaxCheckWorker::doWork(XMap &componentMap) {
     }
 
     if (success) {
-        // STEP 4: check symbolic types
-        stepName = "symbolic types";
+        // STEP 3: check symbolic types
+        stepName = "check for symbolic types";
         std::tie(nextstart, nextend) = checkSymbolicTypes(componentSet, result, stepName);
         end = nextend;
         reportTimer(nextstart, nextend, stepName, result);
@@ -96,31 +91,11 @@ void SyntaxCheckWorker::doWork(XMap &componentMap) {
 
 void SyntaxCheckWorker::doThreadWork(const QString &json) {
     // STEP 0: parse the json string toward a component map
+    XProject *project = new XProject();
     bitpowder::lib::MemoryPool mp;
     std::map<bitpowder::lib::String, XMASComponent *> componentMap;
     std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
     doWork(componentMap);
-}
-
-std::tuple<tpoint, tpoint, XSet>
-    SyntaxCheckWorker::convertComponentMap2Set(XMap componentMap) {
-    auto start = std::chrono::high_resolution_clock::now();
-
-    XSet componentSet;
-
-    // Create componentSet
-    auto cbegin = componentMap.cbegin();
-    auto cend = componentMap.cend();
-    auto it = cbegin;
-
-    while(it != cend) {
-        auto component = it->second;
-        componentSet.insert(component);
-        it++;
-    }
-    auto end = std::chrono::high_resolution_clock::now();
-
-    return std::make_tuple(start, end, componentSet);
 }
 
 std::pair<tpoint, tpoint>
