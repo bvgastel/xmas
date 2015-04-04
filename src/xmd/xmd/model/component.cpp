@@ -60,13 +60,13 @@ QVariantMap model::Component::getPorts()
 
     //auto comp = xmas_component();
     QVariantMap map;
-    //    for(Port *p : comp->ports()) {
-    //        QString name = p->getName();
-    //        map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
-    //    }
-    map["in0"] = XPort::PortType::INPORT;
-    //    map["in1"] = XPort::PortType::INPORT;
-    map["out"] = XPort::PortType::OUTPORT;
+        for(Port *p : comp->ports()) {
+            QString name = p->getName();
+            map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
+        }
+//    map["in0"] = XPort::PortType::INPORT;
+//    map["in1"] = XPort::PortType::INPORT;
+//    map["out"] = XPort::PortType::OUTPORT;
     return map;
 }
 
