@@ -43,7 +43,6 @@ void model::Component::updateCanvasData() {
     if (c) {
         c->canvasData(this->x(), this->y(), this->rotation(), this->scale());
     }
-    qDebug() << "updateCanvasData" ;
 }
 
 // This method was made for composite objects.
@@ -57,10 +56,16 @@ QVariantMap model::Component::getPorts()
 
     auto comp = xmas_component();
     QVariantMap map;
+    if(comp){
         for(Port *p : comp->ports()) {
             QString name = p->getName();
             map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
+            qDebug() << "port:" << p->getName() ;
         }
+        qDebug() << "end of ports" ;
+    } else {
+        qDebug() << "no comp :(" ;
+    }
 //    map["in0"] = XPort::PortType::INPORT;
 //    map["in1"] = XPort::PortType::INPORT;
 //    map["out"] = XPort::PortType::OUTPORT;

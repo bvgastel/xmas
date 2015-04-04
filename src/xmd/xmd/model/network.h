@@ -59,6 +59,7 @@ signals:
     void compositeLibraryChanged();
     void writeLog(QString message, QColor color = Qt::blue);
     bool createNetwork(const QVariantMap &object);
+    void componentAdded();
 
 public slots:
     bool connect(XPort *port_out, XPort *port_in);

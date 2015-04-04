@@ -434,9 +434,10 @@ bool model::Network::addComposite(model::Component *component) {
     XMASNetwork *xnetwork = project->getNetwork(filename);
 
     std::string name = component->getName().toStdString();
-    project->insertComposite(name, std::ref(*xnetwork));
-
-    return true;
+    if(project->insertComposite(name, std::ref(*xnetwork))){
+        return true;
+    }
+    return false;
 }
 
 bool model::Network::addComponent(model::Component *component) {
@@ -483,6 +484,7 @@ bool model::Network::addComponent(model::Component *component) {
         emit writeLog(QString("Unknown component type!"), Qt::red);
         return false;
     }
+    if(result) emit componentAdded();
     return result;
 }
 
