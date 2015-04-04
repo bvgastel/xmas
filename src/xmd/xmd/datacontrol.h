@@ -33,12 +33,15 @@
  * @brief The DataControl class
  *
  * The data control class has access to the xmas project.
+ *
  * Also this class is available to all other c++ classes
  * using a global "extern DataControl *dataControl;" declaration.
- * It also registers the data classes with Qml as required.
+ *
+ * Furthermore it registers the data classes with Qml as required.
+ *
  * Finally, it serves as a relay for messages through m_logger.
  * Qml only connects to this m_logger provided an entry for
- * all C++ classes
+ * all C++ classes that want access to the qml console log.
  *
  */
 class DataControl : public QObject

@@ -54,10 +54,9 @@ bool PluginControl::startPlugin(QString vtPlugin) {
 
 bool PluginControl::stopPlugin(QString vtPlugin) {
     Q_UNUSED(vtPlugin)
-//    VtPluginInterface *plugin = m_vtMap[vtPlugin];
-//        plugin->stop();
-        return true;
-    m_logger->log(QString("[PluginControl] Plugin stopped."));
+//  Currently no mechanism to stop a plugin
+    return true;
+//    m_logger->log(QString("[PluginControl] Plugin stopped."));
 }
 
 /*
@@ -69,23 +68,18 @@ bool PluginControl::stopPlugin(QString vtPlugin) {
 XMap PluginControl::getXmasComponents() {
     std::shared_ptr<XMASProject> project = dataControl->project();
     if (!project) {
-        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null xmas_project.";
-        m_logger->log(msg);
-        std::cerr << msg.toStdString() << std::endl;
         return XMap();
     }
     XMASNetwork *network = project->getRootNetwork();
     if (!network) {
-        QString msg = "[PluginControl::startPlugin] Plugin could not run due to null network from xmas_project.";
-        m_logger->log(msg);
-        std::cerr << msg.toStdString() << std::endl;
         return XMap();
     }
     auto xmap = network->getComponentMap();
     return xmap;
 }
 
-
+// This is pretty platform dependent. Needs some extra tweaking to reduce platform dependencies
+// Maybe a default setting in the application setup
 std::shared_ptr<QDir> PluginControl::pluginDir() {
     std::shared_ptr<QDir> pluginDir = std::make_shared<QDir>(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)

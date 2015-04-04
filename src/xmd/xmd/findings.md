@@ -24,7 +24,6 @@ D    =  Developer
    15   g   2015-04-02              After new, file is still '*'            bug     medium
    16   g   2015-04-02              src = green without expr (sometimes)    bug     medium
    17   g   2015-04-02              Parsing of all expressions fail         bug     high
-   19   g   2015-04-02              New aborts again .... pffff             bug     high
    20   s   2015-04-03              component delete --> no xmas delete     bug     high
    21   s   2015-04-03              Retrieving ports for composites aborts  bug     high
                                     Composite.cpp::getPorts()
@@ -51,5 +50,6 @@ D    =  Developer
    18   g   2015-04-02  2015-04-04  Abort when closing application          bug     high
    19   g   2015-04-03  2015-04-03  When a file just read: already '*'      bug     medium  Annoys the hell out of me / solved
                                     Expected: not '*' until modified
+   19x  g   2015-04-02  2015-04-04  New aborts again .... pffff             bug     high
 99999
 
