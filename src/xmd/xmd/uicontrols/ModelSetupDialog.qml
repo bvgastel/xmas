@@ -57,7 +57,7 @@ Window {
         focus: true
         Component.onCompleted:{
             txtInputModelFileName.forceActiveFocus()
-            txtInputModelFileName.select(0,1)
+            txtInputModelFileName.selectAll()
         }
 
         Keys.onEscapePressed:cancelAction.trigger()
@@ -107,7 +107,7 @@ Window {
                                     text: network.fileName
                                     focus:true
                                     selectByMouse:true
-                                    validator: RegExpValidator{id:regFileName ; regExp:/^[\w,\s-]+(\.json){1}$/}
+                                    validator: RegExpValidator{id:regFileName ; regExp:/^[\w,\s-]*(\.json){0,1}$/}
                                     wrapMode: TextInput.NoWrap
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
