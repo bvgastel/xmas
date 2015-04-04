@@ -113,7 +113,6 @@ private:
     QString m_imageName;
     bool m_boxedImage;
     QVariantList m_compositeLibrary;
-    bool addComposite(QUrl url);
 
     std::map<std::type_index, model::Component::CompType> m_type_index_map = {
         {std::type_index(typeid(XMASSource)), xsource},

@@ -58,7 +58,7 @@ QVariantMap model::Component::getPorts()
         return QVariantMap();
     }
 
-    //auto comp = xmas_component();
+    auto comp = xmas_component();
     QVariantMap map;
         for(Port *p : comp->ports()) {
             QString name = p->getName();

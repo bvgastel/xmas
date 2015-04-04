@@ -146,9 +146,6 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
             map.insert("outport", QString(out->getName()));
             map.insert("incomp", QString(out->getTarget()->getStdName().c_str()));
             map.insert("inport", QString(out->getTargetPort()->getName()));
-//            m_logger.log(
-//             "channel created from " + out->getInitiator()->getStdName() +
-//             " to " + out->getTarget()->getStdName());
             list.append(map);
         } else {
             m_logger.log("output port " + std::string(out->getName()) + " in comp "
@@ -160,7 +157,6 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
 
 void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
-//    m_logger.log("name = "+ name + " slot for creation called", Qt::darkGreen);
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
     model::Component::CompType type = m_type_index_map[typeIndex];
@@ -622,8 +618,3 @@ bool model::Network::removeLibraryComposite(QUrl url){
     return true;
 }
 
-
-bool model::Network::addComposite(QUrl url){
-    qDebug() << "add composite with url = " << url;
-    return true;
-}
