@@ -139,7 +139,6 @@ Window {
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: okAction.trigger()
-                                    KeyNavigation.priority: KeyNavigation.BeforeItem
                                     KeyNavigation.tab: modelFolderButton
                                 }
                             }

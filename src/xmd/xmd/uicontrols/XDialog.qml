@@ -35,100 +35,118 @@ import QtQuick.Window 2.2
 
 Window {
     id:dialog
+
+    // Properties
     visible: false
     modality: Qt.WindowModal
     flags: Qt.Dialog
     color: "darkgrey"
-
+    width:500
+    height: 300
+    minimumHeight: 300
+    minimumWidth: 400
+    maximumHeight: 500
+    maximumWidth: 700
     property string help:""
     property string expression:""
     property alias validator: regex.regExp
 
+    // Signals
     signal accepted()
 
-    width:500
-    height: 300
-    minimumHeight: 200
-    minimumWidth: 400
-    maximumHeight: 500
-    maximumWidth: 700
+    // Event handling
+    onVisibleChanged: {
+        expressionTextInput.text = expression
+        expressionTextInput.forceActiveFocus()
+    }
 
-    onVisibleChanged: expr.text = expression
-    ColumnLayout {
-        id: column
+    // Content
+    FocusScope{
         anchors.fill: parent
-        anchors.margins: 10
-        spacing:5
-        Rectangle{
-            Layout.fillWidth: true
-            Layout.preferredHeight: 150
-            color: "darkgrey"
-            Label {
-                anchors.fill:parent
-                anchors.margins: 10
-                text: help
-                wrapMode: Text.WordWrap
-                color: "black"
-            }
-        }
-        Rectangle{
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredHeight: 100
-            Layout.minimumHeight: 50
-            color: "white"
-            TextInput{
-                id:expr
-                anchors.fill:parent
-                anchors.margins: 10
-                text: expression
-                focus:true
-                selectByMouse:true
-                validator: RegExpValidator{id:regex ; regExp:/^(\S.*)$/}
-                wrapMode: TextInput.WordWrap
-                font.pointSize : 10
-                onFocusChanged: if(focus)selectAll()
-                onAccepted: okAction.trigger()
-                Keys.onEscapePressed:cancelAction.trigger()
-            }
-        }
-        RowLayout{
-            spacing:10
-            Layout.fillWidth: true
-            Layout.preferredHeight: 30
-            Layout.alignment: Qt.AlignRight
-            Button{
-                action:cancelAction
-                tooltip: ""
-            }
-            Button {
-                isDefault: true
-                action: okAction
-                tooltip: ""
-            }
-        }
-    }
+        focus:true
+        Keys.onEscapePressed:cancelAction.trigger()
 
-    Action {
-        id:cancelAction
-        text: "Cancel"
-        onTriggered: {dialog.close()
+        ColumnLayout {
+            id: column
+            anchors.fill: parent
+            anchors.margins: 10
+            spacing:5
+            Rectangle{
+                Layout.fillWidth: true
+                Layout.preferredHeight: 150
+                color: "darkgrey"
+                Label {
+                    anchors.fill:parent
+                    anchors.margins: 10
+                    text: help
+                    wrapMode: Text.WordWrap
+                    color: "black"
+                }
+            }
+            Rectangle{
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredHeight: 100
+                Layout.minimumHeight: 50
+                color: "white"
+                TextInput{
+                    id:expressionTextInput
+                    anchors.fill:parent
+                    anchors.margins: 10
+                    focus:true
+                    selectByMouse:true
+                    validator: RegExpValidator{id:regex ; regExp:/^(\S.*)$/}
+                    wrapMode: TextInput.WordWrap
+                    font.pointSize : 10
+                    onFocusChanged: if(focus)selectAll()
+                    onAccepted: okAction.trigger()
+                    KeyNavigation.tab: okButton
+                }
+            }
+            RowLayout{
+                spacing:10
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight
+                Button{
+                    id:cancelButton
+                    action:cancelAction
+                    tooltip: ""
+                    Keys.onReturnPressed: cancelAction.trigger()
+                    KeyNavigation.tab: expressionTextInput
+                }
+                Button {
+                    id:okButton
+                    isDefault: true
+                    focus:true
+                    action: okAction
+                    tooltip: ""
+                    Keys.onReturnPressed: okAction.trigger()
+                    KeyNavigation.tab: cancelButton
+                }
+            }
         }
-    }
-    Action {
-        id: okAction
-        text: "Ok"
-        enabled: expr.acceptableInput
-        onTriggered: {
-            dialog.expression = expr.text
-            dialog.accepted()
-            dialog.close()
+
+        // Actions
+        Action {
+            id:cancelAction
+            text: "Cancel"
+            onTriggered: dialog.close()
+            tooltip: ""
         }
+        Action {
+            id: okAction
+            text: "Ok"
+            enabled: expressionTextInput.acceptableInput
+            onTriggered: {
+                dialog.expression = expressionTextInput.text
+                dialog.accepted()
+                dialog.close()
+            }
+            tooltip: ""
+        }
+
+
+
+
     }
 }
-
-
-
-
-
-
