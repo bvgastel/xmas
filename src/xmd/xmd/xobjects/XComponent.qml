@@ -59,6 +59,7 @@ Model.XComponent {
     // Signals
     signal update()
     signal showDialog()
+    signal remove
 
     // JavaScripts
 
@@ -122,6 +123,7 @@ Model.XComponent {
     onExpressionChanged: validmarker.color = valid ? "green" : "red"
     // result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
+    onRemove: ComponentJs.remove(component)
 
     // Selection highlite
     Rectangle {
@@ -247,7 +249,7 @@ Model.XComponent {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: ComponentJs.remove(component)
+            onTriggered: remove
         }
         MenuSeparator{}
         MenuItem {
