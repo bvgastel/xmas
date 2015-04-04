@@ -29,7 +29,6 @@ extern DataControl *dataControl;
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent), m_name()
 {
-    //QObject::connect()
 }
 
 model::Component::~Component()
@@ -117,6 +116,18 @@ void model::Component::setValidExpr(bool validExpr, int pos, QString errMsg) {
     emit validExprChanged(pos, errMsg);
 }
 
+void model::Component::classBegin()
+{
+    // no action
+}
+
+void model::Component::componentComplete()
+{
+    if (m_expression != "") {
+        updateExpression();
+    }
+}
+
 bool model::Component::getValid() {
     bool result = false;
     auto c = xmas_component();
@@ -132,15 +143,17 @@ bitpowder::lib::MemoryPool &model::Component::mp() {
 }
 
 int model::Component::updateExpression(QVariant expression) {
-    QString typeName = QString(expression.typeName());
-    emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+expression.toString());
+    m_expression = expression;
+    return updateExpression();
+}
+
+int model::Component::updateExpression() {
+    QString typeName = QString(m_expression.typeName());
+    emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+m_expression.toString());
 
     auto c = xmas_component();
     if (!c) {
-        emit writeLog(QString("Fatal error in Component: "
-                              "did not recognize component as XMAS Component."));
-        std::cerr   << "Fatal error in Component: did not recognize component as XMAS Component."
-                    << std::endl;
+        // some calls are before component is complete: without name, no xmas component.
         return false;
     }
 
@@ -149,8 +162,7 @@ int model::Component::updateExpression(QVariant expression) {
             setValidExpr(false, 0, QString("Received non integer size."));
             return 0;
         }
-        m_expression = expression;
-        int size = expression.toInt();
+        int size = m_expression.toInt();
         XMASQueue *queue = dynamic_cast<XMASQueue *>(c);
         if (!queue) {
             emit writeLog(QString("Fatal error in Component: "
@@ -167,8 +179,7 @@ int model::Component::updateExpression(QVariant expression) {
         if (typeName != "QString") {
             return 0;
         }
-        m_expression = expression;
-        QString qexpr = expression.toString();
+        QString qexpr = m_expression.toString();
         XMASSource *source = dynamic_cast<XMASSource *>(c);
         if (source) {
             std::string expr = qexpr.toStdString();
@@ -192,8 +203,7 @@ int model::Component::updateExpression(QVariant expression) {
         if (typeName != "QString") {
             return 0;
         }
-        m_expression = expression;
-        QString qexpr = expression.toString();
+        QString qexpr = m_expression.toString();
         XMASFunction *func = dynamic_cast<XMASFunction *>(c);
         if (func) {
             std::string expr = qexpr.toStdString();
@@ -219,8 +229,7 @@ int model::Component::updateExpression(QVariant expression) {
         if (typeName != "QString") {
             return 0;
         }
-        m_expression = expression;
-        QString qexpr = expression.toString();
+        QString qexpr = m_expression.toString();
         XMASJoin *join = dynamic_cast<XMASJoin *>(c);
         if (join) {
             std::string expr = qexpr.toStdString();
@@ -232,6 +241,7 @@ int model::Component::updateExpression(QVariant expression) {
             } else {
                 kindOfJoin = "unrestricted";
                 result = join->setUnrestrictedJoinExpression(expr, mp());
+                emit writeLog(QString("Function for unrestricted Join is not implemented yet."));
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
@@ -241,7 +251,6 @@ int model::Component::updateExpression(QVariant expression) {
             emit writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
                           + (result.m_success? "succeeded. Stored \"" + xmas_expression + "\""
                                              : "failed. Error message is:" + errMsg));
-            emit writeLog(QString("Function for Join is not implemented yet."));
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
@@ -253,8 +262,7 @@ int model::Component::updateExpression(QVariant expression) {
         if (typeName != "QString") {
             return 0;
         }
-        m_expression = expression;
-        QString qexpr = expression.toString();
+        QString qexpr = m_expression.toString();
         XMASSwitch *sw = dynamic_cast<XMASSwitch *>(c);
         if (sw) {
             std::string expr = qexpr.toStdString();
@@ -293,6 +301,8 @@ XMASComponent *model::Component::xmas_component() {
     std::string stdName = getName().toStdString();
     auto c = network->getComponent(stdName);
     if (!c) {
+        std::cerr << "xmas component for component " << stdName << " not found."
+                  << "returning nullptr."<< std::endl;
         return nullptr;
     }
 

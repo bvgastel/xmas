@@ -43,6 +43,7 @@ public:
     enum CompType {Unknown=0, Source, Sink, Function, Queue, Join, Merge, Switch, Fork, Composite};
 
 private:
+    Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
@@ -87,7 +88,8 @@ public:
     void setValidExpr(bool validExpr);
     void setValidExpr(bool validExpr, int pos, QString errMsg);
 
-
+    virtual void classBegin();
+    virtual void componentComplete();
 
 
 
@@ -95,6 +97,7 @@ public:
 
 private:
     int updateExpression(QVariant expression);
+    int updateExpression();
     bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
 
 public:
