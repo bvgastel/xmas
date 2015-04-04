@@ -30,7 +30,6 @@ namespace model
 class Component : public QQuickItem
 {
     Q_OBJECT
-
 public:
     enum Orientation {
         North = 0,
@@ -52,6 +51,10 @@ private:
     Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ getValid NOTIFY validChanged)
+    Q_PROPERTY(int width READ width WRITE width NOTIFY widthChanged)
+    Q_PROPERTY(int height READ height WRITE height NOTIFY heightChanged)
+    Q_PROPERTY(int rotation READ rotation WRITE rotation NOTIFY rotationChanged)
+    Q_PROPERTY(float scale READ scale WRITE scale NOTIFY scaleChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -63,6 +66,10 @@ signals:
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
+    void widthChanged();
+    void heightChanged();
+    void rotationChanged();
+    void scaleChanged();
 
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
@@ -71,7 +78,14 @@ public slots:
 
     QVariantMap getPorts();
 
-public:
+    int width();
+    void width(int width);
+    int height();
+    void height(int height);
+    int rotation();
+    void rotation(int rotation);
+    float scale();
+    void scale(float scale);
 
     CompType getType() const;
     void setType(CompType type);
@@ -83,15 +97,18 @@ public:
     void setExpression(QVariant expression);
 
     bool getValidExpr();
+    bool getValid();
+
+public:
     void setValidExpr(bool validExpr);
     void setValidExpr(bool validExpr, int pos, QString errMsg);
 
-    bool getValid();
 
     XMASComponent *xmas_component();
 
 private:
     int updateExpression(QVariant expression);
+    void setCanvasData();
     bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
 
 public:
@@ -106,6 +123,10 @@ private:
     CompType m_type;
     bool m_valid;       /* Is the object fully connected? */
     bool m_validExpr;   /* Is the expression correctly updated in xmas? */
+    int m_width;
+    int m_height;
+    int m_rotation;
+    float m_scale;
 };
 } // namespace model
 

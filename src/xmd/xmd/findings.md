@@ -27,6 +27,8 @@ D    =  Developer
    18   g   2015-04-02              Abort when closing application          bug     high    Global pointer to datacontrol (see ~QObject() comment)
    19   g   2015-04-02              New aborts again .... pffff             bug     high
    20   s   2015-04-03              component delete --> no xmas delete     bug     high
+   21   s   2015-04-03              Retrieving ports for composites aborts  bug     high
+                                    Composite.cpp::getPorts()
 99999
 
 

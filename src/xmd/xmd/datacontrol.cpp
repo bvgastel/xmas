@@ -20,26 +20,11 @@
   *
   **********************************************************************/
 
-#include <iostream>
-#include <map>
-#include <set>
-#include <iostream>
-#include <iomanip>
-#include <chrono>
-#include <ctime>
-
-#include <QQmlContext>
-#include <QDebug>
 #include <QtQml>
-#include <QVariant>
-#include "canvascomponentextension.h"
-#include "composite-network-extension.h"
 #include "model/network.h"
 #include "model/component.h"
 #include "model/port.h"
 #include "model/channel.h"
-#include "export.h"
-#include "parse.h"
 #include "datacontrol.h"
 
 DataControl::DataControl(QObject *parent)

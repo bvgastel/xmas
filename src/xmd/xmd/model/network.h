@@ -38,7 +38,6 @@ const model::Component::CompType xmerge = model::Component::CompType::Merge;
 const model::Component::CompType xfork = model::Component::CompType::Fork;
 const model::Component::CompType xswitch = model::Component::CompType::Switch;
 
-
 class Network : public QQuickItem
 {
     Q_OBJECT
@@ -126,8 +125,6 @@ private:
         {std::type_index(typeid(XMASFork)), xfork},
         {std::type_index(typeid(XMASSwitch)), xswitch},
     };
-
 };
-
 } // namespace model
 #endif // NETWORK_H

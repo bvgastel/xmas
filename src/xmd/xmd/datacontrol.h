@@ -19,93 +19,50 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #ifndef DATACONTROL_H
 #define DATACONTROL_H
-
 #include <typeindex>
 #include <map>
 
 #include <QObject>
 #include <QColor>
-#include <QUrl>
 
-#include "simplestring.h"
-#include "xmas.h"
 #include "logger.h"
-#include "parse.h"
-#include "memorypool.h"
-#include "exception.h"
-#include "common.h" // for destroy template
-#include "model/component.h"
-#include "model/network.h"
 #include "xmasproject.h"
-
-
 /**
  * @brief The DataControl class
  *
- * The data control class has access to the complete datamodel and is able to
- * manage the data (create, modify, destroy and cleanup).
+ * The data control class has access to the xmas project.
+ * Also this class is available to all other c++ classes
+ * using a global "extern DataControl *dataControl;" declaration.
  * It also registers the data classes with Qml as required.
- *
- *
+ * Finally, it serves as a relay for messages through m_logger.
+ * Qml only connects to this m_logger provided an entry for
+ * all C++ classes
  *
  */
 class DataControl : public QObject
 {
     Q_OBJECT
-
 public:
     explicit DataControl(QObject *parent = 0);
     ~DataControl();
 
     void registerTypes() const;
-
-
     /************************************************************
      * Signals
      ************************************************************/
 signals:
     void writeLog(QString message,QColor color=Qt::black);
-
-    /************************************************************
-     * Slots
-     ************************************************************/
-public slots:
-
-    /************************************************************
-     * Public methods
-     ************************************************************/
-public:
-
-    /************************************************************
-     * Private methods
-     ************************************************************/
-private:
-
     /************************************************************
      * Data members
      ************************************************************/
 public:
-
     std::shared_ptr<XMASProject> project();
 
 private:
-
     Logger m_logger;
     std::shared_ptr<XMASProject> m_project;
-
-    QVariantList m_compositeLibrary;
-
-    /************************************************************
-     * enums and constant data members
-     ************************************************************/
-    const char *m_modelName = "XMAS.model";
-    const int m_modelMajor = 1;
-    const int m_modelMinor = 0;
-
 };
-
 
 #endif // DATACONTROL_H

@@ -523,6 +523,14 @@ void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
     }
 }
 
+XMASComponent *XMASNetwork::getComponent(std::string name) {
+    if (components.count(name)) {
+        auto c = components.at(name);
+        return c;
+    }
+    return nullptr;
+}
+
 void XMASNetwork::setCompositeNetworkData(std::string alias, int width, int height, std::string imageName, bool boxedImage)
 {
     auto cn_ext = getNetworkExtension<CompositeNetworkExtension>(true);
@@ -577,9 +585,8 @@ bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder:
 
 bool XMASNetwork::removeComponent(bitpowder::lib::String name)
 {
-    auto it = components.find(name);
-    if (it != components.end()) {
-        XMASComponent *c = components.at(name);
+    auto c = getComponent(name.stl());
+    if (c) {
         for (Input* i : c->inputPorts()) {
             if (i->isConnected()) {
                 disconnect(*i);
@@ -590,7 +597,7 @@ bool XMASNetwork::removeComponent(bitpowder::lib::String name)
                 disconnect(*o);
             }
         }
-        auto count = components.erase(it);
+        auto count = components.erase(name);
         if (count == 1) {
             return true;
         }

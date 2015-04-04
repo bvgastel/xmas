@@ -22,6 +22,7 @@
 
 #include "datacontrol.h"
 #include "component.h"
+#include "port.h"
 
 extern DataControl *dataControl;
 
@@ -32,6 +33,63 @@ model::Component::Component(QQuickItem *parent)
 
 model::Component::~Component()
 {
+}
+
+int model::Component::width() {
+    return m_width;
+}
+
+void model::Component::setCanvasData() {
+    auto project = dataControl->project();
+    auto network = project->getRootNetwork();
+    XMASComponent *c = network->getComponent(getName().toStdString());
+    if (c) {
+        c->canvasData(m_width, m_height, m_rotation, m_scale);
+    }
+}
+
+void model::Component::width(int width) {
+    if (m_width != width) {
+        m_width = width;
+        setCanvasData();
+        emit widthChanged();
+    }
+}
+
+int model::Component::height() {
+    return m_height;
+}
+
+void model::Component::height(int height) {
+    if (m_height != height) {
+        m_height = height;
+        setCanvasData();
+        emit heightChanged();
+    }
+}
+
+int model::Component::rotation() {
+    return m_rotation;
+}
+
+void model::Component::rotation(int rotation){
+    if (m_rotation != rotation) {
+        m_rotation = rotation;
+        setCanvasData();
+        emit rotationChanged();
+    }
+}
+
+float model::Component::scale() {
+    return m_scale;
+}
+
+void model::Component::scale(float scale) {
+    if (m_scale != scale) {
+        m_scale = scale;
+        setCanvasData();
+        emit scaleChanged();
+    }
 }
 
 // This method was made for composite objects.
@@ -45,12 +103,12 @@ QVariantMap model::Component::getPorts()
 
     //auto comp = xmas_component();
     QVariantMap map;
-//    for(Port *p : comp->ports()) {
-//        QString name = p->getName();
-//        map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
-//    }
+    //    for(Port *p : comp->ports()) {
+    //        QString name = p->getName();
+    //        map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
+    //    }
     map["in0"] = XPort::PortType::INPORT;
-//    map["in1"] = XPort::PortType::INPORT;
+    //    map["in1"] = XPort::PortType::INPORT;
     map["out"] = XPort::PortType::OUTPORT;
     return map;
 }
@@ -134,9 +192,9 @@ int model::Component::updateExpression(QVariant expression) {
         XMASQueue *queue = dynamic_cast<XMASQueue *>(c);
         if (!queue) {
             emit writeLog(QString("Fatal error in Component: "
-                             "did not recognize m_component as queue."));
+                                  "did not recognize m_component as queue."));
             std::cerr   << "Fatal error in Component: did not recognize m_component"
-                         " as queue : " << c->getStdName() << std::endl;
+                           " as queue : " << c->getStdName() << std::endl;
             return false;
         }
         queue->c = size;
@@ -160,8 +218,8 @@ int model::Component::updateExpression(QVariant expression) {
                                                .stl().c_str())
                                      : "<should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." + xmas_expression
-                                        : "failed. Error message is:" + errMsg));
+                          + (result.m_success? "succeeded." + xmas_expression
+                                             : "failed. Error message is:" + errMsg));
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
@@ -181,7 +239,7 @@ int model::Component::updateExpression(QVariant expression) {
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             emit writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
+                          + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
                 std::string expr = func->getFunctionExpression(mp());
                 QString xmas_expression = QString(expr.c_str());
@@ -190,7 +248,7 @@ int model::Component::updateExpression(QVariant expression) {
             return result.m_pos;
         } else {
             std::cerr   << "Fatal error in Component: did not recognize m_component"
-                         " as function : "
+                           " as function : "
                         << c->getStdName() << std::endl;
             return false;
         }
@@ -219,8 +277,8 @@ int model::Component::updateExpression(QVariant expression) {
                                                        : "<Should never show>";
             xmas_expression = xmas_expression == "" ? "<no value returned>" : xmas_expression;
             emit writeLog(QString("saving ")+ kindOfJoin + QString(" join expression in XMASComponent ")
-                     + (result.m_success? "succeeded. Stored \"" + xmas_expression + "\""
-                                        : "failed. Error message is:" + errMsg));
+                          + (result.m_success? "succeeded. Stored \"" + xmas_expression + "\""
+                                             : "failed. Error message is:" + errMsg));
             emit writeLog(QString("Function for Join is not implemented yet."));
             return result.m_pos;
         } else {
@@ -244,8 +302,8 @@ int model::Component::updateExpression(QVariant expression) {
             QString xmas_expression = result.m_success ? QString(sw->getSwitchExpression(mp()).stl().c_str())
                                                        : "<Should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
-                     + (result.m_success? "succeeded." + xmas_expression
-                                        : "failed. Error message is:" + errMsg));
+                          + (result.m_success? "succeeded." + xmas_expression
+                                             : "failed. Error message is:" + errMsg));
             return result.m_pos;
         } else {
             std::cerr << "Fatal error in Component: did not recognize m_component"
