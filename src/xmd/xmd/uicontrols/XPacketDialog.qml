@@ -101,7 +101,6 @@ Window {
                         selectByMouse:true
                         wrapMode: TextInput.NoWrap
                         font.pointSize : 10
-                        Keys.onEscapePressed:cancelAction.trigger()
                         KeyNavigation.priority: KeyNavigation.BeforeItem
                         KeyNavigation.tab: okButton
                     }
