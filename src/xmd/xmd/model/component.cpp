@@ -352,4 +352,3 @@ void model::Component::setExpression(QVariant expression) {
     errorPosition = updateExpression(expression);
     emit expressionChanged(errorPosition);
 }
-
