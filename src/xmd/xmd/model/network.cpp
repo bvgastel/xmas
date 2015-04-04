@@ -198,6 +198,12 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
             expression = QString(sw->getSwitchExpression(mp).stl().c_str());
         }
         map.insert("expression", expression);
+    } else if (type == model::Component::Composite) {
+        XMASComposite *composite = dynamic_cast<XMASComposite *>(comp);
+        if (composite) {
+            const std::string& url = composite->getNetwork().getStdName();
+            qDebug() << "FIXME: Pass composite url to qml!!";
+        }
     }
     map.insert("type", type);
     map.insert("name", qname);
