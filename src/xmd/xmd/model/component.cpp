@@ -29,14 +29,11 @@ extern DataControl *dataControl;
 model::Component::Component(QQuickItem *parent)
     : QQuickItem(parent), m_name()
 {
+    //QObject::connect()
 }
 
 model::Component::~Component()
 {
-}
-
-int model::Component::width() {
-    return m_width;
 }
 
 void model::Component::setCanvasData() {
@@ -44,52 +41,12 @@ void model::Component::setCanvasData() {
     auto network = project->getRootNetwork();
     XMASComponent *c = network->getComponent(getName().toStdString());
     if (c) {
-        c->canvasData(m_width, m_height, m_rotation, m_scale);
+        c->canvasData(this->x(), this->y(), this->rotation(), this->scale());
     }
 }
 
-void model::Component::width(int width) {
-    if (m_width != width) {
-        m_width = width;
-        setCanvasData();
-        emit widthChanged();
-    }
-}
-
-int model::Component::height() {
-    return m_height;
-}
-
-void model::Component::height(int height) {
-    if (m_height != height) {
-        m_height = height;
-        setCanvasData();
-        emit heightChanged();
-    }
-}
-
-int model::Component::rotation() {
-    return m_rotation;
-}
-
-void model::Component::rotation(int rotation){
-    if (m_rotation != rotation) {
-        m_rotation = rotation;
-        setCanvasData();
-        emit rotationChanged();
-    }
-}
-
-float model::Component::scale() {
-    return m_scale;
-}
-
-void model::Component::scale(float scale) {
-    if (m_scale != scale) {
-        m_scale = scale;
-        setCanvasData();
-        emit scaleChanged();
-    }
+void model::Component::onUpdate() {
+    setCanvasData();
 }
 
 // This method was made for composite objects.
