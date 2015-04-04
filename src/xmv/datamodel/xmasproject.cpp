@@ -76,7 +76,7 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
         jsonComposite["alias"] = String(cne->alias);
         jsonComposite["image-name"] = String(cne->imageName);
         jsonComposite["packet"] = String(cne->packet);
-        jsonComposite["boxed-imaged"] = cne->boxedImage ? 1 : 0;
+        jsonComposite["boxed-image"] = cne->boxedImage ? 1 : 0;
         globals["COMPOSITE_NETWORK"] = jsonComposite;
     }
 

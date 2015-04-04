@@ -32,6 +32,8 @@ D    =  Developer
    24   g   2015-04-04              Plugin parameters can not modify        bug     medium
    25   g   2015-04-04              Sink never has canvasdata in json       bug     high
    26   g   2015-04-04              Read file: components never connected   but     high    Regression?!
+   27   j   2015-04-04              Component position not saved in
+                                    extension upon first placement          bug     high
 99999
 
 
