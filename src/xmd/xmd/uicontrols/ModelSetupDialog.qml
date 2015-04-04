@@ -412,7 +412,6 @@ Window {
             }
         }
 
-
         // Dialog actions
         Action {
             id:cancelAction
