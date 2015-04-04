@@ -28,6 +28,7 @@ D    =  Developer
    21   s   2015-04-03              Retrieving ports for composites aborts  bug     high
                                     Composite.cpp::getPorts()
    22   g   2015-04-04              new does not clear components from canv bug     high
+   23   g   2015-04-04              Plugin output too verbose               feature medium  needs one output line per execution
 99999
 
 
