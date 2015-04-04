@@ -35,99 +35,119 @@ import QtQuick.Window 2.2
 
 Window {
     id:dialog
+
+    // Properties
     visible: false
     modality: Qt.WindowModal
     flags: Qt.Dialog
     color: "darkgrey"
     title: "Packet Dialog"
+    width: 300
+    height: 260
+    minimumHeight: height
+    minimumWidth: width
+    maximumHeight: height
+    maximumWidth: width
 
     property string expression:""
 
-    signal accepted()
+    // Signals
+    signal accepted
 
-    width:300
-    height: 260
-    minimumHeight: 200
-    minimumWidth: 200
-    maximumHeight: 500
-    maximumWidth: 500
+    // Event handling
+    onVisibleChanged:{
+        expressionTextEdit.text = expression
+        expressionTextEdit.forceActiveFocus()
+    }
 
-    onVisibleChanged: expr.text = expression
-    ColumnLayout {
-        id: column
+    FocusScope{
         anchors.fill: parent
-        anchors.margins: 10
-        spacing:5
-        Rectangle{
-            Layout.fillWidth: true
-            Layout.preferredHeight: 25
-            color: "darkgrey"
-            Label {
-                anchors.fill:parent
-                anchors.margins: 10
-                text: "Add one field<range per line."
-                wrapMode: Text.WordWrap
-                color: "black"
-            }
-        }
-        Rectangle{
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredHeight: 200
-            Layout.minimumHeight: 50
-            color: "white"
-            TextEdit{
-                id:expr
-                anchors.fill:parent
-                anchors.margins: 10
-                text: expression
-                focus:true
-                selectByMouse:true
-                wrapMode: TextInput.NoWrap
-                font.pointSize : 10
-                onFocusChanged: if(focus)selectAll()
-                Keys.onEscapePressed:cancelAction.trigger()
-            }
-        }
-        RowLayout{
-            spacing:10
-            Layout.fillWidth: true
-            Layout.preferredHeight: 30
-            Layout.alignment: Qt.AlignRight
-            Button{
-                action:cancelAction
-                tooltip: ""
+        focus:true
+        Keys.onEscapePressed:cancelAction.trigger()
 
+        // Content
+        ColumnLayout {
+            anchors.fill: parent
+            spacing:5
+            anchors.margins: 5
+            // help
+            RowLayout{
+                Rectangle{
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: 25
+                    Layout.maximumHeight: 25
+                    color: "darkgrey"
+                    Label {
+                        anchors.margins: 10
+                        text: "Add one field<range per line."
+                        wrapMode: Text.WordWrap
+                        color: "black"
+                    }
+                }
             }
-            Button {
-                isDefault: true
-                action: okAction
-                tooltip: ""
+            // packet input
+            RowLayout{
+                Rectangle{
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.minimumHeight: 50
+                    color: "white"
+                    TextEdit{
+                        id:expressionTextEdit
+                        anchors.fill:parent
+                        anchors.margins: 10
+                        text: expression
+                        focus:true
+                        selectByMouse:true
+                        wrapMode: TextInput.NoWrap
+                        font.pointSize : 10
+                        Keys.onEscapePressed:cancelAction.trigger()
+                        KeyNavigation.priority: KeyNavigation.BeforeItem
+                        KeyNavigation.tab: okButton
+                    }
+                }
+            }
+            // buttons
+            RowLayout{
+                spacing:10
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignRight
+                Button{
+                    id:cancelButton
+                    action:cancelAction
+                    tooltip: ""
+                    Keys.onReturnPressed: cancelAction.trigger()
+                    KeyNavigation.tab: expressionTextEdit
+                }
+                Button {
+                    id:okButton
+                    isDefault: true
+                    focus:true
+                    action: okAction
+                    tooltip: ""
+                    Keys.onReturnPressed: okAction.trigger()
+                    KeyNavigation.tab: cancelButton
+                }
             }
         }
-    }
 
-    Action {
-        id:cancelAction
-        text: "Cancel"
-        onTriggered: dialog.close()
-        tooltip: ""
-    }
-    Action {
-        id: okAction
-        text: "Ok"
-        enabled: expr.text !== ""
-        onTriggered: {
-            dialog.expression = expr.text
-            dialog.accepted()
-            dialog.close()
+        // Actions
+        Action {
+            id:cancelAction
+            text: "Cancel"
+            onTriggered: dialog.close()
+            tooltip: ""
         }
-        tooltip: ""
+        Action {
+            id: okAction
+            text: "Ok"
+            enabled: expressionTextEdit.text !== ""
+            onTriggered: {
+                dialog.expression = expressionTextEdit.text
+                dialog.accepted()
+                dialog.close()
+            }
+            tooltip: ""
+        }
     }
 }
-
-
-
-
-
-
