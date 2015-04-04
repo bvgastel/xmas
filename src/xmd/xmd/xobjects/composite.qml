@@ -44,7 +44,8 @@ XComponent {
     property bool boxed: true
     property int portSpace: 30 //2 times default gridsize - 1 time portsize
 
-    Component.onCompleted:{
+
+    function updatePorts(){
         var ports = getPorts()
         inportModel.clear()
         outportModel.clear()
@@ -144,5 +145,10 @@ XComponent {
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
+    }
+
+    Connections{
+        target:network
+        onComponentAdded:updatePorts()
     }
 }
