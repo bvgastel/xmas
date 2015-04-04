@@ -49,8 +49,6 @@ public:
 
 private:
     std::shared_ptr<QDir> pluginDir();
-    XMap getXmasComponents();
-
 
 signals:
     void pluginsLoaded(QVariantList vtNameList);

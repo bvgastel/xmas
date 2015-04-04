@@ -52,8 +52,9 @@ void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
     tpoint start, end, nextstart, nextend;
     QString stepName;
 
-    std::set<XMASComponent *> componentSet = project->getRootNetwork()->getComponentSet();
     XMap componentMap = project->getRootNetwork()->getComponentMap();
+    std::set<XMASComponent *> componentSet;
+    project->getRootNetwork()->getComponentSet(componentSet);
     success = true;
 
     if (success) {
@@ -90,12 +91,13 @@ void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
 }
 
 void SyntaxCheckWorker::doThreadWork(const QString &json) {
-    // STEP 0: parse the json string toward a component map
-    XProject *project = new XProject();
-    bitpowder::lib::MemoryPool mp;
-    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
-    doWork(componentMap);
+    Q_UNUSED(json)
+    //XProject *project = new XMASProject(json.toStdString());
+
+//    bitpowder::lib::MemoryPool mp;
+//    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
+//    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
+//    doWork(componentMap);
 }
 
 std::pair<tpoint, tpoint>

@@ -43,13 +43,9 @@ PluginControl::~PluginControl()
 
 bool PluginControl::startPlugin(QString vtPlugin) {
    VtPluginInterface *plugin = m_vtMap[vtPlugin];
-    auto xmap = getXmasComponents();
-    if (!xmap.empty()) {
-        plugin->start(xmap);
-        return true;
-    }
-    m_logger->log(QString("[PluginControl] Plugin not started due to empty map."));
-    return false;
+    std::shared_ptr<XMASProject> project = dataControl->project();
+    plugin->start(project);
+    return true;
 }
 
 bool PluginControl::stopPlugin(QString vtPlugin) {
@@ -57,25 +53,6 @@ bool PluginControl::stopPlugin(QString vtPlugin) {
 //  Currently no mechanism to stop a plugin
     return true;
 //    m_logger->log(QString("[PluginControl] Plugin stopped."));
-}
-
-/*
- * Return the map of xmas components by name
- * Return an empty map if things go wrong.
- * But do show some message of what went wrong.
- *
- */
-XMap PluginControl::getXmasComponents() {
-    std::shared_ptr<XMASProject> project = dataControl->project();
-    if (!project) {
-        return XMap();
-    }
-    XMASNetwork *network = project->getRootNetwork();
-    if (!network) {
-        return XMap();
-    }
-    auto xmap = network->getComponentMap();
-    return xmap;
 }
 
 // This is pretty platform dependent. Needs some extra tweaking to reduce platform dependencies

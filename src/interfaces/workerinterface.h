@@ -39,7 +39,7 @@ public:
 public slots:
     virtual void doProcessWork(const QString &json) = 0;
     virtual void doThreadWork(const QString &json) = 0;
-    virtual void doWork(XMap &componentMap) = 0;
+    virtual void doWork(std::shared_ptr<XMASProject> project) = 0;
 
 signals:
     void resultReady(const ResultInterface &result);
