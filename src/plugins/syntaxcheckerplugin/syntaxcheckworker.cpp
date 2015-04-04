@@ -41,7 +41,7 @@ SyntaxCheckWorker::~SyntaxCheckWorker() {
 
 void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Result &result) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
-    QString duration_qstr = name + QString(" in \t")+duration+" ms\n";
+    QString duration_qstr = name + QString(" in \t")+duration+" ms";
     result.addStep(name, duration_qstr);
     std::cout << duration_qstr.toStdString() << std::endl;
 }

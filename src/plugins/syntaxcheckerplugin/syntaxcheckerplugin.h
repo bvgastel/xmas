@@ -29,6 +29,7 @@
 #include <QThread>
 #include <QProcess>
 
+//#include "loggerinterface.h"
 #include "resultinterface.h"
 #include "commoninterface.h"
 #include "vtplugininterface.h"
@@ -74,7 +75,7 @@ private:
     /**
      * @brief m_logger A specific logger for this verification tool.
      */
-    //LoggerInterface *m_logger;
+//    LoggerInterface *m_logger;
     /**
      * @brief m_workerThread The thread that will run the verification tool
      */

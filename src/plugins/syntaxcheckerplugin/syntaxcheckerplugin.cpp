@@ -26,7 +26,7 @@
 
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
-//#include "loggerfactory.h"
+#include "loggerfactory.h"
 
 QString SyntaxCheckerPlugin::name() {
     return m_name;
@@ -35,7 +35,6 @@ QString SyntaxCheckerPlugin::name() {
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
     m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}})
-//    m_logger(LoggerFactory::MakeLogger("syntaxchecker"))
 {
 }
 
