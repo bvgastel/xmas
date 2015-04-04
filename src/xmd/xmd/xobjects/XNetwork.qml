@@ -341,7 +341,10 @@ Model.XNetwork {
 
     ModelSetupDialog {
         id:setupDialog
-        onSetupAccepted: mainwindow.saveModel()
+        onAccepted: {
+            setCompositeNetworkData()
+            mainwindow.saveModel()
+        }
     }
 
     // Connections

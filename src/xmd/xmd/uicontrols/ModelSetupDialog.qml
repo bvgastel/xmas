@@ -39,6 +39,8 @@ import Qt.labs.folderlistmodel 2.1
 
 Window {
     id:dialog
+
+    // Properties
     visible: false
     modality: Qt.WindowModal
     flags: Qt.Dialog
@@ -51,22 +53,32 @@ Window {
     maximumHeight: height
     maximumWidth: width
 
-    signal setupAccepted
+    // Signals
+    signal accepted
+
+    // Event handling
+    onVisibleChanged:{
+        txtInputModelFileName.text = network.fileName
+        txtInputModelFileName.selectAll()
+        txtInputModelFolder.text = network.folder
+        txtInputModelWidth.text = network.size.width
+        txtInputModelHeight.text = network.size.height
+        txtInputModelAlias.text = network.alias
+        chkImage.checked = network.imageName !== ""
+        chkBoxedImage.checked = network.boxedImage
+        //imageList.currentIndex = network.imageName
+    }
 
     FocusScope{
-        focus: true
-        Component.onCompleted:{
-            txtInputModelFileName.forceActiveFocus()
-            txtInputModelFileName.selectAll()
-        }
-
+        anchors.fill: parent
+        focus:true
         Keys.onEscapePressed:cancelAction.trigger()
 
+        // Content
         ColumnLayout {
             anchors.fill: parent
             spacing:5
             anchors.margins: 5
-
             // Model group 1
             RowLayout {
                 GroupBox {
@@ -104,7 +116,6 @@ Window {
                                     id:txtInputModelFileName
                                     anchors.fill:parent
                                     anchors.leftMargin: 10
-                                    text: network.fileName
                                     focus:true
                                     selectByMouse:true
                                     validator: RegExpValidator{id:regFileName ; regExp:/^[\w,\s-]*(\.json){0,1}$/}
@@ -112,7 +123,8 @@ Window {
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: okAction.trigger()
-                                    Keys.onTabPressed: modelFolderButton.forceActiveFocus()
+                                    KeyNavigation.priority: KeyNavigation.BeforeItem
+                                    KeyNavigation.tab: modelFolderButton
                                 }
                             }
                         }
@@ -143,7 +155,7 @@ Window {
                                     anchors.topMargin: 2
                                     text:"..."
                                     onClicked: modelFolderDialog.open()
-                                    Keys.onTabPressed: txtInputModelWidth.forceActiveFocus()
+                                    KeyNavigation.tab: txtInputModelFolder
                                 }
                             }
                             Rectangle{
@@ -157,12 +169,11 @@ Window {
                                     id:txtInputModelFolder
                                     anchors.fill:parent
                                     anchors.leftMargin: 10
-                                    text: network.folder
-                                    readOnly: true
                                     inputMethodHints: Qt.ImhUrlCharactersOnly
                                     validator: RegExpValidator{regExp:/^(\S.*)$/}
                                     wrapMode: TextInput.WordWrap
                                     font.pointSize : 8
+                                    KeyNavigation.tab: txtInputModelWidth
                                 }
                             }
                         }
@@ -194,7 +205,6 @@ Window {
                                     id:txtInputModelWidth
                                     anchors.fill:parent
                                     anchors.leftMargin: 10
-                                    text: network.size.width
                                     selectByMouse:true
                                     inputMethodHints: Qt.ImhDigitsOnly
                                     validator: IntValidator{bottom: 500; top:25000}
@@ -202,7 +212,7 @@ Window {
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: okAction.trigger()
-                                    Keys.onTabPressed: txtInputModelHeight.forceActiveFocus()
+                                    KeyNavigation.tab:  txtInputModelHeight
                                 }
                             }
 
@@ -228,7 +238,6 @@ Window {
                                     id:txtInputModelHeight
                                     anchors.fill:parent
                                     anchors.leftMargin: 10
-                                    text: network.size.height
                                     selectByMouse:true
                                     inputMethodHints: Qt.ImhDigitsOnly
                                     validator: IntValidator{bottom: 500; top:25000}
@@ -236,11 +245,10 @@ Window {
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: okAction.trigger()
-                                    Keys.onTabPressed: txtInputModelAlias.forceActiveFocus()
+                                    KeyNavigation.tab: txtInputModelAlias
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -279,14 +287,13 @@ Window {
                                     id:txtInputModelAlias
                                     anchors.fill:parent
                                     anchors.leftMargin: 10
-                                    text: network.alias
                                     selectByMouse:true
                                     validator: RegExpValidator{id:regAlias ; regExp:/^[\w,\s-]+$/}
                                     wrapMode: TextInput.NoWrap
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
                                     onAccepted: okAction.trigger()
-                                    Keys.onTabPressed: chkImage.forceActiveFocus()
+                                    KeyNavigation.tab: chkImage
                                 }
                             }
                         }
@@ -304,7 +311,6 @@ Window {
                                     anchors.right: parent.right
                                     anchors.top: parent.top
                                     anchors.topMargin: 5
-                                    checked: network.imageName !== ""
                                     style: CheckBoxStyle{
                                         label: Text {
                                             color:"darkblue"
@@ -313,14 +319,13 @@ Window {
                                             text: "Image"
                                         }
                                     }
-                                    Keys.onTabPressed: chkBoxedImage.forceActiveFocus()
+                                    KeyNavigation.tab: chkBoxedImage
                                 }
                                 CheckBox {
                                     id: chkBoxedImage
                                     anchors.top: chkImage.bottom
                                     anchors.topMargin: 5
                                     anchors.left: chkImage.left
-                                    checked: network.boxedImage
                                     style: CheckBoxStyle{
                                         label: Text {
                                             color:"darkblue"
@@ -328,7 +333,7 @@ Window {
                                             text: "boxed?"
                                         }
                                     }
-                                    Keys.onTabPressed: imageList.forceActiveFocus()
+                                    KeyNavigation.tab: imageList
                                 }
                             }
 
@@ -376,7 +381,7 @@ Window {
                                             onClicked: imageList.currentIndex = index
                                         }
                                     }
-                                    Keys.onTabPressed: okButton.forceActiveFocus()
+                                    KeyNavigation.tab: okButton
                                 }
                             }
                         }
@@ -393,14 +398,16 @@ Window {
                     id:cancelButton
                     action:cancelAction
                     tooltip: ""
-                    Keys.onTabPressed: txtInputModelFileName.forceActiveFocus()
+                    Keys.onReturnPressed: cancelAction.trigger()
+                    KeyNavigation.tab: txtInputModelFileName
                 }
                 Button {
                     id:okButton
                     isDefault: true
                     action: okAction
                     tooltip: ""
-                    Keys.onTabPressed: cancelButton.forceActiveFocus()
+                    Keys.onReturnPressed: okAction.trigger()
+                    KeyNavigation.tab: cancelButton
                 }
             }
         }
@@ -411,6 +418,7 @@ Window {
             id:cancelAction
             text: "Cancel"
             onTriggered: dialog.close()
+            tooltip: ""
         }
         Action {
             id: okAction
@@ -428,12 +436,10 @@ Window {
                     network.imageName = symbols.get(imageList.currentIndex,"fileName")
                 }
                 network.boxedImage = chkBoxedImage.checked
-                dialog.setupAccepted()
+                dialog.accepted
                 dialog.close()
-                network.modified = true
-                // NOTE: gbo: let me know: is this the right place?
-                network.setCompositeNetworkData()
             }
+            tooltip: ""
         }
 
         // Image model
@@ -450,7 +456,7 @@ Window {
             selectExisting: true
             selectFolder: true
             selectMultiple: false
-            onAccepted: network.folder = modelFolderDialog.folder
+            onAccepted: txtInputModelFolder.text = modelFolderDialog.folder
         }
     }
 }
