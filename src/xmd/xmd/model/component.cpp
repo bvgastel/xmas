@@ -36,17 +36,14 @@ model::Component::~Component()
 {
 }
 
-void model::Component::setCanvasData() {
+void model::Component::updateCanvasData() {
     auto project = dataControl->project();
     auto network = project->getRootNetwork();
     XMASComponent *c = network->getComponent(getName().toStdString());
     if (c) {
         c->canvasData(this->x(), this->y(), this->rotation(), this->scale());
     }
-}
-
-void model::Component::onUpdate() {
-    setCanvasData();
+    qDebug() << "updateCanvasData" ;
 }
 
 // This method was made for composite objects.
