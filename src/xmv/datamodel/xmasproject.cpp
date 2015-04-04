@@ -216,6 +216,11 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     delete dummy;
     networks.insert(std::make_pair(name, result));
 
+    auto jsonPacketType = json["PACKET_TYPE"];
+    if (!jsonPacketType.isNull()) {
+        // Help: don't know how to store packet_type !!
+    }
+
     auto jsonComposite = json["COMPOSITE_NETWORK"];
     if (!jsonComposite.isNull()) {
         auto cn_ext = result->getNetworkExtension<CompositeNetworkExtension>(true);
