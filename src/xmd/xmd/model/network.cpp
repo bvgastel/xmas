@@ -428,9 +428,10 @@ bool model::Network::addComposite(model::Component *component) {
 
     QUrl fileUrl = QUrl(component->property("url").toString());
 
-    std::string filename =
-            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
-                                  : fileUrl.fileName().toStdString();
+//    std::string filename =
+//            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+//                                  : fileUrl.fileName().toStdString();
+    std::string filename = fileUrl.fileName().toStdString();
 
     XMASNetwork *xnetwork = project->getNetwork(filename);
     if (!xnetwork)
