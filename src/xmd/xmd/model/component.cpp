@@ -136,6 +136,14 @@ int model::Component::updateExpression(QVariant expression) {
     emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+expression.toString());
 
     auto c = xmas_component();
+    if (!c) {
+        emit writeLog(QString("Fatal error in Component: "
+                              "did not recognize component as XMAS Component."));
+        std::cerr   << "Fatal error in Component: did not recognize component as XMAS Component."
+                    << std::endl;
+        return false;
+    }
+
     if (getType() == Queue) {
         if (typeName != "int") {
             setValidExpr(false, 0, QString("Received non integer size."));

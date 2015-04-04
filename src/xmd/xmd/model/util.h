@@ -57,6 +57,8 @@ public:
     static bool saveFile(QUrl fileUrl, QString contents);
     static QString openFile(QUrl fileUrl);
 
+    static std::string fileName(QUrl fileUrl);
+
 };
 
 #endif // UTIL_H

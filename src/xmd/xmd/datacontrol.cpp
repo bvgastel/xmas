@@ -48,6 +48,17 @@ void DataControl::registerTypes() const{
     qRegisterMetaType<model::XPort*>("XPort*");
 }
 
-std::shared_ptr<XMASProject> DataControl::project() {
+const std::shared_ptr<XMASProject> DataControl::project() {
     return m_project;
+}
+
+bool DataControl::loadNewProject(std::string filename)
+{
+    try {
+        m_project.reset(new XMASProject(filename));
+    } catch (bitpowder::lib::Exception e) {
+        m_logger.log("[DataControl::reset(filename)] Unable to parse file " + filename + ". Error msg: " + e.description(), Qt::red);
+        return false;
+    }
+    return true;
 }

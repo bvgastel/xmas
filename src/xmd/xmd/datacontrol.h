@@ -61,7 +61,9 @@ signals:
      * Data members
      ************************************************************/
 public:
-    std::shared_ptr<XMASProject> project();
+    /* Only datacontrol may modify pointer (through loadNewProject) */
+    const std::shared_ptr<XMASProject> project();
+    bool loadNewProject(std::string filename);
 
 private:
     Logger m_logger;

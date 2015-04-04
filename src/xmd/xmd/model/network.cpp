@@ -56,22 +56,13 @@ void model::Network::setPacket(QString expression) {
 
 bool model::Network::openFile(QUrl fileUrl) {
 
-    auto project = dataControl->project();
-
-    std::string filename =
-            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
-                                  : fileUrl.fileName().toStdString();
-
-    m_logger.log("Opening file " + filename);
-
-    try {
-        project.reset(new XMASProject(filename));
-    } catch (bitpowder::lib::Exception e) {
-        m_logger.log("[Network::openFile] Unable to parse file " + filename + ". Error msg: " + e.description(), Qt::red);
-        return false;
+    std::string filename = Util::fileName(fileUrl);
+    if (dataControl->loadNewProject(filename)) {
+        auto project = dataControl->project();
+        auto result = emitNetwork(*project->getRootNetwork());
+        return result;
     }
-    auto result = emitNetwork(*project->getRootNetwork());
-    return result;
+    return false;
 }
 
 bool model::Network::saveFile(QUrl fileUrl) {
@@ -81,8 +72,6 @@ bool model::Network::saveFile(QUrl fileUrl) {
     std::string filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
                                   : fileUrl.fileName().toStdString();
-
-    m_logger.log("Saving file " + filename);
 
     project->saveNetwork(filename);
 

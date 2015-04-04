@@ -36,6 +36,13 @@ Util::~Util()
 
 }
 
+std::string Util::fileName(QUrl fileUrl) {
+
+    return (fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
+                                 : fileUrl.fileName().toStdString());
+}
+
+
 QString Util::modelPath() {
     return QDir::homePath() + "/xmas-models";
 }
