@@ -37,28 +37,39 @@ import XMAS 1.0 as XMAS
 
 Model.XChannel {
     id: channel
+
+    // Properties
     objectName: "channel"
     focus: selected
     property color color: "darkblue"
     property bool selected: false
 
-    // TODO: gbo: insert network.connect(out, in) here??
+    // Signals
+    signal remove
+
+    // JavaScripts
+
+    // update position if outport moves
     function doUpdate1() {
         wire.x1 = mapFromItem(outport,5,5).x
         wire.y1 = mapFromItem(outport,5,5).y
     }
+
+    // update position if inport moves
     function doUpdate2() {
         wire.x2 = mapFromItem(inport,5,5).x
         wire.y2 = mapFromItem(inport,5,5).y
     }
 
+    // Event handling
     onOutportChanged: outport ? doUpdate1() : null
     onInportChanged: inport ? doUpdate2() : null
 
     // FIXME: Stefan: not sure how to do this, want to connect signal to mainWindow.log()
     onWriteLog: console.log(msg, color)
+    onRemove: ChannelJs.remove(channel)
 
-    //TODO: replace straight canvas wire with pathfinder logic (horizontal/vertical)
+    // Graphical representation of a channel --> "wire"
     XWire {
         id: wire
         color: selected ? "steelblue" : "darkblue"
@@ -89,21 +100,19 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: ChannelJs.remove(channel)
+            onTriggered: remove
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        // gbo: Only one channel remove plz. Otherwise on new / clear: abort
         onRemoved: ChannelJs.remove(channel)
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        // gbo: The second remove is responsible for null deletes and subsequent abort; Don't do it.
-        //onRemoved: ChannelJs.remove(channel)
+        onRemoved: ChannelJs.remove(channel)
     }
 }
 
