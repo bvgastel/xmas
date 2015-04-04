@@ -262,9 +262,10 @@ bool model::Network::xmasConnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_inport || !xmas_outport) {
         return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport null. ");
     }
-    if (xmas_inport->isConnected() || xmas_outport->isConnected()) {
-        return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport already connected. ");
-    }
+//    no check for connected: already part of Qml programming.
+//    if (xmas_inport->isConnected() || xmas_outport->isConnected()) {
+//        return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport already connected. ");
+//    }
     return true;
 }
 
@@ -488,14 +489,25 @@ bool model::Network::addComponent(model::Component *component) {
     return result;
 }
 
+/*
+ *
+ *
+ */
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
     if (component) {
         auto name = component->getName().toStdString();
         bool result = project->removeComponent(name);
-        return result;
+        if (!result) {
+            auto c = project->getRootNetwork()->getComponent(name);
+            if (!c) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
-    return false;
+    return true;
 }
 
 
