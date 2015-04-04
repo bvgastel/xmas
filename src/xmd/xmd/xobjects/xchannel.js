@@ -30,7 +30,7 @@
  **************************************************************************/
 .import XMAS.model 1.0 as Model
 .import XMAS 1.0 as XMAS
-.import QtQuick 2.0 as Qjs
+.import QtQuick 2.4 as Qjs
 var channel = null;
 var component = null;
 
