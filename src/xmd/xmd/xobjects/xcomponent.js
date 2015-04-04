@@ -99,6 +99,8 @@ function endDrag()
 function remove(component) {
     if (network.removeComponent(component)) {
         destroy(component)
+    } else {
+        log("Remove of component " + component.name + " not confirmed by xmas!!","red")
     }
 }
 
