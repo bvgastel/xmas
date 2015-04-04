@@ -22,7 +22,6 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 #include <QQuickItem>
-#include <QQmlListProperty>
 #include "xmas.h"
 
 namespace model
@@ -62,8 +61,6 @@ signals:
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
-    void update();
-
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
@@ -83,13 +80,16 @@ public slots:
     bool getValidExpr();
     bool getValid();
 
-    void onUpdate();
+
+    void updateCanvasData();
 
 public:
     void setValidExpr(bool validExpr);
     void setValidExpr(bool validExpr, int pos, QString errMsg);
 
-    void setCanvasData();
+
+
+
 
     XMASComponent *xmas_component();
 

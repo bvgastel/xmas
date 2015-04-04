@@ -55,9 +55,10 @@ Model.XComponent {
     property bool selected: false
     property bool withValidMarker: false
     property bool topLabel: true
+    property bool positionHasChanged: false
 
     // Signals
-    //signal update()
+    signal update()
     signal showDialog()
     signal remove
 
@@ -117,13 +118,16 @@ Model.XComponent {
     }
 
     // Event handling
-    onRotationChanged:component.update()
-    onScaleChanged: doMove(0,0)
+    onRotationChanged:{component.update();component.updateCanvasData()}
+    onScaleChanged: {doMove(0,0);component.updateCanvasData()}
     onWriteLog: mainwindow.log(message,color)
     onExpressionChanged: validmarker.color = valid ? "green" : "red"
     // result === -1 ? "transparent" : "red"
     onSelectedChanged: if(!selected) label.focus = false
     onRemove: ComponentJs.remove(component)
+    onXChanged: positionHasChanged = true
+    onYChanged: positionHasChanged = true
+
 
     // Selection highlite
     Rectangle {
@@ -185,14 +189,23 @@ Model.XComponent {
         }
         onExited: {component.focus = false; cursorShape = Qt.ArrowCursor}
         onPressed: {if(mouse.button == Qt.LeftButton)cursorShape = Qt.ClosedHandCursor}
-        onReleased: {cursorShape = Qt.OpenHandCursor}
+        onReleased: {
+            cursorShape = Qt.OpenHandCursor
+            if(positionHasChanged){
+                component.updateCanvasData()
+                positionHasChanged = false
+            }
+
+        }
         onDoubleClicked: component.showDialog()
 
         onPositionChanged: {
-            if(network.gridSnap && drag.active){
-                ComponentJs.doGridSnap(component)
+            if(drag.active) {
+                if(network.gridSnap){
+                    ComponentJs.doGridSnap(component)
+                }
+                component.update()
             }
-            component.update()
         }
 
         onWheel: {
