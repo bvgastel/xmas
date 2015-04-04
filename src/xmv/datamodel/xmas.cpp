@@ -484,6 +484,7 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
     : name(name),
+      m_packet_type(),
       m_mp(mp ? mp
               : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
@@ -491,7 +492,9 @@ XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::Memor
 }
 
 XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
-    : name(name), components(components),
+    : name(name),
+      m_packet_type(),
+      components(components),
       m_mp(mp ? mp
               : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
@@ -509,6 +512,16 @@ XMASNetwork::~XMASNetwork()
 const std::string XMASNetwork::getStdName() const {
     return this->name;
 }
+
+const std::string XMASNetwork::packetType() const {
+    return m_packet_type;
+}
+
+void XMASNetwork::packetType(const std::string packet_type) {
+    m_packet_type = packet_type;
+}
+
+
 
 const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponentMap() const {
     return components;
