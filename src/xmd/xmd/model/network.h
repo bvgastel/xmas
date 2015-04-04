@@ -124,6 +124,7 @@ private:
         {std::type_index(typeid(XMASMerge)), xmerge},
         {std::type_index(typeid(XMASFork)), xfork},
         {std::type_index(typeid(XMASSwitch)), xswitch},
+        {std::type_index(typeid(XMASComposite)), model::Component::Composite},
     };
 };
 } // namespace model
