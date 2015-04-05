@@ -2,7 +2,6 @@
   "VARS": [],
   "PACKET_TYPE": {"val ": 2},
   "COMPOSITE_OBJECTS": [
-    "my_composite.xmas"
   ],
   "NETWORK": [
     {
@@ -29,7 +28,7 @@
     {
       "id": "my-comp1",
       "type": "composite",
-      "subnetwork": "my_composite.xmas",
+      "subnetwork": "my_composite.json",
       "outs": [
         {
           "id": "my-comp2",
@@ -40,7 +39,7 @@
     {
       "id": "my-comp2",
       "type": "composite",
-      "subnetwork": "my_composite.xmas",
+      "subnetwork": "my_composite.json",
       "outs": [
         {
           "id": "sink1",
