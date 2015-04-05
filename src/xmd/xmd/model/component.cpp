@@ -362,14 +362,15 @@ XMASComponent *model::Component::xmas_component() {
 
     std::string stdName = name().toStdString();
     auto c = network->getComponent(stdName);
-    if (!c) {
-        //FIXME during drag from XToolbar this will launch continuously, there is no xmas component yet
-        // But ports are linked to their "connected" , isConnected asks for getPort()
-        // getPort() asks for its owner and this owner asks for xmas_component and then we're here
-        std::cerr << "xmas component for component " << stdName << " not found."
-                  << "returning nullptr."<< std::endl;
-        return nullptr;
-    }
+//    if (!c) {
+//        //FIXME during creation this will launch several times, there is no xmas component yet
+//        // But ports are linked to their "connected" , isConnected asks for getPort()
+//        // getPort() asks for its owner and this owner asks for xmas_component and then we're here
+//        // we must solve it by a better handshaking: qml creates --> ask for xmas creation --> wait on ok --> emit ready
+//        std::cerr << "xmas component for component " << stdName << " not found."
+//                  << "returning nullptr."<< std::endl;
+//        return nullptr;
+//    }
 
     return c;
 }
