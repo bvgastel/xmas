@@ -52,9 +52,6 @@ public:
     void inport(XPort *port);
 
 private:
-    bool portsOk(QString &errMsg);
-
-private:
 
     XPort *m_outport;
     XPort *m_inport;

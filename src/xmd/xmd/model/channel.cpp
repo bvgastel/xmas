@@ -19,7 +19,6 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #include "channel.h"
 #include "xmas.h"
 
@@ -32,7 +31,6 @@ model::Channel::Channel(QQuickItem *parent)
 
 model::Channel::~Channel()
 {
-
 }
 
 model::XPort *model::Channel::outport() {
@@ -53,26 +51,4 @@ void model::Channel::inport(XPort *port){
     if (m_inport==port) return;
     m_inport = port;
     emit inportChanged();
-}
-
-bool model::Channel::portsOk(QString &errMsg)
-{
-    bool result = true;
-    if (!m_outport) {
-        errMsg += "\nComponent completion of channel failed due to missing output XPort.";
-        result = false;
-    }
-    if (!m_inport) {
-        errMsg += "\nComponent completion of channel failed due to missing input XPort.";
-        result = false;
-    }
-    if (m_outport && !m_outport->getPort()) {
-        errMsg += "\nComponent completion of channel failed due to lack of Output.";
-        result =  false;
-    }
-    if (m_inport && !m_inport->getPort()) {
-        errMsg += "\nComponent completion of channel failed due to lack of Input.";
-        result = false;
-    }
-    return result;
 }
