@@ -31,7 +31,6 @@ D    =  Developer
    23   g   2015-04-04              Plugin output too verbose               feature medium  needs one output line per execution
    24   g   2015-04-04              Plugin parameters can not modify        bug     medium
    25   g   2015-04-04              Random comps have no canvasdata in json bug     high
-   26   g   2015-04-04              Read file: components never connected   but     high    Regression?!
    27   j   2015-04-04              Component position not saved in         bug     high
                                     extension upon first placement
 99999
@@ -57,5 +56,6 @@ D    =  Developer
    19   g   2015-04-03  2015-04-03  When a file just read: already '*'      bug     medium  Annoys the hell out of me / solved
                                     Expected: not '*' until modified
    19x  g   2015-04-02  2015-04-04  New aborts again .... pffff             bug     high
+   26   g   2015-04-04              Read file: components never connected   but     high    Solved when using proper project.reset.
 99999
 
