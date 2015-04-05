@@ -69,6 +69,7 @@ XComponent {
             Layout.maximumWidth: 15
             Layout.fillHeight: true
             color:"transparent"
+            z:-1
             Repeater{
                 id:portsLeft
                 model:inportModel
@@ -111,6 +112,7 @@ XComponent {
             Layout.maximumWidth: 15
             Layout.fillHeight: true
             color:"transparent"
+            z:-1
             Repeater{
                 id: portsRight
                 model:outportModel
