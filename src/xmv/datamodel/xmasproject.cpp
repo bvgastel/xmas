@@ -194,21 +194,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     XMASNetwork* dummy = new XMASNetwork {"dummy"};
     networks.insert(std::make_pair(name, dummy));
 
-    // gbo: unnecessary to store COMPOSITE OBJECTS: better retrieve dynamically
-    // load all composite networks used by this network
-//    for (auto &jsonComponent : json["COMPOSITE_OBJECTS"]) {
-//        String compositeName = jsonComponent.asString();
-//        std::cout << "Depends on: " << compositeName << std::endl;
-
-//        // load the composite network, if not already loaded
-//        if (networks.count(compositeName.stl()) == 0) {
-//            std::string compositeFilename = basePath + '/' + compositeName.stl();
-//            loadNetwork(compositeFilename);
-//        }
-//    }
-
-
-    // now load the network itself
+    // load the network
     auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this, basePath](std::string name) -> XMASNetwork* {
             auto network_it = networks.find(name);
             if (network_it != networks.end()) {
