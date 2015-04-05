@@ -291,36 +291,10 @@ bool model::Network::connect(Output *xmas_outport, Input *xmas_inport) {
     return false;
 }
 
-/*
- * @brief model::Network::xmasDisconnectOk
- *
- *  The Qml system calls the disconnect on request of the qml
- * javascript both explicitly and implicitly. Due to the way Qml
- * works, at closing time, Qml might ask for disconnect of ports
- * that are not connected. This is not an error. The cause is a
- * difference in structure on the canvas and in xmas-components.
- *
- * On the canvas the channel is an object that has 2 ports that are
- * also objects. When deleting the canvas, Qml deletes each port in
- * sequence. This causes two disconnect requests in sequence. The first
- * will always be ok, as the components are connected. The second
- * will meet with components that are already disconnect. In xmas
- * the disconnects leads to automatic disconnection of both ends of
- * the channel, while in Qml the system tries to disconnect both ports
- * in sequence. So, we ignore this fact en execute the disconnect anyways,
- * because xmas.cpp will not do anything for already disconnected ports.
- *
- * For that reason the disconnect responds to a request to disconnect
- * already disconnected ports as if the disconnect was successful.
- *
- * @param xmas_outport
- * @param xmas_inport
- * @return
- */
 bool model::Network::xmasDisconnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_outport->connectedTo(xmas_inport->m_owner)) {
         // Ignore requests for disconnecting already disconnected channels.
-        // Qml issue 1 disconnect request for each port
+        // Qml issues 1 disconnect request for each port
         if (xmas_inport && !xmas_inport->isConnected()
                 && xmas_outport && !xmas_outport->isConnected()) {
             return true;
