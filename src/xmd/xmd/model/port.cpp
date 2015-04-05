@@ -32,20 +32,20 @@ model::XPort::~XPort()
 {
 }
 
-model::XPort::PortType model::XPort::getType() const {
+model::XPort::PortType model::XPort::type() const {
     return m_type;
 }
 
-void model::XPort::setType(PortType type) {
+void model::XPort::type(PortType type) {
     m_type = type;
     emit typeChanged();
 }
 
-QString model::XPort::getName() {
+QString model::XPort::name() {
     return m_name;
 }
 
-void model::XPort::setName(QString name) {
+void model::XPort::name(QString name) {
     if (name != m_name) {
         m_name = name;
     }
@@ -79,7 +79,7 @@ Port *model::XPort::getPort() {
         XMASComponent *c = component->xmas_component();
         if (c) {
             for (Port *p : c->ports()) {
-                if (QString(p->getName()) == getName()) {
+                if (QString(p->getName()) == name()) {
                     return p;
                 }
             }

@@ -31,8 +31,8 @@ class XPort : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(PortType)
-    Q_PROPERTY(PortType type READ getType WRITE setType NOTIFY typeChanged)
-    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(PortType type READ type WRITE type NOTIFY typeChanged)
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
 
 signals:
@@ -50,11 +50,11 @@ public:
 
     enum PortType {INPORT, OUTPORT};
 
-    PortType getType() const;
-    void setType(PortType type);
+    PortType type() const;
+    void type(PortType type);
 
-    QString getName();
-    void setName(QString name);
+    QString name();
+    void name(QString name);
 
     bool isConnected();
 

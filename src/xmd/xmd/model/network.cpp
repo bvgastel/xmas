@@ -221,9 +221,9 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
  */
 bool model::Network::portError(XPort *port, QString errMsg) {
     if (port) {
-        errMsg += (port->getType() == model::XPort::OUTPORT ? " port = output_port! "
+        errMsg += (port->type() == model::XPort::OUTPORT ? " port = output_port! "
                                                             : " port = input_port! ");
-        errMsg += port->getComponent()->getName()+"."+port->getName() + ". ";
+        errMsg += port->getComponent()->getName()+"."+port->name() + ". ";
         if (!port->isConnected()) {
             errMsg += "Port is not connected. ";
         }
