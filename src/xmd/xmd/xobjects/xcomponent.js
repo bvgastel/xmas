@@ -54,20 +54,21 @@ function loadComponent(qml) {
 
 function createComponent(parent,component) {
     if (component.status === Qjs.Component.Ready && draggedItem == null) {
-        draggedItem = component.createObject(parent,{
-                                                 "x":posnInWindow.x,
-                                                 "y": posnInWindow.y,
-                                                 "rotation":posnInWindow.rotation,
-                                                 "scale":posnInWindow.scale,
-                                                 "name":posnInWindow.name,
-                                                 "expression":posnInWindow.expression
-                                             })
+        draggedItem = component.createObject(parent,{"x":posnInWindow.x,"y": posnInWindow.y})
+        draggedItem.index = generateTagIndex(draggedItem)
+        draggedItem.name = draggedItem.prefix + draggedItem.index
         if(draggedItem.type === Model.XComponent.Composite){
             draggedItem.url = item.url
             draggedItem.alias = item.alias
             draggedItem.image = item.image ? item.source : ""
             draggedItem.boxed = item.boxed
         }
+        if (!network.addComponent(draggedItem)){
+            draggedItem.destroy()
+            draggedItem = null
+            return;
+        }
+
     } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
         log(component.errorString(),"red")
@@ -91,21 +92,14 @@ function endDrag()
             || draggedItem.x > network.x + network.width - network.margin - draggedItem.width
             || draggedItem.y < network.y + network.margin
             || draggedItem.y > network.y + network.height - network.margin - draggedItem.height) {
-        draggedItem.destroy();
-        draggedItem = null;
-    } else {
-        draggedItem.index = generateTagIndex(draggedItem)
-        draggedItem.name = draggedItem.prefix + draggedItem.index
-        if (!network.addComponent(draggedItem)){
-          draggedItem.destroy();
-        }
-        draggedItem = null;
+        remove(draggedItem)
     }
+    draggedItem = null;
 }
 
 function remove(component) {
     if (network.removeComponent(component)) {
-        destroy(component)
+        component.destroy()
     } else {
         log("Remove of component " + component.name + " not confirmed by xmas!!","red")
     }
