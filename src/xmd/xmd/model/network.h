@@ -78,6 +78,7 @@ public slots:
     bool newFile();
     bool addLibraryComposite(QUrl url);
     bool removeLibraryComposite(QUrl url);
+    bool clearCompositeLibrary();
 
 private:
     QList<Component *> getAllComponents();

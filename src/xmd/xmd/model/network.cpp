@@ -55,7 +55,7 @@ void model::Network::setPacket(QString expression) {
 }
 
 bool model::Network::openFile(QUrl fileUrl) {
-
+    clearCompositeLibrary();
     std::string filename = Util::fileName(fileUrl);
     if (dataControl->loadNewProject(filename)) {
         auto project = dataControl->project();
@@ -80,6 +80,7 @@ bool model::Network::saveFile(QUrl fileUrl) {
 
 bool model::Network::closeFile() {
     //TODO destroy the model and reset everything
+    clearCompositeLibrary();
     auto project = dataControl->project();
     project->clear();
     return true;
@@ -499,6 +500,16 @@ bool model::Network::removeLibraryComposite(QUrl url){
     //4.2 url still used in current network
     //4.3 xmas failed to delete composite
 
+    emit compositeLibraryChanged();
+    return true;
+}
+
+/**
+ * @brief model::Network::clearCompositeLibrary
+ * @return
+ */
+bool model::Network::clearCompositeLibrary(){
+    m_compositeLibrary.clear();
     emit compositeLibraryChanged();
     return true;
 }

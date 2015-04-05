@@ -194,5 +194,4 @@ Rectangle {
         standardButtons: StandardButton.Ok
         onApply: this.destroy()
     }
-
 }
