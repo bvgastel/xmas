@@ -420,18 +420,13 @@ bool model::Network::addComposite(model::Component *component) {
     }
 
     QUrl fileUrl = QUrl(component->property("url").toString());
-
-//    std::string filename =
-//            fileUrl.isLocalFile() ? fileUrl.toLocalFile().toStdString()
-//                                  : fileUrl.fileName().toStdString();
     std::string filename = fileUrl.fileName().toStdString();
-
-    XMASNetwork *xnetwork = project->getNetwork(filename);
-    if (!xnetwork)
+    XMASNetwork *network = project->getNetwork(filename);
+    if (!network)
         return false;
 
     std::string name = component->name().toStdString();
-    if(project->insertComposite(name, std::ref(*xnetwork))){
+    if(project->insertComposite(name, std::ref(*network))){
         return true;
     }
     return false;

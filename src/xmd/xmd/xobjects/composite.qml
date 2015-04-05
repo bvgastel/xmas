@@ -45,7 +45,7 @@ XComponent {
     property int portSpace: 30 //2 times default gridsize - 1 time portsize
 
 
-    function updatePorts(){
+    function updatePorts() {
         var ports = getPorts()
         inportModel.clear()
         outportModel.clear()
