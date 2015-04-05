@@ -223,7 +223,7 @@ bool model::Network::portError(XPort *port, QString errMsg) {
     if (port) {
         errMsg += (port->type() == model::XPort::OUTPORT ? " port = output_port! "
                                                             : " port = input_port! ");
-        errMsg += port->getComponent()->getName()+"."+port->name() + ". ";
+        errMsg += port->getComponent()->name()+"."+port->name() + ". ";
         if (!port->isConnected()) {
             errMsg += "Port is not connected. ";
         }
@@ -455,7 +455,7 @@ bool model::Network::addComposite(model::Component *component) {
     if (!xnetwork)
         return false;
 
-    std::string name = component->getName().toStdString();
+    std::string name = component->name().toStdString();
     if(project->insertComposite(name, std::ref(*xnetwork))){
         return true;
     }
@@ -477,8 +477,8 @@ bool model::Network::addComponent(model::Component *component) {
         return false;
     }
 
-    std::string name = component->getName().toStdString();
-    model::Component::CompType type = component->getType();
+    std::string name = component->name().toStdString();
+    model::Component::CompType type = component->type();
 
     bool result = false;
     switch(type) {
@@ -529,7 +529,7 @@ bool model::Network::addComponent(model::Component *component) {
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
     if (component) {
-        auto name = component->getName().toStdString();
+        auto name = component->name().toStdString();
         bool result = project->removeComponent(name);
         if (!result) {
             auto c = project->getRootNetwork()->getComponent(name);

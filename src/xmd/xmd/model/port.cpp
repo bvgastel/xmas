@@ -60,8 +60,6 @@ bool model::XPort::isConnected() {
     return false;
 }
 
-
-
 /**
  * @brief model::XPort::getPort
  *

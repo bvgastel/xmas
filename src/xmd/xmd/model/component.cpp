@@ -38,13 +38,14 @@ model::Component::~Component()
 void model::Component::updateCanvasData() {
     auto project = dataControl->project();
     auto network = project->getRootNetwork();
-    XMASComponent *c = network->getComponent(getName().toStdString());
+    XMASComponent *c = network->getComponent(name().toStdString());
     if (c) {
         c->canvasData(this->x(), this->y(), this->rotation(), this->scale());
     }
 }
 
 // This method was made for composite objects.
+// Primitives have fixed portnames
 QVariantMap model::Component::getPorts()
 {
     auto project = dataControl->project();
@@ -64,11 +65,11 @@ QVariantMap model::Component::getPorts()
     return map;
 }
 
-QString model::Component::getName() {
+QString model::Component::name() {
     return m_name;
 }
 
-void model::Component::setName(QString name) {
+void model::Component::name(QString name) {
     // initial setting
     if (m_name == QString()) {
         m_name = name;
@@ -91,25 +92,25 @@ void model::Component::setName(QString name) {
     emit nameChanged(false);
 }
 
-model::Component::CompType model::Component::getType() const {
+model::Component::CompType model::Component::type() const {
     return m_type;
 }
 
-void model::Component::setType(CompType type) {
+void model::Component::type(CompType type) {
     m_type = type;
     emit typeChanged();
 }
 
-bool model::Component::getValidExpr() {
+bool model::Component::validExpr() {
     return m_validExpr;
 }
 
-void model::Component::setValidExpr(bool validExpr) {
+void model::Component::validExpr(bool validExpr) {
     m_validExpr = validExpr;
     emit validExprChanged(-1, QString(""));
 }
 
-void model::Component::setValidExpr(bool validExpr, int pos, QString errMsg) {
+void model::Component::validExpr(bool validExpr, int pos, QString errMsg) {
     m_validExpr = validExpr;
     emit validExprChanged(pos, errMsg);
 }
@@ -126,7 +127,7 @@ void model::Component::componentComplete()
     }
 }
 
-bool model::Component::getValid() {
+bool model::Component::valid() {
     bool result = false;
     auto c = xmas_component();
     if (c) {
@@ -155,9 +156,9 @@ int model::Component::updateExpression() {
         return false;
     }
 
-    if (getType() == Queue) {
+    if (type() == Queue) {
         if (typeName != "int") {
-            setValidExpr(false, 0, QString("Received non integer size."));
+            validExpr(false, 0, QString("Received non integer size."));
             return 0;
         }
         int size = m_expression.toInt();
@@ -170,10 +171,10 @@ int model::Component::updateExpression() {
             return false;
         }
         queue->c = size;
-        setValidExpr(true, -1, QString(""));
+        validExpr(true, -1, QString(""));
         emit writeLog(QString("queuesize set: ")+size);
         return -1;
-    } else if (getType() == Source) {
+    } else if (type() == Source) {
         if (typeName != "QString") {
             return 0;
         }
@@ -183,7 +184,7 @@ int model::Component::updateExpression() {
             std::string expr = qexpr.toStdString();
             auto result = source->setSourceExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
-            setValidExpr(result.m_success, result.m_pos, errMsg);
+            validExpr(result.m_success, result.m_pos, errMsg);
             QString xmas_expression =
                     result.m_success ? QString(source->getSourceExpression(mp())
                                                .stl().c_str())
@@ -197,7 +198,7 @@ int model::Component::updateExpression() {
                          " as source : " << c->getStdName() << std::endl;
             return false;
         }
-    } else if (getType() == Function) {
+    } else if (type() == Function) {
         if (typeName != "QString") {
             return 0;
         }
@@ -207,7 +208,7 @@ int model::Component::updateExpression() {
             std::string expr = qexpr.toStdString();
             auto result =  func->setFunctionExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
-            setValidExpr(result.m_success, result.m_pos, errMsg);
+            validExpr(result.m_success, result.m_pos, errMsg);
             emit writeLog(QString("saving expression in XMASComponent ")
                           + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
@@ -223,7 +224,7 @@ int model::Component::updateExpression() {
             return false;
         }
         return true;
-    } else if (getType() == Join) {
+    } else if (type() == Join) {
         if (typeName != "QString") {
             return 0;
         }
@@ -242,7 +243,7 @@ int model::Component::updateExpression() {
                 emit writeLog(QString("Function for unrestricted Join is not implemented yet."));
             }
             QString errMsg = QString(result.m_errMsg.stl().c_str());
-            setValidExpr(result.m_success, result.m_pos, errMsg);
+            validExpr(result.m_success, result.m_pos, errMsg);
             QString xmas_expression = result.m_success ? QString(join->getJoinExpression(mp()).stl().c_str())
                                                        : "<Should never show>";
             xmas_expression = xmas_expression == "" ? "<no value returned>" : xmas_expression;
@@ -256,7 +257,7 @@ int model::Component::updateExpression() {
             return false;
         }
         return true;
-    } else if (getType() == Switch) {
+    } else if (type() == Switch) {
         if (typeName != "QString") {
             return 0;
         }
@@ -266,7 +267,7 @@ int model::Component::updateExpression() {
             std::string expr = qexpr.toStdString();
             auto result =  sw->setSwitchExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
-            setValidExpr(result.m_success, result.m_pos, errMsg);
+            validExpr(result.m_success, result.m_pos, errMsg);
             QString xmas_expression = result.m_success ? QString(sw->getSwitchExpression(mp()).stl().c_str())
                                                        : "<Should never show>";
             emit writeLog(QString("saving expression in XMASComponent ")
@@ -281,7 +282,7 @@ int model::Component::updateExpression() {
         return true;
     }
 
-    emit writeLog(QString("Component type not recognized for expression: ")+getType());
+    emit writeLog(QString("Component type not recognized for expression: ")+type());
     return false;
 }
 
@@ -296,7 +297,7 @@ XMASComponent *model::Component::xmas_component() {
         return nullptr;
     }
 
-    std::string stdName = getName().toStdString();
+    std::string stdName = name().toStdString();
     auto c = network->getComponent(stdName);
     if (!c) {
         //FIXME during drag from XToolbar this will launch continuously, there is no xmas component yet
@@ -310,7 +311,7 @@ XMASComponent *model::Component::xmas_component() {
     return c;
 }
 
-QVariant model::Component::getExpression() {
+QVariant model::Component::expression() {
     auto c = xmas_component();
     // In case of queue return queue size
     auto queue = dynamic_cast<XMASQueue *>(c);
@@ -361,7 +362,7 @@ QVariant model::Component::getExpression() {
     return m_expression;
 }
 
-void model::Component::setExpression(QVariant expression) {
+void model::Component::expression(QVariant expression) {
     int errorPosition = -1;
     errorPosition = updateExpression(expression);
     emit expressionChanged(errorPosition);

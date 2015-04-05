@@ -46,11 +46,11 @@ private:
     Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
-    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(CompType type READ getType WRITE setType NOTIFY typeChanged)
-    Q_PROPERTY(QVariant expression READ getExpression WRITE setExpression NOTIFY expressionChanged)
-    Q_PROPERTY(bool validExpr READ getValidExpr WRITE setValidExpr NOTIFY validExprChanged)
-    Q_PROPERTY(bool valid READ getValid NOTIFY validChanged)
+    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(CompType type READ type WRITE type NOTIFY typeChanged)
+    Q_PROPERTY(QVariant expression READ expression WRITE expression NOTIFY expressionChanged)
+    Q_PROPERTY(bool validExpr READ validExpr WRITE validExpr NOTIFY validExprChanged)
+    Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -66,32 +66,28 @@ signals:
     void writeLog(QString message, QColor color = Qt::blue);
 
 public slots:
-
     QVariantMap getPorts();
 
-    CompType getType() const;
-    void setType(CompType type);
+    CompType type() const;
+    void type(CompType type);
 
-    QString getName();
-    void setName(QString name);
+    QString name();
+    void name(QString name);
 
-    QVariant getExpression();
-    void setExpression(QVariant expression);
+    QVariant expression();
+    void expression(QVariant expression);
 
-    bool getValidExpr();
-    bool getValid();
-
+    bool validExpr();
+    bool valid();
 
     void updateCanvasData();
 
 public:
-    void setValidExpr(bool validExpr);
-    void setValidExpr(bool validExpr, int pos, QString errMsg);
+    void validExpr(bool validExpr);
+    void validExpr(bool validExpr, int pos, QString errMsg);
 
     virtual void classBegin();
     virtual void componentComplete();
-
-
 
     XMASComponent *xmas_component();
 
