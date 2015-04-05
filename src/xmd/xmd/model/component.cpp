@@ -59,15 +59,8 @@ QVariantMap model::Component::getPorts()
         for(Port *p : c->ports()) {
             QString name = p->getName();
             map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
-            qDebug() << "port:" << p->getName() ;
         }
-        qDebug() << "end of ports" ;
-    } else {
-        qDebug() << "no component :(" ;
     }
-//    map["in0"] = XPort::PortType::INPORT;
-//    map["in1"] = XPort::PortType::INPORT;
-//    map["out"] = XPort::PortType::OUTPORT;
     return map;
 }
 
@@ -306,6 +299,9 @@ XMASComponent *model::Component::xmas_component() {
     std::string stdName = getName().toStdString();
     auto c = network->getComponent(stdName);
     if (!c) {
+        //FIXME during drag from XToolbar this will launch continuously, there is no xmas component yet
+        // But ports are linked to their "connected" , isConnected asks for getPort()
+        // getPort() asks for its owner and this owner asks for xmas_component and then we're here
         std::cerr << "xmas component for component " << stdName << " not found."
                   << "returning nullptr."<< std::endl;
         return nullptr;
