@@ -99,7 +99,7 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantMap map;
-            convertToQml(map, comp);
+            convertToQml(map, comp, network);
             compList.append(map);
         }
     }
@@ -115,9 +115,9 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
     QVariantMap qmlNetwork;
     qmlNetwork["complist"] = compList;
     qmlNetwork["channellist"] = channelList;
-    // TODO: add methods to network.
-    //qmlNetwork["packet_type"] = m_project->getRootNetwork()->getPacketType();
-    //qmlNetwork["var"] = m_project->getRootNetwork()->getVar();
+    qmlNetwork["packet_type"] = QString(network.getPacketType().stl().c_str());
+    // Var is not implemented in qml yet. No known semantics for var
+    //qmlNetwork["var"] = QString(network.getVar().stl().c_str());
 
     emit createNetwork(qmlNetwork);
     std::clock_t c_end = std::clock();
@@ -144,7 +144,7 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
 }
 
 
-void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
+void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNetwork &network) {
     std::string name = comp->getStdName();
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
@@ -203,11 +203,12 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
         if (composite) {
             QString url = QString::fromStdString(composite->getNetwork().getStdName());
             map.insert("url", url);
-
-            //FIXME we also need these for the canvas representation
-//            map.insert("alias", QString::fromStdString(cn_ext->alias));
-//            map.insert("symbol", QString::fromStdString(cn_ext->imageName));
-//            map.insert("boxed", cn_ext->boxedImage);
+            CompositeNetworkExtension *cn_ext = network.getNetworkExtension<CompositeNetworkExtension>(false);
+            if (cn_ext) {
+                map.insert("alias", QString::fromStdString(cn_ext->alias));
+                map.insert("symbol", QString::fromStdString(cn_ext->imageName));
+                map.insert("boxed", cn_ext->boxedImage);
+            }
         }
     }
     map.insert("type", type);
