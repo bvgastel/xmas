@@ -201,13 +201,20 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
     } else if (type == model::Component::Composite) {
         XMASComposite *composite = dynamic_cast<XMASComposite *>(comp);
         if (composite) {
-            const std::string& url = composite->getNetwork().getStdName();
-            qDebug() << "FIXME: Pass composite url to qml!!";
+            QString url = QString::fromStdString(composite->getNetwork().getStdName());
+            map.insert("url", url);
+
+            //FIXME we also need these for the canvas representation
+//            map.insert("alias", QString::fromStdString(cn_ext->alias));
+//            map.insert("symbol", QString::fromStdString(cn_ext->imageName));
+//            map.insert("boxed", cn_ext->boxedImage);
         }
     }
     map.insert("type", type);
     map.insert("name", qname);
+    emit componentAdded();
 }
+
 /*
  * portError(port, errMsg) always return false to support error messaging.
  *
@@ -500,7 +507,7 @@ bool model::Network::addComponent(model::Component *component) {
         result = project->insertFork(name);
         break;
     case model::Component::CompType::Composite :
-        result = result = addComposite(component);
+        result = addComposite(component);
         break;
     default :
         emit writeLog(QString("Unknown component type!"), Qt::red);
@@ -555,9 +562,7 @@ QVariantList model::Network::compositeLibrary() {
  * @return True is composite has been added to the library.
  */
 bool model::Network::addLibraryComposite(QUrl url){
-    qDebug() << "Add library composite with url = " << url;
-
-    //1 - send url to xmas and parse as composite
+   //1 - send url to xmas and parse as composite
     std::string name = url.toLocalFile().toStdString();
     try {
         XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
@@ -576,7 +581,6 @@ bool model::Network::addLibraryComposite(QUrl url){
     } catch (bitpowder::lib::Exception) {
         return false;
     }
-
     return true;
 }
 
