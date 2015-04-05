@@ -404,86 +404,16 @@ QString model::Network::toJson() {
 }
 
 /**
- * @brief model::Network::addComposite
- * @param component
- * @return
- */
-bool model::Network::addComposite(model::Component *component) {
-
-    auto project = dataControl->project();
-
-    if (!project) {
-        emit writeLog(QString("Project not existing! All will fail!"));
-        return false;
-    }
-
-    QUrl fileUrl = QUrl(component->property("url").toString());
-    std::string filename = fileUrl.fileName().toStdString();
-    XMASNetwork *network = project->getNetwork(filename);
-    if (!network)
-        return false;
-
-    std::string name = component->name().toStdString();
-    if(project->insertComposite(name, std::ref(*network))){
-        return true;
-    }
-    return false;
-}
-
-/**
- *  Add component request (qml xcomponent.js)
+ *  Relay request to add component to xmas
  *
  * @brief model::Network::addComponent
  * @param component to add
- * @return true if component is added into xmas
+ * @return true if component was added into xmas
  */
 bool model::Network::addComponent(model::Component *component) {
 
-    auto project = dataControl->project();
-    if (!project) {
-        emit writeLog(QString("Project not existing! All will fail!"));
-        return false;
-    }
-
-    std::string name = component->name().toStdString();
-    model::Component::CompType type = component->type();
-
-    bool result = false;
-    switch(type) {
-    case model::Component::CompType::Source :
-        result = project->insertSource(name);
-        break;
-    case model::Component::CompType::Sink :
-        result = project->insertSink(name);
-        break;
-    case model::Component::CompType::Function :
-        result = project->insertFunction(name);
-        break;
-    case model::Component::CompType::Queue :
-        result = project->insertQueue(name);
-        break;
-    case model::Component::CompType::Join :
-        result = project->insertJoin(name);
-        break;
-    case model::Component::CompType::Merge :
-        result = project->insertMerge(name);
-        break;
-    case model::Component::CompType::Switch :
-        result = project->insertSwitch(name);
-        break;
-    case model::Component::CompType::Fork :
-        result = project->insertFork(name);
-        break;
-    case model::Component::CompType::Composite :
-        result = addComposite(component);
-        break;
-    default :
-        emit writeLog(QString("Unknown component type!"), Qt::red);
-        return false;
-    }
-    if(result) {
-        emit componentAdded();
-    } else {
+    bool result = component->addXComponent();
+    if(!result) {
         emit writeLog(QString("XMAS Component not inserted!"), Qt::red);
     }
     return result;

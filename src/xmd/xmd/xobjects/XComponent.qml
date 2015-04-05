@@ -290,4 +290,5 @@ Model.XComponent {
             onTriggered: doScale(-0.5)
         }
     }
+
 }

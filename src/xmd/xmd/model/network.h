@@ -59,6 +59,7 @@ signals:
     void compositeLibraryChanged();
     void writeLog(QString message, QColor color = Qt::blue);
     bool createNetwork(const QVariantMap &object);
+
     void componentAdded();
 
 public slots:
@@ -80,7 +81,6 @@ public slots:
 
 private:
     QList<Component *> getAllComponents();
-    bool addComposite(model::Component *component);
 
     bool emitNetwork(XMASNetwork &network);
     void convertToQml(QVariantMap &map, XMASComponent *comp, XMASNetwork &network);

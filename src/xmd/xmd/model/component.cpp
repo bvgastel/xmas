@@ -19,7 +19,6 @@
   * <http://www.gnu.org/licenses/>.
   *
   **********************************************************************/
-
 #include "datacontrol.h"
 #include "component.h"
 #include "port.h"
@@ -125,6 +124,70 @@ void model::Component::componentComplete()
     if (m_expression != "") {
         updateExpression();
     }
+
+}
+
+bool model::Component::addXComponent() {
+    auto project = dataControl->project();
+    bool result = false;
+    std::string name = m_name.toStdString();
+    try {
+        switch(m_type) {
+        case model::Component::CompType::Source :
+            result = project->insertSource(name);
+            break;
+        case model::Component::CompType::Sink :
+            result = project->insertSink(name);
+            break;
+        case model::Component::CompType::Function :
+            result = project->insertFunction(name);
+            break;
+        case model::Component::CompType::Queue :
+            result = project->insertQueue(name);
+            break;
+        case model::Component::CompType::Join :
+            result = project->insertJoin(name);
+            break;
+        case model::Component::CompType::Merge :
+            result = project->insertMerge(name);
+            break;
+        case model::Component::CompType::Switch :
+            result = project->insertSwitch(name);
+            break;
+        case model::Component::CompType::Fork :
+            result = project->insertFork(name);
+            break;
+        case model::Component::CompType::Composite :
+            result = addComposite();
+            break;
+        default :
+            emit writeLog(QString("Unknown component type!"), Qt::red);
+            return false;
+        }
+    } catch (bitpowder::lib::Exception e) {}      // component already exists, ignore
+
+    if (result) {
+        emit componentAdded();
+    }
+
+    return result;
+}
+
+bool model::Component::addComposite() {
+
+    auto project = dataControl->project();
+
+    QUrl fileUrl = QUrl(property("url").toString());
+    std::string filename = fileUrl.fileName().toStdString();
+    XMASNetwork *network = project->getNetwork(filename);
+    if (!network)
+        return false;
+
+    std::string name = m_name.toStdString();
+    if(project->insertComposite(name, std::ref(*network))){
+        return true;
+    }
+    return false;
 }
 
 bool model::Component::valid() {

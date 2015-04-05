@@ -29,6 +29,8 @@ namespace model
 class Component : public QQuickItem
 {
     Q_OBJECT
+
+    friend class Network;
 public:
     enum Orientation {
         North = 0,
@@ -65,6 +67,8 @@ signals:
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
 
+    void componentAdded();
+
 public slots:
     QVariantMap getPorts();
 
@@ -92,6 +96,8 @@ public:
     XMASComponent *xmas_component();
 
 private:
+    bool addXComponent();
+    bool addComposite();
     int updateExpression(QVariant expression);
     int updateExpression();
     bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
