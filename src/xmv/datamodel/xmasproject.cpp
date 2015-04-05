@@ -194,17 +194,18 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     XMASNetwork* dummy = new XMASNetwork {"dummy"};
     networks.insert(std::make_pair(name, dummy));
 
+    // gbo: unnecessary to store COMPOSITE OBJECTS: better retrieve dynamically
     // load all composite networks used by this network
-    for (auto &jsonComponent : json["COMPOSITE_OBJECTS"]) {
-        String compositeName = jsonComponent.asString();
-        std::cout << "Depends on: " << compositeName << std::endl;
+//    for (auto &jsonComponent : json["COMPOSITE_OBJECTS"]) {
+//        String compositeName = jsonComponent.asString();
+//        std::cout << "Depends on: " << compositeName << std::endl;
 
-        // load the composite network, if not already loaded
-        if (networks.count(compositeName.stl()) == 0) {
-            std::string compositeFilename = basePath + '/' + compositeName.stl();
-            loadNetwork(compositeFilename);
-        }
-    }
+//        // load the composite network, if not already loaded
+//        if (networks.count(compositeName.stl()) == 0) {
+//            std::string compositeFilename = basePath + '/' + compositeName.stl();
+//            loadNetwork(compositeFilename);
+//        }
+//    }
 
 
     // now load the network itself
@@ -213,7 +214,7 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
             if (network_it != networks.end()) {
                 return network_it->second;
             }
-            // Let's pretend COMPOSITE_OBJECTS was not filled correctly, and fill it here
+            // Network was not retrieved yet, retrieve it now
             std::string compositeFilename = basePath + '/' + name;
             XMASNetwork *network = loadNetwork(compositeFilename);
             if (network) {

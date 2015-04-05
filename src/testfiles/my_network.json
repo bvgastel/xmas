@@ -1,8 +1,7 @@
 {
   "VARS": [],
   "PACKET_TYPE": {"val ": 2},
-  "COMPOSITE_OBJECTS": [
-  ],
+  "COMPOSITE_OBJECTS": [],
   "NETWORK": [
     {
       "id": "src1",
@@ -27,6 +26,12 @@
     },
     {
       "id": "my-comp1",
+       "pos": {
+        "x": 200,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      },
       "type": "composite",
       "subnetwork": "my_composite.json",
       "outs": [
@@ -38,7 +43,13 @@
     },
     {
       "id": "my-comp2",
-      "type": "composite",
+        "pos": {
+        "x": 500,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      },
+     "type": "composite",
       "subnetwork": "my_composite.json",
       "outs": [
         {
@@ -51,8 +62,8 @@
       "id": "sink1",
       "type": "sink",
       "pos": {
-        "x": 410,
-        "y": 410,
+        "x": 900,
+        "y": 100,
         "orientation": 0,
         "scale": 100
       }
