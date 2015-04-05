@@ -139,13 +139,14 @@ function createComponent(parent,component,object) {
                                           "name":object.name,
                                           "expression":object.expression
                                       });
-
-        //TODO : if shared memory VT - XMD continues
-        // datacontrol emits the whole network at once
-        // so check localy if everything goes well and
-        // at the and feedback result as "networkCreated()"
-        // NOTE: distinguish between sources of input (screen or json)
-        //datacontrol.componentCreated(component) --> disabled, no longer necessary in new direct data model
+        if (object.type === Model.XComponent.Composite) {
+            object.url = item.url
+            object.alias = item.alias
+            object.image = item.image ? item.source : ""
+            object.boxed = item.boxed
+        }
+    // Timing incorrect: component is not fully created yet. But it does get called!
+    //        network.addComponent(component);
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }

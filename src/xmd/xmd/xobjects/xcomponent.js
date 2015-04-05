@@ -54,15 +54,23 @@ function loadComponent(qml) {
 
 function createComponent(parent,component) {
     if (component.status === Qjs.Component.Ready && draggedItem == null) {
-        draggedItem = component.createObject(parent,{"x":posnInWindow.x, "y": posnInWindow.y})
+        draggedItem = component.createObject(parent,{
+                                                 "x":posnInWindow.x,
+                                                 "y": posnInWindow.y,
+                                                 "rotation":posnInWindow.rotation,
+                                                 "scale":posnInWindow.scale,
+                                                 "name":posnInWindow.name,
+                                                 "expression":posnInWindow.expression
+                                             })
         if(draggedItem.type === Model.XComponent.Composite){
-            // TODO: Stefan: moet je hier network.addComponent aanroepen?
-            // Hoe kom je anders aan de poorten?
             draggedItem.url = item.url
             draggedItem.alias = item.alias
             draggedItem.image = item.image ? item.source : ""
             draggedItem.boxed = item.boxed
         }
+        // TODO: Stefan: moet je hier network.addComponent aanroepen?
+        // Hoe kom je anders aan de poorten?
+        network.addComponent(draggedItem)
     } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
         log(component.errorString(),"red")
