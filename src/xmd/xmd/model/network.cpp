@@ -277,9 +277,7 @@ bool model::Network::xmasConnectOk(Output *xmas_outport, Input *xmas_inport) {
         return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport null. ");
     }
 //    no check for connected: already part of Qml programming.
-//    if (xmas_inport->isConnected() || xmas_outport->isConnected()) {
-//        return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport already connected. ");
-//    }
+
     return true;
 }
 
