@@ -208,12 +208,19 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
 
 
     // now load the network itself
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this](std::string name) -> XMASNetwork* {
-        auto network_it = networks.find(name);
-        if (network_it != networks.end())
-            return network_it->second;
-        return nullptr;
-    });
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this, basePath](std::string name) -> XMASNetwork* {
+            auto network_it = networks.find(name);
+            if (network_it != networks.end()) {
+                return network_it->second;
+            }
+            // Let's pretend COMPOSITE_OBJECTS was not filled correctly, and fill it here
+            std::string compositeFilename = basePath + '/' + name;
+            XMASNetwork *network = loadNetwork(compositeFilename);
+            if (network) {
+                networks.insert(std::make_pair(name, network));
+            }
+            return network;
+            });
     auto components = componentsAndGlobals.first;
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components), m_mp};
