@@ -60,7 +60,7 @@ Model.XNetwork {
     property bool modified: false
     property bool gridVisible:mainwindow.showGrid
     property bool gridSnap:mainwindow.snapToGrid
-    property int gridSize:20
+    property int gridSize:10
 
 
     // Persistent properties
@@ -186,13 +186,13 @@ Model.XNetwork {
                 var ctx = getContext('2d')
                 ctx.strokeStyle = "#F0F0F0"
                 ctx.lineWidth = 1.0
-                for(var v=margin; v<=size.height-margin; v+=gridSize){
+                for(var v=margin; v<=size.height-margin; v+=gridSize*2){
                     ctx.beginPath()
                     ctx.moveTo(margin ,v)
                     ctx.lineTo(size.width-margin,v)
                     ctx.stroke()
                 }
-                for(var h=margin; h<=size.width-margin; h+=gridSize){
+                for(var h=margin; h<=size.width-margin; h+=gridSize*2){
                     ctx.beginPath()
                     ctx.moveTo(h,margin)
                     ctx.lineTo(h,size.height-margin)
@@ -211,6 +211,7 @@ Model.XNetwork {
         property int mx: 0
         property int my: 0
         visible: connecting
+        z:100
         size: 4
         color: "red"
 
