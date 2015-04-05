@@ -423,6 +423,11 @@ QString model::Network::toJson() {
     return jsonString;
 }
 
+/**
+ * @brief model::Network::addComposite
+ * @param component
+ * @return
+ */
 bool model::Network::addComposite(model::Component *component) {
 
     auto project = dataControl->project();
@@ -450,6 +455,13 @@ bool model::Network::addComposite(model::Component *component) {
     return false;
 }
 
+/**
+ *  Add component request (qml xcomponent.js)
+ *
+ * @brief model::Network::addComponent
+ * @param component to add
+ * @return true if component is added into xmas
+ */
 bool model::Network::addComponent(model::Component *component) {
 
     auto project = dataControl->project();
@@ -461,46 +473,51 @@ bool model::Network::addComponent(model::Component *component) {
     std::string name = component->getName().toStdString();
     model::Component::CompType type = component->getType();
 
-    bool result = true;
+    bool result = false;
     switch(type) {
     case model::Component::CompType::Source :
-        project->insertSource(name);
+        result = project->insertSource(name);
         break;
     case model::Component::CompType::Sink :
-        project->insertSink(name);
+        result = project->insertSink(name);
         break;
     case model::Component::CompType::Function :
-        project->insertFunction(name);
+        result = project->insertFunction(name);
         break;
     case model::Component::CompType::Queue :
-        project->insertQueue(name);
+        result = project->insertQueue(name);
         break;
     case model::Component::CompType::Join :
-        project->insertJoin(name);
+        result = project->insertJoin(name);
         break;
     case model::Component::CompType::Merge :
-        project->insertMerge(name);
+        result = project->insertMerge(name);
         break;
     case model::Component::CompType::Switch :
-        project->insertSwitch(name);
+        result = project->insertSwitch(name);
         break;
     case model::Component::CompType::Fork :
-        project->insertFork(name);
+        result = project->insertFork(name);
         break;
     case model::Component::CompType::Composite :
-        result = addComposite(component);
+        result = result = addComposite(component);
         break;
     default :
         emit writeLog(QString("Unknown component type!"), Qt::red);
         return false;
     }
-    if(result) emit componentAdded();
+    if(result) {
+        emit componentAdded();
+    } else {
+        emit writeLog(QString("XMAS Component not inserted!"), Qt::red);
+    }
     return result;
 }
 
-/*
- *
- *
+/**
+ * @brief model::Network::removeComponent
+ * @param component
+ * @return
  */
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
@@ -526,49 +543,7 @@ bool model::Network::removeComponent(model::Component *component) {
  * @brief model::Network::getComposites
  * @return Network composite list
  */
-//TODO replace example data with json data
 QVariantList model::Network::compositeLibrary() {
-//    m_compositeLibrary.clear();
-//    //example composite 1
-//    QVariantMap composite1;
-//    composite1.insert("url", "file://xmas-models/test.json");
-//    composite1.insert("alias", "Credit Counter");
-//    composite1.insert("symbol", "counter.png");
-//    composite1.insert("boxed", false);
-//    m_compositeLibrary.append(composite1);
-
-//    //example composite 2
-//    QVariantMap composite2;
-//    composite2.insert("url", "");
-//    composite2.insert("alias", "Delay");
-//    composite2.insert("symbol", "delay.png");
-//    composite2.insert("boxed", false);
-//    m_compositeLibrary.append(composite2);
-
-//    //example composite 3
-//    QVariantMap composite3;
-//    composite3.insert("url", "");
-//    composite3.insert("alias", "MuxSrc");
-//    composite3.insert("symbol", "muxsource.png");
-//    composite3.insert("boxed", false);
-//    m_compositeLibrary.append(composite3);
-
-//    //example composite 4
-//    QVariantMap composite4;
-//    composite4.insert("url", "");
-//    composite4.insert("alias", "mySubnet");
-//    composite4.insert("symbol", "");
-//    composite4.insert("boxed", true);
-//    m_compositeLibrary.append(composite4);
-
-//    example composite 5
-//    QVariantMap composite5;
-//    composite5.insert("url", "");
-//    composite5.insert("alias", "spidergon");
-//    composite5.insert("symbol", "spidergon.ico");
-//    composite5.insert("boxed", true);
-//    m_compositeLibrary.append(composite5);
-
     return m_compositeLibrary;
 }
 
@@ -579,10 +554,6 @@ QVariantList model::Network::compositeLibrary() {
  * @param url
  * @return True is composite has been added to the library.
  */
-// NOTE: are these remarks important for the code?
-//4.1 url doesn't exist
-//4.2 url already in list
-//4.3 parser failed to read composite
 bool model::Network::addLibraryComposite(QUrl url){
     qDebug() << "Add library composite with url = " << url;
 
