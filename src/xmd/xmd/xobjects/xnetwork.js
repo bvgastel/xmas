@@ -140,13 +140,14 @@ function createComponent(parent,component,object) {
                                           "expression":object.expression
                                       });
         if (object.type === Model.XComponent.Composite) {
-            object.url = item.url
-            object.alias = item.alias
-            object.image = item.image ? item.source : ""
-            object.boxed = item.boxed
+            item.url = object.url ? object.url : ""
+            item.alias = object.alias ? object.alias : ""
+            item.image = object.image ? object.image : ""
+            item.boxed = object.boxed
         }
     // Timing incorrect: component is not fully created yet. But it does get called!
-    //        network.addComponent(component);
+      //network.addComponent(component);
+        item.componentAdded()
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
     }

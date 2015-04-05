@@ -68,9 +68,6 @@ function createComponent(parent,component) {
             draggedItem.image = item.image ? item.source : ""
             draggedItem.boxed = item.boxed
         }
-        // TODO: Stefan: moet je hier network.addComponent aanroepen?
-        // Hoe kom je anders aan de poorten?
-        network.addComponent(draggedItem)
     } else if (component.status === Qjs.Component.Error) {
         draggedItem = null
         log(component.errorString(),"red")
