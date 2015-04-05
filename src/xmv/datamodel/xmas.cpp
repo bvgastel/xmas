@@ -632,15 +632,14 @@ XMASComposite::XMASComposite(const bitpowder::lib::String &name, XMASNetwork &ne
     outputs.reserve(numOutGates);
 
     // for all in gates, create an input port
-    for (auto c : inGates)
-        if (c->external) {
-            inputs.push_back(Input {this, c->getStdName().c_str()} );
-        }
+    for (XMASSource *c : inGates) {
+        inputs.push_back(Input {this, c->getStdName().c_str()} );
+    }
 
     // for all out gates, create an output port
-    for (auto c : outGates)
-        if (c->external)
-            outputs.push_back(Output {this, c->getStdName().c_str()} );
+    for (XMASSink *c : outGates) {
+        outputs.push_back(Output {this, c->getStdName().c_str()} );
+    }
 
     // fill p
     p.reserve(inputs.size() + outputs.size());

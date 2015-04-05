@@ -618,7 +618,7 @@ class XMASSink : public XMASComponent
 public:
     Input i;
     Port* p[1];
-    bool external;              // is this sink an interface port of a composite
+    bool required_output;              // is this sink required as an interface port of a composite
 
     /**
      * @brief XMASSink Constructor
@@ -626,7 +626,7 @@ public:
      * @param name the name of the sink
      */
     XMASSink(const bitpowder::lib::String& name, bool external = false)
-        : XMASComponent(name), i(this, "i"), external(external)
+        : XMASComponent(name), i(this, "i"), required_output(external)
     {
         p[0] = &i;
     }
@@ -675,10 +675,10 @@ class XMASSource : public XMASComponent
 public:
     Output o;
     Port* p[1];
-    bool external;              // is this source an interface port of a composite
+    bool required_input;              // is this source required as an interface port of a composite
 
     XMASSource(const bitpowder::lib::String& name, bool external = false)
-        : XMASComponent(name), o(this, "o"), external(external)
+        : XMASComponent(name), o(this, "o"), required_input(external)
     {
         p[0] = &o;
     }

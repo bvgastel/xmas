@@ -56,14 +56,14 @@ public:
     {}
 
     void visit(XMASSink *c) override {
-        if (c->external) {
+        if (c->required_output) {
             auto outGate = new XMASOutGate(name); result = outGate; gates.outGates.push_back(outGate);
         } else {
             result = network.insert<XMASSink>(name);
         }
     }
     void visit(XMASSource *c) override {
-        if (c->external) {
+        if (c->required_input) {
             auto inGate = new XMASInGate(name); result = inGate; gates.inGates.push_back(inGate);
         } else {
             auto src = network.insert<XMASSource>(name);
