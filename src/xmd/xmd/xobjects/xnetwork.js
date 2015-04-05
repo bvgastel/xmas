@@ -143,7 +143,7 @@ function createComponent(parent,component,object) {
             item.url = object.url ? object.url : ""
             item.alias = object.alias ? object.alias : ""
             item.image = object.image ? object.image : ""
-            item.boxed = object.boxed
+            item.boxed = object.boxed ? object.boxed : true
         }
     // Timing incorrect: component is not fully created yet. But it does get called!
       //network.addComponent(component);
