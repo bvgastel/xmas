@@ -56,7 +56,8 @@ Model.XPort {
     Text {
         id:label
         text:name
-        anchors.left: nameAlignCenter ? port.right : portShape.right
+        anchors.left: nameAlignCenter ? port.right : undefined
+        anchors.right: nameAlignCenter ? undefined : portShape.right
         anchors.bottom: nameAlignCenter ?  undefined : portShape.top
         anchors.verticalCenter: nameAlignCenter ? portShape.verticalCenter : undefined
         anchors.leftMargin: nameAlignCenter ? 15 : 0

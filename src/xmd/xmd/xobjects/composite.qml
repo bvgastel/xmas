@@ -59,20 +59,16 @@ XComponent {
         }
     }
 
-    Rectangle{
-        anchors.fill: parent
-        color:"transparent"
-        border.color: "green"
-        border.width: 1
-    }
-
     RowLayout{
        anchors.fill: parent
 
         // Input ports (left)
-        Column{
+        Rectangle{
             id:columnLeft
-            spacing: portSpace
+            Layout.minimumWidth: 15
+            Layout.maximumWidth: 15
+            Layout.fillHeight: true
+            color:"transparent"
             Repeater{
                 id:portsLeft
                 model:inportModel
@@ -88,6 +84,7 @@ XComponent {
             border.width: boxed ? 4 : 0
             radius: 10
             color: boxed ? "white" : "transparent"
+            z:-1
             Image {
                 id:symbol
                 height: boxed ? component.height - 50 : 100
@@ -108,9 +105,12 @@ XComponent {
         }
 
         // Output ports (right)
-        Column{
+        Rectangle{
             id:columnRight
-            spacing: portSpace
+            Layout.minimumWidth: 15
+            Layout.maximumWidth: 15
+            Layout.fillHeight: true
+            color:"transparent"
             Repeater{
                 id: portsRight
                 model:outportModel
@@ -133,6 +133,8 @@ XComponent {
             name:portName
             type:portType
             nameAlignCenter: boxed
+            x:type===Model.XPort.INPORT ? 5 : 10
+            y:30 + index * portSpace
             Rectangle {
                 id:portWire
                 color:"black"
