@@ -66,8 +66,6 @@ public slots:
     bool connect(XPort *port_out, XPort *port_in);
     bool disconnect(XPort *outport, XPort *inport);
 
-    QString toJson();
-
     bool addComponent(model::Component *component);
     bool removeComponent(model::Component *component);
     bool setCompositeNetworkData();
@@ -101,17 +99,16 @@ public:
     ~Network();
 
     QString packet();
-    void setPacket(QString expression);
+    bool setPacket(QString expression);
 
     QVariantList compositeLibrary();
 
 private:
 
     Logger m_logger;
-    QString m_packet;
 
     QString m_alias;
-    QSize m_size = QSize(2500,2000);
+    QSize m_size;
     QString m_imageName;
     bool m_boxedImage;
     QVariantList m_compositeLibrary;

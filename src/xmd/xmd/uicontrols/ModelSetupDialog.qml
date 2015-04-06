@@ -223,7 +223,7 @@ Window {
                                     anchors.leftMargin: 10
                                     selectByMouse:true
                                     inputMethodHints: Qt.ImhDigitsOnly
-                                    validator: IntValidator{bottom: 500; top:25000}
+                                    validator: IntValidator{bottom: 500; top:5000}
                                     wrapMode: TextInput.NoWrap
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter
@@ -256,7 +256,7 @@ Window {
                                     anchors.leftMargin: 10
                                     selectByMouse:true
                                     inputMethodHints: Qt.ImhDigitsOnly
-                                    validator: IntValidator{bottom: 500; top:25000}
+                                    validator: IntValidator{bottom: 500; top:5000}
                                     wrapMode: TextInput.NoWrap
                                     font.pointSize : 10
                                     verticalAlignment: Text.AlignVCenter

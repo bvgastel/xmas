@@ -45,13 +45,9 @@ Model.XNetwork {
     id: network
     // Properties
     scale: 1.0
-//    size: Qt.size(2500,2000)
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
-//    alias:""
-//    boxedImage: true
-//    imageName: ""
     property string fileName: "?.json"
     property string folder: modelFolder
     property bool selectionMode: Qt.Unchecked
@@ -61,14 +57,6 @@ Model.XNetwork {
     property bool gridVisible:mainwindow.showGrid
     property bool gridSnap:mainwindow.snapToGrid
     property int gridSize:10
-
-
-    // Persistent properties
-    Settings {
-        category: "network"
-        property alias size: network.size
-    }
-
 
     // Signals
     signal moveSelected(var group)

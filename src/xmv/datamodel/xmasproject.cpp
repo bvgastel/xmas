@@ -88,10 +88,10 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
         globals["CANVAS"] = jsonCanvas;
     }
 
+    //FIXME packet_type is (string,value) list , need to parse first!
     JSONData::Map jsonPacketType = JSONData::AllocateMap(mp);
-    jsonPacketType["val "] = bitpowder::lib::String(network->packetType());
-    globals["PACKET_TYPE"] = JSONData::AllocateMap(mp);
-
+    jsonPacketType["val "] = String(network->m_packet_type);
+    globals["PACKET_TYPE"] = jsonPacketType;
 
     for (auto& it : network->getComponentMap()) {
         allComponents.insert(it.second);

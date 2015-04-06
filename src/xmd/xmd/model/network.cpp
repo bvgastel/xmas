@@ -17,9 +17,9 @@ model::Network::Network(QQuickItem *parent)
     : QQuickItem(parent),
       m_logger("Network.cpp"),
       m_alias(),
-      m_size(),
+      m_size(QSize(2500,2000)),
       m_imageName(),
-      m_boxedImage(false)
+      m_boxedImage(true)
 {
     QObject::connect(&m_logger, &Logger::writeLog, dataControl, &DataControl::writeLog );
     m_logger.log(QString("Network starting ..."));
@@ -43,16 +43,22 @@ bool model::Network::setCompositeNetworkData() {
 }
 
 QString model::Network::packet() {
-    return m_packet ;
+    auto project = dataControl->project();
+    if (!project || !project->getRootNetwork()) {
+        emit writeLog(QString("This network has no project or no network: big problems!"),Qt::red);
+        return "";
+    }
+    return project->getRootNetwork()->packetType();
 }
 
-void model::Network::setPacket(QString expression) {
-    if (expression != m_packet) {
-        m_packet = expression;
+bool model::Network::setPacket(QString expression) {
+    auto project = dataControl->project();
+    if (!project || !project->getRootNetwork()) {
+        emit writeLog(QString("This network has no project or no network: big problems!"),Qt::red);
+        return false;
     }
-    emit packetChanged();
-    m_logger.log(QString("packet expression = ")+m_packet);
-    qDebug() << "packet expression = " << m_packet;
+    project->getRootNetwork()->packetType(expression.toStdString());
+    m_logger.log(QString("packet set to expression = ") + expression);
 }
 
 bool model::Network::openFile(QUrl fileUrl) {
@@ -116,29 +122,23 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
     }
     QVariantMap qmlNetwork;
     qmlNetwork["complist"] = compList;
-    qmlNetwork["channellist"] = channelList;
-    qmlNetwork["packet_type"] = QString(network.getPacketType().stl().c_str());
+    qmlNetwork["channellist"] = channelList;    emit packetChanged();
+
+    emit packetChanged();
     // Var is not implemented in qml yet. No known semantics for var
     //qmlNetwork["var"] = QString(network.getVar().stl().c_str());
-
 
     auto cne = network.getNetworkExtension<CompositeNetworkExtension>(false);
     if(cne){
         this->m_alias = cne->alias.c_str();
-        emit aliasChanged();
         this->m_boxedImage = cne->boxedImage;
-        emit boxedImageChanged();
         this->m_imageName = cne->imageName.c_str();
-        emit imageNameChanged();
     }
 
    auto cve = network.getNetworkExtension<CanvasNetworkExtension>(false);
     if(cve){
         this->m_size = QSize(cve->width,cve->height);
-        emit sizeChanged();
-    }
-
-
+   }
 
     emit createNetwork(qmlNetwork);
     std::clock_t c_end = std::clock();
@@ -397,31 +397,6 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
     }
 
     return false;
-}
-
-
-QString model::Network::toJson() {
-
-    bitpowder::lib::String result;
-    bitpowder::lib::MemoryPool mp;
-    bitpowder::lib::JSONData globals = bitpowder::lib::JSONData::AllocateMap(mp);
-
-    std::cout << "m_packet = " << m_packet.toStdString() << std::endl;
-    bitpowder::lib::String packet = bitpowder::lib::String(m_packet.toStdString())(mp);
-    globals["PACKET_TYPE"] = packet;
-    globals["VARS"] = bitpowder::lib::String("")(mp);        // no VARS implemented
-
-    auto xset = std::set<XMASComponent *>();
-    if (dataControl->project()) {
-        auto network = dataControl->project()->getRootNetwork();
-        if (network) {
-            network->getComponentSet(xset);
-        }
-    }
-    result = ::Export(xset, globals, mp);
-
-    QString jsonString = QString(result.stl().c_str());
-    return jsonString;
 }
 
 /**
