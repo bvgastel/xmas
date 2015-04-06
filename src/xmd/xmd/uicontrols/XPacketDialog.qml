@@ -52,7 +52,7 @@ Window {
     property string expression:""
 
     // Signals
-    signal accepted
+    signal accepted()
 
     // Event handling
     onVisibleChanged:{

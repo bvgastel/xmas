@@ -54,7 +54,7 @@ Window {
     maximumWidth: width
 
     // Signals
-    signal accepted
+    signal accepted()
 
     // Event handling
     onVisibleChanged:{
@@ -454,7 +454,7 @@ Window {
                    network.imageName = ""
                 }
                 network.boxedImage = chkBoxedImage.checked
-                dialog.accepted
+                dialog.accepted()
                 dialog.close()
             }
             tooltip: ""

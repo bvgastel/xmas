@@ -55,7 +55,7 @@ Window {
 
 
     // Signals
-    signal accepted
+    signal accepted()
 
     // Event handling
     onVisibleChanged:{
@@ -215,7 +215,7 @@ Window {
                 mainwindow.modelFolder = txtInputModelFolder.text
                 mainwindow.confirmQuit = chkConfirmQuit.checked
                 mainwindow.autoSave = chkAutoSave.checked
-                dialog.accepted
+                dialog.accepted()
                 dialog.close()
             }
             tooltip: ""
