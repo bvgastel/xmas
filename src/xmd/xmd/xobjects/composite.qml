@@ -85,7 +85,7 @@ XComponent {
             border.width: boxed ? 4 : 0
             radius: 10
             color: boxed ? "white" : "transparent"
-            z:-1
+            z:-2
             Image {
                 id:symbol
                 height: boxed ? component.height - 50 : 100
