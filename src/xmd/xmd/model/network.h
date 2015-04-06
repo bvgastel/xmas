@@ -111,7 +111,7 @@ private:
     QString m_packet;
 
     QString m_alias;
-    QSize m_size;
+    QSize m_size = QSize(2500,2000);
     QString m_imageName;
     bool m_boxedImage;
     QVariantList m_compositeLibrary;

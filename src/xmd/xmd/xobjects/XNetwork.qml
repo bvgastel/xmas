@@ -45,13 +45,13 @@ Model.XNetwork {
     id: network
     // Properties
     scale: 1.0
-    size: Qt.size(2500,2000)
+//    size: Qt.size(2500,2000)
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
-    alias:""
-    boxedImage: true
-    imageName: ""
+//    alias:""
+//    boxedImage: true
+//    imageName: ""
     property string fileName: "?.json"
     property string folder: modelFolder
     property bool selectionMode: Qt.Unchecked
@@ -352,7 +352,6 @@ Model.XNetwork {
     Connections {
         target: network
         onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
-
     }
 
     Connections {

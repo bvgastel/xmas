@@ -8,6 +8,7 @@
 #include "xmas.h"
 #include "canvascomponentextension.h"
 #include "composite-network-extension.h"
+#include "canvas-network-extension.h"
 
 /* Access to the global datacontrol pointer */
 extern DataControl *dataControl;
@@ -119,6 +120,25 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
     qmlNetwork["packet_type"] = QString(network.getPacketType().stl().c_str());
     // Var is not implemented in qml yet. No known semantics for var
     //qmlNetwork["var"] = QString(network.getVar().stl().c_str());
+
+
+    auto cne = network.getNetworkExtension<CompositeNetworkExtension>(false);
+    if(cne){
+        this->m_alias = cne->alias.c_str();
+        emit aliasChanged();
+        this->m_boxedImage = cne->boxedImage;
+        emit boxedImageChanged();
+        this->m_imageName = cne->imageName.c_str();
+        emit imageNameChanged();
+    }
+
+   auto cve = network.getNetworkExtension<CanvasNetworkExtension>(false);
+    if(cve){
+        this->m_size = QSize(cve->width,cve->height);
+        emit sizeChanged();
+    }
+
+
 
     emit createNetwork(qmlNetwork);
     std::clock_t c_end = std::clock();
