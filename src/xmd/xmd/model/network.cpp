@@ -48,7 +48,7 @@ QString model::Network::packet() {
         emit writeLog(QString("This network has no project or no network: big problems!"),Qt::red);
         return "";
     }
-    return project->getRootNetwork()->packetType();
+    return project->getRootNetwork()->packetType().c_str();
 }
 
 bool model::Network::setPacket(QString expression) {
