@@ -248,7 +248,7 @@ Model.XNetwork {
             rotation: -parent.rotation
             radius: {
                 if(wire.port1) {
-                    wire.port1.type === Model.XPort.Target ? 10  : 0
+                    wire.port1.type === Model.XPort.INPORT ? 10  : 0
                 } else 0
             }
             border.color: wire.color
