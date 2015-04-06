@@ -57,8 +57,10 @@ bool model::Network::setPacket(QString expression) {
         emit writeLog(QString("This network has no project or no network: big problems!"),Qt::red);
         return false;
     }
+    // TODO: Need to check expression with expression parser? Query for Bernard.
     project->getRootNetwork()->packetType(expression.toStdString());
     m_logger.log(QString("packet set to expression = ") + expression);
+    return true;
 }
 
 bool model::Network::openFile(QUrl fileUrl) {
@@ -408,7 +410,7 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
  */
 bool model::Network::addComponent(model::Component *component) {
 
-    bool result = component->addXComponent();
+    bool result = component->addXmasComponent();
     if(!result) {
         emit writeLog(QString("XMAS Component not inserted!"), Qt::red);
     }

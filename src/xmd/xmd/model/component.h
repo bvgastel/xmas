@@ -96,7 +96,7 @@ public:
     XMASComponent *xmas_component();
 
 private:
-    bool addXComponent();
+    bool addXmasComponent();
     bool addComposite();
     int updateExpression(QVariant expression);
     int updateExpression();
@@ -106,10 +106,7 @@ public:
 private:
 
     QString m_name;
-    /**
-     * @brief m_expression the expression entered (if syntactically incorrect)     *
-     */
-    QVariant m_expression;
+    QVariant m_expression;  /* Expression, even if not accepted by xmas */
 
     CompType m_type;
     bool m_valid;       /* Is the object fully connected? */

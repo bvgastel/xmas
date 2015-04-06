@@ -44,7 +44,7 @@ void model::Component::updateCanvasData() {
 }
 
 // This method was made for composite objects.
-// Primitives have fixed portnames
+// So Qml can retrieve portnames and types
 QVariantMap model::Component::getPorts()
 {
     auto project = dataControl->project();
@@ -75,7 +75,7 @@ void model::Component::name(QString name) {
         emit nameChanged(true);
         return;
     }
-    // change current name
+    // change current name, only if it's really a change
     if (name == m_name) {
         return;
     }
@@ -127,7 +127,7 @@ void model::Component::componentComplete()
 
 }
 
-bool model::Component::addXComponent() {
+bool model::Component::addXmasComponent() {
     auto project = dataControl->project();
     bool result = false;
     std::string name = m_name.toStdString();
