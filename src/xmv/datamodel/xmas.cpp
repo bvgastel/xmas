@@ -488,7 +488,7 @@ XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::Memor
       m_mp(mp ? mp
               : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
-    ;
+    setCompositeNetworkData("",1000,500,"",true);
 }
 
 XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
@@ -498,6 +498,7 @@ XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMAS
       m_mp(mp ? mp
               : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
 {
+    setCompositeNetworkData("",1000,500,"",true);
 }
 
 XMASNetwork::~XMASNetwork()
