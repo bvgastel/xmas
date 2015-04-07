@@ -9,6 +9,4 @@ SUBDIRS += \
     plugins \
     xmd \
     bitpowdertest \
-#    xmc \
-#    xmcmain \
     xmvtest

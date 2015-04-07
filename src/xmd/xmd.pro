@@ -5,6 +5,5 @@ TEMPLATE = subdirs
 CONFIG += ordered
 SUBDIRS += \
     xmd \
-    xmdtest \
     xmdmain
 

@@ -53,6 +53,7 @@ private:
     Q_PROPERTY(QVariant expression READ expression WRITE expression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ validExpr WRITE validExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
+    Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -62,6 +63,7 @@ signals:
     void nameChanged(int result);
     void typeChanged();
     void expressionChanged(int result);
+    void sizeChanged();
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
     void changeName(QString old_name, QString name);
@@ -77,6 +79,9 @@ public slots:
 
     QString name();
     void name(QString name);
+
+    unsigned int size();
+    void size(unsigned int size);
 
     QVariant expression();
     void expression(QVariant expression);

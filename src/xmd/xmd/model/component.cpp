@@ -219,30 +219,7 @@ int model::Component::updateExpression() {
         return false;
     }
 
-    if (type() == Queue) {
-        if (typeName != "QString") {
-            return 0;
-        }
-        // Still debugging, QVariant has 5 in size, but still returns 0.
-        // both with convert and with toInt
-        int size;
-        if (m_expression.canConvert(QVariant::Int)) {
-            size = m_expression.convert(QVariant::Int);
-        }
-        size = m_expression.toInt();
-        XMASQueue *queue = dynamic_cast<XMASQueue *>(c);
-        if (!queue) {
-            emit writeLog(QString("Fatal error in Component: "
-                                  "did not recognize m_component as queue."));
-            std::cerr   << "Fatal error in Component: did not recognize m_component"
-                           " as queue : " << c->getStdName() << std::endl;
-            return false;
-        }
-        queue->c = size;
-        validExpr(true, -1, QString(""));
-        emit writeLog(QString("queuesize set: ")+size);
-        return -1;
-    } else if (type() == Source) {
+    if (type() == Source) {
         if (typeName != "QString") {
             return 0;
         }
@@ -379,6 +356,31 @@ XMASComponent *model::Component::xmas_component() {
 
     return c;
 }
+
+unsigned int model::Component::size() {
+    auto c = xmas_component();
+    if (c) {
+        auto queue = dynamic_cast<XMASQueue *>(c);
+        if (queue) {
+            return queue->c;
+        }
+    }
+    return 0;
+}
+
+void model::Component::size(unsigned int size) {
+    auto c = xmas_component();
+    if (c) {
+        auto queue = dynamic_cast<XMASQueue *>(c);
+        if (queue) {
+            if (size != queue->c) {
+                queue->c = size;
+            }
+        }
+    }
+}
+
+
 
 QVariant model::Component::expression() {
     auto c = xmas_component();

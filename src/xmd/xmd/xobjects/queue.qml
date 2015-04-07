@@ -37,7 +37,7 @@ XComponent {
     height: 60
     type: Model.XComponent.Queue
     prefix: "q"
-    property int size: 0
+    size: 0
     XPort{x:0 ; y:30; name:"i"; type:Model.XPort.INPORT}
     XPort{x:100 ; y:30; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
@@ -81,7 +81,7 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onAccepted: {component.size = text; component.expression = text; focus = false}
+            onAccepted: {component.size = text; focus = false}
             onFocusChanged: if(focus)selectAll()
         }
     }

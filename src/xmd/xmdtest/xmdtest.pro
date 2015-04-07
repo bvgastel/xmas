@@ -19,8 +19,7 @@ CONFIG += link_prl
 TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    testnetwork.cpp
+SOURCES +=
 
 ################################################
 # INSTALL instructions
