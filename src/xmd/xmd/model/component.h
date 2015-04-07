@@ -48,12 +48,12 @@ private:
     Q_INTERFACES(QQmlParserStatus)
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
-    Q_PROPERTY(QString name READ name WRITE name NOTIFY nameChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ type WRITE type NOTIFY typeChanged)
-    Q_PROPERTY(QVariant expression READ expression WRITE expression NOTIFY expressionChanged)
+    Q_PROPERTY(QVariant expression READ expression WRITE setExpression NOTIFY expressionChanged)
     Q_PROPERTY(bool validExpr READ validExpr WRITE validExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
-    Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
+//    Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
@@ -63,7 +63,7 @@ signals:
     void nameChanged(int result);
     void typeChanged();
     void expressionChanged(int result);
-    void sizeChanged();
+ //   void sizeChanged();
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
     void changeName(QString old_name, QString name);
@@ -78,13 +78,13 @@ public slots:
     void type(CompType type);
 
     QString name();
-    void name(QString name);
+    void setName(QString name);
 
-    unsigned int size();
-    void size(unsigned int size);
+//    unsigned int size();
+//    void size(unsigned int size);
 
     QVariant expression();
-    void expression(QVariant expression);
+    void setExpression(QVariant expression);
 
     bool validExpr();
     bool valid();

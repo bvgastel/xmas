@@ -189,8 +189,8 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
         XMASQueue *queue = dynamic_cast<XMASQueue *>(comp);
         QString expression = QString();
         if (queue) {
-            int size = queue->c;
-            expression = QString(size);
+            unsigned int size = queue->c;
+            expression = size;
         }
         map.insert("expression", expression);
     } else if (type == xfunction) {

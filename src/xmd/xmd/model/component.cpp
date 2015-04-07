@@ -68,7 +68,7 @@ QString model::Component::name() {
     return m_name;
 }
 
-void model::Component::name(QString name) {
+void model::Component::setName(QString name) {
     // initial setting
     if (m_name == QString()) {
         m_name = name;
@@ -219,6 +219,21 @@ int model::Component::updateExpression() {
         return false;
     }
 
+    if (type() == Queue) {
+        if (typeName != "QString") {
+            return false;
+        }
+        unsigned int qexpr = m_expression.toUInt();
+        auto queue = dynamic_cast<XMASQueue *>(c);
+        if (queue) {
+            if (qexpr != queue->c) {
+                queue->c = qexpr;
+                return 0;
+            }
+        }
+        return false;
+    }
+
     if (type() == Source) {
         if (typeName != "QString") {
             return 0;
@@ -339,32 +354,30 @@ XMASComponent *model::Component::xmas_component() {
     return (network ? network->getComponent(stdName) : nullptr);
 }
 
-unsigned int model::Component::size() {
-    qDebug() << "size()";
-    auto c = xmas_component();
-    if (c) {
-        auto queue = dynamic_cast<XMASQueue *>(c);
-        if (queue) {
-            qDebug() << "queue size = " << queue->c;
-            return queue->c;
-        }
-    }
-    return 0;
-}
+//unsigned int model::Component::size() {
+//    qDebug() << "size()";
+//    auto c = xmas_component();
+//    if (c) {
+//        auto queue = dynamic_cast<XMASQueue *>(c);
+//        if (queue) {
+//            qDebug() << "queue size = " << queue->c;
+//            return queue->c;
+//        }
+//    }
+//    return 0;
+//}
 
-void model::Component::size(unsigned int size) {
-    qDebug() << "size(" << size << ")";
-    auto c = xmas_component();
-    if (c) {
-        auto queue = dynamic_cast<XMASQueue *>(c);
-        if (queue) {
-            if (size != queue->c) {
-                qDebug() << "queue size -> " << queue->c;
-                queue->c = size;
-            }
-        }
-    }
-}
+//void model::Component::size(unsigned int size) {
+//    auto c = xmas_component();
+//    if (c) {
+//        auto queue = dynamic_cast<XMASQueue *>(c);
+//        if (queue) {
+//            if (size != queue->c) {
+//                queue->c = size;
+//            }
+//        }
+//    }
+//}
 
 
 
@@ -373,8 +386,8 @@ QVariant model::Component::expression() {
     // In case of queue return queue size
     auto queue = dynamic_cast<XMASQueue *>(c);
     if (queue) {
-        qulonglong expr = queue->c;
-        return expr;
+       // m_expression = queue->c;
+        return queue->c;
     }
     // In case of function return function specification.
     auto func = dynamic_cast<XMASFunction *>(c);
@@ -419,8 +432,9 @@ QVariant model::Component::expression() {
     return m_expression;
 }
 
-void model::Component::expression(QVariant expression) {
+void model::Component::setExpression(QVariant expression) {
     int errorPosition = -1;
+    m_expression = expression;
     errorPosition = updateExpression(expression);
     emit expressionChanged(errorPosition);
 }

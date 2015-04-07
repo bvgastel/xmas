@@ -37,7 +37,7 @@ XComponent {
     height: 60
     type: Model.XComponent.Queue
     prefix: "q"
-    size: 0
+    expression: 0
     XPort{x:0 ; y:30; name:"i"; type:Model.XPort.INPORT}
     XPort{x:100 ; y:30; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
@@ -71,9 +71,9 @@ XComponent {
         border.width: 0
         TextInput {
             id:fx
-            text: size
+            text: expression
             color: acceptableInput ? "green" : "white"
-            inputMethodHints: Qt.ImhDigitsOnly || Qt.ImhMultiLine
+            inputMethodHints: Qt.ImhDigitsOnly
             validator: IntValidator{bottom: 1}
             wrapMode: TextInput.NoWrap
             font.pointSize : 12
@@ -81,7 +81,7 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onAccepted: {console.log("onAccepted size"); component.size = text; focus = false}
+            onAccepted: {expression = text; focus = false}
             onFocusChanged: if(focus)selectAll()
         }
     }
