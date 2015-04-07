@@ -1,75 +1,56 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2015-04-06T07:41:19
+#
+#-------------------------------------------------
+
+QT       += widgets
+
+QT       -= gui
+
+TARGET = interfaces
 TEMPLATE = lib
 
 WARNINGS += -Wall
-
-QT       += widgets
-QT       -= gui
-
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 CONFIG += dll
-#CONFIG += build_all
-
-TARGET = interfaces
-CONFIG(debug, debug|release) {
-    mac: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,,d)
-}
 
 DEFINES += INTERFACES_LIBRARY
 
 SOURCES += \
-    workerinterface.cpp \
     logger.cpp \
-    result.cpp
+    result.cpp \
+    workerinterface.cpp
 
-HEADERS +=\
-    workerinterface.h \
-    vtplugininterface.h \
-    result.h \
+HEADERS += \
+    commoninterface.h \
     logger.h \
     loggerinterface.h \
+    result.h \
     resultinterface.h \
-    commoninterface.h
+    vtplugininterface.h \
+    workerinterface.h
 
-################################################
-# INSTALL instructions
-################################################
-unix|win32|macx {
-    target.path = $$PWD/../../lib/interfaces
+unix {
+    target.path = /usr/lib
     INSTALLS += target
-
-    headerfiles.path=$$PWD/../../include/interfaces
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
 }
 
 DISTFILES += \
     readme.md
 
-################################################
-# Internal dependencies
-################################################
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
 
-################################################
-# External dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../lib/datamodel/ -ldatamodel_debug
+INCLUDEPATH += $$PWD/../bitpowder
+DEPENDPATH += $$PWD/../bitpowder
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../lib/datamodel/ -ldatamodeld
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../xmv/datamodel/ -ldatamodel
 
-else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../lib/datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../include/datamodel
-DEPENDPATH += $$PWD/../../include/datamodel
-
+INCLUDEPATH += $$PWD/../xmv/datamodel
+DEPENDPATH += $$PWD/../xmv/datamodel

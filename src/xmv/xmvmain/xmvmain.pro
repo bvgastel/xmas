@@ -1,65 +1,42 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2015-04-06T08:22:37
+#
+#-------------------------------------------------
+
+QT       += core
+
+QT       -= gui qt
+
+TARGET = xmvmain
+CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   += C++11
+#CONFIG += link_prl
+
 TEMPLATE = app
 
 WARNINGS += -Wall
 
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
-CONFIG += C++11
-CONFIG += link_prl
-
 SOURCES += main.cpp
 
-CONFIG(debug, debug|release) {
-    macx: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,,d)
-}
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
 
-################################################
-# INSTALL instructions
-################################################
-unix|win32|macx {
- target.path=$$PWD/../../../bin
- INSTALLS += target
-}
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder
 
-################################################
-# Internal dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../datamodel/ -ldatamodel_debug \
-    -L$$OUT_PWD/../vt/ -lvt_debug
-else:macx:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../datamodel/ -ldatamodel \
-    -L$$OUT_PWD/../vt/ -lvt
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../datamodel/debug/ -ldatamodeld \
-    -L$$OUT_PWD/../vt/debug/ -lvtd
-else:win32:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../datamodel/release/ -ldatamodel \
-    -L$$OUT_PWD/../vt/release/ -lvt
-else:unix: LIBS += \
-    -L$$OUT_PWD/../datamodel/ -ldatamodel \
-    -L$$OUT_PWD/../vt/ -lvt
-
-INCLUDEPATH += $$PWD/../datamodel
-DEPENDPATH += $$PWD/../datamodel
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../vt/debug/ -lvt
+else:unix: LIBS += -L$$OUT_PWD/../vt/ -lvt
 
 INCLUDEPATH += $$PWD/../vt
 DEPENDPATH += $$PWD/../vt
 
-################################################
-# External dependencies
-################################################
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
 
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug
-
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd
-
-else:unix|CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder
-
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+INCLUDEPATH += $$PWD/../datamodel
+DEPENDPATH += $$PWD/../datamodel

@@ -1,27 +1,21 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-02-22T19:47:15
+# Project created by QtCreator 2015-04-06T08:47:13
 #
 #-------------------------------------------------
 
+QT       -= gui
+QT       += widgets
+
+CONFIG += plugin
+CONFIG += dll
+CONFIG += create_prl
+CONFIG += C++11
+
+TARGET = syntaxcheckerplugin
 TEMPLATE = lib
 
 WARNINGS += -Wall
-
-QT       += widgets
-QT       -= gui
-
-CONFIG += plugin
-CONFIG += C++11
-CONFIG += dll
-CONFIG += create_prl
-#CONFIG += build_all
-
-TARGET = syntaxcheckerplugin
-CONFIG(debug, debug|release) {
-    macx: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,,d)
-}
 
 DEFINES += PLUGINS_LIBRARY
 
@@ -30,59 +24,40 @@ SOURCES += \
     syntaxcheckworker.cpp \
     loggerfactory.cpp
 
-HEADERS +=\
+HEADERS += \
     syntaxcheckerplugin.h \
     syntaxcheckworker.h \
     loggerfactory.h
 
-################################################
-# INSTALL instructions
-################################################
-unix|win32|macx {
-    target.path = $$PWD/../../../lib/plugins
+unix {
+    target.path = /usr/lib
     INSTALLS += target
-
-    # Plugin should never need to export header files
 }
 
-DISTFILES += \
-    vtplugin.json \
-    readme_todo.md
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
 
-################################################
-# Internal dependencies
-################################################
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder
 
-################################################
-# External dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/debug/ -lvt
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/vt/ -lvt
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/vt/ -lvtd \
-    -L$$PWD/../../../lib/interfaces/ -linterfacesd
+INCLUDEPATH += $$PWD/../../xmv/vt
+DEPENDPATH += $$PWD/../../xmv/vt
 
-else:unix|CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/vt/ -lvt \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+INCLUDEPATH += $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../xmv/datamodel
 
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/release/ -linterfaces
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/debug/ -linterfaces
+else:unix: LIBS += -L$$OUT_PWD/../../interfaces/ -linterfaces
 
-INCLUDEPATH += $$PWD/../../../include/vt
-DEPENDPATH += $$PWD/../../../include/vt
-
-INCLUDEPATH += $$PWD/../../../include/interfaces
-DEPENDPATH += $$PWD/../../../include/interfaces
-
+INCLUDEPATH += $$PWD/../../interfaces
+DEPENDPATH += $$PWD/../../interfaces

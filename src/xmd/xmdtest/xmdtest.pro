@@ -1,99 +1,71 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-02-18T10:17:35
+# Project created by QtCreator 2015-04-06T09:07:33
 #
 #-------------------------------------------------
-TEMPLATE = app
+
+QT       += core
+
+QT       -= gui
 
 WARNINGS += -Wall
 
-CONFIG += console
-CONFIG -= app_bundle
+TARGET = xmdtest
+CONFIG   += console
+CONFIG   -= app_bundle
 CONFIG += C++11
 CONFIG += link_prl
 
-TARGET = xmdtest
-CONFIG(debug, debug|release) {
-    macx: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,,d)
-}
+TEMPLATE = app
 
-HEADERS +=
 
-SOURCES += \
-    main.cpp \
+SOURCES += main.cpp \
     testnetwork.cpp
 
-################################################
-# INSTALL instructions
-################################################
-unix|win32|macx {
- target.path=$$PWD/../../bin
- INSTALLS += target
-}
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
 
-DISTFILES += \
-    readme.md \
-    network.json
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder
 
-################################################
-# Internal dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../xmd/ -lxmd_debug
-else:macx:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../xmd/ -lxmd
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$OUT_PWD/../xmd/debug/ -lxmdd
-else:win32:CONFIG(release, debug|release): LIBS += \
-    -L$$OUT_PWD/../xmd/release/ -lxmd
-else:unix: LIBS += \
-    -L$$OUT_PWD/../xmd/ -lxmd
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
+else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
 
 INCLUDEPATH += $$PWD/../xmd
 DEPENDPATH += $$PWD/../xmd
 
-################################################
-# External dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../../lib/interfaces -linterfaces_debug
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/debug/ -lvt
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/vt/ -lvt
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/vt/ -lvtd \
-    -L$$PWD/../../../lib/interfaces -linterfacesd
+INCLUDEPATH += $$PWD/../../xmv/vt
+DEPENDPATH += $$PWD/../../xmv/vt
 
-else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/vt/ -lvt \
-    -L$$PWD/../../../lib/interfaces -linterfaces
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/release/ -linterfaces
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/debug/ -linterfaces
+else:unix: LIBS += -L$$OUT_PWD/../../interfaces/ -linterfaces
 
-# All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
-#
-# Remark: 1. always using gtest and gtest_main contrary to gtestd and gtest_maind for debug.
-#         2. always use gtest or gtest_main from a version compilated for your machine
-#
+INCLUDEPATH += $$PWD/../../interfaces
+DEPENDPATH += $$PWD/../../interfaces
 
-unix|win32|macx: LIBS += -L$$PWD/../../../lib -lgtest
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
+INCLUDEPATH += $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../xmv/datamodel
 
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../gtest/ -lgtest
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../gtest/ -lgtest
+else:unix: LIBS += -L$$PWD/../../gtest/ -lgtest
 
-INCLUDEPATH += $$PWD/../../../include/interfaces
-DEPENDPATH += $$PWD/../../../include/interfaces
+INCLUDEPATH += $$PWD/../../gtest
+DEPENDPATH += $$PWD/../../gtest
 
-INCLUDEPATH += $$PWD/../../../include/vt
-DEPENDPATH += $$PWD/../../../include/vt
-
-INCLUDEPATH += $$PWD/../../../include
-DEPENDPATH += $$PWD/../../../include
-
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/gtest.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/gtest.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a

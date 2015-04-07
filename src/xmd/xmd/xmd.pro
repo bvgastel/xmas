@@ -1,91 +1,52 @@
+#-------------------------------------------------
 #
-# Instructions for use:
+# Project created by QtCreator 2015-04-06T08:56:05
 #
-# 1. When building, the output goes solely to the
-#    build directory. This is usually something
-#    like build-libraryname-platform-compiler
-#    where libraryname, platform and compiler vary.
-# 2. When cleaning, only the build directory is cleaned.
-#
-# 3. When deploying, the library files (both dll/so and
-#    .a) and the header files are copied to the lib and
-#    include directory right below the git-root. This is
-#    the most vulnerable piece of code.
-#    REMARK: when cleaning, this does not get touched.
-# 3a. The include directory has a subdir for this project's
-#     header files.
-#
-# IMPORTANT: Be sure to have qtcreator execute a make install
-#            as one step in the local deployment.
-#            As long as this step is not added to qtcreator
-#            (which writes the deploy step in .user.pro file)
-#            the header files and xmd lib will not occur in
-#            the directories lib or include under the root.
-#
-#
+#-------------------------------------------------
 
+QT       += qml quick quickwidgets widgets
+
+TARGET = xmd
 TEMPLATE = lib
 
+DEFINES += XMD_LIBRARY
+
 WARNINGS += -Wall
-
-QT += widgets
-QT += quick
-QT += qml
-QT += quickwidgets
-
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
 unix: CONFIG += static dll
 
-# Some problems are easier to debug using no optimization
-# In that case: uncomment the following line (-O1 might be enough)
-#QMAKE_CXXFLAGS_DEBUG += -O0
-
-#CONFIG += build_all
-
-TARGET = xmd
-CONFIG(debug, debug|release) {
-    macx: TARGET = $$join(TARGET,,,_debug)
-    win32: TARGET = $$join(TARGET,,,d)
-}
-
-DEFINES += XMD_LIBRARY
-
-HEADERS       = \
-    xmdexception.h \
-    plugincontrol.h \
-    datacontrol.h \
-    model/util.h \
-    model/component.h \
-    model/channel.h \
-    model/port.h \
-    model/network.h
-
-SOURCES       = \
-    xmdexception.cpp \
-    plugincontrol.cpp \
+SOURCES += \
     datacontrol.cpp \
-    model/util.cpp \
-    model/component.cpp \
+    plugincontrol.cpp \
+    xmdexception.cpp \
     model/channel.cpp \
+    model/component.cpp \
+    model/network.cpp \
     model/port.cpp \
-    model/network.cpp
+    model/util.cpp
 
+HEADERS += \
+    datacontrol.h \
+    plugincontrol.h \
+    xmdexception.h \
+    model/channel.h \
+    model/component.h \
+    model/network.h \
+    model/port.h \
+    model/util.h
 
-
-################################################
-# INSTALL instructions
-################################################
-unix|win32|macx {
-    target.path = $$PWD/../../../lib/xmd
+unix {
+    target.path = /usr/lib
     INSTALLS += target
-
-    headerfiles.path=$$PWD/../../../include/xmd
-    headerfiles.files = $$HEADERS
-    INSTALLS += headerfiles
 }
+
+RESOURCES += \
+    images.qrc \
+    javascripts.qrc \
+    quick.qrc
 
 INCLUDEPATH += uicontrols xobjects content
 DEPENDPATH += uicontrols xobjects content
@@ -125,49 +86,30 @@ DISTFILES += mainWindow.qml \
     uicontrols/Log.qml \
     findings.md
 
-RESOURCES += \
-    images.qrc \
-    javascripts.qrc \
-    quick.qrc
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
 
-################################################
-# Internal dependencies
-################################################
+INCLUDEPATH += $$PWD/../../bitpowder
+DEPENDPATH += $$PWD/../../bitpowder
 
-################################################
-# External dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces_debug \
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/debug/ -lvt
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/vt/ -lvt
 
+INCLUDEPATH += $$PWD/../../xmv/vt
+DEPENDPATH += $$PWD/../../xmv/vt
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../../lib/vt/ -lvtd \
-    -L$$PWD/../../../lib/interfaces/ -linterfacesd \
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
 
+INCLUDEPATH += $$PWD/../../xmv/datamodel
+DEPENDPATH += $$PWD/../../xmv/datamodel
 
-else:unix|CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../../lib/vt/ -lvt \
-    -L$$PWD/../../../lib/interfaces/ -linterfaces \
-    -L$$PWD/../../../lib/plugins/  \
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/release/ -linterfaces
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/debug/ -linterfaces
+else:unix: LIBS += -L$$OUT_PWD/../../interfaces/ -linterfaces
 
-
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
-
-INCLUDEPATH += $$PWD/../../../include/vt
-DEPENDPATH += $$PWD/../../../include/vt
-
-INCLUDEPATH += $$PWD/../../../include/interfaces
-DEPENDPATH += $$PWD/../../../include/interfaces
-
+INCLUDEPATH += $$PWD/../../interfaces
+DEPENDPATH += $$PWD/../../interfaces
