@@ -72,11 +72,17 @@ HEADERS += \
     xmas.h \
     xmasproject.h
 
-unix {
-    target.path = /usr/lib
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
+    target.path = $$PWD/../../../lib
     INSTALLS += target
 }
 
+################################################
+# Dependencies
+################################################
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
 else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder

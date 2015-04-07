@@ -60,7 +60,11 @@ HEADERS += \
     type_hash.h \
     zip.h
 
-unix {
-    target.path = /usr/lib
+
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
+    target.path = $$PWD/../../lib
     INSTALLS += target
 }

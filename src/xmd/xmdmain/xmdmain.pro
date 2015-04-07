@@ -27,6 +27,17 @@ macx: ICON = myapp.icns
 
 SOURCES += main.cpp
 
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
+ target.path=$$PWD/../../../bin
+ INSTALLS += target
+}
+
+################################################
+# Dependencies
+################################################
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
 else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
