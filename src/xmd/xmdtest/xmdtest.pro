@@ -68,15 +68,8 @@ else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
 INCLUDEPATH += $$PWD/../../xmv/datamodel
 DEPENDPATH += $$PWD/../../xmv/datamodel
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../gtest/ -lgtest
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../gtest/ -lgtest
-else:unix: LIBS += -L$$PWD/../../gtest/ -lgtest
+unix|win32|macx: LIBS += -L$$PWD/../../../lib -lgtest
 
-INCLUDEPATH += $$PWD/../../gtest
-DEPENDPATH += $$PWD/../../gtest
+INCLUDEPATH += $$PWD/../../../include
+DEPENDPATH += $$PWD/../../../include
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/gtest.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../gtest/gtest.lib
-else:unix: PRE_TARGETDEPS += $$PWD/../../gtest/libgtest.a

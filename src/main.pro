@@ -7,4 +7,8 @@ SUBDIRS += \
     xmv \
     interfaces \
     plugins \
-    xmd
+    xmd \
+    bitpowdertest \
+#    xmc \
+#    xmcmain \
+    xmvtest

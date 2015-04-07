@@ -32,27 +32,18 @@ unix|win32 {
     target.path = $$PWD/../../bin
     INSTALLS += target
 }
-################################################
-# Internal dependencies
-################################################
 
 ################################################
-# External dependencies
+# Dependencies
 ################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../lib -lgtest_main -lgtest
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../lib -lgtest_main -lgtest
+INCLUDEPATH += $$PWD/../bitpowder
+DEPENDPATH += $$PWD/../bitpowder
 
-else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../lib -lgtest_main -lgtest
-
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
+unix|win32|macx: LIBS += -L$$PWD/../../lib -lgtest
 
 INCLUDEPATH += $$PWD/../../include
 DEPENDPATH += $$PWD/../../include

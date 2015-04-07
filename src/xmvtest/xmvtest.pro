@@ -41,38 +41,31 @@ unix|win32 {
 }
 
 ################################################
-# Internal dependencies
+# Dependencies
 ################################################
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
+else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
 
-################################################
-# External dependencies
-################################################
-macx:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder_debug \
-    -L$$PWD/../../lib/vt/ -lvt_debug \
-    -L$$PWD/../../lib/datamodel/ -ldatamodel_debug \
-    -L$$PWD/../../lib/ -lgtest \
+INCLUDEPATH += $$PWD/../bitpowder
+DEPENDPATH += $$PWD/../bitpowder
 
-else:win32:CONFIG(debug, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowderd \
-    -L$$PWD/../../lib/vt/ -lvtd \
-    -L$$PWD/../../lib/datamodel/ -ldatamodeld \
-    -L$$PWD/../../lib/ -lgtest \
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/vt/release/ -lvt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/vt/debug/ -lvt
+else:unix: LIBS += -L$$OUT_PWD/../xmv/vt/ -lvt
 
-else:unix|CONFIG(release, debug|release): LIBS += \
-    -L$$PWD/../../lib/bitpowder/ -lbitpowder \
-    -L$$PWD/../../lib/vt/ -lvt \
-    -L$$PWD/../../lib/datamodel/ -ldatamodel \
-    -L$$PWD/../../lib/ -lgtest \
+INCLUDEPATH += $$PWD/../xmv/vt
+DEPENDPATH += $$PWD/../xmv/vt
 
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/release/ -ldatamodel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/debug/ -ldatamodel
+else:unix: LIBS += -L$$OUT_PWD/../xmv/datamodel/ -ldatamodel
 
-INCLUDEPATH += $$PWD/../../include/vt
-DEPENDPATH += $$PWD/../../include/vt
+INCLUDEPATH += $$PWD/../xmv/datamodel
+DEPENDPATH += $$PWD/../xmv/datamodel
 
-INCLUDEPATH += $$PWD/../../include/datamodel
-DEPENDPATH += $$PWD/../../include/datamodel
+unix|win32|macx: LIBS += -L$$PWD/../../lib -lgtest
 
 INCLUDEPATH += $$PWD/../../include
 DEPENDPATH += $$PWD/../../include
+
