@@ -1,6 +1,5 @@
 #include "xmasproject.h"
 
-#include "parser_json.h"
 #include "parse.h"
 #include "simplestring.h"
 #include "export.h"
@@ -15,15 +14,28 @@
 
 using namespace bitpowder::lib;
 
-JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp);
-
 XMASProject::XMASProject()
   : m_mp {new bitpowder::lib::MemoryPool}
 {
     allocate_initial_project();
 }
 
-XMASProject::XMASProject(const std::string& filename)
+XMASProject::XMASProject(const std::string &json, std::string &name, std::string &basePath) {
+
+    bitpowder::lib::String bjson = bitpowder::lib::String(json)(*m_mp);
+    auto parseResult = ParseJSON(bjson, *m_mp);
+    if (!parseResult) {
+        std::stringstream errStr;
+        errStr << "error in parsing json : " << parseResult.error()
+               << " at " << parseResult.position() << std::endl;
+        throw Exception(errStr.str());
+    }
+
+    root = loadNetwork(parseResult, name, basePath);
+
+}
+
+XMASProject::XMASProject(const std::string &filename)
     : m_mp {new bitpowder::lib::MemoryPool}
 {
     root = loadNetwork(filename);
@@ -50,7 +62,6 @@ void XMASProject::deallocate_project() {
     delete root;
     m_mp->clear();
 }
-
 
 XMASNetwork* XMASProject::getRootNetwork() const {
     return root;
@@ -104,68 +115,14 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 
 }
 
-XMASComponent *XMASProject::insertSource(const bitpowder::lib::String &name, bool external) {
-    return insert<XMASSource>(name, external);
-}
-
-XMASComponent *XMASProject::insertSink(const bitpowder::lib::String &name, bool external) {
-    return insert<XMASSink>(name, external);
-}
-
-XMASComponent *XMASProject::insertFunction(const bitpowder::lib::String &name) {
-    return insert<XMASFunction>(name);
-}
-
-XMASComponent *XMASProject::insertQueue(const bitpowder::lib::String &name, size_t capacity) {
-    return insert<XMASQueue>(name, capacity);
-}
-
-XMASComponent *XMASProject::insertJoin(const bitpowder::lib::String &name) {
-    return insert<XMASJoin>(name);
-}
-
-XMASComponent *XMASProject::insertMerge(const bitpowder::lib::String &name) {
-    return insert<XMASMerge>(name);
-}
-
-XMASComponent *XMASProject::insertSwitch(const bitpowder::lib::String &name) {
-    return insert<XMASSwitch>(name);
-}
-
-XMASComponent *XMASProject::insertFork(const bitpowder::lib::String &name) {
-    return insert<XMASFork>(name);
-}
-
-XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, XMASNetwork &network) {
-    return root->insert<XMASComposite>(name, std::ref(network));
-}
-
-bool XMASProject::changeComponentName(std::string oldName, std::string newName)
-{
-    /* ensure memory is permanent enough */
-    bitpowder::lib::String b_oldName = bitpowder::lib::String(oldName);
-    b_oldName = b_oldName(*m_mp);
-    bitpowder::lib::String b_newName = bitpowder::lib::String(newName);
-    b_newName = b_newName(*m_mp);
-
-    /* change the name and position in the component map */
-    bool result = root->changeComponentName(b_oldName, b_newName);
-    return result;
-}
-
-bool XMASProject::removeComponent(std::string name)
-{
-    bitpowder::lib::String bname = bitpowder::lib::String(name)(mp());
-    bool result = root->removeComponent(bname);
-    return result;
-}
-
 /**
  * @brief XMASProject::loadNetwork
  *
  * Beware. This is a recursively called network loading utility.
  * Each level of new composites leads to a new load network for
  * each composite.
+ *
+ * Beware: indirect recursion through loadNetwork(parseResult).
  *
  * @param filename
  * @return
@@ -187,6 +144,11 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     if (!jsonResult)
         throw Exception("Unable to read JSON data from file");
 
+    return loadNetwork(jsonResult, name, basePath);
+
+}
+
+XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResult, std::string &name, std::string &basePath) {
     auto json = jsonResult.result();
 
     // add the current networks key and a dummy network value to the networks map
@@ -244,36 +206,59 @@ XMASNetwork* XMASProject::loadNetwork(const std::string& filename)
     return result;
 }
 
-
-JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp)
+bool XMASProject::changeComponentName(std::string oldName, std::string newName)
 {
-    struct stat st;
-    if (stat(filename.c_str(), &st)) {
-        throw Exception("Unable to read file: " + filename);
-    }
-#ifdef __MINGW32__
-    int fd = open(filename.c_str(), O_RDONLY | O_BINARY);
-#else
-    int fd = open(filename.c_str(), O_RDONLY);
-#endif
-    if (!fd) {
-        throw Exception("Unable to read file: " + filename);
-    }
-    char *buffer = (char*)mp.alloc(st.st_size);
-    int size = read(fd, buffer, st.st_size);
-    if (size != st.st_size) {
-        std::stringstream errStr;
-        errStr << "wrong number of bytes read: " << size << " instead of " << st.st_size;
-        throw Exception(errStr.str());
-    }
-    close(fd);
+    /* ensure memory is permanent enough */
+    bitpowder::lib::String b_oldName = bitpowder::lib::String(oldName);
+    b_oldName = b_oldName(*m_mp);
+    bitpowder::lib::String b_newName = bitpowder::lib::String(newName);
+    b_newName = b_newName(*m_mp);
 
-    String current(buffer, size);
-    auto parseResult = ParseJSON(current, mp);
-    if (!parseResult) {
-        std::stringstream errStr;
-        errStr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
-        throw Exception(errStr.str());
-    }
-    return parseResult;
+    /* change the name and position in the component map */
+    bool result = root->changeComponentName(b_oldName, b_newName);
+    return result;
 }
+
+bool XMASProject::removeComponent(std::string name)
+{
+    bitpowder::lib::String bname = bitpowder::lib::String(name)(mp());
+    bool result = root->removeComponent(bname);
+    return result;
+}
+
+XMASComponent *XMASProject::insertSource(const bitpowder::lib::String &name, bool external) {
+    return insert<XMASSource>(name, external);
+}
+
+XMASComponent *XMASProject::insertSink(const bitpowder::lib::String &name, bool external) {
+    return insert<XMASSink>(name, external);
+}
+
+XMASComponent *XMASProject::insertFunction(const bitpowder::lib::String &name) {
+    return insert<XMASFunction>(name);
+}
+
+XMASComponent *XMASProject::insertQueue(const bitpowder::lib::String &name, size_t capacity) {
+    return insert<XMASQueue>(name, capacity);
+}
+
+XMASComponent *XMASProject::insertJoin(const bitpowder::lib::String &name) {
+    return insert<XMASJoin>(name);
+}
+
+XMASComponent *XMASProject::insertMerge(const bitpowder::lib::String &name) {
+    return insert<XMASMerge>(name);
+}
+
+XMASComponent *XMASProject::insertSwitch(const bitpowder::lib::String &name) {
+    return insert<XMASSwitch>(name);
+}
+
+XMASComponent *XMASProject::insertFork(const bitpowder::lib::String &name) {
+    return insert<XMASFork>(name);
+}
+
+XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, XMASNetwork &network) {
+    return root->insert<XMASComposite>(name, std::ref(network));
+}
+

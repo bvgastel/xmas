@@ -1,6 +1,7 @@
 #ifndef XMASPROJECT_H
 #define XMASPROJECT_H
 
+#include "parser_json.h"
 #include "string.h"
 #include "xmas.h"
 
@@ -9,6 +10,7 @@ class XMASProject
 public:
     XMASProject();
     XMASProject(const std::string& filename);
+    XMASProject(const std::string &json, std::string &name, std::string &basePath);
     ~XMASProject();
 
     void allocate_initial_project();
@@ -21,6 +23,9 @@ public:
     XMASNetwork* getNetwork(const std::string name) const;
 
     XMASNetwork* loadNetwork(const std::string& filename);
+    XMASNetwork *loadNetwork(bitpowder::lib::JSONParseResult &jsonResult,
+                             std::string &name,
+                             std::string &basePath);
     void saveNetwork(const std::string& filename, XMASNetwork* network = nullptr);
 
     template <class T, typename... Args>

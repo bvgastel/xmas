@@ -39,11 +39,19 @@ SyntaxCheckWorker::~SyntaxCheckWorker() {
 
 }
 
-void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Result &result) {
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
-    QString duration_qstr = name + QString(" in \t")+duration+" ms";
-    result.addStep(name, duration_qstr);
-    std::cout << duration_qstr.toStdString() << std::endl;
+// Never tested yet. Not implemented.
+void SyntaxCheckWorker::doProcessWork(const QString &json) {
+    Q_UNUSED(json)
+    std::cout << "[SyntaxCheckWorker::doProcessWork()] Not implemented." << std::endl;
+}
+
+// Never tested yet.
+void SyntaxCheckWorker::doThreadWork(const QString &json) {
+
+    std::string networkName = "syntax checker network";
+    std::string basePath;
+    std::shared_ptr<XProject> project = std::make_shared<XMASProject>(json.toStdString(), networkName, basePath);
+    doWork(project);
 }
 
 void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
@@ -88,16 +96,6 @@ void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
     stepName = "Complete check duration";
     reportTimer(start, end, stepName, result);
     emit resultReady(result);
-}
-
-void SyntaxCheckWorker::doThreadWork(const QString &json) {
-    Q_UNUSED(json)
-    //XProject *project = new XMASProject(json.toStdString());
-
-//    bitpowder::lib::MemoryPool mp;
-//    std::map<bitpowder::lib::String, XMASComponent *> componentMap;
-//    std::tie(componentMap, std::ignore) = parse_xmas_from_json(json.toStdString(), mp);
-//    doWork(componentMap);
 }
 
 std::pair<tpoint, tpoint>
@@ -184,11 +182,6 @@ SyntaxCheckWorker::checkSymbolicTypes(XSet componentSet,
     return make_pair(start, end);
 }
 
-void SyntaxCheckWorker::doProcessWork(const QString &json) {
-    Q_UNUSED(json)
-    std::cout << "[SyntaxCheckWorker::doProcessWork()] Not implemented." << std::endl;
-}
-
 bool SyntaxCheckWorker::extractSuccess(Result &result) {
     bool success = true;
     for (auto e : result.errorList()) {
@@ -196,4 +189,12 @@ bool SyntaxCheckWorker::extractSuccess(Result &result) {
     }
     return success;
 }
+
+void SyntaxCheckWorker::reportTimer(tpoint start, tpoint end, QString name, Result &result) {
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+    QString duration_qstr = name + QString(" in \t")+duration+" ms";
+    result.addStep(name, duration_qstr);
+    std::cout << duration_qstr.toStdString() << std::endl;
+}
+
 

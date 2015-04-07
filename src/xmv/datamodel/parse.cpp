@@ -1232,10 +1232,21 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
 
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_file(const std::string &filename, MemoryPool &mp)
 {
+    try {
+        auto parseResult = read_json_from_file(filename, mp);
+        auto result = generate_xmas_from_parse_result(parseResult, mp, {});
+        return result;
+    } catch (Exception e) {
+        std::cerr << e.description() << std::endl;
+        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+    }
+}
+
+JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp)
+{
     struct stat st;
     if (stat(filename.c_str(), &st)) {
-        std::cerr << "error: " << strerror(errno) << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        throw Exception("Unable to read file: " + filename);
     }
 #ifdef __MINGW32__
     int fd = open(filename.c_str(), O_RDONLY | O_BINARY);
@@ -1243,24 +1254,25 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
     int fd = open(filename.c_str(), O_RDONLY);
 #endif
     if (!fd) {
-        std::cerr << "error: " << strerror(errno) << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        throw Exception("Unable to read file: " + filename);
     }
     char *buffer = (char*)mp.alloc(st.st_size);
     int size = read(fd, buffer, st.st_size);
     if (size != st.st_size) {
-        std::cerr << "wrong number of bytes read: " << size << " instead of " << st.st_size << std::endl;
-        abort();
+        std::stringstream errStr;
+        errStr << "wrong number of bytes read: " << size << " instead of " << st.st_size;
+        throw Exception(errStr.str());
     }
     close(fd);
 
     String current(buffer, size);
     auto parseResult = ParseJSON(current, mp);
     if (!parseResult) {
-        std::cerr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        std::stringstream errStr;
+        errStr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
+        throw Exception(errStr.str());
     }
-    return generate_xmas_from_parse_result(parseResult, mp, {});
+    return parseResult;
 }
 
 /**

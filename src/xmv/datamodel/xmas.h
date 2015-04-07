@@ -10,7 +10,9 @@
 
 /*
  * GBO: added setter for name to XMASComponent: necessary for designer or we have no way to
- *      initialize and change name. The first name would be final, no way to change.
+ *      initialize and change name.
+ *
+ *      The first name would be final, no way to change. We need to be able to change.
  *
  */
 
@@ -82,7 +84,7 @@ public:
     /**
      * @brief Port
      *
-     * @param self pointer to self
+     * @param owner pointer to owner (component)
      * @param name the name of the port
      */
     Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner)

@@ -84,6 +84,9 @@ parse_xmas_from_file(const std::string &filename, bitpowder::lib::MemoryPool &mp
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
 parse_xmas_from_json(const std::string &str, bitpowder::lib::MemoryPool &mp);
 
+bitpowder::lib::JSONParseResult
+read_json_from_file(const std::string &filename, bitpowder::lib::MemoryPool &mp);
+
 /**
  * @brief parse_json_buffer Uses the parsed JSON for a network to return the xmas components.
  *
