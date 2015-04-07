@@ -220,11 +220,16 @@ int model::Component::updateExpression() {
     }
 
     if (type() == Queue) {
-        if (typeName != "int") {
-            validExpr(false, 0, QString("Received non integer size."));
+        if (typeName != "QString") {
             return 0;
         }
-        int size = m_expression.toInt();
+        // Still debugging, QVariant has 5 in size, but still returns 0.
+        // both with convert and with toInt
+        int size;
+        if (m_expression.canConvert(QVariant::Int)) {
+            size = m_expression.convert(QVariant::Int);
+        }
+        size = m_expression.toInt();
         XMASQueue *queue = dynamic_cast<XMASQueue *>(c);
         if (!queue) {
             emit writeLog(QString("Fatal error in Component: "

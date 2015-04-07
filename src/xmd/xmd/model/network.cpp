@@ -101,11 +101,11 @@ bool model::Network::newFile() {
 
 bool model::Network::emitNetwork(XMASNetwork &network) {
 
-    auto& components = network.getComponentMap();
+    auto &componentMap = network.getComponentMap();
 
     std::clock_t c_start = std::clock();
     QVariantList compList;
-    for(auto &it : components) {
+    for(auto &it : componentMap) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantMap map;
@@ -114,7 +114,7 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
         }
     }
     QVariantList channelList;
-    for (auto &it : components) {
+    for (auto &it : componentMap) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantList list;
