@@ -81,7 +81,7 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onAccepted: {component.size = text; focus = false}
+            onAccepted: {console.log("onAccepted size"); component.size = text; focus = false}
             onFocusChanged: if(focus)selectAll()
         }
     }

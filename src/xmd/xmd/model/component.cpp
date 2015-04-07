@@ -358,10 +358,12 @@ XMASComponent *model::Component::xmas_component() {
 }
 
 unsigned int model::Component::size() {
+    qDebug() << "size()";
     auto c = xmas_component();
     if (c) {
         auto queue = dynamic_cast<XMASQueue *>(c);
         if (queue) {
+            qDebug() << "queue size = " << queue->c;
             return queue->c;
         }
     }
@@ -369,11 +371,13 @@ unsigned int model::Component::size() {
 }
 
 void model::Component::size(unsigned int size) {
+    qDebug() << "size(" << size << ")";
     auto c = xmas_component();
     if (c) {
         auto queue = dynamic_cast<XMASQueue *>(c);
         if (queue) {
             if (size != queue->c) {
+                qDebug() << "queue size -> " << queue->c;
                 queue->c = size;
             }
         }
