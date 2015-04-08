@@ -64,10 +64,11 @@ Window {
         txtInputModelWidth.text = network.size.width
         txtInputModelHeight.text = network.size.height
         txtInputModelAlias.text = network.alias
-        console.log("network.alias = " + network.alias)
         chkImage.checked = network.imageName !== ""
         chkBoxedImage.checked = network.boxedImage
         setCurrentSymbol(network.imageName)
+
+        txtInputModelFileName.forceActiveFocus()
     }
     Component.onCompleted: imageList.count
 

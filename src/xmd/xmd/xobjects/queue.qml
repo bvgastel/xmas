@@ -37,7 +37,6 @@ XComponent {
     height: 60
     type: Model.XComponent.Queue
     prefix: "q"
-    expression: 0
     XPort{x:0 ; y:30; name:"i"; type:Model.XPort.INPORT}
     XPort{x:100 ; y:30; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
@@ -81,9 +80,8 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onAccepted: {expression = text; focus = false}
-            onFocusChanged: if(focus)selectAll()
+            onEditingFinished: {fx.acceptableInput ? expression = fx.text : fx.text = expression ; focus = false}
+            onFocusChanged: focus ? selectAll(): editingFinished()
         }
     }
-
 }

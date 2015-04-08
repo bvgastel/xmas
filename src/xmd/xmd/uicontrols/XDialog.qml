@@ -144,9 +144,5 @@ Window {
             }
             tooltip: ""
         }
-
-
-
-
     }
 }

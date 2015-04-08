@@ -23,6 +23,8 @@
 #define COMPONENT_H
 #include <QQuickItem>
 #include "xmas.h"
+#include "canvascomponentextension.h"
+#include "composite-network-extension.h"
 
 namespace model
 {
@@ -49,21 +51,22 @@ private:
     Q_ENUMS(Orientation)
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(CompType type READ type WRITE type NOTIFY typeChanged)
+    Q_PROPERTY(CompType type READ type WRITE setType NOTIFY typeChanged)
     Q_PROPERTY(QVariant expression READ expression WRITE setExpression NOTIFY expressionChanged)
-    Q_PROPERTY(bool validExpr READ validExpr WRITE validExpr NOTIFY validExprChanged)
+    Q_PROPERTY(bool validExpr READ validExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
-//    Q_PROPERTY(unsigned int size READ size WRITE size NOTIFY sizeChanged)
 
 public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
 
+    virtual void classBegin();
+    virtual void componentComplete();
+
 signals:
     void nameChanged(int result);
     void typeChanged();
     void expressionChanged(int result);
- //   void sizeChanged();
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
     void changeName(QString old_name, QString name);
@@ -75,13 +78,10 @@ public slots:
     QVariantMap getPorts();
 
     CompType type() const;
-    void type(CompType type);
+    void setType(CompType type);
 
     QString name();
     void setName(QString name);
-
-//    unsigned int size();
-//    void size(unsigned int size);
 
     QVariant expression();
     void setExpression(QVariant expression);
@@ -90,13 +90,14 @@ public slots:
     bool valid();
 
     void updateCanvasData();
+    void updateProperties();
 
 public:
-    void validExpr(bool validExpr);
-    void validExpr(bool validExpr, int pos, QString errMsg);
+    void setValidExpr(bool isValid);
+    void setValidExpr(bool isValid, int pos, QString errMsg);
 
-    virtual void classBegin();
-    virtual void componentComplete();
+//    virtual void classBegin();
+//    virtual void componentComplete();
 
     XMASComponent *xmas_component();
 
@@ -111,7 +112,6 @@ private:
 
     QString m_name;
     QVariant m_expression;  /* Expression, even if not accepted by xmas */
-
     CompType m_type;
     bool m_valid;       /* Is the object fully connected? */
     bool m_validExpr;   /* Is the expression correctly updated in xmas? */
