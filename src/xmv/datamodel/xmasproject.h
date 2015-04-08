@@ -22,6 +22,8 @@ public:
     XMASNetwork* getRootNetwork() const;
     XMASNetwork* getNetwork(const std::string name) const;
 
+    bitpowder::lib::String network2jsonString( bitpowder::lib::MemoryPool &mp, XMASNetwork *network = nullptr);
+
     XMASNetwork* loadNetwork(const std::string& filename);
     XMASNetwork *loadNetwork(bitpowder::lib::JSONParseResult &jsonResult,
                              std::string &name,

@@ -72,10 +72,22 @@ XMASNetwork* XMASProject::getNetwork(const std::string name) const {
     return (it != networks.end()) ? it->second : nullptr;
 }
 
+// If network is nullptr: use root.
 void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 {
     MemoryPool mp;
-    std::set<XMASComponent*> allComponents;
+
+    // convert network to jsonString
+    String jsonStr = network2jsonString(mp, network);
+
+    std::ofstream file { filename };
+    file << jsonStr;
+
+}
+
+// if network is nullptr: use root.
+bitpowder::lib::String XMASProject::network2jsonString(bitpowder::lib::MemoryPool &mp, XMASNetwork *network) {
+    std::set<XMASComponent*> componentSet;
 
     JSONData::Map globals = JSONData::AllocateMap(mp);
 
@@ -104,15 +116,9 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
     jsonPacketType["val "] = String(network->m_packet_type);
     globals["PACKET_TYPE"] = jsonPacketType;
 
-    for (auto& it : network->getComponentMap()) {
-        allComponents.insert(it.second);
-    }
-
-    String jsonStr = Export(allComponents, globals, mp);
-
-    std::ofstream file { filename };
-    file << jsonStr;
-
+    network->getComponentSet(componentSet);
+    String jsonStr = Export(componentSet, globals, mp);
+    return jsonStr;
 }
 
 /**
