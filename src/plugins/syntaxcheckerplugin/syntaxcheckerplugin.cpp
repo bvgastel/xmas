@@ -23,18 +23,17 @@
 
 #include <QUrl>
 #include <QColor>
+#include <QBuffer>
+#include <QDataStream>
 
 #include "syntaxcheckworker.h"
 #include "syntaxcheckerplugin.h"
 #include "loggerfactory.h"
 
-QString SyntaxCheckerPlugin::name() {
-    return m_name;
-}
-
 SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
     m_name("syntax checker"),
-    m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}})
+    m_paramMap({{"runthread", "main"}, {"timer (sec)", "20"}}),
+    m_sharedMemory("syntaxchecker")
 {
 }
 
@@ -42,10 +41,14 @@ SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.quit();
     m_workerThread.wait();
     // NOTE: from windows we should use kill() because the program
-    // does not respond to the WM_CLOSE message
+    // does not respond to the WM_CLOSE message if there is no event loop.
     // we need an ifdef
     m_process.terminate();
 
+}
+
+QString SyntaxCheckerPlugin::name() {
+    return m_name;
 }
 
 void SyntaxCheckerPlugin::start(std::shared_ptr<XProject> project) {
@@ -77,13 +80,32 @@ void SyntaxCheckerPlugin::startThread(const QString &json) {
 }
 
 // Not implemented yet. needs some more thought.
+// Query: is slot/signal over process feasible? If so, it is simpeler
 void SyntaxCheckerPlugin::startProcess(const QString &programName, const QString &json, const QStringList &argList) {
-    bitpowder::lib::unused(json);
+    if (share(json)) {
+        m_process.setProcessChannelMode(QProcess::ForwardedChannels);
+        m_process.setProgram(programName);
+        m_process.setArguments(argList);
+        m_process.start();
+    }
+}
 
-    m_process.setProcessChannelMode(QProcess::ForwardedChannels);
-    m_process.setProgram(programName);
-    m_process.setArguments(argList);
-    m_process.start();
+bool SyntaxCheckerPlugin::share(const QString &json) {
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    QDataStream out(&buffer);
+    out << json;
+    int size = buffer.size();
+    if (!m_sharedMemory.create(size)) {
+        std::cerr << "Could not share memory from SyntaxChecker." << std::endl;
+        return false;
+    }
+    m_sharedMemory.lock();
+    char *to = (char*)m_sharedMemory.data();
+    const char *from = buffer.data().data();
+    memcpy(to, from, qMin(m_sharedMemory.size(), size));
+    m_sharedMemory.unlock();
+    return true;
 }
 
 

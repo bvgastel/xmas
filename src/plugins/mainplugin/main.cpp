@@ -20,22 +20,64 @@
   *
   **********************************************************************/
 
-#include <QCoreApplication>
 #include <iostream>
 
-#include "vtplugininterface.h"
+#include <QCoreApplication>
+#include <QBuffer>
+#include <QSharedMemory>
+#include <QDataStream>
+
+#include "xmasproject.h"
+#include "workerinterface.h"
+#include "syntaxcheckworker.h"
+
+std::pair<bool, QString> json() {
+
+    QSharedMemory sharedMemory;
+
+    if (!sharedMemory.attach()) {
+        return std::make_pair<bool, QString>(false, QString());
+    }
+
+    QBuffer buffer;
+    QDataStream in(&buffer);
+    QString json;
+
+    sharedMemory.lock();
+    buffer.setData((char*)sharedMemory.constData(), sharedMemory.size());
+    buffer.open(QBuffer::ReadOnly);
+    in >> json;
+    sharedMemory.unlock();
+
+    sharedMemory.detach();
+    return std::make_pair<bool, QString>(false, QString());
+}
 
 int main(int argc, char *argv[])
 {
     std::cout << "argc = " << argc << ", argv = '" << *argv << "'" << std::endl;
 
     QCoreApplication app(argc, argv);
-    QCoreApplication::setApplicationName("plugin-main-program");
+    QCoreApplication::setApplicationName("syntax checker main");
     QCoreApplication::setApplicationVersion("1.0");
 
-    VtPluginInterface plugin;
+    WorkerInterface *plugin = new SyntaxCheckWorker();
+    QString qjson;
+    std::string jsonStr;
+    bool success;
+    std::tie(success, qjson)= json();
+    jsonStr = qjson.toStdString();
+    if (success) {
+        std::cout << "Received json string: '" << jsonStr << "'" << std::endl;
+        std::string networkName = "syntax checker plugin";
+        std::string basePath = "";
+        std::shared_ptr<XMASProject> project = std::make_shared<XMASProject>(jsonStr, networkName, basePath);
+        plugin->doWork(project);
+        return 0;
+    }
+    return -1;
 
-    return app.exec();
+    //return app.exec();        // without app.exec() no event thread !!
 
 //    std::cout << "Thanks for deploying the most recently developed plugins." << std::endl;
 //    std::cout << "******* Program finishes ********************************" << std::endl;

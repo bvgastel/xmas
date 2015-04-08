@@ -28,6 +28,7 @@
 #include <QVariant>
 #include <QThread>
 #include <QProcess>
+#include <QSharedMemory>
 
 //#include "loggerinterface.h"
 #include "resultinterface.h"
@@ -63,6 +64,9 @@ signals:
     void operate(const QString &json);
 
 private:
+    bool share(const QString &json);
+
+private:
 
     /**
      * @brief m_name the name of the verification tool.
@@ -81,6 +85,7 @@ private:
      */
     QThread m_workerThread;
     QProcess m_process;
+    QSharedMemory m_sharedMemory;
 };
 
 
