@@ -155,7 +155,7 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
         if (out->isConnected()) {
             QVariantMap map;
             map.insert("outcomp", QString(out->getInitiator()->getStdName().c_str()));
-            map.insert("outport", QString(out->getName()));
+            map.insert("outport", QString(out->getInitiatorPort()->getName()));
             map.insert("incomp", QString(out->getTarget()->getStdName().c_str()));
             map.insert("inport", QString(out->getTargetPort()->getName()));
             list.append(map);
