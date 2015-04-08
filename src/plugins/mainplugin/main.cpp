@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("plugin-main-program");
     QCoreApplication::setApplicationVersion("1.0");
 
-    VtPluginInterface plugin;
+    //VtPluginInterface plugin;
 
     return app.exec();
 
