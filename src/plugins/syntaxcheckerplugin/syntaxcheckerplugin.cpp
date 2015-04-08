@@ -75,14 +75,14 @@ void SyntaxCheckerPlugin::startThread(const QString &json) {
     emit operate(json);
 
 }
-void SyntaxCheckerPlugin::startProcess(const QString &json) {
+
+// Not implemented yet. needs some more thought.
+void SyntaxCheckerPlugin::startProcess(const QString &programName, const QString &json, const QStringList &argList) {
     bitpowder::lib::unused(json);
 
     m_process.setProcessChannelMode(QProcess::ForwardedChannels);
-    // TODO: How to start processes?
-    m_process.setProgram("dir");  // fixed program
-    QStringList argList = {};
-    m_process.setArguments(argList);   // variable argument
+    m_process.setProgram(programName);
+    m_process.setArguments(argList);
     m_process.start();
 }
 

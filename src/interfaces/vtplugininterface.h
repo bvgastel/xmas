@@ -45,7 +45,9 @@ public:
 
     virtual void start(std::shared_ptr<XProject> project) = 0;
     virtual void startThread(const QString &json) = 0;
-    virtual void startProcess(const QString &json) = 0;
+    virtual void startProcess(const QString &programName,
+                              const QString &json,
+                              const QStringList &argList) = 0;
 
 };
 
@@ -54,4 +56,3 @@ public:
 Q_DECLARE_INTERFACE(VtPluginInterface, VtPluginInterface_iid)
 
 #endif // VTPLUGININTERFACE
-

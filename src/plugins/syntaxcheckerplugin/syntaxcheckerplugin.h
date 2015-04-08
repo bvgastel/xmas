@@ -53,7 +53,7 @@ public:
 
     virtual void start(std::shared_ptr<XProject> project) override;
     virtual void startThread(const QString &json) override;
-    virtual void startProcess(const QString &json) override;
+    virtual void startProcess(const QString &programName, const QString &json, const QStringList &argList) override;
 
 //    virtual LoggerInterface *logger() override;
 
