@@ -52,7 +52,14 @@ private:
     Q_ENUMS(CompType)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ type WRITE setType NOTIFY typeChanged)
+    //only for queue
+//    Q_PROPERTY(unsigned int capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
+    // for source/join/switch/function
     Q_PROPERTY(QVariant expression READ expression WRITE setExpression NOTIFY expressionChanged)
+
+//    Q_PROPERTY(bool requirend READ requirend WRITE setRequirend NOTIFY requirendChanged)
+
+    Q_PROPERTY(QVariantMap xdata READ xdata WRITE setXdata NOTIFY xdataChanged)
     Q_PROPERTY(bool validExpr READ validExpr WRITE setValidExpr NOTIFY validExprChanged)
     Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
 
@@ -60,12 +67,10 @@ public:
     explicit Component(QQuickItem *parent = 0);
     ~Component();
 
-    virtual void classBegin();
-    virtual void componentComplete();
-
 signals:
     void nameChanged(int result);
     void typeChanged();
+    void xdataChanged();
     void expressionChanged(int result);
     void validChanged();
     void validExprChanged(int errorPosition, QString errMsg);
@@ -86,25 +91,24 @@ public slots:
     QVariant expression();
     void setExpression(QVariant expression);
 
+    QVariantMap xdata();
+    void setXdata(QVariantMap xdata);
+
     bool validExpr();
     bool valid();
 
     void updateCanvasData();
-    void updateProperties();
 
 public:
     void setValidExpr(bool isValid);
     void setValidExpr(bool isValid, int pos, QString errMsg);
 
-//    virtual void classBegin();
-//    virtual void componentComplete();
-
     XMASComponent *xmas_component();
 
 private:
     bool addXmasComponent();
-    int updateExpression(QVariant expression);
-    int updateExpression();
+    QVariantMap getXmasComponentData(XMASComponent *xmas_comp);
+    int setXmasComponentData(QVariantMap map);
     bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
 
 public:

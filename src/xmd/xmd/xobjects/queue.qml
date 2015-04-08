@@ -70,7 +70,7 @@ XComponent {
         border.width: 0
         TextInput {
             id:fx
-            text: expression
+            text: xdata["capacity"] ? xdata["capacity"] : 0
             color: acceptableInput ? "green" : "white"
             inputMethodHints: Qt.ImhDigitsOnly
             validator: IntValidator{bottom: 1}
@@ -80,8 +80,21 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onEditingFinished: {fx.acceptableInput ? expression = fx.text : fx.text = expression ; focus = false}
+            onEditingFinished: {doAccept(fx.acceptableInput) ; focus = false}
             onFocusChanged: focus ? selectAll(): editingFinished()
         }
     }
+
+    function doAccept(ok){
+       if(ok){
+           xdata["capacity"] = fx.text
+           console.log("text = " + fx.text + " xdata = " + xdata["capacity"])
+
+       } else {
+           fx.text = xdata["capacity"]
+           console.log("text = " + fx.text + " xdata = " + xdata["capacity"])
+       }
+    }
+
+
 }

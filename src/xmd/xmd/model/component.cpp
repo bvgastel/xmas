@@ -23,11 +23,6 @@
 #include "port.h"
 #include "component.h"
 
-//#include "xmas.h"
-//#include "canvascomponentextension.h"
-//#include "composite-network-extension.h"
-//#include "canvas-network-extension.h"
-
 /* Access to the global datacontrol pointer */
 extern DataControl *dataControl;
 
@@ -38,16 +33,6 @@ model::Component::Component(QQuickItem *parent)
 
 model::Component::~Component()
 {
-}
-
-void model::Component::classBegin()
-{
-    // no action
-}
-
-void model::Component::componentComplete()
-{
-    // no action
 }
 
 void model::Component::updateCanvasData() {
@@ -130,8 +115,26 @@ void model::Component::setValidExpr(bool isValid, int pos, QString errMsg) {
     emit validExprChanged(pos, errMsg);
 }
 
-void model::Component::updateProperties(){
+// this is triggered from qml to read expression
+QVariant model::Component::expression() {
+    return ""; //getXMASExpression();
+}
 
+void model::Component::setExpression(QVariant expression) {
+    //m_expression = expression;
+    //int errorPosition = updateExpression(expression);
+    //emit expressionChanged(errorPosition);
+    Q_UNUSED(expression)
+}
+
+// this is triggered from qml to read expression
+QVariantMap model::Component::xdata() {
+    return getXmasComponentData(xmas_component());
+}
+
+void model::Component::setXdata(QVariantMap xdata) {
+    int errorPosition = setXmasComponentData(xdata);
+    Q_UNUSED(errorPosition)
 }
 
 
@@ -146,76 +149,56 @@ bool model::Component::addXmasComponent() {
     auto project = dataControl->project();
     bitpowder::lib::MemoryPool& mp = project->mp();
     std::string name = m_name.toStdString();
+    XMASComponent *xmas_comp;
     try {
         switch(m_type) {
         case model::Component::CompType::Source : {
-            auto *source = dynamic_cast<XMASSource *>(project->insertSource(name));
-            if(!source) return false;
-            bool required = source->required_input;
-            m_expression = QString(source->getSourceExpression(mp).stl().c_str());
-            this->setProperty("required",required);
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertSource(name);
+            break;
         }
         case model::Component::CompType::Sink :{
-            auto *sink = dynamic_cast<XMASSink *>(project->insertSink(name));
-            if(!sink) return false;
-            bool required = sink->required_output;
-            this->setProperty("required",required);
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertSink(name);
+            break;
         }
         case model::Component::CompType::Function :{
-            auto *func = dynamic_cast<XMASFunction *>(project->insertFunction(name));
-            if(!func) return false;
-            m_expression = QString(func->getFunctionExpression(mp).c_str());
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertFunction(name);
+            break;
         }
         case model::Component::CompType::Queue :{
-            auto *queue = dynamic_cast<XMASQueue *>(project->insertQueue(name));
-            if(!queue) return false;
-            unsigned int capacity = queue->c;
-            this->setProperty("capacity",capacity);
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertQueue(name);
+            break;
         }
         case model::Component::CompType::Join :{
-            auto *join = dynamic_cast<XMASJoin *>(project->insertJoin(name));
-            if(!join) return false;
-            m_expression = QString(join->getJoinExpression(mp).stl().c_str());
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertJoin(name);
+            break;
         }
         case model::Component::CompType::Merge :{
-            if(!project->insertMerge(name)) return false;
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertMerge(name);
+            break;
         }
         case model::Component::CompType::Switch :{
-            if(!project->insertSwitch(name)) return false;
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertSwitch(name);
+            break;
         }
         case model::Component::CompType::Fork :{
-            if(!project->insertFork(name)) return false;
-            emit componentAdded();
-            return true;
+            xmas_comp = project->insertFork(name);
+            break;
         }
         case model::Component::CompType::Composite : {
             QUrl fileUrl = QUrl(property("url").toString());
             std::string filename = fileUrl.fileName().toStdString();
-            auto *composite = dynamic_cast<XMASComposite *>(project->insertComposite(name, filename));
-            if(!composite) return false;
-            XMASNetwork *network = project->getNetwork(composite->getNetwork().getStdName());
-            auto cn_ext = network->getNetworkExtension<CompositeNetworkExtension>(false);
-            if (cn_ext) {
-                this->setProperty("alias",QString::fromStdString(cn_ext->alias));
-                this->setProperty("symbol",QString::fromStdString(cn_ext->imageName));
-                this->setProperty("boxed", cn_ext->boxedImage);
+            auto composite = dynamic_cast<XMASComposite *>(project->insertComposite(name, filename));
+            if(composite){
+                XMASNetwork *network = project->getNetwork(composite->getNetwork().getStdName());
+                auto cn_ext = network->getNetworkExtension<CompositeNetworkExtension>(false);
+                if (cn_ext) {
+                    this->setProperty("alias",QString::fromStdString(cn_ext->alias));
+                    this->setProperty("symbol",QString::fromStdString(cn_ext->imageName));
+                    this->setProperty("boxed", cn_ext->boxedImage);
+                }
+                xmas_comp = composite;
             }
-            emit componentAdded();
-            return true;
+            break;
         }
         default :
             emit writeLog(QString("Unknown component type!"), Qt::red);
@@ -223,7 +206,12 @@ bool model::Component::addXmasComponent() {
         }
     } catch (bitpowder::lib::Exception e) {}      // component already exists, ignore
 
-    return false;
+    if (xmas_comp){
+        //setXData(getXmasComponentData(xmas_comp));
+        emit xdataChanged();
+        emit componentAdded();
+    }
+    return (xmas_comp);
 }
 
 
@@ -241,45 +229,31 @@ bitpowder::lib::MemoryPool &model::Component::mp() {
     return project->mp();
 }
 
-int model::Component::updateExpression(QVariant expression) {
-    m_expression = expression;
-    return updateExpression();
-}
 
-int model::Component::updateExpression() {
-    QString typeName = QString(m_expression.typeName());
-    emit writeLog(QString("[debug] received expression of type '")+typeName+"' and contents "+m_expression.toString());
-
+int model::Component::setXmasComponentData(QVariantMap map) {
     auto xmas_comp = xmas_component();
-    if (!xmas_comp) {
-        // some calls are before component is complete: without name, no xmas component.
-        return false;
-    }
+    if(!xmas_comp) return false;
 
     if (type() == Queue) {
-        if (typeName != "QString") {
-            return false;
-        }
-        unsigned int qexpr = m_expression.toUInt();
+        unsigned int capacity =  qvariant_cast<unsigned int>(map["capacity"]);
         auto queue = dynamic_cast<XMASQueue *>(xmas_comp);
         if (queue) {
-            if (qexpr != queue->c) {
-                queue->c = qexpr;
+            if (capacity != queue->c) {
+                queue->c = capacity;
                 return 0;
             }
         }
-        return false;
+        return -1;
     }
 
     if (type() == Source) {
-        if (typeName != "QString") {
-            return 0;
-        }
-        QString qexpr = m_expression.toString();
+        QString expression =  qvariant_cast<QString>(map["expression"]);
+        bool required =  qvariant_cast<bool>(map["required"]);
         XMASSource *source = dynamic_cast<XMASSource *>(xmas_comp);
         if (source) {
-            std::string expr = qexpr.toStdString();
+            std::string expr = expression.toStdString();
             auto result = source->setSourceExpression(expr, mp());
+            source->required_input = required;
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             QString xmas_expression =
@@ -295,22 +269,27 @@ int model::Component::updateExpression() {
                          " as source : " << xmas_comp->getStdName() << std::endl;
             return false;
         }
-    } else if (type() == Function) {
-        if (typeName != "QString") {
+    } else if (type() == Sink) {
+        bool required =  qvariant_cast<bool>(map["required"]);
+        XMASSink *sink = dynamic_cast<XMASSink *>(xmas_comp);
+        if (sink) {
+            sink->required_output = required;
             return 0;
         }
-        QString qexpr = m_expression.toString();
+        return -1;
+    } else if (type() == Function) {
+        QString expression =  qvariant_cast<QString>(map["expression"]);
         XMASFunction *func = dynamic_cast<XMASFunction *>(xmas_comp);
         if (func) {
-            std::string expr = qexpr.toStdString();
+            std::string expr = expression.toStdString();
             auto result =  func->setFunctionExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
             emit writeLog(QString("saving expression in XMASComponent ")
                           + (result.m_success? "succeeded." : "failed. Error message is:" + errMsg));
             if (result.m_success) {
-                std::string expr = func->getFunctionExpression(mp());
-                QString xmas_expression = QString(expr.c_str());
+                std::string expression = func->getFunctionExpression(mp());
+                QString xmas_expression = QString(expression.c_str());
                 emit writeLog(QString("result = ") + xmas_expression );
             }
             return result.m_pos;
@@ -322,15 +301,12 @@ int model::Component::updateExpression() {
         }
         return true;
     } else if (type() == Join) {
-        if (typeName != "QString") {
-            return 0;
-        }
-        QString qexpr = m_expression.toString();
+        QString expression =  qvariant_cast<QString>(map["expression"]);
         XMASJoin *join = dynamic_cast<XMASJoin *>(xmas_comp);
         if (join) {
-            std::string expr = qexpr.toStdString();
             ExpressionResult result;
             QString kindOfJoin;
+            std::string expr = expression.toStdString();
             if (expr == "0" || expr == "1") {
                 kindOfJoin = "restricted";
                 result = join->setRestrictedJoinPort(expr, mp());
@@ -355,13 +331,10 @@ int model::Component::updateExpression() {
         }
         return true;
     } else if (type() == Switch) {
-        if (typeName != "QString") {
-            return 0;
-        }
-        QString qexpr = m_expression.toString();
+        QString expression =  qvariant_cast<QString>(map["expression"]);
         XMASSwitch *sw = dynamic_cast<XMASSwitch *>(xmas_comp);
         if (sw) {
-            std::string expr = qexpr.toStdString();
+            std::string expr = expression.toStdString();
             auto result =  sw->setSwitchExpression(expr, mp());
             QString errMsg = QString(result.m_errMsg.stl().c_str());
             setValidExpr(result.m_success, result.m_pos, errMsg);
@@ -383,67 +356,59 @@ int model::Component::updateExpression() {
     return false;
 }
 
+QVariantMap model::Component::getXmasComponentData(XMASComponent *xmas_comp) {
+    //auto c = xmas_component();
+    QVariantMap map;
+    // In case of queue return queue size
+    auto queue = dynamic_cast<XMASQueue *>(xmas_comp);
+    if (queue) {
+        map["capacity"] = (unsigned int) queue->c;
+        return map;
+    }
+    // In case of function return function specification.
+    auto func = dynamic_cast<XMASFunction *>(xmas_comp);
+    if (func) {
+        auto expr = func->getFunctionExpression(mp());
+        map["expression"] = QString(expr.c_str());
+        return map;
+    }
+    // In case of source return source specification.
+    auto src = dynamic_cast<XMASSource *>(xmas_comp);
+    if (src) {
+        auto expr = src->getSourceExpression(mp());
+        map["expression"] = QString(expr.stl().c_str());
+        map["required"] = src->required_input;
+        return map;
+    }
+    // In case of source return source specification.
+    auto snk = dynamic_cast<XMASSink *>(xmas_comp);
+    if (snk) {
+        map["required"] = snk->required_output;
+        return map;
+    }
+    // In case of switch return switch expression
+    auto sw = dynamic_cast<XMASSwitch *>(xmas_comp);
+    if (sw) {
+        auto expr = sw->getSwitchExpression(mp());
+        map["expression"] = QString(expr.stl().c_str());
+        return map;
+    }
+    // In case of join return join expression
+    auto join = dynamic_cast<XMASJoin *>(xmas_comp);
+    if (join) {
+        auto expr = join->getJoinExpression(mp());
+        map["expression"] = QString(expr.stl().c_str());
+        return map;
+    }
+    return map;
+}
+
 XMASComponent *model::Component::xmas_component() {
-    std::string stdName = name().toStdString();
+    std::string name = m_name.toStdString();
 
     auto project = dataControl ? dataControl->project() : nullptr;
     auto network = project ? project->getRootNetwork() : nullptr;
-    return (network ? network->getComponent(stdName) : nullptr);
+    return (network ? network->getComponent(name) : nullptr);
 }
 
-QVariant model::Component::expression() {
-    auto c = xmas_component();
-    // In case of queue return queue size
-    auto queue = dynamic_cast<XMASQueue *>(c);
-    if (queue) {
-        return (int) queue->c;
-    }
-    // In case of function return function specification.
-    auto func = dynamic_cast<XMASFunction *>(c);
-    if (func) {
-        auto expr = func->getFunctionExpression(mp());
-        if (expr != "") {
-            return QString(expr.c_str()); // Only return xmas string, if useful
-        } else {
-            return m_expression;
-        }
-    }
-    // In case of source return source specification.
-    auto src = dynamic_cast<XMASSource *>(c);
-    if (src) {
-        auto expr = src->getSourceExpression(mp());
-        if (expr != "") {
-            return QString(expr.stl().c_str());  // Only return xmas string, if useful
-        } else {
-            return m_expression;
-        }
-    }
-    // In case of switch return switch expression
-    auto sw = dynamic_cast<XMASSwitch *>(c);
-    if (sw) {
-        auto expr = sw->getSwitchExpression(mp());
-        if (expr != "") {
-            return QString(expr.stl().c_str());  // Only return xmas string, if useful
-        } else {
-            return m_expression;
-        }
-    }
-    // In case of join return join expression
-    auto join = dynamic_cast<XMASJoin *>(c);
-    if (join) {
-        auto expr = join->getJoinExpression(mp());
-        if (expr != "") {
-            return QString(expr.stl().c_str());  // Only return xmas string, if useful
-        } else {
-            return m_expression;
-        }
-    }
-    return m_expression;
-}
 
-void model::Component::setExpression(QVariant expression) {
-    int errorPosition = -1;
-    m_expression = expression;
-    errorPosition = updateExpression(expression);
-    emit expressionChanged(errorPosition);
-}
