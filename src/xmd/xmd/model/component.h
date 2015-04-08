@@ -102,7 +102,6 @@ public:
 
 private:
     bool addXmasComponent();
-    bool addComposite();
     int updateExpression(QVariant expression);
     int updateExpression();
     bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp

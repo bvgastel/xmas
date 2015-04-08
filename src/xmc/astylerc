@@ -1,6 +1,0 @@
-indent=spaces=4 
-style=linux 
-indent-labels 
-unpad-method-prefix 
-convert-tabs 
-indent-preprocessor 
