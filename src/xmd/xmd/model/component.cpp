@@ -387,7 +387,7 @@ QVariant model::Component::expression() {
     auto queue = dynamic_cast<XMASQueue *>(c);
     if (queue) {
        // m_expression = queue->c;
-        return queue->c;
+        return (int) queue->c;
     }
     // In case of function return function specification.
     auto func = dynamic_cast<XMASFunction *>(c);

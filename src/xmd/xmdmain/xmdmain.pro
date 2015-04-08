@@ -17,7 +17,7 @@ CONFIG   -= app_bundle
 CONFIG += C++11
 CONFIG += link_prl
 win32: CONFIG += static
-unix: CONFIG += static dll
+unix: CONFIG += dll
 
 TEMPLATE = app
 
@@ -49,7 +49,7 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/rel
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/libxmd.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/release/xmd.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/xmd.lib
-else:unix: PRE_TARGETDEPS += $$OUT_PWD/../xmd/libxmd.a
+# no pre_targetdeps for unix plz
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
