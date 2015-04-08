@@ -56,11 +56,15 @@ signals:
 
 public slots:
     bool loadPlugins();
+
+    bool startPluginThread(QString vtPlugin);
+    bool stopPluginThread(QString vtPlugin);
+
     bool startPlugin(QString vtPlugin);
     bool stopPlugin(QString vtPlugin);
 
 private:
-    QDir m_pluginDir;
+    std::shared_ptr<QDir> m_pluginDir;
     QMap<QString, VtPluginInterface *> m_vtMap;
     LoggerInterface *m_logger;
 };

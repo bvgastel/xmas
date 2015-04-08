@@ -33,12 +33,28 @@ PluginControl::PluginControl(QObject *parent)
     : QObject(parent), m_logger(new Logger("plugin control"))
 {
     std::shared_ptr<QDir> dir = pluginDir();
-    m_pluginDir = QDir(*dir);
+    m_pluginDir = dir;
 }
 
 PluginControl::~PluginControl()
 {
 
+}
+
+// TODO: Not fully implemented yet.
+bool PluginControl::startPluginThread(QString vtPlugin) {
+   VtPluginInterface *plugin = m_vtMap[vtPlugin];
+   Q_UNUSED(plugin)
+    std::shared_ptr<XMASProject> project = dataControl->project();
+    //std::string json = project->
+    //plugin->startThread(json);
+    return true;
+}
+
+//  Currently no mechanism to stop a plugin running in a separate thread.
+bool PluginControl::stopPluginThread(QString vtPlugin) {
+    Q_UNUSED(vtPlugin)
+    return true;
 }
 
 bool PluginControl::startPlugin(QString vtPlugin) {
@@ -48,11 +64,10 @@ bool PluginControl::startPlugin(QString vtPlugin) {
     return true;
 }
 
+//  Currently no mechanism to stop a plugin running in the main thread.
 bool PluginControl::stopPlugin(QString vtPlugin) {
     Q_UNUSED(vtPlugin)
-//  Currently no mechanism to stop a plugin
     return true;
-//    m_logger->log(QString("[PluginControl] Plugin stopped."));
 }
 
 // This is pretty platform dependent. Needs some extra tweaking to reduce platform dependencies
@@ -74,7 +89,6 @@ std::shared_ptr<QDir> PluginControl::pluginDir() {
     pluginDir->cdUp(); // to xmas
     pluginDir->cd("lib");
     pluginDir->cd("plugins");
-//    qApp->addLibraryPath(pluginDir->absolutePath());
     QString msg = QString("Plugin directory is ")+pluginDir->absolutePath();
     m_logger->log(msg);
     qDebug() << msg;
@@ -83,9 +97,9 @@ std::shared_ptr<QDir> PluginControl::pluginDir() {
 
 bool PluginControl::loadPlugins() {
     QVariantList vtNameList;
-    foreach (QString fileName, m_pluginDir.entryList(QDir::Files)) {
-        m_logger->log("Found " + fileName + " in " + m_pluginDir.absolutePath());
-        QPluginLoader pluginLoader(m_pluginDir.absoluteFilePath(fileName));
+    foreach (QString fileName, m_pluginDir->entryList(QDir::Files)) {
+        m_logger->log("Found " + fileName + " in " + m_pluginDir->absolutePath());
+        QPluginLoader pluginLoader(m_pluginDir->absoluteFilePath(fileName));
         pluginLoader.load();
         if (!pluginLoader.isLoaded()) {
             QString errorString = pluginLoader.errorString();
