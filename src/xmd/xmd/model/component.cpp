@@ -159,7 +159,6 @@ bool model::Component::addXmasComponent() {
             break;
         case model::Component::CompType::Composite : {
              QUrl fileUrl = QUrl(property("url").toString());
-            // std::string url = property("url").canConvert<std::string>() ? property("url").toUInt() : 1;
              std::string filename = fileUrl.fileName().toStdString();
              result = project->insertComposite(name, filename);
              break;
