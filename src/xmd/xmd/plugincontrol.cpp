@@ -46,8 +46,9 @@ bool PluginControl::startPluginThread(QString vtPlugin) {
    VtPluginInterface *plugin = m_vtMap[vtPlugin];
    Q_UNUSED(plugin)
     std::shared_ptr<XMASProject> project = dataControl->project();
-    //std::string json = project->
-    //plugin->startThread(json);
+    bitpowder::lib::MemoryPool mp;
+    QString json = QString(project->network2jsonString(mp).stl().c_str());
+    plugin->startThread(json);
     return true;
 }
 
