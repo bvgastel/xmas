@@ -41,10 +41,25 @@ PluginControl::~PluginControl()
 
 }
 
-// TODO: Not fully implemented yet.
+bool PluginControl::startPluginProcess(QString vtPlugin, QString program, QStringList argList) {
+    VtPluginInterface *plugin = m_vtMap[vtPlugin];
+    std::shared_ptr<XMASProject> project = dataControl->project();
+    bitpowder::lib::MemoryPool mp;
+    QString json = QString(project->network2jsonString(mp).stl().c_str());
+    plugin->startProcess(json, program, argList);
+    return true;
+}
+
+// Not implemented
+bool PluginControl::stopPluginProcess(QString vtPlugin, QString program) {
+    Q_UNUSED(vtPlugin)
+    Q_UNUSED(program)
+    return false;
+}
+
+
 bool PluginControl::startPluginThread(QString vtPlugin) {
-   VtPluginInterface *plugin = m_vtMap[vtPlugin];
-   Q_UNUSED(plugin)
+    VtPluginInterface *plugin = m_vtMap[vtPlugin];
     std::shared_ptr<XMASProject> project = dataControl->project();
     bitpowder::lib::MemoryPool mp;
     QString json = QString(project->network2jsonString(mp).stl().c_str());

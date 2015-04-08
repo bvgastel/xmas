@@ -57,6 +57,9 @@ signals:
 public slots:
     bool loadPlugins();
 
+    bool startPluginProcess(QString vtPlugin, QString program, QStringList argList);
+    bool stopPluginProcess(QString vtPlugin, QString program);
+
     bool startPluginThread(QString vtPlugin);
     bool stopPluginThread(QString vtPlugin);
 
