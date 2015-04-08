@@ -31,7 +31,7 @@ D    =  Developer
    23   g   2015-04-04              Plugin output too verbose               feature medium  needs one output line per execution
    24   g   2015-04-04              Plugin parameters can not modify        bug     medium
    25   g   2015-04-04              Random comps have no canvasdata in json bug     high
-   27   j   2015-04-04              Component position not saved in         bug     high
+   27   j   2015-04-04              Component position not saved in         bug     high    Cause is qml timing (stefan is looking into it)
                                     extension upon first placement
 99999
 
