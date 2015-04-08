@@ -43,7 +43,7 @@ public:
     XMASComponent *insertMerge(const bitpowder::lib::String& name);
     XMASComponent *insertSwitch(const bitpowder::lib::String& name);
     XMASComponent *insertFork(const bitpowder::lib::String& name);
-    XMASComponent *insertComposite(const bitpowder::lib::String& name, XMASNetwork& network);
+    XMASComponent *insertComposite(const bitpowder::lib::String& name, std::string filename = "");
 
     bool changeComponentName(std::string oldName, std::string newName);
 

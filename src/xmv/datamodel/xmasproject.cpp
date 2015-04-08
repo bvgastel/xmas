@@ -264,7 +264,11 @@ XMASComponent *XMASProject::insertFork(const bitpowder::lib::String &name) {
     return insert<XMASFork>(name);
 }
 
-XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, XMASNetwork &network) {
-    return root->insert<XMASComposite>(name, std::ref(network));
+XMASComponent *XMASProject::insertComposite(const bitpowder::lib::String &name, std::string filename) {
+    XMASNetwork* network = getNetwork(filename);
+    if(network){
+        return root->insert<XMASComposite>(name,std::ref(*network));
+    }
+    return nullptr;
 }
 

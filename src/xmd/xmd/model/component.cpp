@@ -157,9 +157,13 @@ bool model::Component::addXmasComponent() {
         case model::Component::CompType::Fork :
             result = project->insertFork(name);
             break;
-        case model::Component::CompType::Composite :
-            result = addComposite();
-            break;
+        case model::Component::CompType::Composite : {
+             QUrl fileUrl = QUrl(property("url").toString());
+            // std::string url = property("url").canConvert<std::string>() ? property("url").toUInt() : 1;
+             std::string filename = fileUrl.fileName().toStdString();
+             result = project->insertComposite(name, filename);
+             break;
+        }
         default :
             emit writeLog(QString("Unknown component type!"), Qt::red);
             return false;
@@ -171,23 +175,6 @@ bool model::Component::addXmasComponent() {
     }
 
     return result;
-}
-
-bool model::Component::addComposite() {
-
-    auto project = dataControl->project();
-
-    QUrl fileUrl = QUrl(property("url").toString());
-    std::string filename = fileUrl.fileName().toStdString();
-    XMASNetwork *network = project->getNetwork(filename);
-    if (!network)
-        return false;
-
-    std::string name = m_name.toStdString();
-    if(project->insertComposite(name, std::ref(*network))){
-        return true;
-    }
-    return false;
 }
 
 bool model::Component::valid() {
