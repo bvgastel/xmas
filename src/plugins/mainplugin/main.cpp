@@ -23,17 +23,22 @@
 #include <QCoreApplication>
 #include <iostream>
 
+#include "vtplugininterface.h"
+
 int main(int argc, char *argv[])
 {
     std::cout << "argc = " << argc << ", argv = '" << *argv << "'" << std::endl;
 
-    std::cout << "Thanks for deploying the most recently developed plugins." << std::endl;
-    std::cout << "******* Program finishes ********************************" << std::endl;
-    exit(0);
+    QCoreApplication app(argc, argv);
+    QCoreApplication::setApplicationName("plugin-main-program");
+    QCoreApplication::setApplicationVersion("1.0");
 
-//    QCoreApplication app(argc, argv);
-//    QCoreApplication::setApplicationName("plugin-main-program");
-//    QCoreApplication::setApplicationVersion("1.0");
+    VtPluginInterface plugin;
 
-//    return app.exec();
+    return app.exec();
+
+//    std::cout << "Thanks for deploying the most recently developed plugins." << std::endl;
+//    std::cout << "******* Program finishes ********************************" << std::endl;
+//    exit(0);
+
 }
