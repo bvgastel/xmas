@@ -110,13 +110,14 @@ XComponent {
         title: "Enter expression for join " + name
         help: "Type 0 or 1, indicating which in-port of the restrictive join is used for tokens,"
               + "or insert an expression for an unrestrictive join.\n"
-        //onAccepted: drawRestrictedJoinPort()
+        onAccepted: drawRestrictedJoinPort()
     }
 
     Component.onCompleted: {
         //insert on top
         insertMenuSeparator()
         insertMenuItem(menuExpression)
+        drawRestrictedJoinPort()
     }
 
     // context menu expression item
