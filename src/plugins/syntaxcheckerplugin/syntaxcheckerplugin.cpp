@@ -87,8 +87,7 @@ void SyntaxCheckerPlugin::startProcess(const QString &programName, const QString
         m_process.setProgram(programName);
         m_process.setArguments(argList);
 
-        QObject::connect(&m_process, SIGNAL(finished(int)), this, SLOT(handleFinish));
-
+        QObject::connect(&m_process, SIGNAL(finished(int)), this, SLOT(handleProcessFinish));
 
         m_process.start();
     }
@@ -125,6 +124,11 @@ void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
         }
 
     }
+}
+
+void SyntaxCheckerPlugin::handleProcessFinish(const int exitCode) {
+    Q_UNUSED(exitCode)
+    // TODO: add handling of process finish
 }
 
 void SyntaxCheckerPlugin::name(QString name) {
