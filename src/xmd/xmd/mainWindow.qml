@@ -104,12 +104,12 @@ ApplicationWindow {
         if(save) saveModel()
         if(network.newFile()) {
             network.clear()
+            network.modified = false
         }
     }
 
     function openModel(save){
-        if(save) saveModel()
-        network.modified = false
+        newModel(save)
         dialogFileOpen.open()
     }
 
