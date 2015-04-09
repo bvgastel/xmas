@@ -1387,7 +1387,7 @@ generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult,
         XMASSink *sink = dynamic_cast<XMASSink*>(component);
         if (sink) {
             try {
-                JSONData external = jsonComponent["external"];          // boolean not supported by JSONData! use 0/1
+                JSONData external = jsonComponent["required"];          // boolean not supported by JSONData! use 0/1
                 sink->required_output = external.isNumber() && (external.asNumber() > 0);
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
@@ -1400,7 +1400,7 @@ generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult,
         XMASSource *src = dynamic_cast<XMASSource*>(component);
         if (src) {
             try {
-                JSONData external = jsonComponent["external"];          // boolean not supported by JSONData! use 0/1
+                JSONData external = jsonComponent["required"];          // boolean not supported by JSONData! use 0/1
                 src->required_input = external.isNumber() && (external.asNumber() > 0);
 
                 String types = jsonComponent["fields"][0]["init_types"];

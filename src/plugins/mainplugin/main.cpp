@@ -31,6 +31,7 @@
 #include "workerinterface.h"
 #include "syntaxcheckworker.h"
 
+// Example how to get json using shared memory. Not tested :-D
 std::pair<bool, QString> json() {
 
     QSharedMemory sharedMemory;
@@ -61,7 +62,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("syntax checker main");
     QCoreApplication::setApplicationVersion("1.0");
 
-    WorkerInterface *plugin = new SyntaxCheckWorker();
+    // Unfortunately link-edit for the syntaxcheckworker, only is successful
+    // from Linux, not from Windows. Could be a build option, but I couldn't
+    // find the culprit.
+    // Probably the fact the it is in a plugin library. It might have to be in a
+    // different (non-plugin) library
+//    WorkerInterface *plugin = new SyntaxCheckWorker();
     QString qjson;
     std::string jsonStr;
     bool success;
@@ -72,7 +78,13 @@ int main(int argc, char *argv[])
         std::string networkName = "syntax checker plugin";
         std::string basePath = "";
         std::shared_ptr<XMASProject> project = std::make_shared<XMASProject>(jsonStr, networkName, basePath);
-        plugin->doWork(project);
+//        plugin->doWork(project);
+        // Add the code for the plugin here
+        //
+        // plugin-code
+        // plugin-code
+        // etc etc
+        //
         return 0;
     }
     return -1;

@@ -116,6 +116,9 @@ public:
     virtual void visit(XMASSink *c) {
         bitpowder::lib::unused(c);
         json["type"] = "sink"_S;
+        if (c->required_output) {
+            json["required"] = 1;
+        }
     }
 
     virtual String exportSourceExpression(XMASSource* source, MemoryPool& mp) {
@@ -136,6 +139,10 @@ public:
         init_types_wrapper["init_types"] = types;
         fields.push_back(std::move(init_types_wrapper));
         json["fields"] = std::move(fields);
+
+        if (c->required_input) {
+            json["required"] = 1;
+        }
     }
 
     virtual void visit(XMASQueue *c) {
