@@ -83,9 +83,13 @@ void SyntaxCheckerPlugin::startThread(const QString &json) {
 // Query: is slot/signal over process feasible? If so, it is simpeler
 void SyntaxCheckerPlugin::startProcess(const QString &programName, const QString &json, const QStringList &argList) {
     if (share(json)) {
-        m_process.setProcessChannelMode(QProcess::ForwardedChannels);
+        //m_process.setProcessChannelMode(QProcess::ForwardedChannels);  // bad idea in GUI programs
         m_process.setProgram(programName);
         m_process.setArguments(argList);
+
+        QObject::connect(&m_process, SIGNAL(finished(int)), this, SLOT(handleFinish));
+
+
         m_process.start();
     }
 }

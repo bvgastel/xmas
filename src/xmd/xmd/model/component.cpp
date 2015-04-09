@@ -35,12 +35,14 @@ model::Component::~Component()
 {
 }
 
+// x, y, rotation and scale are part of QQuickItem
+// They need no definition in Component.
 void model::Component::updateCanvasData() {
     auto project = dataControl->project();
     auto network = project->getRootNetwork();
     XMASComponent *c = network->getComponent(name().toStdString());
     if (c) {
-        c->canvasData(this->x(), this->y(), this->rotation(), this->scale());
+        c->canvasData(x(), y(), rotation(), scale());
     }
 }
 
@@ -69,6 +71,8 @@ QString model::Component::name() {
     return m_name;
 }
 
+// Name changes need to reset the componentMap in network
+// besides changing the name in component.
 void model::Component::setName(QString name) {
     // initial setting
     if (m_name == QString()) {
@@ -147,7 +151,7 @@ void model::Component::setXdata(QVariantMap xdata) {
  */
 bool model::Component::addXmasComponent() {
     auto project = dataControl->project();
-    bitpowder::lib::MemoryPool& mp = project->mp();
+    //bitpowder::lib::MemoryPool& mp = project->mp();    // is this variable useful?
     std::string name = m_name.toStdString();
     XMASComponent *xmas_comp;
     try {
@@ -156,31 +160,31 @@ bool model::Component::addXmasComponent() {
             xmas_comp = project->insertSource(name);
             break;
         }
-        case model::Component::CompType::Sink :{
+        case model::Component::CompType::Sink : {
             xmas_comp = project->insertSink(name);
             break;
         }
-        case model::Component::CompType::Function :{
+        case model::Component::CompType::Function : {
             xmas_comp = project->insertFunction(name);
             break;
         }
-        case model::Component::CompType::Queue :{
+        case model::Component::CompType::Queue : {
             xmas_comp = project->insertQueue(name);
             break;
         }
-        case model::Component::CompType::Join :{
+        case model::Component::CompType::Join : {
             xmas_comp = project->insertJoin(name);
             break;
         }
-        case model::Component::CompType::Merge :{
+        case model::Component::CompType::Merge : {
             xmas_comp = project->insertMerge(name);
             break;
         }
-        case model::Component::CompType::Switch :{
+        case model::Component::CompType::Switch : {
             xmas_comp = project->insertSwitch(name);
             break;
         }
-        case model::Component::CompType::Fork :{
+        case model::Component::CompType::Fork : {
             xmas_comp = project->insertFork(name);
             break;
         }
@@ -410,5 +414,3 @@ XMASComponent *model::Component::xmas_component() {
     auto network = project ? project->getRootNetwork() : nullptr;
     return (network ? network->getComponent(name) : nullptr);
 }
-
-
