@@ -53,30 +53,23 @@ private:
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(CompType type READ type WRITE setType NOTIFY typeChanged)
     //only for queue
-//    Q_PROPERTY(unsigned int capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
+    Q_PROPERTY(unsigned int capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
     // for source/join/switch/function
-    Q_PROPERTY(QVariant expression READ expression WRITE setExpression NOTIFY expressionChanged)
+    Q_PROPERTY(QString expression READ expression WRITE setExpression NOTIFY expressionChanged)
+    Q_PROPERTY(bool expressionValid READ expressionValid WRITE setExpressionValid NOTIFY expressionChanged)
+    Q_PROPERTY(int expressionErrorPosition READ expressionErrorPosition NOTIFY expressionChanged)
+    // sink & source
+    Q_PROPERTY(bool required READ required WRITE setRequired NOTIFY requiredChanged)
 
-//    Q_PROPERTY(bool requirend READ requirend WRITE setRequirend NOTIFY requirendChanged)
-
-    Q_PROPERTY(QVariantMap xdata READ xdata WRITE setXdata NOTIFY xdataChanged)
-    Q_PROPERTY(bool validExpr READ validExpr WRITE setValidExpr NOTIFY validExprChanged)
-    Q_PROPERTY(bool valid READ valid NOTIFY validChanged)
-
-public:
-    explicit Component(QQuickItem *parent = 0);
-    ~Component();
 
 signals:
     void nameChanged(int result);
     void typeChanged();
-    void xdataChanged();
-    void expressionChanged(int result);
-    void validChanged();
-    void validExprChanged(int errorPosition, QString errMsg);
+    void capacityChanged();
+    void expressionChanged(bool success);
+    void requiredChanged();
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);
-
     void componentAdded();
 
 public slots:
@@ -88,37 +81,42 @@ public slots:
     QString name();
     void setName(QString name);
 
-    QVariant expression();
-    void setExpression(QVariant expression);
+    QString expression();
+    void setExpression(QString expression);
 
-    QVariantMap xdata();
-    void setXdata(QVariantMap xdata);
+    int expressionErrorPosition();
+    void setExpressionErrorPosition(int error);
 
-    bool validExpr();
-    bool valid();
+    bool expressionValid();
+    void setExpressionValid(bool valid);
+
+    unsigned int capacity();
+    void setCapacity(unsigned int capacity);
+
+    bool required();
+    void setRequired(bool required);
 
     void updateCanvasData();
 
 public:
-    void setValidExpr(bool isValid);
-    void setValidExpr(bool isValid, int pos, QString errMsg);
+
+    explicit Component(QQuickItem *parent = 0);
+    ~Component();
 
     XMASComponent *xmas_component();
 
 private:
     bool addXmasComponent();
-    QVariantMap getXmasComponentData(XMASComponent *xmas_comp);
-    int setXmasComponentData(QVariantMap map);
-    bitpowder::lib::MemoryPool &mp();       // Retrieves XMASProject->m_mp
+    bitpowder::lib::MemoryPool &mp();
 
-public:
-private:
 
     QString m_name;
-    QVariant m_expression;  /* Expression, even if not accepted by xmas */
     CompType m_type;
-    bool m_valid;       /* Is the object fully connected? */
-    bool m_validExpr;   /* Is the expression correctly updated in xmas? */
+    unsigned int m_capacity;
+    bool m_required;
+    QString m_expression;
+    int m_expressionErrorPosition;
+    bool m_expressionValid = false;
 };
 } // namespace model
 

@@ -136,17 +136,29 @@ function createComponent(parent,component,object) {
                                           "y":object.y,
                                           "rotation":object.rotation,
                                           "scale":object.scale,
-                                          "name":object.name,
-                                          "expression":object.expression
+                                          "name":object.name
                                       });
+        if (object.type === Model.XComponent.Queue) {
+            item.capacity = object.capacity ? object.capacity : 0
+        }
+        if (object.type === Model.XComponent.Source
+                || object.type === Model.XComponent.Sink ) {
+            item.required = object.required ? object.required : true
+        }
+        if (object.type === Model.XComponent.Function
+                || object.type === Model.XComponent.Join
+                || object.type === Model.XComponent.Switch
+                || object.type === Model.XComponent.Source ) {
+            item.expression = object.expression ? object.expression : ""
+        }
         if (object.type === Model.XComponent.Composite) {
             item.url = object.url ? object.url : ""
             item.alias = object.alias ? object.alias : ""
             item.image = object.image ? object.image : ""
             item.boxed = object.boxed ? object.boxed : true
         }
-    // Timing incorrect: component is not fully created yet. But it does get called!
-      //network.addComponent(component);
+        // Timing incorrect: component is not fully created yet. But it does get called!
+        //network.addComponent(component);
         item.componentAdded()
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")

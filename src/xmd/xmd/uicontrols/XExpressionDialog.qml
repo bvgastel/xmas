@@ -48,8 +48,6 @@ Window {
     maximumHeight: 500
     maximumWidth: 700
     property string help:""
-    property string expression:""
-    property alias validator: regex.regExp
 
     // Signals
     signal accepted()
@@ -84,11 +82,12 @@ Window {
                 }
             }
             Rectangle{
+                id:textBackground
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredHeight: 100
                 Layout.minimumHeight: 50
-                color: "white"
+                color: expressionValid ? "#CCFFFF" : "#FFCCCC"
                 TextInput{
                     id:expressionTextInput
                     anchors.fill:parent
@@ -130,7 +129,10 @@ Window {
         Action {
             id:cancelAction
             text: "Cancel"
-            onTriggered: dialog.close()
+            onTriggered: {
+                expression = expression //restore
+                dialog.close()
+            }
             tooltip: ""
         }
         Action {
@@ -138,9 +140,13 @@ Window {
             text: "Ok"
             enabled: expressionTextInput.acceptableInput
             onTriggered: {
-                dialog.expression = expressionTextInput.text
-                dialog.accepted()
-                dialog.close()
+                expression = expressionTextInput.text
+                if(expressionValid){
+                    dialog.accepted()
+                    dialog.close()
+                } else {
+                    textBackground.color = "#FFCCCC"
+                }
             }
             tooltip: ""
         }

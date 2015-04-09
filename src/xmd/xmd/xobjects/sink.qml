@@ -39,7 +39,6 @@ XComponent {
     type: Model.XComponent.Sink
     prefix: "snk"
     topLabel: false
-    property bool required: true
     XPort{x:30 ; y:0; rotation:180; name:"i"; type:Model.XPort.INPORT}
     Canvas {
         anchors.fill: parent

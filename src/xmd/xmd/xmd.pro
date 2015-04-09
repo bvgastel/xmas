@@ -71,7 +71,6 @@ DISTFILES += mainWindow.qml \
     xobjects/xnetwork.js \
     uicontrols/ScrollBar.qml \
     uicontrols/XToolBar.qml \
-    uicontrols/XDialog.qml \
     uicontrols/Selection.qml \
     uicontrols/XWire.qml \
     xobjects/xchannel.js \
@@ -87,7 +86,8 @@ DISTFILES += mainWindow.qml \
     uicontrols/XConsole.qml \
     uicontrols/XPlugin.qml \
     uicontrols/Log.qml \
-    findings.md
+    findings.md \
+    uicontrols/XExpressionDialog.qml
 
 ################################################
 # Dependencies

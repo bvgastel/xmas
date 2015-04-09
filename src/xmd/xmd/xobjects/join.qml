@@ -91,27 +91,26 @@ XComponent {
         }
     }
 
-    onExpressionChanged: {
+    function drawRestrictedJoinPort() {
         var result = -1
-        if(!isNaN(this.expression)){
-           result = parseInt(this.expression)
+        try{
+            result = parseInt(expression)
             // limit to two target ports
-           if(result < 0 || result > 1) result = -1
-        }
-         canvas.token = result
-         canvas.requestPaint()
+            if(result < 0 || result > 1) result = -1
+        } catch(e){}
+        canvas.token = result
+        canvas.requestPaint()
+
     }
 
     withValidMarker: true
     onShowDialog: dialog.show()
-    XDialog {
+    XExpressionDialog {
         id: dialog
         title: "Enter expression for join " + name
         help: "Type 0 or 1, indicating which in-port of the restrictive join is used for tokens,"
-             + "or insert an expression for an unrestrictive join.\n"
-        validator: /^(\S.*)$/
-        onAccepted: component.expression = dialog.expression
-
+              + "or insert an expression for an unrestrictive join.\n"
+        //onAccepted: drawRestrictedJoinPort()
     }
 
     Component.onCompleted: {

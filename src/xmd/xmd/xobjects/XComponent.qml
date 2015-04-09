@@ -121,8 +121,7 @@ Model.XComponent {
     onRotationChanged:{component.update();component.updateCanvasData()}
     onScaleChanged: {doMove(0,0);component.updateCanvasData()}
     onWriteLog: mainwindow.log(message,color)
-    onExpressionChanged: validmarker.color = valid ? "green" : "red"
-    // result === -1 ? "transparent" : "red"
+    onExpressionChanged: {validmarker.color = success ? "green" : "red"}
     onSelectedChanged: if(!selected) label.focus = false
     onRemove: ComponentJs.remove(component)
     onXChanged: positionHasChanged = true
@@ -148,7 +147,8 @@ Model.XComponent {
         width: 15
         height: 15
         radius: 15
-        color: validExpr ? "green" : "red"
+        color: "red"
+        //color: expressionValid ? "green" : "red"
         anchors.verticalCenter: nameItem.verticalCenter
         anchors.right: component.left
         MouseArea {

@@ -187,12 +187,11 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
 
     if (type == xqueue) {
         XMASQueue *queue = dynamic_cast<XMASQueue *>(comp);
-        QString expression = QString();
+        unsigned int capacity = 0;
         if (queue) {
-            unsigned int size = queue->c;
-            expression = size;
+            capacity = queue->c;
         }
-        map.insert("expression", expression);
+        map.insert("capacity", capacity);
     } else if (type == xfunction) {
         XMASFunction *func = dynamic_cast<XMASFunction *>(comp);
         QString expression = QString();
@@ -203,10 +202,20 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
     } else if (type == xsource) {
         XMASSource *source = dynamic_cast<XMASSource *>(comp);
         QString expression = QString();
+        bool required = true;
         if (source) {
             expression = QString(source->getSourceExpression(mp).stl().c_str());
+            required = source->required_input;
         }
         map.insert("expression", expression);
+        map.insert("required", required);
+    } else if (type == xsink) {
+        XMASSink *sink = dynamic_cast<XMASSink *>(comp);
+        bool required = true;
+        if (sink) {
+            required = sink->required_output;
+        }
+        map.insert("required", required);
     } else if (type == xjoin) { // NOTE: for now only works for restricted join
         XMASJoin *join = dynamic_cast<XMASJoin *>(comp);
         QString expression = QString();
@@ -368,10 +377,10 @@ bool model::Network::connect(XPort *outport, XPort *inport) {
 
     if (success) {
         if (outport->getComponent()) {
-            emit outport->getComponent()->validChanged();
+            //emit outport->getComponent()->validChanged();
         }
         if (inport->getComponent()) {
-            emit inport->getComponent()->validChanged();
+            //emit inport->getComponent()->validChanged();
         }
         emit outport->connectedChanged();
         emit inport->connectedChanged();

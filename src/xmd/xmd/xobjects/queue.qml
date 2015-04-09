@@ -57,7 +57,6 @@ XComponent {
         }
     }
 
-
     //size input label & validator
     Rectangle{
         id:functionPlaceholder
@@ -70,7 +69,7 @@ XComponent {
         border.width: 0
         TextInput {
             id:fx
-            text: xdata["capacity"] ? xdata["capacity"] : 0
+            text: capacity
             color: acceptableInput ? "green" : "white"
             inputMethodHints: Qt.ImhDigitsOnly
             validator: IntValidator{bottom: 1}
@@ -80,18 +79,8 @@ XComponent {
             anchors.fill: parent
             horizontalAlignment: Qt.AlignRight
             verticalAlignment: Qt.AlignVCenter
-            onEditingFinished: {doAccept(fx.acceptableInput) ; focus = false}
+            onEditingFinished: {fx.acceptableInput ? capacity = fx.text : fx.text = capacity ; focus = false}
             onFocusChanged: focus ? selectAll(): editingFinished()
-            function doAccept(ok){
-                var map = xdata //need a ref to modify items
-                if(ok){
-                   map["capacity"] = fx.text
-
-               } else {
-                   fx.text = map["capacity"]
-               }
-               xdata = map
-            }
         }
     }
 }

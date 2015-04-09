@@ -59,7 +59,7 @@ XComponent {
 
     withValidMarker: true
     onShowDialog: dialog.show()
-    XDialog {
+    XExpressionDialog {
         id: dialog
         title: "Enter expression for function " + name
         help:"Insert function.\n"
@@ -69,8 +69,6 @@ XComponent {
              + "\t dst := src, colour := 1\n"
              + "transforms an incoming packet by setting the destination to its original source,"
              + " by setting its colour to 1, and by removing the src field."
-        validator: /^(\S.*)$/
-        onAccepted: component.expression = dialog.expression
     }
 
     Component.onCompleted: {

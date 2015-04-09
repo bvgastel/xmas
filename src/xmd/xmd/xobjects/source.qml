@@ -39,7 +39,6 @@ XComponent {
     height: 60
     type: Model.XComponent.Source
     prefix: "src"
-    property bool required: true
     XPort{x:30 ; y:40; name:"o"; type:Model.XPort.OUTPORT}
     Canvas {
         anchors.fill: parent
@@ -59,7 +58,7 @@ XComponent {
 
     withValidMarker: true
     onShowDialog: dialog.show()
-    XDialog {
+    XExpressionDialog {
         id: dialog
         title: "Enter expression for source " + name
         help: "Insert types of packets injected at this source.\n"
@@ -67,8 +66,6 @@ XComponent {
             + "For additional operators, see the syntax for matching expressions.\n"
             + "E.g.: assume incoming packets have fields dst, src and colour. The following expression:\n"
             + "(dst > 4 ? src <= 4 : colour == 0) && src % 2 == 0"
-        validator: /^(\S.*)$/
-        onAccepted: component.expression = dialog.expression
     }
 
     Component.onCompleted: {

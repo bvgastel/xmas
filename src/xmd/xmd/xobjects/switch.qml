@@ -71,7 +71,7 @@ XComponent {
 
     withValidMarker: true
     onShowDialog: dialog.show()
-    XDialog {
+    XExpressionDialog {
         id: dialog
         title: "Enter expression for switch " + name
         help:   "Insert switching function\n"
@@ -79,8 +79,6 @@ XComponent {
                 + "For additional operators, see the syntax for matching expressions.\n"
                 + "E.g.: assume incoming packets have fields dst, src and colour. The following expression:\n"
                 + "(dst > 4 ? src <= 4 : colour == 0) && src % 2 == 0"
-        validator: /^(\S.*)$/
-        onAccepted: component.expression = dialog.expression
     }
 
     Component.onCompleted: {
