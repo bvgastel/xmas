@@ -68,7 +68,7 @@ XComponent {
 
     // Content
     RowLayout{
-       anchors.fill: parent
+        anchors.fill: parent
 
         // Input ports (left)
         Rectangle{
@@ -140,6 +140,7 @@ XComponent {
     Component {
         id: portDelegate
         XPort {
+            id:port
             name:portName
             type:parseInt(portType)
             nameAlignCenter: boxed
@@ -156,6 +157,11 @@ XComponent {
                 anchors.left: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
             }
+            //            states: State {
+            //                name: "reparent"
+            //                ParentChange { target: port; parent: component}
+            //            }
+            //            Component.onCompleted: port.state = "reparent"
         }
     }
 }

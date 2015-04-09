@@ -145,6 +145,8 @@ Window {
                     dialog.accepted()
                     dialog.close()
                 } else {
+                    var pos = expressionErrorPosition
+                    expressionTextInput.select(pos,pos+1)
                     textBackground.color = "#FFCCCC"
                 }
             }

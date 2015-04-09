@@ -258,15 +258,17 @@ void model::Component::setExpression(QString expression) {
         }
         if(result.m_success){
             m_expression = expression;
-            setExpressionErrorPosition(result.m_pos);
-        } else {
+         } else {
             QMetaObject metaObject = model::Component::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("CompType"));
             emit writeLog(QString("Invalid expression entered for ") +
                           QString(metaEnum.valueToKey(m_type)) +  " \""  + m_name + "\" !" ,Qt::red);
         }
 
-        if(hasUpdated) setExpressionValid(result.m_success);
+        if(hasUpdated) {
+            setExpressionValid(result.m_success);
+            setExpressionErrorPosition(result.m_pos);
+        }
     }
     catch(bitpowder::lib::Exception e){
         emit writeLog(e.description(),Qt::red);
@@ -281,7 +283,7 @@ int  model::Component::expressionErrorPosition(){
 // store expression error position and let qml know by emit
 void  model::Component::setExpressionErrorPosition(int error){
     m_expressionErrorPosition = error;
-    emit expressionChanged(error);
+    emit expressionChanged(error==0);
 }
 
 // read expression valid derived from xmas
