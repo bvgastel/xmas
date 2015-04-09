@@ -40,10 +40,17 @@ SyntaxCheckerPlugin::SyntaxCheckerPlugin(QObject *parent) : QObject(parent),
 SyntaxCheckerPlugin::~SyntaxCheckerPlugin() {
     m_workerThread.quit();
     m_workerThread.wait();
+
+    // Just detach, if not attached, will return false;
+    m_sharedMemory.detach();
     // NOTE: from windows we should use kill() because the program
     // does not respond to the WM_CLOSE message if there is no event loop.
-    // we need an ifdef
+    // we need an ifdef: not nice, but better than never ending.
+#ifdef WIN32
+    m_process.kill();
+#else
     m_process.terminate();
+#endif
 
 }
 
@@ -83,9 +90,12 @@ void SyntaxCheckerPlugin::startThread(const QString &json) {
 // Query: is slot/signal over process feasible? If so, it is simpeler
 void SyntaxCheckerPlugin::startProcess(const QString &programName, const QString &json, const QStringList &argList) {
     if (share(json)) {
-        m_process.setProcessChannelMode(QProcess::ForwardedChannels);
+        //m_process.setProcessChannelMode(QProcess::ForwardedChannels);  // bad idea in GUI programs
         m_process.setProgram(programName);
         m_process.setArguments(argList);
+
+        QObject::connect(&m_process, SIGNAL(finished(int)), this, SLOT(handleProcessFinish));
+
         m_process.start();
     }
 }
@@ -121,6 +131,14 @@ void SyntaxCheckerPlugin::handleResults(const ResultInterface &result) {
         }
 
     }
+}
+
+void SyntaxCheckerPlugin::handleProcessFinish(const int exitCode) {
+    if (!exitCode) {
+        std::cout << "Process plugin finished." << std::endl;
+    } else {
+        std::cerr << "Process plugin finished with error." << std::endl;
+     }
 }
 
 void SyntaxCheckerPlugin::name(QString name) {

@@ -60,6 +60,7 @@ public:
 
 public slots:
     virtual void handleResults(const ResultInterface &result);
+    virtual void handleProcessFinish(const int exitCode);
 signals:
     void operate(const QString &json);
 
