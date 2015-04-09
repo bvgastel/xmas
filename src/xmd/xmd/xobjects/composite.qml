@@ -35,6 +35,8 @@ import XMAS 1.0 as XMAS
 
 XComponent {
     id:component
+
+    // Properties
     width: boxed ? 200 : 100
     height: Math.max(portsLeft.count,portsRight.count) * (portSpace) + 30
     type: Model.XComponent.Composite
@@ -45,6 +47,8 @@ XComponent {
     property bool boxed: true
     property int portSpace: 30 //2 times default gridsize - 1 time portsize
 
+
+    // Javascript
     function updatePorts() {
         var ports = getPorts()
         inportModel.clear()
@@ -59,6 +63,10 @@ XComponent {
         }
     }
 
+    // Event handling
+    onComponentAdded: updatePorts()
+
+    // Content
     RowLayout{
        anchors.fill: parent
 
@@ -133,7 +141,7 @@ XComponent {
         id: portDelegate
         XPort {
             name:portName
-            type:portType
+            type:parseInt(portType)
             nameAlignCenter: boxed
             x:type===Model.XPort.INPORT ? 5 : 10
             y:30 + index * portSpace
@@ -150,15 +158,4 @@ XComponent {
             }
         }
     }
-
-    // This signal qml recognices but never reaches. The updatePorts() is never called. Despair!!
-    onComponentAdded: updatePorts()
-
-//    // The following will never work, because network signals never arrive here.
-//    // Qml does not even recognise network or the signal componentAdded.
-//    // Use component signal instead (however, see above, does not work either).
-//    Connections{
-//        target:network
-//        onComponentAdded:updatePorts()
-//    }
 }

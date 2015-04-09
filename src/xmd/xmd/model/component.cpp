@@ -35,38 +35,7 @@ model::Component::~Component()
 {
 }
 
-// x, y, rotation and scale are part of QQuickItem
-// They need no definition in Component.
-void model::Component::updateCanvasData() {
-//    auto project = dataControl->project();
-//    auto network = project->getRootNetwork();
-    XMASComponent *c = xmas_component(); //network->getComponent(name().toStdString());
-    if (c) {
-        c->canvasData(x(), y(), rotation(), scale());
-    }
-}
-
-// This method was made for composite objects.
-// So Qml can retrieve portnames and types
-QVariantMap model::Component::getPorts()
-{
-    auto project = dataControl->project();
-    if (!project) {
-        emit writeLog("[model::Component::getPorts()] no project: big problems.");
-        return QVariantMap();
-    }
-
-    auto c = xmas_component();
-    QVariantMap map;
-    if(c){
-        for(Port *p : c->ports()) {
-            QString name = p->getName();
-            map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
-        }
-    }
-    return map;
-}
-
+// get component name (must be unique and same as in xmas)
 QString model::Component::name() {
     return m_name;
 }
@@ -96,16 +65,18 @@ void model::Component::setName(QString name) {
     emit nameChanged(false);
 }
 
+// get component type
 model::Component::CompType model::Component::type() const {
     return m_type;
 }
 
+// set component type (only set once during creation)
 void model::Component::setType(CompType type) {
     m_type = type;
     emit typeChanged();
 }
 
-// read xmas queue capacity
+// read xmas capacity (queue)
 unsigned int model::Component::capacity(){
     try {
         auto queue = dynamic_cast<XMASQueue *>(xmas_component());
@@ -117,7 +88,7 @@ unsigned int model::Component::capacity(){
     return m_capacity;
 }
 
-// write xmas queue capacity
+// write xmas capacity (queue)
 void model::Component::setCapacity(unsigned int capacity) {
     try {
         auto queue = dynamic_cast<XMASQueue *>(xmas_component());
@@ -131,7 +102,7 @@ void model::Component::setCapacity(unsigned int capacity) {
     }
 }
 
-// read xmas sink or source required
+// read xmas required (source,sink)
 bool model::Component::required(){
     try {
         switch(m_type) {
@@ -156,7 +127,7 @@ bool model::Component::required(){
     return m_required;
 }
 
-// write xmas sink or source required
+// write xmas required (source,sink)
 void model::Component::setRequired(bool required) {
     try {
         switch(m_type) {
@@ -302,35 +273,31 @@ void model::Component::setExpression(QString expression) {
     }
 }
 
+// read expression error position derived from xmas
 int  model::Component::expressionErrorPosition(){
     return m_expressionErrorPosition;
 }
 
+// store expression error position and let qml know by emit
 void  model::Component::setExpressionErrorPosition(int error){
     m_expressionErrorPosition = error;
     emit expressionChanged(error);
 }
 
+// read expression valid derived from xmas
 bool  model::Component::expressionValid(){
     return m_expressionValid;
 }
 
+// store expression valid and let qml know by emit
 void model::Component::setExpressionValid(bool valid){
     m_expressionValid = valid;
     emit expressionChanged(valid);
 }
 
-
-/**
- * Adds an xmas component into the root network
- *  (initial xmas properties are read and set)
- *
- * @brief model::Component::addXmasComponent
- * @return true if an xmas component is created successful
- */
+// add a new xmas component
 bool model::Component::addXmasComponent() {
     auto project = dataControl->project();
-    //bitpowder::lib::MemoryPool& mp = project->mp();    // is this variable useful?
     std::string name = m_name.toStdString();
     XMASComponent *xmas_comp;
     try {
@@ -402,17 +369,45 @@ bool model::Component::addXmasComponent() {
     return (xmas_comp);
 }
 
-
-bitpowder::lib::MemoryPool &model::Component::mp() {
-    auto project = dataControl->project();
-    return project->mp();
+// x, y, rotation and scale are part of QQuickItem
+// They need no definition in Component.
+void model::Component::updateCanvasData() {
+    XMASComponent *c = xmas_component();
+    if (c) {
+        c->canvasData(x(), y(), rotation(), scale());
+    }
 }
 
+// This method was made for composite objects.
+// So Qml can retrieve portnames and types
+QVariantMap model::Component::getPorts()
+{
+    QVariantMap map;
+    XMASComponent *c = xmas_component();
+    if(c){
+        for(Port *p : c->ports()) {
+            QString name = p->getName();
+            map[name] = typeid(*p) == typeid(Input) ? XPort::PortType::INPORT : XPort::PortType::OUTPORT;
+        }
+    }
+    return map;
+}
 
+// get xmas project memory pool
+bitpowder::lib::MemoryPool &model::Component::mp() {
+    auto project = dataControl->project();
+    return  project->mp();
+}
+
+// get xmas component by its name
 XMASComponent *model::Component::xmas_component() {
     std::string name = m_name.toStdString();
 
     auto project = dataControl ? dataControl->project() : nullptr;
+    if (!project) {
+        emit writeLog("No project: big problems.",Qt::red);
+        return nullptr;
+    }
     auto network = project ? project->getRootNetwork() : nullptr;
     return (network ? network->getComponent(name) : nullptr);
 }
