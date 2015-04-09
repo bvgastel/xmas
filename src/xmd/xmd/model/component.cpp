@@ -160,7 +160,7 @@ bool model::Component::required(){
 void model::Component::setRequired(bool required) {
     try {
         switch(m_type) {
-        case Source :
+        case Sink :
         {
             auto sink = dynamic_cast<XMASSink *>(xmas_component());
             if (sink){
@@ -169,7 +169,7 @@ void model::Component::setRequired(bool required) {
             }
             break;
         }
-        case Sink :
+        case Source :
         {
             auto source = dynamic_cast<XMASSource *>(xmas_component());
             if (source){
@@ -338,7 +338,7 @@ bool model::Component::addXmasComponent() {
         case model::Component::CompType::Source : {
             xmas_comp = project->insertSource(name);
             emit requiredChanged();
-            //emit expressionChanged(false);
+            emit expressionChanged(false);
             break;
         }
         case model::Component::CompType::Sink : {
@@ -348,7 +348,7 @@ bool model::Component::addXmasComponent() {
         }
         case model::Component::CompType::Function : {
             xmas_comp = project->insertFunction(name);
-            //emit expressionChanged();
+            emit expressionChanged(false);
             break;
         }
         case model::Component::CompType::Queue : {
@@ -358,7 +358,7 @@ bool model::Component::addXmasComponent() {
         }
         case model::Component::CompType::Join : {
             xmas_comp = project->insertJoin(name);
-            //emit expressionChanged();
+            emit expressionChanged(false);
             break;
         }
         case model::Component::CompType::Merge : {
@@ -367,7 +367,7 @@ bool model::Component::addXmasComponent() {
         }
         case model::Component::CompType::Switch : {
             xmas_comp = project->insertSwitch(name);
-            //emit expressionChanged();
+            emit expressionChanged(false);
             break;
         }
         case model::Component::CompType::Fork : {
