@@ -55,7 +55,7 @@ Model.XComponent {
     property bool selected: false
     property bool withValidMarker: false
     property bool topLabel: true
-    property bool positionHasChanged: false
+    property bool positionHasChanged: true
 
     // Signals
     signal update()

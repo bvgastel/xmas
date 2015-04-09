@@ -94,6 +94,7 @@ function endDrag()
             || draggedItem.y > network.y + network.height - network.margin - draggedItem.height) {
         remove(draggedItem)
     }
+    draggedItem.updateCanvasData()
     draggedItem = null;
 }
 

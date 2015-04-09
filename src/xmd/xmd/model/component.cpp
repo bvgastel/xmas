@@ -38,9 +38,9 @@ model::Component::~Component()
 // x, y, rotation and scale are part of QQuickItem
 // They need no definition in Component.
 void model::Component::updateCanvasData() {
-    auto project = dataControl->project();
-    auto network = project->getRootNetwork();
-    XMASComponent *c = network->getComponent(name().toStdString());
+//    auto project = dataControl->project();
+//    auto network = project->getRootNetwork();
+    XMASComponent *c = xmas_component(); //network->getComponent(name().toStdString());
     if (c) {
         c->canvasData(x(), y(), rotation(), scale());
     }

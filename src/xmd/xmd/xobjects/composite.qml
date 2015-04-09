@@ -154,11 +154,11 @@ XComponent {
     // This signal qml recognices but never reaches. The updatePorts() is never called. Despair!!
     onComponentAdded: updatePorts()
 
-    // The following will never work, because network signals never arrive here.
-    // Qml does not even recognise network or the signal componentAdded.
-    // Use component signal instead (however, see above, does not work either).
-    Connections{
-        target:network
-        onComponentAdded:updatePorts()
-    }
+//    // The following will never work, because network signals never arrive here.
+//    // Qml does not even recognise network or the signal componentAdded.
+//    // Use component signal instead (however, see above, does not work either).
+//    Connections{
+//        target:network
+//        onComponentAdded:updatePorts()
+//    }
 }
