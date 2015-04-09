@@ -87,7 +87,6 @@ void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 
 // if network is nullptr: use root.
 bitpowder::lib::String XMASProject::network2jsonString(bitpowder::lib::MemoryPool &mp, XMASNetwork *network) {
-    std::set<XMASComponent*> componentSet;
 
     JSONData::Map globals = JSONData::AllocateMap(mp);
 
@@ -116,7 +115,7 @@ bitpowder::lib::String XMASProject::network2jsonString(bitpowder::lib::MemoryPoo
     jsonPacketType["val "] = String(network->m_packet_type);
     globals["PACKET_TYPE"] = jsonPacketType;
 
-    network->getComponentSet(componentSet);
+    auto componentSet = network->getComponentSet();
     String jsonStr = Export(componentSet, globals, mp);
     return jsonStr;
 }

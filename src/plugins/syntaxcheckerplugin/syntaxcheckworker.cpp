@@ -61,8 +61,7 @@ void SyntaxCheckWorker::doWork(std::shared_ptr<XProject> project) {
     QString stepName;
 
     XMap componentMap = project->getRootNetwork()->getComponentMap();
-    std::set<XMASComponent *> componentSet;
-    project->getRootNetwork()->getComponentSet(componentSet);
+    std::set<XMASComponent *> componentSet = project->getRootNetwork()->getComponentSet();
     success = true;
 
     if (success) {

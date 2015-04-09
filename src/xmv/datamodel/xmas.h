@@ -1107,7 +1107,7 @@ public:
     bitpowder::lib::String getVars();
 
     const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
-    void getComponentSet(std::set<XMASComponent*> &) const;
+    std::set<XMASComponent*> getComponentSet() const;
 
     XMASComponent *getComponent(std::string name);
 

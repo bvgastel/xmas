@@ -528,13 +528,16 @@ const std::map<bitpowder::lib::String, XMASComponent*> &XMASNetwork::getComponen
     return components;
 }
 
-void XMASNetwork::getComponentSet(std::set<XMASComponent *> &xset) const {
-    XMASComponent *c;
+std::set<XMASComponent *> XMASNetwork::getComponentSet() const {
+    std::set<XMASComponent*> xset;
+
     auto xmap = getComponentMap();
     for (auto entry : xmap) {
-        c = entry.second;
+        XMASComponent *c = entry.second;
         xset.insert(c);
     }
+
+    return xset;
 }
 
 XMASComponent *XMASNetwork::getComponent(std::string name) {

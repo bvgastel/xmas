@@ -430,21 +430,8 @@ String ExportOldCStyle(std::set<XMASComponent *> allComponents, const JSONData& 
             network.push_back(std::move(jsonComponent));
         }
 
-        std::set<std::string> compositeNetworks;
-        for (auto c : allComponents) {
-            auto composite = dynamic_cast<XMASComposite*>(c);
-            if (composite)
-                compositeNetworks.insert(composite->getNetwork().getStdName());
-        }
-
-        JSONData::Vector compositeObjects = JSONData::AllocateVector(mp);
-        for (auto n : compositeNetworks) {
-            compositeObjects.push_back(String(n));
-        }
-
         JSONData::Map root = globals.asObject();
         root["NETWORK"] = network;
-        root["COMPOSITE_OBJECTS"] = compositeObjects;
 
         std::ostringstream buffer;
         buffer << root;
