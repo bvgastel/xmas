@@ -82,19 +82,16 @@ XComponent {
             verticalAlignment: Qt.AlignVCenter
             onEditingFinished: {doAccept(fx.acceptableInput) ; focus = false}
             onFocusChanged: focus ? selectAll(): editingFinished()
+            function doAccept(ok){
+                var map = xdata //need a ref to modify items
+                if(ok){
+                   map["capacity"] = fx.text
+
+               } else {
+                   fx.text = map["capacity"]
+               }
+               xdata = map
+            }
         }
     }
-
-    function doAccept(ok){
-       if(ok){
-           xdata["capacity"] = fx.text
-           console.log("text = " + fx.text + " xdata = " + xdata["capacity"])
-
-       } else {
-           fx.text = xdata["capacity"]
-           console.log("text = " + fx.text + " xdata = " + xdata["capacity"])
-       }
-    }
-
-
 }
