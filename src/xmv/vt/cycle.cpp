@@ -1,6 +1,9 @@
 #include "cycle.h"
 #include "memorypool.h"
 
+#include "feedback-interface.h"
+
+constexpr auto CYCLE_CHECKER = "cycle-checker";
 
 class CombinatorialCycleDependencies : public XMASComponentVisitor {
 public:
@@ -133,6 +136,9 @@ bool CombinatorialCycleDetector(XMASComponent *c) {
 bool CombinatorialCycleDetector(std::set<XMASComponent *> allComponents) {
     // default no cycle
     bool cycle = false;
+
+    feedback_message(CYCLE_CHECKER, FeedbackSeverity::Info, "Starting cycle checker");
+
     // check for each component if there is a cycle
     for (XMASComponent *c : allComponents)
         cycle = cycle || CombinatorialCycleDetector(c);
@@ -141,5 +147,8 @@ bool CombinatorialCycleDetector(std::set<XMASComponent *> allComponents) {
         for (Port *p : c->ports())
             p->clearPortExtension<CombinatorialCyclePortExtension>();
     // return result
+
+    feedback_message(CYCLE_CHECKER, FeedbackSeverity::Info, "Finished!");
+
     return cycle;
 }

@@ -21,13 +21,15 @@ DEFINES += VT_LIBRARY
 SOURCES += \
     cycle.cpp \
     deadlock.cpp \
-    vt.cpp
+    vt.cpp \
+    feedback-interface.cpp
 
 HEADERS += \
     cycle.h \
     deadlock.h \
     vt.h \
-    vt_global.h
+    vt_global.h \
+    feedback-interface.h
 
 ################################################
 # INSTALL instructions
