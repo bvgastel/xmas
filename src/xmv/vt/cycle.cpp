@@ -1,6 +1,8 @@
 #include "cycle.h"
 #include "memorypool.h"
 
+#include <sstream>
+
 #include "feedback-interface.h"
 
 constexpr auto CYCLE_CHECKER = "cycle-checker";
@@ -128,7 +130,9 @@ bool CombinatorialCycleDetector(XMASComponent *c) {
                 return true;
         }
     } catch (bitpowder::lib::Exception &e) {
-        std::cout << "exception: " << e << std::endl;
+        std::stringstream msg;
+        msg << "exception: " << e;
+        feedback_message(CYCLE_CHECKER, FeedbackSeverity::Crash, msg.str());
     }
     return false;
 }

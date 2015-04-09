@@ -16,7 +16,7 @@ class XMASComponent;
 class Port;
 
 /**
- * @brief feedback_message
+ * @brief feedback_message Send a feedback message
  * @param sender name of the verification tool
  * @param severity severity of the detected issue
  * @param message description of the issue detected by the verification tool
@@ -28,6 +28,19 @@ void feedback_message(  const std::string& sender,
                         const std::string& message,
                         const std::vector<XMASComponent*>& components = {},
                         const std::vector<Port*>& ports = {});
+
+
+/**
+ * @brief feedback_stream Send feedback through an ostream interface
+ * This function can be used to stream a message directly to the feedback stream
+ * rather than passing it as a string as in feedback_message.
+ * Make sure to end the message with std::endl !
+ * @param sender name of the verification tool
+ * @param severity severity of the detected issue
+ * @return reference to the feedback stream
+ */
+std::ostream& feedback_stream(  const std::string& sender,
+                                FeedbackSeverity severity);
 
 /**
  * @brief feedback_progress

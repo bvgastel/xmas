@@ -61,6 +61,13 @@ void feedback_message(  const std::string& sender,
     *stream << std::endl;
 }
 
+std::ostream& feedback_stream(  const std::string& sender,
+                                FeedbackSeverity severity)
+{
+    return *stream << '[' << sender << "] **" << severityName(severity) << "**: ";
+}
+
+
 void feedback_progress( const std::string& sender, int progress, int total)
 {
     *stream << '[' << sender << "] **PROGRESS** " << progress << '/' << total << std::endl;
