@@ -72,7 +72,7 @@ bool model::XPort::isConnected() {
  * @return
  */
 Port *model::XPort::getPort() {
-    auto component = qobject_cast<Component *>(this->parent());
+    Component *component = getComponent();
     if (component) {
         XMASComponent *c = component->xmas_component();
         if (c) {
@@ -87,6 +87,11 @@ Port *model::XPort::getPort() {
 }
 
 model::Component *model::XPort::getComponent() {
-    auto component = qobject_cast<Component *>(parent());
-    return component;
+    QQuickItem *item = parentItem();
+    while(item){
+        auto component = qobject_cast<Component *>(item);
+        if(component) return component;
+        item = item->parentItem();
+    }
+    return nullptr;
 }

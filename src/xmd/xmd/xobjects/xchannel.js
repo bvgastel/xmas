@@ -73,7 +73,6 @@ function doConnect(port1,port2) {
     channel = null
     loadcomponent(outport,inport)
     network.connect(outport,inport)
-
 }
 
 //TODO : portnames are references and must match json!!!

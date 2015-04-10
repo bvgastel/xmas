@@ -47,19 +47,22 @@ XComponent {
     property bool boxed: true
     property int portSpace: 30 //2 times default gridsize - 1 time portsize
 
-
     // Javascript
     function updatePorts() {
-        var ports = getPorts()
-        inportModel.clear()
-        outportModel.clear()
-        for (var key in ports) {
-            if(ports[key]===Model.XPort.INPORT) {
-                inportModel.append({portName: key, portType:ports[key]})
+        try {
+            var ports = getPorts()
+            inportModel.clear()
+            outportModel.clear()
+            for (var key in ports) {
+                if(ports[key]===Model.XPort.INPORT) {
+                    inportModel.append({portName: key, portType:ports[key]})
+                }
+                if(ports[key]===Model.XPort.OUTPORT) {
+                    outportModel.append({portName: key, portType:ports[key]})
+                }
             }
-            if(ports[key]===Model.XPort.OUTPORT) {
-                outportModel.append({portName: key, portType:ports[key]})
-            }
+        } catch(e){
+            writeLog("[composite.qml - ]" + e, Qt.red)
         }
     }
 
@@ -157,11 +160,6 @@ XComponent {
                 anchors.left: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
             }
-            //            states: State {
-            //                name: "reparent"
-            //                ParentChange { target: port; parent: component}
-            //            }
-            //            Component.onCompleted: port.state = "reparent"
         }
     }
 }
