@@ -126,7 +126,7 @@ private:
 
 XMASNetwork flatten(const XMASNetwork& src)
 {
-    XMASNetwork result {src.getStdName() + "_flattened"};
+    XMASNetwork result(src.getStdName() + "_flattened");
 
     flattenInto(result, src, "::");
 

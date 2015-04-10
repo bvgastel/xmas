@@ -15,7 +15,6 @@
 using namespace bitpowder::lib;
 
 XMASProject::XMASProject()
-  : m_mp {new bitpowder::lib::MemoryPool}
 {
     allocate_initial_project();
 }
@@ -36,7 +35,6 @@ XMASProject::XMASProject(const std::string &json, std::string &name, std::string
 }
 
 XMASProject::XMASProject(const std::string &filename)
-    : m_mp {new bitpowder::lib::MemoryPool}
 {
     root = loadNetwork(filename);
 }
@@ -53,15 +51,15 @@ void XMASProject::clear() {
 
 void XMASProject::allocate_initial_project() {
     std::string name = m_initial_name;
-    root = new XMASNetwork {name};
+    root = new XMASNetwork(name, &m_mp);
     networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {root} ));
 }
 
 void XMASProject::deallocate_project() {
     networks.clear();
     root = nullptr;
-    m_mp->vacuum();
-    m_mp->clear();
+    m_mp.vacuum();
+    m_mp.clear();
 }
 
 XMASNetwork* XMASProject::getRootNetwork() const {
@@ -159,7 +157,7 @@ XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResul
 
     // add the current networks key and a dummy network value to the networks map
     // this prevents infinite recursion of loadNetwork with a circular dependency
-    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {new XMASNetwork {"dummy"}} ));
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {new XMASNetwork {"dummy", &m_mp}} ));
 
     // load the network
     auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this, basePath](std::string name) -> XMASNetwork* {
