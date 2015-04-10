@@ -14,6 +14,7 @@ D    =  Developer
    13   g   2015-04-02              Remove library composite                bug     high    Not implemented !
    15   g   2015-04-02              After new, file is still '*'            bug     medium  Confirmed 2015-04-10
    28   g   2015-04-09              New aborts (Linux only)                 bug     high    Confirmed 2015-04-10
+   29   g   2015-04-10              Valgrind Memory Analyzer output         bug     high    xmd and xmv have access errors
 
    12   g   2015-04-02  fridge      Source parse expression does not accept bug     low     (Out of scope for user interface)
                                     a percentage token (%)
