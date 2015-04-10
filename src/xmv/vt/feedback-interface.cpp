@@ -29,6 +29,7 @@ void streamVector(std::ostream& stream, const std::vector<T*>& v, GetValue f)
     for (auto x : v) {
         if (!first) {
             stream << ", ";
+        } else {
             first = false;
         }
 
