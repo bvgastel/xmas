@@ -412,8 +412,8 @@ XMASJoin::~XMASJoin() {
 }
 
 const bitpowder::lib::String XMASJoin::getJoinExpression(bitpowder::lib::MemoryPool &mp) {
-    bitpowder::lib::unused(mp);
     bitpowder::lib::String port;
+    port = port(mp);
 
     ParsedXMASRestrictedJoin* restricted = this->getComponentExtension<ParsedXMASRestrictedJoin>(false);
     if (restricted) {
@@ -421,7 +421,6 @@ const bitpowder::lib::String XMASJoin::getJoinExpression(bitpowder::lib::MemoryP
         port = bitpowder::lib::String(port_str.c_str());
     }
     return std::move(port);
-    //return Export(this, mp).stl();  ---> does not exist yet
 }
 
 ExpressionResult XMASJoin::setRestrictedJoinPort(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
