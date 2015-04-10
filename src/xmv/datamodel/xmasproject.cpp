@@ -52,7 +52,7 @@ void XMASProject::clear() {
 }
 
 void XMASProject::allocate_initial_project() {
-    std::string name = "?.xmas";
+    std::string name = m_initial_name;
     root = new XMASNetwork {name};
     networks.insert(std::make_pair(name, root));
 }
@@ -60,6 +60,7 @@ void XMASProject::allocate_initial_project() {
 void XMASProject::deallocate_project() {
     networks.clear();
     delete root;
+    m_mp->vacuum();
     m_mp->clear();
 }
 
