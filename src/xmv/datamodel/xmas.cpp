@@ -343,7 +343,9 @@ XMASSwitch::~XMASSwitch() {
 }
 
 const bitpowder::lib::String XMASSwitch::getSwitchExpression(bitpowder::lib::MemoryPool &mp) {
-    return Export(this, mp).stl();
+    bitpowder::lib::String expression = Export(this, mp);
+    expression = expression(mp);
+    return std::move(expression);
 }
 
 ExpressionResult XMASSwitch::setSwitchExpression(std::string &str_expr, bitpowder::lib::MemoryPool &mp) {
@@ -413,12 +415,12 @@ XMASJoin::~XMASJoin() {
 
 const bitpowder::lib::String XMASJoin::getJoinExpression(bitpowder::lib::MemoryPool &mp) {
     bitpowder::lib::String port;
-    port = port(mp);
 
     ParsedXMASRestrictedJoin* restricted = this->getComponentExtension<ParsedXMASRestrictedJoin>(false);
     if (restricted) {
         std::string port_str = std::to_string(restricted->function);
         port = bitpowder::lib::String(port_str.c_str());
+        port = port(mp);
     }
     return std::move(port);
 }

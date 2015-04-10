@@ -27,7 +27,9 @@
 extern DataControl *dataControl;
 
 model::Component::Component(QQuickItem *parent)
-    : QQuickItem(parent), m_name()
+    : QQuickItem(parent),
+      m_name(),
+      m_type(model::Component::CompType::Unknown)
 {
 }
 
