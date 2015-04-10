@@ -98,8 +98,10 @@ bool checkSignal(Port *p, int depth) {
     CombinatorialCyclePortExtension *ext = p->getPortExtension<CombinatorialCyclePortExtension>();
     //std::cout << "checkSignal: depth=" << depth << " " << *p->getComponent() << "." << p->getName() << "." << (trdy ? "trdy" : "irdy") << " -> checking=" << ext->checking << " checked=" << ext->checked << std::endl;
     // if part of current search, report cycle
-    if (ext->checking)
+    if (ext->checking) {
+        feedback_message(CYCLE_CHECKER, FeedbackSeverity::Fault, "Combinatorial cycle detected!", {}, {p});
         return true;
+    }
     // if already checked this, stop
     if (ext->checked)
         return false;
