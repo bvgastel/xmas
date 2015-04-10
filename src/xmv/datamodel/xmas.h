@@ -1089,12 +1089,12 @@ class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
 {
     friend class XMASProject;
 public:
-    XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp = nullptr);
+    XMASNetwork(std::string name, bitpowder::lib::MemoryPool *mp = nullptr);
     XMASNetwork(std::string name,
                 std::map<bitpowder::lib::String,
                 XMASComponent*>&& components,
-                std::shared_ptr<bitpowder::lib::MemoryPool> mp = nullptr);
-    XMASNetwork(XMASNetwork&&) = default;
+                bitpowder::lib::MemoryPool *mp = nullptr);
+    XMASNetwork(XMASNetwork&&);
 
     ~XMASNetwork();
 
@@ -1162,7 +1162,8 @@ private:
     std::string name;
     std::string m_packet_type;
     std::map<bitpowder::lib::String, XMASComponent*> components;
-    std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
+    bitpowder::lib::MemoryPool *m_mp;
+    bool m_mp_self_created;
 };
 
 class XMASComposite : public XMASComponent

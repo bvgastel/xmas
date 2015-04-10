@@ -483,23 +483,38 @@ ExpressionResult XMASJoin::setUnrestrictedJoinExpression(bitpowder::lib::String 
 
 }
 
-XMASNetwork::XMASNetwork(std::string name, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
+XMASNetwork::XMASNetwork(std::string name, bitpowder::lib::MemoryPool *mp)
     : name(name),
       m_packet_type(),
       m_mp(mp ? mp
-              : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
+              : new bitpowder::lib::MemoryPool()),
+      m_mp_self_created(mp ? false : true)
 {
     setCompositeNetworkData("",1000,500,"",true);
 }
 
-XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, std::shared_ptr<bitpowder::lib::MemoryPool> mp)
+XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMASComponent*>&& components, bitpowder::lib::MemoryPool *mp)
     : name(name),
       m_packet_type(),
       components(components),
       m_mp(mp ? mp
-              : std::shared_ptr<bitpowder::lib::MemoryPool>(new bitpowder::lib::MemoryPool))
+              : new bitpowder::lib::MemoryPool()),
+      m_mp_self_created(mp ? false : true)
 {
     setCompositeNetworkData("",1000,500,"",true);
+}
+
+XMASNetwork::XMASNetwork(XMASNetwork &&tempNetwork)
+    : name(std::move(tempNetwork.name)),
+      m_packet_type(std::move(tempNetwork.m_packet_type)),
+      components(std::move(tempNetwork.components)),
+      m_mp(std::move(tempNetwork.m_mp)),
+      m_mp_self_created(std::move(tempNetwork.m_mp_self_created))
+{
+    if (!m_mp) {
+        m_mp = new bitpowder::lib::MemoryPool();
+        m_mp_self_created = true;
+    }
 }
 
 XMASNetwork::~XMASNetwork()
@@ -508,6 +523,9 @@ XMASNetwork::~XMASNetwork()
         XMASComponent* c = entry.second;
         ClearSymbolicTypes(c);
         ClearMessageSpec(c);
+    }
+    if (m_mp_self_created) {
+        delete m_mp;
     }
 }
 
