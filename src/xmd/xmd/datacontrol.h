@@ -67,6 +67,9 @@ public:
 
 private:
     Logger m_logger;
+    // Don't replace shared ptr with pointer, because
+    // the shared pointer guards in-main-thread plugins from
+    // reading released memory i.e. protects against dangling pointers.
     std::shared_ptr<XMASProject> m_project;
 };
 
