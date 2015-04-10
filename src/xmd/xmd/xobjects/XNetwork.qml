@@ -65,6 +65,7 @@ Model.XNetwork {
     onChildrenChanged: modified=true
     onWriteLog: log(message, color)
     onPacketChanged: modified=true
+    onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
 
     // JavaScripts
 
@@ -327,7 +328,6 @@ Model.XNetwork {
         }
     }
 
-
     ModelSetupDialog {
         id:setupDialog
         onAccepted: {
@@ -338,11 +338,6 @@ Model.XNetwork {
 
     // Connections
     Connections {
-        target: network
-        onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
-    }
-
-    Connections {
         target: mainwindow
         onZoom: doScale(value)
         onSelectAll: selectAll()
@@ -350,4 +345,3 @@ Model.XNetwork {
         onModelSetupDialog: setupDialog.show()
     }
 }
-
