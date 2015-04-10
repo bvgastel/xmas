@@ -54,12 +54,12 @@ void XMASProject::clear() {
 void XMASProject::allocate_initial_project() {
     std::string name = m_initial_name;
     root = new XMASNetwork {name};
-    networks.insert(std::make_pair(name, root));
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {root} ));
 }
 
 void XMASProject::deallocate_project() {
     networks.clear();
-    delete root;
+    root = nullptr;
     m_mp->vacuum();
     m_mp->clear();
 }
@@ -70,7 +70,7 @@ XMASNetwork* XMASProject::getRootNetwork() const {
 
 XMASNetwork* XMASProject::getNetwork(const std::string name) const {
     auto it = networks.find(name);
-    return (it != networks.end()) ? it->second : nullptr;
+    return (it != networks.end()) ? it->second.get() : nullptr;
 }
 
 // If network is nullptr: use root.
@@ -159,29 +159,27 @@ XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResul
 
     // add the current networks key and a dummy network value to the networks map
     // this prevents infinite recursion of loadNetwork with a circular dependency
-    XMASNetwork* dummy = new XMASNetwork {"dummy"};
-    networks.insert(std::make_pair(name, dummy));
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {new XMASNetwork {"dummy"}} ));
 
     // load the network
     auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this, basePath](std::string name) -> XMASNetwork* {
-            auto network_it = networks.find(name);
-            if (network_it != networks.end()) {
-                return network_it->second;
-            }
-            // Network was not retrieved yet, retrieve it now
-            std::string compositeFilename = basePath + '/' + name;
-            XMASNetwork *network = loadNetwork(compositeFilename);
-            if (network) {
-                networks.insert(std::make_pair(name, network));
-            }
-            return network;
-            });
+        auto network_it = networks.find(name);
+        if (network_it != networks.end()) {
+            return network_it->second.get();
+        }
+        // Network was not retrieved yet, retrieve it now
+        std::string compositeFilename = basePath + '/' + name;
+        XMASNetwork *network = loadNetwork(compositeFilename);
+        if (network) {
+            networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {network}));
+        }
+        return network;
+    });
     auto components = componentsAndGlobals.first;
 
     XMASNetwork* result = new XMASNetwork {name, std::move(components), m_mp};
     networks.erase(name);
-    delete dummy;
-    networks.insert(std::make_pair(name, result));
+    networks.insert(std::make_pair(name, std::unique_ptr<XMASNetwork> {result}));
 
     auto jsonPacketType = json["PACKET_TYPE"];
     if (!jsonPacketType.isNull()) {

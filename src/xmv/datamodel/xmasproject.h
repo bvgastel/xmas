@@ -52,7 +52,7 @@ public:
 private:
     const std::string m_initial_name = "?.json";
     std::shared_ptr<bitpowder::lib::MemoryPool> m_mp;
-    std::map<std::string, XMASNetwork *>networks;
+    std::map<std::string, std::unique_ptr<XMASNetwork>> networks;
     XMASNetwork* root;
 
 };
