@@ -351,8 +351,7 @@ bool model::Component::addXmasComponent() {
             break;
         }
         case model::Component::CompType::Composite : {
-            QUrl fileUrl = QUrl(property("url").toString());
-            std::string filename = fileUrl.fileName().toStdString();
+            std::string filename = QString(property("filename").toString()).toStdString();
             auto composite = dynamic_cast<XMASComposite *>(project->insertComposite(name, filename));
             if(composite){
                 XMASNetwork *network = project->getNetwork(composite->getNetwork().getStdName());

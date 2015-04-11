@@ -122,11 +122,11 @@ Rectangle {
                     height:30
                     width:40
                     fillMode: Image.PreserveAspectFit
-                    url: modelData.url
+                    filename: modelData.filename
                     alias:modelData.alias
                     image: modelData.symbol
                     boxed: modelData.boxed
-                    onRemove: if(!network.unloadComposite(modelData.url)) unloadCompositeFailedDialog.open()
+                    onRemove: if(!network.unloadComposite(modelData.filename)) unloadCompositeFailedDialog.open()
                 }
             }
         }
