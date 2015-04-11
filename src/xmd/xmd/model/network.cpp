@@ -252,7 +252,6 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
     }
     map.insert("type", type);
     map.insert("name", qname);
-    emit componentAdded();
 }
 
 /*
