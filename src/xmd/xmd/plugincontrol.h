@@ -35,7 +35,7 @@
 #include "model/network.h"
 #include "vtplugininterface.h"
 
-extern DataControl *dataControl;
+extern std::unique_ptr<DataControl> dataControl;
 
 class PluginControl : public QObject
 {
@@ -69,7 +69,7 @@ public slots:
 private:
     std::shared_ptr<QDir> m_pluginDir;
     QMap<QString, VtPluginInterface *> m_vtMap;
-    LoggerInterface *m_logger;
+    std::unique_ptr<LoggerInterface> m_logger;
 };
 
 #endif // PLUGINCONTROL_H

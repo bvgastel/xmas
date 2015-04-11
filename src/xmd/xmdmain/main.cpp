@@ -49,9 +49,9 @@
  *      "extern DataControl *dataControl;"
  *
  */
-DataControl *dataControl = nullptr;
-PluginControl *pluginControl = nullptr;
-Util *util = nullptr;
+std::unique_ptr<DataControl> dataControl = nullptr;
+std::unique_ptr<PluginControl> pluginControl = nullptr;
+std::unique_ptr<Util> util = nullptr;
 
 int main(int argc, char *argv[])
 {
@@ -71,20 +71,17 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* ctx = engine.rootContext();
 
-    DataControl *dataControl = new DataControl();
-    ::dataControl = dataControl;
+    ::dataControl.reset(new DataControl);
     qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
-    ctx->setContextProperty("datacontrol", dataControl);
+    ctx->setContextProperty("datacontrol", dataControl.get());
 
-    PluginControl *pluginControl = new PluginControl();
-    ::pluginControl = pluginControl;
+    ::pluginControl.reset(new PluginControl);
     qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
-    ctx->setContextProperty("plugincontrol", pluginControl);
+    ctx->setContextProperty("plugincontrol", pluginControl.get());
 
-    Util *util = new Util();
-    ::util = util;
+    ::util.reset(new Util());
     qmlRegisterType<Util>("XMAS", 1, 0, "Util"); // Before engine.load
-    ctx->setContextProperty("util", util);
+    ctx->setContextProperty("util", util.get());
 
 
     /* End of OOAK class registration for Qml access */
