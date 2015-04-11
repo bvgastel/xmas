@@ -68,8 +68,6 @@ Image {
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
         hoverEnabled: true
-//        onEntered: item.opacity = 1.0
-//        onExited: item.opacity = 0.6
         onClicked:if (mouse.button === Qt.RightButton)contextMenu.popup()
     }
 

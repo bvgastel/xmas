@@ -132,7 +132,7 @@ Rectangle {
         }
 
         //dummy filler
-       // Item{Layout.preferredWidth: 50}
+       Item{Layout.preferredWidth: 10}
     }
 
     Action {
