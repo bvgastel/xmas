@@ -63,7 +63,6 @@ Model.XPort {
         anchors.leftMargin: nameAlignCenter ? 15 : 0
         rotation:-port.rotation
         visible: mainwindow.showPortNames
-
     }
 
 
