@@ -58,8 +58,8 @@ Image {
 
     MouseArea {
         anchors.fill: parent
-        //acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: Code.startDrag(mouse);
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
         hoverEnabled: true

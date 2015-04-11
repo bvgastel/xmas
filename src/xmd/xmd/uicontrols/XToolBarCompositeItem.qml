@@ -64,7 +64,7 @@ Image {
         anchors.fill: parent
         preventStealing: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: Code.startDrag(mouse);
+        onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
         onPositionChanged:Code.continueDrag(mouse);
         onReleased:Code.endDrag();
         hoverEnabled: true
