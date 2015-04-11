@@ -443,7 +443,6 @@ bool model::Network::addComponent(model::Component *component) {
  */
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
-    qDebug() << component->name() << " deleted1";
     if (component) {
         auto name = component->name().toStdString();
         bool result = project->removeComponent(name);
@@ -518,7 +517,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         map.insert("boxed", cn_ext->boxedImage);
         m_compositeLibrary.append(map);
     } catch (bitpowder::lib::Exception e) {
-        emit writeLog("adding composite failed :" + e.description(),Qt::red);
+        emit writeLog("adding composite failed :" + QString(e.description()),Qt::red);
         return false;
     }
     return true;
