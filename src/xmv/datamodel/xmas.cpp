@@ -135,7 +135,7 @@ bitpowder::lib::String XMASComponent::getName() const {
 }
 
 Port::~Port() {
-    //clearExtensions();
+    clearExtensions();          // FIXME: why was this call commented out?
 }
 
 bool XMASComponent::valid()
@@ -519,15 +519,22 @@ XMASNetwork::XMASNetwork(XMASNetwork &&tempNetwork)
 
 XMASNetwork::~XMASNetwork()
 {
+    clearExtensions();
     for (auto entry : components) {
         XMASComponent* c = entry.second;
-        ClearSymbolicTypes(c);
-        ClearMessageSpec(c);
+        //c->clearExtensions();
     }
     if (m_mp_self_created) {
         delete m_mp;
     }
 }
+
+void XMASNetwork::clearExtensions() {
+    auto extensions = ExtensionContainer<XMASNetworkExtension>::clearExtensions();
+    for (auto it = extensions.begin(); it != extensions.end(); )
+        delete it.erase();
+}
+
 
 const std::string XMASNetwork::getStdName() const {
     return this->name;

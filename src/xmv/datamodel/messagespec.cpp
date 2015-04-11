@@ -259,6 +259,7 @@ bool CheckMessageSpec(std::set<XMASComponent *> allComponents) {
                 allItems.push_back(w);
 #else
                 w->execute();
+                delete(w);              // FIXME: (memory leak) forgot to delete(w) when not using CONCURRENCY ?
 #endif
             }
     }
