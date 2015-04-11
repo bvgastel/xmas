@@ -471,13 +471,10 @@ bool model::Network::loadComposite(QUrl url){
 // unload a composite network
 bool model::Network::unloadComposite(QUrl url){
     qDebug() << "Remove library composite with url = " << url;
-    //1 - send url to xmas find composite in library by url
-    //2 - remove composite in xmas if not used in current network
-    //3 - if ok ; remove composite in library based on url
-    //4 - if not ok return false without emit
-    //4.1 url doesn't exist in xmas composite library
-    //4.2 url still used in current network
-    //4.3 xmas failed to delete composite
+
+    //here url will be the network name e.g. "network.json" of the composite
+    // only delete it from xmas networks when not used as composite in root
+    // if still used return false else true if removed
 
     emit compositeLibraryChanged();
     return true;
