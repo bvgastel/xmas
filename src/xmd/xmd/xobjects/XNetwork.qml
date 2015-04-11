@@ -48,8 +48,6 @@ Model.XNetwork {
     width: size.width
     height: size.height
     transformOrigin: Item.TopLeft
-    property string fileName: "?.json"
-    property string folder: modelFolder
     property bool selectionMode: Qt.Unchecked
     property int margin: 25
     property string color: "white"
