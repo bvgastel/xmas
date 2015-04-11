@@ -505,7 +505,8 @@ XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMAS
 }
 
 XMASNetwork::XMASNetwork(XMASNetwork &&tempNetwork)
-    : name(std::move(tempNetwork.name)),
+    : ExtensionContainer<XMASNetworkExtension>(std::move(tempNetwork)),
+      name(std::move(tempNetwork.name)),
       m_packet_type(std::move(tempNetwork.m_packet_type)),
       components(std::move(tempNetwork.components)),
       m_mp(tempNetwork.m_mp),
