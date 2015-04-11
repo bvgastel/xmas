@@ -99,7 +99,7 @@ Rectangle{
         for (var i in items){
             if(items[i].selected !== undefined)items[i].selected = true
                 selectedItems.push(items[i])
-         }
+          }
         rubberBand()
     }
 
@@ -218,7 +218,7 @@ Rectangle{
         var group = selectedItems
         for (var i = group.length; i-- > 0; ){
             if (group[i].selected) {
-               group[i].remove()
+               ComponentJs.remove(group[i])
             }
         }
         clear()

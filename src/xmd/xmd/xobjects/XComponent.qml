@@ -60,7 +60,6 @@ Model.XComponent {
     // Signals
     signal update()
     signal showDialog()
-    signal remove
 
     // JavaScripts
 
@@ -123,7 +122,6 @@ Model.XComponent {
     onWriteLog: mainwindow.log(message,color)
     onExpressionChanged: {validmarker.color = success ? "green" : "red"}
     onSelectedChanged: if(!selected) label.focus = false
-    onRemove: ComponentJs.remove(component)
     onXChanged: positionHasChanged = true
     onYChanged: positionHasChanged = true
 
@@ -262,7 +260,7 @@ Model.XComponent {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: remove
+            onTriggered: ComponentJs.remove(component)
         }
         MenuSeparator{}
         MenuItem {
