@@ -31,7 +31,7 @@
 .import XMAS.model 1.0 as Model
 .import XMAS 1.0 as XMAS
 .import QtQuick 2.4 as Qjs
-.import "qrc:/javascripts/xobjects/xchannel.js" as Channel
+.import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
 
 var start
 var end
@@ -57,7 +57,7 @@ function createNetwork(object) {
     // process list of connections and create connections
     var connlist = object["channellist"]
     for (var conn in connlist) {
-        var result = Channel.create(
+        var result = ChannelJs.create(
                     connlist[conn]["outcomp"],
                     connlist[conn]["outport"],
                     connlist[conn]["incomp"],
