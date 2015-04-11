@@ -3,10 +3,10 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
-    bitpowder \
+#    bitpowder \
     xmv \
-    interfaces \
-    plugins \
-    xmd \
-    bitpowdertest \
-    xmvtest
+#    interfaces \
+#    plugins \
+    xmd #\
+#    bitpowdertest \
+#    xmvtest
