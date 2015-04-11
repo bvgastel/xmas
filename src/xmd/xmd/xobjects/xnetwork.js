@@ -159,7 +159,6 @@ function createComponent(parent,component,object) {
             item.alias = object.alias ? object.alias : ""
             item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
             item.boxed = object.boxed ? object.boxed : true
-            console.log("imagename = " + object.boxed)
         }
         item.componentAdded()
     } else if (component.status === Qjs.Component.Error) {
