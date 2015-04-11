@@ -308,7 +308,7 @@ void model::Component::setExpressionValid(bool valid){
 bool model::Component::addXmasComponent() {
     auto project = dataControl->project();
     std::string name = m_name.toStdString();
-    XMASComponent *xmas_comp;
+    XMASComponent *xmas_comp = nullptr;
     try {
         switch(m_type) {
         case model::Component::CompType::Source : {
