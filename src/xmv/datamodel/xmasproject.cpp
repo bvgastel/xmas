@@ -212,14 +212,27 @@ bool XMASProject::unloadNetwork(std::string name)
 {
     auto toUnload_it = networks.find(name);
     if (toUnload_it == networks.end())
-        return false;                   // network not found
+        return false;                       // network not found
 
     XMASNetwork* toUnload = toUnload_it->second.get();
+
     // check if the network is still used by a composite
-    auto composites = root->componentsOfType<XMASComposite>();
-    for (auto x : composites) {
-        if (&x->getNetwork() == toUnload)
-            return false;               // network still in use
+    auto checkComposites = [toUnload](const XMASNetwork* n) -> bool {
+        auto composites = n->componentsOfType<XMASComposite>();
+        for (auto x : composites) {
+            if (&x->getNetwork() == toUnload)
+                return false;               // network still in use
+        }
+        return true;
+    };
+
+    // check all networks for composites referring to the network to unload
+    for (auto x : networks) {
+        XMASNetwork* n = x.second.get();
+        if (n != toUnload) {                // don't need to check toUnload itself
+            if (!checkComposites(n))
+                return false;
+        }
     }
 
     // ok, unload the network
