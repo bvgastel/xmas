@@ -167,6 +167,7 @@ Rectangle {
         selectExisting: true
         selectFolder: false
         selectMultiple: false
+        folder: network.folder
         nameFilters: [
             "Model files (*.json)",
             "All files (*)"]

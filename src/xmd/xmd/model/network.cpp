@@ -502,7 +502,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         qDebug() << "composite added & ext available";
 
         QVariantMap map;
-        map.insert("url", QString(xmas_network->getStdName().c_str()));
+        map.insert("url", QString(m_folder + "/" + xmas_network->getStdName().c_str()));
         map.insert("alias", QString::fromStdString(cn_ext->alias));
         map.insert("symbol", QString::fromStdString(cn_ext->imageName));
         map.insert("boxed", cn_ext->boxedImage);

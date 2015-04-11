@@ -41,6 +41,8 @@ const model::Component::CompType xswitch = model::Component::CompType::Switch;
 class Network : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(QString fileName MEMBER m_fileName NOTIFY fileNameChanged)
+    Q_PROPERTY(QString folder MEMBER m_folder NOTIFY folderChanged)
     Q_PROPERTY(QString alias MEMBER m_alias NOTIFY aliasChanged)
     Q_PROPERTY(QSize size MEMBER m_size NOTIFY sizeChanged)
     Q_PROPERTY(QString imageName MEMBER m_imageName NOTIFY imageNameChanged)
@@ -51,6 +53,8 @@ class Network : public QQuickItem
 private:
 
 signals:
+    void fileNameChanged();
+    void folderChanged();
     void packetChanged();
     void aliasChanged();
     void sizeChanged();
@@ -108,7 +112,8 @@ public:
 private:
 
     Logger m_logger;
-
+    QString m_fileName;
+    QString m_folder;
     QString m_alias;
     QSize m_size;
     QString m_imageName;
