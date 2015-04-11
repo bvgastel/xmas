@@ -243,6 +243,7 @@ Rectangle{
         drag.minimumY: network.margin
         drag.maximumX: network.width - selection.width - network.margin
         drag.maximumY: network.height - selection.height - network.margin
+        onDoubleClicked: {}
         onPressed: {
             if (mouse.button == Qt.RightButton)
                 showContextMenu()
