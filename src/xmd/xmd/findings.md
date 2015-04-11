@@ -15,6 +15,7 @@ D    =  Developer
    15   g   2015-04-02              After new, file is still '*'            bug     medium  Confirmed 2015-04-10
    28   g   2015-04-09              New aborts (Linux only)                 bug     high    Confirmed 2015-04-10
    29   g   2015-04-10              Valgrind Memory Analyzer output         bug     high    xmd and xmv have access errors
+   30   s   2015-04-11  2015-04-11  Empty name in component inconsistent    bug     high    allow empty name -> disallowed empty name
 
    12   g   2015-04-02  fridge      Source parse expression does not accept bug     low     (Out of scope for user interface)
                                     a percentage token (%)
