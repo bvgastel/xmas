@@ -445,14 +445,11 @@ bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
     qDebug() << component->name() << " deleted1";
     if (component) {
-         qDebug() << component->name() << " deleted2";
         auto name = component->name().toStdString();
         bool result = project->removeComponent(name);
         if (!result) {
-             qDebug() << component->name() << " deleted3";
             auto c = project->getRootNetwork()->getComponent(name);
             if (!c) {
-                 qDebug() << component->name() << " deleted4";
                 return true;
             } else {
                 return false;
@@ -513,11 +510,7 @@ QVariantList model::Network::compositeLibrary() {
 bool model::Network::addComposite(XMASNetwork* xmas_network){
     try {
         auto cn_ext = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
-        qDebug() << "composite added";
-
         if (!cn_ext) return false;
-        qDebug() << "composite added & ext available";
-
         QVariantMap map;
         map.insert("url", QString(xmas_network->getStdName().c_str()));
         map.insert("alias", QString::fromStdString(cn_ext->alias));
@@ -525,7 +518,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         map.insert("boxed", cn_ext->boxedImage);
         m_compositeLibrary.append(map);
     } catch (bitpowder::lib::Exception e) {
-        qDebug() << "adding composite failed :" << e.description();
+        emit writeLog("adding composite failed :" + e.description(),Qt::red);
         return false;
     }
     return true;
