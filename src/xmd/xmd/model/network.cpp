@@ -478,15 +478,19 @@ bool model::Network::loadComposite(QUrl url){
 }
 
 // unload a composite network
-bool model::Network::unloadComposite(QUrl url){
-    qDebug() << "Remove library composite with url = " << url;
+bool model::Network::unloadComposite(QString name){
+    qDebug() << "Remove library composite with name = " << name;
 
-    //here url will be the network name e.g. "network.json" of the composite
+    // here url will be the network name e.g. "network.json" of the composite
     // only delete it from xmas networks when not used as composite in root
     // if still used return false else true if removed
 
-    emit compositeLibraryChanged();
-    return true;
+    if (dataControl->project()->unloadNetwork(name.toStdString())) {
+        emit compositeLibraryChanged();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // read composite library
@@ -511,7 +515,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         qDebug() << "composite added & ext available";
 
         QVariantMap map;
-        map.insert("url", QString(m_folder + "/" + xmas_network->getStdName().c_str()));
+        map.insert("url", QString(xmas_network->getStdName().c_str()));
         map.insert("alias", QString::fromStdString(cn_ext->alias));
         map.insert("symbol", QString::fromStdString(cn_ext->imageName));
         map.insert("boxed", cn_ext->boxedImage);

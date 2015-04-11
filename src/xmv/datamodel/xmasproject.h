@@ -31,6 +31,8 @@ public:
                              std::string &basePath);
     void saveNetwork(const std::string& filename, XMASNetwork* network = nullptr);
 
+    bool unloadNetwork(std::string name);
+
     template <class T, typename... Args>
     T *insert(const bitpowder::lib::String& name, Args... args) {
         return root->insert<T>(name, args...);
