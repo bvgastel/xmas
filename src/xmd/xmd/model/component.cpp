@@ -55,12 +55,17 @@ void model::Component::setName(QString name) {
     if (name == m_name) {
         return;
     }
+    // Do not allow change name to empty name
+    if (m_name != QString() && name.trimmed() == QString())
+        emit nameChanged(false);
+    return;
     // get project
     auto project = dataControl->project();
     if (!project) {
         return;
     }
-    if (project->changeComponentName(m_name.toStdString(), name.toStdString())) {
+    // Process change in xmas and xmd
+    if (project->changeComponentName(m_name.toStdString(), name.trimmed().toStdString())) {
         m_name = name;
         emit nameChanged(true);
     }
