@@ -208,6 +208,27 @@ XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResul
     return result;
 }
 
+bool XMASProject::unloadNetwork(std::string name)
+{
+    auto toUnload_it = networks.find(name);
+    if (toUnload_it == networks.end())
+        return false;                   // network not found
+
+    XMASNetwork* toUnload = toUnload_it->second.get();
+    // check if the network is still used by a composite
+    auto composites = root->componentsOfType<XMASComposite>();
+    for (auto x : composites) {
+        if (&x->getNetwork() == toUnload)
+            return false;               // network still in use
+    }
+
+    // ok, unload the network
+    networks.erase(toUnload_it);
+
+    return true;
+}
+
+
 bool XMASProject::changeComponentName(std::string oldName, std::string newName)
 {
     /* ensure memory is permanent enough */

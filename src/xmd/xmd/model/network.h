@@ -79,7 +79,7 @@ public slots:
     bool closeFile();
     bool newFile();
     bool loadComposite(QUrl url);
-    bool unloadComposite(QUrl url);
+    bool unloadComposite(QString name);
 
 private:
     QList<Component *> getAllComponents();
