@@ -172,7 +172,7 @@ Rectangle {
             "Model files (*.json)",
             "All files (*)"]
         onAccepted: {
-            if(folder!==network.folder){
+            if(folder.toString()!==network.folder){
                 wrongFolderDialog.open()
             } else {
                 if(!network.loadComposite(fileUrl))
