@@ -443,12 +443,16 @@ bool model::Network::addComponent(model::Component *component) {
  */
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
+    qDebug() << component->name() << " deleted1";
     if (component) {
+         qDebug() << component->name() << " deleted2";
         auto name = component->name().toStdString();
         bool result = project->removeComponent(name);
         if (!result) {
+             qDebug() << component->name() << " deleted3";
             auto c = project->getRootNetwork()->getComponent(name);
             if (!c) {
+                 qDebug() << component->name() << " deleted4";
                 return true;
             } else {
                 return false;
