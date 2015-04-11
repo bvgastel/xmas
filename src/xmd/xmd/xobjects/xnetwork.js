@@ -158,7 +158,7 @@ function createComponent(parent,component,object) {
             item.filename = object.filename ? object.filename : ""
             item.alias = object.alias ? object.alias : ""
             item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
-            item.boxed = object.boxed ? object.boxed : true
+            item.boxed = object.boxed
         }
         item.componentAdded()
     } else if (component.status === Qjs.Component.Error) {
