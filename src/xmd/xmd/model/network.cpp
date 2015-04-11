@@ -68,15 +68,10 @@ bool model::Network::setPacket(QString expression) {
 
 // open xmas network project
 bool model::Network::openFile(QUrl fileUrl) {
-    clearCompositeLibrary();
     std::string filename = Util::fileName(fileUrl);
     if (dataControl->loadNewProject(filename)) {
+        emit compositeLibraryChanged();
         auto project = dataControl->project();
-        for (auto network : project->getNetworks()) {
-             if(network.second.get() != project->getRootNetwork()){
-                 addComposite(network.second.get());
-             }
-         }
         auto result = emitNetwork(*project->getRootNetwork());
         return result;
     }
@@ -471,7 +466,11 @@ bool model::Network::loadComposite(QUrl url){
         std::string name = url.toLocalFile().toStdString();
         auto xmas_network = dataControl->project()->loadNetwork(name);
         if(!xmas_network) return false;
-        return addComposite(xmas_network);
+        if(addComposite(xmas_network)) {
+            emit compositeLibraryChanged();
+            return true;
+        }
+        return false;
     } catch (bitpowder::lib::Exception) {
         return false;
     }
@@ -492,6 +491,13 @@ bool model::Network::unloadComposite(QUrl url){
 
 // read composite library
 QVariantList model::Network::compositeLibrary() {
+    m_compositeLibrary.clear();
+    auto project = dataControl->project();
+    for (auto network : project->getNetworks()) {
+         if(network.second.get() != project->getRootNetwork()){
+             addComposite(network.second.get());
+         }
+     }
     return m_compositeLibrary;
 }
 
@@ -509,9 +515,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         map.insert("alias", QString::fromStdString(cn_ext->alias));
         map.insert("symbol", QString::fromStdString(cn_ext->imageName));
         map.insert("boxed", cn_ext->boxedImage);
-       // map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
         m_compositeLibrary.append(map);
-        emit compositeLibraryChanged();
     } catch (bitpowder::lib::Exception e) {
         qDebug() << "adding composite failed :" << e.description();
         return false;
