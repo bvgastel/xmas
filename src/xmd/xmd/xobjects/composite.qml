@@ -102,7 +102,7 @@ XComponent {
                 height: boxed ? component.height - 50 : 100
                 width: 100
                 fillMode: Image.PreserveAspectFit
-                source: image
+                source: image // ? "qrc:/symbols/content/symbols/" + image : ""
                 anchors.centerIn: parent
                 onStatusChanged: if(symbol.status === Image.Error) boxed = true
                 Text {

@@ -144,15 +144,15 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
         this->m_imageName = cne->imageName.c_str();
     }
 
-   auto cve = network.getNetworkExtension<CanvasNetworkExtension>(false);
+    auto cve = network.getNetworkExtension<CanvasNetworkExtension>(false);
     if(cve){
         this->m_size = QSize(cve->width,cve->height);
-   }
+    }
 
     emit createNetwork(qmlNetwork);
     std::clock_t c_end = std::clock();
-        qDebug() << "CPU time used: " << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms"
-                       << " for " << compList.length() << " components and " << channelList.length() << " channels";
+    qDebug() << "CPU time used: " << 1000.0 * (c_end-c_start) / CLOCKS_PER_SEC << " ms"
+             << " for " << compList.length() << " components and " << channelList.length() << " channels";
 
     return true;
 }
@@ -168,7 +168,7 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
             list.append(map);
         } else {
             m_logger.log("output port " + std::string(out->getName()) + " in comp "
-                      + out->getComponent()->getStdName() + " is not connected");
+                         + out->getComponent()->getStdName() + " is not connected");
         }
     }
 }
@@ -240,13 +240,19 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
     } else if (type == model::Component::Composite) {
         XMASComposite *composite = dynamic_cast<XMASComposite *>(comp);
         if (composite) {
-            QString filename = QString::fromStdString(composite->getNetwork().getStdName());
-            map.insert("filename", filename);
-            CompositeNetworkExtension *cn_ext = network.getNetworkExtension<CompositeNetworkExtension>(false);
-            if (cn_ext) {
-                map.insert("alias", QString::fromStdString(cn_ext->alias));
-                map.insert("symbol", QString::fromStdString(cn_ext->imageName));
-                map.insert("boxed", cn_ext->boxedImage);
+            auto project = dataControl->project();
+            if(project) {
+                auto cn = project->getNetwork(composite->getNetwork().getStdName());
+                if(cn) {
+                    QString filename = QString::fromStdString(composite->getNetwork().getStdName());
+                    map.insert("filename", filename);
+                    auto cn_ext = cn->getNetworkExtension<CompositeNetworkExtension>(false);
+                    if (cn_ext) {
+                        map.insert("alias", QString::fromStdString(cn_ext->alias));
+                        map.insert("image", QString::fromStdString(cn_ext->imageName));
+                        map.insert("boxed", cn_ext->boxedImage);
+                    }
+                }
             }
         }
     }
@@ -261,7 +267,7 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
 bool model::Network::portError(XPort *port, QString errMsg) {
     if (port) {
         errMsg += (port->type() == model::XPort::OUTPORT ? " port = output_port! "
-                                                            : " port = input_port! ");
+                                                         : " port = input_port! ");
         errMsg += port->getComponent()->name()+"."+port->name() + ". ";
         if (!port->isConnected()) {
             errMsg += "Port is not connected. ";
@@ -314,7 +320,7 @@ bool model::Network::xmasConnectOk(Output *xmas_outport, Input *xmas_inport) {
     if (!xmas_inport || !xmas_outport) {
         return xmasError(xmas_outport, xmas_inport, "[Network::connect()] Connect failed: inport or outport null. ");
     }
-//    no check for connected: already part of Qml programming.
+    //    no check for connected: already part of Qml programming.
 
     return true;
 }
@@ -460,7 +466,7 @@ bool model::Network::removeComponent(model::Component *component) {
 
 // load a composite network into xmas
 bool model::Network::loadComposite(QUrl url){
-   try {
+    try {
         //1 - send url to xmas and parse as composite
         std::string name = url.toLocalFile().toStdString();
         auto xmas_network = dataControl->project()->loadNetwork(name);
@@ -491,10 +497,10 @@ QVariantList model::Network::compositeLibrary() {
     m_compositeLibrary.clear();
     auto project = dataControl->project();
     for (auto network : project->getNetworks()) {
-         if(network.second.get() != project->getRootNetwork()){
-             addComposite(network.second.get());
-         }
-     }
+        if(network.second.get() != project->getRootNetwork()){
+            addComposite(network.second.get());
+        }
+    }
     return m_compositeLibrary;
 }
 

@@ -140,25 +140,27 @@ function createComponent(parent,component,object) {
                                       });
         if (object.type === Model.XComponent.Queue) {
             item.capacity = object.capacity ? object.capacity : 0
+            //item.capacityChanged()
         }
         if (object.type === Model.XComponent.Source
                 || object.type === Model.XComponent.Sink ) {
             item.required = object.required ? object.required : true
+            //item.requiredChanged()
         }
         if (object.type === Model.XComponent.Function
                 || object.type === Model.XComponent.Join
                 || object.type === Model.XComponent.Switch
                 || object.type === Model.XComponent.Source ) {
             item.expression = object.expression ? object.expression : ""
+            //item.expressionChanged()
         }
         if (object.type === Model.XComponent.Composite) {
             item.filename = object.filename ? object.filename : ""
             item.alias = object.alias ? object.alias : ""
-            item.image = object.image ? object.image : ""
+            item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
             item.boxed = object.boxed ? object.boxed : true
+            console.log("imagename = " + object.boxed)
         }
-        // Timing incorrect: component is not fully created yet. But it does get called!
-        //network.addComponent(component);
         item.componentAdded()
     } else if (component.status === Qjs.Component.Error) {
         log(component.errorString(),"red")
