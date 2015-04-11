@@ -135,7 +135,7 @@ bitpowder::lib::String XMASComponent::getName() const {
 }
 
 Port::~Port() {
-    //clearExtensions();
+    clearExtensions();          // FIXME: why was this call commented out?
 }
 
 bool XMASComponent::valid()
@@ -505,29 +505,32 @@ XMASNetwork::XMASNetwork(std::string name, std::map<bitpowder::lib::String, XMAS
 }
 
 XMASNetwork::XMASNetwork(XMASNetwork &&tempNetwork)
-    : name(std::move(tempNetwork.name)),
+    : ExtensionContainer<XMASNetworkExtension>(std::move(tempNetwork)),
+      name(std::move(tempNetwork.name)),
       m_packet_type(std::move(tempNetwork.m_packet_type)),
       components(std::move(tempNetwork.components)),
-      m_mp(std::move(tempNetwork.m_mp)),
-      m_mp_self_created(std::move(tempNetwork.m_mp_self_created))
+      m_mp(tempNetwork.m_mp),
+      m_mp_self_created(tempNetwork.m_mp_self_created)
 {
-    if (!m_mp) {
-        m_mp = new bitpowder::lib::MemoryPool();
-        m_mp_self_created = true;
-    }
+    tempNetwork.m_mp = nullptr;
+    tempNetwork.m_mp_self_created = false;
 }
 
 XMASNetwork::~XMASNetwork()
 {
-    for (auto entry : components) {
-        XMASComponent* c = entry.second;
-        ClearSymbolicTypes(c);
-        ClearMessageSpec(c);
-    }
+    clearExtensions();
+
     if (m_mp_self_created) {
         delete m_mp;
     }
 }
+
+void XMASNetwork::clearExtensions() {
+    auto extensions = ExtensionContainer<XMASNetworkExtension>::clearExtensions();
+    for (auto it = extensions.begin(); it != extensions.end(); )
+        delete it.erase();
+}
+
 
 const std::string XMASNetwork::getStdName() const {
     return this->name;
