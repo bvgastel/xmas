@@ -169,24 +169,6 @@ function destroy(component){
     component.destroy()
 }
 
-
-function destroyAll(network){
-    //only delete xmas children who has
-    //network as parent
-    // destroy doesn't work on array items
-    //TODO destroy network and create new one
-    var temp = []
-
-    for (var child in network.children) {
-        if(network.children[child].objectName!=="component"
-                && network.children[child].objectName!=="channel") {
-            temp.push(network.children[child])
-            }
-    }
-    network.children = temp
-    //log("network cleared.","black")
-}
-
 // Grid Snap
 function doGridSnap(item){
     var snapX = Math.round(((item.x-network.margin) / network.gridSize)) * network.gridSize + network.margin
