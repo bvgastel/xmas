@@ -27,6 +27,7 @@ model::Network::Network(QQuickItem *parent)
 
 model::Network::~Network() {}
 
+// set xmas composite network extension data
 bool model::Network::setCompositeNetworkData() {
     auto project = dataControl->project();
     if (!project || !project->getRootNetwork()) {
@@ -42,6 +43,7 @@ bool model::Network::setCompositeNetworkData() {
     return true;
 }
 
+// read xmas network packet type
 QString model::Network::packet() {
     auto project = dataControl->project();
     if (!project || !project->getRootNetwork()) {
@@ -51,6 +53,7 @@ QString model::Network::packet() {
     return project->getRootNetwork()->packetType().c_str();
 }
 
+// set xmas network packet type
 bool model::Network::setPacket(QString expression) {
     auto project = dataControl->project();
     if (!project || !project->getRootNetwork()) {
@@ -63,6 +66,7 @@ bool model::Network::setPacket(QString expression) {
     return true;
 }
 
+// open xmas network project
 bool model::Network::openFile(QUrl fileUrl) {
     clearCompositeLibrary();
     std::string filename = Util::fileName(fileUrl);
@@ -79,6 +83,7 @@ bool model::Network::openFile(QUrl fileUrl) {
     return false;
 }
 
+// save xmas network project
 bool model::Network::saveFile(QUrl fileUrl) {
 
     auto project = dataControl->project();
@@ -92,14 +97,16 @@ bool model::Network::saveFile(QUrl fileUrl) {
     return true;
 }
 
+// close xmas network project
 bool model::Network::closeFile() {
-    //TODO destroy the model and reset everything
-    clearCompositeLibrary();
     auto project = dataControl->project();
     project->clear();
+    emit compositeLibraryChanged();
+    emit packetChanged();
     return true;
 }
 
+// new xmas network
 bool model::Network::newFile() {
     return closeFile();
 }

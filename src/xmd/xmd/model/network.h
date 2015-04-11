@@ -76,7 +76,6 @@ public slots:
     bool newFile();
     bool loadComposite(QUrl url);
     bool unloadComposite(QUrl url);
-    bool clearCompositeLibrary();
 
 private:
     QList<Component *> getAllComponents();
@@ -95,6 +94,7 @@ private:
     bool disconnect(Output *xmas_outport, Input *xmas_inport);
 
     bool addComposite(XMASNetwork* xmas_network);
+    bool clearCompositeLibrary();
 
 public:
     explicit Network(QQuickItem *parent = 0);
