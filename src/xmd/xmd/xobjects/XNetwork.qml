@@ -245,7 +245,6 @@ Model.XNetwork {
 
     Selection {
         id: selection
-        onShowContextMenu:contextMenu.popup()
         onPositionChanged: moveSelected(selection)
     }
 
