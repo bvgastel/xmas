@@ -171,13 +171,20 @@ Rectangle {
         nameFilters: [
             "Model files (*.json)",
             "All files (*)"]
-        onAccepted: if(!network.loadComposite(fileUrl)) loadCompositeFailedDialog.open()
+        onAccepted: {
+            if(folder!==network.folder){
+                wrongFolderDialog.open()
+            } else {
+                if(!network.loadComposite(fileUrl))
+                    loadCompositeFailedDialog.open()
+            }
+        }
     }
 
     // Load composite failed dialog
     MessageDialog{
         id:loadCompositeFailedDialog
-        title: "Load composite error"
+        title: "Load composite"
         icon: StandardIcon.Warning
         text:  "Cannot load composite network!"
                + "  Make sure file is a correct model."
@@ -188,11 +195,22 @@ Rectangle {
     // Remove composite failed dialog
     MessageDialog{
         id:unloadCompositeFailedDialog
-        title: "Remove composite error"
+        title: "Remove composite"
         icon: StandardIcon.Warning
         text:  "Cannot unload composite!"
                + "  Make sure composite is not used in this model."
         standardButtons: StandardButton.Ok
         onApply: this.destroy()
+    }
+
+    // wrong composite folder dialog
+    MessageDialog{
+        id:wrongFolderDialog
+        title: "Load composite"
+        icon: StandardIcon.Warning
+        text:  "Cannot load composite!"
+               + "  Make sure composite is in the same folder of this model."
+        standardButtons: StandardButton.Ok
+        onApply:this.destroy()
     }
 }
