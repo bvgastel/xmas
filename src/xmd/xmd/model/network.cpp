@@ -240,8 +240,8 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNet
     } else if (type == model::Component::Composite) {
         XMASComposite *composite = dynamic_cast<XMASComposite *>(comp);
         if (composite) {
-            QString url = QString::fromStdString(composite->getNetwork().getStdName());
-            map.insert("url", url);
+            QString filename = QString::fromStdString(composite->getNetwork().getStdName());
+            map.insert("filename", filename);
             CompositeNetworkExtension *cn_ext = network.getNetworkExtension<CompositeNetworkExtension>(false);
             if (cn_ext) {
                 map.insert("alias", QString::fromStdString(cn_ext->alias));
@@ -479,12 +479,6 @@ bool model::Network::loadComposite(QUrl url){
 
 // unload a composite network
 bool model::Network::unloadComposite(QString name){
-    qDebug() << "Remove library composite with name = " << name;
-
-    // here url will be the network name e.g. "network.json" of the composite
-    // only delete it from xmas networks when not used as composite in root
-    // if still used return false else true if removed
-
     if (dataControl->project()->unloadNetwork(name.toStdString())) {
         emit compositeLibraryChanged();
         return true;
@@ -511,7 +505,7 @@ bool model::Network::addComposite(XMASNetwork* xmas_network){
         auto cn_ext = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
         if (!cn_ext) return false;
         QVariantMap map;
-        map.insert("url", QString(xmas_network->getStdName().c_str()));
+        map.insert("filename", QString(xmas_network->getStdName().c_str()));
         map.insert("alias", QString::fromStdString(cn_ext->alias));
         map.insert("symbol", QString::fromStdString(cn_ext->imageName));
         map.insert("boxed", cn_ext->boxedImage);

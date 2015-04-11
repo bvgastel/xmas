@@ -58,7 +58,7 @@ function createComponent(parent,component) {
         draggedItem.index = generateTagIndex(draggedItem)
         draggedItem.name = draggedItem.prefix + draggedItem.index
         if(draggedItem.type === Model.XComponent.Composite){
-            draggedItem.url = item.url
+            draggedItem.filename = item.filename
             draggedItem.alias = item.alias
             draggedItem.image = item.image ? item.source : ""
             draggedItem.boxed = item.boxed

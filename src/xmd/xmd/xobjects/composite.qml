@@ -41,7 +41,7 @@ XComponent {
     height: Math.max(portsLeft.count,portsRight.count) * (portSpace) + 30
     type: Model.XComponent.Composite
     prefix: "C"
-    property string url:""
+    property string filename:""
     property string alias:"Composite"
     property string image:""
     property bool boxed: true

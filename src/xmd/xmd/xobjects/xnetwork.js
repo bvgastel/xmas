@@ -152,7 +152,7 @@ function createComponent(parent,component,object) {
             item.expression = object.expression ? object.expression : ""
         }
         if (object.type === Model.XComponent.Composite) {
-            item.url = object.url ? object.url : ""
+            item.filename = object.filename ? object.filename : ""
             item.alias = object.alias ? object.alias : ""
             item.image = object.image ? object.image : ""
             item.boxed = object.boxed ? object.boxed : true
