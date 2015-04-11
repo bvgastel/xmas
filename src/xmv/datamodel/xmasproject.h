@@ -21,6 +21,7 @@ public:
 
     XMASNetwork* getRootNetwork() const;
     XMASNetwork* getNetwork(const std::string name) const;
+    std::map<std::string, std::shared_ptr<XMASNetwork>> getNetworks() const;
 
     bitpowder::lib::String network2jsonString( bitpowder::lib::MemoryPool &mp, XMASNetwork *network = nullptr);
 
@@ -52,7 +53,7 @@ public:
 private:
     const std::string m_initial_name = "?.json";
     bitpowder::lib::MemoryPool m_mp;
-    std::map<std::string, std::unique_ptr<XMASNetwork>> networks;
+    std::map<std::string, std::shared_ptr<XMASNetwork>> networks;
     XMASNetwork* root;
 
 };

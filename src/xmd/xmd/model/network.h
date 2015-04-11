@@ -74,8 +74,8 @@ public slots:
     bool openFile(QUrl fileUrl);
     bool closeFile();
     bool newFile();
-    bool addLibraryComposite(QUrl url);
-    bool removeLibraryComposite(QUrl url);
+    bool loadComposite(QUrl url);
+    bool unloadComposite(QUrl url);
     bool clearCompositeLibrary();
 
 private:
@@ -93,6 +93,8 @@ private:
 
     bool connect(Output *xmas_outport, Input *xmas_inport);
     bool disconnect(Output *xmas_outport, Input *xmas_inport);
+
+    bool addComposite(XMASNetwork* xmas_network);
 
 public:
     explicit Network(QQuickItem *parent = 0);

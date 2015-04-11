@@ -68,6 +68,11 @@ bool model::Network::openFile(QUrl fileUrl) {
     std::string filename = Util::fileName(fileUrl);
     if (dataControl->loadNewProject(filename)) {
         auto project = dataControl->project();
+        for (auto network : project->getNetworks()) {
+             if(network.second.get() != project->getRootNetwork()){
+                 addComposite(network.second.get());
+             }
+         }
         auto result = emitNetwork(*project->getRootNetwork());
         return result;
     }
@@ -449,54 +454,22 @@ bool model::Network::removeComponent(model::Component *component) {
 }
 
 
-/**
- * Gets the composite list of this network
- *      (Related to the composites section in json)
- * @brief model::Network::getComposites
- * @return Network composite list
- */
-QVariantList model::Network::compositeLibrary() {
-    return m_compositeLibrary;
-}
-
-/**
- * Adds a composite to this network its composite library
- *      (Related to the composites section in json)
- * @brief model::Network::addLibraryComposite
- * @param url
- * @return True is composite has been added to the library.
- */
-bool model::Network::addLibraryComposite(QUrl url){
-   //1 - send url to xmas and parse as composite
-    std::string name = url.toLocalFile().toStdString();
-    try {
-        XMASNetwork* xmas_network = dataControl->project()->loadNetwork(name);
-        auto cn_ext = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
-        if (!cn_ext)
-            return false;   // Composite network information missing, can't use as a composite network!
-
-        QVariantMap map;
-        map.insert("url", url);
-        map.insert("alias", QString::fromStdString(cn_ext->alias));
-        map.insert("symbol", QString::fromStdString(cn_ext->imageName));
-        map.insert("boxed", cn_ext->boxedImage);
-        map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
-        m_compositeLibrary.append(map);
-        emit compositeLibraryChanged();
+// load a composite network into xmas
+bool model::Network::loadComposite(QUrl url){
+   try {
+        //1 - send url to xmas and parse as composite
+        std::string name = url.toLocalFile().toStdString();
+        auto xmas_network = dataControl->project()->loadNetwork(name);
+        if(!xmas_network) return false;
+        return addComposite(xmas_network);
     } catch (bitpowder::lib::Exception) {
         return false;
     }
     return true;
 }
 
-/**
- * Removes a composite in this network its composite library
- *      (Related to the composites section in json)
- * @brief model::Network::removeLibraryComposite
- * @param url
- * @return True is composite has been removed from the library.
- */
-bool model::Network::removeLibraryComposite(QUrl url){
+// unload a composite network
+bool model::Network::unloadComposite(QUrl url){
     qDebug() << "Remove library composite with url = " << url;
     //1 - send url to xmas find composite in library by url
     //2 - remove composite in xmas if not used in current network
@@ -510,13 +483,38 @@ bool model::Network::removeLibraryComposite(QUrl url){
     return true;
 }
 
-/**
- * @brief model::Network::clearCompositeLibrary
- * @return
- */
+// read composite library
+QVariantList model::Network::compositeLibrary() {
+    return m_compositeLibrary;
+}
+
+// add composite to model library
+bool model::Network::addComposite(XMASNetwork* xmas_network){
+    try {
+        auto cn_ext = xmas_network->getNetworkExtension<CompositeNetworkExtension>(false);
+        qDebug() << "composite added";
+
+        if (!cn_ext) return false;
+        qDebug() << "composite added & ext available";
+
+        QVariantMap map;
+        map.insert("url", QString(xmas_network->getStdName().c_str()));
+        map.insert("alias", QString::fromStdString(cn_ext->alias));
+        map.insert("symbol", QString::fromStdString(cn_ext->imageName));
+        map.insert("boxed", cn_ext->boxedImage);
+       // map.insert("xmas_network", qVariantFromValue((void*)xmas_network));
+        m_compositeLibrary.append(map);
+        emit compositeLibraryChanged();
+    } catch (bitpowder::lib::Exception e) {
+        qDebug() << "adding composite failed :" << e.description();
+        return false;
+    }
+    return true;
+}
+
+// clear composite library
 bool model::Network::clearCompositeLibrary(){
     m_compositeLibrary.clear();
     emit compositeLibraryChanged();
     return true;
 }
-

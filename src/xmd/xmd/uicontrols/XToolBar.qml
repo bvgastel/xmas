@@ -89,7 +89,7 @@ Rectangle {
         ToolBarSeparator {}
 
         ToolButton {
-            action: addLibraryCompositeAction
+            action: loadCompositeAction
         }
         Rectangle{
             id:compositeListRect
@@ -126,7 +126,7 @@ Rectangle {
                     alias:modelData.alias
                     image: modelData.symbol
                     boxed: modelData.boxed
-                    onRemove: if(!network.removeLibraryComposite(modelData.url)) removeCompositeFailedDialog.open()
+                    onRemove: if(!network.unloadComposite(modelData.url)) unloadCompositeFailedDialog.open()
                 }
             }
         }
@@ -145,12 +145,12 @@ Rectangle {
     }
 
     Action {
-        id: addLibraryCompositeAction
-        text: "Add composite"
+        id: loadCompositeAction
+        text: "Load composite"
         shortcut: ""
         iconSource: "qrc:/icons/content/add_composite.ico"
-        iconName: "add-composite"
-        onTriggered: addLibraryCompositeDialog.open()
+        iconName: "load-composite"
+        onTriggered: loadCompositeDialog.open()
     }
 
     XPacketDialog {
@@ -161,24 +161,24 @@ Rectangle {
         }
     }
 
-    // Add composite dialog
+    // Load composite dialog
     FileDialog {
-        id: addLibraryCompositeDialog
+        id: loadCompositeDialog
         selectExisting: true
         selectFolder: false
         selectMultiple: false
         nameFilters: [
             "Model files (*.json)",
             "All files (*)"]
-        onAccepted: if(!network.addLibraryComposite(fileUrl)) addLibraryCompositeFailedDialog.open()
+        onAccepted: if(!network.loadComposite(fileUrl)) loadCompositeFailedDialog.open()
     }
 
-    // Add composite failed dialog
+    // Load composite failed dialog
     MessageDialog{
-        id:addLibraryCompositeFailedDialog
-        title: "Add composite error"
+        id:loadCompositeFailedDialog
+        title: "Load composite error"
         icon: StandardIcon.Warning
-        text:  "Cannot add composite!"
+        text:  "Cannot load composite network!"
                + "  Make sure file is a correct model."
         standardButtons: StandardButton.Ok
         onApply: this.destroy()
@@ -186,10 +186,10 @@ Rectangle {
 
     // Remove composite failed dialog
     MessageDialog{
-        id:removeLibraryCompositeFailedDialog
+        id:unloadCompositeFailedDialog
         title: "Remove composite error"
         icon: StandardIcon.Warning
-        text:  "Cannot remove composite!"
+        text:  "Cannot unload composite!"
                + "  Make sure composite is not used in this model."
         standardButtons: StandardButton.Ok
         onApply: this.destroy()

@@ -71,6 +71,10 @@ XMASNetwork* XMASProject::getNetwork(const std::string name) const {
     return (it != networks.end()) ? it->second.get() : nullptr;
 }
 
+std::map<std::string,std::shared_ptr<XMASNetwork>> XMASProject::getNetworks() const {
+    return networks;
+}
+
 // If network is nullptr: use root.
 void XMASProject::saveNetwork(const std::string &filename, XMASNetwork* network)
 {
