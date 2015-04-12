@@ -387,7 +387,7 @@ void model::Component::updateCanvasData() {
 }
 
 // This method was made for composite objects.
-// So Qml can retrieve portnames and types
+// So Qml can retrieve xmas portnames and types
 QVariantMap model::Component::getPorts()
 {
     QVariantMap map;

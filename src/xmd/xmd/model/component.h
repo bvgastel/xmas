@@ -73,7 +73,7 @@ signals:
     void componentAdded();
 
 public slots:
-    QVariantMap getPorts();
+    QVariantMap getPorts(); //xmas ports
 
     CompType type() const;
     void setType(CompType type);
