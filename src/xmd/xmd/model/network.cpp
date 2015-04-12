@@ -175,6 +175,7 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
 
 
 void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNetwork &network) {
+    Q_UNUSED(network)
     std::string name = comp->getStdName();
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
