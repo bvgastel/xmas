@@ -30,6 +30,8 @@
  **************************************************************************/
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 1.3
+import "qrc:/ui/uicontrols/"
 import XMAS.model 1.0 as Model
 import XMAS 1.0 as XMAS
 
@@ -46,6 +48,7 @@ XComponent {
     property string image:""
     property bool boxed: true
     property int portSpace: 30 //2 times default gridsize - 1 time portsize
+    property bool parametric: false
 
     // Javascript
     function updatePorts() {
@@ -161,5 +164,35 @@ XComponent {
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
+    }
+
+    // set to true
+    withValidMarker: parametric
+    onShowDialog: dialog.show()
+    XExpressionDialog {
+        id: dialog
+        title: "Enter expression for composite " + name
+        help:"Insert parametric function.\n"
+             + "Enter n:=[unsigned int]; as the number of repeats"
+             + "n:=0 means 1 subnet\n"
+             + "E.g.: composite with port i and port o and three subnets \n"
+             + "Expression to link e.g. three subnets in serie can be : \n"
+             + "\t n := 2\n"
+             + "\t i(n) := o(n-1)\n"
+             + " (To be further worked out e.g. on n=0 which ports become external) "
+    }
+
+    Component.onCompleted: {
+        //insert on top
+        insertMenuSeparator()
+        insertMenuItem(menuExpression)
+    }
+
+    // context menu expression item
+    MenuItem {
+        id:menuExpression
+        text: "Parametric..."
+        enabled: true //TODO remove this once parametic parser is implemented
+        onTriggered: dialog.show()
     }
 }

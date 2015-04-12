@@ -207,6 +207,16 @@ QString model::Component::expression() {
             }
             break;
         }
+        case Composite :
+        {
+            auto xmas_comp = dynamic_cast<XMASComposite *>(xmas_component());
+            if (xmas_comp) {
+                //TODO uncomment once composite parametric parser is implmented
+                m_expression = QString(""); //QString(xmas_comp->getCompositeExpression(mp()).stl().c_str());
+                emit expressionChanged(true); // empty expression does mean no parametrics
+            }
+            break;
+        }
         default:; //not used for other components
         }
     }
@@ -260,6 +270,18 @@ void model::Component::setExpression(QString expression) {
             auto xmas_comp = dynamic_cast<XMASSwitch *>(xmas_component());
             if (xmas_comp){
                 result = xmas_comp->setSwitchExpression(expr, mp());
+                hasUpdated = true;
+            }
+            break;
+        }
+        case Composite :
+        {
+            auto xmas_comp = dynamic_cast<XMASComposite *>(xmas_component());
+            if (xmas_comp){
+                //TODO uncomment once composite parametric parser is implmented
+                //result = xmas_comp->setCompositeExpression(expr, mp());
+                result.m_success = true;
+                result.m_pos = 0;
                 hasUpdated = true;
             }
             break;
@@ -365,7 +387,9 @@ bool model::Component::addXmasComponent() {
                     this->setProperty("alias",QString::fromStdString(cn_ext->alias));
                     this->setProperty("symbol",QString::fromStdString(cn_ext->imageName));
                     this->setProperty("boxed", cn_ext->boxedImage);
+                    this->setProperty("parametric", false);
                 }
+                emit expressionChanged(false); //TODO set to false once parser is implemented!
                 xmas_comp = composite;
             }
             break;

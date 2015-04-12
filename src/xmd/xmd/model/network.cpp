@@ -239,8 +239,11 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
         map.insert("expression", expression);
     } else if (type == model::Component::Composite) {
         XMASComposite *composite = dynamic_cast<XMASComposite *>(comp);
+        QString expression = QString();
         if (composite) {
             auto project = dataControl->project();
+            //TODO uncomment once parametric parser is implemented
+            expression = QString("");//QString(source->getCompositeExpression(mp).stl().c_str());
             if(project) {
                 auto cn = project->getNetwork(composite->getNetwork().getStdName());
                 if(cn) {
@@ -251,6 +254,7 @@ void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
                         map.insert("alias", QString::fromStdString(cn_ext->alias));
                         map.insert("image", QString::fromStdString(cn_ext->imageName));
                         map.insert("boxed", cn_ext->boxedImage);
+                        map.insert("parametric", expression!="");
                     }
                 }
             }

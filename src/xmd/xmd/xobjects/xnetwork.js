@@ -163,7 +163,8 @@ function createComponent(parent,component,object) {
             if (object.type === Model.XComponent.Function
                     || object.type === Model.XComponent.Join
                     || object.type === Model.XComponent.Switch
-                    || object.type === Model.XComponent.Source ) {
+                    || object.type === Model.XComponent.Source
+                    || object.type === Model.XComponent.Composite) {
                 item.expression = object.expression ? object.expression : ""
                 //item.expressionChanged()
             }
@@ -172,6 +173,7 @@ function createComponent(parent,component,object) {
                 item.alias = object.alias ? object.alias : ""
                 item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
                 item.boxed = object.boxed
+                item.parametric = object.parametric
             }
             item.componentAdded()
         } else if (component.status === Qjs.Component.Error) {
