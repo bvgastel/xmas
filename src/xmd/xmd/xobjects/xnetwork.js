@@ -32,6 +32,7 @@
 .import XMAS 1.0 as XMAS
 .import QtQuick 2.4 as Qjs
 .import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
+.import "qrc:/javascripts/xobjects/xcomponent.js" as ComponentJs
 
 var start
 var end
@@ -140,7 +141,7 @@ function getXQml(type) {
 function createComponent(parent,component,object) {
     try {
         var item = null
-        //TODO check if name is unique
+
         if (component.status === Qjs.Component.Ready) {
             item = component.createObject(parent,
                                           {

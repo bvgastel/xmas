@@ -51,7 +51,6 @@ Model.XComponent {
     type: Model.XComponent.Unknown
     z:1 //on top of channels
     property string prefix: ""
-    property int index:-1
     property bool selected: false
     property bool withValidMarker: false
     property bool topLabel: true
@@ -124,7 +123,6 @@ Model.XComponent {
     onSelectedChanged: if(!selected) label.focus = false
     onXChanged: positionHasChanged = true
     onYChanged: positionHasChanged = true
-
 
     // Selection highlite
     Rectangle {
