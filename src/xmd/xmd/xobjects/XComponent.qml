@@ -124,7 +124,6 @@ Model.XComponent {
     onRotationChanged:{component.update();component.updateCanvasData()}
     onScaleChanged: {doMove(0,0);component.updateCanvasData()}
     onWriteLog: mainwindow.log(message,color)
-    onExpressionChanged: {validmarker.color = success ? "green" : "red"}
     onSelectedChanged: if(!selected) label.focus = false
     onXChanged: positionHasChanged = true
     onYChanged: positionHasChanged = true
@@ -148,8 +147,7 @@ Model.XComponent {
         width: 15
         height: 15
         radius: 15
-        color: "red"
-        //color: expressionValid ? "green" : "red"
+        color: expressionValid ? "green" : "red"
         anchors.verticalCenter: nameItem.verticalCenter
         anchors.right: component.left
         MouseArea {

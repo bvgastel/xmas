@@ -142,6 +142,7 @@ Window {
             onTriggered: {
                 expression = expressionTextInput.text
                 if(expressionValid){
+                    textBackground.color = "#CCFFFF"
                     dialog.accepted()
                     dialog.close()
                 } else {

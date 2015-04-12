@@ -56,7 +56,7 @@ private:
     Q_PROPERTY(unsigned int capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
     // for source/join/switch/function
     Q_PROPERTY(QString expression READ expression WRITE setExpression NOTIFY expressionChanged)
-    Q_PROPERTY(bool expressionValid READ expressionValid WRITE setExpressionValid NOTIFY expressionChanged)
+    Q_PROPERTY(bool expressionValid READ expressionValid WRITE setExpressionValid NOTIFY expressionValidChanged)
     Q_PROPERTY(int expressionErrorPosition READ expressionErrorPosition NOTIFY expressionChanged)
     // sink & source
     Q_PROPERTY(bool required READ required WRITE setRequired NOTIFY requiredChanged)
@@ -67,6 +67,7 @@ signals:
     void typeChanged();
     void capacityChanged();
     void expressionChanged(bool success);
+    void expressionValidChanged();
     void requiredChanged();
     void changeName(QString old_name, QString name);
     void writeLog(QString message, QColor color = Qt::blue);

@@ -306,7 +306,7 @@ bool  model::Component::expressionValid(){
 // store expression valid and let qml know by emit
 void model::Component::setExpressionValid(bool valid){
     m_expressionValid = valid;
-    emit expressionChanged(valid);
+    emit expressionValidChanged();
 }
 
 // add a new xmas component
