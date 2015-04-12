@@ -83,7 +83,7 @@ private:
     QList<Component *> getAllComponents();
 
     bool emitNetwork(XMASNetwork &network);
-    void convertToQml(QVariantMap &map, XMASComponent *comp, XMASNetwork &network);
+    void convertToQml(QVariantMap &map, XMASComponent *comp);
     void connectInQml(QVariantList &list, XMASComponent *comp);
 
     bool portError(XPort *outport, QString errMsg);

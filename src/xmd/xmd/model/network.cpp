@@ -116,7 +116,7 @@ bool model::Network::emitNetwork(XMASNetwork &network) {
         XMASComponent *comp = it.second;
         if (comp) {
             QVariantMap map;
-            convertToQml(map, comp, network);
+            convertToQml(map, comp);
             compList.append(map);
         }
     }
@@ -174,8 +174,7 @@ void model::Network::connectInQml(QVariantList &list, XMASComponent *comp) {
 }
 
 
-void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp, XMASNetwork &network) {
-    Q_UNUSED(network)
+void model::Network::convertToQml(QVariantMap &map, XMASComponent *comp) {
     std::string name = comp->getStdName();
 
     std::type_index typeIndex = std::type_index(typeid(*comp));
