@@ -40,7 +40,6 @@ import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
 import XMAS.model 1.0 as Model
 import XMAS 1.0 as XMAS
 
-
 Model.XNetwork {
     id: network
     // Properties
@@ -55,12 +54,13 @@ Model.XNetwork {
     property bool gridVisible:mainwindow.showGrid
     property bool gridSnap:mainwindow.snapToGrid
     property int gridSize:10
+    property bool clearRequest: false
 
     // Signals
     signal moveSelected(var group)
 
     // Event handling
-    onChildrenChanged: modified=true
+    onChildrenChanged: clearRequest && isEmpty() ?  clearRequest = false : modified=true
     onWriteLog: log(message, color)
     onPacketChanged: modified=true
     onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
@@ -93,6 +93,7 @@ Model.XNetwork {
 
     // Clear network
     function clear(){
+        clearRequest = true
         selectAll()
         selection.deleteSelected()
         network.fileName = "?.json"
@@ -102,7 +103,6 @@ Model.XNetwork {
         network.boxedImage = true
         network.modified = false
     }
-
 
     function checkTarget(port) {
         if (wire.port1
@@ -153,6 +153,16 @@ Model.XNetwork {
                 items.push(children[child])
         }
         return items
+    }
+
+    function isEmpty(){
+        var children = network.children
+        for (var child in children){
+            if(children[child].objectName==="component"
+                    || children[child].objectName==="channel")
+                return false
+        }
+        return true
     }
 
     function deleteSelected(){
