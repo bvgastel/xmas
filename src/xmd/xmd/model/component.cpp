@@ -116,13 +116,13 @@ void model::Component::setCapacity(unsigned int capacity) {
 bool model::Component::required(){
     try {
         switch(m_type) {
-        case Source :
+        case Sink :
         {
             auto sink = dynamic_cast<XMASSink *>(xmas_component());
             if (sink) m_required = sink->required_output;
             break;
         }
-        case Sink :
+        case Source :
         {
             auto source = dynamic_cast<XMASSource *>(xmas_component());
             if (source) m_required = source->required_input;
