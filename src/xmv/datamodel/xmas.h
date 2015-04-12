@@ -627,7 +627,7 @@ public:
      *
      * @param name the name of the sink
      */
-    XMASSink(const bitpowder::lib::String& name, bool external = false)
+    XMASSink(const bitpowder::lib::String& name, bool external = true)
         : XMASComponent(name), i(this, "i"), required_output(external)
     {
         p[0] = &i;
@@ -679,7 +679,7 @@ public:
     Port* p[1];
     bool required_input;              // is this source required as an interface port of a composite
 
-    XMASSource(const bitpowder::lib::String& name, bool external = false)
+    XMASSource(const bitpowder::lib::String& name, bool external = true)
         : XMASComponent(name), o(this, "o"), required_input(external)
     {
         p[0] = &o;

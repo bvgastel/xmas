@@ -38,8 +38,8 @@ public:
         return root->insert<T>(name, args...);
     }
 
-    XMASComponent *insertSource(const bitpowder::lib::String& name, bool external = false);
-    XMASComponent *insertSink(const bitpowder::lib::String& name, bool external = false);
+    XMASComponent *insertSource(const bitpowder::lib::String& name, bool external = true);
+    XMASComponent *insertSink(const bitpowder::lib::String& name, bool external = true);
     XMASComponent *insertFunction(const bitpowder::lib::String& name);
     XMASComponent *insertQueue(const bitpowder::lib::String& name, size_t capacity = 1);
     XMASComponent *insertJoin(const bitpowder::lib::String& name);
