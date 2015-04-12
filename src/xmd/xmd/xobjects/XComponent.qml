@@ -115,6 +115,11 @@ Model.XComponent {
         contextMenu.insertSeparator(0)
     }
 
+    // remove this
+    function remove(){
+        ComponentJs.remove(component)
+    }
+
     // Event handling
     onRotationChanged:{component.update();component.updateCanvasData()}
     onScaleChanged: {doMove(0,0);component.updateCanvasData()}
@@ -259,7 +264,7 @@ Model.XComponent {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: ComponentJs.remove(component)
+            onTriggered: remove()
         }
         MenuSeparator{}
         MenuItem {

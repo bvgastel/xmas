@@ -45,7 +45,6 @@ Model.XChannel {
     property bool selected: false
 
     // Signals
-    signal remove
 
     // JavaScripts
 
@@ -61,13 +60,14 @@ Model.XChannel {
         wire.y2 = mapFromItem(inport,5,5).y
     }
 
+    // remove this
+    function remove(){
+        ChannelJs.remove(channel)
+    }
+
     // Event handling
     onOutportChanged: outport ? doUpdate1() : null
     onInportChanged: inport ? doUpdate2() : null
-
-    // FIXME: Stefan: not sure how to do this, want to connect signal to mainWindow.log()
-    onWriteLog: console.log(msg, color)
-    onRemove: ChannelJs.remove(channel)
 
     // Graphical representation of a channel --> "wire"
     XWire {
@@ -100,19 +100,19 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: remove
+            onTriggered: remove()
         }
     }
 
     Connections {
         target: outport
         onUpdate: doUpdate1()
-        onRemoved: ChannelJs.remove(channel)
+        onRemoved: remove()
     }
     Connections {
         target: inport
         onUpdate: doUpdate2()
-        onRemoved: ChannelJs.remove(channel)
+        onRemoved: remove()
     }
 }
 

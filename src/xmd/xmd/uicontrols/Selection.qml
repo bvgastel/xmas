@@ -30,7 +30,6 @@
  **************************************************************************/
 
 import QtQuick 2.4
-import "qrc:/javascripts/xobjects/xcomponent.js" as ComponentJs
 
 Rectangle{
     id:selection
@@ -218,7 +217,7 @@ Rectangle{
         var group = selectedItems
         for (var i = group.length; i-- > 0; ){
             if (group[i].selected) {
-               ComponentJs.remove(group[i])
+                    group[i].remove()
             }
         }
         clear()
