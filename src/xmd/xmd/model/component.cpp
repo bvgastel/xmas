@@ -271,8 +271,10 @@ void model::Component::setExpression(QString expression) {
          } else {
             QMetaObject metaObject = model::Component::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator(metaObject.indexOfEnumerator("CompType"));
-            emit writeLog(QString("Invalid expression entered for ") +
-                          QString(metaEnum.valueToKey(m_type)) +  " \""  + m_name + "\" !" ,Qt::red);
+            QString errmsg = QString(result.m_errMsg.stl().c_str());
+            emit writeLog(QString("Parsing error for expression of ") +
+                          QString(metaEnum.valueToKey(m_type)) +  " \""  + m_name + "\" !" +
+                          " The error message is: '" + errmsg + "'" ,Qt::red);
         }
 
         if(hasUpdated) {

@@ -270,7 +270,6 @@ ExpressionResult XMASSource::setSourceExpression(bitpowder::lib::String &expr,
         return ExpressionResult(false, -1, errMsg.str());
     }
 
-
     auto result = ParseSourceExpression(expr, mp);
     // note: result has a bool() operator
     if (result) {
