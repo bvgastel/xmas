@@ -56,9 +56,10 @@ void model::Component::setName(QString name) {
         return;
     }
     // Do not allow change name to empty name
-    if (m_name != QString() && name.trimmed() == QString())
+    if (m_name != QString() && name.trimmed() == QString()) {
         emit nameChanged(false);
-    return;
+        return;
+    }
     // get project
     auto project = dataControl->project();
     if (!project) {
@@ -68,6 +69,8 @@ void model::Component::setName(QString name) {
     if (project->changeComponentName(m_name.toStdString(), name.trimmed().toStdString())) {
         m_name = name;
         emit nameChanged(true);
+    } else {
+       emit writeLog("Component name """ + name + """ allready exists!", Qt::red);
     }
     emit nameChanged(false);
 }
@@ -369,7 +372,9 @@ bool model::Component::addXmasComponent() {
             emit writeLog(QString("Unknown component type!"), Qt::red);
             return false;
         }
-    } catch (bitpowder::lib::Exception e) {}      // component already exists, ignore
+    } catch (bitpowder::lib::Exception e) {
+        emit writeLog(QString(e.description()), Qt::red);
+    }
 
     if (xmas_comp){
         emit componentAdded();
