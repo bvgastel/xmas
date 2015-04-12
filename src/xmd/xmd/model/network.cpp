@@ -410,6 +410,8 @@ bool model::Network::disconnect(XPort *outport, XPort *inport) {
             return true;
         }
     }
+    emit outport->connectedChanged();
+    emit inport->connectedChanged();
     return false;
 }
 
