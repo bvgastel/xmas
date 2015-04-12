@@ -274,7 +274,6 @@ bool model::Network::portError(XPort *port, QString errMsg) {
         }
     }
     emit writeLog(errMsg, Qt::red);
-    qDebug() << errMsg;
     return false;
 }
 
@@ -312,7 +311,6 @@ bool model::Network::xmasError(Output *xmas_outport, Input *xmas_inport, QString
     }
 
     emit writeLog(errMsg);
-    qDebug() << errMsg;
     return false;
 }
 
@@ -368,70 +366,50 @@ bool model::Network::disconnect(Output *xmas_outport, Input *xmas_inport) {
     return false;
 }
 
-/**
- * Connect method for qml
- *
- * @brief model::Network::connect
- * @param outport
- * @param inport
- * @return xmas connection succeeded
- */
+
+// add connection (canvas request)
 bool model::Network::connect(XPort *outport, XPort *inport) {
 
-    // Check ports
-    if (!outport) return portError(outport, "[Network::connect()] outport is null: ");
-    if (!inport) return portError(inport, "[Network::connect()] inport is null.");
-
+    // check outport
+    if (!outport) {
+        return portError(outport, "[Network::connect()] outport is null: ");
+    }
+    if (!inport) {
+        return portError(inport, "[Network::connect()] inport is null.");
+    }
     // obtain and check xmas inport and outport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
     bool success = connect(xmas_outport, xmas_inport);
-
-    if (success) {
-        if (outport->getComponent()) {
-            //emit outport->getComponent()->validChanged();
-        }
-        if (inport->getComponent()) {
-            //emit inport->getComponent()->validChanged();
-        }
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-    }
+    emit outport->connectedChanged();
+    emit inport->connectedChanged();
     return success;
 }
 
+// remove connection (canvas request)
 bool model::Network::disconnect(XPort *outport, XPort *inport) {
 
     // check outport
-    if (!outport) return portError(outport, "[Network::disconnect()] outport is null: ");
-    if (!inport) return portError(inport, "[Network::disconnect()] inport is null.");
-
+    if (!outport) {
+        return portError(outport, "[Network::disconnect()] outport is null: ");
+    }
+    if (!inport) {
+        return portError(inport, "[Network::disconnect()] inport is null.");
+    }
     //  check outport for being xmas outport to inport
     Output *xmas_outport = dynamic_cast<Output *>(outport->getPort());
     Input *xmas_inport = dynamic_cast<Input *>(inport->getPort());
-    if (xmas_outport == nullptr || xmas_inport == nullptr) {
-        xmasError(xmas_outport, xmas_inport, "[model::Network::disconnect()] xmas ports null: ");
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-        return false;
+    if (xmas_outport != nullptr && xmas_inport != nullptr) {
+        if (disconnect(xmas_outport, xmas_inport)) {
+            emit outport->connectedChanged();
+            emit inport->connectedChanged();
+            return true;
+        }
     }
-    if (disconnect(xmas_outport, xmas_inport)) {
-        emit outport->connectedChanged();
-        emit inport->connectedChanged();
-        return true;
-    }
-    emit outport->connectedChanged();
-    emit inport->connectedChanged();
     return false;
 }
 
-/**
- *  Relay request to add component to xmas
- *
- * @brief model::Network::addComponent
- * @param component to add
- * @return true if component was added into xmas
- */
+// add component (canvas request )
 bool model::Network::addComponent(model::Component *component) {
 
     bool result = component->addXmasComponent();
@@ -441,11 +419,7 @@ bool model::Network::addComponent(model::Component *component) {
     return result;
 }
 
-/**
- * @brief model::Network::removeComponent
- * @param component
- * @return
- */
+// remove component (canvas request)
 bool model::Network::removeComponent(model::Component *component) {
     auto project = dataControl->project();
     if (component) {
