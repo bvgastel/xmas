@@ -1,5 +1,7 @@
 Findings.md
 
+**** just to say final bug has been tackled :P
+
 type = bug, feature
 prio =  high    means "directly decreases benefit from using tool in essential area"
         medium  means "decreases benefit from using tool in non-essential area"
