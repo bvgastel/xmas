@@ -55,8 +55,7 @@ function createComponent(parent,component) {
     try {
         if (component.status === Qjs.Component.Ready && draggedItem == null) {
             draggedItem = component.createObject(parent,{"x":posnInWindow.x,"y": posnInWindow.y})
-            draggedItem.index = generateTagIndex(draggedItem)
-            draggedItem.name = draggedItem.prefix + draggedItem.index
+            draggedItem.name = generateName(draggedItem.prefix)
             if(draggedItem.type === Model.XComponent.Composite){
                 draggedItem.filename = item.filename
                 draggedItem.alias = item.alias
@@ -147,22 +146,35 @@ function doGridSnap(item){
     }
 }
 
-// generates a unique index per component type
-function generateTagIndex(item)
-{
+
+// generate a unique name
+function generateName(prefix) {
     try {
-        var max = -1
-        for(var child in network.children){
-            if(network.children[child].objectName==="component"){
-                if(item.type === network.children[child].type) {
-                    max = Math.max(network.children[child].index,max)
-                }
-            }
+        var idx = 0
+        var name = prefix + idx
+        while(!isUniqueName(name)){
+            ++idx
+           name = prefix + idx
         }
-        //idList.sort(function(a, b){return a-b})
-        return (++max)
+        return name
     } catch(e) {
-        log("[xcomponent.js(generateTagIndex) - ]" + e, "red")
+        log("[xcomponent.js(generateName) - ]" + e, "red")
     }
 }
 
+// check if name is unique
+function isUniqueName(name) {
+    try {
+        for(var child in network.children){
+            if(network.children[child].objectName==="component"){
+                if(name === network.children[child].name) {
+                    return false
+                }
+            }
+        }
+        return true
+    } catch(e) {
+        log("[xcomponent.js(isUniqueName) - ]" + e, "red")
+    }
+    return false
+}
