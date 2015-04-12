@@ -609,8 +609,9 @@ bitpowder::lib::String XMASNetwork::getVars() {
   */
 bool XMASNetwork::changeComponentName(bitpowder::lib::String oldName, bitpowder::lib::String &newName)
 {
-    auto it = components.find(oldName);
-    if (it != components.end()) {
+    auto it_old = components.find(oldName);
+    auto it_new = components.find(newName);
+    if (it_old != components.end() && it_new == components.end()) {
         XMASComponent *c = components.at(oldName);
         components.erase(oldName);
         c->name(newName.stl());
