@@ -37,143 +37,146 @@ var start
 var end
 var time
 
-// called by datacontrol signal
+// called by open network via datacontrol signal
 function createNetwork(object) {
+    try {
+        if(!object) {
+            log("Undefined network!","red")
+            return
+        }
 
-    if(!object) {
-        log("Undefined network!","red")
-        return
+        //clear network
+        network.clear()
+
+        // process list of components and create components
+        var complist = object["complist"]
+        for (var c in complist) {
+            loadComponent(complist[c])
+        }
+
+        // process list of connections and create connections
+        var connlist = object["channellist"]
+        for (var conn in connlist) {
+            var result = ChannelJs.create(
+                        connlist[conn]["outcomp"],
+                        connlist[conn]["outport"],
+                        connlist[conn]["incomp"],
+                        connlist[conn]["inport"]
+                        )
+        }
+    } catch(e) {
+        log("[xnetwork.js(createNetwork) - ]" + e, "red")
     }
-
-    //clear network
-    network.clear()
-
-    // process list of components and create components
-    var complist = object["complist"]
-    for (var c in complist) {
-        loadComponent(complist[c])
-    }
-
-    // process list of connections and create connections
-    var connlist = object["channellist"]
-    for (var conn in connlist) {
-        var result = ChannelJs.create(
-                    connlist[conn]["outcomp"],
-                    connlist[conn]["outport"],
-                    connlist[conn]["incomp"],
-                    connlist[conn]["inport"]
-                    )
-    }
-
 }
 
+// load component
 function loadComponent(object) {
-    var qml = ""
-    var component = null
-    var type = ""
-    if(!object) {
-        log("Undefined object!","red")
-        return
+    try {
+        var qml = ""
+        var component = null
+        var type = ""
+        if(!object) {
+            log("Undefined object!","red")
+            return
+        }
+
+        if(object.type!==undefined){
+            qml = getXQml(object.type)
+        } else {
+            log("Undefined type!" + object,"red")
+            return
+        }
+
+        if(qml==="") return
+
+        //    start = new Date().getTime()
+        component = Qt.createComponent(qml)
+        //    end = new Date().getTime()
+        //    log("Execution time: " + (end - start) + "ms","red")
+
+        if (component.status === Qjs.Component.Loading)
+            component.statusChanged.connect(createComponent(network,component,object))
+        else if (component.status === Qjs.Component.Ready)
+            createComponent(network,component,object)
+        else if (component.status === Qjs.Component.Error)
+            log(component.errorString(),"red")
+    } catch(e) {
+        log("[xnetwork.js(loadComponent) - ]" + e, "red")
     }
-
-    if(object.type!==undefined){
-        qml = getXQml(object.type)
-    } else {
-        log("Undefined type!" + object,"red")
-        return
-    }
-
-    if(qml==="") return
-
-//    start = new Date().getTime()
-    component = Qt.createComponent(qml)
-//    end = new Date().getTime()
-//    log("Execution time: " + (end - start) + "ms","red")
-
-    if (component.status === Qjs.Component.Loading)
-        component.statusChanged.connect(createComponent(network,component,object))
-    else if (component.status === Qjs.Component.Ready)
-        createComponent(network,component,object)
-    else if (component.status === Qjs.Component.Error)
-        log(component.errorString(),"red")
-
 }
 
-
+// get qml resource by type
 function getXQml(type) {
-    switch(type) {
-    case Model.XComponent.Queue:
-        return "qrc:/xmas/xobjects/queue.qml"
-    case Model.XComponent.Function:
-        return "qrc:/xmas/xobjects/function.qml"
-    case Model.XComponent.Fork:
-        return "qrc:/xmas/xobjects/fork.qml"
-    case Model.XComponent.Join:
-        return "qrc:/xmas/xobjects/join.qml"
-    case Model.XComponent.Switch:
-        return "qrc:/xmas/xobjects/switch.qml"
-    case Model.XComponent.Merge:
-        return "qrc:/xmas/xobjects/merge.qml"
-    case Model.XComponent.Sink:
-        return "qrc:/xmas/xobjects/sink.qml"
-    case Model.XComponent.Source:
-        return "qrc:/xmas/xobjects/source.qml"
-    case Model.XComponent.Composite:
-        return "qrc:/xmas/xobjects/composite.qml"
-    default:
-        log("Unknown xmas type! (" + type + ")","red")
-        return ""
+    try {
+        switch(type) {
+        case Model.XComponent.Queue:
+            return "qrc:/xmas/xobjects/queue.qml"
+        case Model.XComponent.Function:
+            return "qrc:/xmas/xobjects/function.qml"
+        case Model.XComponent.Fork:
+            return "qrc:/xmas/xobjects/fork.qml"
+        case Model.XComponent.Join:
+            return "qrc:/xmas/xobjects/join.qml"
+        case Model.XComponent.Switch:
+            return "qrc:/xmas/xobjects/switch.qml"
+        case Model.XComponent.Merge:
+            return "qrc:/xmas/xobjects/merge.qml"
+        case Model.XComponent.Sink:
+            return "qrc:/xmas/xobjects/sink.qml"
+        case Model.XComponent.Source:
+            return "qrc:/xmas/xobjects/source.qml"
+        case Model.XComponent.Composite:
+            return "qrc:/xmas/xobjects/composite.qml"
+        default:
+            log("Unknown xmas type! (" + type + ")","red")
+            return ""
+        }
+    } catch(e) {
+        log("[xnetwork.js(getXQml) - ]" + e, "red")
     }
 }
 
+// create component
 function createComponent(parent,component,object) {
-    var item = null
-    //TODO check if name is unique
-    if (component.status === Qjs.Component.Ready) {
-        item = component.createObject(parent,
-                                      {
-                                          "x":object.x,
-                                          "y":object.y,
-                                          "rotation":object.rotation,
-                                          "scale":object.scale,
-                                          "name":object.name
-                                      });
-        if (object.type === Model.XComponent.Queue) {
-            item.capacity = object.capacity ? object.capacity : 0
-            //item.capacityChanged()
+    try {
+        var item = null
+        //TODO check if name is unique
+        if (component.status === Qjs.Component.Ready) {
+            item = component.createObject(parent,
+                                          {
+                                              "x":object.x,
+                                              "y":object.y,
+                                              "rotation":object.rotation,
+                                              "scale":object.scale,
+                                              "name":object.name
+                                          });
+            if (object.type === Model.XComponent.Queue) {
+                item.capacity = object.capacity ? object.capacity : 0
+                //item.capacityChanged()
+            }
+            if (object.type === Model.XComponent.Source
+                    || object.type === Model.XComponent.Sink ) {
+                item.required = object.required ? object.required : true
+                //item.requiredChanged()
+            }
+            if (object.type === Model.XComponent.Function
+                    || object.type === Model.XComponent.Join
+                    || object.type === Model.XComponent.Switch
+                    || object.type === Model.XComponent.Source ) {
+                item.expression = object.expression ? object.expression : ""
+                //item.expressionChanged()
+            }
+            if (object.type === Model.XComponent.Composite) {
+                item.filename = object.filename ? object.filename : ""
+                item.alias = object.alias ? object.alias : ""
+                item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
+                item.boxed = object.boxed
+            }
+            item.componentAdded()
+        } else if (component.status === Qjs.Component.Error) {
+            log(component.errorString(),"red")
         }
-        if (object.type === Model.XComponent.Source
-                || object.type === Model.XComponent.Sink ) {
-            item.required = object.required ? object.required : true
-            //item.requiredChanged()
-        }
-        if (object.type === Model.XComponent.Function
-                || object.type === Model.XComponent.Join
-                || object.type === Model.XComponent.Switch
-                || object.type === Model.XComponent.Source ) {
-            item.expression = object.expression ? object.expression : ""
-            //item.expressionChanged()
-        }
-        if (object.type === Model.XComponent.Composite) {
-            item.filename = object.filename ? object.filename : ""
-            item.alias = object.alias ? object.alias : ""
-            item.image = object.image ? "qrc:/symbols/content/symbols/" + object.image : ""
-            item.boxed = object.boxed
-        }
-        item.componentAdded()
-    } else if (component.status === Qjs.Component.Error) {
-        log(component.errorString(),"red")
+    } catch(e) {
+        log("[xnetwork.js(createComponent) - ]" + e, "red")
     }
-}
-
-function destroy(component){
-    component.destroy()
-}
-
-// Grid Snap
-function doGridSnap(item){
-    var snapX = Math.round(((item.x-network.margin) / network.gridSize)) * network.gridSize + network.margin
-    var snapY =  Math.round(((item.y-network.margin) / network.gridSize)) * network.gridSize + network.margin
-    item.x = snapX
-    item.y = snapY
 }
