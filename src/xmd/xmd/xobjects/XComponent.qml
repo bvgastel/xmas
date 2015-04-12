@@ -239,7 +239,8 @@ Model.XComponent {
             color: "blue"
             wrapMode: TextInput.NoWrap
             font.pointSize : 12
-            onEditingFinished: {name = text; focus = false}
+            onEditingFinished: name = text
+            onAccepted: focus = false
             focus:true
             onFocusChanged: if(focus)selectAll()
             readOnly: false
