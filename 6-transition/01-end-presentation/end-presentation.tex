@@ -21,7 +21,7 @@
 %\logo{} 
 \institute{Open University\\team033\\Guus Bonnema, Stefan Versluys, Jeroen Kleijn} 
 \date{May 20, 2015} 
-\subject{XMas Designer} 
+\subject{ABI project XMas Designer} 
 
 \begin{document}
 
@@ -30,15 +30,42 @@
 \newcommand{\qml}{\textsc{Qml}\xspace}
 
 \begin{frame}
-\titlepage
+	\titlepage
+\end{frame}
+
+\begin{frame}{Who are we?}
+	\begin{description}
+		\item[Guus Bonnema]	Student Computer Science
+							Dayjob: functional maintenance
+		\item[Jeroen Kleijn] Student Computer Science
+							 Dayjob: ...............
+		\item[Stefan Versluys]	Student Computer Science
+								Dayjob: C++ embedded programming
+	\end{description}
 \end{frame}
 
 \begin{frame}{Assignment}
-	\begin{itemize}
-		\item Create a platform independent, maintainable application to develop
-			  a Network on Chip (NoC)
-		\item Refactor or rewrite the current application
-	\end{itemize}
+	\begin{columns}
+		\begin{column}[t]{5cm}
+		{\bf Customer needs}
+
+		Create a {\it platform independent}, {\it maintainable} application that supports
+		developing Network on Chip (\Noc) designs and supports adding verification tools
+		to check the \Noc designs for cycles and deadlocks. The tool should {\it integrate well}
+		with our existing C++ tools.
+		
+		Options are a rewrite
+		of the current tool or a refactor.
+		\end{column}
+		\begin{column}[t]{5cm}
+		{\bf Project intentions}		
+		
+		Using only multi-platform tools we aimed at creating a C++ tool for creating
+		and maintaining \Noc networks.
+		
+		Refactor seemed improbable as best solution
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Overview Process}
@@ -46,28 +73,23 @@
 		\begin{column}[t]{5cm}
 			Process
 			\begin{itemize}
-				\item <1->Planning phase: DAD approach
+				\item <1->Planning phase: DAD approach (Disciplined Agile Delivery)
 				\item <1->Domain analyses
 				\item <1->Iteration 0 Architecture
 				\item <1->Iteration 1 Build procedures and first prototype
 				\item <1->iteration 2, 3, 4, 5 software development
 				\item <1->\textit{Final Demo}$\leftarrow$
 				\item <1->\textbf{transition}
-				\begin{itemize}
-					\item {\tiny research context}
-					\item {\tiny software release version}
-					\item {\tiny final presentation}
-				\end{itemize}
 			\end{itemize}
 		\end{column}
 		\begin{column}[t]{5cm}
 			Development factors
 			\begin{itemize}
-				\item <2,7->Time boxing
-				\item <3,7->Early switch to \qt
-				\item <4,5,7->UI design : \qml
-				\item <5,7->Qml / xmas integration: fat interface
-				\item <6,7->Reorg OU $\rightarrow$ Communication drop
+				\item <2->Time boxing
+				\item <2->Early switch to \qt
+				\item <2->UI design : \qml
+				\item <2->Qml / xmas integration: fat interface
+				\item <2->Reorg OU $\rightarrow$ Communication drop
 			\end{itemize}
 		\end{column}
 	\end{columns}
@@ -76,10 +98,16 @@
 \begin{frame}{Contribution to research project}
 
 	\begin{itemize}
-		\item support for papers to reason about verification tools of NoC
-		\item support for designs of NoC
-		\item support for developers and testers of verification tools
-		\item support for marketing of research efforts at OU and Radboud university
+		\item {\bf Research}
+		\begin{itemize}
+			\item support for papers to reason about verification tools of NoC
+			\item support for developers and testers of verification tools
+			\item support for marketing of research efforts at OU and Radboud university
+		\end{itemize}
+		\item {\bf Design}
+		\begin{itemize}
+			\item support for designs of NoC
+		\end{itemize}
 	\end{itemize}
 
 \end{frame}
@@ -106,21 +134,21 @@
 
 \begin{frame}{Project Reflection}
 	\begin{itemize}
-		\item {\bf Working agile} was evidently the way to do this project. Up front
-				we had no idea what to expect and how easy it would be. So we agreed
-				to time boxing, using tools like skype, teamviewer, and, Agilefant, github.
-				There was no one tool to provide all at the required quality.
-				The approach could withstand the attack made by OU reorganization. Although we
-				did (internally) discuss replanning, we didn't.
-		\item {\bf Planning} We followed the planning exactly. One adjustment for OU reorganization: modifed one risk
-				and added one measure.
-		\item {\bf Cooperation} Contact was intens and cooperation (skype + screensharing) was intense as
-				well. 
-		\item {\bf Design} Several design decisions:
+		\item {\bf Agile} 
+				\begin{itemize}
+					\item tools: skype: teamviewer, github, agilfant. Worked well.
+					\item Internal communication: worked very well
+					\item External communication: limited (OU reorg)
+				\end{itemize}
+		\item {\bf Planning}
+				\begin{itemize}
+					\item scheduling \& iterations: followed to a t.
+					\item Influence OU reorg: risks increased
+				\end{itemize}
+		\item {\bf Design} 
 			\begin{itemize}
-				\item Switching to \qt				 would do it again
-				\item Switching to \qml				 might do it without tight xmas integration
-				\item Switching to xmas datamodel
+				\item Switching to \qt				 (would do it again)
+				\item Switching to \qml				 (might do it without tight xmas integration)
 				\item Switching to tight xmas integration (underestimated consequences)
 			\end{itemize}
 	\end{itemize}
