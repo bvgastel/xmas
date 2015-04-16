@@ -11,7 +11,8 @@ WARNINGS += -Wall
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prt
-CONFIG += static dll
+win32|linux:CONFIG += static dll
+macx: CONFIG += staticlib
 
 TARGET = bitpowder
 TEMPLATE = lib
@@ -24,7 +25,6 @@ SOURCES += \
     iterators.cpp \
     memory.cpp \
     memorypool.cpp \
-    memorypool.debug.cpp \
     parser.cpp \
     parser_json.cpp \
     queue.cpp \
@@ -45,7 +45,6 @@ HEADERS += \
     iterators.h \
     lock.h \
     memory.h \
-    memorypool.debug.h \
     memorypool.h \
     parser.h \
     parser_json.h \

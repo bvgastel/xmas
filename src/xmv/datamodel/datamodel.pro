@@ -15,7 +15,8 @@ CONFIG += create_prl
 CONFIG += link_prl
 
 win32: CONFIG += static
-unix: CONFIG += static dll
+linux: CONFIG += static dll
+macx: CONFIG += staticlib
 
 DEFINES += DATAMODEL_LIBRARY
 
@@ -83,9 +84,4 @@ unix|win32|macx {
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
-
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
+include(../../bitpowder/bitpowder.pri)

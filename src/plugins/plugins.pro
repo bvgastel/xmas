@@ -1,7 +1,7 @@
 TEMPLATE = subdirs
 
-CONFIG += ordered
 SUBDIRS += \
     syntaxcheckerplugin \
     mainplugin \
 
+mainplugin.depends = syntaxcheckerplugin

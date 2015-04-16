@@ -10,3 +10,6 @@ SUBDIRS += \
     xmd \
     bitpowdertest \
     xmvtest
+
+bitpowdertest.depends = bitpowder
+xmvtest.depends = xmv

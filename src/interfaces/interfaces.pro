@@ -15,7 +15,8 @@ WARNINGS += -Wall
 CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
-CONFIG += dll
+win32|linux: CONFIG += dll
+macx: CONFIG += staticlib
 
 DEFINES += INTERFACES_LIBRARY
 
@@ -47,18 +48,8 @@ unix|win32|macx {
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+BASE=..
+include(../xmv/datamodel/datamodel.pri)
 
-INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../bitpowder
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/debug/ -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../xmv/datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../xmv/datamodel
-DEPENDPATH += $$PWD/../xmv/datamodel
 
 

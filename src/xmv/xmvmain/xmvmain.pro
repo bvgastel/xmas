@@ -10,7 +10,6 @@ QT       -= gui qt
 
 TARGET = xmvmain
 CONFIG   += console
-CONFIG   -= app_bundle
 CONFIG   += C++11
 #CONFIG += link_prl
 
