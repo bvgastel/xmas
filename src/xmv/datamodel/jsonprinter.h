@@ -118,14 +118,14 @@ struct JsonEndProperty {};
 struct JsonStartString {};
 struct JsonEndString {};
 
-constexpr JsonNull jsonnull;
-constexpr JsonStartObject json_startobj;
-constexpr JsonEndObject json_endobj;
-constexpr JsonStartArray json_startarray;
-constexpr JsonEndArray json_endarray;
-constexpr JsonEndProperty json_endprop;
-constexpr JsonStartString json_startstr;
-constexpr JsonEndString json_endstr;
+constexpr JsonNull jsonnull = {};
+constexpr JsonStartObject json_startobj = {};
+constexpr JsonEndObject json_endobj = {};
+constexpr JsonStartArray json_startarray = {};
+constexpr JsonEndArray json_endarray = {};
+constexpr JsonEndProperty json_endprop = {};
+constexpr JsonStartString json_startstr = {};
+constexpr JsonEndString json_endstr = {};
 
 template<typename T>
 inline constexpr JsonProperty<T> jsonprop(const std::string& name, T value) {
