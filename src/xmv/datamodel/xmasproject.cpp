@@ -58,8 +58,6 @@ void XMASProject::allocate_initial_project() {
 void XMASProject::deallocate_project() {
     networks.clear();
     root = nullptr;
-    m_mp.vacuum();
-    m_mp.clear();
 }
 
 XMASNetwork* XMASProject::getRootNetwork() const {
