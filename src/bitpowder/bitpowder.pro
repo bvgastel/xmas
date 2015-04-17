@@ -22,18 +22,18 @@ DEFINES += BITPOWDER_LIBRARY
 SOURCES += \
     dispatch.cpp \
     exception.cpp \
-    iterators.cpp \
+#    iterators.cpp \
     memory.cpp \
     memorypool.cpp \
     parser.cpp \
     parser_json.cpp \
-    queue.cpp \
-    shared_object.cpp \
+#    queue.cpp \
+#    shared_object.cpp \
     simplestring.cpp \
-    stack.cpp \
-    stringparse.cpp \
+#    stack.cpp \
+#    stringparse.cpp \
     thread.cpp \
-    type_hash.cpp
+#    type_hash.cpp
 
 HEADERS += \
     atomic.h \
