@@ -10,7 +10,7 @@ WARNINGS += -Wall
 
 CONFIG += C++11
 CONFIG += create_prl
-CONFIG += link_prt
+CONFIG += link_prl
 win32|linux:CONFIG += static dll
 macx: CONFIG += staticlib
 

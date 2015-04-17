@@ -19,7 +19,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/$$BASE/bitpowder/
-        PRE_TARGETDEPS += $$OUT_PWD/$$BASE/bitpowder/libbitpowder.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/bitpowder/libbitpowder.a
 
         QMAKE_LFLAGS += -fprofile-arcs
 }

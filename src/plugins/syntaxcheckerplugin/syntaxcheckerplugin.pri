@@ -1,4 +1,4 @@
-include(../../bitpowder/bitpowder.pri)
+include(../../interfaces/interfaces.pri)
 
 QT += qml quick
 
@@ -17,7 +17,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/$$BASE/xmv/syntaxcheckermodel/
-        PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/syntaxcheckermodel/libsyntaxcheckermodel.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/syntaxcheckermodel/libsyntaxcheckermodel.a
 
 	QMAKE_LFLAGS += -fprofile-arcs
 }

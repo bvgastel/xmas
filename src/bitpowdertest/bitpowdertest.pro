@@ -17,7 +17,7 @@ SOURCES += \
 
 
 CONFIG += C++11
-CONFID += link_prl
+CONFIG += link_prl
 
 TARGET = bitpowdertest
 

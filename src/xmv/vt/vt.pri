@@ -17,7 +17,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/$$BASE/xmv/vt/
-        PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/vt/libvt.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/vt/libvt.a
 
 	QMAKE_LFLAGS += -fprofile-arcs
 }

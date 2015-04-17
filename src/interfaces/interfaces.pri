@@ -1,4 +1,4 @@
-include(../xmv/datamodel/datamodel.pri)
+include(../xmv/vt/vt.pri)
 
 QT += qml quick
 
@@ -17,7 +17,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/../../interfaces/
-        PRE_TARGETDEPS += $$OUT_PWD/../../interfaces/libinterfaces.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/../../interfaces/libinterfaces.a
 
         QMAKE_LFLAGS += -fprofile-arcs
 }

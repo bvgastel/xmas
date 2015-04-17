@@ -17,7 +17,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/$$BASE/xmv/datamodel/
-        PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/datamodel/libdatamodel.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/xmv/datamodel/libdatamodel.a
 
 	QMAKE_LFLAGS += -fprofile-arcs
 }
