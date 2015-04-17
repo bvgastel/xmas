@@ -17,7 +17,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/
-        #macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/libsyntaxcheckerplugin.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/libsyntaxcheckerplugin.a
 
 	QMAKE_LFLAGS += -fprofile-arcs
 }

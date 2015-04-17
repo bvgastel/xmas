@@ -41,3 +41,4 @@ unix|win32|macx {
 # Dependencies
 ################################################
 include(../../interfaces/interfaces.pri)
+r

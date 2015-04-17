@@ -19,7 +19,7 @@ win32 {
 
 unix {
         LIBS += -L$$OUT_PWD/../xmd/
-        PRE_TARGETDEPS += $$OUT_PWD/../xmd/libxmd.a
+        macx: PRE_TARGETDEPS += $$OUT_PWD/../xmd/libxmd.a
 
         QMAKE_LFLAGS += -fprofile-arcs
 }
