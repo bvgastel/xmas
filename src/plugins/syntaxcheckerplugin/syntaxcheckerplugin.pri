@@ -5,19 +5,19 @@ QT += qml quick
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
-LIBS += -lsyntaxcheckermodel
+LIBS += -lsyntaxcheckerplugin
 
 win32 {
-        CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/release/
-        CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/debug/
+        CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/release/
+        CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/debug/
 
-        CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/release/syntaxcheckermodel.lib
-        CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/debug/syntaxcheckermodel.lib
+        CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/release/syntaxcheckerplugin.lib
+        CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/debug/syntaxcheckerplugin.lib
 }
 
 unix {
-        LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/
-        macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckermodel/libsyntaxcheckermodel.a
+        LIBS += -L$$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/
+        #macx: PRE_TARGETDEPS += $$OUT_PWD/$$BASE/plugins/syntaxcheckerplugin/libsyntaxcheckerplugin.a
 
 	QMAKE_LFLAGS += -fprofile-arcs
 }

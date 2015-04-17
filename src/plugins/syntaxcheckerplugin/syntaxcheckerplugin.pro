@@ -8,7 +8,7 @@ QT       -= gui
 QT       += widgets
 
 CONFIG += plugin
-CONFIG += dll
+CONFIG += dll shared
 CONFIG += create_prl
 CONFIG += C++11
 
