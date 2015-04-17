@@ -17,7 +17,7 @@ public:
     void deallocate_project();
     void clear();
 
-    bitpowder::lib::MemoryPool& mp() { return *m_mp; }
+    bitpowder::lib::MemoryPool& mp() { return m_mp; }
 
     XMASNetwork* getRootNetwork() const;
     XMASNetwork* getNetwork(const std::string name) const;
