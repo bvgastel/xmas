@@ -43,7 +43,17 @@ void checkValidAndFlat(const XMASNetwork& network) {
     }
 }
 
+Input& composite_i(XMASComposite* c, const char* portName) {
+    Input* i = c->findInputPort(portName);
+    EXPECT_NE(i, nullptr);
+    return *i;
+}
 
+Output& composite_o(XMASComposite* c, const char* portName) {
+    Output* o = c->findOutputPort(portName);
+    EXPECT_NE(o, nullptr);
+    return *o;
+}
 
 class CreditCounterTest : public ::testing::Test
 {
@@ -95,7 +105,7 @@ TEST_F(BridgeCompositeTest, EmptyFlatNetwork) {
 
     auto bridge1 = test.insert<XMASComposite>("bridge", std::ref(bridge));
 
-    connect(bridge1->getOutputs()[0], bridge1->getInputs()[0]);
+    connect(composite_o(bridge1, "out"), composite_i(bridge1, "in"));
 
     XMASNetwork flattened = flatten(test);
 
@@ -115,15 +125,15 @@ TEST_F(BridgeCompositeTest, SourceBridgeSink) {
     auto bridge1 = test.insert<XMASComposite>("bridge1", std::ref(bridge));
 
 
-    connect(source1->o, bridge1->getInputs()[0]);
-    connect(bridge1->getOutputs()[0], sink1->i);
+    connect(source1->o, composite_i(bridge1, "in"));
+    connect(composite_o(bridge1, "out"), sink1->i);
 
 
     // add another bridge, isolated from the other components and connect the
     // two gates to each other
     // after flattening, no traces of the bridge should be left!
     auto bridge2 = test.insert<XMASComposite>("bridge2", std::ref(bridge));
-    connect(bridge2->getOutputs()[0], bridge2->getInputs()[0]);
+    connect(composite_o(bridge2, "out"), composite_i(bridge2, "in"));
 
 
 
@@ -178,8 +188,8 @@ TEST_F(CreditCounterTest, SourceCCSink) {
     auto sink1 = test.insert<XMASSink>("sink1");
     auto cc = test.insert<XMASComposite>("cc1", std::ref(creditCounter));
 
-    connect(source1->o, cc->getInputs()[0]);
-    connect(cc->getOutputs()[0], sink1->i);
+    connect(source1->o, composite_i(cc, "in"));
+    connect(composite_o(cc, "out"), sink1->i);
 
 
     // now flatten this network
@@ -215,9 +225,9 @@ TEST_F(CreditCounterTest, ConsecutiveCC) {
     auto cc1 = test.insert<XMASComposite>("cc1", std::ref(creditCounter));
     auto cc2 = test.insert<XMASComposite>("cc2", std::ref(creditCounter));
 
-    connect(source1->o, cc1->getInputs()[0]);
-    connect(cc1->getOutputs()[0], cc2->getInputs()[0]);
-    connect(cc2->getOutputs()[0], sink1->i);
+    connect(source1->o, composite_i(cc1, "in"));
+    connect(composite_o(cc1, "out"), composite_i(cc2, "in"));
+    connect(composite_o(cc2, "out"), sink1->i);
 
 
     // now flatten this network

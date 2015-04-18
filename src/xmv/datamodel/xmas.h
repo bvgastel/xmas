@@ -539,6 +539,10 @@ public:
      */
     PortIterators<Output**> outputPorts();
 
+    Port* findPort(std::string name, PortType type = PortType::ALL);
+    Input* findInputPort(std::string name);
+    Output* findOutputPort(std::string name);
+
     /**
      * @brief clearExtensions
      */
