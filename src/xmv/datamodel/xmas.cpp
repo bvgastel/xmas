@@ -637,6 +637,8 @@ bool XMASNetwork::removeComponent(bitpowder::lib::String name)
             }
         }
         auto count = components.erase(name);
+        // FIXME: delete/destroy the component
+
         if (count == 1) {
             return true;
         }
