@@ -41,6 +41,7 @@ Model.XChannel {
     // Properties
     objectName: "channel"
     focus: selected
+    z:100
     property color color: "darkblue"
     property bool selected: false
 
