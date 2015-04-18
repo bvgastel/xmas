@@ -164,7 +164,7 @@ XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResul
     networks.insert(std::make_pair(name, std::shared_ptr<XMASNetwork> {new XMASNetwork {"dummy", &m_mp}} ));
 
     // load the network
-    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, *m_mp, [this, basePath](std::string name) -> XMASNetwork* {
+    auto componentsAndGlobals = generate_xmas_from_parse_result(jsonResult, m_mp, [this, basePath](std::string name) -> XMASNetwork* {
         auto network_it = networks.find(name);
         if (network_it != networks.end()) {
             return network_it->second.get();
@@ -175,7 +175,7 @@ XMASNetwork *XMASProject::loadNetwork(bitpowder::lib::JSONParseResult &jsonResul
     });
     auto components = componentsAndGlobals.first;
 
-    XMASNetwork* result = new XMASNetwork {name, std::move(components), m_mp};
+    XMASNetwork* result = new XMASNetwork {name, std::move(components), &m_mp};
     networks.erase(name);
     networks.insert(std::make_pair(name, std::shared_ptr<XMASNetwork> {result}));
 

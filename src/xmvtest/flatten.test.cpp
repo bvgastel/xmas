@@ -23,10 +23,14 @@ void checkGateAndCompositeFree(XMASComponent* comp) {
         EXPECT_FALSE(typeid(*init) == typeid(XMASInGate));
         EXPECT_FALSE(typeid(*init) == typeid(XMASOutGate));
         EXPECT_FALSE(typeid(*init) == typeid(XMASComposite));
+        EXPECT_FALSE(typeid(*init) == typeid(XMASSource) && dynamic_cast<XMASSource*>(init)->required_input);
+        EXPECT_FALSE(typeid(*init) == typeid(XMASSink) && dynamic_cast<XMASSink*>(init)->required_output);
 
         EXPECT_FALSE(typeid(*target) == typeid(XMASInGate));
         EXPECT_FALSE(typeid(*target) == typeid(XMASOutGate));
         EXPECT_FALSE(typeid(*target) == typeid(XMASComposite));
+        EXPECT_FALSE(typeid(*target) == typeid(XMASSource) && dynamic_cast<XMASSource*>(target)->required_input);
+        EXPECT_FALSE(typeid(*target) == typeid(XMASSink) && dynamic_cast<XMASSink*>(target)->required_output);
     }
 
 }
