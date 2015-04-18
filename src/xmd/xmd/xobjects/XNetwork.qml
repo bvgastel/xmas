@@ -108,7 +108,7 @@ Model.XNetwork {
         if (wire.port1
                 && wire.port1 !== port
                 && wire.port2 !== port) {
-            if (wire.port1.type !== port.type){
+            if (isValidPort(port)){
                 wire.port2 = port
             }
         } else {
@@ -119,7 +119,7 @@ Model.XNetwork {
     function wiring(port) {
         selection.clear()
         if (wire.port1) {
-            if(wire.port1.type !== port.type)
+            if(isValidPort(port))
             {
                 ChannelJs.doConnect(wire.port1,port)
                 ChannelJs.channel = null
@@ -139,7 +139,9 @@ Model.XNetwork {
 
     function isValidPort(port){
         if(wire.port1){
-            return wire.port1.type !== port.type
+            return (wire.port1.type !== port.type
+                        && ((wire.port1.parent !== port.parent)
+                            || port.parent.type === Model.XComponent.Composite))
         }
         return true
     }
