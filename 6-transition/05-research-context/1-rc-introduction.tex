@@ -46,21 +46,21 @@ manufacturing cost, SoC time to market, SoC time to volume, and SoC design risk
 or increases SoC performance.''} \cite{NoC-busses} 
 
 The success of the NoC design depends on the research of the interfaces between
-processing elements of NoC and interconnection fabric the performance of the NoC
-design relies greatly on the interconnection paradigm.
+processing elements of NoC and interconnection fabric.
 
 \paragraph{xMAS}
 
 If a SoC does not meet its specification or isn't reliable e.g. because of
 deadlock situations in a NoC, the cost of production loss is much higher than
-the costs spent for design or verification. In worst case a company can lose its
-market share and remain reputational damage. It is very important to detect
-flaws in an early stage of SoC production process, therefor researchers have
-developed a high level modelling language for communication fabrics called xMAS
-or executable Micro Architectural Specifications. This high level approach makes
-it less complex and gives researchers a way to gain knowledge of how these
-fabrics behave under certain conditions so they can prove the absence or
-presence of specific properties long before it's built on silicon.
+the costs spent for the extra design or verification effort. In worst case a
+company can lose its market share and remain reputational damage. It is very
+important to detect flaws in an early stage of SoC production process, therefor
+researchers have developed a high level modelling language for communication
+fabrics called xMAS or executable Micro Architectural Specifications. This high
+level approach makes it less complex and gives researchers a way to gain
+knowledge of how these fabrics behave under certain conditions so they can prove
+the absence or presence of specific properties long before it's built on
+silicon.
 
 xMAS consist of only eight primitive components that have one or more ports. To
 create a valid model all ports must be connected by channels and components must
@@ -105,7 +105,7 @@ can be easily plugged in, controlled and send feedback to the designer.
 \end{wrapfigure}
 A scientist can easily implement a new verification algorithm if it has the plugin
 interface. We've foreseen the syntax checker of such a plugin interface and can
-be used as an example. 
+be used as an example for ohter verification tools. 
 Each plugin gets automatically its own console output and
 control with setup fields. Starting a verification process is simply done by
 clicking the start button, no conversion or exports are necessary anymore.
@@ -126,8 +126,8 @@ way.
 \label{fig:composite-use}
   \vspace{-10pt}
 \end{wrapfigure}
-Models can be setup with composite properties so these can be used just
-like primitives. A designer can do this by adding them to a model its composite
+A model can be setup with composite properties so it can be used just
+like a primitive. A designer can do this by adding them to a model its composite
 library and drag those into the canvas. The way that xmd implements composites
 gives scientists the opportunity to extend these with a parametric expression.
 With a parametric expression it is possible to call a composite in a recursive
