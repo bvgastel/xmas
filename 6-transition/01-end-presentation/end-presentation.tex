@@ -5,7 +5,10 @@
 %%% if the mode is not presentation (but article or handout) they are not shown
 \mode<presentation>{}
 
-\usetheme{Warsaw}
+%\usetheme{Warsaw}
+\usetheme{Dresden}
+%\usetheme{Copenhagen}
+%\usetheme{Montpellier}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -19,7 +22,7 @@
 %\setbeamercovered{transparent} 
 %\setbeamertemplate{navigation symbols}{} 
 %\logo{} 
-\institute{Open University\\team033\\Guus Bonnema, Stefan Versluys, Jeroen Kleijn} 
+\institute{Open University/\\team033/\\Guus Bonnema, Stefan Versluys, Jeroen Kleijn} 
 \date{May 20, 2015} 
 \subject{ABI project XMas Designer} 
 
@@ -34,7 +37,7 @@
 \end{frame}
 
 \begin{frame}
-	{\bf Contents}
+	\frametitle{Contents}
 	\begin{itemize}
 		\item [Guus] Introduction 
 		\item [Guus] Assignment
@@ -47,12 +50,14 @@
 	
 \end{frame}
 
-\begin{frame}{Introduction}
+\begin{frame}
+	\frametitle{Introduction}
 	\begin{tabular}{lp{2.5cm}p{4cm}}
 	\hline
 	{\bf Student} & {\bf Role}      & {\bf Dayjob}\\\hline
 	Jeroen        &  Datamodel      & Programmer for eLearning appl\\
 	Guus		  &  Mapping        & Functional maintenance\\
+	              &  Architecture   &                       \\
 	Stefan        &  User interface & C++ programmer (embedded)\\
 	\hline
 	\end{tabular}
@@ -135,13 +140,13 @@
 
 \begin{frame}{Specification model Data Layer iteration 1}
 
-	\includegraphics[width=.95\linewidth]{pictures/1c-architecture-dynamic-1}
+	\includegraphics[width=.80\linewidth]{pictures/1c-architecture-dynamic-1}
 
 \end{frame}
 
 \begin{frame}{Implementation Data layer}
 
-	\includegraphics[width=.95\linewidth]{pictures/1c-architecture-dynamic-2}
+	\includegraphics[width=.90\linewidth]{pictures/1c-architecture-dynamic-2}
 
 \end{frame}
 
