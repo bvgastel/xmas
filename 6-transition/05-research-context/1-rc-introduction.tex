@@ -1,13 +1,13 @@
 \section{Introduction}
 
-\paragraph{Background}
+\paragraph{Background} \cite{SoC-market}
 
 Today we all know that personal computers do not rule the chip industry's market
-anymore but it does much more by small intelligent devices. If we look into the
+anymore but the more by small intelligent devices. If we look into the
 near future upcoming technologies like the internet of things, intelligent cars
 or drones will overrule all previous market demands for chip industries. Common
 properties of such devices made chip producers already shifting their challenges
-from transistor level to core level for following reasons:
+from transistor level to core level wich are:
 
 \begin{enumerate}
 \item Integration of multiple powerful functionalities into one small device
@@ -18,27 +18,27 @@ from transistor level to core level for following reasons:
 
 This background illustrates the importance of further integration and the
 related technologies that makes this possible. These technologies are introduced
-in the next sections. \cite{SoC-market}
+in the next sections. 
 
 \paragraph{SoC}
 
 An integrated circuit that covers multiple cores or intellectual properties
 blocks (IP's) which are linked to an internal bus system is called a system on
-chip or SoC. IP's of several companies are integrated into a single chip, by
-this a company can focus on its core business instead of building all the
-functionality by themselves and reduce time to market. Following Moore's law the
-number of IP's in a SoC will double every two years. But the more IP's attached
+chip or SoC. IP's of several companies are integrated into a single chip. So the
+SoC producer can focus on its core business instead of building all the
+functionality by themselves and reduce time to market. But the more IP's attached
 to a traditional bus system the wiring delay increases exponential and longer
 wiring reduces the bus its bandwidth.\cite{SoC}
 
 \paragraph{NoC}
 
-To cope with the increasing number of cores into one chip and to make
-integration of IP's from different companies less complex the use of network
-communication inside a chip instead of a traditional bus system is inevitable. A
-so called network on chip or NoC has much less wiring and can handle more IP's
-without losing performance. For the related business it has the same advantage
-as it does for network communication in general:
+The use of network communication inside a chip instead of a traditional bus
+system is inevitable. One of the reasons is to cope with the increasing number
+of cores into a single chip. It is also less complex to integrate IP's from
+different companies. A so called network on chip or NoC has much less wiring
+\cite{NoC-busses} and can handle more IP's without losing performance. For the
+related business it has the same advantage as it does for network communication
+in general:
 
 \textit{``Replacement of SoC busses by NoCs will follow the same path of data
 communications when the economics prove that the NoC either reduces SoC
@@ -50,22 +50,24 @@ processing elements of NoC and interconnection fabric.
 
 \paragraph{xMAS}
 
-If a SoC does not meet its specification or isn't reliable e.g. because of
-deadlock situations in a NoC, the cost of production loss is much higher than
-the costs spent for the extra design or verification effort. In worst case a
-company can lose its market share and remain reputational damage. It is very
-important to detect flaws in an early stage of SoC production process, therefor
+If a NoC does not meet its specification or isn't reliable e.g. because of
+deadlock situations in the network, the cost of production loss is much higher
+than the costs spent for the extra design or verification effort. In worst case
+a company can lose its market share and reputational damage. It is very
+important to detect flaws in an early stage of NoC production process, therefor
 researchers have developed a high level modelling language for communication
 fabrics called xMAS or executable Micro Architectural Specifications. This high
-level approach makes it less complex and gives researchers a way to gain
+level approach makes modelling less complex and gives researchers a way to gain
 knowledge of how these fabrics behave under certain conditions so they can prove
 the absence or presence of specific properties long before it's built on
 silicon.
 
-xMAS consist of only eight primitive components that have one or more ports. To
-create a valid model all ports must be connected by channels and components must
-be parameterized. Once a model has been created and parameterized it can be
-verified to detect deadlock situations or other flaws. 
+xMAS consists of only eight primitive components. Each component has one or more
+ports. To create a valid model all ports must be connected by channels. Some
+components have specific properties to set. These properties are used by the
+verification tools. E.g. the queue has a size property. Once a model has been
+created and all components are set up it can be verified to detect deadlock
+situations or other flaws.
 
 \begin{figure}[here]
 \includegraphics[width=1.0\textwidth]{xmas-language}
@@ -79,20 +81,36 @@ parameters. Gray letters indicate ports.}
 To make use of the xMAS language and verification tools, computer scientists
 have developed an application called WickedXMAS \cite{WickedXmas}.
 With this application it is possible to draw a model and export it so it can be
-verified. The verification tool reads the model and process one or more
+verified. The verification tool reads the model and processes one or more
 algorithms e.g. to detect network deadlocks or model syntax faults.
 
-To stay ahead and because of the importance of pre-production verification, our
-team has created a complete new tool. Our goal was to create a maintainable,
-platform independent, xMAS modelling tool that integrates the verification
-tools. The project is split into a designer that we call ``xmd'' or xMAS Model
-Designer and the verification process called ``xmv'' or xMAS Model Verification. The
-project is based on Qt's latest technology where we have written the GUI in QML
-(JavaScript) and the logic in c++.
+Although the WickedXMAS designer tool is still usefull and unique in its kind
+there are some major shortcomings and had to be redesigned because:
+\begin{enumerate}
+\item It was written in csharp which makes it only available for researchers
+working on a Windows platform.
+\item Verification tools are not integrated which
+makes it complicated to use.
+\item The model must be exported before it can be
+used by the verification tools.
+\item It is difficult to maintain, verification tools are written in c++ while
+designer is written in csharp and xaml
+\item The tool aborts in several situations.
+\item Lack of composite management.
+\item Not working recursive composite feature.
+\end{enumerate}
+
+Therefor our team was asked to design and build a new tool. Our goal was to
+create a maintainable, platform independent, xMAS modelling tool that integrates
+the verification tools. The project is split into a designer that we call
+``xmd'' or xMAS Model Designer and the verification process called ``xmv'' or
+xMAS Model Verification. The project is based on Qt's latest technology where we
+have written the GUI in QML (JavaScript) and the logic in c++.
 
 Instead of implementing specific verification tools we have put our effort into
 implementing a generic plugin interface. Via this interface, verification tools
-can be easily plugged in, controlled and send feedback to the designer. 
+can be easily plugged in and controlled. This interface can also send the
+verification results to the console.
 \begin{wrapfigure}{r}{0.55\textwidth}
   \vspace{-20pt}
   \begin{center}
@@ -103,12 +121,12 @@ can be easily plugged in, controlled and send feedback to the designer.
   \label{fig:console}
   \vspace{-10pt}
 \end{wrapfigure}
-A scientist can easily implement a new verification algorithm if it has the plugin
-interface. We've foreseen the syntax checker of such a plugin interface and can
-be used as an example for ohter verification tools. 
-Each plugin gets automatically its own console output and
-control with setup fields. Starting a verification process is simply done by
-clicking the start button, no conversion or exports are necessary anymore.
+A scientist can easily implement a new verification algorithm if it has the
+plugin interface. We have provided the syntax checker of such a plugin interface
+that can be used as an example for other verification tools. Each plugin
+automatically gets its own console output and control with setup fields.
+Starting a verification process is simply done by clicking the start button, no
+conversion or exports are necessary anymore.
 
 
 In the new designer ``xmd'' all actions on the canvas are now directly reflected
