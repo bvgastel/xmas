@@ -66,18 +66,6 @@ PACKET_TYPE
 
 *TODO*
 
-COMPOSITE_OBJECTS
------------------
-
-***NEW***
-
-Description:
-Array of references to subnetworks used as composite objects by this network.
-
-A reference indicates the relative location of the subnetwork on the filesystem excluding the extension.
-E.g. "mesh" refers to the network defined in "mesh.xmas" in the same directory as this network and
-"spidergon/node" refers to the network defined in "node.xmas" in the subdirectoy "spidergon".
-
 
 
 COMPONENT
@@ -108,16 +96,35 @@ Enumeration:
 * join
 * xswitch
 * merge
+* composite ***NEW***
 
+
+COMPONENT [type="source", type="sink"]
+--------------------------------------
+
+Propertes:
+
+* "required"    : **Boolean 1/0** - set to 1 when this source/sink is an interface port of a composite
+                                    network that must be connected by the higher level network.
+                                    set to 0 when this is optional.
 
 COMPONENT [type="composite"]
 ----------------------------
+***NEW***
 
 Properties:
 
 * "subnetwork"  : **String** - name of the subnetwork
+* ("parameters"  : **Not determined yet** - reserved property name, to be used in the future to parameterize the network)
 
-See also field **COMPOSITE_OBJECTS**
+Description:
+The subnetwork reference indicates the relative location of the subnetwork on the filesystem.
+
+E.g. "mesh.json" refers to the network defined in "mesh.json" in the same directory as this network and
+"spidergon/node.json" refers to the network defined in "node.json" in the subdirectoy "spidergon".
+
+*Note: Currently the XMAS designer requires that all used composite networks are defined in the same
+directory as the root network.*
 
 OUT
 ---
@@ -139,7 +146,7 @@ FIELD
 POSITION
 --------
 
-***New object type introduced by xMAS designer***
+***New json data object introduced by xMAS designer***
 
 Properties:
 
