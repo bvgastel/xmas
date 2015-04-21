@@ -1,13 +1,14 @@
-FJSON file format
-=================
+XMAS network file format
+========================
 
-This document (partially) describes the flat JSON file format currently used by
-checker. This description is meant as a specification that states how the xMAS
-design tool should serialize a network to disk. As such, not all data in
-currently availabe fjson files will be explained here. Only data required by
-the design tool will be listed. In order to graphically place components on a
-canvas, additional data fields have been added to the specification. These
-fields will not be used by the verification tools.
+This document describes the file format used to store XMAS network models. Both
+the XMAS designer application and the standalone verification tools use this
+file format. The structure is based on the flat json format used by the checker
+application provided at the start of this project. Several new fields have been
+added in order to support hierarchical networks and information specific to the
+designer. As the new file format is able to support both flat and hierachical
+networks, the (recommended) file extension has been changed from fjson to json.
+
 
 
 Root JSON object
@@ -15,10 +16,43 @@ Root JSON object
 
 Properties:
 
+* "CANVAS"              : **CANVAS** (optional) *NEW*
+* "COMPOSITE_NETWORK"   : **COMPOSITE_NETWORK** (optional) *NEW*
 * "VARS"                : **VARS**
 * "PACKET_TYPE"         : **PACKET_TYPE**
-* "COMPOSITIE_OBJECTS"  : **COMPOSITE_OBJECTS**
 * "NETWORK"             : array of **COMPONENT**
+
+
+
+CANVAS
+------
+
+***NEW***
+Used by the XMAS designer application to define properties of the designer canvas.
+When no CANVAS information is specified, default values are used.
+
+Properties:
+
+* "width"       : width of the canvas in logical units
+* "height"      : height of the canvas in logical units
+
+
+COMPOSITE_NETWORK
+-----------------
+
+***NEW***
+Contains designer specific information to use this network as a composite object.
+If this information is not present, the network cannot be used as a composite object.
+
+Properties:
+
+* "alias"       : displayed inside a composite object to denote the objects type (e.g. mesh)
+* "image-name"  : name of graphical resource used as a symbol to denote the objects type (e.g. mesh.ico)
+* "boxed-image" : set to 1 to use the image as a symbol inside a generic composite object (drawn boxed)
+                  or set to 0 to use the image as the graphical representation of the entire component,
+                  this can be used to draw common macro's like credit counters and delays using the symbols
+                  commonly used in literature to denote these macro's.
+* "packet"      : ???
 
 
 VARS
