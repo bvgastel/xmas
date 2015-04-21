@@ -44,6 +44,7 @@ unix|win32 {
 ################################################
 BASE=..
 include(../xmv/vt/vt.pri)
+include(../bitpowder/bitpowder.pri)
 
 linux|win32: LIBS += -L$$PWD/../../lib -lgtest
 

@@ -39,3 +39,4 @@ unix|win32|macx {
 # Dependencies
 ################################################
 include(../xmd/xmd.pri)
+include(../../interfaces/interfaces.pri)

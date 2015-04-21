@@ -40,5 +40,5 @@ unix|win32|macx {
 ################################################
 # Dependencies
 ################################################
+include(../../xmv/vt/vt.pri)
 include(../../interfaces/interfaces.pri)
-r
