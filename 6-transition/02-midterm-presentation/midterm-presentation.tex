@@ -73,14 +73,25 @@
 \end{frame}
 
 \begin{frame}[label=achtergrond2]{Achtergrond}
- \begin{itemize}
-  \item Nadelen SoC's:
-  \begin{itemize}
-   \item Niet flexibel
-   \item Niet schaalbaar
-  \end{itemize}
 
- \end{itemize}
+    \begin{columns}
+        \begin{column}[t]{5cm}
+            {\bf Nadelen SoC's}
+            \begin{itemize}
+                \item <1->Niet flexibel
+                \item <1->Niet schaalbaar
+                \item <3->\includegraphics[width=0.75\textwidth]{trad-bus}
+            \end{itemize}
+        \end{column}
+        \begin{column}[t]{5cm}
+            \visible<2->{\textbf {NoC's}}
+            \begin{itemize}
+                \item <2->IP blocks
+                \item <2->netwerkinfrastructuur
+                \item <3->\includegraphics[width=0.75\textwidth]{switch-fabric}
+            \end{itemize}
+        \end{column}
+    \end{columns}
 
 \end{frame}
 
