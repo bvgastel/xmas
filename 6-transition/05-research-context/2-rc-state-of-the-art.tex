@@ -1,17 +1,17 @@
 \section{State of the art}
 
-While SoC's are used from consumer to critical applications and the number of
-IP's rises, new challenges are awaiting. Challenges where one has to compromise
-between performance and reliability. E.g. if one could prove the absolute
-correctness of a NoC than there would be no need to add communication fabric or
-protocol overhead to recover or avoid errors. But that's not the case the
-questions is finding the right balance between runtime and design-time
-correctness achievements. While formal verification techniques have made a lot
-of progress in proving deadlock freedom there is still some future work e.g. for
-finding a deadlock freedom prove at bit level. The same hold to prove liveness,
-although it is practical impossible to prove so, some experiments show that is
-possible for a particular type of liveness called ``progress'' which is a form
-of deadlock freedom. \cite{Ray:2012:SPV:2492708.2492936,itp}
+As SoC's are used from consumer to critical applications and the number of IP's
+rises, new challenges are awaiting. Chip designers have to compromise between
+performance and reliability. For example, if one could prove the absolute
+correctness of an NoC then there would be no need to add communication fabric or
+protocol overhead to recover or avoid errors. The questions is finding the right
+balance between runtime and design-time correctness achievements. While formal
+verification techniques have made a lot of progress in proving deadlock freedom
+there is still some future work e.g. for finding a deadlock freedom proof at bit
+level. The same holds to prove liveness, although it is practically impossible to
+prove so, some experiments show that is possible for a particular type of
+liveness called ``progress'' which is a form of deadlock absence.
+\cite{Ray:2012:SPV:2492708.2492936,itp}
 
 Other verification techniques like those use by the ForEver framework addresses
 the correctness of a NoC by attacking the problem both at design-time and at
@@ -22,19 +22,19 @@ handling large networks which is difficult to do by formal verification.
 Other improvements like those of the communication fabrics will not only help to
 gain bandwidth but facilitates in mechanisms to achieve correctness by avoidance
 or recovery. Reconfigurable NoC of BiNoC, where channels can dynamically
-reconfigure themselves so that these work bidirectional instead of the
+reconfigure themselves so that these work bidirectionally instead of the
 unidirectional communication fabrics. The flow direction at each channel is
 controlled by a channel direction control (CDC) algorithm. Implemented with a
 pair of finite state machines, this CDC algorithm is shown to be high
 performance, free of deadlock, and free of starvation \cite{5715603}
 
-3D optical communication is also a promising technique it creates the
-possibility for massive degree of integration in a single chip. Vertical optical
+3D optical communication is also a promising technique. It creates the
+possibility a massive degree of integration in a single chip. Vertical optical
 channels are used to interconnect the layers and have many improvements over
 traditional copper-based SoC's. It is interesting to think about the relation
-with formal verification. A question could be of how to deal with massive
-networks, can these still be modelled by a human or what about the time it takes
-to calculate.
+with formal verification. Questions could be: How to deal with a massive
+network? Can these still be modelled by a human? How long wil it take to verifiy
+such networks?
 
 To conclude, the importance of verification during design time remains and wil
 always have benefits over realtime verification, no matter how massive the
