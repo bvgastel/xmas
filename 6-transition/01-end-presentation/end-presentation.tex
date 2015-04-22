@@ -16,13 +16,19 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{xspace}
+\usepackage{tikz}
+%\usetikzlibrary{snakes} % decorations in stead of snakes
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+%\usetikzlibrary{pictures}
+%\usepackage{chronology} % removed: doesn't work
 
 \author{Team33}
 \title{Final Presentation\\(XMas Designer)}
 %\setbeamercovered{transparent} 
 %\setbeamertemplate{navigation symbols}{} 
 %\logo{} 
-\institute{Open University/\\team033/\\Guus Bonnema, Stefan Versluys, Jeroen Kleijn} 
+\institute{Open University/\\Guus Bonnema, Stefan Versluys, Jeroen Kleijn} 
 \date{May 20, 2015} 
 \subject{ABI project XMas Designer} 
 
@@ -47,6 +53,8 @@
 		\item [Guus] Architecture
 		\item [Guus] Reflection
 	\end{itemize}
+	
+	Vragen stellen kan achteraf en tussendoor.
 	
 \end{frame}
 
@@ -86,6 +94,82 @@
 	\end{columns}
 \end{frame}
 
+%\begin{frame}
+%	\begin{tikzpicture}[node distance=5mm and 5mm,
+%						skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}}]
+%		\node (dot) [terminal] {.};
+%		\node (digit) [terminal,right=of dot] {digit};
+%		\node (E) [terminal,right=of digit] {E};
+%		\path (dot) edge[->] (digit) % simple edges
+%			(digit) edge[->] (E) 
+%		($ (digit.east)!.5!(E.west) $)		
+%					edge[->,skip loop=-5mm] ($ (digit.west)!.5!(dot.east) $);
+%	\end{tikzpicture}
+%\end{frame}
+
+% TODO: add events as nodes and provide event arrows to connect to iterations
+\begin{frame}
+ \begin{tikzpicture}
+ 	[month/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=3mm},
+	transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm},
+	iteration/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm},
+	orgiter/.style={rectangle,draw=black!50,fill=yellow!60!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm}]
+%%	[fill=green!70!blue,every path/.style={draw}]
+	\newcounter{ysize};
+	\setcounter{ysize}{7};
+	\newcommand{\y}{\value{ysize}}
+	\node (sep) at (0,\y)    [month] {};
+	\node (start) at (0,\y-1) [transition] {};
+	\node (oct) at (1.0,\y-1)  [month] {};
+	\node (nov) at (2.2,\y-1)    [month] {};
+	\node (dec) at (3.4,\y-1)  [month] {};
+	\node (jan) at (4.6,\y-1)    [month] {};
+	\node (feb) at (5.8,\y-1)  [month] {};
+	\node (mar) at (7.0,\y-1)    [month] {};
+	\node (apr) at (8.2,\y-1) [month] {};
+	\node (may) at (9.4,\y-1)   [month] {};
+	\node (end) at (10.6,\y-1)   [transition] {};
+	\path (0,0);
+	\node (planning) at (0, \y-2) [orgiter] {};
+	\node [above=3mm of planning.north west,anchor=west] {Planning};
+	\node (domain) at (1.5, \y-2) [iteration] {};
+	\node [above=3mm of domain.north west,anchor=west] {Domain};
+	\node (arch) at (2.8, \y-2) [iteration] {};
+	\node [above=3mm of arch.north west,anchor=west] {Arch};
+	\node (setup) at (3.8, \y-2) [iteration] {};
+	\node [above=3mm of setup.north west,anchor=west] {Setup};
+	\node (iterA) at (5.2, \y-2) [iteration] {1};
+	\node [above=3mm of iterA.north west,anchor=west] {Build iterations};
+	\node (iterB) at (6.05, \y-2) [iteration] {2};
+	\node (iterC) at (6.9, \y-2) [iteration] {3};
+	\node (iterD) at (7.75, \y-2) [iteration] {4};
+	\node (transition) at (8.65,\y-2) [orgiter] {}; 
+	\node [above=3mm of transition.north west,anchor=west] {Transition};
+	\draw (sep) node[above=3pt] {sep};
+	\draw (sep) node[left=3pt] {13};
+	\draw (start) node[left=3pt] {22};
+	\draw (oct) node[above=3pt] {oct};
+	\draw (nov) node[above=3pt] {nov};
+	\draw (dec) node[above=3pt] {dec};
+	\draw (jan) node[above=3pt] {jan};
+	\draw (feb) node[above=3pt] {feb};
+	\draw (mar) node[above=3pt] {mar};
+	\draw (apr) node[above=3pt] {apr};
+	\draw (may) node[above=3pt] {may};
+	\draw (end) node[above=3pt] {end};
+	\draw (start) -- (oct) -- (nov) -- (dec) -- (jan) -- (feb) -- (mar) -- (apr) -- (may);
+	\draw [->,decorate,decoration={snake,amplitude=.6mm,segment length=3mm,post length=1mm}] (sep) -- (start);
+	\draw [->,decorate,decoration={snake,amplitude=.6mm,segment length=3mm,post length=1mm}] (may) -- (end);
+%	\path [fill] (-.2, \y-2) rectangle (2, \y-1.75);
+	
+
+%    % draw vertical lines
+%    \foreach \x in {0,1,2,4,5,7}
+%      \draw (\x cm,3pt) -- (\x cm,-3pt);
+
+  \end{tikzpicture}
+\end{frame}
+  
 \begin{frame}{Process Overview}
 	\begin{columns}
 		\begin{column}[t]{5cm}
@@ -150,7 +234,7 @@
 
 \end{frame}
 
-\begin{frame}{Project Reflection}
+\begin{frame}{Process Reflection}
 	\begin{itemize}
 		\item {\bf Agile} 
 				\begin{itemize}
@@ -169,6 +253,29 @@
 				\item Switching to \qml				 (would do it again)
 				\item Switching to tight xmas integration (underestimated consequences)
 			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Product Reflection}
+	\begin{itemize}
+		\item {\bf User Interface} 
+				\begin{itemize}
+					\item Programming user interface in \qml worked out well.
+							It was a lot easier than the conventional user interface
+					\item Integration between user interface and data structures
+							was painfull. For next time take more serious note
+							of alternatives affecting coupling through an interface
+					\item Composites finished ok. Was easier due to /qml
+				\end{itemize}
+		\item {\bf Data structures}
+				\begin{itemize}
+					\item Extensions (useful for visiting pattern) were a source
+							of memory errors, that partly still existed when
+							released. They are still being worked on.
+					\item Composites: easy enough to create. It shows the way
+							for parameterized objects.
+					\item Getting parsing right was more difficult than we expected.
+				\end{itemize}
 	\end{itemize}
 \end{frame}
 
