@@ -44,6 +44,7 @@
         <file>content/zoom-in.ico</file>
         <file>content/zoom-out.ico</file>
         <file>content/timer.ico</file>
+        <file>content/save-as.ico</file>
     </qresource>
     <qresource prefix="/symbols">
         <file>content/symbols/counter.png</file>
