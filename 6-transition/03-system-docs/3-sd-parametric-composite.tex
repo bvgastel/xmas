@@ -1,4 +1,125 @@
 \section{Parametric composite proposal}
 
+This section is a proposal of how composites could be parameterized via
+an expression. With a parametric expression a composite can be reused in a
+recursive way. The benefit is to create a large model without drawing all the
+elements as individual components. Instead a designer creates a valid subnetwork
+and set up its composite properties. In the ``large'' model the designer adds
+this composite and enter its parametric expression. During parsing of the
+expression the composite is called n-times, inputs and outputs are linked. The
+remaining ports are those of the resulting parametric composite and need to be
+connect in the model.
+
+\paragraph{Standard concept}
+
+The principle of how a composite is flattened and build to a canvas component is
+shown in figure~\ref{fig:standard-composite-parsing}.
+
+\begin{figure}[here]
+\includegraphics[width=0.75\textwidth]{pictures/composite-parsing}
+\caption{standard composite parsing}
+\label{fig:standard-composite-parsing}
+\end{figure}
+
+If a model is opened the flattener opens the model its composites in a recursive
+way until all underlaying composite are flattened. For the canvas only the first
+subnetwork level is necessary to extract the required sinks and sources.
+
+\begin{wrapfigure}{l}{0.55\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.20\textwidth]{pictures/composite-boxed}
+  \end{center}
+  \vspace{-20pt}
+  \label{fig:composite-boxed}
+  \caption{standard composite}
+  \vspace{-10pt}
+\end{wrapfigure}
+
+Required sinks and sources become the ports of the composite component. The port
+names are the names of these sinks and sources. Sinks become outputs while
+sources become inputs. The last step is to build a graphical representation of the
+composite its port list and extensions. This concept is generic and can be
+extended with a parameteric expression.
+The designer tool has already a dialog to enter the expression.
+
+\paragraph{Parametric concept}
+The propose is an expression with variable \$N which is a countdown for the
+recursive function in the parametric parser. Variable \$N must be assigned to a
+natural number and used as an index for network$[\$N]$ or port$[\$N]$.
+
+A parametric expression can have three valid states:
+
+\begin{enumerate}
+\item empty : standard composite
+\item \$N=n : parametric composite repeated $n+1$ times. Network and ports in
+the list get index ``\$N'' where n is a natural number.
+\item \$N=n , port assignments : same as previous but ports connected by
+expression asignments.
+\end{enumerate}
+
+\begin{figure}[here]
+\includegraphics[width=0.75\textwidth]{pictures/composite-parametric-parsing}
+\caption{parametric composite parsing}
+\label{fig:parametric-composite-parsing}
+\end{figure}
+
+In figure~\ref{fig:parametric-composite-parsing} the expression has \$N equals two.
+This means the flat network is duplicated two times together with the
+original resulting in three times the same network. Each network is added to a list
+where index equals \$N. The same for the portlist, e.g. networkX[0] its original
+ports ``a'' and ``b'' become $``a[0]'' and ``b[0]''$.
+
+\begin{wrapfigure}{r}{0.55\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.20\textwidth]{pictures/parametric-composite1}
+  \caption{parametric myMesh with \$N=2}
+  \label{fig:parametric-composite1}
+  \end{center}
+  \vspace{-20pt}
+\end{wrapfigure}
+
+The result of the standard ``myMesh'' composite from the previous paragraph with
+a parametric expression \$N=2 will look like
+figure~\ref{fig:parametric-composite1}
+
+To connect ports via the parametric expression is the next step in the
+expression. Suppose we want to cascade the myMesh from
+figure~\ref{fig:parametric-composite1}. So that out[0] will be connected to
+in0[1] and so on. Only output zzz[x] is not used in the expression and left
+open.
+The parser will start the expression with \$N=2 and counts down to zero. The
+expression is evaluated on each decrease of \$N.
+
+\begin{lstlisting}
+$N=2;
+if($N>0) {
+   in0[$N] := out[$N-1];
+   in1[$N] := x[$N-1];
+   in2[$N] := y[$N-1];
+ }
+}
+\end{lstlisting}
+
+\begin{wrapfigure}{r}{0.55\textwidth}
+  \vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.20\textwidth]{pictures/parametric-composite2}
+  \caption{parametric myMesh with \$N=2 and cascaded}
+  \label{fig:parametric-composite2}
+  \end{center}
+  \vspace{-20pt}
+\end{wrapfigure}
+
+The resulting parametric composite is shown in figure~\ref{fig:parametric-composite2}.
+
+In the last example we show a more complicated use of a parametric composite.
+This is an $8x8$ mesh of a simple $in-out$ .... we have meeting, to be continued 
+
+
+
+
+
 
 \newpage
