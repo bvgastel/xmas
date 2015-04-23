@@ -13,13 +13,22 @@ prove so, some experiments show that is possible for a particular type of
 liveness called ``progress'' which is a form of deadlock absence.
 \cite{Ray:2012:SPV:2492708.2492936,itp}
 
-Other verification techniques like those use by the ForEver framework addresses
-the correctness of a NoC by attacking the problem both at design-time and at
-runtime. With a minimal of overhead, this kind of approach is capable of
-handling large networks which is difficult to do by formal verification.
+
+\paragraph{Modelchecking (TODO)}
+\textit{Modelchecking is een formele verificatie techniek door de volledige industrie
+(hardware en software) is omarmd. Model checking heeft echter last van het
+statespace explosion problem: vaak kan het grote problemen (in termen van het
+aantal toestanden van het systeem) niet aan. Als jullie geen interessante
+referenties kunnen vinden hierover, dan kan ik jullie daarbij helpen.}
+
+
+\paragraph{ForEver}is a verification framework that addresses the correctness
+of a NoC by attacking the problem both at design-time and at runtime. With a
+minimal of overhead, this kind of approach is capable of handling large networks
+which is difficult to do by formal verification.
 \cite{Parikh:2014:FCF:2597868.2514871}
 
-Other improvements like those of the communication fabrics will not only help to
+\paragraph{Improvements}of the communication fabrics will not only help to
 gain bandwidth but facilitates in mechanisms to achieve correctness by avoidance
 or recovery. Reconfigurable NoC of BiNoC, where channels can dynamically
 reconfigure themselves so that these work bidirectionally instead of the
@@ -28,18 +37,18 @@ controlled by a channel direction control (CDC) algorithm. Implemented with a
 pair of finite state machines, this CDC algorithm is shown to be high
 performance, free of deadlock, and free of starvation \cite{5715603}
 
-3D optical communication is also a promising technique. It creates the
+\paragraph{3D optical communication}is also a promising technique. It creates the
 possibility a massive degree of integration in a single chip. Vertical optical
 channels are used to interconnect the layers and have many improvements over
 traditional copper-based SoC's. It is interesting to think about the relation
 with formal verification. Questions could be: How to deal with a massive
-network? Can these still be modelled by a human? How long wil it take to verifiy
-such networks?
+network? Can these still be modeled by a human? How long will it take to verify
+such networks? \cite{4542033,5306588}
 
-To conclude, the importance of verification during design time remains and wil
-always have benefits over realtime verification, no matter how massive the
-challenge becomes. It is rather a question of how to deal with large networks in
-formal verification. \cite{4542033,5306588}
+\paragraph{Conclusion: }The importance of verification during design time remains and will
+always have benefits over real-time verification, no matter how massive the
+challenge becomes. It is rather a challenge of how to deal with massive networks in
+formal verification.
 
 
 \newpage

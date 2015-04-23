@@ -4,10 +4,10 @@
 
 Today we all know that personal computers do not rule the chip industry's market
 anymore but the more by small intelligent devices. If we look into the
-near future upcoming technologies like the internet of things, intelligent cars
+near future upcoming technologies like the Internet of things, intelligent cars
 or drones will overrule all previous market demands for chip industries. Common
 properties of such devices made chip producers already shifting their challenges
-from transistor level to core level wich are:
+from transistor level to core level which are:
 
 \begin{enumerate}
 \item Integration of multiple powerful functionalities into one small device
@@ -40,7 +40,7 @@ different companies. A so called network on chip or NoC has much less wiring
 related business it has the same advantage as it does for network communication
 in general:
 
-\textit{``Replacement of SoC busses by NoCs will follow the same path of data
+\textit{``Replacement of SoC busses by NoC's will follow the same path of data
 communications when the economics prove that the NoC either reduces SoC
 manufacturing cost, SoC time to market, SoC time to volume, and SoC design risk
 or increases SoC performance.''} \cite{NoC-busses} 
@@ -54,10 +54,10 @@ If a NoC does not meet its specification or isn't reliable e.g. because of
 deadlock situations in the network, the cost of production loss is much higher
 than the costs spent for the extra design or verification effort. In worst case
 a company can lose its market share and reputational damage. It is very
-important to detect flaws in an early stage of NoC production process, therefor
-researchers have developed a high level modelling language for communication
+important to detect flaws in an early stage of NoC production process, therefore
+researchers have developed a high level modeling language for communication
 fabrics called xMAS or executable Micro Architectural Specifications. This high
-level approach makes modelling less complex and gives researchers a way to gain
+level approach makes modeling less complex and gives researchers a way to gain
 knowledge of how these fabrics behave under certain conditions so they can prove
 the absence or presence of specific properties long before it's built on
 silicon.
@@ -84,7 +84,7 @@ With this application it is possible to draw a model and export it so it can be
 verified. The verification tool reads the model and processes one or more
 algorithms e.g. to detect network deadlocks or model syntax faults.
 
-Although the WickedXMAS designer tool is still usefull and unique in its kind
+Although the WickedXMAS designer tool is still useful and unique in its kind
 there are some major shortcomings and had to be redesigned because:
 \begin{enumerate}
 \item It was written in csharp which makes it only available for researchers
@@ -97,18 +97,22 @@ used by the verification tools.
 designer is written in csharp and xaml
 \item The tool aborts in several situations.
 \item Lack of composite management.
-\item Not working recursive composite feature.
+\item Recursive composite feature not working.
 \end{enumerate}
 
-Therefor our team was asked to design and build a new tool. Our goal was to
-create a maintainable, platform independent, xMAS modelling tool that integrates
-the verification tools. The project is split into a designer that we call
+Therefore our team was asked to design and build a new tool. Our goal was to
+create a maintainable, platform independent, xMAS modeling tool that integrates
+the verification tools.
+By integrating formal verification into a new designer-friendly tool, a designer
+can easily verify a design.
+
+The project is split into a designer that we call
 ``xmd'' or xMAS Model Designer and the verification process called ``xmv'' or
 xMAS Model Verification. The project is based on Qt's latest technology where we
 have written the GUI in QML (JavaScript) and the logic in c++.
 
 Instead of implementing specific verification tools we have put our effort into
-implementing a generic plugin interface. Via this interface, verification tools
+implementing a generic plug-in interface. Via this interface, verification tools
 can be easily plugged in and controlled. This interface can also send the
 verification results to the console.
 \begin{wrapfigure}{r}{0.55\textwidth}
@@ -117,13 +121,13 @@ verification results to the console.
     \includegraphics[width=0.50\textwidth]{console}
   \end{center}
   \vspace{-20pt}
-  \caption{xmd syntax checker plugin console}
+  \caption{xmd syntax checker plug-in console}
   \label{fig:console}
   \vspace{-10pt}
 \end{wrapfigure}
 A scientist can easily implement a new verification algorithm if it has the
-plugin interface. We have provided the syntax checker of such a plugin interface
-that can be used as an example for other verification tools. Each plugin
+plug-in interface. We have provided the syntax checker of such a plug-in interface
+that can be used as an example for other verification tools. Each plug-in
 automatically gets its own console output and control with setup fields.
 Starting a verification process is simply done by clicking the start button, no
 conversion or exports are necessary anymore.
