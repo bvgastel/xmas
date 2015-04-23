@@ -94,19 +94,6 @@
 	\end{columns}
 \end{frame}
 
-%\begin{frame}
-%	\begin{tikzpicture}[node distance=5mm and 5mm,
-%						skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}}]
-%		\node (dot) [terminal] {.};
-%		\node (digit) [terminal,right=of dot] {digit};
-%		\node (E) [terminal,right=of digit] {E};
-%		\path (dot) edge[->] (digit) % simple edges
-%			(digit) edge[->] (E) 
-%		($ (digit.east)!.5!(E.west) $)		
-%					edge[->,skip loop=-5mm] ($ (digit.west)!.5!(dot.east) $);
-%	\end{tikzpicture}
-%\end{frame}
-
 % TODO: add events as nodes and provide event arrows to connect to iterations
 \begin{frame}
  \begin{tikzpicture}
