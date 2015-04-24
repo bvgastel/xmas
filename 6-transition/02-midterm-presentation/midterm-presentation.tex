@@ -26,7 +26,7 @@
 \usepackage{pgfgantt}
 
 \title[Plan]{Rebuilding WickedXMAS}
-\author[Team33]{Team33: Guus Bonnema, Jeroen Kleijn, Stefan Versluys}
+\author[Team33]{Team 33: Guus Bonnema, Jeroen Kleijn, Stefan Versluys}
 \date{25-04-2015}
 \institute[OU nl]{Open University The Netherlands}
 %%\logo{\includegraphics[scale=.25]{oulogo.pdf}}    <- OU has no logo that I could download
@@ -80,18 +80,37 @@
             \begin{itemize}
                 \item <1->Niet flexibel
                 \item <1->Niet schaalbaar
-                \item <3->\includegraphics[width=0.75\textwidth]{trad-bus}
+                \item <1->\includegraphics[width=0.75\textwidth]{trad-bus}
             \end{itemize}
         \end{column}
         \begin{column}[t]{5cm}
             \visible<2->{\textbf {NoC's}}
             \begin{itemize}
                 \item <2->IP blocks
-                \item <2->netwerkinfrastructuur
-                \item <3->\includegraphics[width=0.75\textwidth]{switch-fabric}
+                \item <2->Netwerkinfrastructuur
+                \item <2->\includegraphics[width=0.75\textwidth]{switch-fabric}
             \end{itemize}
         \end{column}
     \end{columns}
+
+\end{frame}
+
+\begin{frame}[label=xMAS]{xMAS}
+    \begin{itemize}
+     \item xMAS: eXecutable Microarchitectural Specification
+     \begin{itemize}
+      \item Visuele modelleertaal voor ``NoC''s
+     \end{itemize}
+    \end{itemize}
+
+    \visible<2->{\includegraphics[width=1\textwidth]{xmas-language}}
+
+\end{frame}
+
+\begin{frame}{xMAS}
+
+    \centering
+    \includegraphics[width=0.75\textheight]{two-agents}
 
 \end{frame}
 
@@ -102,12 +121,16 @@
 
 \begin{itemize}
 
-    \item xMAS: visuele modelleertaal voor ``NoC''s
-    \item uitvoeren van statische verificaties op een netwerk
     \item Eerdere projecten (o.a. ABI)
     \begin{itemize}
-     \item WickedXMAS: designtool voor het ontwerpen van xMAS netwerken
-     \item uitbreidingen (hierarchische netwerken, nieuwe verificatietools)
+        \item WickedXMAS: designtool voor het ontwerpen van xMAS-netwerken
+        \begin{itemize}
+         \item Ontwerpen van netwerken
+         \item Ondersteuning onderzoek naar verificatietools
+         \item Ondersteuning onderzoek naar uitbreidingen xMAS
+        \end{itemize}
+
+        \item Uitbreidingen (hierarchische netwerken, nieuwe verificatietools)
     \end{itemize}
 
 \end{itemize}
@@ -125,11 +148,11 @@
   \item integratie tussen designer en verificatietools
  \end{itemize}
  
- \item Verificatietools geport naar C++
+ \item<2-> Verificatietools geport naar C++
  
- \item Opdracht:
+ \item<2-> Opdracht:
  \begin{itemize}
-  \item Refactor / rebuild WickedXMAS om deze beperkingen op te lossen
+  \item Refactor / rebuild WickedXMAS
  \end{itemize}
 
 
@@ -192,6 +215,7 @@
          \item verdeling van functionaliteit over teamleden
          \item raakvlakken bespreken via mail/Skype
         \end{itemize}
+        \item door verminderd contact doelstelling bijgesteld
 
     \end{itemize}
 
@@ -201,12 +225,7 @@
 \begin{frame}{Huidige status en verwachtingen}
 
     \begin{itemize}
-        \item door verminderd contact doelstelling bijgesteld
-        \begin{itemize}
-         \item focus op basisfunctionaliteit
-         \item naar verwachting weer intensiever contact met opdrachtgever
-        \end{itemize}
-
+        \item Laatste fase ingegaan
     \end{itemize}
 
 \end{frame}
@@ -214,6 +233,7 @@
 
 \begin{frame}{Vragen}
 
+\centering
 ?
 
 \end{frame}
