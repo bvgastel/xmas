@@ -34,6 +34,7 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 \usepackage{listings}
+\usepackage{xspace}%
 
 \bibliographystyle{plain}% unsrt, plain, alpha, abbrv
 
@@ -62,6 +63,7 @@
 \newcommand{\ok}{$\checkmark$}
 \newcommand{\w}[1]{\textbf{\textsc{#1}}}
 \newcommand\bw[1]{{\color{blue}#1}}
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
 
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 
@@ -89,10 +91,9 @@
 
 	\noindent{} 
 Formal verification is a pre-production activity to prove the correctness of a
-design. It is important that designers can make use of such advanced tools
-without any knowledge. This can be realized by a designer-friendly tool that
-provide easy access to formal verification tools.
-This document illustrates why formal verification can play a crucial role
+design. Designers need to use verification technology, but often are not acquainted with formal verification methods.
+A designer tool with built-in verification tools that provides formal verification is of value for pre-production
+design of an \Noc. This document illustrates why formal verification methods play a crucial role
 in the design of new technologies.  
 
 
