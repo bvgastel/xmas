@@ -62,6 +62,25 @@ bool Util::saveFile(QUrl fileUrl, QString contents) {
     return true;
 }
 
+
+QString Util::saveAs(QUrl fileUrl)
+{
+    QFileDialog dialog(nullptr);
+    dialog.setWindowModality(Qt::WindowModal);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setDirectoryUrl(fileUrl);
+    dialog.selectFile(fileUrl.toLocalFile());
+
+    QUrl file;
+    if (dialog.exec())
+        file = dialog.selectedUrls().at(0);
+    else
+        return fileUrl.fileName();
+
+    return file.fileName();
+}
+
+
 QString Util::openFile(QUrl fileUrl) {
     QString filename =
             fileUrl.isLocalFile() ? fileUrl.toLocalFile()

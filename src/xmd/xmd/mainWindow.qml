@@ -114,6 +114,7 @@ ApplicationWindow {
     }
 
     function saveModel(){
+        console.log("saved " + network.url())
         network.saveFile(network.url())
         network.modified = false
     }
@@ -160,6 +161,15 @@ ApplicationWindow {
         text: "Save"
         shortcut: StandardKey.Save
         onTriggered: network.fileName === "?.json" ? modelSetupDialog() : saveModel()
+    }
+
+    Action {
+        id: fileSaveAsAction
+        iconSource: "qrc:/icons/content/save-as.ico"
+        iconName: "model-save-as"
+        text: "Save as..."
+        shortcut: StandardKey.SaveAs
+        onTriggered: {network.fileName = util.saveAs(network.url()); saveModel()}
     }
 
     Action {
@@ -325,6 +335,7 @@ ApplicationWindow {
             MenuItem { action: fileNewAction }
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
+            MenuItem { action: fileSaveAsAction }
             MenuItem { action: setupAction }
             MenuSeparator{}
             MenuItem { action: quitAction }
@@ -385,6 +396,7 @@ ApplicationWindow {
                 ToolButton { action: fileNewAction }
                 ToolButton { action: fileOpenAction }
                 ToolButton { action: fileSaveAction }
+                ToolButton { action: fileSaveAsAction }
                 ToolBarSeparator {}
                 ToolButton { action: modelSetupAction }
                 ToolBarSeparator {}
@@ -476,7 +488,7 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Overwrite " + network.fileName + "?  Press save to confirm!"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onYes: saveModel(true)
+        onYes: saveModel()
     }
 
     // Save before new?

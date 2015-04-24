@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QDir>
+#include <QFileDialog>
 
 class Util : public QObject
 {
@@ -51,6 +52,7 @@ signals:
 public slots:
 
     static QString modelPath();
+    static QString saveAs(QUrl fileUrl);
 
 
 public:
