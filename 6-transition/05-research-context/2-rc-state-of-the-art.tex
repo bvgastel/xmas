@@ -22,10 +22,13 @@ early design phase. In a hardware design it is even more critical because it is
 difficult or even impossible to repair an error afterward.
 
 Formal verification methods can be used to check the correctness of a model.
-This process can be done during design time. Exhaustive testing or peer reviews
-can only detect the presence of errors. Automated formal verification methods
-can prove the correctness of a model for some formal property.
-Some formal properties are:
+This activity can be done during design time and is very suitable to detect
+defects in an early stage of the development process. Exhaustive testing or peer
+reviews can only prove an error its presence not its absence. Automated formal
+verification methods can prove the absence or presence of a fomral property. If
+e.g. for a given model the property is a deadlock formal verification can prove
+its absence.
+Some formal properties:
 
 \begin{itemize}
 \item deadlock freedom : A terminal state can be reached.
