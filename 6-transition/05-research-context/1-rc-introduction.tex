@@ -2,39 +2,40 @@
 
 \paragraph{Background} \cite{SoC-market}
 
-The chip industry's focus is shifting from personal computing to 
-a plethora of small, intelligent devices. The internet of things, intelligent cars,
-smart phones and drones are only examples of the devices that draw the chip industry's 
-attention more and more. 
-Some common properties of such devices that force chip producers to shift their attention 
-from transistor level to core level are:
+The chip industry's focus has shifted from personal computing to a plethora of
+small, intelligent devices. The Internet of things, intelligent cars, smart
+phones and drones are only examples of the devices that draw the chip industry's
+attention more and more. Some common properties of such devices that force chip
+producers to shift their attention from transistor level to core level are:
 
 \begin{enumerate}
 \item The need for integration of multiple powerful functionalities into a small device
 \item The need for power efficiency, because of power dissipation in nanoscale VLSI circuits. 
 \item The need for cost reduction due the growth of chip producing competitors in these markets.
-\item The need for improvement of time to market using combined intellectual propertie in a product.
+\item The need for improvement of time to market using combined intellectual properties in a product.
 \end{enumerate}
 
-These issues illustrate the importance of further integration and the
-related technologies that makes this possible. The next section introduces these technologies.
+These issues illustrate the importance of further integration and the related
+technologies that makes this possible. The next paragraphs introduces these
+technologies.
 
 \paragraph{SoC}
 
 An integrated circuit that covers multiple cores or intellectual properties
-blocks (IP's) linked to an internal bus system is called a system on
-chip or SoC. A single chip often integrates IP's of several companies. It is this
-IP integration that allows the SoC producer to focus on its core business, removing the 
-need to develop the functions. Additionally this decreases development risks and reduces time to market.
+blocks (IP's) linked to an internal bus system is called a system on chip or
+SoC. A single chip often integrates IP's of several companies. It is this IP
+integration that allows the SoC producer to focus on its core business, removing
+the need to develop the functions. Additionally this decreases development risks
+and reduces time to market.
 
 However, with more IP's attached to a traditional bus system, the wiring delay increases 
-exponentially and longer wiring reduces the bus's bandwidth.\cite{SoC}
+and longer wiring reduces the bus's bandwidth.\cite{SoC}
 
 \paragraph{NoC}
 
 The use of network communication inside a chip instead of a traditional bus
 system is inevitable. One of the reasons is to cope with the increasing number
-of cores into a single chip. It is also less complex to integrate IP's from
+of cores into a single chip. Using a NoC makes is less complex to integrate IP's from
 different companies. A so called network on chip or NoC has much less wiring
 \cite{NoC-busses} and can handle more IP's without losing performance. For the
 related business it has the same advantage as it does for network communication
@@ -52,15 +53,15 @@ processing elements of NoC and interconnection fabric.
 
 If a NoC does not meet its specification or isn't reliable e.g. because of
 deadlock situations in the network, the cost of production loss is much higher
-than the costs spent for the extra design or verification effort. In worst case
-a company can lose its market share and reputational damage. It is very
-important to detect flaws in an early stage of NoC production process, therefore
-researchers have developed a high level modeling language for communication
-fabrics called xMAS or executable Micro Architectural Specifications. This high
-level approach makes modeling less complex and gives researchers a way to gain
-knowledge of how these fabrics behave under certain conditions so they can prove
-the absence or presence of specific properties long before it's built on
-silicon.
+than the costs spent for the design or verification effort. In worst case a
+company can lose its market share and have to deal with a reputational damage.
+It is very important to detect flaws in an early stage of NoC production
+process, therefore researchers have developed a high level modeling language for
+communication fabrics called xMAS or executable Micro Architectural
+Specifications. This high level approach makes modeling less complex and gives
+researchers a way to gain knowledge of how these fabrics behave under certain
+conditions so they can prove the absence or presence of specific properties long
+before it's built on silicon.
 
 xMAS consists of only eight primitive components. Each component has one or more
 ports. To create a valid model all ports must be connected by channels. Some
@@ -85,7 +86,7 @@ verified. The verification tool reads the model and processes one or more
 algorithms e.g. to detect network deadlocks or model syntax faults.
 
 Although the WickedXMAS designer tool is still useful and unique in its kind
-there are some major shortcomings and had to be redesigned because:
+there are some major shortcomings like:
 \begin{enumerate}
 \item It was written in csharp which makes it only available for researchers
 working on a Windows platform.
@@ -96,11 +97,12 @@ used by the verification tools.
 \item It is difficult to maintain, verification tools are written in c++ while
 designer is written in csharp and xaml
 \item The tool aborts in several situations.
-\item Lack of composite management.
-\item Recursive composite feature not working.
+\item No management of composite components.
+\item Recursive feature for the composite component is not working.
+\item There is no documentation available.
 \end{enumerate}
 
-Therefore our team was asked to design and build a new tool. Our goal was to
+Therefore our team was asked to design new tool. Our goal was to
 create a maintainable, platform independent, xMAS modeling tool that integrates
 the verification tools.
 By integrating formal verification into a new designer-friendly tool, a designer
@@ -133,26 +135,28 @@ Starting a verification process is simply done by clicking the start button, no
 conversion or exports are necessary anymore.
 
 
-In the new designer ``xmd'' all actions on the canvas are now directly reflected
-into the model network and can be verified immediately. Another improvement of
-the designer is the management of composite components, which are subnetworks
-that can be reused and make it possible to quickly build large models in an easy
-way.
+In the new designer tool all canvas actions are directly reflected into the
+network model and can be verified immediately. Another improvement of the
+designer is the management facility for composite components. These components
+are subnetworks that can be reused. This makes the design of large models less
+complicated and maintainable.
+
 \begin{wrapfigure}{r}{0.55\textwidth}
-  \vspace{-20pt}
+  \vspace{0pt}
   \begin{center}
     \includegraphics[width=0.50\textwidth]{composite-use}
   \end{center}
-  \vspace{-20pt}
+  \vspace{-10pt}
   \caption{xmd composite library and canvas use}
 \label{fig:composite-use}
-  \vspace{-10pt}
+  \vspace{0pt}
 \end{wrapfigure}
-A model can be setup with composite properties so it can be used just
-like a primitive. A designer can do this by adding them to a model its composite
+A model can be setup with composite properties so it can be used just like a
+primitive. A designer can do this by adding them to a model its composite
 library and drag those into the canvas. The way that xmd implements composites
 gives scientists the opportunity to extend these with a parametric expression.
-With a parametric expression it is possible to call a composite in a recursive
-way and avoid drawing large networks of already valid subnets.
+With a parametric expression it is possible to call a composite component in a
+recursive way. Instead of adding a composite component for each use in the model
+it can be done with only one that has been provided with a parametric expression.
 
 \newpage

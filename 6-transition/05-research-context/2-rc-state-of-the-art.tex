@@ -14,12 +14,52 @@ liveness called ``progress'' which is a form of deadlock absence.
 \cite{Ray:2012:SPV:2492708.2492936,itp}
 
 
-\paragraph{Modelchecking (TODO)}
-\textit{Modelchecking is een formele verificatie techniek door de volledige industrie
-(hardware en software) is omarmd. Model checking heeft echter last van het
-statespace explosion problem: vaak kan het grote problemen (in termen van het
-aantal toestanden van het systeem) niet aan. Als jullie geen interessante
-referenties kunnen vinden hierover, dan kan ik jullie daarbij helpen.}
+\paragraph{Model checking}\cite{baier2008principles}
+
+Defects must be detected as soon as possible. For example, the costs of repairing
+a software flaw during maintenance are roughly 500 times higher than a fix in an
+early design phase. In a hardware design it is even more critical because it is
+difficult or even impossible to repair an error afterward.
+
+Formal verification methods can be used to check the correctness of a model.
+This process can be done during design time. Exhaustive testing or peer reviews
+can only detect the presence of errors. Automated formal verification methods
+can prove the correctness of a model for some formal property.
+Some formal properties are:
+
+\begin{itemize}
+\item deadlock freedom : A terminal state can be reached.
+\item liveness : A state can be reachable whenever it is necessary.
+\item fairness : No path will constantly exclude other paths leading to some
+state. (starvation freedom)
+\end{itemize} 
+
+Model checking is a verification technique that explores all possible system
+states in a brute-force manner. If the number of model components raise, the
+number of possible states will increase exponential and so the space necessary
+to hold these states. This is known as the state-space explosion problem.
+
+The strengths of model checking:
+\begin{itemize}
+\item Can be used for a wide range of applications.
+\item Supports partial verification to focus on essential properties first.
+\item It proves absence of an error not the presence.
+\item Provides diagnostic information.
+\item Easy accessible ``push-button'' technology.
+\item Interest by industry.
+\item It can be easily integrated in existing development cycles.
+\item It has a sound and mathematical underpinning.
+\end{itemize} 
+
+The weaknesses of model checking:
+\begin{itemize}
+\item State-space explosion problem, not applicable for data-intensive or
+infinite-state systems.
+\item Verification result is only as good as the system model.
+\item Requires some expertise to interpret the results and to adopt the model.
+\item The tools may contain defects itself.
+\item It does not allow checking generalizations.
+\end{itemize} 
 
 
 \paragraph{ForEver}is a verification framework that addresses the correctness
