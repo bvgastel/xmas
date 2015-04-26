@@ -46,7 +46,34 @@ nullptr) is provided to the constructor, XMASNetwork will create its own
 MemoryPool instance. In this case, XMASNetwork also takes care of the MemoryPool
 destruction.
 
+
 \subsection{XMASComposite}
+
+When modelling a hierarchical network, composite objects are used to represent
+subnetworks as black boxes inside a higher-level network. The addition of
+composite objects to an xMAS network is reflected in the data model through the
+new XMASComposite class. Like the eight xMAS primitive types, XMASComposite
+is derived from XMASComponent. As such, XMASComposites can be used in the same
+way as the primitive components.
+
+When a new XMASComposite object is created, a reference to an XMASNetwork must
+be passed to the constructor. The composite object will represent an
+instantiation of this (sub)network.
+
+The sinks and sources of the subnetwork are used as interface ports or gates
+between the subnetwork and the higher-level network. An xMAS source component
+will result in an Input port on the composite object. Likewise, each xMAS sink
+component in the subnetwork leads to an Output port on the composite object.
+
+\subsubsection{Hierarchical visitors}
+
+Due to the introduction of the new XMASComposite type, the XMASComponentVisitor
+interface has been extended to support composite objects. Unlike the existing
+pure virtual visit functions, XMASComponentVisitor provides a default
+implementation to visit XMASComposites. This way, exisiting implementations of
+the interface which weren't designed to support composites aren't affected. The
+default visit implementation for composite objects does throw an Exception however.
+So, only flat, composite free networks should be passed to these implementations.
 
 \subsection{XMASProject}
 
