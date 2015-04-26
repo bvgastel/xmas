@@ -1,13 +1,14 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt]{article}
 %
 %% option = draft will generate black except with \color, replace images by a rectangle
 %% option = final will generate color
 %
 
 \usepackage{color}
+\usepackage{tcolorbox}
 \usepackage[all]{nowidow}
 \usepackage{bold-extra}
 \usepackage{footmisc}% granting the ability to use label for a footnote
@@ -17,7 +18,9 @@
 %\usepackage{supertabular}% multiple pages tabular
 \usepackage{longtable}% multiple pages table like tabular
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
-\usepackage[english]{babel}
+%% todo replace with thesis language (will be discussed on monday 27 apr 2015)
+%%\usepackage[english]{babel}
+\usepackage[dutch]{babel}
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{hyperref}% Load after biblatex
@@ -26,7 +29,7 @@
     citecolor = blue,
     linkcolor = blue
 }
-\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=small]{todonotes}% when generating final (documentclass option) skip notes
 \usepackage{pdflscape}
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
@@ -39,12 +42,11 @@
 
 \newcommand{\biburl}[1]{\hspace*{\fill}\\\url{#1} accessed oct/nov 2014}
 
-\author{ABI team 33\\
-		Guus Bonnema, Stefan Versluys en Jeroen Kleijn
-		}
+\author{ABI team 33}
+				
 \date{03/03/2015}
 
-\title{\color{blue}xMAS Design \& Verification tool}
+\title{\color{blue}XMAS Model Designer}
 
 \setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
 
@@ -52,7 +54,9 @@
 
 \begin{document}
 
-\selectlanguage{english}
+%%\selectlanguage{english}
+\selectlanguage{dutch}
+
 \hyphenation{func-tio-nal}
 
 \nowidow% needs package nowidow
@@ -77,6 +81,7 @@
 %\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \newcommand\smp[1]{%
 	\marginpar{\color{blue}\small\bf\textsc#1}
 }%
@@ -85,31 +90,47 @@
 
 \maketitle
 
+\begin{center}
+	T61327 - Afstudeerproject bachelor informatica
+	\\ \hfill\break
+	Open Universiteit Nederland, faculteit Informatica
+	\\ \hfill\break
+\end{center}
+
+\todo[inline]{english or dutch thesis body? decision on monday 27apr2015}
+
+
+\todo[inline]{enter studentnumber and check data}
+\begin{flushleft}
+    \begin{tabular}{p{2cm} l }
+    \textbf{studenten:} \\
+
+    & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
+    \textbf{naam} & \textbf{nr.} & \textbf{woonplaats} & \textbf{land} \\ \hline
+    Guus Bonnema & ?  & Dieren  & Nederland \\
+    Jeroen Kleijn & ? & Den Haag & Nederland \\
+    Versluys Stefan & 850317700 & Sint-Laureins & Belgie \\
+    \hline \break
+    \end{tabular}
+    \\ 
+    \textbf{begeleider:} & Freek Verbeek  \\
+    \textbf{examinator:} & Marko van Eekelen \\
+    \end{tabular}
+\end{flushleft}
+
+
 \begin{abstract}
-
-	\noindent{} Thesis Report.
-
+\todo[inline]{een korte samenvatting (plusminus 250 woorden)}
 \end{abstract}
 
-%\listoftodos   %% commented out when creating final document
-%\tableofcontents
+\newpage
+\listoftodos   %% hidden when documentclass is set to final
 
-TODO: insert title page with : 
-\begin{itemize}
-\item titel van het verslag 
-\item Engelse titel
-\item studentnaam, woonplaats en land
-\item studentnummer
-\item datum verslag
-\item eventueel een figuur en/of bedrijfslogo
-\item naam begeleider
-\item naam examinator
-\item ``T61327 - Afstudeerproject bachelor informatica''
-\item ``Open Universiteit Nederland, faculteit Informatica''
-\end{itemize}
+\newpage
+\tableofcontents
+\newpage
 
-\input{0-tr-summerizing}% include forces page break. Input does not.
-\input{1-tr-introduction}
+\input{1-tr-introduction}% include forces page break. Input does not.
 \input{2-tr-requirements}
 \input{3-tr-overview}
 \input{4-tr-reports}
