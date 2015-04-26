@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt]{report}
 %
 %% option = draft will generate black except with \color, replace images by a rectangle
 %% option = final will generate color
@@ -19,8 +19,7 @@
 \usepackage{longtable}% multiple pages table like tabular
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
 %% todo replace with thesis language (will be discussed on monday 27 apr 2015)
-%%\usepackage[english]{babel}
-\usepackage[dutch]{babel}
+\usepackage[english,dutch]{babel}
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{hyperref}% Load after biblatex
@@ -37,6 +36,13 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 \usepackage{listings}
+\usepackage{xspace}%
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\graphicspath{ {pictures/} }
 
 \bibliographystyle{plain}% unsrt, plain, alpha, abbrv
 
@@ -46,7 +52,13 @@
 				
 \date{03/03/2015}
 
-\title{\color{blue}XMAS Model Designer}
+\title{
+	{\color{blue}XMAS Model Designer}\\
+	{\large Open Universiteit Nederland, faculteit Informatica}\\
+	{\small T61327 - Afstudeerproject bachelor informatica}\\
+	\vspace{1cm}
+	{\includegraphics[width=.25\textwidth]{xmd}}
+}
 
 \setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
 
@@ -66,7 +78,7 @@
 \newcommand{\ok}{$\checkmark$}
 \newcommand{\w}[1]{\textbf{\textsc{#1}}}
 \newcommand\bw[1]{{\color{blue}#1}}
-
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 
 %\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
@@ -90,12 +102,6 @@
 
 \maketitle
 
-\begin{center}
-	T61327 - Afstudeerproject bachelor informatica
-	\\ \hfill\break
-	Open Universiteit Nederland, faculteit Informatica
-	\\ \hfill\break
-\end{center}
 
 \todo[inline]{english or dutch thesis body? decision on monday 27apr2015}
 
@@ -130,16 +136,39 @@
 \tableofcontents
 \newpage
 
+\chapter{Introduction}
 \input{1-tr-introduction}% include forces page break. Input does not.
+
+\chapter{Requirement}
 \input{2-tr-requirements}
+
+\chapter{Overview}
 \input{3-tr-overview}
+
+\chapter{Reports}
 \input{4-tr-reports}
+
+\chapter{Research context}
 \input{5-tr-research-context}
+
+\chapter{Product manual}
 \input{6-tr-product-manual}
+
+\chapter{Process report}
 \input{7-tr-process-report}
+
+\chapter{Team reflections}
 \input{8-tr-team-reflection}
+
+\chapter{Individual reflections}
 \input{9-tr-individual-reflections}
+
+\chapter{Conclusion}
 \input{10-tr-conclusion}
+
+\appendix
+\chapter{Appendix}
+%%\input{../09-appendix/appendix}
 
 % Bibliography ---> need to include
 \bibliography{tr}
