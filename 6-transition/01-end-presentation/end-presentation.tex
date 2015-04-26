@@ -54,7 +54,7 @@
 		\item [Guus] Reflection
 	\end{itemize}
 	
-	Vragen stellen kan achteraf en tussendoor.
+	Query? During (if urgent) or after (if not urgent)
 	
 \end{frame}
 
@@ -66,6 +66,7 @@
 	Jeroen        &  Datamodel      & Programmer for eLearning appl\\
 	Guus		  &  Mapping        & Functional maintenance\\
 	              &  Architecture   &                       \\
+	              &  org \& mgt     & \\
 	Stefan        &  User interface & C++ programmer (embedded)\\
 	\hline
 	\end{tabular}
@@ -74,15 +75,17 @@
 \begin{frame}{Assignment}
 	\begin{columns}
 		\begin{column}[t]{5cm}
-		{\bf Customer needs}
+		
+		\textbf{Customer needs}
 
 		Create a {\it platform independent}, {\it maintainable} application that supports
 		developing Network on Chip (\Noc) designs and supports adding verification tools
 		to check the \Noc designs for cycles and deadlocks. The tool should {\it integrate well}
 		with our existing C++ tools.
+
+		\textbf{Options}		
 		
-		Options are a rewrite
-		of the current tool or a refactor.
+		Rewrite or refactor.
 		\end{column}
 		\begin{column}[t]{5cm}
 		{\bf Project intentions}		
@@ -99,42 +102,44 @@
  \begin{tikzpicture}
  	[month/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=3mm},
 	transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm},
-	iteration/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm},
-	orgiter/.style={rectangle,draw=black!50,fill=yellow!60!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm}]
+	iteration/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=6mm},
+	orgiter/.style={rectangle,draw=black!50,fill=yellow!60!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm},
+	planiter/.style={rectangle,draw=black!50,fill=yellow!70!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=12mm},
+	domainiter/.style={rectangle,draw=black!50,fill=green!30!yellow,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm}]
 %%	[fill=green!70!blue,every path/.style={draw}]
 	\newcounter{ysize};
 	\setcounter{ysize}{7};
 	\newcommand{\y}{\value{ysize}}
-	\node (sep) at (0,\y)    [month] {};
-	\node (start) at (0,\y-1) [transition] {};
+	\node (sep) at (-0.5,\y-1)    [month] {};
+	\node (start) at (0.5,\y-1) [transition] {};
 	\node (oct) at (1.0,\y-1)  [month] {};
-	\node (nov) at (2.2,\y-1)    [month] {};
-	\node (dec) at (3.4,\y-1)  [month] {};
-	\node (jan) at (4.6,\y-1)    [month] {};
-	\node (feb) at (5.8,\y-1)  [month] {};
-	\node (mar) at (7.0,\y-1)    [month] {};
-	\node (apr) at (8.2,\y-1) [month] {};
-	\node (may) at (9.4,\y-1)   [month] {};
-	\node (end) at (10.6,\y-1)   [transition] {};
+	\node (nov) at (2.0,\y-1)    [month] {};
+	\node (dec) at (3.0,\y-1)  [month] {};
+	\node (jan) at (4.0,\y-1)    [month] {};
+	\node (feb) at (5.0,\y-1)  [month] {};
+	\node (mar) at (6.0,\y-1)    [month] {};
+	\node (apr) at (7.0,\y-1) [month] {};
+	\node (may) at (8.0,\y-1)   [month] {};
+	\node (end) at (9.0,\y-1)   [transition] {};
 	\path (0,0);
-	\node (planning) at (0, \y-2) [orgiter] {};
+	\node (planning) at (0.5, \y-2) [planiter] {};
 	\node [above=3mm of planning.north west,anchor=west] {Planning};
-	\node (domain) at (1.5, \y-2) [iteration] {};
-	\node [above=3mm of domain.north west,anchor=west] {Domain};
-	\node (arch) at (2.8, \y-2) [iteration] {};
+	\node (domain) at (1.8, \y-2) [domainiter] {};
+	\node [below=3mm of domain.south west,anchor=west] {Domain};
+	\node (arch) at (2.4, \y-2) [iteration] {};
 	\node [above=3mm of arch.north west,anchor=west] {Arch};
-	\node (setup) at (3.8, \y-2) [iteration] {};
+	\node (setup) at (3.2, \y-2) [iteration] {};
 	\node [above=3mm of setup.north west,anchor=west] {Setup};
-	\node (iterA) at (5.2, \y-2) [iteration] {1};
+	\node (iterA) at (4.4, \y-2) [iteration] {1};
 	\node [above=3mm of iterA.north west,anchor=west] {Build iterations};
-	\node (iterB) at (6.05, \y-2) [iteration] {2};
-	\node (iterC) at (6.9, \y-2) [iteration] {3};
-	\node (iterD) at (7.75, \y-2) [iteration] {4};
-	\node (transition) at (8.65,\y-2) [orgiter] {}; 
+	\node (iterB) at (5.0, \y-2) [iteration] {2};
+	\node (iterC) at (5.6, \y-2) [iteration] {3};
+	\node (iterD) at (6.2, \y-2) [iteration] {4};
+	\node (transition) at (7.0,\y-2) [orgiter] {}; 
 	\node [above=3mm of transition.north west,anchor=west] {Transition};
-	\draw (sep) node[above=3pt] {sep};
-	\draw (sep) node[left=3pt] {13};
-	\draw (start) node[left=3pt] {22};
+	\draw (sep) node[above=11pt] {sep};
+	\draw (sep) node[above=3pt] {13};
+	\draw (start) node[above=3pt] {22};
 	\draw (oct) node[above=3pt] {oct};
 	\draw (nov) node[above=3pt] {nov};
 	\draw (dec) node[above=3pt] {dec};
@@ -308,7 +313,7 @@
 					\item Integration between user interface and data structures
 							was painfull. For next time take more serious note
 							of alternatives affecting coupling through an interface
-					\item Composites finished ok. Was easier due to /qml
+					\item Composites finished ok. Was easier due to \qml
 				\end{itemize}
 		\item {\bf Data structures}
 				\begin{itemize}
