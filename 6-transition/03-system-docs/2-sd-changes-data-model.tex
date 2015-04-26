@@ -28,6 +28,23 @@ The 'promotion' of XMASNetwork to its own class definition has two primary reaso
  models. Using an explicit class to represent networks eases this task.
 \end{itemize}
 
+\paragraph{Extending networks}
+XMASNetwork implements the same extension mechansism as used by the XMASComponent and
+Port classes. For this, a new class named XMASNetworkExtension has been created.
+Currently, the designer uses two network extensions. One to store network
+properties common to all models, and one to store network properties specifically
+for network models that are to be used as composite objects.
+In the future, additional network extensions could be defined, for example to store
+data required to support parameterization of subnetworks.
+
+\paragraph{MemoryPool}
+All components in an XMASNetwork are stored in a MemoryPool for optimal performance.
+Multiple networks can share a MemoryPool instance. The XMASNetwork constructors
+optionally take a pointer to a MemoryPool. Passing the same instance to multiple
+networks will let these networks share the pool. When no MemoryPool pointer (or
+nullptr) is provided to the constructor, XMASNetwork will create its own
+MemoryPool instance. In this case, XMASNetwork also takes care of the MemoryPool
+destruction.
 
 \subsection{XMASComposite}
 
