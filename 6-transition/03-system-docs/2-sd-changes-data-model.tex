@@ -1,0 +1,45 @@
+\section{Changes to the data model}
+
+Due to requirements imposed by the designer, several changes and additions have
+been made to the data model. Most of these changes are related to the additional
+support for hierarchical networks in the designer. This section present an overview
+of new and modified classes and functions.
+
+\subsection{XMASNetwork}
+
+XMASNetwork is a new class designed to represent an xMAS network. This class can be
+used to model both flat and hierarchical networks. When used to model hierarchical
+networks, an XMASNetwork represents a single level or subnetwork in the hierarchy.
+Multiple networks are combined to form the complete network.
+
+The main responsibility of XMASNetwork is to serve as a container of XMASComponent
+instances. Internally, XMASNetwork stores the components in a map relating a
+components name to its in-memory instance. Prior to the introduction of XMASNetwork,
+the concept of an xMAS network was directly represented by such a map. Verification
+tools still use this approach, although they could be easily adapted to use
+XMASNetwork as well.
+
+\paragraph{}
+The 'promotion' of XMASNetwork to its own class definition has two primary reasons:
+\begin{itemize}
+ \item The designer uses additional network properties like the canvas size. These
+ properties must be stored somewhere in the data model (i.e. in XMASNetwork).
+ \item Support for hierarchical networks requires management of multiple network
+ models. Using an explicit class to represent networks eases this task.
+\end{itemize}
+
+
+\subsection{XMASComposite}
+
+\subsection{XMASProject}
+
+\subsubsection{Loader}
+
+\subsection{Flattening the network}
+
+\subsection{Changes to the xmas file format}
+
+\section{Feedback interface (not data model related, move to other file?)}
+
+\newpage
+
