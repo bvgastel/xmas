@@ -1,13 +1,14 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt]{article}
 %
 %% option = draft will generate black except with \color, replace images by a rectangle
 %% option = final will generate color
 %
 
 \usepackage{color}
+\usepackage{tcolorbox}
 \usepackage[all]{nowidow}
 \usepackage{bold-extra}
 \usepackage{footmisc}% granting the ability to use label for a footnote
@@ -28,7 +29,7 @@
     citecolor = blue,
     linkcolor = blue
 }
-\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=tiny]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=small]{todonotes}% when generating final (documentclass option) skip notes
 \usepackage{pdflscape}
 \usepackage[a4paper]{geometry}
 \usepackage{titlesec}% added to change section headers, see newcommand definition.
@@ -53,7 +54,6 @@
 
 \begin{document}
 
-\todo{english or dutch thesis body?}
 %%\selectlanguage{english}
 \selectlanguage{dutch}
 
@@ -81,6 +81,7 @@
 %\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \newcommand\smp[1]{%
 	\marginpar{\color{blue}\small\bf\textsc#1}
 }%
@@ -88,6 +89,7 @@
 
 
 \maketitle
+
 \begin{center}
 	T61327 - Afstudeerproject bachelor informatica
 	\\ \hfill\break
@@ -95,16 +97,18 @@
 	\\ \hfill\break
 \end{center}
 
+\todo[inline]{english or dutch thesis body? decision on monday 27apr2015}
 
 
+\todo[inline]{enter studentnumber and check data}
 \begin{flushleft}
     \begin{tabular}{p{2cm} l }
     \textbf{studenten:} \\
 
     & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
     \textbf{naam} & \textbf{nr.} & \textbf{woonplaats} & \textbf{land} \\ \hline
-    Guus Bonnema & \todo{studentnummer Guus}  & Dieren  & Nederland \\
-    Jeroen Kleijn & \todo{studentnummer Jeroen} & Den Haag & Nederland \\
+    Guus Bonnema & ?  & Dieren  & Nederland \\
+    Jeroen Kleijn & ? & Den Haag & Nederland \\
     Versluys Stefan & 850317700 & Sint-Laureins & Belgie \\
     \hline \break
     \end{tabular}
@@ -116,13 +120,11 @@
 
 
 \begin{abstract}
-\todo{een korte samenvatting (plusminus 250 woorden)}
-
+\todo[inline]{een korte samenvatting (plusminus 250 woorden)}
 \end{abstract}
 
 \newpage
-\listoftodos   %% commented out when creating final document
-
+\listoftodos   %% hidden when documentclass is set to final
 
 \newpage
 \tableofcontents
