@@ -17,7 +17,9 @@
 %\usepackage{supertabular}% multiple pages tabular
 \usepackage{longtable}% multiple pages table like tabular
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
-\usepackage[english]{babel}
+%% todo replace with thesis language (will be discussed on monday 27 apr 2015)
+%%\usepackage[english]{babel}
+\usepackage[dutch]{babel}
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{hyperref}% Load after biblatex
@@ -51,7 +53,10 @@
 
 \begin{document}
 
-\selectlanguage{english}
+\todo{english or dutch thesis body?}
+%%\selectlanguage{english}
+\selectlanguage{dutch}
+
 \hyphenation{func-tio-nal}
 
 \nowidow% needs package nowidow
@@ -98,8 +103,8 @@
 
     & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
     \textbf{naam} & \textbf{nr.} & \textbf{woonplaats} & \textbf{land} \\ \hline
-    Guus Bonnema &  & Dieren  & Nederland \\
-    Jeroen Kleijn &  & Den Haag & Nederland \\
+    Guus Bonnema & \todo{studentnummer Guus}  & Dieren  & Nederland \\
+    Jeroen Kleijn & \todo{studentnummer Jeroen} & Den Haag & Nederland \\
     Versluys Stefan & 850317700 & Sint-Laureins & Belgie \\
     \hline \break
     \end{tabular}
@@ -109,15 +114,21 @@
     \end{tabular}
 \end{flushleft}
 
+
+\begin{abstract}
+\todo{een korte samenvatting (plusminus 250 woorden)}
+
+\end{abstract}
+
 \newpage
 \listoftodos   %% commented out when creating final document
+
 
 \newpage
 \tableofcontents
 \newpage
 
-\input{0-tr-summerizing}% include forces page break. Input does not.
-\input{1-tr-introduction}
+\input{1-tr-introduction}% include forces page break. Input does not.
 \input{2-tr-requirements}
 \input{3-tr-overview}
 \input{4-tr-reports}
