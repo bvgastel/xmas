@@ -37,6 +37,8 @@
 \newcommand{\Noc}{\textsc{NoC}\xspace}
 \newcommand{\qt}{\textsc{Qt}\xspace}
 \newcommand{\qml}{\textsc{Qml}\xspace}
+\newcommand{\ou}{\textsc{Ou}\xspace}
+\newcommand{\dad}{\textsc{Dad}\xspace}
 
 \begin{frame}
 	\titlepage
@@ -83,16 +85,17 @@
 		to check the \Noc designs for cycles and deadlocks. The tool should {\it integrate well}
 		with our existing C++ tools.
 
+		\end{column}
+		\begin{column}[t]{5cm}
 		\textbf{Options}		
 		
 		Rewrite or refactor.
-		\end{column}
-		\begin{column}[t]{5cm}
+		
 		{\bf Project intentions}		
 		
 		Using multi-platform tools we aimed at creating a C++ tool for researching \Noc networks.
 		
-		Refactor seemed improbable as best solution
+		Refactor resulted in equivalent plat dependencies to C\#
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -102,10 +105,19 @@
  \begin{tikzpicture}
  	[month/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=3mm},
 	transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm},
-	iteration/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=6mm},
-	orgiter/.style={rectangle,draw=black!50,fill=yellow!60!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm},
-	planiter/.style={rectangle,draw=black!50,fill=yellow!70!black,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=12mm},
-	domainiter/.style={rectangle,draw=black!50,fill=green!30!yellow,anchor=west,thick,inner sep=0pt,minimum height=4mm, minimum width=8mm}]
+	iteration/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,
+				inner sep=0pt,minimum height=4mm, minimum width=6mm},
+	orgiter/.style={rectangle,draw=black!50,fill=yellow!60!black,anchor=west,thick,
+				inner sep=0pt,minimum height=4mm, minimum width=8mm},
+	planiter/.style={rectangle,draw=black!50,fill=yellow!70!black,anchor=west,thick,
+				inner sep=0pt,minimum height=4mm, minimum width=12mm},
+	domainiter/.style={rectangle,draw=black!50,fill=green!30!yellow,anchor=west,thick,
+				inner sep=0pt,minimum height=4mm, minimum width=8mm},
+	setupiter/.style={rectangle,draw=black!50,fill=green!30,anchor=west,thick,
+				inner sep=0pt,minimum height=4mm, minimum width=10mm},
+	txt/.style={rectangle,draw=white,anchor=west,thin, inner sep=0pt},
+	events/.style={rectangle,draw=blue!10,fill=green!10,inner sep=0pt,thick,minimum height=9em, minimum width=25em,anchor=north west}
+				]
 %%	[fill=green!70!blue,every path/.style={draw}]
 	\newcounter{ysize};
 	\setcounter{ysize}{7};
@@ -122,21 +134,16 @@
 	\node (may) at (8.0,\y-1)   [month] {};
 	\node (end) at (9.0,\y-1)   [transition] {};
 	\path (0,0);
-	\node (planning) at (0.5, \y-2) [planiter] {};
-	\node [above=3mm of planning.north west,anchor=west] {Planning};
-	\node (domain) at (1.8, \y-2) [domainiter] {};
-	\node [below=3mm of domain.south west,anchor=west] {Domain};
-	\node (arch) at (2.4, \y-2) [iteration] {};
-	\node [above=3mm of arch.north west,anchor=west] {Arch};
-	\node (setup) at (3.2, \y-2) [iteration] {};
-	\node [above=3mm of setup.north west,anchor=west] {Setup};
-	\node (iterA) at (4.4, \y-2) [iteration] {1};
+	\node (planning) at (0.5, \y-2) [planiter] {\tiny Planning};
+	\node (domain) at (1.8, \y-2) [domainiter] {\tiny Dom};
+	\node (arch) at (2.5, \y-2) [iteration] {\tiny Arch};
+	\node (setup) at (3.2, \y-2) [setupiter] {\tiny Setup};
+	\node (iterA) at (4.4, \y-2) [iteration] {\tiny 1};
 	\node [above=3mm of iterA.north west,anchor=west] {Build iterations};
-	\node (iterB) at (5.0, \y-2) [iteration] {2};
-	\node (iterC) at (5.6, \y-2) [iteration] {3};
-	\node (iterD) at (6.2, \y-2) [iteration] {4};
-	\node (transition) at (7.0,\y-2) [orgiter] {}; 
-	\node [above=3mm of transition.north west,anchor=west] {Transition};
+	\node (iterB) at (5.0, \y-2) [iteration] {\tiny 2};
+	\node (iterC) at (5.6, \y-2) [iteration] {\tiny 3};
+	\node (iterD) at (6.2, \y-2) [iteration] {\tiny 4};
+	\node (transition) at (7.0,\y-2) [orgiter] {\tiny Trans}; 
 	\draw (sep) node[above=11pt] {sep};
 	\draw (sep) node[above=3pt] {13};
 	\draw (start) node[above=3pt] {22};
@@ -152,7 +159,21 @@
 	\draw (start) -- (oct) -- (nov) -- (dec) -- (jan) -- (feb) -- (mar) -- (apr) -- (may);
 	\draw [->,decorate,decoration={snake,amplitude=.6mm,segment length=3mm,post length=1mm}] (sep) -- (start);
 	\draw [->,decorate,decoration={snake,amplitude=.6mm,segment length=3mm,post length=1mm}] (may) -- (end);
-%	\path [fill] (-.2, \y-2) rectangle (2, \y-1.75);
+
+	\node (events) at (-0.5, \y-3) [events] {};
+	\node (dad) at (0.5, \y-3.5) [txt] {\dad};
+	\draw [->,decorate] (dad) -- (planning);
+	\node (qtswitch) at (0.5, \y-4) [txt] {\qt switch};
+	\draw [->,decorate] (qtswitch) -- (setup);
+	\node (qtqml) at (4.0, \y-5) [txt] {\qt \qml};
+	\node (qtqmlD) at (4.0, \y-5.4) [txt] {design decision};
+	\draw [->,decorate] (qtqml) -- (iterA);
+	\node (oureorg) at (3.0, \y-4) [txt] {\ou reorg};
+	\draw [->,decorate] (oureorg) -- (setup);
+	\draw [->,decorate] (oureorg) -- (iterB);
+	\node (xintegr)  at (5.0, \y-4) [txt] {xmas integration};
+	\node (xintegrD) at (5.0, \y-4.4) [txt] {design decision};
+	\draw [->,decorate] (xintegr) -- (iterB);
 	
 
 %    % draw vertical lines
@@ -172,8 +193,8 @@
 				\item <1->Iteration 0 Architecture
 				\item <1->Iteration 1 Build procedures and first prototype
 				\item <1->iteration 2, 3, 4, 5 software development
-				\item <1->\textit{Final Demo}$\leftarrow$
-				\item <1->\textbf{transition}
+				\item <1->\textit{Final Demo}
+				\item <1->\textbf{transition}$\leftarrow$
 			\end{itemize}
 		\end{column}
 		\begin{column}[t]{5cm}
