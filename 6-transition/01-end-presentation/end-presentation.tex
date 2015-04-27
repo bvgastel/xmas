@@ -183,53 +183,72 @@
   \end{tikzpicture}
 \end{frame}
   
-\begin{frame}{Process Overview}
+\begin{frame}{Agile for a distributed team}
+\begin{itemize}
+\item <1-> DAD:
+	\begin{itemize}
+		\item <1-> visualize work
+		\item <1-> backlog
+		\item <1-> automated metrics
+	\end{itemize}	
+	
+\item <2-> Agilefant:		
+	\begin{itemize}
+		\item <2-> open source
+		\item <2-> web hosted tool
+		\item <2-> backlog \& metrics
+		\item <2-> stories, iterations, tasks
+		\item <2-> visualize \& prioritize work		
+	\end{itemize}			
+	\includegraphics[width=.30\linewidth]{pictures/af-elephant} 	
+	\hspace{1cm}	
+	\includegraphics[width=.30\linewidth]{pictures/af-metrics}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Agilefant backlog}
+	\begin{center}
+		\includegraphics[width=0.9\linewidth]{pictures/backlog}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Qt Quick2}
 	\begin{columns}
 		\begin{column}[t]{5cm}
-			{\bf Process}
+			{\bf FLTK}
 			\begin{itemize}
-				\item <1->Planning phase: DAD approach (Disciplined Agile Delivery)
-				\item <1->Domain analyses
-				\item <1->Iteration 0 Architecture
-				\item <1->Iteration 1 Build procedures and first prototype
-				\item <1->iteration 2, 3, 4, 5 software development
-				\item <1->\textit{Final Demo}
-				\item <1->\textbf{transition}$\leftarrow$
+				\item <1-> graphics library only
+				\item <1-> basic widgets.
+				\item <1-> pure c++
+				\item <1-> no native look-and-feel
+				\item <1-> create from scratch
+			\end{itemize}
+			
+			{\bf Qt Quick1}
+			\begin{itemize}
+				\item <2-> not for future designs
+				\item <2-> painter raster rendering
+				\item <2-> native desktop widgets
 			\end{itemize}
 		\end{column}
 		\begin{column}[t]{5cm}
-			\textbf{Development factors}
+			\textbf{Qt Quick2}
 			\begin{itemize}
-				\item <2->Time boxing
-				\item <2->Early switch to \qt
-				\item <2->UI design : \qml
-				\item <2->Qml / xmas integration: fat interface
-				\item <2->Reorg OU $\rightarrow$ Communication drop
+				\item <3-> all-in-one environment
+				\item <3-> fancy widgets
+				\item <3-> JavaScript (QML)
+				\item <3-> easy binding c++ logic
+				\item <3-> signals \& slots
+				\item <3-> OpenGL 2.0
 			\end{itemize}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Contribution to research project}
-	\textbf{Contribution in different area's}
-	\begin{itemize}
-		\item {\bf Research support}
-		\begin{itemize}
-			\item papers to reason about verification tools of \Noc
-			\item developers and testers of verification tools
-			\item marketing of research efforts at OU and Radboud university
-		\end{itemize}
-		\item {\bf Design support}
-		\begin{itemize}
-			\item design and verification of new \Noc
-		\end{itemize}
-	\end{itemize}
-
+\begin{frame}{Qt Quick2 - QML} 
+%% slide of QML
 \end{frame}
 
-\begin{frame}{Example NoC}
-
-\end{frame}
 
 %% Demo XMAS Designer
 \begin{frame}{Demo ``xmd'' \underline{x}MAS \underline{m}odel \underline{d}esigner}
@@ -288,6 +307,24 @@
 	\includegraphics[width=.90\linewidth]{pictures/2m-xmd-plug-in}
 \end{frame}
 %% Demo XMAS Designer (end)
+
+%% what are the benefits
+\begin{frame}{Contribution to research project}
+	\textbf{Contribution in different area's}
+	\begin{itemize}
+		\item {\bf Research support}
+		\begin{itemize}
+			\item papers to reason about verification tools of \Noc
+			\item developers and testers of verification tools
+			\item marketing of research efforts at OU and Radboud university
+		\end{itemize}
+		\item {\bf Design support}
+		\begin{itemize}
+			\item design and verification of new \Noc
+		\end{itemize}
+	\end{itemize}
+
+\end{frame}
 
 
 
