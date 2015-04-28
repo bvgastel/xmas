@@ -196,28 +196,46 @@
 
   \end{tikzpicture}
 \end{frame}
-  
-\begin{frame}{Agile for a distributed team}
-\begin{itemize}
-\item <1-> DAD:
+
+
+\begin{frame}[t]{Product \& technology}
 	\begin{itemize}
-		\item <1-> visualize work
-		\item <1-> backlog
-		\item <1-> automated metrics
+		\item \textbf{Agilefant}
+		\item \textbf{Qt Quick2}
+		\item \textbf{product demo}
+		\item \textbf{contribution}
 	\end{itemize}	
 	
-\item <2-> Agilefant:		
-	\begin{itemize}
-		\item <2-> open source
-		\item <2-> web hosted tool
-		\item <2-> backlog \& metrics
-		\item <2-> stories, iterations, tasks
-		\item <2-> visualize \& prioritize work		
-	\end{itemize}			
-	\includegraphics[width=.30\linewidth]{pictures/af-elephant} 	
-	\hspace{1cm}	
-	\includegraphics[width=.30\linewidth]{pictures/af-metrics}
-\end{itemize}
+\end{frame}
+  
+\begin{frame}{Agilefant tool}
+	\begin{columns}
+		\begin{column}[t]{5cm}
+			\textbf{DAD:}
+			\begin{itemize}
+				\item visualize work
+				\item backlog
+				\item automated metrics
+			\end{itemize}
+		\end{column}
+		\pause
+		\begin{column}[t]{5cm}
+			\textbf{Agilefant:}		
+			\begin{itemize}
+				\item open source
+				\item web hosted tool
+				\item backlog \& metrics
+				\item stories, iterations, tasks
+				\item visualize \& prioritize work		
+			\end{itemize}		
+		\end{column}
+	\end{columns}
+	\begin{center}
+		\includegraphics[width=.30\linewidth]{pictures/af-metrics}
+		\hspace{0.5cm}	
+		\includegraphics[width=.50\linewidth]{pictures/af-elephant}
+	\end{center}
+		
 \end{frame}
 
 \begin{frame}{Agilefant backlog}
@@ -229,38 +247,49 @@
 \begin{frame}{Qt Quick2}
 	\begin{columns}
 		\begin{column}[t]{5cm}
-			{\bf FLTK}
+			{\bf FLTK?}
 			\begin{itemize}
-				\item <1-> graphics library only
-				\item <1-> basic widgets.
-				\item <1-> pure c++
-				\item <1-> no native look-and-feel
-				\item <1-> create from scratch
+				\item graphics library only
+				\item basic widgets.
+				\item pure c++
+				\item no native look-and-feel
+				\item create from scratch
 			\end{itemize}
-			
-			{\bf Qt Quick1}
+			\pause
+			{\bf Qt Quick1?}
 			\begin{itemize}
-				\item <2-> not for future designs
-				\item <2-> painter raster rendering
-				\item <2-> native desktop widgets
+				\item not for future designs
+				\item painter raster rendering
+				\item native desktop widgets
 			\end{itemize}
 		\end{column}
+		\pause
 		\begin{column}[t]{5cm}
-			\textbf{Qt Quick2}
+			\textbf{Qt Quick2!}
 			\begin{itemize}
-				\item <3-> all-in-one environment
-				\item <3-> fancy widgets
-				\item <3-> JavaScript (QML)
-				\item <3-> easy binding c++ logic
-				\item <3-> signals \& slots
-				\item <3-> OpenGL 2.0
+				\item all-in-one environment
+				\item declarative UI language QML (JavaScript+)
+				\item separate back-end (c++) enforces model/view
+				\item signals \& slots
+				\item OpenGL 2.0
 			\end{itemize}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Qt Quick2 - QML} 
-%% slide of QML
+\begin{frame}[t]{Qt Quick2}
+	\textbf{Registered c++ class $\rightarrow$ instantiable QML type}
+	\begin{center}
+		\only<1>{\includegraphics[width=.90\linewidth]{pictures/qml1}}
+		\only<2>{\includegraphics[width=.90\linewidth]{pictures/qml2}}
+	\end{center}
+\end{frame}
+
+\begin{frame}[t]{Qt Quick2}
+	\textbf{Embedded c++ class  $\rightarrow$ QML context}
+	\begin{center}
+		\includegraphics[width=.90\linewidth]{pictures/qml3}
+	\end{center}
 \end{frame}
 
 
@@ -323,21 +352,18 @@
 %% Demo XMAS Designer (end)
 
 %% what are the benefits
-\begin{frame}{Contribution to research project}
-	\textbf{Contribution in different area's}
-	\begin{itemize}
-		\item {\bf Research support}
-		\begin{itemize}
-			\item papers to reason about verification tools of \Noc
-			\item developers and testers of verification tools
-			\item marketing of research efforts at OU and Radboud university
-		\end{itemize}
-		\item {\bf Design support}
-		\begin{itemize}
-			\item design and verification of new \Noc
-		\end{itemize}
-	\end{itemize}
+\begin{frame}[t]{Contribution to research project}
 
+	\begin{itemize}
+		\item Integration of formal verification   $\rightarrow$  Designer friendly \\
+		= get benefits without complexity concerns.
+		\item Multi-platform $\rightarrow$ More researchers can make use if this tool \\
+		= more interest.
+		\item Maintainability   $\rightarrow$ The better to maintain the easier to adjust \\
+		= satisfied users.
+		\item Technology   $\rightarrow$ Qt well known IDE \\
+		= support.		
+	\end{itemize}
 \end{frame}
 
 
