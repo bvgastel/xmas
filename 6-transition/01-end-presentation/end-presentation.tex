@@ -46,17 +46,31 @@
 
 \begin{frame}
 	\frametitle{Contents}
-	\begin{itemize}
-		\item [Guus] Introduction 
-		\item [Guus] Assignment
-		\item [Stefan] Process Overview
-		\item [Stefan] Contribution
-		\item [Stefan] Demo
-		\item [Guus] Architecture
-		\item [Guus] Reflection
-	\end{itemize}
-	
-	Query? During (if urgent) or after (if not urgent)
+	\begin{columns}
+		\begin{column}[t]{5cm}
+			\begin{itemize}
+				\item [Guus] Introduction 
+				\item [Guus] Assignment
+				\item [Stefan] Process Overview
+				\item [Stefan] Contribution
+				\item [Stefan] Demo
+				\item [Guus] Architecture
+				\item [Guus] Reflection
+			\end{itemize}	
+		\end{column}
+		\begin{column}[t]{5cm}
+			
+			\begin{tabular}{ll}
+				\hline
+				{\tiny Query?} &  {\tiny what to do?} \\
+				\hline
+				{\tiny Can wait} & {\tiny End of session}\\
+				{\tiny must know now} & {\tiny Ask away} \\
+			 	{\tiny demo} & {\tiny Ask}\\
+			 	\hline
+			\end{tabular}
+		\end{column}
+	\end{columns}
 	
 \end{frame}
 
@@ -66,9 +80,9 @@
 	\hline
 	{\bf Student} & {\bf Role}      & {\bf Dayjob}\\\hline
 	Jeroen        &  Datamodel      & Programmer for eLearning appl\\
-	Guus		  &  Mapping        & Functional maintenance\\
+	Guus	      &  Mapping        & Functional maintenance\\
 	              &  Architecture   &                       \\
-	              &  org \& mgt     & \\
+	              &  Team Lead     & \\
 	Stefan        &  User interface & C++ programmer (embedded)\\
 	\hline
 	\end{tabular}
@@ -101,7 +115,7 @@
 \end{frame}
 
 % TODO: add events as nodes and provide event arrows to connect to iterations
-\begin{frame}
+\begin{frame}{Project overview}
  \begin{tikzpicture}
  	[month/.style={circle,draw=blue!50,fill=blue!20,thick,inner sep=0pt,minimum size=3mm},
 	transition/.style={rectangle,draw=black!50,fill=black!20,thick,inner sep=0pt,minimum size=4mm},
