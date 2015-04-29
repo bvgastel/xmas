@@ -75,9 +75,34 @@ the interface which weren't designed to support composites aren't affected. The
 default visit implementation for composite objects does throw an Exception however.
 So, only flat, composite free networks should be passed to these implementations.
 
+
 \subsection{XMASProject}
 
-\subsubsection{Loader}
+The xMAS designer application uses the XMASProject class to manage a complete
+hierarchical model. The root network, available through getRootNetwork(), is
+the network under construction. For each composite object type used, XMASProject
+additionally stores its network definition. XMASProject is equipped with member
+functions to insert new components into the network, remove them from the network
+and change the name of a component. All of these functions act upon the root network.
+Adding a new composite object to the model requires that its network definition
+is added to the project in advance. Function insertComposite() automatically does
+this if necessary. A subnetwork that is no longer of use can be unloaded using
+unloadNetwork(). Unloading only succeeds if no composite objects in the project
+(at any level) depend on the network.
+
+XMASProject is also responsible for the construction and destruction of a MemoryPool.
+All networks loaded in the project share this instance of the pool.
+
+\paragraph{Note:}
+Currently, the designer assumes that all subnetworks used in a project are
+stored in the same directory as the root network.
+
+
+\subsection{Parser}
+
+The additional support for hierarchical models and the need to store data used
+by the designer require a number of modifications to the parser.
+
 
 \subsection{Flattening the network}
 
