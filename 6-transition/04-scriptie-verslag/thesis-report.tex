@@ -78,6 +78,7 @@
 \newcommand{\w}[1]{\textbf{\textsc{#1}}}
 \newcommand\bw[1]{{\color{blue}#1}}
 \newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 
 %\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
@@ -142,7 +143,7 @@ Freek
 
     & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
     \textbf{name} & \textbf{nb.} & \textbf{city} & \textbf{country} \\ \hline
-    Guus Bonnema & ?  & Dieren  & Netherlands \\
+    Guus Bonnema & 838523637  & Dieren  & Netherlands \\
     Jeroen Kleijn & ? & Den Haag & Netherlands \\
     Versluys Stefan & 850317700 & Sint-Laureins & Belgium \\
     \hline \break
@@ -155,7 +156,22 @@ Freek
 
 
 \begin{abstract}
-\todo[inline]{een korte samenvatting (plusminus 250 woorden)}
+%% abstract of about 250 words
+Research of \Noc leads to problems of verification. Manual verification is time intensive and error prone.
+Automatic verification of arbitrary networks causes state-space explosion.
+Intel countered with the development of XMas (eXtensible M A S) which reduces the state-space using
+eight primitive constructions the designer can glue together. This enables automatic verification of
+certain desirable properties like freedom of cycles, deadlocks and maybe also livelocks.
+
+The previous installment of XMAS in a C\# program turned out to miss the mark due to platform dependencies.
+Additionally, using the non-managed environment of \cpp with the managed environment of C\# causes integration problems.
+Our solution works on multiple platforms and roughly supports the same networks as the original program.
+At the same time it integrates properly with the existing \cpp programs. Because all programs both the xmas
+designer and the verification tools are written using \cpp maintenance is of both parts is easier to combine.
+
+In this document we explain the research environment that the product will support, the requirements we followed and the 
+functionality we developed using these requirements. We also provide hints for the following ABI project.
+
 \end{abstract}
 
 \newpage
