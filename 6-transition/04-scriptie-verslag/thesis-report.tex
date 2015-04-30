@@ -18,7 +18,6 @@
 %\usepackage{supertabular}% multiple pages tabular
 \usepackage{longtable}% multiple pages table like tabular
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
-%% todo replace with thesis language (will be discussed on monday 27 apr 2015)
 \usepackage[english,dutch]{babel}
 \usepackage{graphicx}
 \usepackage{url}
@@ -66,8 +65,8 @@
 
 \begin{document}
 
-%%\selectlanguage{english}
-\selectlanguage{dutch}
+\selectlanguage{english}
+%%\selectlanguage{dutch}
 
 \hyphenation{func-tio-nal}
 
@@ -102,9 +101,12 @@
 
 \maketitle
 
-
-\todo[inline]{english or dutch thesis body? decision on monday 27apr2015}
-
+\begin{tcolorbox}[colback=yellow!30]
+  1) is het ok dat titelblad , team-info en abstract op een afzonderlijke pagina staan of liever niet? \\
+  2) als logo gebruiken we de xmd metafoor (Bernard is er dol op). Deze komt van internet er 
+  stond geen info van een artist bij dus we nemen aan dat we deze mogen gebruiken
+  zolang er niemand over valt?
+\end{tcolorbox}
 
 \todo[inline]{enter studentnumber and check data}
 \begin{flushleft}
@@ -112,15 +114,15 @@
     \textbf{studenten:} \\
 
     & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
-    \textbf{naam} & \textbf{nr.} & \textbf{woonplaats} & \textbf{land} \\ \hline
-    Guus Bonnema & ?  & Dieren  & Nederland \\
-    Jeroen Kleijn & ? & Den Haag & Nederland \\
-    Versluys Stefan & 850317700 & Sint-Laureins & Belgie \\
+    \textbf{name} & \textbf{nb.} & \textbf{city} & \textbf{country} \\ \hline
+    Guus Bonnema & ?  & Dieren  & Netherlands \\
+    Jeroen Kleijn & ? & Den Haag & Netherlands \\
+    Versluys Stefan & 850317700 & Sint-Laureins & Belgium \\
     \hline \break
     \end{tabular}
     \\ 
-    \textbf{begeleider:} & Freek Verbeek  \\
-    \textbf{examinator:} & Marko van Eekelen \\
+    \textbf{mentor:} & Freek Verbeek  \\
+    \textbf{examiner:} & Marko van Eekelen \\
     \end{tabular}
 \end{flushleft}
 
@@ -137,9 +139,10 @@
 \newpage
 
 \chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 \input{1-tr-introduction}% include forces page break. Input does not.
 
-\chapter{Requirements}
+\chapter{System Documentation}
 \input{2-tr-requirements}
 
 \chapter{Overview}
