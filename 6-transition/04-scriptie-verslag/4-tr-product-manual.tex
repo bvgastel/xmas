@@ -136,14 +136,12 @@ action, small and large size components plus several orientations options are
 illustrated. It is also possible to hide or show the component or port names.
 These options can be found in the main toolbar or via the canvas context menu.
 
-
-
 In figure~\ref{fig:primitives} the graphical representation of the eight
 primitive components. Some have a red dot which means that this component has an
 expression to set up and is invalid. If the expression is valid the dot becomes
 green. To show the expression dialog double click on the dot or select it in the
 context menu. More information of the expression dialog can be found in the
-dialog section.
+dialog section~\ref{sec:expression-dialogs}.
 
 \begin{itemize}
 \item Queue: In-place size property, a user can only enter digits.
@@ -166,8 +164,55 @@ input as a restrictive join, otherwise it becomes an unrestrictive join.
 \end{center}
 \end{figure}
 
-A composite its graphical representation depends on its model settings,
-required sinks and sources.
+\paragraph{A composite} \label{sec:composite} its graphical representation
+depends on its model settings, required sinks and sources. If a model is used as
+a composite component then all required sinks become outputs and all required
+sources become inputs. In other words if a composite network has four required
+sinks and three required sources the composite component will have three input
+ports at the left and four output ports at the right. In the model setup a user
+can define composite properties. This sets its appearance on the canvas if
+used as a composite component:
+\begin{itemize}
+\item The alias is a model nickname and printed in the composite body box.
+\item Image is used as a symbol for the composite its body. 
+\item If boxed is checked the composite body outline is visible.
+Uncheck boxed to let a composite appear as a primitive.
+\end{itemize}
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/composites}
+	\caption{Composite properties}
+	\label{fig:composites}
+\end{center}
+\end{figure}
+
+The composite at the left in figure~\ref{fig:composites} is un-boxed. For the un-boxed
+version the alias will not be printed on the canvas.\\
+
+\begin{tcolorbox}[colback=white]
+\textbf{
+The symbol for an un-boxed composite must match the default port alignment.
+The width is 100 while port spacing is 30.
+}
+\end{tcolorbox}
+\vspace{0.1cm}
+The alias is also used as a toolbar tool tip otherwise the filename of the
+model-behind used. A composite that has no symbol gets a default symbol. The
+composite at the right in figure~\ref{fig:composites} shows the appearance if no
+composite properties were set. A user can always open the composite network and
+change its properties. The composite will appear with its new properties in new
+and even in existing models.
+
+The port names of a composite are the names of its required sinks and sources.
+\begin{tcolorbox}[colback=white]
+\textbf{
+Try to avoid too long sink and source names so these will fit into the composite its body.
+}
+\end{tcolorbox}
+
+
+
 
 \subsection{Dialogs}
 This subsection gives an overview of all the application specific dialogs. Other
@@ -204,9 +249,10 @@ appears on the entry field. Normally a user does not have to change the folder
 because this is set to the application default model folder. But it can become
 handy if the user has a sub folder for this modeling project. Composite
 properties are optional but useful if this model is meant to be used as a
-composite later. Details can be found in the composite management section. Model
-size and composite properties are saved in $''[folder]/[filename]''$.
-The model setup is shown in figure~\ref{fig:model-setup}.
+composite later. Details can be found in the composite paragraph in
+section~\ref{sec:composite}. Model size and composite properties are saved in
+$''[folder]/[filename]''$. The model setup is shown in
+figure~\ref{fig:model-setup}.
 
 
 \begin{figure}[here]
@@ -230,7 +276,9 @@ The packet dialog is shown in figure~\ref{fig:packet-setup}.
 \end{center}
 \end{figure}
 
-\paragraph{Expression dialogs} are used for components that must be set up with
+
+\paragraph{Expression dialogs} \label{sec:expression-dialogs}
+are used for components that must be set up with
 an expression. An expression has a small help on top explaining the syntax and
 can differ for each component type. Each time an expression is checked by the
 parser and if valid the background becomes green. If the expression is invalid
