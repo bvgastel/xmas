@@ -38,7 +38,7 @@
 \usepackage{xspace}%
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
-
+\usepackage{pdfpages}
 \pagestyle{fancy}
 
 \graphicspath{ {pictures/} }
@@ -119,7 +119,6 @@
     \end{tabular}
 \end{flushleft}
 
-
 \begin{abstract}
 %% abstract of about 250 words
 Research of \Noc leads to problems of verification. Manual verification is time intensive and error prone.
@@ -146,31 +145,18 @@ functionality we developed using these requirements. We also provide hints for t
 \tableofcontents
 \newpage
 
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction}
+
 \input{0-tr-introduction}% include forces page break. Input does not.
-
-\chapter{System Documentation}
 \input{1-tr-system-doc}
-
-\chapter{Reports}
 \input{2-tr-reports}
-
-\chapter{Research context}
 \input{3-tr-research-context}
-
-\chapter{Product manual}
 \input{4-tr-product-manual}
-
-\chapter{Reflection}
 \input{5-tr-reflection}
-
-\chapter*{Conclusion}
 \input{6-tr-conclusion}
 
 \appendix
 \chapter{Appendix}
-%%\input{../09-appendix/appendix}
+\input{appendix}
 
 % Bibliography ---> need to include
 %%\bibliography{tr}
