@@ -26,7 +26,7 @@ If the installation is finished xmd can be started via the desktop icon or the s
 \begin{tcolorbox}[colback=white]
 \textbf{
 At the moment there is only a Windows installer available and can be found in
-the xmas repository in the ``installers'' map.
+the ``installers'' map of the xmas repository.
 }
 \end{tcolorbox}
 
@@ -79,9 +79,9 @@ by 500 while the maximum size is 5000 by 5000. This means that the largest
 models can directly hold 500 normal scaled primitive components or 2000 if small
 scaled.
 
-\paragraph{With grid and snap} canvas items can be easily aligned. The main
+\paragraph{With grid and snap}canvas items can be easily aligned. The main
 toolbar has two toggle buttons, one to show or hide the canvas grid and one to
-set the grid snap ``on'' or ``off''.
+set the grid snap ``on'' or ``off''. 
 
 \begin{figure}[here]
 \begin{center}	
@@ -91,7 +91,161 @@ set the grid snap ``on'' or ``off''.
 \end{center}
 \end{figure}
 
+By setting grid snap off a designer can place or move canvas items freely. If
+setting this option to ``on'', then at least one component port will snap to the
+grid and cannot be placed somewhere in between.
 
+\paragraph{Selecting}canvas items can be done one by one or via a group select.
+A selection can be deleted or moved within the canvas its bounds. To select a
+group of canvas items you must enable the `group select'' button in the main
+toolbar. This is because the canvas page its drag-default is used for scrolling.
+If group select is enabled then the canvas drag or swipe is disabled.
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/canvas-selection}
+	\caption{canvas group select}
+	\label{fig:canvas-selection}
+\end{center}
+\end{figure}
+
+Next to the ``group select'' button there's a ``select all'' button which selects all
+canvas items. Of course all of these actions can be used with standard
+shortcuts. Pressing the escape key or click outside the selection will deselect the group.
+
+\paragraph{All components}have common and specific properties. Every component
+has a name and must be unique. When a component is dragged to the canvas it will
+automatically get a unique name. The name can be changed by clicking on it and
+press enter when ready. If the name is invalid the change will be ignored. Other
+common properties are component size and orientation. Size can be changed in
+five steps from 25\% to 400\%. Orientation can be up, down, left and right. Size
+and orientation can be set via the context menu or press the left mouse button
+and scroll the mouse wheel while hold the ``Ctrl'' or ``Alt'' key. Of course the
+touch pad can be used too.
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/component-common-properties}
+	\caption{canvas common component properties}
+	\label{fig:component-common-properties}
+\end{center}
+\end{figure}
+
+In figure~\ref{fig:component-common-properties}: In-place name editing in
+action, small and large size components plus several orientations options are
+illustrated. It is also possible to hide or show the component or port names.
+These options can be found in the main toolbar or via the canvas context menu.
+
+
+
+In figure~\ref{fig:primitives} the graphical representation of the eight
+primitive components. Some have a red dot which means that this component has an
+expression to set up and is invalid. If the expression is valid the dot becomes
+green. To show the expression dialog double click on the dot or select it in the
+context menu. More information of the expression dialog can be found in the
+dialog section.
+
+\begin{itemize}
+\item Queue: In-place size property, a user can only enter digits.
+\item Function: Needs a function expression.
+\item Fork: No specific properties
+\item Join: Need a token expression. Enter 0 or 1 selects the appropriate
+input as a restrictive join, otherwise it becomes an unrestrictive join.
+\item Switch: Needs a switching expression.
+\item Merge: No specific property
+\item Sink: Default set as required. A required sink has to be defined later, e.g. outside the composite network.
+\item Source: Same as sink but also needs a source expression.
+\item Composite: Can be setup with a parametric expression.
+\end{itemize}
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/primitives}
+	\caption{list of primitive components}
+	\label{fig:primitives}
+\end{center}
+\end{figure}
+
+A composite its graphical representation depends on its model settings,
+required sinks and sources.
+
+\subsection{Dialogs}
+This subsection gives an overview of all the application specific dialogs. Other
+dialogs, e.g. to open or save a model, are native and do not need any further
+explanation.
+Most dialogs accept with the enter key and cancel with the escape key.
+
+\paragraph{With the application setup dialog} in figure~\ref{fig:app-setup} a
+user can change the default model folder. The default model folder is
+``xmas-models'' in the users ``home'' directory. A user can select if the
+application ask a quit confirm or not. The auto save option will automatically
+save the actual modified model every 5 minutes. All these settings are
+persistent.\\
+
+\begin{tcolorbox}[colback=white]
+\textbf{
+It is important to know that models used as composites must be in the same
+directory as the main model.
+}
+\end{tcolorbox}
+   
+\begin{figure}[t]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/app-setup}
+	\caption{Application setup dialog}
+	\label{fig:app-setup}
+\end{center}
+\end{figure}
+
+\paragraph{The model setup dialog}is used to set the canvas size and the model
+filename. Models are saved in json format and therefor the filename must end
+with ``.json''. The inputs are checked if valid or not and if not a red border
+appears on the entry field. Normally a user does not have to change the folder
+because this is set to the application default model folder. But it can become
+handy if the user has a sub folder for this modeling project. Composite
+properties are optional but useful if this model is meant to be used as a
+composite later. Details can be found in the composite management section. Model
+size and composite properties are saved in $''[folder]/[filename]''$.
+The model setup is shown in figure~\ref{fig:model-setup}.
+
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.70\linewidth]{pictures/model-setup}
+	\caption{Model setup dialog}
+	\label{fig:model-setup}
+\end{center}
+\end{figure}
+
+\paragraph{The packet setup dialog} is a simple text field entry. It is used to
+enter a packet field-range list. The packet is also saved in the model file.
+Every field-range entry must start on a new line while field and range are separated with ``\textless ``.
+The packet dialog is shown in figure~\ref{fig:packet-setup}.
+   
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.30\linewidth]{pictures/packet-setup}
+	\caption{Packet setup dialog}
+	\label{fig:packet-setup}
+\end{center}
+\end{figure}
+
+\paragraph{Expression dialogs} are used for components that must be set up with
+an expression. An expression has a small help on top explaining the syntax and
+can differ for each component type. Each time an expression is checked by the
+parser and if valid the background becomes green. If the expression is invalid
+the background becomes red. The parsers will also select the first invalid
+character in the expression. A dialog having an invalid expression cannot be
+closed with ``ok'' and so not accepted. The packet dialog is shown
+in figure~\ref{fig:expression-dialog}.
+
+\begin{figure}[here]
+\begin{center}	
+	\includegraphics[width=.90\linewidth]{pictures/expression-dialog}
+	\caption{Expression dialog}
+	\label{fig:expression-dialog}
+\end{center}
+\end{figure}
 
 
 
@@ -110,6 +264,10 @@ interface and can be used via the GUI.
 
 
 \section{Remarks}
+
+
+If one or more components are deleted then all connections related to these
+components will be deleted.
 
 \begin{tcolorbox}[colback=yellow!30]
  verwijzing naar appendix voor feature,fix en bug list
