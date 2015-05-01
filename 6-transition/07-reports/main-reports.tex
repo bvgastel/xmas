@@ -1,7 +1,7 @@
 %%
 %% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
 %%
-\documentclass[a4paper,11pt,final]{article}
+\documentclass[a4paper,11pt,final]{report}
 %
 %% option = draft will generate black except with \color, replace images by a rectangle
 %% option = final will generate color
@@ -34,6 +34,8 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 \usepackage{listings}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 
 \bibliographystyle{plain}% unsrt, plain, alpha, abbrv
 
@@ -44,7 +46,7 @@
 		}
 \date{22/04/2015}
 
-\title{\color{blue}System documentation}
+\title{\color{blue}Reports}
 
 \setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
 
@@ -85,18 +87,14 @@
 
 \maketitle
 
-\begin{abstract}
 
-	\noindent{} This system documentation bla bla bla... (replace me).
-
-\end{abstract}
 
 %\listoftodos   %% commented out when creating final document
 %\tableofcontents
 
-\input{1-sd-changes-data-model}% include forces page break. Input does not.
+\chapter{Parametric composite}
+\input{1-parametric-composite}% include forces page break. Input does not.
 
-% Bibliography ---> need to include
-\bibliography{sd}
+
 
 \end{document} ;########################### end document ##################################;
