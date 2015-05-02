@@ -19,9 +19,9 @@ Set xmdmain as default and build the Qt project.
 This section is meant for xmd end users who want to design and verify xMAS models.
 
 Go to the xMAS webpage and download the appropriate installer. For example,
-choose $''xmd-windows-x86-1.0.0.exe''$ for a 32bit MS Windows platform. After
-the download was successful start it and follow the install procedure.
-If the installation is finished xmd can be started via the desktop icon or the startmenu.
+choose $''xmd-win-x86-1.0.0.exe''$ for a 32bit MS Windows platform. After
+the download was successful, run the installable and follow the procedure.
+If the installation is finished, xmd can be started via the desktop icon or the startmenu.
 
 \begin{tcolorbox}[colback=white]
 \textbf{
@@ -31,15 +31,16 @@ the ``installers'' map of the xmas repository.
 \end{tcolorbox}
 
 \section{xMAS model design}
-This section first starts with explaining the main parts of the user interface,
-secondly how to set it up and finally how to create and save an xMAS model.
+This section starts with explaining the main parts of the user interface.
+Followed by an explanation of the settings and finally how to create and save an
+xMAS model.
 
 \subsection{Main window}
 Figure~\ref{fig:mainwindow} is the main window of the designer application. On
 top there is the xMAS toolbar while in the center it has a single page canvas
 that can be setup. A tabbed console can be found at the bottom, the first tab
-selects the designer console. Every verification tool loaded as plug-in get its
-own console which can be selected via a tab named as the plug-in.
+selects the designer console. Every verification tool loaded as plug-in will get a
+console with control panel that can be selected via a tab named as the plug-in.
 
 \begin{figure}[here]
 \begin{center}	
@@ -67,17 +68,17 @@ Composite components can be found at the right part of this toolbar. Primitive
 and composite components can be placed on the canvas by dragging. The area
 holding the available composites is called the library which is a horizontal
 flickable list. The button at the left side of this list opens a dialog to add a
-composite. To remove a composite simply right click the composite and select
-remove. Notice that a composite can only be removed if it is not used.
+composite to the library. To remove a composite simply right click the composite
+and select remove. Notice that a composite can only be removed if it is not
+used.
 
 
 \subsection{Canvas}
-The canvas is build as a flickable single page. The actual view port of this page
-can be changed by drag or swipe it. The size of the canvas page can be changed
-in the model setup dialog and is saved with the model. The minimum size is 500
-by 500 while the maximum size is 5000 by 5000. This means that the largest
-models can directly hold 500 normal scaled primitive components or 2000 if small
-scaled.
+The canvas is a flickable single page, the actual view port can be changed by
+drag or swipe it. The size of the canvas page can be changed in the model setup
+dialog and is saved with the model. The minimum size is 500 by 500 while the
+maximum size is 5000 by 5000. This means that the largest models can directly
+hold 500 normal scaled primitive components or 2000 if small scaled.
 
 \paragraph{With grid and snap}canvas items can be easily aligned. The main
 toolbar has two toggle buttons, one to show or hide the canvas grid and one to
@@ -98,7 +99,7 @@ grid and cannot be placed somewhere in between.
 \paragraph{Selecting}canvas items can be done one by one or via a group select.
 A selection can be deleted or moved within the canvas its bounds. To select a
 group of canvas items you must enable the `group select'' button in the main
-toolbar. This is because the canvas page its drag-default is used for scrolling.
+toolbar. This because the canvas page its drag-default is used for scrolling.
 If group select is enabled then the canvas drag or swipe is disabled.
 
 \begin{figure}[here]
@@ -113,7 +114,7 @@ Next to the ``group select'' button there's a ``select all'' button which select
 canvas items. Of course all of these actions can be used with standard
 shortcuts. Pressing the escape key or click outside the selection will deselect the group.
 
-\paragraph{All components}have common and specific properties. Every component
+\paragraph{All components}have common and specific properties. A component
 has a name and must be unique. When a component is dragged to the canvas it will
 automatically get a unique name. The name can be changed by clicking on it and
 press enter when ready. If the name is invalid the change will be ignored. Other
@@ -137,9 +138,9 @@ illustrated. It is also possible to hide or show the component or port names.
 These options can be found in the main toolbar or via the canvas context menu.
 
 In figure~\ref{fig:primitives} the graphical representation of the eight
-primitive components. Some have a red dot which means that this component has an
-expression to set up and is invalid. If the expression is valid the dot becomes
-green. To show the expression dialog double click on the dot or select it in the
+primitive components. Some have a red dot meaning that this component has an
+expression to set up. If the expression is valid the dot becomes
+green. To open the expression dialog double click on the dot or select it in the
 context menu. More information of the expression dialog can be found in the
 dialog section~\ref{sec:expression-dialogs}.
 
@@ -170,8 +171,8 @@ a composite component then all required sinks become outputs and all required
 sources become inputs. In other words if a composite network has four required
 sinks and three required sources the composite component will have three input
 ports at the left and four output ports at the right. In the model setup a user
-can define composite properties. This sets its appearance on the canvas if
-used as a composite component:
+can also define composite properties. This sets the model its appearance on the
+canvas if used as a composite component:
 \begin{itemize}
 \item The alias is a model nickname and printed in the composite body box.
 \item Image is used as a symbol for the composite its body. 
@@ -198,7 +199,7 @@ The width is 100 while port spacing is 30.
 \end{tcolorbox}
 \vspace{0.1cm}
 The alias is also used as a toolbar tool tip otherwise the filename of the
-model-behind used. A composite that has no symbol gets a default symbol. The
+model-behind is used. A composite that has no symbol gets a default symbol. The
 composite at the right in figure~\ref{fig:composites} shows the appearance if no
 composite properties were set. A user can always open the composite network and
 change its properties. The composite will appear with its new properties in new
@@ -282,9 +283,9 @@ are used for components that must be set up with
 an expression. An expression has a small help on top explaining the syntax and
 can differ for each component type. Each time an expression is checked by the
 parser and if valid the background becomes green. If the expression is invalid
-the background becomes red. The parsers will also select the first invalid
+the background becomes red. The parser will also select the first invalid
 character in the expression. A dialog having an invalid expression cannot be
-closed with ``ok'' and so not accepted. The packet dialog is shown
+closed with ``ok'' and so not accepted. The expression dialog is shown
 in figure~\ref{fig:expression-dialog}.
 
 \begin{figure}[here]
@@ -322,7 +323,7 @@ implemented into each verification tool. The interface provides:
 \item a stop signal
 \item a progress value
 \item plug-in specific parameters
-\item a model to verify
+\item model reference
 \item structured or non-structured text messages
 \end{itemize}
 
@@ -332,8 +333,8 @@ in-model-feedback.
 To support developers of how to implement the interface into their verification
 tools the syntax-checker plug-in can be used as an example. If a verification
 tool has the interface, than copy the dll file to the plug-in directory of the
-xMAS designer. When the xMAS designer start it automatically loads all valid
-plug-ins from its plug-in directory. Each plug-in will get a console tab.
+xMAS designer. When the xMAS designer starts it will automatically load all valid
+plug-ins from the plug-in directory. Each plug-in will get a console tab.
 Figure~\ref{fig:plug-in-console} has one for the syntax checker.
 
 \begin{figure}[here]
@@ -358,13 +359,12 @@ be used within the designer.
 \item The repose list
 \end{itemize}
 
-With the control panel a user can send a start or stop to the verification tool
-via the plug-in interface. The tool can also start from a timer setup with an
-interval from the parameter list. For example in the parameter list of the
-syntax checker we see that it will run in the main thread and that it is time
-triggered every twenty seconds. The control panel panel also has a progress bar.
-The parameter list shows all the plug-in its specific parameters and are read
-via the interface.
+With the control panel a user can send a start or stop to the plug-in. The start
+can also triggered by a timer, set by the plug-in interval parameter. For
+example in the parameter list of the syntax checker we see that it will run in
+the main thread and that it is time triggered every twenty seconds. The control
+panel panel also has a progress bar. The parameter list shows all the plug-in
+its specific parameters and are read via the interface.
 
 \begin{tcolorbox}[colback=white]
 \textbf{
