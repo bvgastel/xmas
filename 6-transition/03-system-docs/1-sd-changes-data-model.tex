@@ -98,10 +98,29 @@ Currently, the designer assumes that all subnetworks used in a project are
 stored in the same directory as the root network.
 
 
-\subsection{Parser}
+\subsection{Parser \& Exporter}
 
 The additional support for hierarchical models and the need to store data used
-by the designer require a number of modifications to the parser.
+by the designer require a number of modifications to the parser and the exporter.
+
+\paragraph{Position}
+For each component listed in the json data, the parser checks whether canvas data
+is available in the pos field (see also the file format description). If this is
+indeed the case, the x, y, orientation and scale fields are read and stored inside
+an extension of the component (CanvasComponentExtension). If no position data
+is stored in the json data, the designer will use default values. The exporter has
+been updated to write the positition data, if present, back to json as well.
+
+\paragraph{Composite objects}
+XMASComposite objects are created for all components in the json file with type
+'composite'. The parser uses the 'subnetwork' attribute mandatory for composite
+components to determine what kind of composite object should be created. The
+parser is not responsible for loading subnetworks. Rather, the caller of the parser
+must suply a function that is able to map a subnetwork name to an instance of
+an XMASNetwork. Code that uses the parser should be updated to comply with the
+new function signature. The implementation in XMASProject can be used as a reference.
+
+
 
 
 \subsection{Flattening the network}
