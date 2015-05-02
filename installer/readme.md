@@ -7,4 +7,4 @@ Create a non static Qt installer
 * copy every missing Qt dll to xmas/installer/packages/data/ until no warnings
 * modify installer framework bin path in xmas/installer/create-win-x86.cmd
 * e.g. run xmas/installer/create-win-x86.cmd script
-* xmas/installer/xmd-windows-x86-v1.0.0.exe is ready to install as standalone
+* xmas/installer/xmd-win-x86-v1.0.0.exe is ready to install as standalone
