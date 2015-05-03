@@ -103,7 +103,7 @@ Enumeration:
 COMPONENT [type="source", type="sink"]
 --------------------------------------
 
-Propertes:
+Properties:
 
 * "required"    : **Boolean 1/0** - set to 1 when this source/sink is an interface port of a composite
                                     network that must be connected by the higher level network.
