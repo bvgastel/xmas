@@ -109,7 +109,7 @@
     & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
     \textbf{name} & \textbf{nb.} & \textbf{city} & \textbf{country} \\ \hline
     Guus Bonnema & 838523637  & Dieren  & Netherlands \\
-    Jeroen Kleijn & ? & Den Haag & Netherlands \\
+    Jeroen Kleijn &  & Den Haag & Netherlands \\
     Versluys Stefan & 850317700 & Sint-Laureins & Belgium \\
     \hline \break
     \end{tabular}
@@ -119,25 +119,7 @@
     \end{tabular}
 \end{flushleft}
 
-\begin{abstract}
-%% abstract of about 250 words
-Research of \Noc leads to problems of verification. Manual verification is time intensive and error prone.
-Automatic verification of arbitrary networks causes state-space explosion.
-Intel countered with the development of XMas (eXtensible M A S) which reduces the state-space using
-eight primitive constructions the designer can glue together. This enables automatic verification of
-certain desirable properties like freedom of cycles, deadlocks and maybe also livelocks.
-
-The previous installment of XMAS in a C\# program turned out to miss the mark due to platform dependencies.
-Additionally, using the non-managed environment of \cpp with the managed environment of C\# causes integration problems.
-Our solution works on multiple platforms and roughly supports the same networks as the original program.
-At the same time it integrates properly with the existing \cpp programs. Because all programs both the xmas
-designer and the verification tools are written using \cpp maintenance is of both parts is easier to combine.
-
-In this document we explain the research environment that the product will support, the requirements we followed and the 
-functionality we developed using these requirements. We also provide hints for the following ABI project.
-
-\end{abstract}
-
+\input{abstract}
 \newpage
 \listoftodos   %% hidden when documentclass is set to final
 
@@ -147,10 +129,10 @@ functionality we developed using these requirements. We also provide hints for t
 
 
 \input{0-tr-introduction}% include forces page break. Input does not.
-\input{1-tr-system-doc}
-\input{2-tr-reports}
-\input{3-tr-research-context}
-\input{4-tr-product-manual}
+\input{1-tr-research-context}
+\input{2-tr-product-manual}
+\input{3-tr-system-doc}
+\input{4-tr-reports}
 \input{5-tr-reflection}
 \input{6-tr-conclusion}
 
