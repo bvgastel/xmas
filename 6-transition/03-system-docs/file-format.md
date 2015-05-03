@@ -16,11 +16,11 @@ Root JSON object
 
 Properties:
 
-* "CANVAS"              : **CANVAS** (optional) *NEW*
-* "COMPOSITE_NETWORK"   : **COMPOSITE_NETWORK** (optional) *NEW*
-* "VARS"                : **VARS**
-* "PACKET_TYPE"         : **PACKET_TYPE**
-* "NETWORK"             : array of **COMPONENT**
+* "CANVAS"              : **CANVAS** object (optional) *NEW*
+* "COMPOSITE_NETWORK"   : **COMPOSITE_NETWORK** object (optional) *NEW*
+* "VARS"                : **VARS** object
+* "PACKET_TYPE"         : **PACKET_TYPE** object
+* "NETWORK"             : array of **COMPONENT**, describes all components in the network
 
 
 
@@ -59,26 +59,27 @@ VARS
 ----
 
 *TODO*
+Definition taken from original file format
 
 
 PACKET_TYPE
 -----------
 
 *TODO*
+Definition taken from original file format
 
 
 
 COMPONENT
 ---------
 
-Description:
 Describes a component in the network.
 
 Properties:
 
 * "id"          : **String** - unique identifier
-* "type"        : **Component_type** - type of the component
-* "outs"        : array of **OUT**
+* "type"        : **Component_type** enum - type of the component
+* "outs"        : array of **OUT** - describes all connected output ports
 * "fields"      : array of **FIELD** *(optional)*
 * "pos"         : **POSITION** - *new* - position of the component on the canvas
 
@@ -123,6 +124,10 @@ The subnetwork reference indicates the relative location of the subnetwork on th
 E.g. "mesh.json" refers to the network defined in "mesh.json" in the same directory as this network and
 "spidergon/node.json" refers to the network defined in "node.json" in the subdirectoy "spidergon".
 
+Parameterization of composite objects has not been implemented yet. When implemented, composite objects
+require an additional field in the component description to store the parameters. The property name
+"parameters" has been reserved for this purpose.
+
 *Note: Currently the XMAS designer requires that all used composite networks are defined in the same
 directory as the root network.*
 
@@ -141,16 +146,18 @@ FIELD
 -----
 
 *TODO*
+Definition taken from original file format
 
 
 POSITION
 --------
 
-***New json data object introduced by xMAS designer***
+***NEW***
+Stores positional data of the component on the canvas.
 
 Properties:
 
 * "x"           : **Number** - x or horizontal position on the canvas
 * "y"           : **Number** - y or vertical position on the canvas
-* "orientation" : **Number** - Orientation of the component, measured in degrees (counter?) clockwise.
+* "orientation" : **Number** - orientation of the component, measured in degrees clockwise.
 * "scale"       : **Number** - scale factor of the component
