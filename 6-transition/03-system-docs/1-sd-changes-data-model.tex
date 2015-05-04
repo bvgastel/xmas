@@ -29,7 +29,7 @@ The 'promotion' of XMASNetwork to its own class definition has two primary reaso
 \end{itemize}
 
 \paragraph{Extending networks}
-XMASNetwork implements the same extension mechansism as used by the XMASComponent and
+XMASNetwork implements the same extension mechanism as used by the XMASComponent and
 Port classes. For this, a new class named XMASNetworkExtension has been created.
 Currently, the designer uses two network extensions. One to store network
 properties common to all models, and one to store network properties specifically
@@ -49,7 +49,7 @@ destruction.
 
 \subsection{XMASComposite}
 
-When modelling a hierarchical network, composite objects are used to represent
+When modeling a hierarchical network, composite objects are used to represent
 subnetworks as black boxes inside a higher-level network. The addition of
 composite objects to an xMAS network is reflected in the data model through the
 new XMASComposite class. Like the eight xMAS primitive types, XMASComposite
@@ -70,7 +70,7 @@ component in the subnetwork leads to an Output port on the composite object.
 Due to the introduction of the new XMASComposite type, the XMASComponentVisitor
 interface has been extended to support composite objects. Unlike the existing
 pure virtual visit functions, XMASComponentVisitor provides a default
-implementation to visit XMASComposites. This way, exisiting implementations of
+implementation to visit XMASComposites. This way, existing implementations of
 the interface which weren't designed to support composites aren't affected. The
 default visit implementation for composite objects does throw an Exception however.
 So, only flat, composite free networks should be passed to these implementations.
@@ -100,7 +100,7 @@ stored in the same directory as the root network.
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{new-xmas-datamodel}
-    \caption{xMAS datamodel extended with new classes}
+    \caption{xMAS data-model extended with new classes}
 \end{figure}
 
 
@@ -115,14 +115,14 @@ is available in the pos field (see also the file format description). If this is
 indeed the case, the x, y, orientation and scale fields are read and stored inside
 an extension of the component (CanvasComponentExtension). If no position data
 is stored in the json data, the designer will use default values. The exporter has
-been updated to write the positition data, if present, back to json as well.
+been updated to write the position data, if present, back to json as well.
 
 \paragraph{Composite objects}
 XMASComposite objects are created for all components in the json file with type
 'composite'. The parser uses the 'subnetwork' attribute mandatory for composite
 components to determine what kind of composite object should be created. The
 parser is not responsible for loading subnetworks. Rather, the caller of the parser
-must suply a function that is able to map a subnetwork name to an instance of
+must supply a function that is able to map a subnetwork name to an instance of
 an XMASNetwork. Code that uses the parser should be updated to comply with the
 new function signature. The implementation in XMASProject can be used as a reference.
 
