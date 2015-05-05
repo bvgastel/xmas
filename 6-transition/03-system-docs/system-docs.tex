@@ -87,22 +87,25 @@
 
 \begin{abstract}
 
-	\noindent{} This system documentation bla bla bla... (replace me).
+This document contains the system documentation for the xMAS Model Designer.
+It describes the design and implementation details of the designer, the integration with
+verification tools, changes to existing code and techniques used for the implementation.
 
 \end{abstract}
 
 %\listoftodos   %% commented out when creating final document
 %\tableofcontents
 
-\input{1-sd-changes-data-model}% include forces page break. Input does not.
-%\input{2-sd-flattening}
+\include{6-sd-stories}
+%\include the architecture diagram
+\include{1-sd-changes-data-model}% include forces page break. Input does not.
+%\include{2-sd-flattening}
 \include{3-sd-xmd}
 \include{4-sd-feedback}
 \include{5-sd-file-format}
-\include{6-sd-stories.tex}
 
 
 % Bibliography ---> need to include
-\bibliography{sd}
+%\bibliography{sd}
 
 \end{document} ;########################### end document ##################################;
