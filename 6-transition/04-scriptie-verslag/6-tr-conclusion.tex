@@ -1,39 +1,34 @@
 \chapter*{Conclusion}
 
-\begin{tcolorbox}[colback=yellow!30]
-Freek $\rightarrow$ \\
- Conclusie: Hier kun je onder andere wat "future work" kwijt. Hoe zouden jullie jullie tool verder ontwikkelen. Stel we hebben een nieuw ABI groepje, wat zou deze kunnen doen en wat raden jullie hun aan? Staar je niet blind op pagina nummers, 1 pagina is ook goed.
-\end{tcolorbox}
-
-\todo[inline]{
-Conclusion in progress by stefan
-}
-
-When it comes at the end of a project like this, it is always a good practice to
-resume and see if the requirements of the customer were met or what is still
-missing. It is not only important to handover a nice and technically correct
-product but it must satisfy the customer and match the expectations.
+When it comes to the end of a project like this, it is always a good practice to
+resume and see if the requirements of the customer were met. It is also
+important to take note of what is still missing or what improvement can we
+suggest. So, it is not only about a nice and technically correct product but it
+must satisfy the customer and match the expectations.
 
 
-One of our customer main requirements was to have a platform independent xMAS toolkit.
-The new xMAS toolkit is developed and tested in a multi platform environment.
-It is exhaustive tested on Linux and Windows while MacOs is used to try-out the releases.
+One of the main requirements was to have a platform independent xMAS
+toolkit. The new xMAS toolkit is developed and tested in a multi platform
+environment. It is exhaustive tested on Linux and Windows while MacOs is used to
+try-out the releases.
 
-To meet the maintainability requirement we've chosen Qt as integrated development
-environment. Qt is a powerful open source platform independent IDE and its QML
-declarative UI language enforces separation of view and control. The Qt IDE is
-an all-in-one solution with a lot of support available.
+To meet the maintainability requirement we've chosen Qt as integrated
+development environment. Qt is a powerful open source platform independent IDE.
+The QML declarative UI language from Qt, enforces separation of view and control. The
+Qt IDE is an all-in-one solution with a lot of support available.
 
 
-Integration of formal verification tools is implemented via a standard plug-in interface.
-In this way it is possible to develop new or re-factor existing verification tools independently.
-Once a verification tool has the right plug-in interface it can be used in the xMAS designer.
+Integration of formal verification tools is implemented via a standard plug-in
+interface. In this way it is possible to develop new or re-factor existing
+verification tools independently and without the need of touching the designer
+source code. Once a verification tool has the right plug-in interface it can be
+used in the xMAS designer.
 
 
 \vspace{0.5 cm}
 
 \begin{tcolorbox}[colback=white]
-The main requirements of the new xMAS designer toolkit:
+According to the main requirements; The benefits of the new xMAS designer toolkit:
 \begin{itemize}
 \item \textbf{It is platform independent.}
 \item \textbf{Maintainability is improved.}
@@ -41,12 +36,43 @@ The main requirements of the new xMAS designer toolkit:
 \end{itemize}
 \end{tcolorbox}
 
-The latest release, version 0.6, has still some bugs or things that can be fixed.
-Both can be found in the appendix of this document or in the Agilefant backlog.
-In the appendix there's also a list of possible features that can be added.
+The current product release v0.6 has still some bugs~\ref{sec:bug-list} or
+things that can be fixed~\ref{sec:fix-list}. Both can be found in the appendix
+of this document or in the Agilefant backlog. The latter has comments of how
+these bugs can be reproduced.
 
+In the appendix there's also a list of possible features~\ref{sec:feature-list}
+that can be added. Some are described in detail and can be found in the
+reports section. For example, report chapter~\ref{sec:parametric} is a proposal
+of how parametric composites could be implemented.
 
-Hopefully this can boost future releases to the next level
+We are still convinced that keeping the designer fully independent from the
+verification model back-end makes the project much more maintainable.
+
+Separating UI code from pure c++ model and verification code is also a good idea
+because UI tools are much more exposed to changes, e.g. Qt version update. The
+tighter these are coupled the bigger the chance that you have to make
+modifications through the whole system.
+
+Also the benefit of updating the back-end verification model with every canvas
+action doesn't make sense. Why would a designer start a verification tool if the
+canvas model is still under creation? This implies that it isn't necessary to
+keep the back-end model constantly up to date with every canvas action. Once the
+designer thinks the model is ready he or she can start a verification tool.
+Details of this proposal can be found in report chapter~\ref{sec:integration}
+
+\vspace{0.5 cm}
+\begin{tcolorbox}[colback=white]
+Some prior suggestions for future releases:
+\begin{itemize}
+\item \textbf{Parametric composites}
+\item \textbf{Designer as full declarative UI enforces independency from back-end verification model}
+\item \textbf{Add plug-in interface for deadlock verification tool}
+\end{itemize}
+\end{tcolorbox}
+
+Hopefully these ideas are useful for future releases and boost the xMAS designer
+to the next level.
 
 
 
