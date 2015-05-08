@@ -102,6 +102,7 @@ Model.XNetwork {
         network.imageName = ""
         network.boxedImage = true
         network.modified = false
+        network.packet = ""
     }
 
     function checkTarget(port) {

@@ -49,14 +49,12 @@ Window {
     maximumHeight: height
     maximumWidth: width
 
-    property string expression:""
-
     // Signals
     signal accepted()
 
     // Event handling
     onVisibleChanged:{
-        expressionTextEdit.text = expression
+        expressionTextEdit.text = network.packet
         expressionTextEdit.forceActiveFocus()
     }
 
@@ -96,7 +94,6 @@ Window {
                         id:expressionTextEdit
                         anchors.fill:parent
                         anchors.margins: 10
-                        text: expression
                         focus:true
                         selectByMouse:true
                         wrapMode: TextInput.NoWrap
@@ -142,7 +139,7 @@ Window {
             text: "Ok"
             enabled: expressionTextEdit.text !== ""
             onTriggered: {
-                dialog.expression = expressionTextEdit.text
+                network.packet = expressionTextEdit.text
                 dialog.accepted()
                 dialog.close()
             }
