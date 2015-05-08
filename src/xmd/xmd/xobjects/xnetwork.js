@@ -46,9 +46,6 @@ function createNetwork(object) {
             return
         }
 
-        //clear network
-        network.clear()
-
         // process list of components and create components
         var complist = object["complist"]
         for (var c in complist) {
