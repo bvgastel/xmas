@@ -137,7 +137,6 @@ Window {
         Action {
             id: okAction
             text: "Ok"
-            enabled: expressionTextEdit.text !== ""
             onTriggered: {
                 network.packet = expressionTextEdit.text
                 dialog.accepted()
