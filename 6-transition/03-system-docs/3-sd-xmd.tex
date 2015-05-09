@@ -31,7 +31,7 @@ values or through the signal/slot mechanism. Interaction between QML and C++
 classes is slightly more complicated. The application uses two methods provided
 by QML to integrate QML and C++ objects.
 
-\subsubsection{Context property}
+\subsubsection{QML Context property}
 Each QML application operates in a certain QML context. The QML context stores
 properties that are available throughout all QML code. C++ classes can be exposed
 to the QML world by setting a C++ object instance as the value of a property
@@ -46,22 +46,43 @@ XMD uses context properties to provide access to three C++ classes:
  \item \textbf{util} (of class Util) to provide utility functions
 \end{itemize}
 
+\begin{figure}
+    \includegraphics[width=\textwidth]{qml3}
+    \caption{Registering a QML context property}
+\end{figure}
 
-%\begin{figure}
-%    \includegraphics[width=\textwidth]{qml-context-property}
-%    \caption{Qml / C++ integration using a context property}
-%\end{figure}
 
 More information on context properties is available at:
 \url{http://doc.qt.io/qt-5/qtqml-cppintegration-contextproperties.html}
 
 
-\subsubsection{C++ extension class}
+\subsubsection{Embedding C++ classes in QML}
 
-%\begin{figure}
-%    \includegraphics[width=\textwidth]{qml-cpp-extension}
-%    \caption{Qml/ C++ integration using an extension class}
-%\end{figure}
+QML applications can also be extended with C++ code by registering C++ classes
+with the QML type system. Any C++ class that derives from QObject can be used
+in this way. Registering the class to QML not only allows access to the properties,
+methods and signals of an object. Additionally, QML code can directly instantiate
+new objects of the registered classes (see figure \ref{fig:register-qml}).
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{qml1}
+    \includegraphics[width=\textwidth]{qml2}
+    \caption{Exposing a C++ class to QML}
+    \label{fig:register-qml}
+\end{figure}
+
+More information is available at:
+\url{http://doc.qt.io/qt-5/qtqml-tutorials-extending-qml-example.html}
+
+
+
+
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{qml-cpp-extension}
+    \caption{Qml/ C++ integration using an extension class}
+\end{figure}
 
 
 \subsubsection{Interaction xmd / datamodel classes}
