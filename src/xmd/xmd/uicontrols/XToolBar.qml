@@ -57,34 +57,42 @@ Rectangle {
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/queue.qml"
             image: "qrc:/icons/content/queue.png"
+            tooltip: "queue"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/function.qml"
             image: "qrc:/icons/content/function.png"
+            tooltip: "function"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/fork.qml"
             image: "qrc:/icons/content/fork.png"
+            tooltip: "fork"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/join.qml"
             image: "qrc:/icons/content/join.png"
+            tooltip: "join"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/switch.qml"
             image: "qrc:/icons/content/switch.png"
+            tooltip: "switch"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/merge.qml"
             image: "qrc:/icons/content/merge.png"
+            tooltip: "merge"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/sink.qml"
             image: "qrc:/icons/content/sink.png"
+            tooltip: "sink"
         }
         XToolBarPrimitiveItem {
             componentFile: "qrc:/xmas/xobjects/source.qml"
             image: "qrc:/icons/content/source.png"
+            tooltip: "source"
         }
         ToolBarSeparator {}
 
@@ -141,6 +149,7 @@ Rectangle {
         shortcut: ""
         iconSource: "qrc:/icons/content/packet.ico"
         iconName: "Packet"
+        tooltip: "Set network packet..."
         onTriggered: packetDialog.show()
     }
 
