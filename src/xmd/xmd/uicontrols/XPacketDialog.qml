@@ -138,6 +138,9 @@ Window {
             id: okAction
             text: "Ok"
             onTriggered: {
+                if(network.packet !== expressionTextEdit.text) {
+                    network.modified = true
+                    }
                 network.packet = expressionTextEdit.text
                 dialog.accepted()
                 dialog.close()
