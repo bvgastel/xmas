@@ -51,7 +51,7 @@ XMD uses context properties to provide access to three C++ classes:
     \caption{Registering a QML context property}
 \end{figure}
 
-
+\paragraph{QML Documentation}
 More information on context properties is available at:
 \url{http://doc.qt.io/qt-5/qtqml-cppintegration-contextproperties.html}
 
@@ -71,6 +71,19 @@ new objects of the registered classes (see figure \ref{fig:register-qml}).
     \label{fig:register-qml}
 \end{figure}
 
+\paragraph{Usage}XMD registers four C++ classes to the QML type system. These classes
+are \textbf{Channel}, \textbf{XPort}\footnote{This class has been named XPort to
+avoid confusion with the Port class defined in the xMAS data model}, \textbf{Network}
+and \textbf{Component}. The definitions of each of the four classes is split in
+three files. The .h and .cpp files contain normal C++ header and source files of
+the classes. Furthermore, each class has a QML file, e.g. XChannel.qml, which contains
+additional QML code (figure \ref{fig:qml-cpp-classes}). All three files all belong to
+the same class. Even though the class names are sometimes different (e.g. Channel vs.
+XChannel), the QML type system binds the C++ code and the QML code together to form a
+single class definition. Registration of types is done by a call to qmlRegisterType,
+figure \ref{fig:register-qml} shows an example.
+
+\paragraph{QML Documentation}
 More information is available at:
 \url{http://doc.qt.io/qt-5/qtqml-tutorials-extending-qml-example.html}
 
@@ -81,7 +94,8 @@ More information is available at:
 
 \begin{figure}
     \includegraphics[width=\textwidth]{qml-cpp-extension}
-    \caption{Qml/ C++ integration using an extension class}
+    \caption{Qml/ C++ integration by extending the QML type system}
+    \label{fig:qml-cpp-classes}
 \end{figure}
 
 
