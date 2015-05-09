@@ -113,7 +113,7 @@ Rectangle {
                 anchors.fill: compositeListRect
                 contentWidth: 40
                 contentHeight: 40
-                anchors.margins: 2
+                spacing: 4
                 orientation: ListView.Horizontal
                 model: network.compositeLibrary
                 snapMode: ListView.SnapOneItem
@@ -127,13 +127,11 @@ Rectangle {
                 delegate:
                     XToolBarCompositeItem {
                     id:item
-                    height:30
-                    width:40
-                    fillMode: Image.PreserveAspectFit
                     filename: modelData.filename
                     alias:modelData.alias
                     image: modelData.symbol
                     boxed: modelData.boxed
+                    tooltip: modelData.alias !== "" ? modelData.alias : modelData.filename
                     onRemove: if(!network.unloadComposite(modelData.filename)) unloadCompositeFailedDialog.open()
                 }
             }
