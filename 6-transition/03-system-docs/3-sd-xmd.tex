@@ -62,7 +62,7 @@ QML applications can also be extended with C++ code by registering C++ classes
 with the QML type system. Any C++ class that derives from QObject can be used
 in this way. Registering the class to QML not only allows access to the properties,
 methods and signals of an object. Additionally, QML code can directly instantiate
-new objects of the registered classes (see figure \ref{fig:register-qml}).
+new objects of the registered classes (see figure~\ref{fig:register-qml}).
 
 \begin{figure}
     \includegraphics[width=\textwidth]{qml1}
@@ -76,34 +76,40 @@ are \textbf{Channel}, \textbf{XPort}\footnote{This class has been named XPort to
 avoid confusion with the Port class defined in the xMAS data model}, \textbf{Network}
 and \textbf{Component}. The definitions of each of the four classes is split in
 three files. The .h and .cpp files contain normal C++ header and source files of
-the classes. Furthermore, each class has a QML file, e.g. XChannel.qml, which contains
-additional QML code (figure \ref{fig:qml-cpp-classes}). All three files all belong to
-the same class. Even though the class names are sometimes different (e.g. Channel vs.
-XChannel), the QML type system binds the C++ code and the QML code together to form a
-single class definition. Registration of types is done by a call to qmlRegisterType,
-figure \ref{fig:register-qml} shows an example.
+the classes. Furthermore, each class has a QML file which contains additional
+QML code (figure~\ref{fig:qml-cpp-classes}). All three files belong to the same
+class. The QML type system binds the C++ code and the QML code together to form a
+single class definition. Note that a class can have different names in C++ code
+and QML code, e.g. Channel (C++) vs. XChannel (QML). Registration of types is
+done by a call to qmlRegisterType, figure~\ref{fig:register-qml} shows an example.
 
 \paragraph{QML Documentation}
 More information is available at:
 \url{http://doc.qt.io/qt-5/qtqml-tutorials-extending-qml-example.html}
 
 
-
-
-
-
 \begin{figure}
-    \includegraphics[width=\textwidth]{qml-cpp-extension}
-    \caption{Qml/ C++ integration by extending the QML type system}
+    \centering
+    \includegraphics[width=0.8\textwidth]{qml-cpp-classes}
+    \caption{Qml / C++ integration of XMD classes}
     \label{fig:qml-cpp-classes}
 \end{figure}
 
 
 \subsubsection{Interaction xmd / datamodel classes}
 
-\begin{figure}
+Figure~\ref{fig:xmd-xmv-integration} shows the relationship between the classes of
+xmd and the the datamodel. The bottom part contains the model classes, which are
+shared by both xmv and xmd. The equivalant (QML) classes that make up the view are
+located in the upper part. The xmd classes XPort and Component do not directly
+access the Port and XMASComponent classes of the datamodel. Manipulation of the
+datamodel always involves class DataControl. This class has access to the project,
+its root network and the components and ports of the model under construction.
+
+\begin{figure}[ht]
     \includegraphics[width=\textwidth]{xmd-xmv-integration}
     \caption{Integration of xmd and xmv datamodel}
+    \label{fig:xmd-xmv-integration}
 \end{figure}
 
 
