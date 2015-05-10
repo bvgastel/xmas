@@ -1,5 +1,5 @@
 \chapter{Reflection}
-\paragraph{Project} We started out largely unsure about how to continue. The first few months
+\paragraph{Process} We started out largely unsure about how to continue. The first few months
 planning we structured internal and external communication. Additionally, we decided to 
 work in time boxes (iterations) where we successively worked toward a finished project. 
 The internal communication was intense (three times a week, sometimes more) where one of our
@@ -19,7 +19,7 @@ even if most of the students should not notice anything, after all: it's a big c
  
 We realized we had to change our approach. Although initially we talked about rescheduling,
 we decided not to. One of the advantages of agile working is the principle of the time-box. 
-The consequent of the decrease of communication with the customer would be a decrease in speed
+The consequence of the decrease of communication with the customer would be a decrease in speed
 of deciding. We agreed with the customer to have at minimum one skype session per iteration. 
 This we added to our planning. Informally, we could request a quick answer to urgent questions
 by email.
@@ -38,6 +38,58 @@ interface fearing the consequences of a second parser for maintenance. We chose 
 \qml and \cpp which probably cost about 2 iterations (6 weeks) extra in comparison to a text
 interface. Although this is partly conjecture, if the team and the customer had known the extent 
 of the consequences, we might have chosen differently.
+
+\paragraph{Requirements}
+%\begin{tcolorbox}[colback=white]
+The product satisfies  the main requirements as we set out to meet. 
+The benefits of the new xMAS designer toolkit are that
+\begin{itemize}
+\item \textbf{it is platform independent.}
+\item \textbf{it's maintainability is improved.}
+\item \textbf{it integrates verification tools through
+			 a standard plug-in interface}
+\end{itemize}
+%\end{tcolorbox}
+
+\paragraph{Project} When it comes to the end of a project like this, it is always a good practice to
+step back and ask ourselves: did we meet the requirements of the customer? In the end we strive
+to satisfy the customer in addition to our own ambitions.
+
+\subparagraph{Platform independence} One of the main requirements was to have a platform independent xMAS
+toolkit. The new xMAS toolkit was developed and tested in a multi platform
+environment. It was exhaustively tested on Linux and Windows while MacOs was used to
+try-out the releases\footnote{Bernard offered to take on the responsibility for the Macintosh 
+because the team did not have a Macintosh machine. We owe him our gratitude for that.}.
+
+\subparagraph{Maintenance} To meet the maintainability requirement we have chosen Qt as integrated
+development environment. Qt is a powerful open source platform independent IDE.
+The QML declarative UI language from Qt, enforces separation of view and control. The
+Qt IDE is an all-in-one solution with a lot of support available. We chose \qt because
+of its ease of use, speed and power of development. 
+
+\subparagraph{Design} In retrospect and referring to the integration design decision 
+in chapter~\ref{sec:integration}, we are strongly convinced that a loose coupling between 
+designer and verification back-end would ease maintenance, increase development
+speed and make development of verification tools more independent from the 
+user interface.
+
+Additionally, separating UI code from pure c++ model and verification code is 
+a good idea because UI tools are much more exposed to changes, e.g. 
+Qt version update. The tighter these are coupled the bigger the chance that 
+modification ripple through the whole system crossing presentation / data model
+boundaries.
+
+Also the benefit of updating the back-end verification model with every canvas
+action doesn't make sense. Why would a designer start a verification tool if the
+canvas model is still under creation? This implies that it isn't necessary to
+keep the back-end model constantly up to date with every canvas action. Once the
+designer thinks the model is ready he or she can start a verification tool.
+Details of this proposal can be found in report chapter~\ref{sec:integration}
+
+\subparagraph{Functionality} Integration of formal verification tools was implemented 
+through a standard plug-in interface. This way it will be possible to refactor or create 
+verification tools independently and without the need of touching the designer source code. 
+Once a verification tool has the right plug-in interface it can be used in the xMAS designer.
 
 \paragraph{Guus} I felt very happy working this project with a very intense communication pattern,
 a positively constructive team and supportive and helpful mentor and customer. I started out 
@@ -63,7 +115,7 @@ enforcing too much.
 todo \\ 
 \todo[inline]{reflection jeroen}
 
-\paragraph{Stefan: }
+\paragraph{Stefan}
 From time to time I thought that it would be difficult to reach our targets so
 we could meet the customer requirements. After all we had to start from scratch
 and with a limited amount of time. It took some time to find the right platform

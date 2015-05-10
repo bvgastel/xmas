@@ -1,88 +1,34 @@
-\chapter*{Conclusion}
+\chapter{Conclusion}
 
-When it comes to the end of a project like this, it is always a good practice to
-resume and see if the requirements of the customer were met. It is also
-important to take note of what is still missing or what improvement can we
-suggest. So, it is not only about a nice and technically correct product but it
-must satisfy the customer and match the expectations.
+In addition to the previous chapter we ponder improvements to formulate 
+suggestions for the next project to work on. This chapter provides these considerations.
 
-
-One of the main requirements was to have a platform independent xMAS
-toolkit. The new xMAS toolkit is developed and tested in a multi platform
-environment. It is exhaustive tested on Linux and Windows while MacOs is used to
-try-out the releases.
-
-To meet the maintainability requirement we've chosen Qt as integrated
-development environment. Qt is a powerful open source platform independent IDE.
-The QML declarative UI language from Qt, enforces separation of view and control. The
-Qt IDE is an all-in-one solution with a lot of support available.
-
-
-Integration of formal verification tools is implemented via a standard plug-in
-interface. In this way it is possible to develop new or re-factor existing
-verification tools independently and without the need of touching the designer
-source code. Once a verification tool has the right plug-in interface it can be
-used in the xMAS designer.
-
-
-\vspace{0.5 cm}
-
-\begin{tcolorbox}[colback=white]
-According to the main requirements; The benefits of the new xMAS designer toolkit:
+%\vspace{0.5 cm}
+%\begin{tcolorbox}[colback=white]
+Suggestions for future releases are:
 \begin{itemize}
-\item \textbf{It is platform independent.}
-\item \textbf{Maintainability is improved.}
-\item \textbf{Integrate verification tools via a standard plug-in interface}
+\item \textbf{Parametric composites} Add significantly to the expressive power
+of the \Noc designs by implementing parametric composites.
+\item \textbf{Decouple user interface} Refactor the designer as 
+as a fully declarative UI and enforce independence from the back-end 
+verification model, increasing the ease of development of both user interface
+and verification tools.
+\item \textbf{Deadlock verification} Add plug-in interface for deadlock verification tool
+thus increasing the confidence of designers in their \Noc designs.
+\item \textbf{Plugin tool} Improve and complete the plugin interface to a level where
+the designer of a verification tool only has to write the verification tool and 
+only needs to write some minimal plugin code. 
 \end{itemize}
-\end{tcolorbox}
+%\end{tcolorbox}
 
-The current product release v0.6 has still some bugs~\ref{sec:bug-list} or
-things that can be fixed~\ref{sec:fix-list}. Both can be found in the appendix
-of this document or in the Agilefant backlog. The latter has comments of how
-these bugs can be reproduced.
+Some of the features are described in detail and can be found in the
+reports section. The parametric composites is a proposal of how these
+complex components could be designed and implemented (see chapter~\ref{sec:parametric}).
 
-In the appendix there's also a list of possible features~\ref{sec:feature-list}
-that can be added. Some are described in detail and can be found in the
-reports section. For example, report chapter~\ref{sec:parametric} is a proposal
-of how parametric composites could be implemented.
-
-We are still convinced that keeping the designer fully independent from the
-verification model back-end makes the project much more maintainable.
-
-Separating UI code from pure c++ model and verification code is also a good idea
-because UI tools are much more exposed to changes, e.g. Qt version update. The
-tighter these are coupled the bigger the chance that you have to make
-modifications through the whole system.
-
-Also the benefit of updating the back-end verification model with every canvas
-action doesn't make sense. Why would a designer start a verification tool if the
-canvas model is still under creation? This implies that it isn't necessary to
-keep the back-end model constantly up to date with every canvas action. Once the
-designer thinks the model is ready he or she can start a verification tool.
-Details of this proposal can be found in report chapter~\ref{sec:integration}
-
-\vspace{0.5 cm}
-\begin{tcolorbox}[colback=white]
-Some prior suggestions for future releases:
-\begin{itemize}
-\item \textbf{Parametric composites}
-\item \textbf{Designer as full declarative UI enforces independency from back-end verification model}
-\item \textbf{Add plug-in interface for deadlock verification tool}
-\end{itemize}
-\end{tcolorbox}
+For release v0.6 in the appendix one can find the buglist (see~\ref{sec:bug-list}, a fixlist \ref{sec:fix-list}), 
+and the feature list (see~\ref{sec:feature-list}).
+The agilefant backlog\footnote{to be found in the repository} has these lists plus 
+comments on how to reproduce the bugs.
 
 Hopefully these ideas are useful for future releases and boost the xMAS designer
 to the next level.
-
-
-
-
-
-
-
-
-
-
-
-
-
