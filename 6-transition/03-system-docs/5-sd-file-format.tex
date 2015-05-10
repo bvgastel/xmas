@@ -16,23 +16,23 @@ Properties:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  ``CANVAS'' : \textbf{CANVAS} object (optional) \emph{NEW}
+  ``CANVAS'' : the \textsc{Canvas} object (optional) \emph{NEW}
 \item
-  ``COMPOSITE\_NETWORK'' : \textbf{COMPOSITE\_NETWORK} object (optional)
+  ``COMPOSITE\_NETWORK'' : the \textsc{Composite\_Network} object (optional)
   \emph{NEW}
 \item
-  ``VARS'' : \textbf{VARS} object
+  ``VARS'' : the \textsc{Vars} object
 \item
-  ``PACKET\_TYPE'' : \textbf{PACKET\_TYPE} object
+  ``PACKET\_TYPE'' : the \textsc{Packet\_Type} object
 \item
-  ``NETWORK'' : array of \textbf{COMPONENT}, describes all components in
+  ``NETWORK'' : an array of \textsc{Component} describes all components in
   the network
 \end{itemize}
 
 \subsection{CANVAS}\label{canvas}
 
 \textbf{\emph{NEW}} Used by the XMAS designer application to define
-properties of the designer canvas. When no CANVAS information is
+properties of the designer canvas. When no \textsc{Canvas} information is
 specified, default values are used.
 
 Properties:
@@ -68,19 +68,22 @@ Properties:
   to draw common macro's like credit counters and delays using the
   symbols commonly used in literature to denote these macro's.
 \item
-  ``packet'' : ???
+  ``packet'' : The verification system does not use this information yet, 
+  				although the user interface does allow entering a value.
+  				It's value is reserved for later use.
 \end{itemize}
 
 \subsection{VARS}\label{vars}
 
-\emph{TODO}\footnote{\label{fileformat-todo}The semantics of this field are not changed from the original file format.
+\emph{TODO}\footnote{\label{fileformat-todo}The semantics of this field 
+were not changed from the original file format.
 It is up to the customer to define the contents of this field.}
-Definition taken from original file format
+Definition taken from original file format.
 
 \subsection{PACKET\_TYPE}\label{packetux5ftype}
 
 \emph{TODO}\footref{fileformat-todo}
-Definition taken from original file format
+Definition taken from original file format.
 
 \subsection{COMPONENT}\label{component}
 
@@ -91,16 +94,16 @@ Properties:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  ``id'' : \textbf{String} - unique identifier
+  ``id'' : \textsc{String} - unique identifier
 \item
-  ``type'' : \textbf{Component\_type} enum - type of the component
+  ``type'' : \textsc{Component\_type} enum - type of the component
 \item
-  ``outs'' : array of \textbf{OUT} - describes all connected output
+  ``outs'' : array of \textsc{Out} - describes all connected output
   ports
 \item
-  ``fields'' : array of \textbf{FIELD} \emph{(optional)}
+  ``fields'' : array of \textsc{Field} \emph{(optional)}
 \item
-  ``pos'' : \textbf{POSITION} - \emph{new} - position of the component
+  ``pos'' : \textsc{Position} - \emph{new} - position of the component
   on the canvas
 \end{itemize}
 
@@ -153,9 +156,9 @@ Properties:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  ``subnetwork'' : \textbf{String} - name of the subnetwork
+  ``subnetwork'' : \textsc{String} - name of the subnetwork
 \item
-  (``parameters'' : \textbf{Not determined yet} - reserved property
+  (``parameters'' : (Not determined yet) - reserved property
   name, to be used in the future to parameterize the network)
 \end{itemize}
 
@@ -185,9 +188,9 @@ Properties:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  ``id'' : \textbf{String} - reference to the target component
+  ``id'' : \textsc{String} - reference to the target component
 \item
-  ``in\_port'' : \textbf{Number} - index of the input port on the target
+  ``in\_port'' : \textsc{Number} - index of the input port on the target
   component
 \end{itemize}
 
@@ -206,12 +209,12 @@ Properties:
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  ``x'' : \textbf{Number} - x or horizontal position on the canvas
+  ``x'' : \textsc{Number} - x or horizontal position on the canvas
 \item
-  ``y'' : \textbf{Number} - y or vertical position on the canvas
+  ``y'' : \textsc{Number} - y or vertical position on the canvas
 \item
-  ``orientation'' : \textbf{Number} - orientation of the component,
+  ``orientation'' : \textsc{Number} - orientation of the component,
   measured in degrees clockwise.
 \item
-  ``scale'' : \textbf{Number} - scale factor of the component
+  ``scale'' : \textsc{Number} - scale factor of the component
 \end{itemize}
