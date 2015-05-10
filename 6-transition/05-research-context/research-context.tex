@@ -19,6 +19,7 @@
 \usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{url}
 \usepackage{hyperref}% Load after biblatex
 \hypersetup{
     colorlinks = true,
@@ -33,6 +34,7 @@
 \usepackage{amssymb}% For \checkmark
 \usepackage{pifont}% for \ding{'-code or "-code}
 \usepackage{listings}
+\usepackage{xspace}%
 
 \bibliographystyle{plain}% unsrt, plain, alpha, abbrv
 
@@ -43,7 +45,7 @@
 		}
 \date{03/03/2015}
 
-\title{\color{blue}Research context for xmas designer}
+\title{\color{blue}Research context for the xmas designer}
 
 \setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
 
@@ -61,6 +63,7 @@
 \newcommand{\ok}{$\checkmark$}
 \newcommand{\w}[1]{\textbf{\textsc{#1}}}
 \newcommand\bw[1]{{\color{blue}#1}}
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
 
 \newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
 
@@ -86,13 +89,13 @@
 
 \begin{abstract}
 
-	\noindent{} This document illustrates the research context
-	that benefits from the xmas designer project, specifies
-	what these benefits are and who they benefit. The questions
-	answered here are: "what problem area is the subject of research?",
-	"what is our contribution to the solution?", "Why is the research
-	area relevent (socially or academically)?" and finally, "what is
-	the state of the art of the research?".
+	\noindent{} 
+Formal verification is a pre-production activity to prove the correctness of a
+design. Designers need to use verification technology, but often are not acquainted with formal verification methods.
+A designer tool with built-in verification tools that provides formal verification is of value for pre-production
+design of an \Noc. This document illustrates why formal verification methods play a crucial role
+in the design of new technologies.  
+
 
 \end{abstract}
 
@@ -103,6 +106,6 @@
 \input{2-rc-state-of-the-art}
 
 % Bibliography ---> need to include
-\bibliography{da-rc}
+\bibliography{rc}
 
 \end{document} ;########################### end document ##################################;

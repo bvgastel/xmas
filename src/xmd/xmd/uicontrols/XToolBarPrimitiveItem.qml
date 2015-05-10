@@ -43,27 +43,30 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
-Image {
-    id: item
+ToolButton{
+    id:item
     property string componentFile
-    property alias image:item.source
+    property alias image:icon.source
 
     Layout.preferredHeight: 40
     Layout.preferredWidth: 40
     anchors.verticalCenter: parent.verticalCenter
 
-    fillMode: Image.PreserveAspectFit
+    tooltip: "primitive component"
 
-    opacity: 0.6
+    onHoveredChanged: icon.opacity = item.hovered ? 1.0 : 0.6
 
-    MouseArea {
+    Image {
+        id: icon
         anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
-        onPositionChanged:Code.continueDrag(mouse);
-        onReleased:Code.endDrag();
-        hoverEnabled: true
-        onEntered: item.opacity = 1.0
-        onExited: item.opacity = 0.6
+        opacity: 0.6
+        MouseArea {
+            id:area
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
+            onPositionChanged:Code.continueDrag(mouse);
+            onReleased:Code.endDrag();
+        }
     }
 }

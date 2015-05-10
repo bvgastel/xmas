@@ -1,0 +1,220 @@
+\section{XMAS network file format}\label{xmas-network-file-format}
+
+This document describes the file format used to store XMAS network
+models. Both the XMAS designer application and the standalone
+verification tools use this file format. The structure is based on the
+flat json format used by the checker application provided at the start
+of this project. Several new fields have been added in order to support
+hierarchical networks and information specific to the designer. As the
+new file format is able to support both flat and hierarchical networks,
+the (recommended) file extension has been changed from fjson to json.
+
+\subsection{Root JSON object}\label{root-json-object}
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``CANVAS'' : the \textsc{Canvas} object (optional) \emph{NEW}
+\item
+  ``COMPOSITE\_NETWORK'' : the \textsc{Composite\_Network} object (optional)
+  \emph{NEW}
+\item
+  ``VARS'' : the \textsc{Vars} object
+\item
+  ``PACKET\_TYPE'' : the \textsc{Packet\_Type} object
+\item
+  ``NETWORK'' : an array of \textsc{Component} describes all components in
+  the network
+\end{itemize}
+
+\subsection{CANVAS}\label{canvas}
+
+\textbf{\emph{NEW}} Used by the XMAS designer application to define
+properties of the designer canvas. When no \textsc{Canvas} information is
+specified, default values are used.
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``width'' : width of the canvas in logical units
+\item
+  ``height'' : height of the canvas in logical units
+\end{itemize}
+
+\subsection{COMPOSITE\_NETWORK}\label{compositeux5fnetwork}
+
+\textbf{\emph{NEW}} Contains designer specific information to use this
+network as a composite object. If this information is not present, the
+network cannot be used as a composite object.
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``alias'' : displayed inside a composite object to denote the objects
+  type (e.g.~mesh)
+\item
+  ``image-name'' : name of graphical resource used as a symbol to denote
+  the objects type (e.g.~mesh.ico)
+\item
+  ``boxed-image'' : set to 1 to use the image as a symbol inside a
+  generic composite object (drawn boxed) or set to 0 to use the image as
+  the graphical representation of the entire component, this can be used
+  to draw common macro's like credit counters and delays using the
+  symbols commonly used in literature to denote these macro's.
+\item
+  ``packet'' : The verification system does not use this information yet, 
+  				although the user interface does allow entering a value.
+  				It's value is reserved for later use.
+\end{itemize}
+
+\subsection{VARS}\label{vars}
+
+\emph{TODO}\footnote{\label{fileformat-todo}The semantics of this field 
+were not changed from the original file format.
+It is up to the customer to define the contents of this field.}
+Definition taken from original file format.
+
+\subsection{PACKET\_TYPE}\label{packettype}
+
+\emph{TODO}\footref{fileformat-todo}
+Definition taken from original file format.
+
+\subsection{COMPONENT}\label{component}
+
+Describes a component in the network.
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``id'' : \textsc{String} - unique identifier
+\item
+  ``type'' : \textsc{Component\_type} enum - type of the component
+\item
+  ``outs'' : array of \textsc{Out} - describes all connected output
+  ports
+\item
+  ``fields'' : array of \textsc{Field} \emph{(optional)}
+\item
+  ``pos'' : \textsc{Position} - \emph{new} - position of the component
+  on the canvas
+\end{itemize}
+
+\subsection{Component\_type}\label{componenttype}
+
+Enumeration:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  source
+\item
+  sink
+\item
+  function
+\item
+  queue
+\item
+  xfork
+\item
+  join
+\item
+  xswitch
+\item
+  merge
+\item
+  composite \textbf{\emph{NEW}}
+\end{itemize}
+
+\subsection{COMPONENT {[}type=``source'',
+type=``sink''{]}}\label{component-typesource-typesink}
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``required'' : \textbf{Boolean 1/0} - set to 1 when this source/sink
+  is an interface port of a composite network that must be connected by
+  the higher level network. set to 0 when this is optional.
+\end{itemize}
+
+\subsection{COMPONENT
+{[}type=``composite''{]}}\label{component-typecomposite}
+
+\textbf{\emph{NEW}}
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``subnetwork'' : \textsc{String} - name of the subnetwork
+\item
+  (``parameters'' : (Not determined yet) - reserved property
+  name, to be used in the future to parameterize the network)
+\end{itemize}
+
+Description: The subnetwork reference indicates the relative location of
+the subnetwork on the filesystem.
+
+E.g. ``mesh.json'' refers to the network defined in ``mesh.json'' in the
+same directory as this network and ``spidergon/node.json'' refers to the
+network defined in ``node.json'' in the subdirectory ``spidergon''.
+
+Parameterization of composite objects has not been implemented yet. When
+implemented, composite objects require an additional field in the
+component description to store the parameters. The property name
+``parameters'' has been reserved for this purpose.
+
+\emph{Note: Currently the XMAS designer requires that all used composite
+networks are defined in the same directory as the root network.}
+
+\subsection{OUT}\label{out}
+
+Description: Describes channels between the components in the network.
+For each output port of a component, an \textbf{OUT} object describes to
+which input port of which component it is connected.
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``id'' : \textsc{String} - reference to the target component
+\item
+  ``in\_port'' : \textsc{Number} - index of the input port on the target
+  component
+\end{itemize}
+
+\subsection{FIELD}\label{field}
+
+\emph{TODO}\footref{fileformat-todo}
+Definition taken from original file format
+
+\subsection{POSITION}\label{position}
+
+\textbf{\emph{NEW}} Stores positional data of the component on the
+canvas.
+
+Properties:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  ``x'' : \textsc{Number} - x or horizontal position on the canvas
+\item
+  ``y'' : \textsc{Number} - y or vertical position on the canvas
+\item
+  ``orientation'' : \textsc{Number} - orientation of the component,
+  measured in degrees clockwise.
+\item
+  ``scale'' : \textsc{Number} - scale factor of the component
+\end{itemize}

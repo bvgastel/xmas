@@ -32,7 +32,7 @@ DataControl::DataControl(QObject *parent)
       m_logger("datacontrol")
 {
     m_project = std::make_shared<XMASProject>();
-    QObject::connect(&m_logger, &Logger::writeLog, this, &DataControl::writeLog );
+    QObject::connect(&m_logger, SIGNAL(writeLog(QString,QColor)), this, SIGNAL(writeLog(QString,QColor)));
 }
 
 DataControl::~DataControl()

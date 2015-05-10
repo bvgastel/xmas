@@ -43,32 +43,51 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 import "qrc:/javascripts/xobjects/xcomponent.js" as Code
 
-Image {
+ToolButton {
     id: item
     property string componentFile: "qrc:/xmas/xobjects/composite.qml"
     property string filename //json file
     property string alias:"Composite"
     property string image
     property bool boxed: true
-    source:"qrc:/icons/content/composite.ico"
 
     Layout.preferredHeight: 40
     Layout.preferredWidth: 40
     anchors.verticalCenter: parent.verticalCenter
 
-    fillMode: Image.PreserveAspectFit
+    tooltip: "composite component"
 
     signal remove()
 
-    MouseArea {
+    Image{
+        id:icon
         anchors.fill: parent
-        preventStealing: true
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
-        onPositionChanged:Code.continueDrag(mouse);
-        onReleased:Code.endDrag();
-        hoverEnabled: true
-        onClicked:if (mouse.button === Qt.RightButton)contextMenu.popup()
+        source:"qrc:/icons/content/composite.ico"
+        fillMode: Image.PreserveAspectFit
+        MouseArea {
+            anchors.fill: parent
+            preventStealing: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onPressed: if (mouse.button === Qt.LeftButton) Code.startDrag(mouse);
+            onPositionChanged:Code.continueDrag(mouse);
+            onReleased:Code.endDrag();
+            //hoverEnabled: true
+            onClicked:if (mouse.button === Qt.RightButton)contextMenu.popup()
+        }
+
+        onStatusChanged: {
+            if(icon.status === Image.Error){
+                icon.source =  "qrc:/icons/content/composite.ico"
+            }
+            if(icon.status === Image.Null){
+                icon.source =  "qrc:/icons/content/composite.ico"
+            }
+        }
+
+        // Catch console message on invalid source
+        Component.onCompleted: {
+            try{}catch(e){}
+        }
     }
 
     Menu{
@@ -81,22 +100,10 @@ Image {
 
     onImageChanged: {
         if(item.image!=="" && item.image !== null) {
-            item.source = "qrc:/symbols/content/symbols/" + item.image
+            icon.source = "qrc:/symbols/content/symbols/" + item.image
         }
     }
 
-    onStatusChanged: {
-        if(item.status === Image.Error){
-            item.source =  "qrc:/icons/content/composite.ico"
-        }
-        if(item.status === Image.Null){
-            item.source =  "qrc:/icons/content/composite.ico"
-        }
-    }
 
-    // Catch console message on invalid source
-    Component.onCompleted: {
-        try{}catch(e){}
-    }
 
 }

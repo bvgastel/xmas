@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>xMAS designer</Name>
+    <Version>1.0.0</Version>
+    <Title>xMAS designer Installer</Title>
+    <Publisher>OU</Publisher>
+	<ProductUrl></ProductUrl>
+	<InstallerWindowIcon>app</InstallerWindowIcon>
+    <InstallerApplicationIcon>app</InstallerApplicationIcon>
+    <Logo>ounl_logo.png</Logo>
+    <StartMenuDir>xMAS</StartMenuDir>
+    <TargetDir>@ApplicationsDir@\xMAS</TargetDir>
+	<AllowSpaceInPath>true</AllowSpaceInPath>
+</Installer>

@@ -1,0 +1,98 @@
+\section{State of the art}
+
+As SoC's are used from consumer to critical applications and the number of IP's
+rises, new challenges are awaiting. Chip designers have to compromise between
+performance and reliability. For example, if one could prove the absolute
+correctness of an NoC then there would be no need to add communication fabric or
+protocol overhead to recover or avoid errors. The questions is finding the right
+balance between runtime and design-time correctness achievements. While formal
+verification techniques have made a lot of progress in proving deadlock freedom
+there is still some future work e.g. for finding a deadlock freedom proof at bit
+level. The same holds to prove liveness, although it is practically impossible to
+prove so, some experiments show that is possible for a particular type of
+liveness called ``progress'' which is a form of deadlock absence.
+\cite{Ray:2012:SPV:2492708.2492936,itp}
+
+
+\paragraph{Model checking}\cite{baier2008principles}
+
+Defects must be detected as soon as possible. For example, the costs of repairing
+a software flaw during maintenance are roughly 500 times higher than a fix in an
+early design phase. In a hardware design it is even more critical because it is
+difficult or even impossible to repair an error afterward.
+
+Formal verification methods can be used to check the correctness of a model.
+This activity can be done during design time and is very suitable to detect
+defects in an early stage of the development process. Exhaustive testing or peer
+reviews can only prove an error its presence not its absence. Automated formal
+verification methods can prove the absence or presence of a fomral property. For
+example, if a model is checked on deadlock freedom, formal verification can
+prove if this is true.
+Some formal properties:
+
+\begin{itemize}
+\item deadlock freedom : A terminal state can be reached.
+\item liveness : A state can be reachable whenever it is necessary.
+\item fairness : No path will constantly exclude other paths leading to some
+state. (starvation freedom)
+\end{itemize} 
+
+Model checking is a verification technique that explores all possible system
+states in a brute-force manner. If the number of model components raise, the
+number of possible states will increase exponential and so the space necessary
+to hold these states. This is known as the state-space explosion problem.
+
+The strengths of model checking:
+\begin{itemize}
+\item Can be used for a wide range of applications.
+\item Supports partial verification to focus on essential properties first.
+\item It proves absence of an error not the presence.
+\item Provides diagnostic information.
+\item Easy accessible ``push-button'' technology.
+\item Interest by industry.
+\item It can be easily integrated in existing development cycles.
+\item It has a sound and mathematical underpinning.
+\end{itemize} 
+
+The weaknesses of model checking:
+\begin{itemize}
+\item State-space explosion problem, not applicable for data-intensive or
+infinite-state systems.
+\item Verification result is only as good as the system model.
+\item Requires some expertise to interpret the results and to adopt the model.
+\item The tools may contain defects itself.
+\item It does not allow checking generalizations.
+\end{itemize} 
+
+
+\paragraph{ForEver}is a verification framework that addresses the correctness
+of a NoC by attacking the problem both at design-time and at runtime. With a
+minimal of overhead, this kind of approach is capable of handling large networks
+which is difficult to do by formal verification.
+\cite{Parikh:2014:FCF:2597868.2514871}
+
+\paragraph{Improvements}of the communication fabrics will not only help to
+gain bandwidth but facilitates in mechanisms to achieve correctness by avoidance
+or recovery. Reconfigurable NoC of BiNoC, where channels can dynamically
+reconfigure themselves so that these work bidirectionally instead of the
+unidirectional communication fabrics. The flow direction at each channel is
+controlled by a channel direction control (CDC) algorithm. Implemented with a
+pair of finite state machines, this CDC algorithm is shown to be high
+performance, free of deadlock, and free of starvation \cite{5715603}
+
+\paragraph{3D optical communication}is also a promising technique. It creates the
+possibility a massive degree of integration in a single chip. Vertical optical
+channels are used to interconnect the layers and have many improvements over
+traditional copper-based SoC's. It is interesting to think about the relation
+with formal verification. Questions could be: How to deal with a massive
+network? Can these still be modeled by a human? How long will it take to verify
+such networks? \cite{4542033,5306588}
+
+\paragraph{Conclusion: }The importance of verification during design time remains and will
+always have benefits over real-time verification, no matter how massive the
+challenge becomes. It is rather a challenge of how to deal with massive networks in
+formal verification.
+
+
+\newpage
+
