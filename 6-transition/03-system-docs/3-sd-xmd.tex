@@ -71,7 +71,7 @@ One can extend QML applications with C++ code by registering C++ classes
 with the QML type system. Any C++ class that derives from QObject connect to QML this way.
 Registering the class with QML not only allows access to the properties,
 methods and signals of an object. Additionally, QML code can directly instantiate
-new objects of the registered classes (see figure \ref{fig:register-qml}).
+new objects of the registered classes (see figure~\ref{fig:register-qml}).
 
 \begin{figure}
     \includegraphics[width=\textwidth]{qml1}
@@ -98,18 +98,27 @@ figure \ref{fig:register-qml} shows an example.
 More information is available at:
 \url{http://doc.qt.io/qt-5/qtqml-tutorials-extending-qml-example.html}
 
+
 \begin{figure}
-    \includegraphics[width=\textwidth]{qml-cpp-extension}
-    \caption{Qml/ C++ integration by extending the QML type system}
+    \centering
+    \includegraphics[width=0.8\textwidth]{qml-cpp-extension}
+    \caption{Qml / C++ integration of XMD classes}
     \label{fig:qml-cpp-classes}
 \end{figure}
 
 \subsubsection{Interaction xmd / datamodel classes}
 
-See figure~\ref{fig:xmd-xmv-integration} for an overview of the 
-\textsc{Xmd-Xmv} integration.
+Figure~\ref{fig:xmd-xmv-integration} shows the relationship between the classes of
+xmd and the datamodel. \textsc{Xmd} and \textsc{Xmv} share the bottom part that contains
+the model classes.
+The equivalant (QML) classes that make up the view are
+located in the upper part. The \textsc{Xmd} classes \textsc{XPort} and \textsc{Component}
+do not directly access the \textsc{Port} and \textsc{XMASComponent} classes of the datamodel. 
+Manipulation of the datamodel always involves class \textsc{DataControl}. This class has 
+access to the project, its root network and the components and ports of the model under 
+construction.
 
-\begin{figure}
+\begin{figure}[ht]
     \includegraphics[width=\textwidth]{xmd-xmv-integration}
     \caption{Integration of xmd and xmv datamodel}
     \label{fig:xmd-xmv-integration}
