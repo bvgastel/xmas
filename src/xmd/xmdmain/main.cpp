@@ -36,32 +36,60 @@
 
 #include <QQmlContext>
 #include <QtQml>
-#include "controller.h"
+#include "memorypool.h"
+#include "plugincontrol.h"
+#include "datacontrol.h"
+#include "model/util.h"
+#include "model/network.h"
+
+
+/*
+ * Access globals in C++ through statements like
+ *
+ *      "extern DataControl *dataControl;"
+ *
+ */
+std::unique_ptr<DataControl> dataControl = nullptr;
+std::unique_ptr<PluginControl> pluginControl = nullptr;
+std::unique_ptr<Util> util = nullptr;
 
 int main(int argc, char *argv[])
 {
-    Q_INIT_RESOURCE(xmd);
+    Q_INIT_RESOURCE(quick);
+    Q_INIT_RESOURCE(javascripts);
+    Q_INIT_RESOURCE(images);
 
     QApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
-    QCommandLineParser parser;
-    parser.setApplicationDescription("XMAS Model Designer");
-    parser.addHelpOption();
-    parser.addVersionOption();
-    parser.addPositionalArgument("file", "The file to open.");
-    parser.process(app);
+    QCoreApplication::setApplicationName("XMAS Model Designer (2015)");
+    QCoreApplication::setOrganizationName("Open University NL");
+    QCoreApplication::setOrganizationDomain("ou.nl");
 
+    /*************************************************/
+    /* OOAK class registration for Qml access        */
 
     QQmlApplicationEngine engine;
-    Controller controller;
     QQmlContext* ctx = engine.rootContext();
-    ctx->setContextProperty("controller", &controller);
-    engine.load(QUrl(QStringLiteral("qrc:///mainWindow.qml")));
 
-    qmlRegisterType<Controller>("XMAS", 1, 0, "Xmas");
+    ::dataControl.reset(new DataControl);
+    qmlRegisterType<DataControl>("XMAS", 1, 0, "Data"); // Before engine.load
+    ctx->setContextProperty("datacontrol", dataControl.get());
+
+    ::pluginControl.reset(new PluginControl);
+    qmlRegisterType<PluginControl>("XMAS", 1, 0, "Plugin"); // Before engine.load
+    ctx->setContextProperty("plugincontrol", pluginControl.get());
+
+    ::util.reset(new Util());
+    qmlRegisterType<Util>("XMAS", 1, 0, "Util"); // Before engine.load
+    ctx->setContextProperty("util", util.get());
 
 
+    /* End of OOAK class registration for Qml access */
+    /*************************************************/
 
+    dataControl->registerTypes(); // Before engine.load
+
+    engine.load(QUrl(QStringLiteral("qrc:/ui/mainWindow.qml")));
     return app.exec();
 
 }

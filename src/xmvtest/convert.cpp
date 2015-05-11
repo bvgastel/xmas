@@ -20,7 +20,8 @@ void ConvertFile(const std::string &filename) {
             allComponents.insert(it.second);
     }
 
-    Export(allComponents, globals);
+	std::cout << ExportOldCStyle(allComponents, globals, mp);
+
 }
 
 int main(int argc, char* argv[]) {

@@ -1,6 +1,8 @@
 TEMPLATE = app
+
+WARNINGS += -Wall
+
 CONFIG += console
-CONFIG -= app_bundle
 CONFIG -= qt
 
 HEADERS +=
@@ -9,46 +11,47 @@ SOURCES += \
     main.cpp \
     testcyclechecker.cpp \
     testdatamodel.cpp \
-    jsonprinter.test.cpp
+    jsonprinter.test.cpp \
+    testsourcespec.cpp \
+    testfunctionspec.cpp \
+    testswitchfunctionspec.cpp \
+    testjoinfunctionspec.cpp \
+    flatten.test.cpp \
+    testexport.cpp
 
 
 CONFIG += C++11
 CONFIG += link_prl
 
-include(deployment.pri)
-qtcAddDeployment()
-
+CONFIG(debug, debug|release) {
+    macx: TARGET = $$join(TARGET,,,_debug)
+    win32: TARGET = $$join(TARGET,,,d)
+}
 
 DISTFILES += \
     readme.md
 
-
+################################################
+# INSTALL instructions
+################################################
 unix|win32 {
  target.path=$$PWD/../../bin
  INSTALLS += target
 }
 
+################################################
+# Dependencies
+################################################
+BASE=..
+include(../xmv/vt/vt.pri)
+include(../bitpowder/bitpowder.pri)
 
-# All external libraries from $$PWD/../lib[/<subdir>], no distinction win32/unix necessary
-#
-# Remark: 1. always using gtest and gtest_main contrary to gtestd and gtest_maind for debug.
-#         2. always use gtest or gtest_main from a version compilated for your machine
-#
+linux|win32: LIBS += -L$$PWD/../../lib -lgtest
 
-unix|win32: LIBS += -L$$PWD/../../lib/datamodel -ldatamodel
-unix|win32: LIBS += -L$$PWD/../../lib/vt -lvt
-unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../lib -lgtest
+macx: INCLUDEPATH += $$PWD/../../include/googletest/
+macx: SOURCES += $$PWD/../../include/googletest/src/gtest-all.cc
+
+INCLUDEPATH += $$PWD/../../include/googletest/include
+DEPENDPATH += $$PWD/../../include/googletest/include
 
 
-INCLUDEPATH += $$PWD/../../include/datamodel
-DEPENDPATH += $$PWD/../../include/datamodel
-
-INCLUDEPATH += $$PWD/../../include/vt
-DEPENDPATH += $$PWD/../../include/vt
-
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../include
-DEPENDPATH += $$PWD/../../include

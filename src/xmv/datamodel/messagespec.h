@@ -6,15 +6,14 @@
 #include <algorithm>
 #include <set>
 #include <functional>
-#include "xmas.h"
 #include <iostream>
 #include <memory>
-#include "symbolic.h"
 #include <tuple>
 
-#include "shared_object.h"
+#include "xmas.h"
+#include "symbolic.h"
 
-//using namespace bitpowder::lib;
+#include "shared_object.h"
 
 #define USE_REFCOUNT
 
@@ -131,22 +130,29 @@ inline MessageSpec::Ref S(bitpowder::lib::String endpoint, const std::vector<Sym
     return new MessageSpecEndLookup(endpoint, content);
 }
 
-// returns true on error
-bool CheckMessageSpec(std::set<XMASComponent *> allComponents);
-void ClearMessageSpec(std::set<XMASComponent *> allComponents);
-
 class MessageSpecExtension : public PortExtension {
 public:
     std::vector<std::tuple<std::vector<SymbolicPacket>, MessageSpec::Ref>> specs;
 
     MessageSpecExtension() : PortExtension(), specs() {
     }
+    MessageSpecExtension& operator=(const MessageSpecExtension& b) {
+        this->specs = b.specs;
+        return *this;
+    }
+
     void addMessageSpec(const std::vector<SymbolicPacket> &p, MessageSpec::Ref s) {
         specs.emplace_back(p, s);
     }
 };
 
+// returns true on error
+bool CheckMessageSpec(std::set<XMASComponent *> allComponents);
+
 void attachMessageSpec(Output *port, const std::vector<SymbolicPacket> &a, MessageSpec::Ref spec);
+
+void ClearMessageSpec(std::set<XMASComponent *> allComponents);
+void ClearMessageSpec(XMASComponent *c);
 void clearMessageSpec(Output *port);
 
 #endif // MESSAGESPEC_H

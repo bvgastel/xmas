@@ -1,0 +1,56 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>content/redo.png</file>
+        <file>content/undo.png</file>
+        <file>content/copy.png</file>
+        <file>content/cut.png</file>
+        <file>content/new.png</file>
+        <file>content/open.png</file>
+        <file>content/paste.png</file>
+        <file>content/fork.png</file>
+        <file>content/arrow.png</file>
+        <file>content/arrowLit.png</file>
+        <file>content/select.png</file>
+        <file>content/queue.png</file>
+        <file>content/join.png</file>
+        <file>content/merge.png</file>
+        <file>content/sink.png</file>
+        <file>content/source.png</file>
+        <file>content/switch.png</file>
+        <file>content/function.png</file>
+        <file>content/stop.ico</file>
+        <file>content/run.ico</file>
+        <file>content/rotate_left.png</file>
+        <file>content/rotate_right.png</file>
+        <file>content/select_all.png</file>
+        <file>content/bigger.ico</file>
+        <file>content/smaller.ico</file>
+        <file>content/add_composite.ico</file>
+        <file>content/app.ico</file>
+        <file>content/clean.ico</file>
+        <file>content/model-setup.ico</file>
+        <file>content/not_ok.ico</file>
+        <file>content/ok.ico</file>
+        <file>content/plugin.ico</file>
+        <file>content/save.ico</file>
+        <file>content/setup.ico</file>
+        <file>content/warning.ico</file>
+        <file>content/quit.ico</file>
+        <file>content/packet.ico</file>
+        <file>content/composite.ico</file>
+        <file>content/grid.ico</file>
+        <file>content/snap.ico</file>
+        <file>content/unzoom.ico</file>
+        <file>content/zoom-in.ico</file>
+        <file>content/zoom-out.ico</file>
+        <file>content/timer.ico</file>
+        <file>content/save-as.ico</file>
+    </qresource>
+    <qresource prefix="/symbols">
+        <file>content/symbols/counter.png</file>
+        <file>content/symbols/delay.png</file>
+        <file>content/symbols/muxsource.png</file>
+        <file>content/symbols/mesh.ico</file>
+        <file>content/symbols/spidergon.ico</file>
+    </qresource>
+</RCC>

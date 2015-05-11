@@ -1,8 +1,21 @@
 #ifndef XMAS_H
 #define XMAS_H
 
+#include <map>
+#include <set>
+#include <vector>
+
 #include "extension.h"
 #include "simplestring.h"
+//#include "parse-source-expression-parse-result.h"
+
+/*
+ * GBO: added setter for name to XMASComponent: necessary for designer or we have no way to
+ *      initialize and change name.
+ *
+ *      The first name would be final, no way to change. We need to be able to change.
+ *
+ */
 
 /**
  * @brief The SignalType enum type of wires/signals
@@ -53,7 +66,7 @@ public:
  * A port on an xMas component.
  *
  */
-class Port : bitpowder::lib::ExtensionContainer<PortExtension>
+class Port : public bitpowder::lib::ExtensionContainer<PortExtension>
 {
     // due to compiler bug in GCC 4.8, can not be std::string
     // to avoid a memory leak (Input has an "o" argument as
@@ -72,12 +85,14 @@ public:
     /**
      * @brief Port
      *
-     * @param self pointer to self
+     * @param owner pointer to owner (component)
      * @param name the name of the port
      */
     Port(XMASComponent *owner, const char *name) : ExtensionContainer<PortExtension>(), name(name), m_owner(owner)
     {
     }
+
+    Port(Port&&) = default;
 
     virtual ~Port();
 
@@ -232,6 +247,8 @@ class Output : public Port
 {
     friend class Input;
     friend void connect(Output &o, Input &i);
+    friend void disconnect(Output &o);
+    friend void disconnect(Input &i);
     /**
      * @brief output This is a pointer to the output port that is connected
      *          to this input port.
@@ -241,6 +258,9 @@ public:
     Output(XMASComponent *owner, const char *name) : Port(owner, name), output(nullptr)
     {
     }
+
+    Output(Output&&) = default;
+
     Input *getTargetPort();
     Output *getInitiatorPort();
     bool isConnected();
@@ -257,12 +277,17 @@ class Input : public Port
 {
     friend class Output;
     friend void connect(Output &o, Input &i);
+    friend void disconnect(Output &o);
+    friend void disconnect(Input &i);
     // FIXME: why is this Output pointer named input ?
     Output *input;
 public:
     Input(XMASComponent *self, const char *name) : Port(self, name), input(nullptr)
     {
     }
+
+    Input(Input&&) = default;
+
     Output *getInitiatorPort();
     Input *getTargetPort();
     bool isConnected();
@@ -285,6 +310,31 @@ public:
  * @param i the input port
  */
 void connect(Output &o, Input &i);
+
+/**
+ * @brief disconnect disconnect a channel starting from an output
+ *
+ * Provided a channel is valid i.e. o.valid(), both pointers
+ * from output to input port and back are nullified.
+ *
+ * This function is necessary for the graphical designer, where
+ * a designing person may delete a channel.
+ *
+ * @param o the output port of the channel.
+ */
+void disconnect(Output &o);
+/**
+ * @brief disconnect disconnect a channel starting from an input
+ *
+ * Provided a channel is valid i.e. o.valid(), both pointers
+ * from output to input port and back are nullified.
+ *
+ * This function is necessary for the graphical designer, where
+ * a designing person may delete a channel.
+ *
+ * @param i the input port of the channel.
+ */
+void disconnect(Input &i);
 
 /**
  * @brief The XMASComponentExtension class
@@ -311,6 +361,8 @@ class XMASFork;
 class XMASMerge;
 class XMASJoin;
 
+class XMASComposite;
+
 /**
  * @brief The XMASComponentVisitor class
  *
@@ -328,8 +380,23 @@ public:
     virtual void visit(XMASFork *) = 0;
     virtual void visit(XMASMerge *) = 0;
     virtual void visit(XMASJoin *) = 0;
+    virtual void visit(XMASComposite *) {
+        throw bitpowder::lib::Exception("This XMASComponentVisitor does not support composites!");
+    }
 };
+
+
 /************************ XMASComponent *******************************************/
+
+struct ExpressionResult {
+    bool m_success;
+    int m_pos;
+    bitpowder::lib::String m_errMsg;
+
+    ExpressionResult() : m_success(false), m_pos(0), m_errMsg() {}
+    ExpressionResult(bool success, int pos, bitpowder::lib::String errMsg) :
+        m_success(success), m_pos(pos), m_errMsg(errMsg) {}
+};
 
 /**
  * @brief The XMASComponent class
@@ -340,10 +407,10 @@ public:
 class XMASComponent : public bitpowder::lib::ExtensionContainer<XMASComponentExtension>
 {
 private:
-    std::string name;
+    std::string m_name;
 public:
 
-    XMASComponent(const bitpowder::lib::String& name) : name(name.stl())
+    XMASComponent(const bitpowder::lib::String& name) : m_name(name.stl())
     {
     }
 
@@ -354,7 +421,7 @@ public:
      * @return a value initialized copy of name (std::string)
      */
     std::string getStdName() const {
-        return this->name;
+        return this->m_name;
     }
 
     /**
@@ -368,6 +435,37 @@ public:
      * @return a bitpowder::lib::String for name of the XMASComponent
      */
     bitpowder::lib::String getName() const;
+
+    /**
+     * @brief name A function to (re)set the name of the component.
+     *
+     * This is function was primarily created to support direct updates
+     * from qml using getters and setters. Also, the human designer uses
+     * the designer to change the name, if appropriate.
+     *
+     * @param name The new name of the component.
+     */
+    void name(std::string name) {
+        this->m_name = name;
+    }
+
+    /**
+     * @brief canvasData getter for the canvas properties
+     * @return a tuple containing the canvas related data.
+     */
+    std::tuple<int, int, int, float> canvasData();
+
+    /**
+     * @brief canvasData setter for the canvas related data
+     * @param x the x coordinate of the component
+     * @param y the y coordinate of the component
+     * @param orientation the orientation of the component on the board
+     *        in degrees
+     * @param scale the scale of the component in relation to other components
+     *              the default scale = 1.0f
+     */
+    void canvasData(int x, int y, int orientation, float scale);
+
     /**
      * @brief valid
      * @return true if the XMASComponent is valid
@@ -523,18 +621,20 @@ class XMASSink : public XMASComponent
 public:
     Input i;
     Port* p[1];
-
+    bool required_output;              // is this sink required as an interface port of a composite
 
     /**
      * @brief XMASSink Constructor
      *
      * @param name the name of the sink
      */
-    XMASSink(const bitpowder::lib::String& name)
-        : XMASComponent(name), i(this, "i")
+    XMASSink(const bitpowder::lib::String& name, bool external = true)
+        : XMASComponent(name), i(this, "i"), required_output(external)
     {
         p[0] = &i;
     }
+
+    virtual ~XMASSink();
 
     void accept(XMASComponentVisitor &v)
     {
@@ -578,11 +678,22 @@ class XMASSource : public XMASComponent
 public:
     Output o;
     Port* p[1];
+    bool required_input;              // is this source required as an interface port of a composite
 
-    XMASSource(const bitpowder::lib::String& name) : XMASComponent(name), o(this, "o")
+    XMASSource(const bitpowder::lib::String& name, bool external = true)
+        : XMASComponent(name), o(this, "o"), required_input(external)
     {
         p[0] = &o;
     }
+
+    virtual ~XMASSource();
+
+    bitpowder::lib::String getSourceExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setSourceExpression(bitpowder::lib::String &expr,
+                                         bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setSourceExpression(std::string &expr,
+                                         bitpowder::lib::MemoryPool &mp);
 
     void accept(XMASComponentVisitor &v)
     {
@@ -640,6 +751,8 @@ public:
         p[1] = &o;
     }
 
+    virtual ~XMASQueue();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -689,6 +802,16 @@ public:
         p[0] = &i;
         p[1] = &o;
     }
+
+    virtual ~XMASFunction();
+
+    const std::string getFunctionExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setFunctionExpression(std::string &str_expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setFunctionExpression(bitpowder::lib::String &expr,
+                                           bitpowder::lib::MemoryPool &mp);
+
 
     void accept(XMASComponentVisitor &v)
     {
@@ -743,6 +866,15 @@ public:
         p[2] = &b;
     }
 
+    virtual ~XMASSwitch();
+
+    const bitpowder::lib::String getSwitchExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setSwitchExpression(std::string &str_expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setSwitchExpression(bitpowder::lib::String &expr,
+                                           bitpowder::lib::MemoryPool &mp);
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -795,6 +927,8 @@ public:
         p[1] = &a;
         p[2] = &b;
     }
+
+    virtual ~XMASFork();
 
     void accept(XMASComponentVisitor &v)
     {
@@ -852,6 +986,8 @@ public:
         p[2] = &o;
     }
 
+    virtual ~XMASMerge();
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -905,6 +1041,19 @@ public:
         p[2] = &o;
     }
 
+    virtual ~XMASJoin();
+
+    const bitpowder::lib::String getJoinExpression(bitpowder::lib::MemoryPool &mp);
+
+    ExpressionResult setRestrictedJoinPort(std::string &str_expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setRestrictedJoinPort(bitpowder::lib::String &expr,
+                                           bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setUnrestrictedJoinExpression(std::string &str_expr,
+                                                   bitpowder::lib::MemoryPool &mp);
+    ExpressionResult setUnrestrictedJoinExpression(bitpowder::lib::String &expr,
+                                                   bitpowder::lib::MemoryPool &mp);
+
     void accept(XMASComponentVisitor &v)
     {
         v.visit(this);
@@ -930,6 +1079,136 @@ public:
     {
         return type == PortType::INPUT_PORT ? &p[2] : &p[3];
     }
+};
+
+
+class XMASNetworkExtension : public bitpowder::lib::Extension<XMASNetworkExtension>
+{
+};
+
+class XMASNetwork : bitpowder::lib::ExtensionContainer<XMASNetworkExtension>
+{
+    friend class XMASProject;
+public:
+    XMASNetwork(std::string name, bitpowder::lib::MemoryPool *mp = nullptr);
+    XMASNetwork(std::string name,
+                std::map<bitpowder::lib::String,
+                XMASComponent*>&& components,
+                bitpowder::lib::MemoryPool *mp = nullptr);
+    XMASNetwork(XMASNetwork&&);
+
+    ~XMASNetwork();
+
+    const std::string getStdName() const;
+
+    const std::string packetType() const;
+    void packetType(const std::string m_packet_type);
+
+    bitpowder::lib::String getPacketType();
+    bitpowder::lib::String getVars();
+
+    const std::map<bitpowder::lib::String, XMASComponent*> &getComponentMap() const;
+    std::set<XMASComponent*> getComponentSet() const;
+
+    XMASComponent *getComponent(std::string name);
+
+    void setCompositeNetworkData(std::string alias, int width, int height, std::string imageName, bool boxedImage);
+
+    template<typename T>
+    const std::vector<T*> componentsOfType() const
+    {
+        std::vector<T*> result;
+        for (auto c : components)
+            if (typeid(*c.second) == typeid(T))
+                result.push_back(static_cast<T*>(c.second));
+        return std::move(result);
+    }
+
+    template <typename T, typename... Args>
+    T *insert(const bitpowder::lib::String& name, Args... args) {
+        if (components.find(name) != components.end())
+            throw ::bitpowder::lib::Exception(42, __FILE__, __LINE__);
+        T *comp = new(*m_mp, &::bitpowder::lib::destroy<XMASComponent>) T(name, args...);
+        components.insert(std::make_pair(comp->getName(), comp));
+        return comp;
+    }
+
+    template <class NetworkExtensionType>
+    NetworkExtensionType* getNetworkExtension(bool create = true)
+    {
+        NetworkExtensionType *ext = getExtension<NetworkExtensionType*>();
+        if (ext == nullptr && create) {
+            ext = new NetworkExtensionType();
+            addExtension(ext);
+        }
+        return ext;
+    }
+
+    template <class NetworkExtensionType>
+    void clearNetworkExtension()
+    {
+        NetworkExtensionType *ext = removeExtension<NetworkExtensionType*>();
+        if (ext)
+            delete ext;
+    }
+
+    void clearExtensions();
+
+private:
+    bool changeComponentName(bitpowder::lib::String oldName, bitpowder::lib::String &newName);
+    bool removeComponent(bitpowder::lib::String name);
+
+
+private:
+    std::string name;
+    std::string m_packet_type;
+    std::map<bitpowder::lib::String, XMASComponent*> components;
+    bitpowder::lib::MemoryPool *m_mp;
+    bool m_mp_self_created;
+};
+
+class XMASComposite : public XMASComponent
+{
+public:
+
+    XMASComposite(const bitpowder::lib::String& name, XMASNetwork &network);
+
+    virtual ~XMASComposite();
+
+    const XMASNetwork& getNetwork() const {
+        return network;
+    }
+
+    std::vector<Input>& getInputs() {
+        return inputs;
+    }
+
+    std::vector<Output>& getOutputs() {
+        return outputs;
+    }
+
+
+    void accept(XMASComponentVisitor &v) override
+    {
+        v.visit(this);
+    }
+
+
+    Port** beginPort(PortType type) override
+    {
+        return type == PortType::OUTPUT_PORT ? &p[inputs.size()] : &p[0];
+    }
+
+    Port** endPort(PortType type) override
+    {
+        return type == PortType::INPUT_PORT ? &p[inputs.size()] : &p[p.size()];
+    }
+
+private:
+    XMASNetwork& network;
+    std::vector<Input>  inputs;
+    std::vector<Output> outputs;
+    std::vector<Port*> p;
 };
 
 #endif // XMAS_H

@@ -54,13 +54,13 @@ public:
     typedef MemoryPool::Allocator<std::pair<Key,JSONData>> AllocatorMap;
 
     typedef std::vector<JSONData, AllocatorVector> Vector;
-    typedef std::map<Key, JSONData, std::less<Key>, AllocatorMap> Map;
+    typedef std::map<Key, JSONData, lessIgnoreCaseAlfa<Key>, AllocatorMap> Map;
 
     static Map AllocateMap(MemoryPool &mp) {
-        return JSONData::Map(std::less<Key>(), mp.allocator<std::pair<Key,JSONData>>());
+        return Map(lessIgnoreCaseAlfa<Key>(), mp.allocator<std::pair<Key,JSONData>>());
     }
     static Vector AllocateVector(MemoryPool &mp) {
-        return JSONData::Vector(mp.allocator<JSONData>());
+        return Vector(mp.allocator<JSONData>());
     }
 private:
     enum {JSONNull, JSONString, JSONNumber, JSONArray, JSONObject} type;
@@ -172,7 +172,7 @@ public:
         return asNumber();
     }
 
-    virtual void print(std::ostream& out, unsigned int lvl=0) const;
+    virtual void print(std::ostream& out) const;
 
     JSONData& operator[](const String &lookup) {
         return asObject()[lookup];
@@ -238,7 +238,7 @@ JSONParseResult ParseJSON(const String &str, MemoryPool &mp);
 namespace std {
 inline std::ostream& operator<< (std::ostream& out, const bitpowder::lib::JSONData &json)
 {
-    json.print(out, 0);
+    json.print(out);
     return out;
 }
 std::ostream& operator<< (std::ostream& out, bitpowder::lib::JSONParseResult &parseResult);

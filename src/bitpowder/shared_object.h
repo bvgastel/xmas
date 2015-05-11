@@ -35,15 +35,33 @@ public:
         unused(copy);
     }
 
-    int operator++(int) {
-        return refcount.fetch_add(1, std::memory_order_relaxed);
-        //return refcount++;
+
+    // prefix
+    int operator++() {
+        return refcount.fetch_add(1, std::memory_order_relaxed) + 1;
     }
 
+    // postfix
+    int operator++(int) {
+        return refcount.fetch_add(1, std::memory_order_relaxed);
+    }
+
+    int operator+=(int value) {
+        return refcount.fetch_add(value, std::memory_order_relaxed) + value;
+    }
+
+    // prefix
     int operator--() {
-        int count = refcount.fetch_sub(1, std::memory_order_relaxed);
-        return count-1;
-        //return --refcount;
+        return refcount.fetch_sub(1, std::memory_order_relaxed) - 1;
+    }
+
+    // postfix
+    int operator--(int) {
+        return refcount.fetch_sub(1, std::memory_order_relaxed);
+    }
+
+    int operator-=(int value) {
+        return refcount.fetch_sub(value, std::memory_order_relaxed) - value;
     }
 
     operator int() {
@@ -63,9 +81,9 @@ public:
         refcount++;
     }
 
-    int operator--() {
-        int count = --refcount;
-        if (count == 0)
+    int operator--(int) {
+        int count = refcount--;
+        if (count == 1)
             action();
         return count;
     }
@@ -119,7 +137,7 @@ public:
     }
     ~shared_object() {
         //std::cout << "dtor" << std::endl;
-        if (object != nullptr && --(object->*ptr) == 0) {
+        if (object != nullptr && (object->*ptr)-- == 1) {
             deleter(object);
             object = nullptr;
         }
@@ -144,7 +162,7 @@ public:
         //std::cout << "move assignment" << std::endl;
         if (this == &o)
             return *this;
-        if (object && --(object->*ptr) == 0)
+        if (object && (object->*ptr)-- == 1)
             deleter(object);
         object = std::move(o.object);
         o.object = nullptr;

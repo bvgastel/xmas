@@ -3,6 +3,8 @@
 
 #include <stdexcept>
 
+#include <QString>
+
 class XmdException : std::domain_error
 {
 public:

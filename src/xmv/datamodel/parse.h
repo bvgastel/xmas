@@ -6,163 +6,20 @@
 
 #include "memorypool.h"
 #include "parser_json.h"
+#include "symbolic-interval.h"
+#include "symbolic-packet-set.h"
+#include "parse-specset.h"
+#include "parse-packet-expression-parse-result.h"
+#include "parse-packet-function-parse-result.h"
+#include "parse-source-expression-parse-result.h"
+#include "parse-parsed-xmas-expression-interface.h"
+#include "parsed-xmas-function.h"
 #include "xmas.h"
-#include "symbolic-interval-field.h"
-#include "symbolic-enum-field.h"
-#include "messagespec.h"
 
-struct Interval {
-    typedef SymbolicIntervalField::interval_type interval_type;
-    interval_type min;
-    interval_type max;
-    Interval(interval_type min = 0, interval_type max = 0) : min(min), max(max) {
-    }
-
-    void print(std::ostream& out) const {
-        out << "[" << min << ".." << (max-1) << "]";
-    }
-    static Interval all() {
-        return {std::numeric_limits<interval_type>::min(), std::numeric_limits<interval_type>::max()};
-    }
-};
-
-struct Enum {
-    std::vector<SymbolicEnumField::Type> values;
-    Enum() : values() {
-    }
-    bool operator==(const Enum &n) const {
-        return values == n.values;
-    }
-    void print(std::ostream& out) const {
-        out << "{";
-        for (auto &v : values) {
-            out << v << " ";
-        }
-        out << "}";
-    }
-};
-
-struct SymbolicPacketSet {
-    typedef SymbolicIntervalField::interval_type interval_type;
-    std::vector<SymbolicPacket> values;
-    SymbolicPacketSet();
-
-    void greaterAs(interval_type b);
-    void greaterEqualAs(interval_type b);
-    void lessEqualAs(interval_type b);
-    void lessAs(interval_type b);
-    void negate();
-
-    bool operator==(const SymbolicPacketSet &rhs) const {
-        return values == rhs.values;
-    }
-    void print(std::ostream& out) const;
-    void updateHash();
-};
-
-class PacketExpressionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    SymbolicPacketSet retval;
-public:
-    PacketExpressionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    PacketExpressionParseResult(SymbolicPacketSet &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    SymbolicPacketSet& result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
-    }
-};
-
-struct SpecSet {
-    std::vector<std::tuple<SymbolicPacketSet,MessageSpec::Ref>> spec;
-
-    void add(SymbolicPacketSet &&a) {
-        spec.push_back(std::tuple<SymbolicPacketSet, MessageSpec::Ref>(std::move(a), nullptr));
-    }
-
-    void add(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::move(b);
-    }
-
-    void addAnd(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::get<1>(spec.back()) & std::move(b);
-    }
-
-    void addOr(MessageSpec::Ref &&b) {
-        std::get<1>(spec.back()) = std::get<1>(spec.back()) | std::move(b);
-    }
-
-    void updateHash();
-};
-
-class SourceExpressionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    SpecSet retval;
-public:
-    SourceExpressionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    SourceExpressionParseResult(SpecSet &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    SpecSet& result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
-    }
-};
 PacketExpressionParseResult ParsePacketExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
 SourceExpressionParseResult ParseSourceExpression(const bitpowder::lib::String &str,
                                                   bitpowder::lib::MemoryPool &memoryPool);
-
-class ParsedXMASExpression {
-public:
-    virtual ~ParsedXMASExpression() {}
-    virtual std::vector<std::shared_ptr<SymbolicPacketField>> operator()(const SymbolicPacket &packet) const = 0;
-    virtual void print(std::ostream &out) const = 0;
-    virtual void printOldCSyntax(std::ostream &out, std::map<bitpowder::lib::String,int>& enumMap) const = 0;
-};
-
-std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c);
-
-class ParsedXMASFunction {
-public:
-    int refcount = 0;
-    virtual ~ParsedXMASFunction() {}
-
-    bool hasCondition = false;
-    std::vector<SymbolicPacket> conditions;
-    std::shared_ptr<ParsedXMASFunction> next; // if condition was not met
-
-    std::map<bitpowder::lib::String, std::shared_ptr<ParsedXMASExpression>> fields; // function to apply for each field
-
-    std::vector<SymbolicPacket> operator()(const std::vector<SymbolicPacket> &packet) const;
-
-    virtual void printOldCSyntax(std::ostream &out, std::map<bitpowder::lib::String,int>& enumMap) const;
-};
 
 struct ParsedXMASFunctionExtension : public XMASComponentExtension {
     std::shared_ptr<ParsedXMASFunction> value;
@@ -170,9 +27,12 @@ struct ParsedXMASFunctionExtension : public XMASComponentExtension {
     }
     ParsedXMASFunctionExtension(const std::shared_ptr<ParsedXMASFunction>& value) : value(value) {
     }
-};
+    ParsedXMASFunctionExtension& operator=(const ParsedXMASFunctionExtension& b) {
+        this->value = b.value;
+        return *this;
+    }
 
-std::ostream &operator <<(std::ostream &out, const ParsedXMASFunction &c);
+};
 
 struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
     int function = 0;
@@ -180,51 +40,16 @@ struct ParsedXMASRestrictedJoin: public XMASComponentExtension {
     }
     ParsedXMASRestrictedJoin(int function) : function(function) {
     }
-};
-
-
-class PacketFunctionParseResult {
-    bool success;
-    int pos;
-    bitpowder::lib::String errorMessage;
-    std::shared_ptr<ParsedXMASFunction> retval;
-public:
-    PacketFunctionParseResult(int position, bitpowder::lib::String errorMessage)
-        : success(false), pos(position), errorMessage(errorMessage), retval() {
-    }
-    PacketFunctionParseResult(std::shared_ptr<ParsedXMASFunction> &&retval)
-        : success(true), pos(0), errorMessage(), retval(std::move(retval)) {
-    }
-    operator bool() {
-        return success;
-    }
-    std::shared_ptr<ParsedXMASFunction> result() {
-        return retval;
-    }
-    bitpowder::lib::String error() {
-        return errorMessage;
-    }
-    int position() {
-        return pos;
+    ParsedXMASRestrictedJoin& operator=(const ParsedXMASRestrictedJoin& b) {
+        this->function = b.function;
+        return *this;
     }
 };
+
 
 PacketFunctionParseResult ParsePacketFunction(const bitpowder::lib::String &str,
                                               bitpowder::lib::MemoryPool &mp);
 
-namespace std {
-inline std::ostream& operator<< (std::ostream& out, const Interval &n)
-{
-    n.print(out);
-    return out;
-}
-
-inline std::ostream& operator<< (std::ostream& out, const SymbolicPacketSet &n)
-{
-    n.print(out);
-    return out;
-}
-}
 
 /**
  * @brief Parse Reads a file from a specified filename and parses it using the json parser
@@ -259,6 +84,9 @@ parse_xmas_from_file(const std::string &filename, bitpowder::lib::MemoryPool &mp
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
 parse_xmas_from_json(const std::string &str, bitpowder::lib::MemoryPool &mp);
 
+bitpowder::lib::JSONParseResult
+read_json_from_file(const std::string &filename, bitpowder::lib::MemoryPool &mp);
+
 /**
  * @brief parse_json_buffer Uses the parsed JSON for a network to return the xmas components.
  *
@@ -274,6 +102,8 @@ parse_xmas_from_json(const std::string &str, bitpowder::lib::MemoryPool &mp);
  * @return the pair of a map to all xmas components and the json data.
  */
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
-generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult, bitpowder::lib::MemoryPool &mp);
+generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult,
+                                bitpowder::lib::MemoryPool &mp,
+                                std::function<XMASNetwork*(std::string)> getNetwork);
 
 #endif // PARSE_H

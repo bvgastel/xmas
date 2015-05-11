@@ -1,9 +1,11 @@
 TEMPLATE = app
+
+WARNINGS += -Wall
+
 CONFIG += console
-CONFIG -= app_bundle
 CONFIG -= qt
 
-HEADERS +=
+HEADERS += \
 
 
 SOURCES += \
@@ -15,27 +17,31 @@ SOURCES += \
 
 
 CONFIG += C++11
+CONFIG += link_prl
+
+TARGET = bitpowdertest
 
 # Windows needs _USE_MATH_DEFINES to define M_PI and so on.
 win32: DEFINES += _USE_MATH_DEFINES
 
-include(deployment.pri)
-qtcAddDeployment()
-
-# Google test library
-unix|win32: LIBS += -L$$PWD/../../lib -lgtest_main -lgtest
-
-INCLUDEPATH += $$PWD/../../include
-DEPENDPATH += $$PWD/../../include
-
-# Remark: bitpowder is external, so use $$PWD, not $$OUT_PWD.
-
-unix|win32: LIBS += -L$$PWD/../../lib/bitpowder -lbitpowder
-
-INCLUDEPATH += $$PWD/../../include/bitpowder
-DEPENDPATH += $$PWD/../../include/bitpowder
+#include(deployment.pri)
+#qtcAddDeployment()
 
 unix|win32 {
     target.path = $$PWD/../../bin
     INSTALLS += target
 }
+
+################################################
+# Dependencies
+################################################
+BASE=..
+include(../bitpowder/bitpowder.pri)
+
+linux|win32: LIBS += -L$$PWD/../../lib -lgtest
+
+macx: INCLUDEPATH += $$PWD/../../include/googletest/
+macx: SOURCES += $$PWD/../../include/googletest/src/gtest-all.cc
+
+INCLUDEPATH += $$PWD/../../include/googletest/include
+DEPENDPATH += $$PWD/../../include/googletest/include

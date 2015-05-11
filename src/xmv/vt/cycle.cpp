@@ -1,6 +1,9 @@
 #include "cycle.h"
 #include "memorypool.h"
 
+#include "feedback-interface.h"
+
+constexpr auto CYCLE_CHECKER = "cycle-checker";
 
 class CombinatorialCycleDependencies : public XMASComponentVisitor {
 public:
@@ -95,8 +98,10 @@ bool checkSignal(Port *p, int depth) {
     CombinatorialCyclePortExtension *ext = p->getPortExtension<CombinatorialCyclePortExtension>();
     //std::cout << "checkSignal: depth=" << depth << " " << *p->getComponent() << "." << p->getName() << "." << (trdy ? "trdy" : "irdy") << " -> checking=" << ext->checking << " checked=" << ext->checked << std::endl;
     // if part of current search, report cycle
-    if (ext->checking)
+    if (ext->checking) {
+        feedback_message(CYCLE_CHECKER, FeedbackSeverity::Fault, "Combinatorial cycle detected!", {}, {p});
         return true;
+    }
     // if already checked this, stop
     if (ext->checked)
         return false;
@@ -125,7 +130,7 @@ bool CombinatorialCycleDetector(XMASComponent *c) {
                 return true;
         }
     } catch (bitpowder::lib::Exception &e) {
-        std::cout << "exception: " << e << std::endl;
+        feedback_stream(CYCLE_CHECKER, FeedbackSeverity::Crash) << "exception: " << e << std::endl;
     }
     return false;
 }
@@ -133,6 +138,9 @@ bool CombinatorialCycleDetector(XMASComponent *c) {
 bool CombinatorialCycleDetector(std::set<XMASComponent *> allComponents) {
     // default no cycle
     bool cycle = false;
+
+    feedback_message(CYCLE_CHECKER, FeedbackSeverity::Info, "Starting cycle checker");
+
     // check for each component if there is a cycle
     for (XMASComponent *c : allComponents)
         cycle = cycle || CombinatorialCycleDetector(c);
@@ -141,5 +149,8 @@ bool CombinatorialCycleDetector(std::set<XMASComponent *> allComponents) {
         for (Port *p : c->ports())
             p->clearPortExtension<CombinatorialCyclePortExtension>();
     // return result
+
+    feedback_message(CYCLE_CHECKER, FeedbackSeverity::Info, "Finished!");
+
     return cycle;
 }

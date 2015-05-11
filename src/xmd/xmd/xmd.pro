@@ -1,112 +1,99 @@
+#-------------------------------------------------
 #
-# Instructions for use:
+# Project created by QtCreator 2015-04-06T08:56:05
 #
-# 1. When building, the output goes solely to the
-#    build directory. This is usually something
-#    like build-libraryname-platform-compiler
-#    where libraryname, platform and compiler vary.
-# 2. When cleaning, only the build directory is cleaned.
-#
-# 3. When deploying, the library files (both dll/so and
-#    .a) and the header files are copied to the lib and
-#    include directory right below the git-root. This is
-#    the most vulnerable piece of code.
-#    REMARK: when cleaning, this does not get touched.
-# 3a. The include directory has a subdir for this project's
-#     header files.
-#
-# IMPORTANT: Be sure to have qtcreator execute a make install
-#            as one step in the local deployment.
-#            As long as this step is not added to qtcreator
-#            (which writes the deploy step in .user.pro file)
-#            the header files and xmd lib will not occur in
-#            the directories lib or include under the root.
-#
-#
+#-------------------------------------------------
 
+QT       += qml quick quickwidgets widgets
 
-WARNINGS += -Wall
-
+TARGET = xmd
 TEMPLATE = lib
 
+DEFINES += XMD_LIBRARY
+
+WARNINGS += -Wall
 CONFIG += C++11
 CONFIG += create_prl
+CONFIG += link_prl
 win32: CONFIG += static
-unix: CONFIG += static dll
+linux: CONFIG += static dll
+macx: CONFIG += staticlib
 
-include (defines.pri)
-
-QT += widgets svg quick qml quickwidgets
-
-HEADERS       = \ 
-    controller.h \
-    fieldwalker.h \
-    componentwalker.h \
-    network.h \
-    xmdexception.h \
-    logoutput.h
-				
-SOURCES       = \ 
-    controller.cpp \
-    fieldwalker.cpp \
-    componentwalker.cpp \
-    network.cpp \
+SOURCES += \
+    datacontrol.cpp \
+    plugincontrol.cpp \
     xmdexception.cpp \
-    logoutput.cpp
-    
-unix|win32 {
-    target.path = $$PWD/../../../lib/xmd
-    INSTALLS += target
+    model/channel.cpp \
+    model/component.cpp \
+    model/network.cpp \
+    model/port.cpp \
+    model/util.cpp
 
-    headerfiles.path=$$PWD/../../../include/xmd
-    headerfiles.files = $$PWD/*.h
-    INSTALLS += headerfiles
+HEADERS += \
+    datacontrol.h \
+    plugincontrol.h \
+    xmdexception.h \
+    model/channel.h \
+    model/component.h \
+    model/network.h \
+    model/port.h \
+    model/util.h
+
+################################################
+# INSTALL instructions
+################################################
+unix|win32|macx {
+    target.path = $$PWD/../../../lib
+    INSTALLS += target
 }
 
-INCLUDEPATH += content qml
-DEPENDPATH += content qml
-
-DISTFILES += qml/fork.qml \
-    qml/function.qml \
-    qml/in.qml \
-    qml/join.qml \
-    qml/merge.qml \
-    qml/out.qml \
-    qml/queue.qml \
-    qml/sink.qml \
-    qml/source.qml \
-    qml/spidergon.qml \
-    qml/switch.qml \
-	mainWindow.qml \
-    content/ScrollBar.qml \
-    content/MenuBar.qml \
-    content/XmasToolBar.qml \
-    content/ToolBarItem.qml \
-    Sheet.qml \
-    qml/XComponent.qml \
-    qml/Line.qml \
-	controller.js \
-    qml/XChannel.qml \
-    qml/XPort.qml \
-    content/channelCreation.js \
-    content/componentCreation.js \
-    content/Selection.qml \
-    content/XDialog.qml \
-    content/OutputLog.qml \
-    content/XTag.qml \
-    qml/primitive.qml \
-    readme.md
-
 RESOURCES += \
-    xmd.qrc
+    images.qrc \
+    javascripts.qrc \
+    quick.qrc
 
-FORMS +=
+INCLUDEPATH += uicontrols xobjects content
+DEPENDPATH += uicontrols xobjects content
 
-unix|win32: LIBS += -L$$PWD/../../../lib/bitpowder -lbitpowder
-unix|win32: LIBS += -L$$PWD/../../../lib/datamodel -ldatamodel
+DISTFILES += mainWindow.qml \
+    xobjects/fork.qml \
+    xobjects/function.qml \
+    xobjects/join.qml \
+    xobjects/merge.qml \
+    xobjects/queue.qml \
+    xobjects/sink.qml \
+    xobjects/source.qml \
+    xobjects/switch.qml \
+    xobjects/primitive.qml \
+    xobjects/XComponent.qml \
+    xobjects/XChannel.qml \
+    xobjects/XPort.qml \
+    xobjects/XNetwork.qml \
+    xobjects/xnetwork.js \
+    uicontrols/ScrollBar.qml \
+    uicontrols/XToolBar.qml \
+    uicontrols/Selection.qml \
+    uicontrols/XWire.qml \
+    xobjects/xchannel.js \
+    xobjects/xcomponent.js \
+    uiqueries_readme.md \
+    uicontrols/XPacketDialog.qml \
+    xobjects/composite.qml \
+    uicontrols/ModelSetupDialog.qml \
+    uicontrols/ApplicationSetupDialog.qml \
+    qml-xmas-readme.md \
+    uicontrols/XToolBarPrimitiveItem.qml \
+    uicontrols/XToolBarCompositeItem.qml \
+    uicontrols/XConsole.qml \
+    uicontrols/XPlugin.qml \
+    uicontrols/Log.qml \
+    findings.md \
+    uicontrols/XExpressionDialog.qml \
+    xmd.pri
 
-INCLUDEPATH += $$PWD/../../../include/bitpowder
-DEPENDPATH += $$PWD/../../../include/bitpowder
-
-INCLUDEPATH += $$PWD/../../../include/datamodel
-DEPENDPATH += $$PWD/../../../include/datamodel
+################################################
+# Dependencies
+################################################
+include(../../bitpowder/bitpowder.pri)
+include(../../xmv/vt/vt.pri)
+include(../../interfaces/interfaces.pri)

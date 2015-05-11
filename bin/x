@@ -1,4 +1,4 @@
 #!/bin/sh 
 #
-export LD_LIBRARY_PATH=../lib/datamodel:../lib/vt:../lib/bitpowder:../lib/xmd
+export LD_LIBRARY_PATH=../lib/datamodel:../lib/vt:../lib/bitpowder:../lib/xmd:../lib/interfaces:../lib/plugins
 ./$@

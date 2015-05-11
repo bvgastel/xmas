@@ -37,6 +37,7 @@ public:
 
     virtual void visit(XMASFunction *c) {
         SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)> *ext = c->getComponentExtension<SymbolicFunctionExtension<std::vector<SymbolicPacket> (const std::vector<SymbolicPacket>&)>>(false);
+        // FIXME: is this if expression correct ??
         if (ext != nullptr || (bool)ext->function) {
             std::vector<SymbolicPacket> packets;
             packets.push_back(packet);
@@ -424,10 +425,15 @@ void SymbolicTypes(std::set<XMASComponent *> allComponents) {
 
 void ClearSymbolicTypes(std::set<XMASComponent *> allComponents) {
     for (XMASComponent *c : allComponents) {
-        for (Port *p : c->ports())
-            p->clearPortExtension<SymbolicTypesExtension>();
-        c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
+        ClearSymbolicTypes(c);
     }
+}
+
+void ClearSymbolicTypes(XMASComponent *c) {
+    for (Port *p : c->ports()) {
+        p->clearPortExtension<SymbolicTypesExtension>();
+    }
+    c->clearComponentExtension<SymbolicSwitchingFunctionExtension>();
 }
 
 std::ostream &operator <<(std::ostream &out, const SymbolicPacket &c) {
@@ -657,18 +663,6 @@ void SymbolicPacket::accept(SymbolicFieldVisitor &visitor) const
         first = false;
     }
 }
-
-void SymbolicPacket::printOldCSyntax(std::ostream& out, std::map<bitpowder::lib::String, int>& enumMap) const
-{
-    bool first = true;
-    for (auto& field : fields) {
-        if (!first)
-            out << " && ";
-        field.second->printOldCSyntax(out, enumMap, field.first);
-        first = false;
-    }
-}
-
 
 void SymbolicTypesExtension::addSymbolicPacket(SymbolicPacket &&p) {
     if (workerItem) {

@@ -37,212 +37,308 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
-import QtQuick.Dialogs 1.1
+import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.1
 import QtGraphicalEffects 1.0
-import "content"
+import Qt.labs.settings 1.0
+import "qrc:/xmas/xobjects/"
+import "qrc:/ui/uicontrols/"
+import XMAS 1.0 as XMAS
 
 ApplicationWindow {
     id: mainwindow
+    // Properties
     visible: true
     width: 1000
     height: 800
-    minimumWidth: 400
-    minimumHeight: 300
+    minimumWidth: 800
+    minimumHeight: 600
     color: "darkgrey"
+    title: Qt.application.name + "     -     " + network.fileName + (network.modified ? "*" : "")
 
-    title: "XMAS Model Designer 2015"
+    property string modelFolder: util.modelPath()
+    property bool confirmQuit:true
+    property bool autoSave:true
+    property bool showComponentNames:true
+    property bool showPortNames:true
+    property bool showGrid:true
+    property bool snapToGrid:true
 
-    MessageDialog {
-        id: aboutBox
-        title: "About XMD"
-        text: "XMD is an XMAS Model Designer tool"
-        icon: StandardIcon.Information
+    // Persistent properties
+    Settings {
+        category: "xmd"
+        property alias x: mainwindow.x
+        property alias y: mainwindow.y
+        property alias width: mainwindow.width
+        property alias height: mainwindow.height
+        property alias confirmQuit: mainwindow.confirmQuit
+        property alias autoSave: mainwindow.autoSave
+        property alias modelFolder: mainwindow.modelFolder
+        property alias showComponentNames: mainwindow.showComponentNames
+        property alias showPortNames: mainwindow.showPortNames
+        property alias showGrid: mainwindow.showGrid
+        property alias snapToGrid: mainwindow.snapToGrid
+    }
+
+    //TODO replace with qmllist in c++, belongs to plugin dialog (under construction)
+    property var vtNameList
+
+    // Signals
+    signal cut
+    signal copy
+    signal paste
+    signal zoom(var value)
+    signal selectAll
+    signal selectionMode(var checked)
+    signal modelSetupDialog
+    signal clearLog
+
+    // JavaScripts
+
+    // Closes the current model and starts a new one
+    function newModel(save){
+        if(save) saveModel()
+        if(network.newFile()) {
+            network.clear()
+            network.modified = false
+        }
+    }
+
+    function openModel(save){
+        newModel(save)
+        dialogFileOpen.open()
+    }
+
+    function saveModel(){
+        console.log("saved " + network.url())
+        network.saveFile(network.url())
+        network.modified = false
+    }
+
+    function log(message,color,name){
+        xconsole.log(message,color,name)
+    }
+
+    // Event handling
+    onClosing: {
+        close.accepted = false; network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
+    }
+    //TODO load plugins in c++ property list
+    Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
+
+    //#######################################################################################################
+    //
+    // Actions
+    //
+    //#######################################################################################################
+
+    Action {
+        id: fileNewAction
+        iconSource: "qrc:/icons/content/new.png"
+        iconName: "new-model"
+        text: "New"
+        shortcut: StandardKey.New
+        onTriggered: network.modified ? dialogSaveBeforeNew.open(): newModel(false)
     }
 
     Action {
         id: fileOpenAction
-        iconSource: "qrc:/content/images/open.png"
+        iconSource: "qrc:/icons/content/open.png"
         iconName: "model-open"
-        text: "Open"
-        shortcut: "Ctrl+O"
-        onTriggered: fileDialog.open()
+        text: "Open..."
+        shortcut: StandardKey.Open
+        onTriggered: network.modified ? dialogSaveBeforeOpen.open() : openModel(false)
     }
 
     Action {
         id: fileSaveAction
-        iconSource: "qrc:/content/images/save.png"
+        iconSource: "qrc:/icons/content/save.ico"
         iconName: "model-save"
         text: "Save"
-        shortcut: "Ctrl+S"
-        onTriggered: test() // jsonTest() //fileSaveDialog.open()
+        shortcut: StandardKey.Save
+        onTriggered: network.fileName === "?.json" ? modelSetupDialog() : saveModel()
     }
 
+    Action {
+        id: fileSaveAsAction
+        iconSource: "qrc:/icons/content/save-as.ico"
+        iconName: "model-save-as"
+        text: "Save as..."
+        shortcut: StandardKey.SaveAs
+        onTriggered: {network.fileName = util.saveAs(network.url()); saveModel()}
+    }
+
+    Action {
+        id: setupAction
+        iconSource: "qrc:/icons/content/setup.ico"
+        iconName: "setup"
+        text: "Setup..."
+        onTriggered: appSetupDialog.show()
+    }
+
+    Action {
+        id: modelSetupAction
+        iconSource: "qrc:/icons/content/model-setup.ico"
+        iconName: "model-setup"
+        text: "Model setup..."
+        onTriggered: modelSetupDialog()
+    }
 
     Action {
         id: cutAction
         text: "Cut"
-        shortcut: "Ctrl+X"
-        iconSource: "qrc:/content/images/cut.png"
+        shortcut: StandardKey.Cut
+        iconSource: "qrc:/icons/content/cut.png"
         iconName: "edit-cut"
-        onTriggered: log("Cut Action Clicked.","red") //textArea.cut()
+        onTriggered: cut()
     }
 
     Action {
         id: copyAction
         text: "Copy"
-        shortcut: "Ctrl+C"
-        iconSource: "qrc:/content/images/copy.png"
+        shortcut: StandardKey.Copy
+        iconSource: "qrc:/icons/content/copy.png"
         iconName: "edit-copy"
-        onTriggered: log("Copy Action Clicked.","blue") //textArea.copy()
+        onTriggered: copy()
     }
 
     Action {
         id: pasteAction
         text: "Paste"
-        shortcut: "Ctrl+V"
-        iconSource: "qrc:/content/images/paste.png"
+        shortcut: StandardKey.Paste
+        iconSource: "qrc:/icons/content/paste.png"
         iconName: "edit-paste"
-        onTriggered: log("Paste Action Clicked.","green") //textArea.paste()
+        onTriggered: paste()
     }
 
     Action {
-        id: selectAllAction
-        text: "Select All"
-        shortcut: "Ctrl+A"
-        onTriggered: sheet.selectAll()
-        tooltip: "Select All items on the sheet"
+        id: showComponentNamesAction
+        text: "Show component names"
+        checkable: true
+        checked: mainwindow.showComponentNames
+        onTriggered: showComponentNames = checked
+    }
+
+    Action {
+        id: showPortNamesAction
+        text: "Show port names"
+        checkable: true
+        checked: mainwindow.showPortNames
+        onTriggered: showPortNames = checked
     }
 
     Action {
         id: zoomInAction
         text: "Zoom In"
-        shortcut: "Ctrl++"
-        iconSource: "qrc:/content/images/zoom-in.png"
+        shortcut: StandardKey.ZoomIn
+        iconSource: "qrc:/icons/content/zoom-in.ico"
         iconName: "zoom-in"
-        onTriggered: sheet.zoomIn()
+        onTriggered: zoom(0.1)
     }
 
     Action {
         id: zoomOutAction
         text: "Zoom Out"
-        shortcut: "Ctrl+-"
-        iconSource: "qrc:/content/images/zoom-out.png"
+        shortcut: StandardKey.ZoomOut
+        iconSource: "qrc:/icons/content/zoom-out.ico"
         iconName: "zoom-out"
-        onTriggered: sheet.zoomOut()
+        onTriggered: zoom(-0.1)
     }
 
     Action {
-        id: zoomFitAction
-        text: "Zoom Fit"
+        id: unZoomAction
+        text: "Unzoom"
         shortcut: "Ctrl+1"
-        iconSource: "qrc:/content/images/zoom-fit.png"
-        iconName: "zoom-fit"
-        onTriggered: sheet.zoomFit()
+        iconSource: "qrc:/icons/content/unzoom.ico"
+        iconName: "unzoom"
+        onTriggered: zoom(1-network.scale)
     }
 
     Action {
-        id: selectionCursorAction
+        id: selectAreaAction
         text: "Selection Mode"
-        shortcut: ""
-        iconSource: "qrc:/content/images/select.png"
+        shortcut:"Ctrl"
+        iconSource: "qrc:/icons/content/select.png"
         iconName: "select"
         checkable: true
-        onToggled: sheet.selectionMode = checked
+        checked: network.selectionMode
+        onToggled: selectionMode(checked)
     }
 
     Action {
-        id: fileQuitAction
+        id: selectAllAction
+        text: "Select all"
+        tooltip: "Select all items on the network"
+        shortcut: StandardKey.SelectAll
+        iconSource: "qrc:/icons/content/select_all.png"
+        iconName: "selectAll"
+        onTriggered: selectAll()
+    }
+
+    Action {
+        id: showGridAction
+        text: "Show grid"
+        tooltip: "Show grid on model page"
+        shortcut: "Ctrl+Shift+G"
+        iconSource: "qrc:/icons/content/grid.ico"
+        iconName: "Grid"
+        checkable: true
+        checked: showGrid
+        onTriggered: showGrid = checked
+    }
+
+    Action {
+        id: snapToGridAction
+        text: "Snap to grid"
+        tooltip: "Snap items to grid"
+        shortcut: "Ctrl+Shift+S"
+        iconSource: "qrc:/icons/content/snap.ico"
+        iconName: "Snap"
+        checkable: true
+        checked: snapToGrid
+        onTriggered: snapToGrid = checked
+    }
+
+    Action {
+        id: quitAction
         text: "Quit"
-        shortcut: "Ctrl+Q"
-        onTriggered: Qt.quit()
+        shortcut: StandardKey.Quit
+        iconSource: "qrc:/icons/content/quit.ico"
+        iconName: "Quit"
+        onTriggered: network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }
 
-    FileDialog {
-        id: fileDialog
-        nameFilters: [
-            "Model files (*.xmdm *.fjson *.wck *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
-        onAccepted: controller.fileOpen(fileUrl)
-    }
-    FileDialog {
-        id: fileSaveDialog
-        selectMultiple: false
-        selectExisting: true
-        nameFilters: [
-            "Model files (*.xmdm *.fjson *.wck *.json)",
-            "Composite files (*.xmdc)",
-            "Project files (*.xmdp)",
-            "All files (*)"]
-        //onAccepted: controller.fileOpen(fileUrl)
+    Action {
+        id: clearLogAction
+        text: "Clear log"
+        shortcut: ""
+        iconSource: "qrc:/icons/content/clean.ico"
+        iconName: "Clean"
+        onTriggered: clearLog()
+        enabled: xconsole.open
     }
 
-    function test(){
-        sheet.clear()
-    }
+    //#######################################################################################################
+    //
+    // Menu & toolbars
+    //
+    //#######################################################################################################
 
-    function jsonTest(){
-
-        var object = {
-            "VARS":[],
-            "PACKET_TYPE":{},
-            "COMPOSITE_OBJECTS":[],
-            "NETWORK":[],
-        }
-
-        object.NETWORK.push(
-                    {
-                        "id":"q1",
-                        "type":"queue",
-                        "x":100,
-                        "y":50,
-                        "orientation":90,
-                        "scale":0.5,
-                        "outs":[],
-                        "fields":[{"size":2}]
-                    }
-                    )
-
-        var jsonOrder = ["VARS","PACKET_TYPE","COMPOSITE_OBJECTS","NETWORK","id","type","x","y","orientation","scale","outs","fields","size"]
-
-        var jsonFileText = JSON.stringify(object,jsonOrder,1)
-
-        //throws exception if incorrect json
-        var objFromJsonFile = JSON.parse(jsonFileText);
-
-
-        console.log("======================================================================================")
-        console.log("= Json text created from object")
-        console.log("======================================================================================")
-        console.log(jsonFileText)
-        console.log("======================================================================================")
-        console.log("= Object created from JSON text")
-        console.log("======================================================================================")
-        console.log("id=" + objFromJsonFile.NETWORK[0].id
-                    + ", type=" + objFromJsonFile.NETWORK[0].type
-                    + ",(x,y)=(" + objFromJsonFile.NETWORK[0].x + "," + objFromJsonFile.NETWORK[0].y + ")"
-                    + ",fields.size=" + objFromJsonFile.NETWORK[0].fields[0].size
-                    + ",...")
-    }
-
-    function log(text,color)
-    {
-        outputLog.log(text,color)
-    }
 
     menuBar: MenuBar {
         Menu {
             title: "&File"
+            MenuItem { action: fileNewAction }
             MenuItem { action: fileOpenAction }
             MenuItem { action: fileSaveAction }
+            MenuItem { action: fileSaveAsAction }
+            MenuItem { action: setupAction }
             MenuSeparator{}
-            MenuItem { action: fileQuitAction }
+            MenuItem { action: quitAction }
         }
         Menu {
             title: "&Edit"
@@ -250,14 +346,27 @@ ApplicationWindow {
             MenuItem { action: cutAction }
             MenuItem { action: pasteAction }
             MenuSeparator{}
+            MenuItem {action: selectAreaAction}
             MenuItem {action: selectAllAction}
+            MenuSeparator{}
+            MenuItem { action: modelSetupAction }
+
         }
 
         Menu {
             title: "&View"
+
             MenuItem { action: zoomInAction }
             MenuItem { action: zoomOutAction }
-            MenuItem { action: zoomFitAction }
+            MenuItem { action: unZoomAction }
+            MenuSeparator{}
+            MenuItem { action: showGridAction }
+            MenuItem { action: snapToGridAction }
+            MenuSeparator{}
+            MenuItem { action: showComponentNamesAction }
+            MenuItem { action: showPortNamesAction }
+            MenuSeparator{}
+            MenuItem { action: clearLogAction }
         }
 
         Menu {
@@ -268,45 +377,178 @@ ApplicationWindow {
 
     toolBar: ToolBar {
         id: mainToolBar
-        width: parent.width
-        RowLayout {
-
+        style: ToolBarStyle {
+            padding {left:0;right:0;top:0;bottom:0}
+            background: Rectangle {
+                border.color: "gray"
+                color: "lightgray"
+           }
+        }
+        ColumnLayout{
             anchors.fill: parent
-            spacing: 0
-            ToolButton { action: fileOpenAction }
-            ToolButton { action: fileSaveAction }
-            ToolBarSeparator {}
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 24
+                spacing: 2
+                anchors.leftMargin: 5
+                anchors.rightMargin: 5
+                //                Layout.alignment: Qt.AlignVCenter
+                ToolButton { action: fileNewAction }
+                ToolButton { action: fileOpenAction }
+                ToolButton { action: fileSaveAction }
+                ToolButton { action: fileSaveAsAction }
+                ToolBarSeparator {}
+                ToolButton { action: modelSetupAction }
+                ToolBarSeparator {}
 
+                ToolButton { action: copyAction }
+                ToolButton { action: cutAction }
+                ToolButton { action: pasteAction }
 
-            ToolButton { action: copyAction }
-            ToolButton { action: cutAction }
-            ToolButton { action: pasteAction }
+                ToolBarSeparator {}
 
-            ToolBarSeparator {}
+                ToolButton { action: zoomInAction }
+                ToolButton { action: zoomOutAction }
+                ToolButton { action: unZoomAction }
 
-            ToolButton { action: zoomInAction }
-            ToolButton { action: zoomOutAction }
-            ToolButton { action: zoomFitAction }
+                ToolBarSeparator {}
 
-            ToolBarSeparator {}
+                ToolButton {action: selectAreaAction}
+                ToolButton {action: selectAllAction}
 
-            ToolButton {action: selectionCursorAction}
+                ToolBarSeparator {}
+                ToolButton {action: showGridAction}
+                ToolButton {action: snapToGridAction}
 
-            ToolBarSeparator {}
-
-            Item { Layout.fillWidth: true }
+                Item { Layout.fillWidth: true }
+                ToolBarSeparator{}
+                ToolButton {action: quitAction}
+            }
+            RowLayout {
+                XToolBar{
+                    id: xmasToolbar
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+            }
         }
     }
 
 
-    XmasToolBar{
-        id: xmasToolbar
-        height:48
-        anchors {right: parent.right;  left: parent.left}
+    //#######################################################################################################
+    //
+    // Time triggered actions
+    //
+    //#######################################################################################################
+    Timer {
+        id: autoSaveTimer
+        interval: 500000 //every 5min
+        running: autoSave & network.modified
+        repeat: true
+        onTriggered: saveModel()
     }
 
+
+    //#######################################################################################################
+    //
+    // Dialogs
+    //
+    //#######################################################################################################
+
+    ApplicationSetupDialog{
+        id:appSetupDialog
+    }
+
+    //File Open
+    FileDialog {
+        id: dialogFileOpen
+        nameFilters: [
+            "Model files (*.xmdm *.json)",
+            "All files (*)"]
+        onAccepted: {
+            if (network.openFile(fileUrl)) {
+                network.folder = folder
+                network.fileName = fileUrl.toString().replace(folder + "/" ,"" )
+            }
+        }
+    }
+
+    // About
+    MessageDialog {
+        id: aboutBox
+        title: "About XMD"
+        text: "XMD is an XMAS Model Designer tool"
+        icon: StandardIcon.Information //"qrc:/icons/content/app.ico"
+    }
+
+    // File overwrite
+    MessageDialog {
+        id: dialogOverwrite
+        title: "Overwrite"
+        icon: StandardIcon.Question
+        text:  "Overwrite " + network.fileName + "?  Press save to confirm!"
+        standardButtons: StandardButton.No | StandardButton.Yes
+        onYes: saveModel()
+    }
+
+    // Save before new?
+    MessageDialog {
+        id: dialogSaveBeforeNew
+        title: "New model."
+        icon: StandardIcon.Question
+        text:  "Save " + network.fileName + " first?"
+        standardButtons: StandardButton.No | StandardButton.Yes
+        onNo:  newModel(false)
+    }
+
+    // Save before open?
+    MessageDialog {
+        id: dialogSaveBeforeOpen
+        title: "Open model."
+        icon: StandardIcon.Question
+        text:  "Save " + network.fileName + " first?"
+        standardButtons: StandardButton.No | StandardButton.Yes
+        onYes: openModel(true)
+        onNo:  openModel(false)
+    }
+
+    // Quit without save?
+    MessageDialog {
+        id: dialogSaveBeforeQuit
+        title: "Quit application."
+        icon: StandardIcon.Question
+        text:  "Quit without saving " + network.fileName + "?"
+        standardButtons: StandardButton.No | StandardButton.Yes
+        // Qt BUG (MS Windows): need to destroy dialog internally before quit
+        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
+        onYes: {this.destroy(); Qt.quit()}
+        // gbo: why don't you save on yes??
+        // stf: a user asks to quit in the first place and if a dialog pops up it makes more sense to confirm as yes for quit
+        // .. but you are right , the question in that case would be better "sure you want to quit without save?"
+        // onYes: save file somewhere if name is filled.
+    }
+
+    // Quit?
+    MessageDialog {
+        id: dialogQuit
+        title: "Quit?"
+        icon: StandardIcon.Question
+        text:  "Are you sure you want to quit?"
+        standardButtons: StandardButton.No | StandardButton.Yes
+        // Qt BUG (MS Windows): need to destroy dialog internally before quit
+        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
+        onYes: {this.destroy(); Qt.quit()}
+    }
+
+    //#######################################################################################################
+    //
+    // XMAS toolbar & Canvas
+    //
+    //#######################################################################################################
+
     SplitView {
-        anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+        //anchors { top: xmasToolbar.bottom ; bottom: parent.bottom; left: parent.left; right: parent.right}
+        anchors.fill: parent
         orientation: Qt.Vertical
         Item {
             Layout.fillHeight: true
@@ -314,45 +556,31 @@ ApplicationWindow {
                 id: view
                 //center the scene by default
                 anchors.fill: parent
-                contentX: sheet ? (1 - sheet.scale) * sheet.width * 0.5 : 0
-                contentY: sheet ? (1 - sheet.scale) * sheet.height * 0.5 : 0
-                contentWidth: sheet ? sheet.width * sheet.scale : 0
-                contentHeight: sheet ? sheet.height * sheet.scale : 0
+                contentWidth: network.width
+                contentHeight: network.height
                 pixelAligned: true
-                interactive: sheet ? !sheet.selectionMode : true
+                interactive: !network.selectionMode
+                clip:true
 
-
-
-                //        onFlickEnded: {
-                //            console.log("x : " + view.visibleArea.xPosition
-                //                        + " wr : " + view.visibleArea.widthRatio
-                //                        + " y : " + view.visibleArea.yPosition
-                //                        + " hr : " + view.visibleArea.heightRatio)
-                //        }
-
-
-
-                Sheet{
-                    id:sheet
-                    transformOrigin: Item.TopLeft
-                    color: "white"
-                    width : 2970
-                    height: 2100
+                XNetwork{
+                    id:network
+                    onScaleChanged: {
+                        view.resizeContent(network.width * network.scale,
+                                           network.height * network.scale,Qt.point(0,0))
+                    }
 
                 }
-
                 // Only show the scrollbars when the view is moving.
-                states: State {
+                states:
+                    State {
                     name: "ShowBars"
                     when: view.movingVertically || view.movingHorizontally
                     PropertyChanges { target: verticalScrollBar; opacity: 1 }
                     PropertyChanges { target: horizontalScrollBar; opacity: 1 }
                 }
-
                 transitions: Transition {
                     NumberAnimation { properties: "opacity"; duration: 600 }
                 }
-
             }
 
             DropShadow {
@@ -389,20 +617,48 @@ ApplicationWindow {
             }
         }
 
-        onResizingChanged: {
-            outputLog.lastHeight = outputLog.height
-            outputLog.open = outputLog.lastHeight > 0
-        }
-
-        OutputLog {
-            id: outputLog
+        XConsole {
+            id: xconsole
             Layout.minimumHeight: headerHeight
         }
 
-    }
-    Connections {
-        target: controller
-        onWriteLog: log(message,color) //console.log("component create request")
+        //remember the log height
+        onResizingChanged: {
+            xconsole.lastHeight = xconsole.height
+            xconsole.open = xconsole.lastHeight > 0
+        }
 
+    }
+
+    //#######################################################################################################
+    //
+    // Connections
+    //
+    //#######################################################################################################
+    Connections {
+        target: util
+        onWriteLog: xconsole.log("[util]: " + message,color)
+    }
+
+    /************************************************
+     * Data Control
+     ************************************************/
+    Connections {
+        target: datacontrol
+        onWriteLog: xconsole.log("[datacontrol]: " + message,color)
+    }
+
+    /************************************************
+     * Plugin Control
+     ************************************************/
+    Connections {
+        target: plugincontrol
+        onWriteLog: xconsole.log("[plugincontrol]: " + message,color)
+        onPluginsLoaded: {
+            mainwindow.vtNameList = vtNameList
+            for (var i in vtNameList) {
+                xconsole.addPlugin(vtNameList[i])
+            }
+        }
     }
 }

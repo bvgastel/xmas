@@ -1,0 +1,72 @@
+{
+  "VARS": [],
+  "PACKET_TYPE": {"val ": 2},
+  "COMPOSITE_OBJECTS": [],
+  "NETWORK": [
+    {
+      "id": "src1",
+      "type": "source",
+      "outs": [
+        {
+          "id": "my-comp1",
+          "in_port": 0
+        }
+      ],
+      "pos": {
+        "x": 100,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      },
+      "fields": [
+        {
+          "init_types": "value < 65384"
+        }
+      ]
+    },
+    {
+      "id": "my-comp1",
+       "pos": {
+        "x": 200,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      },
+      "type": "composite",
+      "subnetwork": "my_composite.json",
+      "outs": [
+        {
+          "id": "my-comp2",
+          "in_port": 0
+        }
+      ],
+    },
+    {
+      "id": "my-comp2",
+        "pos": {
+        "x": 500,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      },
+     "type": "composite",
+      "subnetwork": "my_composite.json",
+      "outs": [
+        {
+          "id": "sink1",
+          "in_port": 0
+        }
+      ]
+    },
+    {
+      "id": "sink1",
+      "type": "sink",
+      "pos": {
+        "x": 900,
+        "y": 100,
+        "orientation": 0,
+        "scale": 100
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{caption}
+
+\title{Resultaten work meeting 011 Update iteratie 5 }
+\author{Guus}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\w}[1]{\textsc{#1}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmv}{\textsc{Xmv}\xspace}%
+\newcommand{\xmd}{\textsc{Xmd}\xspace}%
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}%
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}%
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}%
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}%
+\newcommand{\vt}{\textsc{Vt}\xspace}%
+\newcommand{\src}{\textsc{src}\xspace}%
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}%
+\newcommand{\een}{\'{e}\'{e}n\xspace}%
+\newcommand{\svn}{\textsc{svn}\xspace}%
+\newcommand{\git}{\textsc{git}\xspace}%
+\newcommand{\github}{\textsc{Github}\xspace}%
+\newcommand{\subversion}{\textsc{subversion}\xspace}%
+\newcommand{\radboud}{\textsc{Radboud}\xspace}%
+\newcommand{\uml}{\textsc{uml}\xspace}%
+\newcommand{\json}{\textsc{Json}\xspace}%
+
+\begin{Minutes}{Work meeting 011}
+\participant{Guus Bonnema, Stefan Versluys, Jeroen Kleijn, Bernard van Gastel}
+\subtitle{Update iteratie 5}
+\minutetaker{Guus}
+\minutesdate{16 maart 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Agilefant}
+
+Zie mail over agilefant. het bedrijf heeft besloten de 5 vrije plaatsen te verminderen tot 1 vrije plaats (de account houder).
+Van gratis naar \$ 5 per persoon per maand is een behoorlijke stap. Het gevoel heerst dat Agilefant ons in een fuik heeft geleid 
+en dat nu wil verzilveren. De gevoelens hierover zijn gemengd, maar we zitten einde traject en hebben Agilefant vanaf einde code 
+maken, niet zo hard meer nodig.
+
+In de mail staan alternatieven. We besluiten nader te overwegen wat we gaan doen. Guus krijgt van Stefan een lijst met alternatieven
+om nader te bekijken. Jeroen gaat kijken of hij agilefant op de OU server kan installeren: maximaal 2 uur. In het ergste geval 
+gebruiken we agile fant nog alleen voor de eind presentatie om een screenprint te laten zien.
+
+Woensdag avond nemen we een besluit.
+
+\topic{Midterm bijeenkomst 25 maart 2015 in Utrecht}
+
+Jeroen besluit uiterlijk 17 april aan de presentatie voor de midterm te gaan werken. We realiseren ons,
+dat dit erg dicht bij eind project is (10 mei).
+
+\topic{Composite voortgang}
+
+Jeroen werkt momenteel aan de flattening functie, maar heeft de \json parser en de \xmas structuren
+nog niet aangepast. We besluiten dat we de aanpassing op structuur en \json parser eerst nodig hebben,
+omdat xmd die ook moet gaan gebruiken. De flattening functie kan dan als stap 2.
+
+\topic{Vraag aan Bernard: IN en OUT}
+Vraag te stellen aan Bernard is het voorstel van Guus om IN en OUT poorten
+in composites te vervangen door Source en Sink met eventueel een optie om een 
+'echte' source of sink op te nemen. Voordeel is dat we niet zelf een primitief 
+hoeven te maken en toe te voegen aan \code{xmas.h} en dat we de parser niet hoeven
+aan te passen.
+
+Deze vraag staat nog van 9 maart, is verstuurd, maar nog geen antwoord van Bernard ontvangen.
+Guus gaat Bernard hier op wijzen en dat het project op antwoord hier wacht.
+
+\topic{Vraag aan Bernard: poorten in composite}
+Bij het tonen van de composites is de vraag hoeveel invoer- en uitvoerpoorten
+we kunnen verwachten maximaal en hoeveel hij wil dat we minimaal kunnen tekenen
+voor we een symbolische invoer poort tekenen.
+
+Deze vraag staat nog van 9 maart, is verstuurd, maar nog geen antwoord van Bernard ontvangen.
+We hebben hier minder haast mee, omdat de designer veel poorten (ca 50) zonder problemen aan kan.
+
+\topic{Expressie- en functie parser}
+De expressie en functie parser zijn af. Dit weekend heeft Bernard zijn \vt programmatuur
+gecorrigeerd en aangevuld met een export functie naar een \json file.
+
+De unrestricted join kan nog geen functie opslaan, omdat dit niet in \xmas is opgenomen.
+Hiervoor is aanpassing van de extensies (een extra extensie) en aanpassing van de parser
+nodig. Guus heeft Bernard gevraagd of hij dit zelf wil aanpassen of niet. Nog geen antwoord.
+
+De volgende stap is connectie van componenten. Het \xmas deel hiervoor is eenvoudig,
+maar Guus ziet niet direct hoe dit in \qml af te handelen. Morgenavond spreken 
+Stefan en Guus af dit via teamviewer en skype op te lossen.
+
+\topic{Plugin}
+De plugin blijft nog steeds liggen. Pas na bouwen afmaken van \xmas integratie met
+\qml kan Guus aan de plugin werken. Het doorlopen van de plugin code de vorige keer
+hebben Stefan en Jeroen als nuttig ervaren.
+
+\topic{Algehele voortgang: project einde nadert}
+Guus wijst op de nadering van project einde. Iteratie 5 is gisteren begonnen en eindigt
+op 5 april. Daar komt transitie van 10 april - 10 mei. Dat betekent dat we 5 april klaar 
+moeten zijn en een werkende designer moeten hebben inclusief plugin en composites. Dat is
+aardig ambitieus gezien de korte tijd (3 weken). We kunnen ons geen vertragingen meer veroorloven.
+Wel hebben we na de einddatum van 10 mei nog een paar weken respijt, maar alleen als het
+echt niet anders kan. We richten ons op 5 april de applicatie af. Tijdens de transitie 
+maken de we software klaar voor release en oplevering aan Bernard.
+
+Guus merkt op, dat de huidige programmatuur nog geen componenten kan verbinden en ook nog geen
+bestanden kan exporteren. Verder is Bernard ongeveer begraven onder werk. Het is beter voor
+de beeldvorming hem geen "half" product te tonen en pas als onze designer meer kan, een demo
+te geven. 
+
+We spreken af de tijdslijnen met Bernard te bespreken en hem voor te stellen in de week voor
+5 april een final demonstratie te doen. Hij krijgt dan ook een versie van de programmatuur
+zoals die dan is om mee te experimenteren.
+
+\paragraph{Voor volgend overleg}
+Komende woensdag wordt een heel kort overleg met alleen updaten waar we staan. Komende zaterdag
+moet de xmas integratie af zijn en als alles meezit kunnen we ook \json bestanden bewaren.
+
+\topic{Actiepunten}
+
+In figuur \ref{fig:openpunten} de openstaande punten. Deze punten werken we elke sessie af, en zetten de 
+afgeronde akties in de lijst daaronder.
+
+\vspace{2em}
+
+\begin{figure}[p]
+%\begingroup
+\begin{tabular}{|l|l|p{25em}|}
+\hline
+{\bf datum} & {\bf wie} & {\bf Aktie}\\\hline
+16-03-2015  & Jeroen    & Is Agilefant zelf installeren een optie?\\\hline
+16-03-2015  & Guus      & Alternatieven voor Agilfant bekijken\\\hline
+16-03-2015  & team      & Wat te doen met Agilefant geld fuik?\\\hline
+16-03-2015  & team      & Tijdslijnen plus voorstel demo naar Bernard.\\\hline
+16-03-2015  & team      & Bernard herinneren aan IN/OUT kwestie: we wachten erop\\\hline
+09-03-2015  & team      & Bernard vragen over maximaal aantal poorten te tekenen\\\hline
+09-03-2015  & team      & Bernard vragen over IN/OUT vervangen door Source/Sink\\\hline
+02-03-2015  & team      & Sturen Bernard een patch van de \vt verschillen\\\hline
+02-03-2015  & Bernard   & Bernard komt terug op repo: git of svn?\\\hline
+24-01-2015  & Bernard   & Filmpje van een collega, Bernard geeft een seintje\\\hline
+24-01-2015  & Bernard   & Voorbeeld deadlock op 2 deadlock vrije composites\\\hline
+\end{tabular}
+\caption{Aktielijst open punten}\label{fig:openpunten}
+\end{figure}
+%\endgroup
+
+\vspace{2em}
+
+\begin{figure}[p]
+%\begingroup
+\begin{tabular}{|l|l|l|p{10em}|p{10em}|}
+\hline
+{\bf datum} & {\bf gereed} & {\bf wie} & {\bf Aktie}                                      & commentaar      \\\hline
+09-03-2015  & 09-03-2015   & team      & Project issue voortgang consequenties bespreken. &     \\\hline
+24-01-2015  & 22-02-2015   & team      & We moeten hernieuwde contactmomenten afspreken   & 22 febr 2015 afspraken gemaakt\\\hline
+07-02-2015  & 22-02-2015   & team      & Afspraak met Bernard voor 21 februari 2015       & 22 febr 2015 10:30\\\hline
+07-02-2015  & 13-02-2015   & team      & Werkwijze opnieuw bezien                         & vastgeled in plan\\\hline
+07-02-2015  & 13-02-2015   & team      & Vernieuwd plan uitbrengen.                       & Akkoord B. 19-02-2015\\\hline
+24-01-2015  & 07-02-2015   & Bernard   & Voert bugfix op xmas.h uit en geeft signaal      & uitgevoerd\\\hline
+24-01-2015  & 07-02-2015   & team      & splitsen header files afstemmen met Bernard      & n.v.t.\\\hline
+26-01-2015  & 07-02-2015   & team      & Kan de licentie van \w{bitpower lib} naar GPLv3? & uitgevoerd\\\hline
+\end{tabular}
+\captionof{table}{Aktielijst gesloten punten}
+\end{figure}
+%\endgroup
+
+\end{Minutes}
+
+\end{document}

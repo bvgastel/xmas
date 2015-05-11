@@ -1,22 +1,49 @@
+/*********************************************************************
+  *
+  * Copyright (C) Guus Bonnema, 2015
+  *
+  * This file is part of the xmas-design tool.
+  *
+  * The xmas-design tool is free software: you can redistribute it
+  * and/or modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3 of
+  * the License, or (at your option) any later version.
+  *
+  * The xmas-design tool is distributed in the hope that it will be
+  * useful,  but WITHOUT ANY WARRANTY; without even the implied warranty
+  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with the xmas-design tool.  If not, see
+  * <http://www.gnu.org/licenses/>.
+  *
+  **********************************************************************/
 #include <gtest/gtest.h>
 
 #include "xmas.h"
 #include "symbolic.h"
 #include "symbolic-enum-field.h"
+#include "simplestring.h"
 #include "messagespec.h"
 
-namespace {
+namespace
+{
 
-class DataModelTest : public ::testing::Test {
+class TestDataModel : public ::testing::Test
+{
 protected:
-    DataModelTest() {
+    TestDataModel()
+    {
 
     }
-    virtual ~DataModelTest() {
+    virtual ~TestDataModel()
+    {
 
     }
 
-    virtual void SetUp() {
+    virtual void SetUp()
+    {
         m_source = new XMASSource("source");
         m_sink = new XMASSink("sink");
         m_fork = new XMASFork("fork");
@@ -26,7 +53,8 @@ protected:
         m_queue = new XMASQueue("queue");
     }
 
-    virtual void TearDown() {
+    virtual void TearDown()
+    {
         delete m_sink;
         delete m_source;
         delete m_fork;
@@ -46,7 +74,8 @@ protected:
 
 };
 
-TEST_F(DataModelTest, NameEqTest) {
+TEST_F(TestDataModel, NameEqTest)
+{
     EXPECT_EQ(m_sink->getName(), "sink");
     EXPECT_EQ(m_source->getName(), "source");
     EXPECT_EQ(m_fork->getName(), "fork");
@@ -56,7 +85,8 @@ TEST_F(DataModelTest, NameEqTest) {
     EXPECT_EQ(m_queue->getName(), "queue");
 }
 
-TEST_F(DataModelTest, NameNeTest) {
+TEST_F(TestDataModel, NameNeTest)
+{
     EXPECT_NE(m_sink->getName(), "sink1");
     EXPECT_NE(m_source->getName(), "source1");
     EXPECT_NE(m_fork->getName(), "fork1");
@@ -66,7 +96,8 @@ TEST_F(DataModelTest, NameNeTest) {
     EXPECT_NE(m_queue->getName(), "queue1");
 }
 
-TEST_F(DataModelTest, NotConnectedInValid) {
+TEST_F(TestDataModel, NotConnectedInValid)
+{
     EXPECT_FALSE(m_sink->valid());
     EXPECT_FALSE(m_source->valid());
     EXPECT_FALSE(m_fork->valid());
@@ -76,7 +107,18 @@ TEST_F(DataModelTest, NotConnectedInValid) {
     EXPECT_FALSE(m_queue->valid());
 }
 
-TEST_F(DataModelTest, ConnectedValid) {
+TEST_F(TestDataModel, DanglingConnect) {
+    connect(m_source->o, m_function->i);
+    connect(m_source->o, m_function->i);    // connect twice: not a problem
+    connect(m_function->o, m_fork->i);
+    connect(m_source->o, m_queue->i);       // now m_function is dangling
+    connect(m_queue->o, m_merge->a);
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_queue->valid());
+    EXPECT_FALSE(m_function->valid());      // See? m_function is invalid!
+}
+
+TEST_F(TestDataModel, ConnectedValid) {
     connect(m_source->o, m_function->i);
     connect(m_function->o, m_queue->i);
     connect(m_queue->o, m_sink->i);
@@ -85,28 +127,30 @@ TEST_F(DataModelTest, ConnectedValid) {
     EXPECT_TRUE(m_sink->valid());
 }
 
-TEST_F(DataModelTest, SimpleSymbolics) {
-    connect(m_source->o, m_sink->i);
+TEST_F(TestDataModel, Disconnect_from_output) {
+    connect(m_source->o, m_function->i);
+    EXPECT_TRUE(m_source->o.connectedTo(m_function));
     EXPECT_TRUE(m_source->valid());
-    EXPECT_TRUE(m_sink->valid());
-
-    SymbolicPacket p = {NAMED_ENUM("first", "r","g"), NAMED_ENUM("second", "x")};
-
-    attach(&m_source->o, p);
-
-    EXPECT_TRUE(m_source->valid());
-    EXPECT_TRUE(m_sink->valid());
-
-    std::set<XMASComponent*> allComponents = {m_source, m_sink};
-
-    SymbolicTypes(allComponents);
-    SymbolicTypesExtension *ext = m_sink->i.getInitiatorPort()->getPortExtension<SymbolicTypesExtension>();
-    ASSERT_EQ(ext->availablePackets.size(), 1U);
-    EXPECT_EQ(ext->availablePackets[0], p);
-
-    ClearSymbolicTypes(allComponents);
-    ClearMessageSpec(allComponents);
+    EXPECT_TRUE(m_source->o.valid());
+    EXPECT_TRUE(m_source->o.isConnected());
+    disconnect(m_source->o);
+    EXPECT_FALSE(m_source->valid());
+    EXPECT_FALSE(m_source->o.isConnected());
+    EXPECT_FALSE(m_source->o.valid());
 }
+
+TEST_F(TestDataModel, Disconnect_from_input) {
+    connect(m_source->o, m_function->i);
+    EXPECT_TRUE(m_source->o.connectedTo(m_function));
+    EXPECT_TRUE(m_source->valid());
+    EXPECT_TRUE(m_source->o.valid());
+    EXPECT_TRUE(m_source->o.isConnected());
+    disconnect(m_function->i);
+    EXPECT_FALSE(m_source->valid());
+    EXPECT_FALSE(m_source->o.isConnected());
+    EXPECT_FALSE(m_source->o.valid());
+}
+
 
 } // namespace
 

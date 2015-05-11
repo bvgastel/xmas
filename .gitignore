@@ -8,7 +8,10 @@ modules/xmas-vt
 include*
 lib*
 bin*
+src/testfiles/*
+src/gtest/*
 *~
+LICENSE-TEMPLATE-*
 
 # Compiled Object files
 *.slo

@@ -1,0 +1,91 @@
+\documentclass[a4paper,final]{article}
+\usepackage{subfig}
+\usepackage[dutch]{babel}
+\usepackage{hyperref}
+\usepackage{minutes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{caption}
+
+\title{Meeting 010}
+\author{Stefan}
+\minutesstyle{header=table, vote=list, contents=true, columns={1}}
+
+\begin{document}
+%\selectlanguage{dutch}
+
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\w}[1]{\textsc{#1}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\qtquick}{\textsc{QtQuick}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\code}[1]{\texttt{#1}\xspace}%
+\newcommand{\xmas}{\textsc{xmas}\xspace}%
+\newcommand{\xmv}{\textsc{Xmv}\xspace}%
+\newcommand{\xmd}{\textsc{Xmd}\xspace}%
+\newcommand{\xmvtest}{\textsc{XmvTest}\xspace}%
+\newcommand{\xmdtest}{\textsc{XmdTest}\xspace}%
+\newcommand{\bitpowder}{\textsc{Bitpowder}\xspace}%
+\newcommand{\datamodel}{\textsc{datamodel}\xspace}%
+\newcommand{\vt}{\textsc{Vt}\xspace}%
+\newcommand{\src}{\textsc{src}\xspace}%
+\newcommand{\agilefant}{\textsc{AgileFant}\xspace}%
+\newcommand{\een}{\'{e}\'{e}n\xspace}%
+\newcommand{\svn}{\textsc{svn}\xspace}%
+\newcommand{\git}{\textsc{git}\xspace}%
+\newcommand{\github}{\textsc{Github}\xspace}%
+\newcommand{\subversion}{\textsc{subversion}\xspace}%
+\newcommand{\radboud}{\textsc{Radboud}\xspace}%
+\newcommand{\uml}{\textsc{uml}\xspace}%
+
+
+\begin{Minutes}{Work meeting 010}
+\participant{Jeroen Kleijn}
+\subtitle{Midweek meeting}
+\minutetaker{Stefan}
+\minutesdate{10 maart 2015}
+\location{Skype}
+
+\maketitle% This is where LaTeX makes the title
+
+\topic{Builden project}
+
+Jeroen kan ondertussen alles builden na een manuele clean maar xmd crasht.
+Werd met debugger verder onderzocht en heeft vermoedelijk iets te maken
+met het ontbreken van de plugin deploy. Jeroen ging dit verder bekijken.
+
+\topic{Composite voortgang}
+
+Overleg over wat qml nodig heeft om een composite voor te kunnen stellen.
+
+Volgende punten:
+\begin{itemize}
+	\item Breedte van het blokje moet groter omdat de poortnamen erin
+		moeten zodat de designer weet welke poort wat is.
+	\item Voor qml is naast de standaard component properties
+		een lijstje met poorten voldoende.
+	\item Bijkomend kan er linkje meegegeven worden naar
+		een pictogram dat dan midden in het blokje getoond
+		kan worden.
+\end{itemize}
+
+Deze week wordt er een open dialog voorzien bij het klikken op het composit pictogram.
+
+De te openen bestandsnaam wordt naar de xmas code gestuurd.
+Deze moet het netwerk parsen als een composite, en levert een component
+van het type composite met naam,pictogram en een lijst met poorten aan
+qml.
+
+\topic{Demo xmd}
+Met teamviewer demo aan Jeroen welke features er in xmd toegevoegd zijn.
+
+\topic{Flattener}
+Jeroen werkt aan de flattener in een branch xmascomposite.
+
+
+
+\end{Minutes}
+
+\end{document}

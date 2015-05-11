@@ -16,11 +16,13 @@
 #include "parse.h"
 #include "export.h"
 
+#include "memorypool.h"
+#include "xmasproject.h"
+#include "flatten.h"
+
 #ifndef __MINGW32__
 #include <sys/resource.h>
 #endif
-
-using namespace std;
 
 /**
   * Features:
@@ -600,23 +602,46 @@ void MeshTest(int size, bool showSinks, bool showAll) {
 }
 
 void TestFile(const std::string &filename, bool showAll) {
-    bitpowder::lib::MemoryPool mp;
+
 
     auto begin = std::chrono::high_resolution_clock::now();
     auto start = begin;
 
-    auto parse = parse_xmas_from_file(filename, mp);
-    auto& components = parse.first;
+    //============
+    //bitpowder::lib::MemoryPool mp;
+
+    //auto parse = parse_xmas_from_file(filename, mp);
+    //auto& components = parse.first;
+    //============
+
+    //============
+    XMASProject project {filename};
+    //============
 
     auto current = std::chrono::high_resolution_clock::now();
     std::cout << "parsed JSON file in \t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
     start = current;
 
+    //============
+    XMASNetwork flattened = flatten(*project.getRootNetwork());
+    auto& components = flattened.getComponentMap();               // TODO: flattened network is quite a bit slower than the original (type inference), due to lack of a MemoryPool?
+    //auto& components = project.getRootNetwork()->getComponentMap();
+    //============
+
+    std::cout << "flattening in \t\t" << std::chrono::duration_cast<std::chrono::milliseconds>(current-start).count() << "ms" << std::endl;
+    start = current;
+
+
+    //project.saveNetwork(filename + ".export");
+    //project.saveNetwork(filename + ".flat", &flattened);
+
+
+
     std::set<XMASComponent*> allComponents;
     for (auto &it : components) {
-        //std::cout << "checking " << it.first << std::endl;
-        checkAssert(it.second->valid());
+        //std::cout << "checking ..." << it.first << std::endl;
         if (it.second)
+            checkAssert(it.second->valid());
             allComponents.insert(it.second);
     }
 
@@ -658,14 +683,8 @@ void TestFile(const std::string &filename, bool showAll) {
 }
 
 int main(int argc, char* argv[]) {
-/*
-    XMASQueue q("test");
-    for (Port* p : q.ports())
-        std::cout << *p << std::endl;
-    return 1;
-    */
     bool showall = false;
-    bool showsinks = true;
+    bool showsinks = false;
     try {
         if (argc >= 3 && strcmp("-json", argv[1]) == 0) {
             TestFile(argv[2], showall);
@@ -693,6 +712,7 @@ int main(int argc, char* argv[]) {
     std::cout << (usage.ru_maxrss/1024) << " megabytes of memory used at max" << std::endl;
 #endif
 #endif
+    bitpowder::lib::MemoryPool::vacuum();
     return 0;
 }
 

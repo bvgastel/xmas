@@ -35,7 +35,7 @@ along with Bit Powder Libraries.  If not, see <http://www.gnu.org/licenses/>.
 namespace bitpowder {
 namespace lib {
 
-template <class E>
+template <class E, typename... CopyArgs>
 class Extension {
 public:
 #ifdef EXTENSION_USING_CPP_TYPE_INDEX
@@ -53,14 +53,21 @@ public:
 #endif
     // one virtual method to make dynamic_cast work
     virtual ~Extension() {}
+
+    Extension* copy(CopyArgs&&... args) {
+        return nullptr;
+    }
+
+    Extension(Extension&) = delete;
+    Extension& operator=(Extension&) = delete;
 };
 
-template <class E>
+template <class E, typename... CopyArgs>
 class ExtensionContainer {
 public:
     //typedef shared_object<E, Extension<E>> Element;
     typedef E* Element;
-    typedef Stack<Element, Extension<E>> ExtensionStack;
+    typedef Stack<Element, Extension<E,CopyArgs...>> ExtensionStack;
 private:
     template <class T>
     class Match {
@@ -74,7 +81,7 @@ private:
         Match() {
 #endif
         }
-        bool operator()(Extension<E>* e) {
+        bool operator()(Extension<E,CopyArgs...>* e) {
 #ifdef EXTENSION_USING_CPP_TYPE_INDEX
             return e->type == targetType;
 #else
@@ -85,15 +92,55 @@ private:
     template <class T>
     class MatchDynamic {
     public:
-        T* retval;
-        bool operator()(const Element& e) {
-            retval = dynamic_cast<T*>(&*e); // extra &* is used to get rid of smart-containers like lib::shared_object
+        T retval;
+        bool operator()(Element e) {
+            retval = dynamic_cast<T>(&*e); // extra &* is used to get rid of smart-containers like lib::shared_object
             return retval != nullptr;
         }
     };
 protected:
     ExtensionStack extensions;
 public:
+    ExtensionContainer() {
+    }
+
+    ExtensionContainer(const ExtensionContainer& c) {
+        // otherwise wrong order will be used, can matter
+        ExtensionStack toBeAdded;
+        for (Element ext : c.extensions) {
+            Element copy = ext->copy();
+            if (copy)
+                toBeAdded.push(copy);
+        }
+        while (!toBeAdded.empty())
+            extensions.push(toBeAdded.pop());
+    }
+
+    ExtensionContainer(ExtensionContainer&& c) {
+        *this = std::move(c);
+    }
+
+    ExtensionContainer& operator=(ExtensionContainer&& c) {
+        if (this == &c)
+            return *this;
+        extensions = std::move(c.extensions);
+        return *this;
+    }
+
+    ExtensionContainer copy(const ExtensionContainer& c, CopyArgs&&... args) {
+        // otherwise wrong order will be used, can matter
+        ExtensionContainer retval;
+        ExtensionStack toBeAdded;
+        for (Element ext : c.extensions) {
+            Element copy = ext->copy(std::forward<CopyArgs...>(args...));
+            if (copy)
+                toBeAdded.push(copy);
+        }
+        while (!toBeAdded.empty())
+            retval.extensions.push(toBeAdded.pop());
+        return retval;
+    }
+
     ExtensionStack& getAllExtensions() {
         return extensions;
     }
@@ -105,7 +152,7 @@ public:
     }
 
     template <class T>
-    T* getExtensionOfBaseType() const {
+    T getExtensionOfBaseType() const {
         MatchDynamic<T> m;
         return extensions.first(std::ref(m)) ? m.retval : nullptr;
     }
@@ -139,10 +186,10 @@ public:
     }
 
     template <class T>
-    T* removeExtensionOfBaseType() {
+    T removeExtensionOfBaseType() {
         MatchDynamic<T> m;
         for (auto it = extensions.select(std::ref(m)).begin(); it != extensions.end(); )
-            return static_cast<T*>(it.erase());
+            return static_cast<T>(it.erase());
         return nullptr;
     }
 

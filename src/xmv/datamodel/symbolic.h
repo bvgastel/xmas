@@ -7,13 +7,15 @@
 #include <set>
 #include <map>
 #include <functional>
-#include "xmas.h"
 #include <iostream>
 #include <unordered_set>
 #include <memory>
 #include <atomic>
+
+#include "xmas.h"
 #include "simplestring.h"
 #include "type_hash.h"
+
 #ifdef CONCURRENCY
 #include "lock.h"
 #include "spinlock.h"
@@ -45,9 +47,6 @@ public:
 
         // support for the visitor pattern
     virtual void accept(const bitpowder::lib::String& field, SymbolicFieldVisitor &t) = 0;
-    virtual void printOldCSyntax(std::ostream& out,
-                                 std::map<bitpowder::lib::String, int>& enumMap,
-                                 const bitpowder::lib::String& key) const = 0;
 };
 
 std::ostream &operator <<(std::ostream &out, const SymbolicPacketField &c);
@@ -112,7 +111,6 @@ public:
     }
     void updateHash();
     void accept(SymbolicFieldVisitor &visitor) const;
-    void printOldCSyntax(std::ostream& out, std::map<bitpowder::lib::String, int>& enumMap) const;
 };
 
 
@@ -124,6 +122,11 @@ public:
     std::set<SymbolicPacket> availablePackets;
     SymbolicSwitchingFunctionExtension() : availablePackets() {
     }
+    SymbolicSwitchingFunctionExtension& operator=(const SymbolicSwitchingFunctionExtension& b) {
+        this->availablePackets = b.availablePackets;
+        return *this;
+    }
+
     void addSymbolicPacket(const SymbolicPacket &p);
 };
 
@@ -134,6 +137,10 @@ public:
     SymbolicFunctionExtension() : function() {
     }
     SymbolicFunctionExtension(std::function<T> &function) : function(function) {
+    }
+    SymbolicFunctionExtension& operator=(const SymbolicFunctionExtension& b) {
+        this->function = b.function;
+        return *this;
     }
 };
 
@@ -164,6 +171,15 @@ public:
 
     SymbolicTypesExtension() : PortExtension(), availablePackets(), availablePacketsHashes(), candidates(), workerItem(nullptr) {
     }
+    SymbolicTypesExtension& operator=(const SymbolicTypesExtension& b) {
+        this->availablePackets = b.availablePackets;
+        this->availablePacketsHashes = b.availablePacketsHashes;
+        this->candidates = b.candidates;
+        this->workerItem = b.workerItem;        // FIXME: does simply copying this pointer cause any trouble?
+        // FIXME: what about the SpinLock?
+        return *this;
+    }
+
     // returns true if packet is not yet in here
     void addSymbolicPacket(SymbolicPacket &&p);
     void simplify(const std::string &desc, bool full = false);
@@ -218,6 +234,8 @@ void printSymbolicTypeInfo(std::ostream &out, Port *port);
 
 void SymbolicTypes(std::set<XMASComponent *> allComponents);
 void ClearSymbolicTypes(std::set<XMASComponent *> allComponents);
+void ClearSymbolicTypes(XMASComponent *c);
+
 
 
 class SymbolicAnyField : public SymbolicPacketField {

@@ -2,8 +2,10 @@
 
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #include "simplestring.h"
 #include "canvascomponentextension.h"
+#include "symbolic-enum.h"
 
 using namespace bitpowder::lib;
 
@@ -11,7 +13,7 @@ class PacketExpressionLexer {
     String original;
     String c;
     Token<String> variable;
-    Token<Interval> intervalToken;
+    Token<SymbolicInterval> intervalToken;
     Token<char> opToken;
     Token<SymbolicIntervalField::interval_type> constantToken;
     Token<Exception> exceptionToken;
@@ -149,7 +151,7 @@ struct PacketExpression {
     typedef MemoryPool& UserData;
     typedef SymbolicIntervalField::interval_type Constant;
     typedef Parser<Lexer, 1, Constant, UserData> & PInt;
-    typedef Parser<Lexer, 1, Interval, UserData> & PInterval;
+    typedef Parser<Lexer, 1, SymbolicInterval, UserData> & PInterval;
     typedef Parser<Lexer, 1, Enum, UserData> & PEnum;
     //typedef Parser<Lexer, 1, SymbolicPacketRestriction, UserData> & PRestriction;
     //typedef Parser<Lexer, 1, SymbolicPacket, UserData> & PPacketDefinition;
@@ -167,7 +169,7 @@ struct PacketExpression {
     static const int ERROR_IN_MIN = 26;
     static const int ERROR_IN_MOD = 24;
 
-    static int intervalInterval(Interval &retval, const Token<Interval> &t, UserData userData) {
+    static int intervalInterval(SymbolicInterval &retval, const Token<SymbolicInterval> &t, UserData userData) {
         bitpowder::lib::unused(userData);
         retval = t.value;
         return 0;
@@ -187,7 +189,7 @@ struct PacketExpression {
         return 0;
     }
 
-    static int constantToInterval(Interval &retval, const Token<Constant> &t, UserData userData) {
+    static int constantToInterval(SymbolicInterval &retval, const Token<Constant> &t, UserData userData) {
         //std::cout << "Interval: ";
         //t.value.print(std::cout);
         //std::cout << std::endl;
@@ -227,7 +229,7 @@ struct PacketExpression {
 
     static PPacketExpr equalToInterval(PPacketExpr cont, UserData userData) {
         bitpowder::lib::unused(userData);
-        return cont().process(interval, [](SymbolicPacketSet &retval, const Interval& b, UserData userData) {
+        return cont().process(interval, [](SymbolicPacketSet &retval, const SymbolicInterval& b, UserData userData) {
             bitpowder::lib::unused(userData);
             auto interval = std::make_shared<SymbolicIntervalField>(b.min, b.max);
             for (SymbolicPacket &packet : retval.values) {
@@ -608,7 +610,10 @@ SourceExpressionParseResult ParseSourceExpression(const String &str, MemoryPool&
     PacketExpressionLexer lexer(str);
     auto p = ParserState<PacketExpressionLexer, 1>(lexer);
     SpecSet result;
-    int retval = Parser<PacketExpressionLexer, 1, SpecSet, PacketExpression<PacketExpressionLexer>::UserData>(&p, memoryPool).perform(PacketExpression<PacketExpressionLexer>::sourceExpr).end().retreive(result);
+    int retval = Parser<PacketExpressionLexer, 1, SpecSet, PacketExpression<PacketExpressionLexer>::UserData>(&p, memoryPool)
+            .perform(PacketExpression<PacketExpressionLexer>::sourceExpr)
+            .end()
+            .retreive(result);
     if (retval != 0) {
         TokenBase *token = p.getToken();
         std::cout << "token: " << token << std::endl;
@@ -625,7 +630,7 @@ class PacketFunctionLexer {
     String original;
     String c;
     Token<String> variable;
-    Token<Interval> intervalToken;
+    Token<SymbolicInterval> intervalToken;
     Token<char> opToken;
     Token<SymbolicIntervalField::interval_type> constantToken;
     Token<Exception> exceptionToken;
@@ -901,18 +906,30 @@ struct ParsedXMASExpressionSubstituion : public ParsedXMASExpression {
         }
         return retval;
     }
+
     virtual void print(std::ostream &out) const {
         out << *value;
         out << " with {";
         bool first = true;
+        SymbolicEnumField::Type any;
         for (const auto& e : map) {
+            if (e.first != "_") {
+                if (!first)
+                    out << ", ";
+                out << e.first << ": " << e.second;
+                first = false;
+            } else {
+                any = e.second;
+            }
+        }
+        if (!any.empty()) {
             if (!first)
                 out << ", ";
-            out << e.first << ": " << e.second;
-            first = false;
+            out << "_: " << any;
         }
         out << "}";
     }
+
     virtual void printOldCSyntax(std::ostream &out, std::map<String,int>& enumMap) const {
         out << "(";
         //bool first = true;		// FIXME: unused-but-set-variable warning
@@ -1167,7 +1184,10 @@ PacketFunctionParseResult ParsePacketFunction(const String &str, MemoryPool &mp)
     PacketFunctionLexer lexer(str);
     auto p = ParserState<PacketFunctionLexer, 1>(lexer);
     PacketFunction<PacketFunctionLexer>::Func result;
-    int retval = Parser<PacketFunctionLexer, 1, PacketFunction<PacketFunctionLexer>::Func, MemoryPool&>(&p, mp).perform(PacketFunction<PacketFunctionLexer>::expr).end().retreive(result);
+    int retval = Parser<PacketFunctionLexer, 1, PacketFunction<PacketFunctionLexer>::Func, MemoryPool&>(&p, mp)
+                .perform(PacketFunction<PacketFunctionLexer>::expr)
+                .end()
+                .retreive(result);
     if (retval != 0) {
         TokenBase *token = p.getToken();
         std::cout << "token: " << token << std::endl;
@@ -1190,6 +1210,15 @@ T *insert(MemoryPool& mp, std::map<String, XMASComponent*>& allComponents, const
     return comp;
 }
 
+template <class T, typename... Args>
+T *insert(MemoryPool& mp, std::map<String, XMASComponent*>& allComponents, const String& name, Args... args) {
+    if (allComponents.find(name) != allComponents.end())
+        throw Exception(42, __FILE__, __LINE__);
+    T *comp = new(mp, &destroy<XMASComponent>) T(name, args...);
+    allComponents.insert(std::make_pair(comp->getName(), comp));
+    return comp;
+}
+
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_json(const std::string &str, MemoryPool &mp)
 {
     String current(str);
@@ -1198,15 +1227,26 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
         std::cerr << "error in parsing json string stream : " << parseResult.error() << " at " << parseResult.position() << std::endl;
         return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
     }
-    return generate_xmas_from_parse_result(parseResult, mp);
+    return generate_xmas_from_parse_result(parseResult, mp, {});
 }
 
 std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas_from_file(const std::string &filename, MemoryPool &mp)
 {
+    try {
+        auto parseResult = read_json_from_file(filename, mp);
+        auto result = generate_xmas_from_parse_result(parseResult, mp, {});
+        return result;
+    } catch (Exception e) {
+        std::cerr << e.description() << std::endl;
+        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+    }
+}
+
+JSONParseResult read_json_from_file(const std::string &filename, MemoryPool &mp)
+{
     struct stat st;
     if (stat(filename.c_str(), &st)) {
-        std::cerr << "error: " << strerror(errno) << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        throw Exception("Unable to read file: " + filename);
     }
 #ifdef __MINGW32__
     int fd = open(filename.c_str(), O_RDONLY | O_BINARY);
@@ -1214,28 +1254,43 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> parse_xmas
     int fd = open(filename.c_str(), O_RDONLY);
 #endif
     if (!fd) {
-        std::cerr << "error: " << strerror(errno) << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        throw Exception("Unable to read file: " + filename);
     }
     char *buffer = (char*)mp.alloc(st.st_size);
     int size = read(fd, buffer, st.st_size);
     if (size != st.st_size) {
-        std::cerr << "wrong number of bytes read: " << size << " instead of " << st.st_size << std::endl;
-        abort();
+        std::stringstream errStr;
+        errStr << "wrong number of bytes read: " << size << " instead of " << st.st_size;
+        throw Exception(errStr.str());
     }
     close(fd);
 
     String current(buffer, size);
     auto parseResult = ParseJSON(current, mp);
     if (!parseResult) {
-        std::cerr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
-        return std::make_pair(std::map<String, XMASComponent *>(), JSONData());
+        std::stringstream errStr;
+        errStr << "error in parsing json file " << filename << ": " << parseResult.error() << " at " << parseResult.position() << std::endl;
+        throw Exception(errStr.str());
     }
-    return generate_xmas_from_parse_result(parseResult, mp);
+    return parseResult;
 }
 
+/**
+ * @brief generate_xmas_from_parse_result Generates a map with XMASComponent pointers from the component's name
+ *
+ * This function uses the parseResult from a previous parse function using ParseJSON to generate a map
+ * containing the XMASComponent instances indexed by name.
+ *
+ * @param parseResult The result of calling ParseJSON()
+ * @param mp A reference to the memory pool.
+ * @return The map of components indexed by name
+ */
+std::pair<std::map<bitpowder::lib::String, XMASComponent *>,bitpowder::lib::JSONData>
+generate_xmas_from_parse_result(bitpowder::lib::JSONParseResult &parseResult,
+                                bitpowder::lib::MemoryPool &mp,
+                                std::function<XMASNetwork*(std::string)> getNetwork) {
 
-std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_xmas_from_parse_result(JSONParseResult &parseResult, MemoryPool &mp) {
+
     std::map<String, XMASComponent *> retval;
 
     //std::cout << retval.result() << std::endl;
@@ -1262,6 +1317,14 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             insert<XMASFork>(mp, retval, name);
         } else if (type == "join"_HS) {
             insert<XMASJoin>(mp, retval, name);
+        } else if (type == "composite"_HS) {
+            String networkName = jsonComponent["subnetwork"];
+            XMASNetwork* network = getNetwork(networkName.stl());
+            if (network) {
+                insert<XMASComposite>(mp, retval, name, std::ref(*network));
+            } else {
+                throw Exception("Required composite network not loaded");
+            }
         } else {
             std::cerr << type << std::endl;
             throw Exception("Unsupported component type");
@@ -1315,13 +1378,31 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
             } catch (Exception e) {
                 std::cerr << "Invalid canvas data:" << std::endl << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                std::cerr << "Skipping parse of pos data from json." << std::endl;
+                // Removed exit(-1): frustrates xmd / user interface
+                throw e;
             }
         }
 
+        XMASSink *sink = dynamic_cast<XMASSink*>(component);
+        if (sink) {
+            try {
+                JSONData external = jsonComponent["required"];          // boolean not supported by JSONData! use 0/1
+                sink->required_output = external.isNumber() && (external.asNumber() > 0);
+            } catch (Exception e) {
+                std::cerr << jsonComponent << std::endl;
+                std::cerr << e << std::endl;
+                std::cerr << "Skipping parse of Sink external from json." << std::endl;
+                // Removed exit(-1): frustrates xmd / user interface
+                throw e;
+            }
+        }
         XMASSource *src = dynamic_cast<XMASSource*>(component);
         if (src) {
             try {
+                JSONData external = jsonComponent["required"];          // boolean not supported by JSONData! use 0/1
+                src->required_input = external.isNumber() && (external.asNumber() > 0);
+
                 String types = jsonComponent["fields"][0]["init_types"];
                 auto result = ParseSourceExpression(types, mp);
                 if (result) {
@@ -1334,12 +1415,14 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Source expression (init_type) from json." << std::endl;
+                    std::cerr << "In source file " << __FILE__ << " and line number " << __LINE__ << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASSwitch *sw = dynamic_cast<XMASSwitch*>(component);
@@ -1358,12 +1441,13 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Switch expression (fields) from json." << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASFunction *f = dynamic_cast<XMASFunction*>(component);
@@ -1383,12 +1467,13 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
                 } else {
                     std::cerr << "parsing " << types << std::endl;
                     std::cerr << "error parsing at position " << result.position() << " is " << result.error() << std::endl;
-                    exit(-1);
+                    std::cerr << "Skipping parse of Function expression (fields) from json." << std::endl;
+                    // Removed exit(-1): frustrates xmd / user interface
                 }
             } catch (Exception e) {
                 std::cerr << jsonComponent << std::endl;
                 std::cerr << e << std::endl;
-                exit(-1);
+                throw e;    // Removed exit(-1): frustrates xmd / user interface
             }
         }
         XMASQueue *q = dynamic_cast<XMASQueue*>(component);
@@ -1424,217 +1509,4 @@ std::pair<std::map<bitpowder::lib::String, XMASComponent *>,JSONData> generate_x
     globals["VARS"] = json["VARS"];
     globals["COMPOSITE_OBJECTS"] = json["COMPOSITE_OBJECTS"];
     return std::make_pair(retval, globals);
-}
-
-
-SymbolicPacketSet::SymbolicPacketSet() : values() {
-}
-
-void SymbolicPacketSet::greaterAs(interval_type b) {
-    for (auto &packet : values) {
-        for (auto &field : packet.fields) {
-            SymbolicIntervalField *interval = dynamic_cast<SymbolicIntervalField*>(field.second.get());
-            if (interval)
-                interval->greaterAs(b);
-            SymbolicAnyField *any = dynamic_cast<SymbolicAnyField*>(field.second.get());
-            if (any)
-                field.second = std::make_shared<SymbolicIntervalField>(b+1, std::numeric_limits<SymbolicIntervalField::interval_type>::max());
-        }
-    }
-}
-
-void SymbolicPacketSet::greaterEqualAs(interval_type b) {
-    for (auto &packet : values) {
-        for (auto &field : packet.fields) {
-            SymbolicIntervalField *interval = dynamic_cast<SymbolicIntervalField*>(field.second.get());
-            if (interval)
-                interval->greaterEqualAs(b);
-            SymbolicAnyField *any = dynamic_cast<SymbolicAnyField*>(field.second.get());
-            if (any)
-                field.second = std::make_shared<SymbolicIntervalField>(b, std::numeric_limits<SymbolicIntervalField::interval_type>::max());
-        }
-    }
-}
-
-void SymbolicPacketSet::lessEqualAs(interval_type b) {
-    for (auto &packet : values) {
-        for (auto &field : packet.fields) {
-            SymbolicIntervalField *interval = dynamic_cast<SymbolicIntervalField*>(field.second.get());
-            if (interval)
-                interval->lessEqualAs(b);
-            SymbolicAnyField *any = dynamic_cast<SymbolicAnyField*>(field.second.get());
-            if (any)
-                //field.second = std::make_shared<SymbolicIntervalField>(std::numeric_limits<SymbolicIntervalField::interval_type>::min(), b+1);
-                field.second = std::make_shared<SymbolicIntervalField>(0, b+1);
-        }
-    }
-}
-
-void SymbolicPacketSet::lessAs(interval_type b) {
-    for (auto &packet : values) {
-        for (auto &field : packet.fields) {
-            SymbolicIntervalField *interval = dynamic_cast<SymbolicIntervalField*>(field.second.get());
-            if (interval)
-                interval->lessAs(b);
-            SymbolicAnyField *any = dynamic_cast<SymbolicAnyField*>(field.second.get());
-            if (any)
-                //field.second = std::make_shared<SymbolicIntervalField>(std::numeric_limits<SymbolicIntervalField::interval_type>::min(), b);
-                field.second = std::make_shared<SymbolicIntervalField>(0, b);
-        }
-    }
-}
-
-void SymbolicPacketSet::negate() {
-    std::vector<SymbolicPacket> before = std::move(values);
-    for (auto &packet : before) {
-        auto result = packet.negate();
-        values.insert(values.end(), result.begin(), result.end());
-    }
-    //std::cout << "after negate there are " << values.size() << " packets" << std::endl;
-}
-
-void SymbolicPacketSet::print(std::ostream &out) const {
-    out << "{";
-    for (auto &packet : values) {
-        if (&packet != &*values.begin())
-            out << ",";
-        out << packet;
-    }
-    out << "}";
-}
-
-void SymbolicPacketSet::updateHash()
-{
-    for (auto &v : values)
-        v.updateHash();
-}
-
-std::vector<SymbolicPacket> ParsedXMASFunction::operator()(const std::vector<SymbolicPacket> &packets) const
-{
-    std::vector<SymbolicPacket> retval;
-    std::vector<SymbolicPacket> current;
-    if (hasCondition) {
-        std::vector<SymbolicPacket> next;
-        next.insert(next.end(), packets.begin(), packets.end());
-        for (auto &condition : conditions) {
-            std::vector<SymbolicPacket> newNext;
-            for (auto &packet : next) {
-                packet.getDifference(condition, [&newNext,this](SymbolicPacket &&p) {
-                    //std::cout << "difference between " << packet << " and " << funcPacket << " -> " << p << std::endl;
-                    newNext.emplace_back(std::move(p));
-                    //retval.push_back(p);
-                });
-            }
-            next = std::move(newNext);
-        }
-
-        if (!next.empty()) {
-            if (!this->next)
-                throw Exception("no else part defined");
-            retval = std::move(this->next->operator()(next));
-        }
-
-        for (auto &packet : packets) {
-            for (auto &condition : conditions) {
-                auto result = packet.getIntersection(condition);
-                current.insert(current.end(), result.begin(), result.end());
-            }
-        }
-    } else {
-        current = packets;
-    }
-
-    //std::cout << "ParsedXMASFunction apply function" << std::endl;
-    std::vector<SymbolicPacket> currentRetval;
-    currentRetval.push_back(SymbolicPacket());
-    for (auto& f : fields) {
-        std::vector<SymbolicPacket> before = std::move(currentRetval);
-        for (auto &c : current) {
-            auto result = (*f.second)(c);
-            for (auto& r : result) {
-                for (auto& b : before) {
-                    SymbolicPacket p(b);
-                    p.fields[f.first] = r;
-                    currentRetval.push_back(p);
-                }
-            }
-        }
-    }
-    for (auto &c : currentRetval)
-        c.updateHash();
-    retval.insert(retval.end(), currentRetval.begin(), currentRetval.end());
-    return retval;
-}
-
-void ParsedXMASFunction::printOldCSyntax(std::ostream& out, std::map<String, int>& enumMap) const
-{
-    if (hasCondition) {
-        out << "if (";
-        bool first = true;
-        for (const auto& condition : conditions) {
-            if (!first)
-                out << " || ";
-            //out << condition;
-            condition.printOldCSyntax(out, enumMap);
-            first = false;
-        }
-        out << ") {";
-    }
-    bool first = true;
-    for (const auto& field : fields) {
-        if (!first)
-            out << ";\\r\\n";
-        out << "ret_" << field.first << " = ";
-        field.second->printOldCSyntax(out, enumMap);
-        first = false;
-    }
-    out << ";";
-    if (next) {
-        out << "} else {";
-        next->printOldCSyntax(out, enumMap);
-    }
-    if (hasCondition)
-        out << "}";
-}
-
-
-void SpecSet::updateHash()
-{
-    for (auto &i : spec)
-        std::get<0>(i).updateHash();
-}
-
-
-std::ostream &operator <<(std::ostream &out, const ParsedXMASExpression &c)
-{
-    c.print(out);
-    return out;
-}
-
-
-std::ostream &operator <<(std::ostream &out, const ParsedXMASFunction &c)
-{
-    if (c.hasCondition) {
-        out << "if ";
-        bool first = true;
-        for (const auto& condition : c.conditions) {
-            if (!first)
-                out << " || ";
-            out << condition;
-            first = false;
-        }
-        out << " then ";
-    }
-    bool first = true;
-    for (const auto& field : c.fields) {
-        if (!first)
-            out << ", ";
-        out << field.first << " := " << *field.second;
-        first = false;
-    }
-    if (c.next) {
-        out << " else ";
-        out << *c.next;
-    }
-    return out;
 }

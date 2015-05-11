@@ -116,8 +116,10 @@ void MainDispatcher::dispatchQueue(DispatchObjectQueue& queue, lib::Dispatch::Pr
         priority = Dispatch::priorities-1;
     auto l = m.locker();
     q[priority].splice(queue);
+    bool doDispatch = !dispatched;
+    dispatched = true;
     l.unlock();
-    if (!dispatched.exchange(true)) {
+    if (doDispatch) {
         dispatch_async(dispatch_get_main_queue(), ^{
             MainDispatcher::main()->execute();
         });
@@ -248,8 +250,10 @@ Worker::Worker(int max) : DispatchQueueFor<shared_object<Work>>("worker", max), 
 }
 
 void Worker::dispatchQueue(Dispatcher::DispatchObjectQueue &queue, Dispatch::Priority priority) {
+    int count = 0;
     for (const auto &it : queue)
-        refcount++;
+        ++count;
+    refcount += count;
     DispatchQueueFor::dispatchQueue(queue, priority);
 }
 
@@ -264,7 +268,7 @@ void Worker::abortedOn(shared_object<Work> item, Exception &e) {
 }
 
 void Worker::dispatchSelf(Dispatcher<DispatchOperation *> *t, Dispatch::Priority priority) {
-    refcount++;
+    ++refcount;
     DispatchQueueFor::dispatchSelf(t, priority);
 }
 

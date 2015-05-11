@@ -35,7 +35,15 @@ PACKET_TYPE
 COMPOSITE_OBJECTS
 -----------------
 
-*TODO*
+***NEW***
+
+Description:
+Array of references to subnetworks used as composite objects by this network.
+
+A reference indicates the relative location of the subnetwork on the filesystem excluding the extension.
+E.g. "mesh" refers to the network defined in "mesh.xmas" in the same directory as this network and
+"spidergon/node" refers to the network defined in "node.xmas" in the subdirectoy "spidergon".
+
 
 
 COMPONENT
@@ -52,6 +60,7 @@ Properties:
 * "fields"      : array of **FIELD** *(optional)*
 * "pos"         : **POSITION** - *new* - position of the component on the canvas
 
+
 Component_type
 --------------
 
@@ -66,6 +75,15 @@ Enumeration:
 * xswitch
 * merge
 
+
+COMPONENT [type="composite"]
+----------------------------
+
+Properties:
+
+* "subnetwork"  : **String** - name of the subnetwork
+
+See also field **COMPOSITE_OBJECTS**
 
 OUT
 ---

@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/ui">
+        <file>uicontrols/ScrollBar.qml</file>
+        <file>uicontrols/Selection.qml</file>
+        <file>uicontrols/XToolBar.qml</file>
+        <file>uicontrols/ToolBarSeparator.qml</file>
+        <file>mainWindow.qml</file>
+        <file>uicontrols/XWire.qml</file>
+        <file>uicontrols/XPacketDialog.qml</file>
+        <file>uicontrols/ModelSetupDialog.qml</file>
+        <file>uicontrols/ApplicationSetupDialog.qml</file>
+        <file>uicontrols/XToolBarCompositeItem.qml</file>
+        <file>uicontrols/XToolBarPrimitiveItem.qml</file>
+        <file>uicontrols/XConsole.qml</file>
+        <file>uicontrols/Log.qml</file>
+        <file>uicontrols/XPlugin.qml</file>
+        <file>uicontrols/XExpressionDialog.qml</file>
+    </qresource>
+    <qresource prefix="/xmas">
+        <file>xobjects/fork.qml</file>
+        <file>xobjects/function.qml</file>
+        <file>xobjects/join.qml</file>
+        <file>xobjects/merge.qml</file>
+        <file>xobjects/queue.qml</file>
+        <file>xobjects/sink.qml</file>
+        <file>xobjects/source.qml</file>
+        <file>xobjects/switch.qml</file>
+        <file>xobjects/XNetwork.qml</file>
+        <file>xobjects/XChannel.qml</file>
+        <file>xobjects/XComponent.qml</file>
+        <file>xobjects/XPort.qml</file>
+        <file>xobjects/composite.qml</file>
+    </qresource>
+</RCC>

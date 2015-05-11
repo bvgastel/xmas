@@ -11,6 +11,16 @@
 typedef std::pair<Output*,SymbolicPacket> VisitedNode;
 //typedef Output* Visited;
 
+/*
+ * The definition of an unordered set
+ *
+ * template < class Key,                        // unordered_set::key_type/value_type
+ *         class Hash = hash<Key>,           // unordered_set::hasher
+ *         class Pred = equal_to<Key>,       // unordered_set::key_equal
+ *         class Alloc = allocator<Key>      // unordered_set::allocator_type
+ *         > class unordered_set;
+ *
+ */
 typedef std::unordered_set<VisitedNode, std::hash<VisitedNode>, std::equal_to<VisitedNode>, bitpowder::lib::MemoryPool::Allocator<VisitedNode>> Visited;
 
 namespace std {
@@ -27,8 +37,16 @@ template<>
             return h1 ^ (h2 << 1);
         }
     };
-}
-
+} // namespace std
+/*
+ * The MessageSpec::Ref is either a
+ *
+ *  (1) bitpowder::lib::shared_object [not defined USE_REFCOUNT]
+ *  (2) std::shared_ptr<MessageSpec> or [-DUSE_REFCOUNT]
+ *
+ *  depending on USE_REFCOUNT
+ *
+ */
 MessageSpec::Ref ConstructFormula(Output *o, Visited &visited, const std::vector<SymbolicPacket> &packets);
 
 class MessageSpecForward : public XMASComponentVisitor {
@@ -187,8 +205,12 @@ struct MessageSpecWorkerItem : public Work {
     XMASSource *source;
     std::tuple<std::vector<SymbolicPacket>, MessageSpec::Ref> &info;
     std::atomic<long> &problems;
-    MessageSpecWorkerItem(XMASSource *source, std::tuple<std::vector<SymbolicPacket>, MessageSpec::Ref> &info, std::atomic<long> &problems) : source(source), info(info), problems(problems) {
+
+    MessageSpecWorkerItem(XMASSource *source,
+                          std::tuple<std::vector<SymbolicPacket>, MessageSpec::Ref> &info,
+                          std::atomic<long> &problems) : source(source), info(info), problems(problems) {
     }
+
     void execute() {
         bitpowder::lib::MemoryPool mp;
         Visited visited(256, std::hash<VisitedNode>(), std::equal_to<VisitedNode>(), mp.allocator<VisitedNode>());
@@ -207,6 +229,19 @@ struct MessageSpecWorkerItem : public Work {
     }
 };
 
+/**
+ * @brief CheckMessageSpec Checks for an error in the message spec for any of the sources.
+ *
+ * This function is important for Source only. It retrieves the function spec.
+ * Watch out for the concurrency though: apparantly this is a compile time define
+ * of an environment variable.
+ *
+ * NOTE: The concurrency from a Qt program might be replaced by QtConcurrent.map() or filter and map.
+ * If in a Qt program ofcourse. Not in xmv proper.
+ *
+ * @param allComponents
+ * @return
+ */
 bool CheckMessageSpec(std::set<XMASComponent *> allComponents) {
     std::atomic<long> problems(0);
 #ifdef CONCURRENCY
@@ -224,6 +259,7 @@ bool CheckMessageSpec(std::set<XMASComponent *> allComponents) {
                 allItems.push_back(w);
 #else
                 w->execute();
+                delete(w);              // FIXME: (memory leak) forgot to delete(w) when not using CONCURRENCY ?
 #endif
             }
     }
@@ -358,7 +394,18 @@ void attachMessageSpec(Output *port, const std::vector<SymbolicPacket> &a, Messa
 void ClearMessageSpec(std::set<XMASComponent *> allComponents)
 {
     for (XMASComponent *c : allComponents) {
-        for (Output *p : c->outputPorts())
-            p->clearPortExtension<MessageSpecExtension>();
+        ClearMessageSpec(c);
     }
 }
+void ClearMessageSpec(XMASComponent *c) {
+    for (Output *p : c->outputPorts()) {
+        clearMessageSpec(p);
+    }
+    ClearSymbolicTypes(c);
+}
+
+void clearMessageSpec(Output *port) {
+    if (port)
+        port->clearPortExtension<MessageSpecExtension>();
+}
+
