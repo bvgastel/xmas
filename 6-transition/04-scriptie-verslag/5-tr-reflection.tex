@@ -1,0 +1,153 @@
+\chapter{Reflection}
+\paragraph{Process} We started out largely unsure about how to continue. The first few months
+planning we structured internal and external communication. Additionally, we decided to 
+work in time boxes (iterations) where we successively worked toward a finished project. 
+The internal communication was intense (three times a week, sometimes more) where one of our
+members routinely worked more hours at the office in order to join our call. The division of work 
+was partly pre-agreed upon and partly just happened.
+
+Right after the first iteration we encountered the first problem: our mentor for the project 
+and the customer both ceased to respond to our mails. Being December, we figured they were 
+on an unscheduled holiday. About a month later (half of January) the customer explained 
+what was happening. The mentor was sent off to the U.S. and our customer's workload had been 
+increased to a level where he hardly had the chance to join us in a call. This was all due to 
+a reorganization within the Open University. The OU was retiring approximately 10 - 30\% of their
+personnel\footnote{When we commented on this during the midterm review, the OU people present,
+did not feel the students needed to know. Apparently, our team was the only team impacted 
+by the change. Still we wonder why such a large reorganization was not communicated broadly, 
+even if most of the students should not notice anything, after all: it's a big change.}.
+ 
+We realized we had to change our approach. Although initially we talked about rescheduling,
+we decided not to. One of the advantages of agile working is the principle of the time-box. 
+The consequence of the decrease of communication with the customer would be a decrease in speed
+of deciding. We agreed with the customer to have at minimum one skype session per iteration. 
+This we added to our planning. Informally, we could request a quick answer to urgent questions
+by email.
+
+In conclusion we finished our product more or less as we planned to. We had initially
+hoped to have covered more ground, but in the circumstances we are quite content with what 
+we produced. The customer and the mentor expressed contentment as well.
+
+\paragraph{Product} The product turned out more or less as we envisioned at the start. The one
+thing we might do differently in hindsight, is to spend a little more attention to the decision
+of using a tight integration with the existing xmas programs that were developed before we started.
+
+The issue was whether to use a text interface causing complete segregation of user interface and
+xmas programs, or, to use a tight interface to the xmas programs. The customer chose the tight 
+interface fearing the consequences of a second parser for maintenance. We chose to integrate
+\qml and \cpp which probably cost about 2 iterations (6 weeks) extra in comparison to a text
+interface. Although this is partly conjecture, if the team and the customer had known the extent 
+of the consequences, we might have chosen differently.
+
+\paragraph{Requirements}
+%\begin{tcolorbox}[colback=white]
+The product satisfies  the main requirements as we set out to meet. 
+The benefits of the new xMAS designer toolkit are that
+\begin{itemize}
+\item \textbf{it is platform independent.}
+\item \textbf{it's maintainability is improved.}
+\item \textbf{it integrates verification tools through
+			 a standard plug-in interface}
+\end{itemize}
+%\end{tcolorbox}
+
+\paragraph{Project} When it comes to the end of a project like this, it is always a good practice to
+step back and ask ourselves: did we meet the requirements of the customer? In the end we strive
+to satisfy the customer in addition to our own ambitions.
+
+\subparagraph{Platform independence} One of the main requirements was to have a platform independent xMAS
+toolkit. The new xMAS toolkit was developed and tested in a multi platform
+environment. It was exhaustively tested on Linux and Windows while MacOs was used to
+try-out the releases\footnote{Bernard offered to take on the responsibility for the Macintosh 
+because the team did not have a Macintosh machine. We owe him our gratitude for that.}.
+
+\subparagraph{Maintenance} To meet the maintainability requirement we have chosen Qt as integrated
+development environment. Qt is a powerful open source platform independent IDE.
+The QML declarative UI language from Qt, enforces separation of view and control. The
+Qt IDE is an all-in-one solution with a lot of support available. We chose \qt because
+of its ease of use, speed and power of development. 
+
+\subparagraph{Design} In retrospect and referring to the integration design decision 
+in chapter~\ref{sec:integration}, we are strongly convinced that a loose coupling between 
+designer and verification back-end would ease maintenance, increase development
+speed and make development of verification tools more independent from the 
+user interface.
+
+Additionally, separating UI code from pure c++ model and verification code is 
+a good idea because UI tools are much more exposed to changes, e.g. 
+Qt version update. The tighter these are coupled the bigger the chance that 
+modification ripple through the whole system crossing presentation / data model
+boundaries.
+
+Also the benefit of updating the back-end verification model with every canvas
+action doesn't make sense. Why would a designer start a verification tool if the
+canvas model is still under creation? This implies that it isn't necessary to
+keep the back-end model constantly up to date with every canvas action. Once the
+designer thinks the model is ready he or she can start a verification tool.
+Details of this proposal can be found in report chapter~\ref{sec:integration}
+
+\subparagraph{Functionality} Integration of formal verification tools was implemented 
+through a standard plug-in interface. This way it will be possible to refactor or create 
+verification tools independently and without the need of touching the designer source code. 
+Once a verification tool has the right plug-in interface it can be used in the xMAS designer.
+
+\paragraph{Guus} I felt very happy working this project with a very intense communication pattern,
+a positively constructive team and supportive and helpful mentor and customer. I started out 
+unfamiliar with the agile way of working and ended up liking the way it works. 
+Especially the time box turned out very useful when events 
+turned against us. In a planned environment, where functionality is fixed and time variable, I 
+am convinced we would have had to reschedule our project. I am very glad we chose to go agile.
+
+Learning \cpp was a real pleasure, although my work managing stuff took a large part of my time,
+especially during planning and preparing for our meetings. Additionally, once we started programming,
+all time I wanted to spend on learning \cpp evaporated. My connotation of \cpp has significantly improved
+due to the working with live \cpp programs.
+
+I also learned the impact of strictness in an agile project. Too much strictness stiffles initiative 
+and creativity. However, some strictness is necessary to constantly know where we are and what we 
+still need cover in order to succeed.
+
+Agile and strictness is a troubled marriage at best. I am very glad to have learned this valuable lesson and
+I am grateful to my team mates who endured my overload of control and finally corrected me when I was 
+enforcing too much.
+
+\paragraph{Jeroen}
+todo \\ 
+\todo[inline]{reflection jeroen}
+
+\paragraph{Stefan}
+From time to time I thought that it would be difficult to reach our targets so
+we could meet the customer requirements. After all we had to start from scratch
+and with a limited amount of time. It took some time to find the right platform
+independent tools plus we had to understand the complex context and think about
+solutions for new features. So we had to do a lot of research before we could
+start writing a single line of code. Even though we weren't familiar with some
+technologies we always tried to pick the best options instead of picking quick
+\& cheap.
+
+Meeting our goals and learning new technologies was one thing but I also wanted
+to try out an agile approach. I can't say if DAD was the right choice or not,
+but I would recommend DAD to anyone who want to start practicing agile methods.
+This because DAD can be tailored by the needs and it does not prescribe strict
+rules but is rather people and learning oriented.
+
+One of the suggested DAD practices that was important for our distributed team
+was how to ``visualize work''. For that purpose we chose Agilefant which is an
+open source web based agile management tool. I'm very satisfied about this kind
+of tools, it has a little bit of learning curve but you get quickly much in
+return. A tool like Agilefant reduces the disadvantage of a distributed team
+compared to a co-located teams. Many times we've used it to lead our on-line
+meetings so we could align our thoughts. Together with on-line communication
+tools I think this is a must have for distributed agile teams.
+
+As for anyone else we also had to deal with ups and downs, technically and
+personally. The most important thing is that we all were there to help or
+listening whenever it was necessary. We communicated a lot and it was rarely
+that someone was not available and in my opinion this was also our strength that
+we managed to quickly find a solution and kept motivation.
+
+After nine months of hard working, I can say that I'm very happy about the
+result and the experience. I could increase my skills in new technologies more
+as expected. I could also practice agile methods and learn how these contribute
+in reaching goals. Finally and last but not least, all of this wouldn't be possible
+without the support and effort of Guus and Jeroen.

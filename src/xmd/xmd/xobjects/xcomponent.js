@@ -59,7 +59,7 @@ function createComponent(parent,component) {
             if(draggedItem.type === Model.XComponent.Composite){
                 draggedItem.filename = item.filename
                 draggedItem.alias = item.alias
-                draggedItem.image = item.image ? item.source : ""
+                draggedItem.image = item.image ? icon.source : ""
                 draggedItem.boxed = item.boxed
             }
             if (!network.addComponent(draggedItem)){

@@ -339,13 +339,13 @@ bool model::Component::addXmasComponent() {
     try {
         switch(m_type) {
         case model::Component::CompType::Source : {
-            xmas_comp = project->insertSource(name);
+            xmas_comp = project->insertSource(name, true);
             emit requiredChanged();
             emit expressionChanged(false);
             break;
         }
         case model::Component::CompType::Sink : {
-            xmas_comp = project->insertSink(name);
+            xmas_comp = project->insertSink(name, true);
             emit requiredChanged();
             break;
         }

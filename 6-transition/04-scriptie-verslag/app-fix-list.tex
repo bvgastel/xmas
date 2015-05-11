@@ -1,0 +1,18 @@
+\begin{enumerate}\label{sec:fix-list}
+\item	Grid snap on port center instead of component body left top
+\item	Grid snap when drag a group of items
+\item	Qt save as dialog not available in version 5.4.0
+\item QML uses non blocking calls, cannot use yes/no dialogs feedback in a
+proper way.
+\item Use of destroy dialog to quit application from QML dialog to prevent
+Windows warning (Qt bug).
+\item	\st{Tooltip for composites in library to show alias or filename}
+\item	\st{Tooltip for primitives in toolbar}
+\item Allow entering source expression when not connected (xmas parser)
+\item New page is now done by select all and delete, instead destroy page and
+create new page.
+\item Remove qml convert logic in network.cpp, instead send a add component
+request to the canvas by its name and type. Signal the update to component.cpp
+which already does the request to xMAS for the other properties like x,y,… This
+to avoid duplicate conversion and checks.
+\end{enumerate}

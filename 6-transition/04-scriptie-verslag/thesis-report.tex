@@ -1,0 +1,148 @@
+%%
+%% Dit is het hoofddocument: compileer dit met latex of xelatex en je krijgt de gehele pdf
+%%
+\documentclass[a4paper,11pt]{report}
+%
+%% option = draft will generate black except with \color, replace images by a rectangle
+%% option = final will generate color
+%
+
+\usepackage{color}
+\usepackage{tcolorbox}
+\usepackage[all]{nowidow}
+\usepackage{bold-extra}
+\usepackage{footmisc}% granting the ability to use label for a footnote
+\usepackage{subfig}
+\usepackage{wrapfig}% product wrapfigure and wraptable
+\usepackage{array}% additions to tabular
+%\usepackage{supertabular}% multiple pages tabular
+\usepackage{longtable}% multiple pages table like tabular
+\usepackage{rotating}% for the environment sidewaysfigure / sidewaystable
+\usepackage[english,dutch]{babel}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}% Load after biblatex
+\hypersetup{
+    colorlinks = true,
+    citecolor = blue,
+    linkcolor = blue
+}
+\usepackage[prependcaption,colorinlistoftodos,obeyFinal,textsize=small]{todonotes}% when generating final (documentclass option) skip notes
+\usepackage{pdflscape}
+\usepackage[a4paper]{geometry}
+\usepackage{titlesec}% added to change section headers, see newcommand definition.
+\usepackage{boxedminipage}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
+\usepackage{listings}
+\usepackage{xspace}%
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
+\usepackage{soul}
+\pagestyle{fancy}
+
+\graphicspath{ {pictures/} }
+
+\bibliographystyle{plain}% unsrt, plain, alpha, abbrv
+
+\newcommand{\biburl}[1]{\hspace*{\fill}\\\url{#1} accessed oct/nov 2014}
+
+\author{ABI team 33}
+				
+\date{03/03/2015}
+
+\title{
+	{\color{blue}XMAS Model Designer}\\
+	{\large Open Universiteit Nederland, faculteit Informatica}\\
+	{\small T61327 - Afstudeerproject bachelor informatica}\\
+	\vspace{1cm}
+	{\includegraphics[width=.25\textwidth]{xmd}}
+}
+
+\setlength\extrarowheight{2pt}% Adds a little space at the top of table rows
+
+%% Document is in subdocumenten gesplitst.
+
+\begin{document}
+
+\selectlanguage{english}
+%%\selectlanguage{dutch}
+
+\hyphenation{func-tio-nal}
+
+\nowidow% needs package nowidow
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+\newcommand{\w}[1]{\textbf{\textsc{#1}}}
+\newcommand\bw[1]{{\color{blue}#1}}
+\newcommand{\qt}{\textsc{Qt}\xspace}%
+\newcommand{\Noc}{\textsc{NoC}\xspace}%
+\newcommand{\Soc}{\textsc{SoC}\xspace}%
+\newcommand{\cpp}{\textsc{C++}\xspace}%
+\newcommand{\qml}{\textsc{Qml}\xspace}%
+\newcommand{\mybox}[1]{\begin{boxedminipage}[t]{\textwidth}#1\end{boxedminipage}}
+
+%\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}%%   This is color in hex #5D8AA8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format start %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand\secformat[1]{%
+%    {\fontsize{60}{60}\selectfont\thesection}%
+%    \ifthenelse{\equal{\thesection}{}}{}{\quad\rule[-8pt]{2pt}{40pt}\quad}
+%    \parbox[b]{.7\textwidth}{\filright\bfseries #1}}%
+%\titleformat{\section}[block]
+%    {\filright\normalfont\sffamily}{}{0pt}{\secformat}
+%\titlespacing*{\section}{0pt}{*3}{*2}[1pc]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% different section format end   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand\smp[1]{%
+	\marginpar{\color{blue}\small\bf\textsc#1}
+}%
+\newcommand\smpp[1]{\smp{#1}#1}
+
+\maketitle
+
+\begin{flushleft}
+    \begin{tabular}{p{2cm} l }
+    \textbf{students:} \\
+    & \begin{tabular}{p{3cm} p{2cm} p{3cm} l}
+    \textbf{name} & \textbf{nb.} & \textbf{city} & \textbf{country} \\ \hline
+    Guus Bonnema & 838523637  & Dieren  & Netherlands \\
+    Jeroen Kleijn & 850080969 & Pijnacker & Netherlands \\
+    Versluys Stefan & 850317700 & Sint-Laureins & Belgium \\
+    \hline \break
+    \end{tabular}
+    \\ 
+    \textbf{mentor:} & Freek Verbeek  \\
+    \textbf{examiner:} & Marko van Eekelen \\
+    \end{tabular}
+\end{flushleft}
+
+\input{abstract}
+\newpage
+\listoftodos   %% hidden when documentclass is set to final
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\input{0-tr-introduction}% include forces page break. Input does not.
+\input{1-tr-research-context}
+\input{2-tr-product-manual}
+\input{3-tr-system-doc}
+\input{4-tr-reports}
+\input{5-tr-reflection}
+\input{6-tr-conclusion}
+
+\appendix
+\chapter{Appendix}
+\input{appendix}
+
+% Bibliography ---> need to include
+\bibliography{tr}
+
+\end{document} ;########################### end document ##################################;

@@ -21,7 +21,7 @@ model::Network::Network(QQuickItem *parent)
       m_imageName(),
       m_boxedImage(true)
 {
-    QObject::connect(&m_logger, &Logger::writeLog, dataControl, &DataControl::writeLog );
+    QObject::connect(&m_logger, SIGNAL(writeLog(QString,QColor)), dataControl, SIGNAL(writeLog(QString,QColor)));
     m_logger.log(QString("Network starting ..."));
 }
 

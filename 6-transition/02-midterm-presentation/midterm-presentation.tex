@@ -1,0 +1,242 @@
+\documentclass[10pt]{beamer}
+
+%%
+%% Examples in comment for including certain frames
+%%
+%%\includeonlyframes{outline,overview}
+%%
+%% This will include only the frames with labels outline and overview
+%%
+%% \begin{frame}[label=overview]
+%%
+%% \end{frame}
+
+%%\includeonlyframes{hulpmiddelen}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{beamerthemebars}
+
+\usepackage{supertabular}
+\usepackage{subfigure}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amssymb}% For \checkmark
+\usepackage{pifont}% for \ding{'-code or "-code}
+\usepackage{pgfgantt}
+
+\title[Plan]{Rebuilding WickedXMAS}
+\author[Team33]{Team 33: Guus Bonnema, Jeroen Kleijn, Stefan Versluys}
+\date{25-04-2015}
+\institute[OU nl]{Open University The Netherlands}
+%%\logo{\includegraphics[scale=.25]{oulogo.pdf}}    <- OU has no logo that I could download
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\xmas}{x\textsc{mas}}%
+\newcommand{\ok}{$\checkmark$}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+\frame{\maketitle}   % <-- generate frame with title.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}[label=outline]{Outline}
+
+    \begin{itemize}
+        \item Achtergrond
+        \item Opdracht
+        \item Projectaanpak
+        \item Aandachtspunten / risico's
+        \item Ontwikkelingen afgelopen maanden
+        \item Huidige status en verwachtingen tot einde project
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[label=achtergrond]{Achtergrond}
+ \begin{itemize}
+  \item <1->Onderzoek naar moderne methoden voor ontwerpen van processoren
+  \item <1->Chips steeds krachtiger en complexer
+  \item <2->SoC
+ \end{itemize}
+
+ \visible<2->{
+   \includegraphics[width=0.75\textwidth]{motherboard-vs-soc-640x313}
+  }
+
+\end{frame}
+
+\begin{frame}[label=achtergrond2]{Achtergrond}
+
+    \begin{columns}
+        \begin{column}[t]{5cm}
+            {\bf Nadelen SoC's}
+            \begin{itemize}
+                \item <1->Niet flexibel
+                \item <1->Niet schaalbaar
+                \item <1->\includegraphics[width=0.75\textwidth]{trad-bus}
+            \end{itemize}
+        \end{column}
+        \begin{column}[t]{5cm}
+            \visible<2->{\textbf {NoC's}}
+            \begin{itemize}
+                \item <2->IP blocks
+                \item <2->Netwerkinfrastructuur
+                \item <2->\includegraphics[width=0.75\textwidth]{switch-fabric}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[label=xMAS]{xMAS}
+    \begin{itemize}
+     \item xMAS: eXecutable Microarchitectural Specification
+     \begin{itemize}
+      \item Visuele modelleertaal voor ``NoC''s
+     \end{itemize}
+    \end{itemize}
+
+    \visible<2->{\includegraphics[width=1\textwidth]{xmas-language}}
+
+\end{frame}
+
+\begin{frame}{xMAS}
+
+    \centering
+    \includegraphics[width=0.75\textheight]{two-agents}
+
+\end{frame}
+
+
+\begin{frame}[label=opdracht]{Opdracht}
+ 
+\par{Wat houdt ons project in?}
+
+\begin{itemize}
+
+    \item Eerdere projecten (o.a. ABI)
+    \begin{itemize}
+        \item WickedXMAS: designtool voor het ontwerpen van xMAS-netwerken
+        \begin{itemize}
+         \item Ontwerpen van netwerken
+         \item Ondersteuning onderzoek naar verificatietools
+         \item Ondersteuning onderzoek naar uitbreidingen xMAS
+        \end{itemize}
+
+        \item Uitbreidingen (hierarchische netwerken, nieuwe verificatietools)
+    \end{itemize}
+
+\end{itemize}
+
+ 
+\end{frame}
+
+\begin{frame}{Opdracht}
+
+\begin{itemize}
+ \item Beperkingen WickedXMAS
+ \begin{itemize}
+  \item geschreven in C\#, werkt alleen op Windows
+  \item tool is lastig te installeren
+  \item integratie tussen designer en verificatietools
+ \end{itemize}
+ 
+ \item<2-> Verificatietools geport naar C++
+ 
+ \item<2-> Opdracht:
+ \begin{itemize}
+  \item Refactor / rebuild WickedXMAS
+ \end{itemize}
+
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Projectaanpak}
+
+\begin{itemize}
+ \item Agile aanpak volgens DAD
+ \begin{itemize}
+  \item 5-6 iteraties van elk 3 weken
+ \end{itemize}
+
+ \item Intensief contact met opdrachtgever
+ \item Grotendeels voorbeeldplanning gevolgd
+ \begin{itemize}
+  \item advies begeleider: domeinanalyse eerst
+  \item wanneer researchcontext?
+ \end{itemize}
+
+\end{itemize}
+
+    
+\end{frame}
+
+
+\begin{frame}{Aandachtspunten / risico's}
+
+\begin{itemize}
+ \item geografische spreiding teamleden
+ \begin{itemize}
+  \item frequent contact (3x/week) via Skype
+ \end{itemize}
+
+ \item beperkte ervaring met C++
+ \begin{itemize}
+  \item zelfstudie, deels buiten de tijd gereserveerd voor ABI
+ \end{itemize}
+
+\end{itemize}
+
+    
+\end{frame}
+
+
+\begin{frame}{Ontwikkelingen}
+ 
+    \begin{itemize}
+        \item geswitched van GUI toolkit
+        \item contact met opdrachtgever \& begeleider minder intensief dan beoogd
+        \begin{itemize}
+         \item afgeweken van strakke Agile aanpak met vaste iteraties
+        \end{itemize}
+        \item taakverdeling
+        \begin{itemize}
+         \item samen code schrijven (bijv. pair programming) lastig
+         \item verdeling van functionaliteit over teamleden
+         \item raakvlakken bespreken via mail/Skype
+        \end{itemize}
+        \item door verminderd contact doelstelling bijgesteld
+
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Huidige status en verwachtingen}
+
+    \begin{itemize}
+        \item Laatste fase ingegaan
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Vragen}
+
+\centering
+?
+
+\end{frame}
+
+
+\end{document}

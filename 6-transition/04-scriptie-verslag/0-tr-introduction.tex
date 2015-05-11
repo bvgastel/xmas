@@ -1,0 +1,30 @@
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+In modern chip architectures a System on Chip (\Soc) contains one or more processors (cores) and 
+on-chip communication fabrics (uncore). The communication fabrics are often referred 
+to as Network on Chip (\Noc).
+
+Production of an \Noc may take years to prepare (pre-production phase) taking large financial investments
+before production of the chip. Errors in the \Noc could lead to both financial and reputation 
+damage that could linger years after. Verification of correctness is necessarily part of the 
+pre-production phase of each \Noc.
+
+Correctness verification is a specialized area of expertise often unfamiliar to designers of chips.
+Additionally, manual verification is a complex, time intensive activity in arbitrary designs.
+Research to verify correctness with respect to cycles, deadlocks and livelocks is ongoing. 
+
+Intel introduced a high level design language for communication fabrics called xMAS (eXecutable 
+Micro Architectural Specification). This model prevents many errors by 
+construction\cite{DBLP:journals/dt/ChatterjeeKO12}. The limitation of construction to eight 
+carefully designed primitives enables automatic verification of networks, increasing the 
+speed of designing a verifiable correct \Noc and \Soc.
+
+The previous installment of an xMAS design tool in C\# (WickedXMAS) was hindered by platform 
+dependencies and \cpp integration problems. The program was limited to Microsoft platforms. The
+managed C\# environment did not integrate well with the unmanaged \cpp environment.
+To solve these issues our project developed a program that works on multiple platforms and 
+roughly supports the same networks as the original program. It integrates properly with the existing \cpp 
+programs. Because both the \xmas designer and the verification tools are written 
+using \cpp, maintenance is of both parts is easier to combine.
+
