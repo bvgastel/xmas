@@ -36,6 +36,7 @@ class VtPluginInterface
 {
 
 public:
+    virtual ~VtPluginInterface() {}
 
     virtual QString name() = 0;
     virtual void name(QString name) = 0;

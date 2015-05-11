@@ -10,8 +10,9 @@ WARNINGS += -Wall
 
 CONFIG += C++11
 CONFIG += create_prl
-CONFIG += link_prt
-CONFIG += static dll
+CONFIG += link_prl
+win32|linux:CONFIG += static dll
+macx: CONFIG += staticlib
 
 TARGET = bitpowder
 TEMPLATE = lib
@@ -21,19 +22,18 @@ DEFINES += BITPOWDER_LIBRARY
 SOURCES += \
     dispatch.cpp \
     exception.cpp \
-    iterators.cpp \
+#    iterators.cpp \
     memory.cpp \
     memorypool.cpp \
-    memorypool.debug.cpp \
     parser.cpp \
     parser_json.cpp \
-    queue.cpp \
-    shared_object.cpp \
+#    queue.cpp \
+#    shared_object.cpp \
     simplestring.cpp \
-    stack.cpp \
-    stringparse.cpp \
+#    stack.cpp \
+#    stringparse.cpp \
     thread.cpp \
-    type_hash.cpp
+#    type_hash.cpp
 
 HEADERS += \
     atomic.h \
@@ -45,7 +45,6 @@ HEADERS += \
     iterators.h \
     lock.h \
     memory.h \
-    memorypool.debug.h \
     memorypool.h \
     parser.h \
     parser_json.h \

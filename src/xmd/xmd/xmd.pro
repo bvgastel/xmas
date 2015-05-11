@@ -16,7 +16,8 @@ CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
-unix: CONFIG += static dll
+linux: CONFIG += static dll
+macx: CONFIG += staticlib
 
 SOURCES += \
     datacontrol.cpp \
@@ -87,35 +88,12 @@ DISTFILES += mainWindow.qml \
     uicontrols/XPlugin.qml \
     uicontrols/Log.qml \
     findings.md \
-    uicontrols/XExpressionDialog.qml
+    uicontrols/XExpressionDialog.qml \
+    xmd.pri
 
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
-
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/release/ -lvt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/debug/ -lvt
-else:unix: LIBS += -L$$OUT_PWD/../../xmv/vt/ -lvt
-
-INCLUDEPATH += $$PWD/../../xmv/vt
-DEPENDPATH += $$PWD/../../xmv/vt
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/debug/ -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../xmv/datamodel
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/release/ -linterfaces
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/debug/ -linterfaces
-else:unix: LIBS += -L$$OUT_PWD/../../interfaces/ -linterfaces
-
-INCLUDEPATH += $$PWD/../../interfaces
-DEPENDPATH += $$PWD/../../interfaces
+include(../../bitpowder/bitpowder.pri)
+include(../../xmv/vt/vt.pri)
+include(../../interfaces/interfaces.pri)

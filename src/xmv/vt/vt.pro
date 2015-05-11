@@ -14,7 +14,8 @@ CONFIG += C++11
 CONFIG += create_prl
 CONFIG += link_prl
 win32: CONFIG += static
-unix: CONFIG += static dll
+linux: CONFIG += static dll
+macx: CONFIG += staticlib
 
 DEFINES += VT_LIBRARY
 
@@ -45,16 +46,5 @@ DISTFILES += \
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
+include(../../xmv/datamodel/datamodel.pri)
 
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../datamodel/debug/ -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../datamodel
-DEPENDPATH += $$PWD/../datamodel

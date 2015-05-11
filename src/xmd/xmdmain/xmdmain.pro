@@ -13,7 +13,7 @@ QT += quickwidgets
 
 TARGET = xmdmain
 CONFIG   += console
-CONFIG   -= app_bundle
+#CONFIG   -= app_bundle
 CONFIG += C++11
 CONFIG += link_prl
 win32: CONFIG += static
@@ -23,7 +23,7 @@ TEMPLATE = app
 
 # Application icon
 win32|unix: RC_ICONS = app.ico
-macx: ICON = myapp.icns
+macx: ICON = app.icns
 
 SOURCES += main.cpp
 
@@ -38,45 +38,5 @@ unix|win32|macx {
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmd/release/ -lxmd
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmd/debug/ -lxmd
-else:unix: LIBS += -L$$OUT_PWD/../xmd/ -lxmd
-
-INCLUDEPATH += $$PWD/../xmd
-DEPENDPATH += $$PWD/../xmd
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/release/libxmd.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/libxmd.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/release/xmd.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../xmd/debug/xmd.lib
-# no pre_targetdeps for unix plz
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../../bitpowder/ -lbitpowder
-
-INCLUDEPATH += $$PWD/../../bitpowder
-DEPENDPATH += $$PWD/../../bitpowder
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/release/ -lvt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/vt/debug/ -lvt
-else:unix: LIBS += -L$$OUT_PWD/../../xmv/vt/ -lvt
-
-INCLUDEPATH += $$PWD/../../xmv/vt
-DEPENDPATH += $$PWD/../../xmv/vt
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../xmv/datamodel/debug/ -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../../xmv/datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../../xmv/datamodel
-DEPENDPATH += $$PWD/../../xmv/datamodel
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/release/ -linterfaces
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../interfaces/debug/ -linterfaces
-else:unix: LIBS += -L$$OUT_PWD/../../interfaces/ -linterfaces
-
-INCLUDEPATH += $$PWD/../../interfaces
-DEPENDPATH += $$PWD/../../interfaces
-
-
+include(../xmd/xmd.pri)
+include(../../interfaces/interfaces.pri)

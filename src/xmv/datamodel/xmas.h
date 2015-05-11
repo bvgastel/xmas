@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <vector>
 
 #include "extension.h"
 #include "simplestring.h"

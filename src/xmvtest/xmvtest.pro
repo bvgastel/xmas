@@ -3,7 +3,6 @@ TEMPLATE = app
 WARNINGS += -Wall
 
 CONFIG += console
-CONFIG -= app_bundle
 CONFIG -= qt
 
 HEADERS +=
@@ -43,29 +42,16 @@ unix|win32 {
 ################################################
 # Dependencies
 ################################################
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/release/ -lbitpowder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../bitpowder/debug/ -lbitpowder
-else:unix: LIBS += -L$$OUT_PWD/../bitpowder/ -lbitpowder
+BASE=..
+include(../xmv/vt/vt.pri)
+include(../bitpowder/bitpowder.pri)
 
-INCLUDEPATH += $$PWD/../bitpowder
-DEPENDPATH += $$PWD/../bitpowder
+linux|win32: LIBS += -L$$PWD/../../lib -lgtest
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/vt/release/ -lvt
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/vt/debug/ -lvt
-else:unix: LIBS += -L$$OUT_PWD/../xmv/vt/ -lvt
+macx: INCLUDEPATH += $$PWD/../../include/googletest/
+macx: SOURCES += $$PWD/../../include/googletest/src/gtest-all.cc
 
-INCLUDEPATH += $$PWD/../xmv/vt
-DEPENDPATH += $$PWD/../xmv/vt
+INCLUDEPATH += $$PWD/../../include/googletest/include
+DEPENDPATH += $$PWD/../../include/googletest/include
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/release/ -ldatamodel
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../xmv/datamodel/debug/ -ldatamodel
-else:unix: LIBS += -L$$OUT_PWD/../xmv/datamodel/ -ldatamodel
-
-INCLUDEPATH += $$PWD/../xmv/datamodel
-DEPENDPATH += $$PWD/../xmv/datamodel
-
-unix|win32|macx: LIBS += -L$$PWD/../../lib -lgtest
-
-INCLUDEPATH += $$PWD/../../include
-DEPENDPATH += $$PWD/../../include
 

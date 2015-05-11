@@ -98,6 +98,7 @@ std::shared_ptr<QDir> PluginControl::pluginDir() {
         pluginDir->cdUp();
         pluginDir->cdUp();
         pluginDir->cdUp();
+        pluginDir->cdUp();
     }
 #endif
     pluginDir->cdUp(); // to build dir
