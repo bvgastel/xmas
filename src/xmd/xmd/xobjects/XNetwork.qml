@@ -36,6 +36,7 @@ import QtQuick.Window 2.1
 import Qt.labs.settings 1.0
 import "qrc:/ui/uicontrols/"
 import "qrc:/javascripts/xobjects/xchannel.js" as ChannelJs
+import "qrc:/javascripts/xobjects/xcomponent.js" as ComponentJs
 import "qrc:/javascripts/xobjects/xnetwork.js" as NetworkJs
 import XMAS.model 1.0 as Model
 import XMAS 1.0 as XMAS
@@ -54,13 +55,12 @@ Model.XNetwork {
     property bool gridVisible:mainwindow.showGrid
     property bool gridSnap:mainwindow.snapToGrid
     property int gridSize:10
-    property bool clearRequest: false
 
     // Signals
     signal moveSelected(var group)
 
     // Event handling
-    onChildrenChanged: clearRequest && isEmpty() ?  clearRequest = false : modified=true
+    onChildrenChanged: modified=true
     onWriteLog: log(message, color)
     onPacketChanged: modified=true
     onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
@@ -93,9 +93,10 @@ Model.XNetwork {
 
     // Clear network
     function clear(){
-        clearRequest = true
-        selectAll()
-        selection.deleteSelected()
+        var group = canvasItems()
+        for (var i = group.length; i-- > 0; ){
+            ComponentJs.remove(group[i])
+        }
         network.fileName = "?.json"
         network.folder = modelFolder
         network.alias = ""
