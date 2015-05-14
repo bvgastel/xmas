@@ -101,7 +101,7 @@ Model.XChannel {
         id: contextMenu
         MenuItem {
             text: "Delete"
-            onTriggered: remove()
+            onTriggered: {remove(); network.modified = true}
         }
     }
 

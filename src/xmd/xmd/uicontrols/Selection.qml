@@ -221,6 +221,7 @@ Rectangle{
             }
         }
         clear()
+        network.modified = true
     }
 
 

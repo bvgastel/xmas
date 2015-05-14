@@ -76,7 +76,6 @@ function remove(channel) {
             }
         }
         destroy(channel)
-        network.modified = true
     } catch(e) {
         log("[xchannel.js(remove) - ]" + e, "red")
     }
