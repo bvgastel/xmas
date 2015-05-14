@@ -1,19 +1,21 @@
 \begin{enumerate} \label{sec:bug-list}
+\item	Invalid maximized main window restore from setup (Qt Bug)
+\item	Group select has not always key focus (e.g. pressing delete has no effect)
+\item	Several memory leaks
+\item Error when building release version
+\item Windows warning : Some dialogs do not get destroyed before quit (see Agilefant details)
 \item	\st{No model modified flag when packet changed}
 \item	\st{Packet dialog not cleared on new/open network}
 \item \st{Not able to enter an empty packet}
-\item	Model modified flag set after new when canvas was not clear
-\item	Invalid maximized main window restore from setup (Qt Bug)
-\item	Group select has not always key focus (e.g. pressing delete has no effect)
-\item	Clicking new if canvas is not clear aborts application under Linux.
+\item	\st{Model modified flag set after new when canvas was not clear}
+\item	\st{Clicking new if canvas is not clear aborts application under Linux.}
 \item	\st{Model setup not restored on model open.}
-\item With composite on canvas and click new then dialog save first $+$ no does not
-work
-\item Sometimes a composite its mouse area becomes inactive. (start with a clean
+\item \st{With composite on canvas and click new then dialog save first $+$ no does not
+work}
+\item \st{Sometimes a composite its mouse area becomes inactive. (start with a clean
 canvas , add a composite in the library and drag one on the canvas. Save new
 model and click new or open). This only occurs with new (nameless) networks,
 adding a composite is probably not handled well in the xMAS networks list and
-therefore do only exists on the canvas.
-\item	Several memory leaks
+therefore do only exists on the canvas.}
 \item \st{Qt warning ``QObject::connect: signal not found in Logger'' (windows)}
 \end{enumerate}
