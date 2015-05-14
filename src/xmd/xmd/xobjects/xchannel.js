@@ -76,6 +76,7 @@ function remove(channel) {
             }
         }
         destroy(channel)
+        network.modified = true
     } catch(e) {
         log("[xchannel.js(remove) - ]" + e, "red")
     }
@@ -89,6 +90,7 @@ function doConnect(port1,port2) {
         channel = null
         loadcomponent(outport,inport)
         network.connect(outport,inport)
+        network.modified = true
     } catch(e) {
         log("[xchannel.js(doConnect) - ]" + e, "red")
     }

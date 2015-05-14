@@ -115,6 +115,7 @@ function endDrag()
             remove(draggedItem)
         }
         draggedItem.updateCanvasData()
+        network.modified=true
         draggedItem = null;
     } catch(e) {
         log("[xcomponent.js(endDrag) - ]" + e, "red")
@@ -126,6 +127,7 @@ function remove(component) {
     try {
         if (network.removeComponent(component)) {
             component.destroy()
+            network.modified = true
         } else {
             log("Remove of component " + component.name + " not confirmed by xmas!!","red")
         }

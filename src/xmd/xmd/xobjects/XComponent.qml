@@ -121,12 +121,12 @@ Model.XComponent {
     }
 
     // Event handling
-    onRotationChanged:{component.update();component.updateCanvasData()}
-    onScaleChanged: {doMove(0,0);component.updateCanvasData()}
+    onRotationChanged:{component.update();component.updateCanvasData();network.modified=true}
+    onScaleChanged: {doMove(0,0);component.updateCanvasData();network.modified=true}
     onWriteLog: mainwindow.log(message,color)
     onSelectedChanged: if(!selected) label.focus = false
-    onXChanged: positionHasChanged = true
-    onYChanged: positionHasChanged = true
+    onXChanged: {positionHasChanged = true;network.modified=true}
+    onYChanged: {positionHasChanged = true;network.modified=true}
 
     // Selection highlite
     Rectangle {
@@ -242,8 +242,8 @@ Model.XComponent {
             color: "blue"
             wrapMode: TextInput.NoWrap
             font.pointSize : 12
-            onEditingFinished: name = text
-            onAccepted: focus = false
+            onEditingFinished: {name = text;network.modified=true}
+            onAccepted: {focus = false;network.modified=true}
             focus:true
             onFocusChanged: if(focus)selectAll()
             readOnly: false

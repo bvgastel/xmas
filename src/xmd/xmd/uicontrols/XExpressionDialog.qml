@@ -140,8 +140,10 @@ Window {
             text: "Ok"
             enabled: expressionTextInput.acceptableInput
             onTriggered: {
+                var changed = expression !== expressionTextInput.text
                 expression = expressionTextInput.text
                 if(expressionValid){
+                    if(changed)network.modified = true
                     textBackground.color = "#CCFFFF"
                     dialog.accepted()
                     dialog.close()

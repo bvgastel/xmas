@@ -60,11 +60,9 @@ Model.XNetwork {
     signal moveSelected(var group)
 
     // Event handling
-    onChildrenChanged: modified=true
     onWriteLog: log(message, color)
     onPacketChanged: modified=true
     onCreateNetwork: { NetworkJs.createNetwork(object); network.modified = false; }
-
     // JavaScripts
 
     function url(){
@@ -97,13 +95,13 @@ Model.XNetwork {
         for (var i = group.length; i-- > 0; ){
             ComponentJs.remove(group[i])
         }
-        network.fileName = "?.json"
         network.folder = modelFolder
         network.alias = ""
         network.imageName = ""
         network.boxedImage = true
-        network.modified = false
         network.packet = ""
+        network.modified = false
+        network.fileName = "?.json"
     }
 
     function checkTarget(port) {

@@ -446,6 +446,7 @@ Window {
                      & txtInputModelWidth.acceptableInput
                      & txtInputModelHeight.acceptableInput
             onTriggered: {
+                network.modified = true
                 network.fileName = txtInputModelFileName.text
                 network.folder = txtInputModelFolder.text
                 network.alias = txtInputModelAlias.text
