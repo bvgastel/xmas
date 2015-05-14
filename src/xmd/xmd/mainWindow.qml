@@ -125,10 +125,22 @@ ApplicationWindow {
 
     // Event handling
     onClosing: {
-        close.accepted = false; network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
+        close.accepted = false
+        network.modified ? dialogSaveBeforeQuit.open() : confirmQuit ? dialogQuit.open() : Qt.quit()
     }
     //TODO load plugins in c++ property list
     Component.onCompleted: {fileNewAction.trigger(); plugincontrol.loadPlugins()}
+
+    Component.onDestruction: {
+        // Qt BUG (MS Windows): need to destroy dialog internally before quit
+        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
+        dialogSaveBeforeNew.destroy()
+        dialogOverwrite.destroy()
+        dialogSaveBeforeOpen.destroy()
+        dialogFileOpen.destroy()
+        dialogQuit.destroy()
+        dialogSaveBeforeQuit.destroy()
+    }
 
     //#######################################################################################################
     //
@@ -498,7 +510,7 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Save " + network.fileName + " first?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        onNo:  newModel(false)
+        onNo: newModel(false)
     }
 
     // Save before open?
@@ -519,9 +531,7 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Quit without saving " + network.fileName + "?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        // Qt BUG (MS Windows): need to destroy dialog internally before quit
-        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
-        onYes: {this.destroy(); Qt.quit()}
+        onYes: Qt.quit()
         // gbo: why don't you save on yes??
         // stf: a user asks to quit in the first place and if a dialog pops up it makes more sense to confirm as yes for quit
         // .. but you are right , the question in that case would be better "sure you want to quit without save?"
@@ -535,9 +545,7 @@ ApplicationWindow {
         icon: StandardIcon.Question
         text:  "Are you sure you want to quit?"
         standardButtons: StandardButton.No | StandardButton.Yes
-        // Qt BUG (MS Windows): need to destroy dialog internally before quit
-        // to prevent warning "External WM_DESTROY received for  QWidgetWindow..."
-        onYes: {this.destroy(); Qt.quit()}
+        onYes: Qt.quit()
     }
 
     //#######################################################################################################
