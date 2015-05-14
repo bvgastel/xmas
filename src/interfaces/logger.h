@@ -32,9 +32,6 @@ class Logger : public LoggerInterface
 {
     Q_OBJECT
 
-signals:
-    void writeLog(QString message, QColor color=Qt::black);
-
 public:
     Logger(QString name, QObject *parent = 0)
         : LoggerInterface(parent), m_name(name) {
