@@ -60,9 +60,16 @@ bool model::Network::setPacket(QString expression) {
         emit writeLog(QString("This network has no project or no network: big problems!"),Qt::red);
         return false;
     }
-    // TODO: Need to check expression with expression parser? Query for Bernard.
-    project->getRootNetwork()->packetType(expression.toStdString());
-    m_logger.log(QString("packet set to expression = ") + expression);
+    auto root = project->getRootNetwork();
+    auto exist_expression = root->packetType();
+    if (exist_expression != "" || expression.trimmed() != "" ) {
+        // TODO: Need to check expression with expression parser? Query for Bernard.
+        root->packetType(expression.toStdString());
+        auto msg_exist = exist_expression != "" ? "from " + exist_expression : "";
+        auto msg_new = expression.trimmed() != "" ? " to " + expression.toStdString() : " to <none>";
+        auto msg = "packet set " + msg_exist + msg_new;
+        m_logger.log(QString(msg.c_str()));
+    }
     return true;
 }
 
