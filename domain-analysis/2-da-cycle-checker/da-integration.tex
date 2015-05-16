@@ -18,7 +18,7 @@
 
 Advances in chip technology have led to increasingly more complex chip
 architectures. This raise in complexity has forced researchers in the field of
-modern chip architecture to search for techniques which allow them to better cope
+modern chip architecture to search for techniques that allow them to better cope
 with this complexity. One of these techniques is xMAS\cite{chatterjee10,xmas}, a visual modeling
 language that allows the description of system-on-chip designs using high-level constructs.
 
@@ -313,7 +313,7 @@ void accept(XMASComponentVisitor &v) {
 
 Immediately, control is returned to the Visitor class by calling its visit method. Since the method
 is defined as part of the XMASMerge class, the \emph{this} pointer passed has type XMASMerge*. The compiler
-uses this knowledge to infer that it has to call the overloaded visit method which takes a pointer
+uses this knowledge to infer that it has to call the overloaded visit method that takes a pointer
 to an XMASMerge component (overloading and dynamic dispatch are combined here to perform double
 dispatch). The CombinatorialCycleDependencies class is now able to execute code specifically written
 to handle an XMAS merge. The diagrams also shows a slightly more complex example where the Visitor
@@ -361,8 +361,8 @@ To determine an irdy or trdy signal of a combinatorial primitive, the connected 
 irdy and trdy signals should be substituted in the equation. Large chains of combinatorial
 primitives as such yield complex expressions. More so, when a component is part of a
 combinatorial cycle, the same irdy or trdy signal occurs on both the left-hand and the
-right-hand side of the equation. Substitution of the right-hand side occurrence of the signal leads
-to an infinite recursion.
+right-hand side of the equation. Substitution of the right-hand side occurrence of the signal
+then leads to an infinite recursion.
 
 \begin{figure}[hp]
  \includegraphics[height=3cm]{images/fork-join-cycle}

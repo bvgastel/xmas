@@ -1,0 +1,84 @@
+\section{Feedback interface}
+
+While analyzing a network, verification tools can generate various types of
+feedback messages. At this moment, verification tools present this feedback
+as human readable text messages on the standard output. Although this form
+is suitable for human consumption when running the verification tools as a
+standalone application, they are hard to parse and interpret by software like
+the designer.
+
+Due to time constraints, presentation of feedback from the verification
+tools has been kept simple. Similar to the standalone application, the
+text messages are presented to the user in a text console integrated in
+the designer. Future improvements could enhance the integration between
+designer and verifications. As an example, problematic components and ports
+could be highlighted on the design canvas.
+
+\paragraph{}
+To support these kinds of enhancements, a more structured way to pass feedback
+from verification tools must be used. For this purpose, a feedback message
+format has been defined along with several functions that can be used 
+by verification tools to generate feedback messages.
+
+
+\subsection{Message format}
+Feedback messages are structured as follows:
+
+\paragraph{}
+[\textbf{sender}] **\textbf{type}**: \textbf{message}
+(\textbf{component list}) (\textbf{port list})
+
+
+\begin{itemize}
+    \item \textbf{sender} is a string to identify the verification tool that
+    sends the feedback message. Each verification tool should define a unique
+    name to identify itself.
+    
+    \item \textbf{type} specifies the type of feedback. The following feedback
+    types are defined:
+    \begin{itemize}
+        \item \textbf{INFO} - informational message, e.g. verification tool has started or finished
+        \item \textbf{WARNING} - non-fatal warning, e.g. non-optimal network configuration detected
+        \item \textbf{FAULT} - fault in the network detected, e.g. a combinatorial cycle
+        \item \textbf{CRASH} - crash / unexpected exception thrown by the verification tool,
+        this indicates a programming error, not a network fault
+        \item \textbf{PROGRESS} - informational message containing progress of a verification tool
+    \end{itemize}
+
+    \item \textbf{message} contains the actual feedback message. Verification tools can pass
+    custom text messages. For PROGRESS type feedback, the message field has a fixed format:
+    ``progress/total'' where both progress and total are positive integers.
+    
+    \item \textbf{component list} is an optional list of component IDs to which the feedback
+    applies. The components are listed inside brackets using comma-separated notation and are
+    prefixed by ``Comp: '', e.g. Comp: [src1, join2, ...].
+
+    \item \textbf{port list} is an optional list of ports (of components) to which the feedback
+    applies. The ports are listed inside brackets using comma-separated notation and are
+    prefixed by ``Port: '', e.g. Port: [src1.o, join2.a, ...].
+    
+    \item messages are terminated by a newline character
+    
+\end{itemize}
+
+
+\subsection{Example}
+
+\begin{verbatim}
+[cycle-checker] **INFO**: Starting cycle checker
+[cycle-checker] **FAULT**: Combinatorial cycle detected!  Port: [::frk0.a]
+[cycle-checker] **INFO**: Finished! 
+\end{verbatim}
+
+
+\subsection{Current state \& future work}
+
+The ``cycle checker'' verification tool has been adapted to output its feedback in the
+described format. Optionally, this tool could be updated to emit progress information.
+However, progress information is of little value due to the short runtime of this tool.
+
+As mentioned earlier, the designer does not interpret the feedback message structure yet.
+Extracting the information from the text string can be accomplished through the use of a
+regular expression. All feedback formatting code is located in the feedback-interface.h/cpp
+files. Changes to the message format and new code to parse the message string can be added
+here.
