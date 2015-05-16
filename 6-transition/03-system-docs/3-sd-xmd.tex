@@ -10,7 +10,7 @@ visual components and their interactions in a readable and compact notation. Bei
 a javascript language, the programmer can use all expressions available
 in javascript while enjoying Qt enhancements. 
 Additionally, QML provides a C++ API for back-end C++ libraries that connects both environments
-transparantly.
+transparently.
 
 \subsection{User interface}
 
@@ -41,9 +41,9 @@ The application uses two methods provided by QML to integrate QML and C++ object
 
 \subsubsection{QML Context property}
 Each QML application operates in a certain QML context. The QML context stores
-properties that are available throughout all QML code. Registration of C++ classes 
-with the Qt metasystem exposes the C++ classes to the QML world.
-Registration adds a C++ object instance to the QML context using a property value.
+properties that are available throughout all QML code. C++ classes can be exposed
+to the QML world by setting a C++ object instance as the value of a property
+on the QML context.
 XMD uses context properties to provide access to three C++ classes:
 
 \begin{itemize}
@@ -67,9 +67,9 @@ More information on context properties is available at:
 
 \subsubsection{Embedding C++ classes in QML}
 
-One can extend QML applications with C++ code by registering C++ classes
-with the QML type system. Any C++ class that derives from QObject connect to QML this way.
-Registering the class with QML not only allows access to the properties,
+QML applications can also be extended with C++ code by registering C++ classes
+with the QML type system. Any C++ class that derives from QObject can be used
+in this way. Registering the class to QML not only allows access to the properties,
 methods and signals of an object. Additionally, QML code can directly instantiate
 new objects of the registered classes (see figure~\ref{fig:register-qml}).
 
@@ -87,7 +87,7 @@ in names can lead the QML/C++ API astray and could lead to difficult to find err
 \textsc{Network} and \textsc{Component}. 
 The definitions of each of the four classes is split into three files. 
 The {\tt .h} and {\tt .cpp} files contain normal C++ header and source files of the 
-classes. Furthermore, each class has a QML file, e.g. XChannel.qml, which contains
+classes. Furthermore, each class has a QML file, which contains
 additional QML code (figure \ref{fig:qml-cpp-classes}). All three files belong to
 the same class. Even though the class names are sometimes different (e.g. Channel vs.
 XChannel), the QML type system binds the C++ code and the QML code together to form a
@@ -101,7 +101,7 @@ More information is available at:
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{qml-cpp-extension}
+    \includegraphics[width=0.8\textwidth]{qml-cpp-classes}
     \caption{Qml / C++ integration of XMD classes}
     \label{fig:qml-cpp-classes}
 \end{figure}
