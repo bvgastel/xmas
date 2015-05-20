@@ -39,6 +39,7 @@
 \newcommand{\qml}{\textsc{Qml}\xspace}
 \newcommand{\ou}{\textsc{Ou}\xspace}
 \newcommand{\dad}{\textsc{Dad}\xspace}
+\newcommand{\cpp}{\textsc{C++}\xspace}
 
 \begin{frame}
 	\titlepage
@@ -103,15 +104,20 @@
 
 		\end{column}
 		\begin{column}[t]{5cm}
-		\textbf{Options}		
+		\textbf{Options: Rewrite or refactor}		
 		
-		Rewrite or refactor.
+		Refactoring would lead to problems with
+		\begin{itemize}
+			\item platform dep due to C\#
+			\item integration with \cpp
+		\end{itemize}
+		
+		We decided to rebuild.
 		
 		{\bf Project intentions}		
 		
 		Using multi-platform tools we aimed at creating a C++ tool for researching \Noc networks.
 		
-		Refactor resulted in equivalent plat dependencies to C\#
 		\end{column}
 	\end{columns}
 \end{frame}
